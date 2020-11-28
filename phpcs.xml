@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<ruleset name="PSR12">
+    <description>The ASH2 coding standard.</description>
+    <rule ref="PSR12"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint"/>
+    <file>src/</file>
+    <exclude-pattern>vendor</exclude-pattern>
+</ruleset>

@@ -1,0 +1,24 @@
+{
+    "config": {
+        "vendor-dir": "./vendor"  
+    },
+    "require": { },
+    "require-dev": {
+        "doctrine/coding-standard": "^6.0",
+        "squizlabs/php_codesniffer": "3.*",
+        "phpunit/phpunit": "^8"
+    },    
+    "name": "bingo/bpmplatform",
+    "description": "BPM Platform",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "BpmPlatform\\": "./src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": { 
+            "Tests\\": "./tests"
+        }
+    }
+}
