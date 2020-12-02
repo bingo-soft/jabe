@@ -2,6 +2,12 @@
 
 namespace BpmPlatform\Engine;
 
+/**
+ * Class contains constants that identifies the activity types.
+ * Events, gateways and activities are summed together as activities.
+ * They typically correspond to the XML tags used in the BPMN 2.0 process definition file.
+ *
+ */
 class ActivityTypes
 {
     public const MULTI_INSTANCE_BODY = "multiInstanceBody";
