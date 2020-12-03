@@ -34,14 +34,14 @@ interface DomElementInterface
 
     public function insertChildElementAfter(
         DomElementInterface $elementToInsert,
-        DomElementInterface $insertAfter
+        ?DomElementInterface $insertAfter
     ): void;
 
     public function hasAttribute(?string $namespaceUri, string $localName): bool;
 
-    public function getAttribute(?string $namespaceUri, string $localName): string;
+    public function getAttribute(?string $namespaceUri, string $localName): ?string;
 
-    public function setAttribute(?string $namespaceUri, string $localName, string $value): void;
+    public function setAttribute(?string $namespaceUri, string $localName, string $value, ?bool $isIdAttribute): void;
 
     public function setIdAttribute(?string $namespaceUri, string $localName, string $value): void;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Type\Attribute;
+namespace BpmPlatform\Model\Xml\Type\Reference;
 
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
