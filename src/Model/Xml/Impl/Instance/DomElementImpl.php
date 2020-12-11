@@ -2,13 +2,14 @@
 
 namespace BpmPlatform\Model\Xml\Impl\Instance;
 
+use BpmPlatform\Model\Xml\Impl\ModelInstanceImpl;
 use BpmPlatform\Model\Xml\Instance\{
     DomDocumentInterface,
     DomElementInterface,
     ModelElementInstanceInterface
 };
 use BpmPlatform\Model\Xml\Impl\Util\XmlQName;
-use BpmPlatform\Model\Xml\Impl\Util\DomUtil\DomUtils;
+use BpmPlatform\Model\Xml\Impl\Util\DomUtil;
 
 class DomElementImpl implements DomElementInterface
 {
@@ -79,7 +80,22 @@ class DomElementImpl implements DomElementInterface
     public function getChildElements(): array
     {
         $childNodes = $this->element->childNodes;
-        return DomUtils::filterNodeListForElements($childNodes);
+        return DomUtil::filterNodeListForElements($childNodes);
+    }
+
+    public function getChildElementsByNameNs(array $namespaceUri, string $elementName): array
+    {
+        $childNodes = $this->element->childNodes;
+        return DomUtil::filterNodeListByName($childNodes, $namespaceUri, $elementName);
+    }
+
+
+    public function getChildElementsByType(
+        ModelInstanceImpl $modelInstance,
+        ModelElementInstanceInterface $elementType
+    ): array {
+        $childNodes = $this->element->childNodes;
+        return DomUtil::filterNodeListByType($childNodes, $modelInstance, $elementType);
     }
 
     public function replaceChild(

@@ -1,0 +1,1 @@
+C:37:"PHPUnit\Runner\DefaultTestResultCache":273:{a:2:{s:7:"defects";a:1:{s:51:"Tests\Unit\DomDocumentTest::testDomDocumentCreation";i:5;}s:5:"times";a:2:{s:51:"Tests\Unit\DomDocumentTest::testDomDocumentCreation";d:0.0040000000000000001;s:51:"Tests\Unit\DomInstanceTest::testDomDocumentCreation";d:0.0030000000000000001;}}}

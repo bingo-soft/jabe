@@ -3,7 +3,8 @@
 namespace BpmPlatform\Model\Xml\Impl\Util\DomUtil;
 
 use BpmPlatform\Model\Xml\Impl\ModelInstanceImpl;
-use BpmPlatform\Model\Xml\Impl\Util\ModelUtil\ModelUtils;
+use BpmPlatform\Model\Xml\Impl\Instance\DomElementImpl;
+use BpmPlatform\Model\Xml\Impl\Util\ModelUtil;
 
 class ElementByTypeListFilter extends ElementNodeListFilter
 {
@@ -19,12 +20,12 @@ class ElementByTypeListFilter extends ElementNodeListFilter
         $this->model = $modelInstance;
     }
 
-    public function matches(\DomNode $node): bool
+    public function matches(\DomElement $element): bool
     {
-        if (!parent::matches($node)) {
+        if (!parent::matches($element)) {
             return false;
         }
-
-        //@TODO
+        $modelElement = ModelUtil::getModelElement(new DomElementImpl($element), $this->model);
+        return $modelElement instanceof $this->type;
     }
 }

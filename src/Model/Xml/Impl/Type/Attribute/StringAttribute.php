@@ -11,13 +11,16 @@ class StringAttribute extends AttributeImpl
         parent::__construct($owningElementType);
     }
 
-    public function convertXmlValueToModelValue(string $rawValue): string
+    /**
+     * @return mixed
+     */
+    protected function convertXmlValueToModelValue(?string $rawValue)
     {
-        return $this->rawValue;
+        return $rawValue;
     }
 
-    public function convertModelValueToXmlValue(string $modelValue): string
+    protected function convertModelValueToXmlValue(string $modelValue): string
     {
-        return $this->modelValue;
+        return strval($modelValue);
     }
 }

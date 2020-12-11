@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Type\Child;
+namespace childElementCollections;
 
 use BpmPlatform\Model\Xml\ModelInterface;
 use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
@@ -16,12 +16,9 @@ interface ChildElementCollectionInterface extends ModelElementInstanceInterface
 
     public function getChildElementType(ModelInterface $model): ModelElementTypeInterface;
 
-    /**
-     * @return mixed
-     */
-    public function getChildElementTypeClass();
+    public function getChildElementTypeClass(): string;
 
     public function getParentElementType(): ModelElementTypeInterface;
 
-    public function get(ModelElementInstanceInterface $element): array;
+    public function get(ModelElementInstanceInterface $modelElement): array;
 }

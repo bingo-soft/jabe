@@ -13,10 +13,10 @@ class ElementByNameListFilter extends ElementNodeListFilter
         $this->namespaceUri = $namespaceUri;
     }
 
-    public function matches(\DomNode $node): bool
+    public function matches(\DomElement $element): bool
     {
-        return parent::matches($node) &&
-               $this->localName == $node->localName &&
-               $this->namespaceUri == $node->namespaceURI;
+        return parent::matches($element) &&
+               $this->localName == $element->localName &&
+               $this->namespaceUri == $element->namespaceURI;
     }
 }

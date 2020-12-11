@@ -7,7 +7,7 @@ use BpmPlatform\Model\Xml\Instance\{
     DomDocumentInterface
 };
 use BpmPlatform\Model\Xml\Impl\Util\XmlQName;
-use BpmPlatform\Model\Xml\Impl\Util\DomUtil\DomUtils;
+use BpmPlatform\Model\Xml\Impl\Util\DomUtil;
 use BpmPlatform\Model\Xml\Exception\ModelException;
 
 class DomDocumentImpl implements DomDocumentInterface
@@ -20,6 +20,11 @@ class DomDocumentImpl implements DomDocumentInterface
     public function __construct(\DOMDocument $document)
     {
         $this->document = $document;
+    }
+
+    public function getDomSource(): \DOMDocument
+    {
+        return $this->document;
     }
 
     public function getRootElement(): ?DomElementInterface
@@ -45,7 +50,7 @@ class DomDocumentImpl implements DomDocumentInterface
 
     public function createElement(string $namespaceUri, string $localName): DomElementInterface
     {
-        $xmlQName = new XmlGName($this, $namespaceUri, $localName);
+        $xmlQName = new XmlQName($this, $namespaceUri, $localName);
         $element = $this->document->createElementNS($xmlQName->getNamespaceUri(), $xmlQName->getPrefixedName());
         return new DomElementImpl($element);
     }
@@ -63,7 +68,7 @@ class DomDocumentImpl implements DomDocumentInterface
     public function getElementsByNameNs(string $namespaceUri, string $localName): array
     {
         $elementsByTagNameNS = $this->document->getElementsByTagNameNS($namespaceUri, $localName);
-        return DomUtils::filterNodeListByName($elementsByTagNameNS, $namespaceUri, $localName);
+        return DomUtil::filterNodeListByName($elementsByTagNameNS, $namespaceUri, $localName);
     }
 
     public function registerNamespace(?string $prefix, string $namespaceUri): void

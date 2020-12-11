@@ -2,6 +2,8 @@
 
 namespace BpmPlatform\Model\Xml\Instance;
 
+use BpmPlatform\Model\Xml\Impl\ModelInstanceImpl;
+
 interface DomElementInterface
 {
     public function getNamespaceURI(): string;
@@ -10,13 +12,13 @@ interface DomElementInterface
 
     public function getPrefix(): string;
 
-    public function getDocument(): DomDocumentInterface;
+    public function getDocument(): ?DomDocumentInterface;
 
-    public function getRootElement(): DomElementInterface;
+    public function getRootElement(): ?DomElementInterface;
 
     public function getChildElements(): array;
 
-    public function getChildElementsByNameNs(array $namespaceUris, string $elementName): array;
+    public function getChildElementsByNameNs(array $namespaceUri, string $elementName): array;
 
     public function getChildElementsByType(
         ModelInstanceImpl $modelInstance,

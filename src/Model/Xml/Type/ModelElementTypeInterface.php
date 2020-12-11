@@ -4,7 +4,10 @@ namespace BpmPlatform\Model\Xml\Type;
 
 use BpmPlatform\Model\Xml\ModelInterface;
 use BpmPlatform\Model\Xml\ModelInstanceInterface;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
+use BpmPlatform\Model\Xml\Instance\{
+    DomElementInterface,
+    ModelElementInstanceInterface
+};
 use BpmPlatform\Model\Xml\Type\Attribute\AttributeInterface;
 
 interface ModelElementTypeInterface
@@ -13,19 +16,22 @@ interface ModelElementTypeInterface
 
     public function getTypeNamespace(): string;
 
-    public function getInstanceType(): ModelElementInstanceInterface;
+    public function getInstanceType(): string;
 
     public function getAttributes(): array;
 
-    public function newInstance(ModelInstanceInterface $instance): ModelElementInstanceInterface;
+    public function newInstance(
+        ModelInstanceInterface $instance,
+        ?DomElementInterface $domElement
+    ): ModelElementInstanceInterface;
 
-    public function getBaseType(): ModelElementTypeInterface;
+    public function getBaseType(): ?ModelElementTypeInterface;
 
     public function isAbstract(): bool;
 
     public function getExtendingTypes(): array;
 
-    public function getAttribute(string $attribute): AttributeInterface;
+    public function getAttribute(string $attribute): ?AttributeInterface;
 
     public function getModel(): ModelInterface;
 

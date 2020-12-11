@@ -7,33 +7,33 @@ use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
 
 interface ModelElementInstanceInterface
 {
-    public function getDomElement(): DomElementInterface;
+    public function getDomElement(): ?DomElementInterface;
 
     public function getModelInstance(): ModelInstanceInterface;
 
-    public function getParentElement(): ModelElementInstanceInterface;
+    public function getParentElement(): ?ModelElementInstanceInterface;
 
     public function getElementType(): ModelElementTypeInterface;
 
-    public function getAttributeValue(string $attributeName): string;
+    public function getAttributeValue(string $attributeName): ?string;
 
     public function setAttributeValue(
         string $attributeName,
         string $xmlValue,
-        bool $isIdAttribute = false,
-        bool $withReferenceUpdate = false
+        ?bool $isIdAttribute,
+        ?bool $withReferenceUpdate
     ): void;
 
     public function removeAttribute(string $attributeName): void;
 
-    public function getAttributeValueNs(string $namespaceUri, string $attributeName): string;
+    public function getAttributeValueNs(string $namespaceUri, string $attributeName): ?string;
 
     public function setAttributeValueNs(
         string $namespaceUri,
         string $attributeName,
         string $xmlValue,
-        bool $isIdAttribute = false,
-        bool $withReferenceUpdate = false
+        ?bool $isIdAttribute,
+        ?bool $withReferenceUpdate
     ): void;
 
     public function removeAttributeNs(string $namespaceUri, string $attributeName): void;
@@ -49,11 +49,11 @@ interface ModelElementInstanceInterface
     public function getUniqueChildElementByNameNs(
         string $namespaceUri,
         string $elementName
-    ): ModelElementInstanceInterface;
+    ): ?ModelElementInstanceInterface;
 
     public function getUniqueChildElementByType(
         ModelElementInstanceInterface $elementType
-    ): ModelElementInstanceInterface;
+    ): ?ModelElementInstanceInterface;
 
     public function setUniqueChildElementByNameNs(ModelElementInstanceInterface $newChild): void;
 
@@ -66,11 +66,14 @@ interface ModelElementInstanceInterface
 
     public function removeChildElement(ModelElementInstanceInterface $child): bool;
 
-    public function getChildElementsByType(ModelElementTypeInterface $childElementType): array;
+    /**
+     * @param mixed $childElementType
+     */
+    public function getChildElementsByType($childElementType): array;
 
     public function insertElementAfter(
-        ModelElementTypeInterface $elementToInsert,
-        ModelElementTypeInterface $insertAfterElement
+        ModelElementInstanceInterface $elementToInsert,
+        ?ModelElementInstanceInterface $insertAfterElement
     ): void;
 
     public function updateAfterReplacement(): void;

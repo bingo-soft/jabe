@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type\Reference;
+namespace BpmPlatform\Model\Xml\Impl\Type\Attribute;
 
 use BpmPlatform\Model\Xml\Type\Attribute\AttributeInterface;
 use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
@@ -33,7 +33,7 @@ abstract class AttributeImpl implements AttributeInterface
     /**
      * @return mixed
      */
-    abstract protected function convertXmlValueToModelValue(string $rawValue);
+    abstract protected function convertXmlValueToModelValue(?string $rawValue);
 
     /**
      * @param mixed $modelValue;

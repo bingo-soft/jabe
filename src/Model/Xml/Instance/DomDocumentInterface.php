@@ -17,4 +17,6 @@ interface DomDocumentInterface
     public function registerNamespace(?string $prefix, string $namespaceUri): void;
 
     public function clone(): DomDocumentInterface;
+
+    public function getDomSource(): \DOMDocument;
 }
