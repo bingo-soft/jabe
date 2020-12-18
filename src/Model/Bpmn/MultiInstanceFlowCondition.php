@@ -2,9 +2,10 @@
 
 namespace BpmPlatform\Model\Bpmn;
 
-class AssociationDirection
+class MultiInstanceFlowCondition
 {
     public const NONE = 'None';
     public const ONE = 'One';
-    public const BOTH = 'Both';
+    public const ALL = 'All';
+    public const COMPLEX = 'Complex';
 }
