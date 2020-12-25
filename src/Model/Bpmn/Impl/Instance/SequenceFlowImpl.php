@@ -6,6 +6,7 @@ use BpmPlatform\Model\Xml\ModelBuilder;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Builder\SequenceFlowBuilder;
+use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
     ConditionExpressionInterface,
     SequenceFlowInterface,

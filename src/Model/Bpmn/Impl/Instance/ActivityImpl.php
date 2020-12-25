@@ -5,7 +5,8 @@ namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 use BpmPlatform\Model\Xml\ModelBuilder;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
-use BpmPlatform\Model\Xml\Instance\{
+use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
+use BpmPlatform\Model\Bpmn\Instance\{
     ActivityInterface,
     DataInputAssociationInterface,
     DataOutputAssociationInterface,

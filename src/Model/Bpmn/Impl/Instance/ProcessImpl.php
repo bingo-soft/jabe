@@ -9,6 +9,7 @@ use BpmPlatform\Model\Xml\Impl\Util\StringUtil;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Builder\ProcessBuilder;
 use BpmPlatform\Model\Bpmn\ProcessType;
+use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
     ArtifactInterface,
     AuditingInterface,

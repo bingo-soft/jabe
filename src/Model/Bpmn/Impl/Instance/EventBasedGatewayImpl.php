@@ -7,6 +7,7 @@ use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Builder\EventBasedGatewayBuilder;
 use BpmPlatform\Model\Bpmn\EventBasedGatewayType;
+use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
     EventBasedGatewayInterface,
     GatewayInterface

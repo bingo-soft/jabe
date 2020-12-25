@@ -8,6 +8,7 @@ use BpmPlatform\Model\Bpmn\QueryInterface;
 use BpmPlatform\Model\Bpmn\Builder\AbstractFlowNodeBuilder;
 use BpmPlatform\Model\Bpmn\Exception\BpmnModelException;
 use BpmPlatform\Model\Bpmn\Impl\QueryImpl;
+use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
     FlowElementInterface,
     FlowNodetInterface,

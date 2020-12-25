@@ -8,6 +8,7 @@ use BpmPlatform\Model\Xml\Impl\Instance\{
 };
 use BpmPlatform\Model\Bpmn\Builder\AbstractBaseElementBuilder;
 use BpmPlatform\Model\Bpmn\Exception\BpmnModelException;
+use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
     BpmnModelElementInstanceInterface,
     ProcessInterface,

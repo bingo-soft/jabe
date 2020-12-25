@@ -7,6 +7,7 @@ use BpmPlatform\Model\Xml\Builder\StartEventBuilder;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
+use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
     StartEventInterface,
     CatchEventInterface
@@ -50,22 +51,22 @@ class StartEventImpl extends CatchEventImpl implements StartEventInterface
         ->build();
 
         self::$asyncAttribute = $typeBuilder->booleanAttribute(BpmnModelConstants::ATTRIBUTE_ASYNC)
-        ->namespace(BpmnModelConstants::CAMUNDA_NS)
+        ->namespace(BpmnModelConstants::NS)
         ->defaultValue(false)
         ->build();
 
         self::$formHandlerClassAttribute = $typeBuilder->stringAttribute(
             BpmnModelConstants::ATTRIBUTE_FORM_HANDLER_CLASS
         )
-        ->namespace(BpmnModelConstants::CAMUNDA_NS)
+        ->namespace(BpmnModelConstants::NS)
         ->build();
 
         self::$formKeyAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_FORM_KEY)
-        ->namespace(BpmnModelConstants::CAMUNDA_NS)
+        ->namespace(BpmnModelConstants::NS)
         ->build();
 
         self::$initiatorAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_INITIATOR)
-        ->namespace(BpmnModelConstants::CAMUNDA_NS)
+        ->namespace(BpmnModelConstants::NS)
         ->build();
 
         $typeBuilder->build();

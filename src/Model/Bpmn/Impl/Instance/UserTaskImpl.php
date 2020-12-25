@@ -8,6 +8,7 @@ use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Xml\Impl\Util\StringUtil;
 use BpmPlatform\Model\Bpmn\Builder\UserTaskBuilder;
+use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
     RenderingInterface,
     TaskInterface,
