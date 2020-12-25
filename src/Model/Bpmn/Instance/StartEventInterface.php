@@ -14,7 +14,7 @@ interface StartEventInterface extends CatchEventInterface
 
     public function getFormHandlerCLass(): string;
 
-    public function setCamundaFormHandlerClass(string $formHandlerClass): void;
+    public function setFormHandlerClass(string $formHandlerClass): void;
 
     public function getFormKey(): string;
 

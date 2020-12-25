@@ -16,5 +16,5 @@ interface BaseElementInterface extends BpmnModelElementInstanceInterface
 
     public function setExtensionElements(ExtensionElementsInterface $extensionElements): void;
 
-    public function getDiagramElement(): DiagramElementInterface;
+    public function getDiagramElement(): ?DiagramElementInterface;
 }

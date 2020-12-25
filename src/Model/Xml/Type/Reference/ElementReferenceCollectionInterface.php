@@ -10,6 +10,4 @@ interface ElementReferenceCollectionInterface extends ReferenceInterface
     public function getReferenceSourceCollection(): ChildElementCollectionInterface;
 
     public function getReferenceTargetElements(ModelElementInstanceImpl $referenceSourceElement): array;
-
-    public function get(ModelElementInstanceInterface $modelElement): array;
 }

@@ -11,7 +11,11 @@ interface FlowNodeInterface extends FlowElementInterface
 
     public function getIncoming(): array;
 
+    public function addIncoming(SequenceFlowInterface $element): void;
+
     public function getOutgoing(): array;
+
+    public function addOutgoing(SequenceFlowInterface $element): void;
 
     public function getPreviousNodes(): QueryInterface;
 

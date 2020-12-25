@@ -19,6 +19,4 @@ interface CatchEventInterface extends EventInterface
     public function getEventDefinitions(): array;
 
     public function getEventDefinitionRefs(): array;
-
-    public function addEventDefinition(MessageEventDefinitionInterface $eventDefinition): void;
 }

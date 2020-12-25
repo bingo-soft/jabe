@@ -118,6 +118,7 @@ class ElementReferenceCollectionImpl extends ReferenceImpl implements ElementRef
                 throw new ModelException(spintf("Unable to find a model element instance for id %s", $identifier));
             }
         }
+        return $referenceTargetElements;
     }
 
     public function size(ModelElementInstanceImpl $referenceSourceParentElement): int
@@ -215,5 +216,10 @@ class ElementReferenceCollectionImpl extends ReferenceImpl implements ElementRef
             $view[] = $referenceSourceElement->getDomElement();
         }
         $this->performClearOperation($referenceSourceParentElement, $view);
+    }
+
+    public function getReferenceTargetElements(ModelElementInstanceImpl $referenceSourceParentElement): array
+    {
+        return $this->getView($referenceSourceParentElement);
     }
 }

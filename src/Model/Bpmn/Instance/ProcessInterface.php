@@ -66,7 +66,7 @@ interface ProcessInterface extends CallableElementInterface
 
     public function setTaskPriority(string $taskPriority): void;
 
-    public function getHistoryTimeToLiveString(): string;
+    public function getHistoryTimeToLiveString(): ?string;
 
     public function setHistoryTimeToLiveString(string $historyTimeToLive): void;
 

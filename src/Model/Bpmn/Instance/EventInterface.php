@@ -9,4 +9,6 @@ interface EventInterface extends FlowNodeInterface, InteractionNodeInterface
     public function getProperties(): array;
 
     public function getDiagramElement(): BpmnShapeInterface;
+
+    public function addEventDefinition(EventDefinitionInterface $eventDefinition): void;
 }
