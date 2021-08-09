@@ -1,4 +1,12 @@
-{
+{  
+    "name": "bingo-soft/bpmplatform",
+    "license": "MIT",
+    "authors": [{
+        "name": "Bingo-Soft",
+        "email": "bingosoft@bk.ru"
+    }],
+    "description": "BPM Platform",
+    "type": "project",
     "config": {
         "vendor-dir": "./vendor"  
     },
@@ -7,10 +15,7 @@
         "doctrine/coding-standard": "6.0.1",
         "squizlabs/php_codesniffer": "3.5.8",
         "phpunit/phpunit": "^8"
-    },    
-    "name": "bingo/bpmplatform",
-    "description": "BPM Platform",
-    "type": "project",
+    },
     "autoload": {
         "psr-4": {
             "BpmPlatform\\": "./src"
