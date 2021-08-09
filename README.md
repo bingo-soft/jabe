@@ -1,3 +1,5 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+
 # About
 
 BpmPlatform is a PHP framework for workflow and process automation. It is still under heavy development and not yet ready for usage in production
