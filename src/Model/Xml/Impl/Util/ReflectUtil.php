@@ -8,11 +8,7 @@ abstract class ReflectUtil
 {
     public static function getResourceAsStream(string $name): ?string
     {
-        if (file_exists($name)) {
-            return file_get_contents($name);
-        } else {
-            return null;
-        }
+        return file_exists($name) ? file_get_contents($name) : null;
     }
 
     /**
@@ -26,7 +22,7 @@ abstract class ReflectUtil
         if ($classLoader != null && method_exists($classLoader, 'getResource')) {
             return $classLoader->getResource($name);
         }
-        return $name;
+        return file_exists($name) ? file_get_contents($name) : null;
     }
 
     /**

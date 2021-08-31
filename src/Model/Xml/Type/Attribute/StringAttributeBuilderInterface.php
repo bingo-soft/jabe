@@ -9,6 +9,22 @@ use BpmPlatform\Model\Xml\Type\Reference\{
     AttributeReferenceCollectionBuilderInterface
 };
 
-interface StringAttributeBuilderInterface
+interface StringAttributeBuilderInterface extends AttributeBuilderInterface
 {
+    public function namespace(string $namespaceUri): StringAttributeBuilderInterface;
+
+    public function defaultValue(string $defaultValue): StringAttributeBuilderInterface;
+
+    public function required(): StringAttributeBuilderInterface;
+
+    public function idAttribute(): StringAttributeBuilderInterface;
+
+    public function qNameAttributeReference(string $referenceTargetElement): AttributeReferenceBuilderInterface;
+
+    public function idAttributeReference(string $referenceTargetElement): AttributeReferenceBuilderInterface;
+
+    public function idAttributeReferenceCollection(
+        string $referenceTargetElement,
+        AttributeReferenceCollectionInterface $attributeReferenceCollection
+    ): AttributeReferenceCollectionBuilderInterface;
 }

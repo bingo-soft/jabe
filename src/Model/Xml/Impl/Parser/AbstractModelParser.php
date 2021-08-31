@@ -59,10 +59,9 @@ abstract class AbstractModelParser
      *
      * @return string|null
      */
-    protected function createSchema(string $location, $classLoader = null): string
+    protected function createSchema(string $location, $classLoader = null): ?string
     {
-        $schema = ReflectUtil::getResource($location, $classLoader);
-        return $schema;
+        return ReflectUtil::getResource($location, $classLoader);
     }
 
     abstract protected function createModelInstance(DomDocumentInterface $document): ModelInstanceInterface;
