@@ -25,25 +25,25 @@ abstract class AbstractFormFieldBuilder extends AbstractBpmnModelElementBuilder
     public function id(string $id): AbstractFormFieldBuilder
     {
         $this->element->setId($id);
-        return $this->myself;
+        return $this;
     }
 
     public function label(string $label): AbstractFormFieldBuilder
     {
         $this->element->setLabel($id);
-        return $this->myself;
+        return $this;
     }
 
     public function type(string $type): AbstractFormFieldBuilder
     {
         $this->element->setType($type);
-        return $this->myself;
+        return $this;
     }
 
     public function defaultValue(string $defaultValue): AbstractFormFieldBuilder
     {
         $this->element->setDefaultValue($defaultValue);
-        return $this->myself;
+        return $this;
     }
 
     public function camundaFormFieldDone(): AbstractFormFieldBuilder

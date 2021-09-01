@@ -22,7 +22,7 @@ abstract class AbstractThrowEventBuilder extends AbstractEventBuilder
     {
         $messageEventDefinition = $this->createMessageEventDefinition($messageName);
         $this->element->addEventDefinition($messageEventDefinition);
-        return $this->myself;
+        return $this;
     }
 
     public function messageEventDefinition(?string $id): MessageEventDefinitionBuilder
@@ -39,7 +39,7 @@ abstract class AbstractThrowEventBuilder extends AbstractEventBuilder
     {
         $signalEventDefinition = $this->createSignalEventDefinition($signalName);
         $this->element->addEventDefinition($signalEventDefinition);
-        return $this->myself;
+        return $this;
     }
 
     public function signalEventDefinition(?string $id): SignalEventDefinitionBuilder
@@ -56,7 +56,7 @@ abstract class AbstractThrowEventBuilder extends AbstractEventBuilder
     {
         $escalationEventDefinition = $this->createEscalationEventDefinition($escalationCode);
         $this->element->addEventDefinition($escalationEventDefinition);
-        return $this->myself;
+        return $this;
     }
 
     public function compensateEventDefinition(string $id): CompensateEventDefinitionBuilder

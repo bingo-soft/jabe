@@ -25,13 +25,13 @@ abstract class AbstractUserTaskBuilder extends AbstractTaskBuilder
     public function implementation(string $implementation): AbstractUserTaskBuilder
     {
         $this->element->setImplementation($implementation);
-        return $this->myself;
+        return $this;
     }
 
     public function assignee(string $assignee): AbstractUserTaskBuilder
     {
         $this->element->setAssignee($assignee);
-        return $this->myself;
+        return $this;
     }
 
     /**
@@ -44,7 +44,7 @@ abstract class AbstractUserTaskBuilder extends AbstractTaskBuilder
         } elseif (is_string($candidateGroups)) {
             $this->element->setCandidateGroups($candidateGroups);
         }
-        return $this->myself;
+        return $this;
     }
 
     /**
@@ -57,37 +57,37 @@ abstract class AbstractUserTaskBuilder extends AbstractTaskBuilder
         } elseif (is_string($candidateUsers)) {
             $this->element->setCandidateUsers($candidateUsers);
         }
-        return $this->myself;
+        return $this;
     }
 
     public function dueDate(string $dueDate): AbstractUserTaskBuilder
     {
         $this->element->setDueDate($dueDate);
-        return $this->myself;
+        return $this;
     }
 
     public function followUpDate(string $followUpDate): AbstractUserTaskBuilder
     {
         $this->element->setFollowUpDate($dueDate);
-        return $this->myself;
+        return $this;
     }
 
     public function formHandlerClass(string $className): AbstractUserTaskBuilder
     {
         $this->element->setFormHandlerClass($className);
-        return $this->myself;
+        return $this;
     }
 
     public function formKey(string $formKey): AbstractUserTaskBuilder
     {
         $this->element->setFormKey($formKey);
-        return $this->myself;
+        return $this;
     }
 
     public function priority(string $priority): AbstractUserTaskBuilder
     {
         $this->element->setPriority($priority);
-        return $this->myself;
+        return $this;
     }
 
     public function formField(): UserTaskFormFieldBuilder
@@ -104,7 +104,7 @@ abstract class AbstractUserTaskBuilder extends AbstractTaskBuilder
         $executionListener->setClass($className);
 
         $this->addExtensionElement($executionListener);
-        return $this->myself;
+        return $this;
     }
 
     public function taskListenerExpression(string $eventName, string $expression): AbstractUserTaskBuilder
@@ -114,7 +114,7 @@ abstract class AbstractUserTaskBuilder extends AbstractTaskBuilder
         $executionListener->setExpression($expression);
 
         $this->addExtensionElement($executionListener);
-        return $this->myself;
+        return $this;
     }
 
     public function taskListenerDelegateExpression(
@@ -126,7 +126,7 @@ abstract class AbstractUserTaskBuilder extends AbstractTaskBuilder
         $executionListener->setDelegateExpression($delegateExpression);
 
         $this->addExtensionElement($executionListener);
-        return $this->myself;
+        return $this;
     }
 
     public function taskListenerClassTimeoutWithCycle(
@@ -220,7 +220,7 @@ abstract class AbstractUserTaskBuilder extends AbstractTaskBuilder
     ): AbstractUserTaskBuilder {
         $executionListener  = $this->createTaskListenerTimeout($id, $timerDefinition);
         $executionListener->setClass($className);
-        return $this->myself;
+        return $this;
     }
 
     protected function createTaskListenerExpressionTimeout(
@@ -230,7 +230,7 @@ abstract class AbstractUserTaskBuilder extends AbstractTaskBuilder
     ): AbstractUserTaskBuilder {
         $executionListener  = $this->createTaskListenerTimeout($id, $timerDefinition);
         $executionListener->setExpression($expression);
-        return $this->myself;
+        return $this;
     }
 
     protected function createTaskListenerDelegateExpressionTimeout(
@@ -240,7 +240,7 @@ abstract class AbstractUserTaskBuilder extends AbstractTaskBuilder
     ): AbstractUserTaskBuilder {
         $executionListener  = $this->createTaskListenerTimeout($id, $timerDefinition);
         $executionListener->setDelegateExpression($delegateExpression);
-        return $this->myself;
+        return $this;
     }
 
     protected function createTaskListenerTimeout(

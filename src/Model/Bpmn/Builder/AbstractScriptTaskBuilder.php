@@ -21,31 +21,31 @@ abstract class AbstractScriptTaskBuilder extends AbstractBaseElementBuilder
     public function scriptFormat(string $scriptFormat): AbstractScriptTaskBuilder
     {
         $this->element->setScriptFormat($scriptFormat);
-        return $this->myself;
+        return $this;
     }
 
     public function script(ScriptInterface $script): AbstractScriptTaskBuilder
     {
         $this->element->setScript($script);
-        return $this->myself;
+        return $this;
     }
 
     public function scriptText(string $scriptText): AbstractScriptTaskBuilder
     {
         $script = $this->createChild(ScriptInterface::class);
         $script->setTextContent($scriptText);
-        return $this->myself;
+        return $this;
     }
 
     public function resultVariable(string $resultVariable): AbstractScriptTaskBuilder
     {
         $this->element->setResultVariable($resultVariable);
-        return $this->myself;
+        return $this;
     }
 
     public function resource(string $resource): AbstractScriptTaskBuilder
     {
         $this->element->setResource($resource);
-        return $this->myself;
+        return $this;
     }
 }

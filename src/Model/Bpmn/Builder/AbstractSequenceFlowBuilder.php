@@ -23,20 +23,20 @@ abstract class AbstractSequenceFlowBuilder extends AbstractFlowElementBuilder
     {
         $this->element->setSource($source);
         $source->addOutgoing($element);
-        return $this->myself;
+        return $this;
     }
 
     public function to(FlowNodeInterface $target): AbstractSequenceFlowBuilder
     {
         $this->element->setTarget($target);
         $target->addIncoming($element);
-        return $this->myself;
+        return $this;
     }
 
     public function condition(
         ConditionExpressionInterface $conditionExpression
     ): AbstractSequenceFlowBuilder {
         $this->element->setConditionExpression($conditionExpression);
-        return $this->myself;
+        return $this;
     }
 }

@@ -18,6 +18,6 @@ abstract class AbstractGatewayBuilder extends AbstractFlowNodeBuilder
     public function gatewayDirection(string $gatewayDirection): AbstractGatewayBuilder
     {
         $this->element->setGatewayDirection($gatewayDirection);
-        return $this->myself;
+        return $this;
     }
 }

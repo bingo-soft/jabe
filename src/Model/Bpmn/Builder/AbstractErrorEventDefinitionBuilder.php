@@ -24,19 +24,19 @@ abstract class AbstractErrorEventDefinitionBuilder extends AbstractRootElementBu
     public function errorCodeVariable(string $errorCodeVariable): AbstractErrorEventDefinitionBuilder
     {
         $this->element->setErrorCodeVariable($errorCodeVariable);
-        return $this->myself;
+        return $this;
     }
 
     public function errorMessageVariable(string $errorMessageVariable): AbstractErrorEventDefinitionBuilder
     {
         $this->element->setErrorMessageVariable($errorMessageVariable);
-        return $this->myself;
+        return $this;
     }
 
     public function error(string $errorCode, ?string $errorMessage): AbstractErrorEventDefinitionBuilder
     {
         $this->element->setError($this->findErrorForNameAndCode($errorCode, $errorMessage));
-        return $this->myself;
+        return $this;
     }
 
     public function errorEventDefinitionDone(): AbstractFlowNodeBuilder

@@ -22,7 +22,7 @@ abstract class AbstractComplexGatewayBuilder extends AbstractGatewayBuilder
     public function defaultFlow(SequenceFlowInterface $sequenceFlow): AbstractComplexGatewayBuilder
     {
         $this->element->setDefault($sequenceFlow);
-        return $this->myself;
+        return $this;
     }
 
     public function activationCondition(string $conditionExpression): AbstractComplexGatewayBuilder
@@ -30,6 +30,6 @@ abstract class AbstractComplexGatewayBuilder extends AbstractGatewayBuilder
         $activationCondition = $this->createInstance(ActivationConditionInterface::class);
         $activationCondition->setTextContent($conditionExpression);
         $this->element->setActivationCondition($activationCondition);
-        return $this->myself;
+        return $this;
     }
 }

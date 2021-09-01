@@ -18,6 +18,6 @@ abstract class AbstractTransactionBuilder extends AbstractSubProcessBuilder
     public function method(string $method): AbstractTransactionBuilder
     {
         $this->element->setMethod($method);
-        return $this->myself;
+        return $this;
     }
 }

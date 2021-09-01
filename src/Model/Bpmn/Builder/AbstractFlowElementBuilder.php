@@ -18,6 +18,6 @@ abstract class AbstractFlowElementBuilder extends AbstractBaseElementBuilder
     public function name(string $name): AbstractFlowElementBuilder
     {
         $this->element->setName($name);
-        return $this->myself;
+        return $this;
     }
 }

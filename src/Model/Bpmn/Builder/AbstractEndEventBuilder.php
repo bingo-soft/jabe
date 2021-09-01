@@ -20,6 +20,6 @@ abstract class AbstractEndEventBuilder extends AbstractThrowEventBuilder
     {
         $errorEventDefinition = $this->createErrorEventDefinition($errorCode, $errorMessage);
         $this->element->addEventDefinition($errorEventDefinition);
-        return $this->myself;
+        return $this;
     }
 }

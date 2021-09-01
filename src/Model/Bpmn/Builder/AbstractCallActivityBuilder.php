@@ -22,55 +22,55 @@ abstract class AbstractCallActivityBuilder extends AbstractActivityBuilder
     public function calledElement(string $calledElement): AbstractCallActivityBuilder
     {
         $this->element->setCalledElement($calledElement);
-        return $this->myself;
+        return $this;
     }
 
     public function calledElementBinding(string $calledElementBinding): AbstractCallActivityBuilder
     {
         $this->element->setCalledElementBinding($calledElementBinding);
-        return $this->myself;
+        return $this;
     }
 
     public function calledElementVersion(string $calledElementVersion): AbstractCallActivityBuilder
     {
         $this->element->setCalledElementVersion($calledElementVersion);
-        return $this->myself;
+        return $this;
     }
 
     public function calledElementVersionTag(string $calledElementVersionTag): AbstractCallActivityBuilder
     {
         $this->element->setCalledElementVersionTag($calledElementVersionTag);
-        return $this->myself;
+        return $this;
     }
 
     public function calledElementTenantId(string $calledElementTenantId): AbstractCallActivityBuilder
     {
         $this->element->setCalledElementTenantId($calledElementTenantId);
-        return $this->myself;
+        return $this;
     }
 
     public function caseRef(string $caseRef): AbstractCallActivityBuilder
     {
         $this->element->setCaseRef($caseRef);
-        return $this->myself;
+        return $this;
     }
 
     public function caseBinding(string $caseBinding): AbstractCallActivityBuilder
     {
         $this->element->setCaseBinding($caseBinding);
-        return $this->myself;
+        return $this;
     }
 
     public function caseVersion(string $caseVersion): AbstractCallActivityBuilder
     {
         $this->element->setCaseVersion($caseVersion);
-        return $this->myself;
+        return $this;
     }
 
     public function caseTenantId(string $caseTenantId): AbstractCallActivityBuilder
     {
         $this->element->setCaseTenantId($caseTenantId);
-        return $this->myself;
+        return $this;
     }
 
     public function in(string $source, string $target): AbstractCallActivityBuilder
@@ -79,7 +79,7 @@ abstract class AbstractCallActivityBuilder extends AbstractActivityBuilder
         $param->setSource($source);
         $param->setTarget($target);
         $this->addExtensionElement($param);
-        return $this->myself;
+        return $this;
     }
 
     public function out(string $source, string $target): AbstractCallActivityBuilder
@@ -88,19 +88,19 @@ abstract class AbstractCallActivityBuilder extends AbstractActivityBuilder
         $param->setSource($source);
         $param->setTarget($target);
         $this->addExtensionElement($param);
-        return $this->myself;
+        return $this;
     }
 
     public function variableMappingClass(string $className): AbstractCallActivityBuilder
     {
         $this->element->setVariableMappingClass($className);
-        return $this->myself;
+        return $this;
     }
 
     public function variableMappingDelegateExpression(
         string $variableMappingDelegateExpression
     ): AbstractCallActivityBuilder {
         $this->element->setVariableMappingDelegateExpression($variableMappingDelegateExpression);
-        return $this->myself;
+        return $this;
     }
 }

@@ -16,7 +16,6 @@ abstract class AbstractBpmnModelElementBuilder
 {
     protected $modelInstance;
     protected $element;
-    protected $myself;
 
     protected function __construct(
         BpmnModelInstanceInterface $modelInstance,
@@ -24,7 +23,6 @@ abstract class AbstractBpmnModelElementBuilder
         string $selfType
     ) {
         $this->modelInstance = $modelInstance;
-        $this->myself = $this;
         $this->element = $element;
     }
 

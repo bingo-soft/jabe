@@ -18,48 +18,48 @@ abstract class AbstractProcessBuilder extends AbstractCallableElementBuilder
     public function processType(string $processType): AbstractProcessBuilder
     {
         $this->element->setProcessType($processType);
-        return $this->myself;
+        return $this;
     }
 
     public function closed(): AbstractProcessBuilder
     {
         $this->element->setClosed(true);
-        return $this->myself;
+        return $this;
     }
 
     public function executable(): AbstractProcessBuilder
     {
         $this->element->setExecutable(true);
-        return $this->myself;
+        return $this;
     }
 
     public function jobPriority(string $jobPriority): AbstractProcessBuilder
     {
         $this->element->setJobPriority($jobPriority);
-        return $this->myself;
+        return $this;
     }
 
     public function taskPriority(string $taskPriority): AbstractProcessBuilder
     {
         $this->element->setTaskPriority($taskPriority);
-        return $this->myself;
+        return $this;
     }
 
     public function historyTimeToLive(int $historyTimeToLive): AbstractProcessBuilder
     {
         $this->element->setHistoryTimeToLive($historyTimeToLive);
-        return $this->myself;
+        return $this;
     }
 
     public function startableInTasklist(bool $isStartableInTasklist): AbstractProcessBuilder
     {
         $this->element->setIsStartableInTasklist($isStartableInTasklist);
-        return $this->myself;
+        return $this;
     }
 
     public function versionTag(string $versionTag): AbstractProcessBuilder
     {
         $this->element->setVersionTag($versionTag);
-        return $this->myself;
+        return $this;
     }
 }

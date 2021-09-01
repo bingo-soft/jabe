@@ -21,6 +21,6 @@ abstract class AbstractInclusiveGatewayBuilder extends AbstractGatewayBuilder
     public function defaultFlow(SequenceFlowInterface $sequenceFlow): AbstractInclusiveGatewayBuilder
     {
         $this->element->setDefault($sequenceFlow);
-        return $this->myself;
+        return $this;
     }
 }

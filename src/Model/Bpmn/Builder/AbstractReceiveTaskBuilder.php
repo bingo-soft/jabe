@@ -22,13 +22,13 @@ abstract class AbstractReceiveTaskBuilder extends AbstractTaskBuilder
     public function implementation(string $implementation): AbstractReceiveTaskBuilder
     {
         $this->element->setImplementation($implementation);
-        return $this->myself;
+        return $this;
     }
 
     public function instantiate(): AbstractReceiveTaskBuilder
     {
         $this->element->setInstantiate(true);
-        return $this->myself;
+        return $this;
     }
 
     /**
@@ -40,12 +40,12 @@ abstract class AbstractReceiveTaskBuilder extends AbstractTaskBuilder
             $message = $this->findMessageForName($message);
         }
         $this->element->setMessage($message);
-        return $this->myself;
+        return $this;
     }
 
     public function operation(OperationInterface $operation): AbstractReceiveTaskBuilder
     {
         $this->element->setOperation($operation);
-        return $this->myself;
+        return $this;
     }
 }

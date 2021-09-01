@@ -55,10 +55,10 @@ abstract class AbstractBaseElementBuilder extends AbstractBpmnModelElementBuilde
         parent::__construct($modelInstance, $element, $selfType);
     }
 
-    protected function createInstance(string $typeClass, ?string $identifier): BpmnModelInstanceInterface
+    protected function createInstance(string $typeClass, ?string $identifier = null): BpmnModelElementInstanceInterface
     {
         $instance = $this->modelInstance->newInstance($typeClass);
-        if ($identifier != null) {
+        if ($identifier !== null) {
             $instance->setId($identifier);
             if ($instance instanceof FlowElementInterface) {
                 $instance->setName($identifier);
@@ -247,21 +247,21 @@ abstract class AbstractBaseElementBuilder extends AbstractBpmnModelElementBuilde
     public function id(string $identifier): AbstractBaseElementBuilder
     {
         $this->element->setId($identifier);
-        return $this->myself;
+        return $this;
     }
 
     public function documentation(string $documentation): AbstractBaseElementBuilder
     {
         $child = $this->createChild($this->element, DocumentationInterface::class);
         $child->setTextContext($documentation);
-        return $this->myself;
+        return $this;
     }
 
     public function addExtensionElement(BpmnModelElementInstanceInterface $extensionElement): AbstractBaseElementBuilder
     {
         $extensionElements = $this->getCreateSingleChild(ExtensionElementsInterface::class);
         $extensionElements->addChildElement($extensionElement);
-        return $this->myself;
+        return $this;
     }
 
     public function createBpmnShape(FlowNodeInterface $node): ?BpmnShapeInterface

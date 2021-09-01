@@ -25,7 +25,7 @@ abstract class AbstractSignalEventDefinitionBuilder extends AbstractRootElementB
         $param->setTarget($target);
 
         $this->addExtensionElement($param);
-        return $this->myself;
+        return $this;
     }
 
     public function inSourceExpressionTarget(string $source, string $target): AbstractSignalEventDefinitionBuilder
@@ -35,7 +35,7 @@ abstract class AbstractSignalEventDefinitionBuilder extends AbstractRootElementB
         $param->setTarget($target);
 
         $this->addExtensionElement($param);
-        return $this->myself;
+        return $this;
     }
 
     public function inBusinessKey(string $businessKey): AbstractSignalEventDefinitionBuilder
@@ -43,7 +43,7 @@ abstract class AbstractSignalEventDefinitionBuilder extends AbstractRootElementB
         $param = $this->modelInstance->newInstance(InInterface::class);
         $param->setBusinessKey($businessKey);
         $this->addExtensionElement($param);
-        return $this->myself;
+        return $this;
     }
 
     public function inAllVariables(string $variables, bool $local = false): AbstractSignalEventDefinitionBuilder
@@ -52,6 +52,6 @@ abstract class AbstractSignalEventDefinitionBuilder extends AbstractRootElementB
         $param->setVariables($variables);
         $param->setLocal($local);
         $this->addExtensionElement($param);
-        return $this->myself;
+        return $this;
     }
 }

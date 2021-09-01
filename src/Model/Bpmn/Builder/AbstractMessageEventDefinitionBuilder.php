@@ -23,25 +23,25 @@ abstract class AbstractMessageEventDefinitionBuilder extends AbstractRootElement
     public function message(string $message): AbstractMessageEventDefinitionBuilder
     {
         $this->element->setMessage($this->findMessageForName($message));
-        return $this->myself;
+        return $this;
     }
 
     public function topic(string $topic): AbstractMessageEventDefinitionBuilder
     {
         $this->element->setTopic($topic);
-        return $this->myself;
+        return $this;
     }
 
     public function type(string $type): AbstractMessageEventDefinitionBuilder
     {
         $this->element->setType($type);
-        return $this->myself;
+        return $this;
     }
 
     public function taskPriority(string $taskPriority): AbstractMessageEventDefinitionBuilder
     {
         $this->element->setTaskPriority($taskPriority);
-        return $this->myself;
+        return $this;
     }
 
     public function messageEventDefinitionDone(): AbstractFlowNodeBuilder

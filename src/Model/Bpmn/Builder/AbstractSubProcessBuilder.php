@@ -23,6 +23,6 @@ abstract class AbstractSubProcessBuilder extends AbstractActivityBuilder
     public function triggerByEvent(): AbstractSubProcessBuilder
     {
         $this->element->setTriggeredByEvent(true);
-        return $this->myself;
+        return $this;
     }
 }

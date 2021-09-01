@@ -22,7 +22,7 @@ abstract class AbstractSendTaskBuilder extends AbstractTaskBuilder
     public function implementation(string $implementation): AbstractSendTaskBuilder
     {
         $this->element->setImplementation($implementation);
-        return $this->myself;
+        return $this;
     }
 
     /**
@@ -34,54 +34,54 @@ abstract class AbstractSendTaskBuilder extends AbstractTaskBuilder
             $message = $this->findMessageForName($message);
         }
         $this->element->setMessage($message);
-        return $this->myself;
+        return $this;
     }
 
     public function operation(OperationInterface $operation): AbstractReceiveTaskBuilder
     {
         $this->element->setOperation($operation);
-        return $this->myself;
+        return $this;
     }
 
     public function setClass(string $className): AbstractReceiveTaskBuilder
     {
         $this->element->setClass($className);
-        return $this->myself;
+        return $this;
     }
 
     public function expression(string $expression): AbstractReceiveTaskBuilder
     {
         $this->element->setExpression($expression);
-        return $this->myself;
+        return $this;
     }
 
     public function delegateExpression(string $expression): AbstractReceiveTaskBuilder
     {
         $this->element->setDelegateExpression($expression);
-        return $this->myself;
+        return $this;
     }
 
     public function resultVariable(string $resultVariable): AbstractReceiveTaskBuilder
     {
         $this->element->setResultVariable($resultVariable);
-        return $this->myself;
+        return $this;
     }
 
     public function topic(string $topic): AbstractReceiveTaskBuilder
     {
         $this->element->setTopic($topic);
-        return $this->myself;
+        return $this;
     }
 
     public function type(string $type): AbstractReceiveTaskBuilder
     {
         $this->element->setType($type);
-        return $this->myself;
+        return $this;
     }
 
     public function taskPriority(string $taskPriority): AbstractReceiveTaskBuilder
     {
         $this->element->setTaskPriority($taskPriority);
-        return $this->myself;
+        return $this;
     }
 }

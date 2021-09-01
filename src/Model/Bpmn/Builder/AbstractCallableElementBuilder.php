@@ -20,6 +20,6 @@ abstract class AbstractCallableElementBuilder extends AbstractRootElementBuilder
     public function name(string $name): AbstractCallableElementBuilder
     {
         $this->element->setName($name);
-        return $this->myself;
+        return $this;
     }
 }

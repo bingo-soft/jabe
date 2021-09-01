@@ -19,13 +19,13 @@ abstract class AbstractEventBasedGatewayBuilder extends AbstractGatewayBuilder
     public function instantiate(): AbstractEventBasedGatewayBuilder
     {
         $this->element->setInstantiate(true);
-        return $this->myself;
+        return $this;
     }
 
     public function eventGatewayType(string $eventGatewayType): AbstractEventBasedGatewayBuilder
     {
         $this->element->setEventGatewayType($eventGatewayType);
-        return $this->myself;
+        return $this;
     }
 
     public function asyncAfter(bool $isCamundaAsyncAfter): AbstractEventBasedGatewayBuilder

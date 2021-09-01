@@ -28,7 +28,7 @@ abstract class AbstractBoundaryEventBuilder extends AbstractCatchEventBuilder
     public function cancelActivity(bool $cancelActivity): AbstractBoundaryEventBuilder
     {
         $this->element->setCancelActivity($cancelActivity);
-        return $this->myself;
+        return $this;
     }
 
     public function error(?string $errorCode, ?string $errorMessage): AbstractBoundaryEventBuilder
@@ -39,7 +39,7 @@ abstract class AbstractBoundaryEventBuilder extends AbstractCatchEventBuilder
             $errorEventDefinition = $this->createErrorEventDefinition($errorCode, $errorMessage);
         }
         $this->element->addEventDefinition($errorEventDefinition);
-        return $this->myself;
+        return $this;
     }
 
     public function errorEventDefinition(?string $id): ErrorEventDefinitionBuilder
@@ -60,7 +60,7 @@ abstract class AbstractBoundaryEventBuilder extends AbstractCatchEventBuilder
             $escalationEventDefinition = $this->createEscalationEventDefinition($escalationCode);
         }
         $this->element->addEventDefinition($escalationEventDefinition);
-        return $this->myself;
+        return $this;
     }
 
     protected function setCoordinates(BpmnShapeInterface $shape): void

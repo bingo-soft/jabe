@@ -25,19 +25,19 @@ abstract class AbstractStartEventBuilder extends AbstractCatchEventBuilder
     public function formHandlerClass(string $className): AbstractStartEventBuilder
     {
         $this->element->setFormHandlerClass($className);
-        return $this->myself;
+        return $this;
     }
 
     public function formKey(string $formKey): AbstractStartEventBuilder
     {
         $this->element->setFormKey($formKey);
-        return $this->myself;
+        return $this;
     }
 
     public function initiator(string $initiator): AbstractStartEventBuilder
     {
         $this->element->setInitiator($initiator);
-        return $this->myself;
+        return $this;
     }
 
     public function formField(): StartEventFormFieldBuilder
@@ -56,7 +56,7 @@ abstract class AbstractStartEventBuilder extends AbstractCatchEventBuilder
         }
         $this->element->addEventDefinition($errorEventDefinition);
 
-        return $this->myself;
+        return $this;
     }
 
     public function errorEventDefinition(?string $id): ErrorEventDefinitionBuilder
@@ -77,19 +77,19 @@ abstract class AbstractStartEventBuilder extends AbstractCatchEventBuilder
             $escalationEventDefinition = $this->createEscalationEventDefinition($escalationCode);
         }
         $this->element->addEventDefinition($errorEventDefinition);
-        return $this->myself;
+        return $this;
     }
 
     public function compensation(): AbstractStartEventBuilder
     {
         $compensateEventDefinition = $this->createCompensateEventDefinition();
         $this->element->addEventDefinition($compensateEventDefinition);
-        return $this->myself;
+        return $this;
     }
 
     public function interrupting(bool $interrupting): AbstractStartEventBuilder
     {
         $this->element->setInterrupting($interrupting);
-        return $this->myself;
+        return $this;
     }
 }

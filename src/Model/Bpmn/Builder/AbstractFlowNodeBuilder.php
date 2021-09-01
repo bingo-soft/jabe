@@ -52,7 +52,7 @@ abstract class AbstractFlowNodeBuilder extends AbstractFlowElementBuilder
     private function getCurrentSequenceFlowBuilder(): ?SequenceFlowBuilder
     {
         if ($this->currentSequenceFlowBuilder == null) {
-            $sequenceFlow = $this->createSibling(SequenceFlowInterface::class);
+            $sequenceFlow = $this->createSibling(SequenceFlowInterface::class, null);
             $this->currentSequenceFlowBuilder = $sequenceFlow->builder();
         }
         return $this->currentSequenceFlowBuilder;
@@ -60,13 +60,13 @@ abstract class AbstractFlowNodeBuilder extends AbstractFlowElementBuilder
 
     public function condition(?string $name, string $condition): AbstractFlowNodeBuilder
     {
-        if ($name != null) {
+        if ($name !== null) {
             $this->getCurrentSequenceFlowBuilder()->name($name);
         }
         $conditionExpression = $this->createInstance(ConditionExpressionInterface::class);
         $conditionExpression->setTextContent($condition);
         $this->getCurrentSequenceFlowBuilder()->condition($conditionExpression);
-        return $this->myself;
+        return $this;
     }
 
     protected function connectTarget(FlowNodeInterface $target): void
@@ -114,7 +114,7 @@ abstract class AbstractFlowNodeBuilder extends AbstractFlowElementBuilder
     public function sequenceFlowId(string $sequenceFlowId): AbstractFlowNodeBuilder
     {
         $this->getCurrentSequenceFlowBuilder()->id($sequenceFlowId);
-        return $this->myself;
+        return $this;
     }
 
     protected function createTarget(string $typeClass, ?string $identifier): FlowNodeInterface
@@ -286,31 +286,31 @@ abstract class AbstractFlowNodeBuilder extends AbstractFlowElementBuilder
     public function asyncBefore(bool $asyncBefore = true): AbstractFlowNodeBuilder
     {
         $this->element->setAsyncBefore($asyncBefore);
-        return $this->myself;
+        return $this;
     }
 
     public function asyncAfter(bool $asyncAfter = true): AbstractFlowNodeBuilder
     {
         $this->element->setAsyncAfter($asyncAfter);
-        return $this->myself;
+        return $this;
     }
 
     public function notExclusive(): AbstractFlowNodeBuilder
     {
         $this->element->setExclusive(false);
-        return $this->myself;
+        return $this;
     }
 
     public function exclusive(bool $exclusive): AbstractFlowNodeBuilder
     {
         $this->element->setExclusive($exclusive);
-        return $this->myself;
+        return $this;
     }
 
     public function camundaJobPriority(string $jobPriority): AbstractFlowNodeBuilder
     {
         $this->element->setJobPriority($jobPriority);
-        return $this->myself;
+        return $this;
     }
 
     public function failedJobRetryTimeCycle(string $retryTimeCycle): AbstractFlowNodeBuilder
@@ -318,7 +318,7 @@ abstract class AbstractFlowNodeBuilder extends AbstractFlowElementBuilder
         $failedJobRetryTimeCycle = $this->createInstance(FailedJobRetryTimeCycleInterface::class);
         $failedJobRetryTimeCycle->setTextContent($retryTimeCycle);
         $this->addExtensionElement($failedJobRetryTimeCycle);
-        return $this->myself;
+        return $this;
     }
 
     public function executionListenerClass(string $eventName, string $className): AbstractFlowNodeBuilder
@@ -327,7 +327,7 @@ abstract class AbstractFlowNodeBuilder extends AbstractFlowElementBuilder
         $executionListener->setEvent($eventName);
         $executionListener->setClass($className);
         $this->addExtensionElement($executionListener);
-        return $this->myself;
+        return $this;
     }
 
     public function executionListenerExpression(string $eventName, string $expression): AbstractFlowNodeBuilder
@@ -336,7 +336,7 @@ abstract class AbstractFlowNodeBuilder extends AbstractFlowElementBuilder
         $executionListener->setEvent($eventName);
         $executionListener->setExpression($expression);
         $this->addExtensionElement($executionListener);
-        return $this->myself;
+        return $this;
     }
 
     public function executionListenerDelegateExpression(
@@ -347,7 +347,7 @@ abstract class AbstractFlowNodeBuilder extends AbstractFlowElementBuilder
         $executionListener->setEvent($eventName);
         $executionListener->setDelegateExpression($delegateExpression);
         $this->addExtensionElement($executionListener);
-        return $this->myself;
+        return $this;
     }
 
     public function compensationStart(): AbstractFlowNodeBuilder
@@ -358,7 +358,7 @@ abstract class AbstractFlowNodeBuilder extends AbstractFlowElementBuilder
                 if ($eventDefinition instanceof CompensateEventDefinitionInterface) {
                     $this->compensateBoundaryEvent = $boundaryEvent;
                     $this->compensationStarted = true;
-                    return $this->myself;
+                    return $this;
                 }
             }
         }

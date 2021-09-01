@@ -24,13 +24,13 @@ abstract class AbstractConditionalEventDefinitionBuilder extends AbstractRootEle
         $condition = $this->createInstance(ConditionInterface::class);
         $condition->setTextContent($conditionText);
         $this->element->setCondition($condition);
-        return $this->myself;
+        return $this;
     }
 
     public function variableName(string $variableName): AbstractConditionalEventDefinitionBuilder
     {
         $this->element->setVariableName($variableName);
-        return $this->myself;
+        return $this;
     }
 
     /**
@@ -43,7 +43,7 @@ abstract class AbstractConditionalEventDefinitionBuilder extends AbstractRootEle
         } elseif (is_string($variableEvents)) {
             $this->element->setVariableEvents($variableEvents);
         }
-        return $this->myself;
+        return $this;
     }
 
     public function conditionalEventDefinitionDone(): AbstractFlowNodeBuilder

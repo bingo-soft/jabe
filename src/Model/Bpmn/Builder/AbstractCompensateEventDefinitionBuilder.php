@@ -31,13 +31,13 @@ abstract class AbstractCompensateEventDefinitionBuilder extends AbstractRootElem
             );
         }
         $this->element->setActivity($activity);
-        return $this->myself;
+        return $this;
     }
 
     public function waitForCompletion(bool $waitForCompletion): AbstractCompensateEventDefinitionBuilder
     {
         $this->element->setWaitForCompletion($waitForCompletion);
-        return $this->myself;
+        return $this;
     }
 
     public function compensateEventDefinitionDone(): AbstractFlowNodeBuilder

@@ -26,7 +26,7 @@ abstract class AbstractEventBuilder extends AbstractFlowNodeBuilder
         $inputParameter = $this->createChild($inputOutput, InputParameterInterface::class);
         $inputParameter->setName($name);
         $inputParameter->setTextContent($value);
-        return $this->myself;
+        return $this;
     }
 
     public function outputParameter(string $name, string $value): AbstractEventBuilder
@@ -35,6 +35,6 @@ abstract class AbstractEventBuilder extends AbstractFlowNodeBuilder
         $inputParameter = $this->createChild($inputOutput, OutputParameterInterface::class);
         $inputParameter->setName($name);
         $inputParameter->setTextContent($value);
-        return $this->myself;
+        return $this;
     }
 }
