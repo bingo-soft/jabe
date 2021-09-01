@@ -1,0 +1,23 @@
+before_commands:
+    - "composer install --no-interaction"
+build:
+  nodes:
+    php72:
+      environment:
+        php: 7.4
+        redis: false
+    php73:
+      environment:
+        php: 8.0
+        redis: false
+    coverage:
+      tests:
+        override:
+          - command: vendor/bin/phpunit
+            coverage:
+              file: build/logs/clover.xml                                        
+              format: clover
+    analysis:
+      tests:
+        override:
+          - php-scrutinizer-run

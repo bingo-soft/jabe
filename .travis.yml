@@ -1,0 +1,22 @@
+language: php
+
+php:
+  - 7.4
+  - 8.0
+
+dist: trusty
+
+sudo: false
+
+install:
+  - composer install --no-interaction
+
+script:
+  - phpunit
+
+after_script:
+  - php vendor/bin/coveralls -v
+
+notifications:
+  email: false
+  webhooks: https://coveralls.io/webhook

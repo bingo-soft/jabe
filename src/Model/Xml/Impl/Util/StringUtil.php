@@ -6,7 +6,7 @@ class StringUtil
 {
     public const PATTERN = '/(\w[^,]*)|([#$]\{[^}]*\})/mu';
 
-    public static function splitCommaSeparatedList(string $text): array
+    public static function splitCommaSeparatedList(?string $text): array
     {
         if (empty($text)) {
             return [];
@@ -19,7 +19,7 @@ class StringUtil
         return $parts;
     }
 
-    public static function joinCommaSeparatedList(array $list): string
+    public static function joinCommaSeparatedList(?array $list): ?string
     {
         return self::joinList($list, ", ");
     }
@@ -32,8 +32,8 @@ class StringUtil
         return [];
     }
 
-    public static function joinList(array $list, string $separator): string
+    public static function joinList(?array $list, string $separator): ?string
     {
-        return implode($separator, $list);
+        return $list == null ? null : implode($separator, $list);
     }
 }
