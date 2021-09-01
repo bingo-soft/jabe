@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Authorization;
+namespace BpmPlatform\Engine\Authorization\Exception;
 
 class PermissionNotFound extends \Exception
 {

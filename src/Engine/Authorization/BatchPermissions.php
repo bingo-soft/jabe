@@ -30,4 +30,14 @@ class BatchPermissions extends AbstractPermissions
     public const CREATE_BATCH_SET_VARIABLES = 131072;
 
     private const RESOURCES = [ Resources::BATCH ];
+
+    public function getTypes(): array
+    {
+        return self::RESOURCES;
+    }
+
+    public static function forName(string $name): PermissionInterface
+    {
+        return new self($name);
+    }
 }

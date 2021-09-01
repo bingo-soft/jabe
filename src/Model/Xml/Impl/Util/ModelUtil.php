@@ -23,14 +23,14 @@ class ModelUtil
     public static function getModelElement(
         DomElementInterface $domElement,
         ModelInstanceImpl $modelInstance,
-        ?ModelElementTypeImpl $modelType,
-        ?string $namespaceUri
+        ?ModelElementTypeImpl $modelType = null,
+        ?string $namespaceUri = null
     ) {
         if ($modelType == null && $namespaceUri == null) {
             $modelElement = $domElement->getModelElementInstance();
 
             if ($modelElement == null) {
-                $modelType = self::getModelElement($domElement, $modelInstance, $domElement->getNamespaceURI());
+                $modelType = self::getModelElement($domElement, $modelInstance, null, $domElement->getNamespaceURI());
                 $modelElement = $modelType->newInstance($modelInstance, $domElement);
                 $domElement->setModelElementInstance($modelElement);
             }
@@ -124,7 +124,8 @@ class ModelUtil
         ModelElementInstanceInterface $modelElement,
         array $childElementTypes
     ): int {
-        for ($index = 0; $index < count($childElementTypes); $index += 1) {
+        $numOfChildren = count($childElementTypes);
+        for ($index = 0; $index < $numOfChildren; $index += 1) {
             $childElementType = $childElementTypes[$index];
             $instanceType = $childElementType->getInstanceType();
             if (is_a($modelElement, $instanceType)) {

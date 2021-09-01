@@ -36,4 +36,9 @@ class ProcessDefinitionPermissions extends AbstractPermissions
     public const UPDATE_HISTORY = 16777216;
 
     private const RESOURCES = [ Resources::PROCESS_DEFINITION ];
+
+    public function getTypes(): array
+    {
+        return self::RESOURCES;
+    }
 }

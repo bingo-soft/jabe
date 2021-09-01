@@ -15,4 +15,9 @@ class OptimizePermissions extends AbstractPermissions
     public const SHARE = 4;
 
     private const RESOURCES = [ Resources::OPTIMIZE ];
+
+    public function getTypes(): array
+    {
+        return self::RESOURCES;
+    }
 }

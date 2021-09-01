@@ -206,4 +206,14 @@ class Permissions implements PermissionInterface
             throw new PermissionNotFound(sprintf("Permission %s not found", $name));
         }
     }
+
+    public function getTypes(): array
+    {
+        return $this->resourceTypes;
+    }
+
+    public static function forName(string $name): PermissionInterface
+    {
+        return new self($name);
+    }
 }

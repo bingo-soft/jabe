@@ -20,4 +20,9 @@ class ProcessInstancePermissions extends AbstractPermissions
     public const UPDATE_VARIABLE = 128;
 
     private const RESOURCES = [ Resources::PROCESS_INSTANCE ];
+
+    public function getTypes(): array
+    {
+        return self::RESOURCES;
+    }
 }

@@ -16,4 +16,9 @@ class UserOperationLogCategoryPermissions extends AbstractPermissions
     public const DELETE = 16;
 
     private const RESOURCES = [ Resources::OPERATION_LOG_CATEGORY ];
+
+    public function getTypes(): array
+    {
+        return self::RESOURCES;
+    }
 }

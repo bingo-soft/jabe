@@ -25,4 +25,9 @@ class TaskPermissions extends AbstractPermissions
     public const TASK_ASSIGN = 32768;
 
     private const RESOURCES = [ Resources::TASK ];
+
+    public function getTypes(): array
+    {
+        return self::RESOURCES;
+    }
 }

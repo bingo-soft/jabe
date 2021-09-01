@@ -14,4 +14,9 @@ class HistoricProcessInstancePermissions extends AbstractPermissions
     public const READ = 2;
 
     private const RESOURCES = [ Resources::HISTORIC_PROCESS_INSTANCE ];
+
+    public function getTypes(): array
+    {
+        return self::RESOURCES;
+    }
 }
