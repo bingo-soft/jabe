@@ -4,11 +4,15 @@ build:
   nodes:
     php72:
       environment:
-        php: 7.4
+        php: 7.2
         redis: false
     php73:
       environment:
-        php: 8.0
+        php: 7.3
+        redis: false
+    php74:
+      environment:
+        php: 7.4
         redis: false
     coverage:
       tests:
