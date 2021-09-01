@@ -10,13 +10,13 @@ build:
       environment:
         php: 7.4
         redis: false
-    coverage:
-      tests:
-        override:
-          - command: vendor/bin/phpunit
-            coverage:
-              file: build/logs/clover.xml                                        
-              format: clover
+    #coverage:
+    #  tests:
+    #    override:
+    #      - command: vendor/bin/phpunit
+    #        coverage:
+    #          file: build/logs/clover.xml                                        
+    #          format: clover
     analysis:
       tests:
         override:
