@@ -5,7 +5,8 @@
         "name": "Bingo-Soft",
         "email": "bingosoft@bk.ru"
     }],
-    "description": "BPM Platform",
+    "description": "PHP framework for workflow and process automation",
+    "keywords": ["php", "bpmn", "workflow", "process", "automation"],
     "type": "project",
     "config": {
         "vendor-dir": "./vendor"  
