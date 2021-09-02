@@ -29,7 +29,7 @@ class PerformerImpl extends ResourceRoleImpl implements PerformerInterface
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->extendsType(ResourceRoleInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

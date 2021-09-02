@@ -33,7 +33,7 @@ class BpmnPlaneImpl extends PlaneImpl implements BpmnPlaneInterface
         ->namespaceUri(BpmnModelConstants::BPMNDI_NS)
         ->extendsType(PlaneInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

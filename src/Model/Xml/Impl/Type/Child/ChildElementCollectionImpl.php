@@ -65,9 +65,9 @@ class ChildElementCollectionImpl implements ChildElementCollectionInterface
         return $this->maxOccurs;
     }
 
-    public function getChildElementType(): ModelElementTypeInterface
+    public function getChildElementType(ModelInterface $model): ModelElementTypeInterface
     {
-        return $this->model->getType($this->childElementTypeClass);
+        return $model->getType($this->childElementTypeClass);
     }
 
     public function getChildElementTypeClass(): string

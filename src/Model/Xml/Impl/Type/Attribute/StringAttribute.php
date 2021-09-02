@@ -19,7 +19,10 @@ class StringAttribute extends AttributeImpl
         return $rawValue;
     }
 
-    protected function convertModelValueToXmlValue(string $modelValue): string
+    /**
+     * @param mixed $modelValue;
+     */
+    protected function convertModelValueToXmlValue($modelValue): string
     {
         return strval($modelValue);
     }

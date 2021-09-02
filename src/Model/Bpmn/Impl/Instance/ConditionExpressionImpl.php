@@ -31,7 +31,7 @@ class ConditionExpressionImpl extends FormalExpressionImpl implements ConditionE
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->extendsType(FormalExpressionInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

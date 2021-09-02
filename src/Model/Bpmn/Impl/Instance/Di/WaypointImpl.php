@@ -27,7 +27,7 @@ class WaypointImpl extends PointImpl implements WaypointInterface
         ->namespaceUri(BpmnModelConstants::DI_NS)
         ->extendsType(PointInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

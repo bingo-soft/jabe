@@ -32,7 +32,7 @@ class EscalationImpl extends RootElementImpl implements EscalationInterface
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->extendsType(RootElementInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

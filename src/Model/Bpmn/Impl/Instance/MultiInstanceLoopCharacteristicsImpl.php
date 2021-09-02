@@ -55,7 +55,7 @@ class MultiInstanceLoopCharacteristicsImpl extends LoopCharacteristicsImpl imple
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->extendsType(LoopCharacteristicsInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

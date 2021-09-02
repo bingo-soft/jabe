@@ -17,7 +17,10 @@ class DoubleAttributeBuilder extends AttributeBuilderImpl
         return $this;
     }
 
-    public function defaultValue(float $defaultValue): DoubleAttributeBuilder
+    /**
+     * @param mixed $defaultValue
+     */
+    public function defaultValue($defaultValue): DoubleAttributeBuilder
     {
         parent::defaultValue($defaultValue);
         return $this;

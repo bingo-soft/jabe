@@ -34,7 +34,7 @@ class AssociationImpl extends ArtifactImpl implements AssociationInterface
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->extendsType(ArtifactInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

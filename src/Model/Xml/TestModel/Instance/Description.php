@@ -10,7 +10,7 @@ use BpmPlatform\Model\Xml\Impl\Instance\{
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Xml\TestModel\TestModelConstants;
 
-class Decription extends ModelElementInstanceImpl
+class Description extends ModelElementInstanceImpl
 {
     public function __construct(ModelTypeInstanceContext $instanceContext)
     {
@@ -20,16 +20,16 @@ class Decription extends ModelElementInstanceImpl
     public static function registerType(ModelBuilder $modelBuilder): void
     {
         $typeBuilder = $modelBuilder->defineType(
-            Decription::class,
+            Description::class,
             TestModelConstants::ELEMENT_NAME_DESCRIPTION
         )
         ->namespaceUri(TestModelConstants::MODEL_NAMESPACE)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
-                public function newInstance(ModelTypeInstanceContext $instanceContext): Decription
+                public function newInstance(ModelTypeInstanceContext $instanceContext): Description
                 {
-                    return new Decription($instanceContext);
+                    return new Description($instanceContext);
                 }
             }
         );

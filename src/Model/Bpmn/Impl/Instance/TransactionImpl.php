@@ -31,7 +31,7 @@ class TransactionImpl extends SubProcessImpl implements TransactionInterface
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->extendsType(SubProcessInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

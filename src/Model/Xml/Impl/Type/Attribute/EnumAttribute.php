@@ -28,7 +28,10 @@ class EnumAttribute extends AttributeImpl
         }
     }
 
-    protected function convertModelValueToXmlValue(string $modelValue): string
+    /**
+     * @param mixed $modelValue;
+     */
+    protected function convertModelValueToXmlValue($modelValue): string
     {
         $class = new ReflectionClass($this->type);
         $constants = $class->getConstants();

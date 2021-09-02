@@ -62,7 +62,7 @@ class ModelUtil
         return null;
     }
 
-    public static function getQName(string $namespaceUri, string $localName): QName
+    public static function getQName(?string $namespaceUri, string $localName): QName
     {
         return new QName($namespaceUri, $localName);
     }

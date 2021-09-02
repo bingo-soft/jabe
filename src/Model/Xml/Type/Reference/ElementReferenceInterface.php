@@ -11,13 +11,20 @@ interface ElementReferenceInterface extends ElementReferenceCollectionInterface
         ModelElementInstanceInterface $referenceSourceParent
     ): ?ModelElementInstanceInterface;
 
+    /**
+     * @return mixed
+     */
     public function getReferenceTargetElement(
-        ModelElementInstanceImpl $referenceSourceParentElement
-    ): ?ModelElementInstanceInterface;
+        ModelElementInstanceInterface $modelElement
+    );
 
+    /**
+     * @param ModelElementInstanceInterface $referenceSourceElement
+     * @param mixed $referenceTargetElement
+     */
     public function setReferenceTargetElement(
-        ModelElementInstanceImpl $referenceSourceParentElement,
-        ModelElementInstanceInterface $referenceTargetElement
+        ModelElementInstanceInterface $referenceSourceElement,
+        $referenceTargetElement
     ): void;
 
     public function clearReferenceTargetElement(ModelElementInstanceImpl $referenceSourceParentElement): void;

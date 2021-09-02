@@ -20,20 +20,20 @@ interface ChildElementCollectionBuilderInterface
     /**
      * @param mixed $referenceTargetType
      */
-    public function qNameElementReference($referenceTargetType): ElementReferenceCollectionBuilderInterface;
+    public function qNameElementReferenceCollection($referenceTargetType): ElementReferenceCollectionBuilderInterface;
 
     /**
      * @param mixed $referenceTargetType
      */
-    public function idElementReference($referenceTargetType): ElementReferenceCollectionBuilderInterface;
+    public function idElementReferenceCollection($referenceTargetType): ElementReferenceCollectionBuilderInterface;
 
     /**
      * @param mixed $referenceTargetType
      */
-    public function idsElementReference($referenceTargetType): ElementReferenceCollectionBuilderInterface;
+    public function idsElementReferenceCollection($referenceTargetType): ElementReferenceCollectionBuilderInterface;
 
     /**
      * @param mixed $referenceTargetType
      */
-    public function uriElementReference($referenceTargetType): ElementReferenceCollectionBuilderInterface;
+    public function uriElementReferenceCollection($referenceTargetType): ElementReferenceCollectionBuilderInterface;
 }

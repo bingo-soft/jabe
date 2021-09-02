@@ -46,7 +46,7 @@ class BusinessRuleTaskImpl extends TaskImpl implements BusinessRuleTaskInterface
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->extendsType(TaskInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

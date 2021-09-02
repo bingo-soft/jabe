@@ -9,6 +9,7 @@ use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Type\Attribute\StringAttributeBuilderInterface;
 use BpmPlatform\Model\Xml\Type\Reference\{
     AttributeReferenceBuilderInterface,
+    AttributeReferenceCollectionInterface,
     AttributeReferenceCollectionBuilderInterface
 };
 use BpmPlatform\Model\Xml\Impl\Type\Reference\{
@@ -30,7 +31,10 @@ class StringAttributeBuilderImpl extends AttributeBuilderImpl implements StringA
         return parent::namespace($namespaceUri);
     }
 
-    public function defaultValue(string $defaultValue): StringAttributeBuilderInterface
+    /**
+     * @param mixed $defaultValue
+     */
+    public function defaultValue($defaultValue): StringAttributeBuilderInterface
     {
         return parent::defaultValue($defaultValue);
     }
@@ -63,7 +67,7 @@ class StringAttributeBuilderImpl extends AttributeBuilderImpl implements StringA
 
     public function idAttributeReferenceCollection(
         string $referenceTargetElement,
-        AttributeReferenceCollectionInterface $attributeReferenceCollection
+        string $attributeReferenceCollection
     ): AttributeReferenceCollectionBuilderInterface {
         $attribute = $this->build();
         $referenceBuilder = new AttributeReferenceCollectionBuilderImpl(
@@ -71,7 +75,7 @@ class StringAttributeBuilderImpl extends AttributeBuilderImpl implements StringA
             $referenceTargetElement,
             $attributeReferenceCollection
         );
-        $this->setAttributeReference(referenceBuilder);
+        $this->setAttributeReference($referenceBuilder);
         return $referenceBuilder;
     }
 

@@ -34,7 +34,7 @@ class BpmnDiagramImpl extends DiagramImpl implements BpmnDiagramInterface
         ->namespaceUri(BpmnModelConstants::BPMNDI_NS)
         ->extendsType(DiagramInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

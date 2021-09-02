@@ -31,7 +31,7 @@ class MessageFlowAssociationImpl extends BaseElementImpl implements MessageFlowA
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->extendsType(BaseElementInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

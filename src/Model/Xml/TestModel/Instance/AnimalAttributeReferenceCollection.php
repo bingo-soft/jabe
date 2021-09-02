@@ -2,6 +2,7 @@
 
 namespace BpmPlatform\Model\Xml\TestModel\Instance;
 
+use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Impl\Type\Attribute\AttributeImpl;
 use BpmPlatform\Model\Xml\Type\Reference\AttributeReferenceCollection;
 
@@ -12,7 +13,7 @@ class AnimalAttributeReferenceCollection extends AttributeReferenceCollection
         parent::__construct($referenceSourceAttribute);
     }
 
-    protected function getTargetElementIdentifier(Animal $referenceTargetElement): string
+    protected function getTargetElementIdentifier(ModelElementInstanceInterface $referenceTargetElement): string
     {
         return $referenceTargetElement->getId();
     }

@@ -28,7 +28,7 @@ class TimeDateImpl extends ExpressionImpl implements TimeDateInterface
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->extendsType(ExpressionInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

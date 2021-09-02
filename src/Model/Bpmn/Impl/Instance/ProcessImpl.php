@@ -59,7 +59,7 @@ class ProcessImpl extends CallableElementImpl implements ProcessInterface
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->extendsType(CallableElementInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

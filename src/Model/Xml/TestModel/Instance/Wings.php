@@ -25,7 +25,7 @@ class Wings extends ModelElementInstanceImpl
         )
         ->namespaceUri(TestModelConstants::NEWER_NAMESPACE)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): Wings
                 {

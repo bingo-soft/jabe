@@ -41,7 +41,7 @@ class BpmnEdgeImpl extends LabeledEdgeImpl implements BpmnEdgeInterface
         ->namespaceUri(BpmnModelConstants::BPMNDI_NS)
         ->extendsType(LabeledEdgeInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

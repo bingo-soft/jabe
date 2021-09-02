@@ -183,8 +183,8 @@ class ModelElementTypeImpl implements ModelElementTypeInterface
     public function resolveBaseTypes(array &$baseTypes): void
     {
         if ($this->baseType != null) {
-            $baseTypes[] = $baseType;
-            $baseType->resolveBaseTypes($baseTypes);
+            $baseTypes[] = $this->baseType;
+            $this->baseType->resolveBaseTypes($baseTypes);
         }
     }
 

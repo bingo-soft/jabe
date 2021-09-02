@@ -52,7 +52,7 @@ abstract class AttributeBuilderImpl implements AttributeBuilderInterface, ModelB
     public function build(): AttributeInterface
     {
         $this->modelType->registerAttribute($this->attribute);
-        return $attribute;
+        return $this->attribute;
     }
 
     public function performModelBuild(ModelInterface $model): void

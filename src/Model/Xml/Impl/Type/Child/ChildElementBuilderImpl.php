@@ -55,8 +55,11 @@ class ChildElementBuilderImpl extends ChildElementCollectionBuilderImpl implemen
         return parent::build();
     }
 
+    /**
+     * @param mixed $referenceTargetType
+     */
     public function qNameElementReference(
-        string $referenceTargetType
+        $referenceTargetType
     ): ElementReferenceBuilderInterface {
         $child = $this->build();
         $builder = new QNameElementReferenceBuilderImpl(
@@ -68,29 +71,35 @@ class ChildElementBuilderImpl extends ChildElementCollectionBuilderImpl implemen
         return $builder;
     }
 
+    /**
+     * @param mixed $referenceTargetType
+     */
     public function idElementReference(
-        string $referenceTargetType
+        $referenceTargetType
     ): ElementReferenceBuilderInterface {
         $child = $this->build();
         $builder = new ElementReferenceBuilderImpl(
             $this->childElementType,
             $referenceTargetType,
-            $collection
+            $child
         );
         $this->setReferenceBuilder($builder);
-        return $child;
+        return $builder;
     }
 
+    /**
+     * @param mixed $referenceTargetType
+     */
     public function uriElementReference(
-        string $referenceTargetType
+        $referenceTargetType
     ): ElementReferenceBuilderInterface {
         $child = $this->build();
         $builder = new UriElementReferenceBuilderImpl(
             $this->childElementType,
             $referenceTargetType,
-            $collection
+            $child
         );
         $this->setReferenceBuilder($builder);
-        return $child;
+        return $builder;
     }
 }

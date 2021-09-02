@@ -17,7 +17,10 @@ class IntegerAttributeBuilder extends AttributeBuilderImpl
         return $this;
     }
 
-    public function defaultValue(int $defaultValue): IntegerAttributeBuilder
+    /**
+     * @param mixed $defaultValue
+     */
+    public function defaultValue($defaultValue): IntegerAttributeBuilder
     {
         parent::defaultValue($defaultValue);
         return $this;

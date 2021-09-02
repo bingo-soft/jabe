@@ -32,7 +32,7 @@ class BpmnLabelStyleImpl extends StyleImpl implements BpmnLabelStyleInterface
         ->namespaceUri(BpmnModelConstants::BPMNDI_NS)
         ->extendsType(StyleInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

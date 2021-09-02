@@ -43,7 +43,7 @@ class ElementReferenceCollectionBuilderImpl implements ElementReferenceCollectio
             $idAttribute->registerIncoming($this->elementReferenceCollectionImpl);
             $this->elementReferenceCollectionImpl->setReferenceTargetAttribute($idAttribute);
         } else {
-            throw new ModelException(sprintf("Unable to find id attribute of %s", $referenceTargetClass));
+            throw new ModelException(sprintf("Unable to find id attribute of %s", $this->referenceTargetClass));
         }
     }
 }

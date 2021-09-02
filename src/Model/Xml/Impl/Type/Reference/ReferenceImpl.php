@@ -5,6 +5,7 @@ namespace BpmPlatform\Model\Xml\Impl\Type\Reference;
 use BpmPlatform\Model\Xml\Type\Reference\ReferenceInterface;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Exception\ModelReferenceException;
+use BpmPlatform\Model\Xml\Type\Attribute\AttributeInterface;
 use BpmPlatform\Model\Xml\Impl\Type\Attribute\AttributeImpl;
 use BpmPlatform\Model\Xml\Impl\Type\ModelElementTypeImpl;
 
@@ -52,7 +53,7 @@ abstract class ReferenceImpl implements ReferenceInterface
         $this->referenceTargetAttribute = $referenceTargetAttribute;
     }
 
-    public function getReferenceTargetAttribute(): AttributeImpl
+    public function getReferenceTargetAttribute(): AttributeInterface
     {
         return $this->referenceTargetAttribute;
     }

@@ -28,7 +28,10 @@ class IntegerAttribute extends AttributeImpl
         }
     }
 
-    protected function convertModelValueToXmlValue(int $modelValue): string
+    /**
+     * @param mixed $modelValue;
+     */
+    protected function convertModelValueToXmlValue($modelValue): string
     {
         return strval($modelValue);
     }

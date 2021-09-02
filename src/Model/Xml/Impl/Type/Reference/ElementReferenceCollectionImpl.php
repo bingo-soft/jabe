@@ -74,7 +74,7 @@ class ElementReferenceCollectionImpl extends ReferenceImpl implements ElementRef
         return $referenceSourceElement->getTextContent();
     }
 
-    public function updateReference(
+    protected function updateReference(
         ModelElementInstanceInterface $referenceSourceElement,
         ?string $oldIdentifier,
         string $newIdentifier
@@ -86,7 +86,7 @@ class ElementReferenceCollectionImpl extends ReferenceImpl implements ElementRef
     }
 
     //@attention. $referenceTargetElement is mentioned, but not used
-    public function removeReference(
+    protected function removeReference(
         ModelElementInstanceInterface $referenceSourceElement,
         ModelElementInstanceInterface $referenceTargetElement
     ): void {

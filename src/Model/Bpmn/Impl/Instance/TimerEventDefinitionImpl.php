@@ -35,7 +35,7 @@ class TimerEventDefinitionImpl extends EventDefinitionImpl implements TimerEvent
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->extendsType(EventDefinitionInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

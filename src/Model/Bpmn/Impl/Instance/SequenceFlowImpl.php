@@ -36,7 +36,7 @@ class SequenceFlowImpl extends FlowElementImpl implements SequenceFlowInterface
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->extendsType(FlowElementInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

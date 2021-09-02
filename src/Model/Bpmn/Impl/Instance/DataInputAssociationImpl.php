@@ -27,7 +27,7 @@ class DataInputAssociationImpl extends DataAssociationImpl implements DataInputA
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->extendsType(DataAssociationInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

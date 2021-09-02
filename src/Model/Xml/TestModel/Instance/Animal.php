@@ -27,6 +27,7 @@ abstract class Animal extends ModelElementInstanceImpl
             ->namespaceUri(TestModelConstants::MODEL_NAMESPACE)
             ->abstractType();
 
+        //@BUG. id attribute missing in Bird???
         self::$idAttr = $typeBuilder->stringAttribute(TestModelConstants::ATTRIBUTE_NAME_ID)
             ->idAttribute()
             ->build();

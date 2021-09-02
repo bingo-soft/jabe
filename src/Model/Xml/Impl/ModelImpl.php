@@ -85,8 +85,8 @@ class ModelImpl implements ModelInterface
     public function getTypeForName(?string $namespaceUri, string $typeName): ?ModelElementTypeInterface
     {
         $name = ModelUtil::getQName($namespaceUri, $typeName);
-        if (array_key_exists($name, $this->typesByName)) {
-            return $this->typesByName[$name];
+        if (array_key_exists(strval($name), $this->typesByName)) {
+            return $this->typesByName[strval($name)];
         }
         return null;
     }
@@ -108,7 +108,7 @@ class ModelImpl implements ModelInterface
     public function registerType(ModelElementTypeInterface $modelElementType, string $instanceType): void
     {
         $qName = ModelUtil::getQName($modelElementType->getTypeNamespace(), $modelElementType->getTypeName());
-        $this->typesByName[$qName] = $modelElementType;
+        $this->typesByName[strval($qName)] = $modelElementType;
         $this->typesByClass[$instanceType] = $modelElementType;
     }
 }

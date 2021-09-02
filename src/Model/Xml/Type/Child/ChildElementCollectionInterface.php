@@ -1,12 +1,12 @@
 <?php
 
-namespace childElementCollections;
+namespace BpmPlatform\Model\Xml\Type\Child;
 
 use BpmPlatform\Model\Xml\ModelInterface;
 use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 
-interface ChildElementCollectionInterface extends ModelElementInstanceInterface
+interface ChildElementCollectionInterface
 {
     public function isImmutable(): bool;
 

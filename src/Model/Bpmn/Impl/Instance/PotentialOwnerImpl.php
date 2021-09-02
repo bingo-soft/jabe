@@ -29,7 +29,7 @@ class PotentialOwnerImpl extends HumanPerformerImpl implements PotentialOwnerInt
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->extendsType(HumanPerformerInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

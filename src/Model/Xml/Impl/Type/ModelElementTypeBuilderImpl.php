@@ -14,9 +14,9 @@ use  BpmPlatform\Model\Xml\Impl\Type\Attribute\{
     IntegerAttributeBuilder,
     DoubleAttributeBuilder,
     EnumAttributeBuilder,
-    NamedEnumAttributeBuilder,
-    SequenceBuilderImpl
+    NamedEnumAttributeBuilder
 };
+use  BpmPlatform\Model\Xml\Impl\Type\Child\SequenceBuilderImpl;
 use BpmPlatform\Model\Xml\Type\{
     ModelElementTypeBuilderInterface,
     ModelTypeInstanceProviderInterface,
@@ -138,16 +138,19 @@ class ModelElementTypeBuilderImpl implements ModelElementTypeBuilderInterface, M
             if ($extendedModelElementType == null) {
                 throw new ModelException(
                     sprintf(
-                        "Type %s is defined to extend %s but no such type is defined.",
-                        $this->modelType,
+                        "Type is defined to extend %s but no such type is defined.",
+                        //$this->modelType,
                         $this->extendedType
                     )
                 );
+            } else {
+                $this->modelType->setBaseType($extendedModelElementType);
+                $extendedModelElementType->registerExtendingType($this->modelType);
             }
         }
     }
 
-    public function preformModelBuild(ModelInterface $model): void
+    public function performModelBuild(ModelInterface $model): void
     {
         foreach ($this->modelBuildOperations as $operation) {
             $operation->performModelBuild($this->model);

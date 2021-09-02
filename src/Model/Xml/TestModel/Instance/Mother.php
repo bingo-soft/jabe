@@ -23,7 +23,7 @@ class Mother extends AnimalReference
         ->namespaceUri(TestModelConstants::MODEL_NAMESPACE)
         ->extendsType(AnimalReference::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): Mother
                 {

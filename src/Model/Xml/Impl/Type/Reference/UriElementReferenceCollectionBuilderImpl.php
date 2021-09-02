@@ -2,9 +2,9 @@
 
 namespace BpmPlatform\Model\Xml\Impl\Type\Reference;
 
-use BpmPlatform\Model\Xml\Type\Impl\Child\ChildElementCollectionImpl;
+use BpmPlatform\Model\Xml\Impl\Type\Child\ChildElementCollectionImpl;
 
-class UriElementReferenceBuilderImpl extends ElementReferenceBuilderImpl
+class UriElementReferenceCollectionBuilderImpl extends ElementReferenceCollectionBuilderImpl
 {
     public function __construct(
         string $childElementType,

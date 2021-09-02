@@ -32,7 +32,7 @@ class Bird extends FlyingAnimal
         ->namespaceUri(TestModelConstants::MODEL_NAMESPACE)
         ->extendsType(FlyingAnimal::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): Bird
                 {

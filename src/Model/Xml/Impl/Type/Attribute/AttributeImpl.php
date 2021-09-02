@@ -81,7 +81,7 @@ abstract class AttributeImpl implements AttributeInterface
     public function setValue(
         ModelElementInstanceInterface $modelElement,
         $value,
-        ?bool $withReferenceUpdate
+        ?bool $withReferenceUpdate = false
     ): void {
         if ($withReferenceUpdate == null) {
             $withReferenceUpdate = true;
@@ -118,7 +118,7 @@ abstract class AttributeImpl implements AttributeInterface
     /**
      * @return mixed
      */
-    public function getDeafultValue()
+    public function getDefaultValue()
     {
         return $this->defaultValue;
     }

@@ -13,7 +13,10 @@ interface StringAttributeBuilderInterface extends AttributeBuilderInterface
 {
     public function namespace(string $namespaceUri): StringAttributeBuilderInterface;
 
-    public function defaultValue(string $defaultValue): StringAttributeBuilderInterface;
+    /**
+     * @param mixed $defaultValue
+     */
+    public function defaultValue($defaultValue): StringAttributeBuilderInterface;
 
     public function required(): StringAttributeBuilderInterface;
 
@@ -25,6 +28,6 @@ interface StringAttributeBuilderInterface extends AttributeBuilderInterface
 
     public function idAttributeReferenceCollection(
         string $referenceTargetElement,
-        AttributeReferenceCollectionInterface $attributeReferenceCollection
+        string $attributeReferenceCollection
     ): AttributeReferenceCollectionBuilderInterface;
 }

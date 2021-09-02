@@ -32,7 +32,7 @@ class ParallelGatewayImpl extends GatewayImpl implements ParallelGatewayInterfac
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->extendsType(GatewayInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

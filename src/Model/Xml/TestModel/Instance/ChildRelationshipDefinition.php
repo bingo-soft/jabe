@@ -26,7 +26,7 @@ class ChildRelationshipDefinition extends RelationshipDefinition
         ->namespaceUri(TestModelConstants::MODEL_NAMESPACE)
         ->extendsType(RelationshipDefinition::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ChildRelationshipDefinition
                 {

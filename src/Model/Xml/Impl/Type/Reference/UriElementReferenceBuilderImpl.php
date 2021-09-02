@@ -2,7 +2,7 @@
 
 namespace BpmPlatform\Model\Xml\Impl\Type\Reference;
 
-use BpmPlatform\Model\Xml\Type\Impl\Child\ChildElementImpl;
+use BpmPlatform\Model\Xml\Type\Child\ChildElementInterface;
 
 class UriElementReferenceBuilderImpl extends ElementReferenceBuilderImpl
 {

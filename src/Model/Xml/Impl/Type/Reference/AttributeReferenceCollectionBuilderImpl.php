@@ -29,7 +29,7 @@ class AttributeReferenceCollectionBuilderImpl implements
         $this->attributeReferenceCollection = new $attributeReferenceCollection($this->referenceSourceAttribute);
     }
 
-    public function build(): AttributeReferenceCollectionInterface
+    public function build(): AttributeReferenceCollection
     {
         $this->referenceSourceAttribute->registerOutgoingReference($this->attributeReferenceCollection);
         return $this->attributeReferenceCollection;

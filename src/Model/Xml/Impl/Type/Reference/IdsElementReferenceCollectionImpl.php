@@ -51,7 +51,7 @@ class IdsElementReferenceCollectionImpl extends ElementReferenceCollectionImpl
 
     protected function updateReference(
         ModelElementInstanceInterface $referenceSourceElement,
-        string $oldIdentifier,
+        ?string $oldIdentifier,
         string $newIdentifier
     ): void {
         $referenceIdentifiers = $this->getReferenceIdentifiers($referenceSourceElement);

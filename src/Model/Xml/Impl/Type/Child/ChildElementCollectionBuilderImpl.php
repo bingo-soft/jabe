@@ -70,8 +70,11 @@ class ChildElementCollectionBuilderImpl implements ChildElementCollectionBuilder
         return $this->collection;
     }
 
+    /**
+     * @param mixed $referenceTargetType
+     */
     public function qNameElementReferenceCollection(
-        string $referenceTargetType
+        $referenceTargetType
     ): ElementReferenceCollectionBuilderInterface {
         $collection = $this->build();
         $builder = new QNameElementReferenceCollectionBuilderImpl(
@@ -83,8 +86,11 @@ class ChildElementCollectionBuilderImpl implements ChildElementCollectionBuilder
         return $builder;
     }
 
+    /**
+     * @param mixed $referenceTargetType
+     */
     public function idElementReferenceCollection(
-        string $referenceTargetType
+        $referenceTargetType
     ): ElementReferenceCollectionBuilderInterface {
         $collection = $this->build();
         $builder = new ElementReferenceCollectionBuilderImpl(
@@ -96,8 +102,11 @@ class ChildElementCollectionBuilderImpl implements ChildElementCollectionBuilder
         return $builder;
     }
 
+    /**
+     * @param mixed $referenceTargetType
+     */
     public function idsElementReferenceCollection(
-        string $referenceTargetType
+        $referenceTargetType
     ): ElementReferenceCollectionBuilderInterface {
         $collection = $this->build();
         $builder = new IdsElementReferenceCollectionBuilderImpl(
@@ -109,8 +118,11 @@ class ChildElementCollectionBuilderImpl implements ChildElementCollectionBuilder
         return $builder;
     }
 
+    /**
+     * @param mixed $referenceTargetType
+     */
     public function uriElementReferenceCollection(
-        string $referenceTargetType
+        $referenceTargetType
     ): ElementReferenceCollectionBuilderInterface {
         $collection = $this->build();
         $builder = new UriElementReferenceCollectionBuilderImpl(
@@ -137,15 +149,14 @@ class ChildElementCollectionBuilderImpl implements ChildElementCollectionBuilder
         if ($elementType == null) {
             throw new ModelException(
                 sprintf(
-                    "%s declares undefined child element of type %s.",
-                    $this->parentElementType,
+                    "Undefined child element of type %s.",
                     $this->childElementType
                 )
             );
         }
         $this->parentElementType->registerChildElementType($elementType);
-        $this->parentElementType->registerChildElementCollection($collection);
-        foreach ($modelBuildOperations as $modelBuildOperation) {
+        $this->parentElementType->registerChildElementCollection($this->collection);
+        foreach ($this->modelBuildOperations as $modelBuildOperation) {
             $modelBuildOperation->performModelBuild($model);
         }
     }

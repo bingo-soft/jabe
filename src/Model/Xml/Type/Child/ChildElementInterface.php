@@ -4,7 +4,7 @@ namespace BpmPlatform\Model\Xml\Type\Child;
 
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 
-interface ChildElementInterface
+interface ChildElementInterface extends ChildElementCollectionInterface
 {
     public function setChild(
         ModelElementInstanceInterface $element,

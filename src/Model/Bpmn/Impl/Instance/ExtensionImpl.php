@@ -31,7 +31,7 @@ class ExtensionImpl extends BpmnModelElementInstanceImpl implements ExtensionInt
         )
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

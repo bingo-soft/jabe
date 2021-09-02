@@ -28,7 +28,7 @@ class ActivationConditionImpl extends ExpressionImpl implements ActivationCondit
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->extendType(ExpressionInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

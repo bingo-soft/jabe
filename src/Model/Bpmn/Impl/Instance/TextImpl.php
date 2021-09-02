@@ -26,7 +26,7 @@ class TextImpl extends BpmnModelElementInstanceImpl implements TextInterface
         )
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

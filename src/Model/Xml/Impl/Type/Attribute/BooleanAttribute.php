@@ -20,7 +20,10 @@ class BooleanAttribute extends AttributeImpl
         return ModelUtil::valueAsBoolean($rawValue);
     }
 
-    protected function convertModelValueToXmlValue(bool $modelValue): string
+    /**
+     * @param mixed $modelValue;
+     */
+    protected function convertModelValueToXmlValue($modelValue): string
     {
         return ModelUtil::valueAsString($modelValue);
     }

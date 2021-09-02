@@ -28,7 +28,7 @@ class GlobalConversationImpl extends CollaborationImpl implements GlobalConversa
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->extendsType(CollaborationInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

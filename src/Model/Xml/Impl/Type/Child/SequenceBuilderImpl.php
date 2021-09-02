@@ -9,10 +9,10 @@ use BpmPlatform\Model\Xml\Impl\Type\Child\ChildElementBuilderImpl;
 use BpmPlatform\Model\Xml\Type\Child\{
     ChildElementBuilderInterface,
     ChildElementCollectionBuilderInterface,
-    SequenceBuilderImplBuilderInterface
+    SequenceBuilderInterface
 };
 
-class SequenceBuilderImpl implements SequenceBuilderImplBuilderInterface, ModelBuildOperationInterface
+class SequenceBuilderImpl implements SequenceBuilderInterface, ModelBuildOperationInterface
 {
     private $elementType;
     private $modelBuildOperations = [];
@@ -22,18 +22,24 @@ class SequenceBuilderImpl implements SequenceBuilderImplBuilderInterface, ModelB
         $this->elementType = $modelType;
     }
 
-    public function element(string $childElementType): ChildElementBuilderInterface
+    /**
+     * @param mixed $childElementType
+     */
+    public function element($childElementType): ChildElementBuilderInterface
     {
         $builder = new ChildElementBuilderImpl($childElementType, $this->elementType);
         $this->modelBuildOperations[] = $builder;
-        return $buidler;
+        return $builder;
     }
 
-    public function elementCollection(string $childElementType): ChildElementCollectionBuilderInterface
+    /**
+     * @param mixed $childElementType
+     */
+    public function elementCollection($childElementType): ChildElementCollectionBuilderInterface
     {
         $builder = new ChildElementCollectionBuilderImpl($childElementType, $this->elementType);
         $this->modelBuildOperations[] = $builder;
-        return $buidler;
+        return $builder;
     }
 
     public function performModelBuild(ModelInterface $model): void

@@ -31,7 +31,7 @@ class TaskImpl extends ActivityImpl implements TaskInterface
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->extendsType(ActivityInterface::class)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {

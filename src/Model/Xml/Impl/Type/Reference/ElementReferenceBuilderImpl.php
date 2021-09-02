@@ -3,9 +3,12 @@
 namespace BpmPlatform\Model\Xml\Impl\Type\Reference;
 
 use BpmPlatform\Model\Xml\Impl\Type\Child\ChildElementImpl;
-use BpmPlatform\Model\Xml\Type\Reference\ElementReferenceInterface;
+use BpmPlatform\Model\Xml\Type\Reference\{
+    ElementReferenceInterface,
+    ElementReferenceBuilderInterface
+};
 
-class ElementReferenceBuilderImpl extends ElementReferenceCollectionBuilderImpl
+class ElementReferenceBuilderImpl extends ElementReferenceCollectionBuilderImpl implements ElementReferenceBuilderInterface
 {
     public function __construct(
         string $childElementType,

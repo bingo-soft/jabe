@@ -36,9 +36,12 @@ class ElementReferenceImpl extends ElementReferenceCollectionImpl implements Ele
         $this->getReferenceSourceChild()->setChild($referenceSourceParent, $referenceSource);
     }
 
+    /**
+     * @return mixed
+     */
     public function getReferenceTargetElement(
-        ModelElementInstanceImpl $referenceSourceParentElement
-    ): ?ModelElementInstanceInterface {
+        ModelElementInstanceInterface $referenceSourceParentElement
+    ) {
         $referenceSource = $this->getReferenceSource($referenceSourceParentElement);
         if ($referenceSource != null) {
             $identifier = $this->getReferenceIdentifier($referenceSource);
@@ -54,9 +57,13 @@ class ElementReferenceImpl extends ElementReferenceCollectionImpl implements Ele
         }
     }
 
+    /**
+     * @param ModelElementInstanceInterface $referenceSourceElement
+     * @param mixed $referenceTargetElement
+     */
     public function setReferenceTargetElement(
-        ModelElementInstanceImpl $referenceSourceParentElement,
-        ModelElementInstanceInterface $referenceTargetElement
+        ModelElementInstanceInterface $referenceSourceParentElement,
+        $referenceTargetElement
     ): void {
         $modelInstance = $referenceSourceParentElement->getModelInstance();
         $identifier = $referenceTargetAttribute->getValue($referenceTargetElement);

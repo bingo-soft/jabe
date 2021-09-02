@@ -29,7 +29,7 @@ class Egg extends ModelElementInstanceImpl
         )
         ->namespaceUri(TestModelConstants::MODEL_NAMESPACE)
         ->instanceProvider(
-            new class extends ModelTypeInstanceProviderInterface
+            new class implements ModelTypeInstanceProviderInterface
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): Egg
                 {

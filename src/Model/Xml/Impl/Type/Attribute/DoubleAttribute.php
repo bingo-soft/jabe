@@ -28,7 +28,10 @@ class DoubleAttribute extends AttributeImpl
         }
     }
 
-    protected function convertModelValueToXmlValue(float $modelValue): string
+    /**
+     * @param mixed $modelValue;
+     */
+    protected function convertModelValueToXmlValue($modelValue): string
     {
         return strval($modelValue);
     }

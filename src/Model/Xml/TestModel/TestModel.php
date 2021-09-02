@@ -39,22 +39,21 @@ class TestModel
 
             Animals::registerType($modelBuilder);
             Animal::registerType($modelBuilder);
-            AnimalReference::registerType($modelBuilder);
-            Bird::registerType($modelBuilder);
-            ChildRelationshipDefinition::registerType($modelBuilder);
             Description::registerType($modelBuilder);
+            RelationshipDefinition::registerType($modelBuilder);
+            RelationshipDefinitionRef::registerType($modelBuilder);
+            FriendRelationshipDefinition::registerType($modelBuilder);
+            ChildRelationshipDefinition::registerType($modelBuilder);
+            AnimalReference::registerType($modelBuilder);
             FlightPartnerRef::registerType($modelBuilder);
+            FlightInstructor::registerType($modelBuilder);
             FlyingAnimal::registerType($modelBuilder);
+            Bird::registerType($modelBuilder);
             Guardian::registerType($modelBuilder);
             GuardEgg::registerType($modelBuilder);
             Mother::registerType($modelBuilder);
             SpouseRef::registerType($modelBuilder);
-            FriendRelationshipDefinition::registerType($modelBuilder);
-            RelationshipDefinition::registerType($modelBuilder);
-            RelationshipDefinitionRef::registerType($modelBuilder);
             Egg::registerType($modelBuilder);
-            FlightInstructor::registerType($modelBuilder);
-
             Wings::registerType($modelBuilder);
 
             self::$model = $modelBuilder->build();
