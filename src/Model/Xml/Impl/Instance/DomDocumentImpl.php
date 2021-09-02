@@ -50,7 +50,7 @@ class DomDocumentImpl implements DomDocumentInterface
 
     public function createElement(string $namespaceUri, string $localName): DomElementInterface
     {
-        $xmlQName = new XmlQName($this, $namespaceUri, $localName);
+        $xmlQName = new XmlQName($this, null, $namespaceUri, $localName);
         $element = $this->document->createElementNS($xmlQName->getNamespaceUri(), $xmlQName->getPrefixedName());
         return new DomElementImpl($element);
     }

@@ -5,6 +5,7 @@ namespace BpmPlatform\Model\Xml\TestModel;
 use BpmPlatform\Model\Xml\ModelInstanceInterface;
 use BpmPlatform\Model\Xml\Impl\ModelInstanceImpl;
 use BpmPlatform\Model\Xml\Impl\Parser\AbstractModelParser;
+use BpmPlatform\Model\Xml\Instance\DomDocumentInterface;
 
 class TestModelParser extends AbstractModelParser
 {

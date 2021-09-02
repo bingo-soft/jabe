@@ -22,7 +22,7 @@ interface ModelElementTypeInterface
 
     public function newInstance(
         ModelInstanceInterface $instance,
-        ?DomElementInterface $domElement
+        ?DomElementInterface $domElement = null
     ): ModelElementInstanceInterface;
 
     public function getBaseType(): ?ModelElementTypeInterface;

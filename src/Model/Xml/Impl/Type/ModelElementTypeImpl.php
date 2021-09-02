@@ -48,7 +48,7 @@ class ModelElementTypeImpl implements ModelElementTypeInterface
 
     public function newInstance(
         ModelInstanceInterface $modelInstance,
-        ?DomElementInterface $domElement
+        ?DomElementInterface $domElement = null
     ): ModelElementInstanceInterface {
         if ($domElement != null) {
             $modelTypeInstanceContext = new ModelTypeInstanceContext($domElement, $modelInstance, $this);
@@ -149,7 +149,7 @@ class ModelElementTypeImpl implements ModelElementTypeInterface
 
     public function isAbstract(): bool
     {
-        return $this->isAbstract;
+        return $this->isAbstract ?? false;
     }
 
     public function setAbstract(bool $isAbstract): void
@@ -235,7 +235,7 @@ class ModelElementTypeImpl implements ModelElementTypeInterface
     {
         $document = $modelInstanceImpl->getDocument();
 
-        $elements = $this->getElementsByNameNs($this->document, $this->typeNamespace);
+        $elements = $this->getElementsByNameNs($document, $this->typeNamespace);
 
         $resultList = [];
         foreach ($elements as $element) {
@@ -246,7 +246,7 @@ class ModelElementTypeImpl implements ModelElementTypeInterface
 
     protected function getElementsByNameNs(DomDocumentInterface $document, string $namespaceURI): array
     {
-        $elements = $document->getElementsByNameNs($namespaceURI, $typeName);
+        $elements = $document->getElementsByNameNs($namespaceURI, $this->typeName);
 
         if (empty($elements)) {
             $alternativeNamespaces = $this->getModel()->getAlternativeNamespaces($namespaceURI);
