@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Xml;
 
 use PHPUnit\Framework\TestCase;
 use BpmPlatform\Model\Xml\ModelBuilder;
