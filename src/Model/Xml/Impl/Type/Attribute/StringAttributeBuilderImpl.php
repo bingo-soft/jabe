@@ -14,7 +14,8 @@ use BpmPlatform\Model\Xml\Type\Reference\{
 };
 use BpmPlatform\Model\Xml\Impl\Type\Reference\{
     AttributeReferenceBuilderImpl,
-    AttributeReferenceCollectionBuilderImpl
+    AttributeReferenceCollectionBuilderImpl,
+    QNameAttributeReferenceBuilderImpl
 };
 
 class StringAttributeBuilderImpl extends AttributeBuilderImpl implements StringAttributeBuilderInterface
@@ -52,7 +53,7 @@ class StringAttributeBuilderImpl extends AttributeBuilderImpl implements StringA
     public function qNameAttributeReference(string $referenceTargetElement): AttributeReferenceBuilderInterface
     {
         $attribute = $this->build();
-        $referenceBuilder = new AttributeReferenceBuilderImpl($attribute, $referenceTargetElement);
+        $referenceBuilder = new QNameAttributeReferenceBuilderImpl($attribute, $referenceTargetElement);
         $this->setAttributeReference($referenceBuilder);
         return $referenceBuilder;
     }

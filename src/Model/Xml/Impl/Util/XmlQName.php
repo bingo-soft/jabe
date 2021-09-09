@@ -29,13 +29,13 @@ class XmlQName
     public function __construct(
         ?DomDocumentInterface $document,
         ?DomElementInterface $element,
-        string $namespaceUri,
+        ?string $namespaceUri,
         string $localName
     ) {
-        if ($document != null) {
-            $this->rootElement = $document->getRootElement();
-        } elseif ($element != null) {
+        if ($element != null) {
             $document = $element->getDocument();
+            $this->rootElement = $document->getRootElement();
+        } elseif ($document != null) {
             $this->rootElement = $document->getRootElement();
         }
         $this->element = $element;
@@ -44,7 +44,7 @@ class XmlQName
         $this->prefix = null;
     }
 
-    public function getNamespaceUri(): string
+    public function getNamespaceUri(): ?string
     {
         return $this->namespaceUri;
     }
@@ -65,10 +65,9 @@ class XmlQName
     public function hasLocalNamespace(): bool
     {
         if ($this->element != null) {
-            return $this->element->getNamespaceURI() == $this->namespaceUri;
-        } else {
-            return false;
+            return $this->element->getNamespaceURI() == $this->namespaceUri || empty($this->namespaceUri);
         }
+        return false;
     }
 
     private function determinePrefixAndNamespaceUri(): ?string

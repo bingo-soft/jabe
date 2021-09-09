@@ -20,8 +20,8 @@ interface ModelElementInstanceInterface
     public function setAttributeValue(
         string $attributeName,
         string $xmlValue,
-        ?bool $isIdAttribute,
-        ?bool $withReferenceUpdate
+        bool $isIdAttribute = false,
+        bool $withReferenceUpdate = true
     ): void;
 
     public function removeAttribute(string $attributeName): void;
@@ -32,8 +32,8 @@ interface ModelElementInstanceInterface
         string $namespaceUri,
         string $attributeName,
         string $xmlValue,
-        ?bool $isIdAttribute,
-        ?bool $withReferenceUpdate
+        bool $isIdAttribute = false,
+        bool $withReferenceUpdate = true
     ): void;
 
     public function removeAttributeNs(string $namespaceUri, string $attributeName): void;

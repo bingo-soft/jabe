@@ -55,7 +55,7 @@ class DomDocumentImpl implements DomDocumentInterface
         return new DomElementImpl($element);
     }
 
-    public function getElementById(string $id): ?DomDocumentInterface
+    public function getElementById(string $id): ?DomElementInterface
     {
         $element = $this->document->getElementById($id);
         if ($element != null) {

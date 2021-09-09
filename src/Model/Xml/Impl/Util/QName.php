@@ -34,7 +34,6 @@ class QName
             $qualifier = null;
             $localName = $split[0];
         }
-
         return new QName($qualifier, $localName);
     }
 

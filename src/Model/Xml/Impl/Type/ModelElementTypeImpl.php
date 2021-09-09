@@ -174,7 +174,7 @@ class ModelElementTypeImpl implements ModelElementTypeInterface
     {
         foreach ($this->extendingTypes as $modelElementTypeImpl) {
             if (!in_array($modelElementTypeImpl, $allExtendingTypes)) {
-                $allExtendingTypes[] = $modelElementType;
+                $allExtendingTypes[] = $modelElementTypeImpl;
                 $modelElementTypeImpl->resolveExtendingTypes($allExtendingTypes);
             }
         }

@@ -17,7 +17,7 @@ class AttributeReferenceImpl extends ReferenceImpl implements AttributeReference
         $this->referenceSourceAttribute = $referenceSourceAttribute;
     }
 
-    public function getReferenceIdentifier(ModelElementInstanceInterface $referenceSourceElement): string
+    public function getReferenceIdentifier(ModelElementInstanceInterface $referenceSourceElement): ?string
     {
         return $this->referenceSourceAttribute->getValue($referenceSourceElement);
     }

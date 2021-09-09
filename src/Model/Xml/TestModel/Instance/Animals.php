@@ -62,4 +62,9 @@ class Animals extends ModelElementInstanceImpl
     {
         return self::$animalColl->get($this);
     }
+
+    public function addAnimal(Animal $animal): void
+    {
+        self::$animalColl->add($this, $animal);
+    }
 }

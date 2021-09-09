@@ -22,7 +22,7 @@ interface DomElementInterface
 
     public function getChildElementsByType(
         ModelInstanceImpl $modelInstance,
-        ModelElementInstanceInterface $elementType
+        string $elementType
     ): array;
 
     public function replaceChild(
@@ -55,11 +55,14 @@ interface DomElementInterface
 
     public function addCDataSection(string $data): void;
 
-    public function getModelElementInstance(): ModelElementInstanceInterface;
+    public function getModelElementInstance(): ?ModelElementInstanceInterface;
 
     public function setModelElementInstance(ModelElementInstanceInterface $modelElementInstance): void;
 
-    public function registerNamespace(?string $prefix, string $namespaceUri): string;
+    /**
+     * @return mixed
+     */
+    public function registerNamespace(?string $prefix, string $namespaceUri);
 
     public function lookupPrefix(string $namespaceUri): string;
 }

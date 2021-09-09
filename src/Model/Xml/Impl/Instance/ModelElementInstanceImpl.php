@@ -53,7 +53,7 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
     {
         $parentElement = $this->domElement->getParentElement();
         if ($parentElement != null) {
-            return ModelUtil::getModelElement($parentElement, $modelInstance);
+            return ModelUtil::getModelElement($parentElement, $this->modelInstance);
         } else {
             return null;
         }
@@ -77,16 +77,14 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
     public function setAttributeValue(
         string $attributeName,
         string $xmlValue,
-        ?bool $isIdAttribute,
-        ?bool $withReferenceUpdate
+        bool $isIdAttribute = false,
+        bool $withReferenceUpdate = true
     ): void {
-        $isIdAttribute = $isIdAttribute ?? false;
-        $withReferenceUpdate = $withReferenceUpdate ?? true;
         $oldValue = $this->getAttributeValue($attributeName);
         if ($isIdAttribute) {
-            $this->domElement->setIdAttribute($attributeName, $xmlValue);
+            $this->domElement->setIdAttribute(null, $attributeName, $xmlValue);
         } else {
-            $this->domElement->setAttribute($attributeName, $xmlValue);
+            $this->domElement->setAttribute(null, $attributeName, $xmlValue, $isIdAttribute);
         }
         $attribute = $this->elementType->getAttribute($attributeName);
         if ($attribute != null && $withReferenceUpdate) {
@@ -98,11 +96,9 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
         string $namespaceUri,
         string $attributeName,
         string $xmlValue,
-        ?bool $isIdAttribute,
-        ?bool $withReferenceUpdate
+        bool $isIdAttribute = false,
+        bool $withReferenceUpdate = true
     ): void {
-        $isIdAttribute = $isIdAttribute ?? false;
-        $withReferenceUpdate = $withReferenceUpdate ?? true;
         $namespaceForSetting = $this->determineNamespace($namespaceUri, $attributeName);
         $oldValue = $this->getAttributeValueNs($namespaceForSetting, $attributeName);
         if ($isIdAttribute) {
@@ -354,6 +350,17 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
             foreach ($childElementsForType as $childElement) {
                 $childElement->unlinkAllReferences();
             }
+        }
+    }
+
+    public function equals(?ModelElementInstanceInterface $obj): bool
+    {
+        if ($obj == null) {
+            return false;
+        } elseif ($obj == $this) {
+            return true;
+        } else {
+            return $obj->domElement->equals($this->domElement);
         }
     }
 }

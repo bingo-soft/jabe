@@ -13,10 +13,7 @@ class QNameAttributeReferenceImpl extends AttributeReferenceImpl
         parent::__construct($referenceSourceAttribute);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getReferenceIdentifier(ModelElementInstanceInterface $referenceSourceElement)
+    public function getReferenceIdentifier(ModelElementInstanceInterface $referenceSourceElement): ?string
     {
         $identifier = parent::getReferenceIdentifier($referenceSourceElement);
         if (!empty($identifier)) {

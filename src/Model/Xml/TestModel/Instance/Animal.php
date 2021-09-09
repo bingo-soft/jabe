@@ -4,7 +4,10 @@ namespace BpmPlatform\Model\Xml\TestModel\Instance;
 
 use BpmPlatform\Model\Xml\ModelBuilder;
 use BpmPlatform\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
-use BpmPlatform\Model\Xml\TestModel\TestModelConstants;
+use BpmPlatform\Model\Xml\TestModel\{
+    Gender,
+    TestModelConstants
+};
 use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 
 abstract class Animal extends ModelElementInstanceImpl
@@ -27,7 +30,6 @@ abstract class Animal extends ModelElementInstanceImpl
             ->namespaceUri(TestModelConstants::MODEL_NAMESPACE)
             ->abstractType();
 
-        //@BUG. id attribute missing in Bird???
         self::$idAttr = $typeBuilder->stringAttribute(TestModelConstants::ATTRIBUTE_NAME_ID)
             ->idAttribute()
             ->build();
@@ -77,7 +79,7 @@ abstract class Animal extends ModelElementInstanceImpl
         parent::__construct($instanceContext);
     }
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return self::$idAttr->getValue($this);
     }
@@ -87,7 +89,7 @@ abstract class Animal extends ModelElementInstanceImpl
         self::$idAttr->setValue($this, $id);
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return self::$nameAttr->getValue($this);
     }
@@ -97,9 +99,14 @@ abstract class Animal extends ModelElementInstanceImpl
         self::$nameAttr->setValue($this, $name);
     }
 
-    public function getFather(): Animal
+    public function getFather(): ?Animal
     {
         return self::$fatherRef->getReferenceTargetElement($this);
+    }
+
+    public function getFatherRef()
+    {
+        return self::$fatherRef;
     }
 
     public function setFather(Animal $father): void
@@ -107,7 +114,7 @@ abstract class Animal extends ModelElementInstanceImpl
         self::$fatherRef->setReferenceTargetElement($this, $father);
     }
 
-    public function getMother(): Animal
+    public function getMother(): ?Animal
     {
         return self::$motherRef->getReferenceTargetElement($this);
     }

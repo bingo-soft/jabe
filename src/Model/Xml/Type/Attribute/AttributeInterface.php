@@ -20,7 +20,7 @@ interface AttributeInterface
     public function setValue(
         ModelElementInstanceInterface $modelElement,
         $value,
-        bool $withReferenceUpdate = false
+        bool $withReferenceUpdate = true
     ): void;
 
     /**

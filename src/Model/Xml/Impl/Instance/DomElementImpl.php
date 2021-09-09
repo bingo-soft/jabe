@@ -13,13 +13,15 @@ use BpmPlatform\Model\Xml\Impl\Util\DomUtil;
 
 class DomElementImpl implements DomElementInterface
 {
-    private const MODEL_ELEMENT_KEY = "camunda.modelElementRef";
+    private const MODEL_ELEMENT_KEY = "example.modelElementRef";
     private const XMLNS_ATTRIBUTE_NS_URI = "http://www.w3.org/2000/xmlns/";
     private const XMLNS_ATTRIBUTE = "xmlns";
 
     private $element;
 
     private $document;
+
+    private $modelElementInstance;
 
     public function __construct(\DOMElement $element)
     {
@@ -83,16 +85,20 @@ class DomElementImpl implements DomElementInterface
         return DomUtil::filterNodeListForElements($childNodes);
     }
 
-    public function getChildElementsByNameNs(array $namespaceUri, string $elementName): array
+    public function getChildElementsByNameNs(array $namespaceUris, string $elementName): array
     {
         $childNodes = $this->element->childNodes;
-        return DomUtil::filterNodeListByName($childNodes, $namespaceUri, $elementName);
+        $result = [];
+        foreach ($namespaceUris as $uri) {
+            $result = array_merge($result, DomUtil::filterNodeListByName($childNodes, $uri, $elementName));
+        }
+        return $result;
     }
 
 
     public function getChildElementsByType(
         ModelInstanceImpl $modelInstance,
-        ModelElementInstanceInterface $elementType
+        string $elementType
     ): array {
         $childNodes = $this->element->childNodes;
         return DomUtil::filterNodeListByType($childNodes, $modelInstance, $elementType);
@@ -152,7 +158,7 @@ class DomElementImpl implements DomElementInterface
 
     public function getAttribute(?string $namespaceUri, string $localName): ?string
     {
-        $xmlQName = new XmlQName($this->getDocument(), $namespaceUri, $localName);
+        $xmlQName = new XmlQName($this->getDocument(), $this, $namespaceUri, $localName);
         if ($xmlQName->hasLocalNamespace()) {
             $value = $this->element->getAttribute($xmlQName->getLocalName());
         } else {
@@ -169,7 +175,7 @@ class DomElementImpl implements DomElementInterface
     public function setAttribute(?string $namespaceUri, string $localName, string $value, ?bool $isIdAttribute): void
     {
         $isIdAttribute = $isIdAttribute ?? false;
-        $xmlQName = new XmlQName($this->getDocument(), $namespaceUri, $localName);
+        $xmlQName = new XmlQName($this->getDocument(), $this, $namespaceUri, $localName);
         if ($xmlQName->hasLocalNamespace()) {
             $this->element->setAttribute($xmlQName->getLocalName(), $value);
             if ($isIdAttribute) {
@@ -185,13 +191,14 @@ class DomElementImpl implements DomElementInterface
 
     public function setIdAttribute(?string $namespaceUri, string $localName, string $value): void
     {
+        $namespaceUri = $namespaceUri ?? $this->getNamespaceURI();
         $this->setAttribute($namespaceUri, $localName, $value, true);
     }
 
     public function removeAttribute(?string $namespaceUri, string $localName): void
     {
         $namespaceUri = $namespaceUri ?? $this->getNamespaceURI();
-        $xmlQName = new XmlQName($this->getDocument(), $namespaceUri, $localName);
+        $xmlQName = new XmlQName($this->getDocument(), $this, $namespaceUri, $localName);
         if ($xmlQName->hasLocalNamespace()) {
             $this->element->removeAttribute($xmlQName->getLocalName());
         } else {
@@ -216,17 +223,20 @@ class DomElementImpl implements DomElementInterface
         $this->element->appendChild($cdataSection);
     }
 
-    public function getModelElementInstance(): ModelElementInstanceInterface
+    public function getModelElementInstance(): ?ModelElementInstanceInterface
     {
-        return unserialize($this->element->getAttribute(self::MODEL_ELEMENT_KEY));
+        return $this->modelElementInstance;
     }
 
     public function setModelElementInstance(ModelElementInstanceInterface $modelElementInstance): void
     {
-        $this->element->setAttribute(self::MODEL_ELEMENT_KEY, serialize($modelElementInstance));
+        $this->modelElementInstance = $modelElementInstance;
     }
 
-    public function registerNamespace(?string $prefix, string $namespaceUri): string
+    /**
+     * @return mixed
+     */
+    public function registerNamespace(?string $prefix, string $namespaceUri)
     {
         if ($prefix != null) {
             $this->element->setAttributeNS(
@@ -261,5 +271,18 @@ class DomElementImpl implements DomElementInterface
     public function lookupPrefix(string $namespaceUri): string
     {
         return $this->element->lookupPrefix($namespaceUri);
+    }
+
+    public function equals(?DomElementInterface $obj): bool
+    {
+        if ($this == $obj) {
+            return true;
+        }
+
+        if ($obj == null) {
+            return false;
+        }
+
+        return $this->element == $obj->element;
     }
 }

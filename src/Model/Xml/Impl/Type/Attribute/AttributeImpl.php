@@ -76,22 +76,19 @@ abstract class AttributeImpl implements AttributeInterface
     /**
      * @param ModelElementInstanceInterface $modelElement
      * @param mixed $value
-     * @param bool|null $withReferenceUpdate
+     * @param bool $withReferenceUpdate
      */
     public function setValue(
         ModelElementInstanceInterface $modelElement,
         $value,
-        ?bool $withReferenceUpdate = false
+        bool $withReferenceUpdate = true
     ): void {
-        if ($withReferenceUpdate == null) {
-            $withReferenceUpdate = true;
-        }
         $xmlValue = $this->convertModelValueToXmlValue($value);
         if ($this->namespaceUri == null) {
             $modelElement->setAttributeValue(
                 $this->attributeName,
                 $xmlValue,
-                $this->idIdAttribute,
+                $this->isIdAttribute,
                 $withReferenceUpdate
             );
         } else {
@@ -99,7 +96,7 @@ abstract class AttributeImpl implements AttributeInterface
                 $this->namespaceUri,
                 $this->attributeName,
                 $xmlValue,
-                $this->idIdAttribute,
+                $this->isIdAttribute,
                 $withReferenceUpdate
             );
         }
@@ -108,7 +105,7 @@ abstract class AttributeImpl implements AttributeInterface
     public function updateIncomingReferences(
         ModelElementInstanceInterface $modelElement,
         string $newIdentifier,
-        string $oldIdentifier
+        ?string $oldIdentifier
     ): void {
         foreach ($this->incomingReferences as $incomingReference) {
             $incomingReference->referencedElementUpdated($modelElement, $oldIdentifier, $newIdentifier);
@@ -177,6 +174,19 @@ abstract class AttributeImpl implements AttributeInterface
             $modelElement->removeAttribute($this->attributeName);
         } else {
             $modelElement->removeAttributeNs($this->namespaceUri, $this->attributeName);
+        }
+    }
+
+    /**
+     * @param ModelElementInstanceInterface $modelElement
+     * @param mixed $referenceIdentifier
+     */
+    public function unlinkReference(ModelElementInstanceInterface $modelElement, $referenceIdentifier): void
+    {
+        if (!empty($this->incomingReferences)) {
+            foreach ($this->incomingReferences as $incomingReference) {
+                $incomingReference->referencedElementRemoved($modelElement, $referenceIdentifier);
+            }
         }
     }
 

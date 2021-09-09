@@ -118,20 +118,17 @@ class ModelElementTypeTest extends TestCase
         $animals = $this->animalsType->newInstance($this->modelInstance);
         $this->modelInstance->setDocumentElement($animals);
 
-        $this->expectException(\BpmPlatform\Model\Xml\Exception\ModelTypeException::class);
-        $this->animalType->newInstance($this->modelInstance);
-
-        $this->expectException(\BpmPlatform\Model\Xml\Exception\ModelTypeException::class);
-        $this->flyingAnimalType->newInstance($this->modelInstance);
-
-        $animals->getAnimals()[] = $this->birdType->newInstance($this->modelInstance);
-        $animals->getAnimals()[] = $this->birdType->newInstance($this->modelInstance);
-        $animals->getAnimals()[] = $this->birdType->newInstance($this->modelInstance);
+        $animals->addAnimal($this->birdType->newInstance($this->modelInstance));
+        $animals->addAnimal($this->birdType->newInstance($this->modelInstance));
+        $animals->addAnimal($this->birdType->newInstance($this->modelInstance));
 
         $this->assertCount(1, $this->animalsType->getInstances($this->modelInstance));
         $this->assertEmpty($this->animalType->getInstances($this->modelInstance));
         $this->assertEmpty($this->flyingAnimalType->getInstances($this->modelInstance));
         $this->assertCount(3, $this->birdType->getInstances($this->modelInstance));
+
+        $this->expectException(\BpmPlatform\Model\Xml\Exception\ModelTypeException::class);
+        $this->animalType->newInstance($this->modelInstance);
     }
 
     public function testChildElementTypes(): void

@@ -54,15 +54,15 @@ class ModelInstanceImpl implements ModelInstanceInterface
     /**
      * @param mixed $type
      */
-    public function newInstance($type, ?string $id): ModelElementInstanceInterface
+    public function newInstance($type, ?string $id = null): ModelElementInstanceInterface
     {
         $modelElementType = $this->model->getType($type);
         if ($modelElementType != null) {
             $modelElementInstance = $modelElementType->newInstance($this, null);
             if (!empty($id)) {
-                ModelUtil::setNewIdentifier($type, $modelElementInstance, $id, false);
+                ModelUtil::setNewIdentifier($modelElementType, $modelElementInstance, $id, false);
             } else {
-                ModelUtil::setGeneratedUniqueIdentifier($type, $modelElementInstance, false);
+                ModelUtil::setGeneratedUniqueIdentifier($modelElementType, $modelElementInstance, false);
             }
             return $modelElementInstance;
         } else {
@@ -99,8 +99,8 @@ class ModelInstanceImpl implements ModelInstanceInterface
             $extendingTypes = $reference->getAllExtendingTypes();
             $instances = [];
             foreach ($extendingTypes as $modelElementType) {
-                if (!$modelElementType->isAbstract()) {
-                    $instances[] = $modelElementType->getInstances($this);
+                if (!($modelElementType->isAbstract())) {
+                    $instances = array_merge($instances, $modelElementType->getInstances($this));
                 }
             }
             return $instances;

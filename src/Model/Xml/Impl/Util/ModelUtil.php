@@ -44,7 +44,7 @@ class ModelUtil
             }
             return $modelElement;
         } elseif ($namespaceUri != null) {
-            $localName = $domELement->getLocalName();
+            $localName = $domElement->getLocalName();
             $modelType = $modelInstance->getModel()->getTypeForName($namespaceUri, $localName);
             if ($modelType == null) {
                 $model = $modelInstance->getModel();
@@ -181,7 +181,7 @@ class ModelUtil
         ModelElementInstanceInterface $modelElementInstance,
         bool $withReferenceUpdate = true
     ): void {
-        self::setNewIdentifier($type, $modelElementInstance, self::getUniqueIdentifier($type), $withReferenceUpdat);
+        self::setNewIdentifier($type, $modelElementInstance, self::getUniqueIdentifier($type), $withReferenceUpdate);
     }
 
     public static function getUniqueIdentifier(ModelElementTypeInterface $type): string
@@ -190,6 +190,6 @@ class ModelUtil
         $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
         $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
         $uuid = vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
-        return $type . '_' . $uuid;
+        return $type->getTypeName() . '_' . $uuid;
     }
 }
