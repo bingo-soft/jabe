@@ -23,7 +23,6 @@ class DomUtil
                 $filteredList[] = new DomElementImpl($node);
             }
         }
-
         return $filteredList;
     }
 

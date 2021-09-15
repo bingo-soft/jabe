@@ -56,20 +56,23 @@ class ModelInstanceImpl implements ModelInstanceInterface
      */
     public function newInstance($type, ?string $id = null): ModelElementInstanceInterface
     {
-        $modelElementType = $this->model->getType($type);
-        if ($modelElementType != null) {
-            $modelElementInstance = $modelElementType->newInstance($this, null);
-            if (!empty($id)) {
-                ModelUtil::setNewIdentifier($modelElementType, $modelElementInstance, $id, false);
+        if (is_string($type)) {
+            $modelElementType = $this->model->getType($type);
+            if ($modelElementType != null) {
+                $type = $modelElementType;
             } else {
-                ModelUtil::setGeneratedUniqueIdentifier($modelElementType, $modelElementInstance, false);
+                throw new ModelException(
+                    sprintf("Cannot create instance of ModelType %s: no such type registered.", $type)
+                );
             }
-            return $modelElementInstance;
-        } else {
-            throw new ModelException(
-                sprintf("Cannot create instance of ModelType %s: no such type registered.", $type)
-            );
         }
+        $modelElementInstance = $type->newInstance($this);
+        if (!empty($id)) {
+            ModelUtil::setNewIdentifier($type, $modelElementInstance, $id, false);
+        } else {
+            ModelUtil::setGeneratedUniqueIdentifier($type, $modelElementInstance, false);
+        }
+        return $modelElementInstance;
     }
 
     public function getModel(): ModelInterface

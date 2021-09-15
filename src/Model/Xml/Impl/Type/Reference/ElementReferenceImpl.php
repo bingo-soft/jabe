@@ -68,8 +68,7 @@ class ElementReferenceImpl extends ElementReferenceCollectionImpl implements Ele
         $modelInstance = $referenceSourceParentElement->getModelInstance();
         $identifier = $referenceTargetAttribute->getValue($referenceTargetElement);
         $existingElement = $modelInstance->getModelElementById($identifier);
-
-        if ($existingElement == null || $existingElement != $referenceTargetElement) {
+        if ($existingElement == null || !$existingElement->equals($referenceTargetElement)) {
             throw new ModelReferenceException("Cannot create reference to model element");
         } else {
             $referenceSourceElement = $modelInstance->newInstance($this->getReferenceSourceElementType());

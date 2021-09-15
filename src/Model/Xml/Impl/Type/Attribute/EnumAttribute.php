@@ -20,12 +20,13 @@ class EnumAttribute extends AttributeImpl
     protected function convertXmlValueToModelValue(?string $rawValue)
     {
         if ($rawValue != null) {
-            $class = new ReflectionClass($this->type);
-            $value = $class->getConstant($rawValue);
-            return $value;
-        } else {
-            return null;
+            $class = new \ReflectionClass($this->type);
+            $constants = $class->getConstants();
+            if (in_array($rawValue, $constants)) {
+                return $rawValue;
+            }
         }
+        return null;
     }
 
     /**
@@ -35,6 +36,9 @@ class EnumAttribute extends AttributeImpl
     {
         $class = new \ReflectionClass($this->type);
         $constants = $class->getConstants();
-        return array_search($modelValue, $constants);
+        if (in_array($modelValue, $constants)) {
+            return $modelValue;
+        }
+        return null;
     }
 }

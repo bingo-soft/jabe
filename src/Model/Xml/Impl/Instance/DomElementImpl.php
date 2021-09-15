@@ -110,6 +110,9 @@ class DomElementImpl implements DomElementInterface
     ): void {
         $newElement = $newChildDomElement->getElement();
         $existingElement = $existingChildDomElement->getElement();
+        if ($this->element->replaceChild($newElement, $existingElement) === false) {
+            throw new \DOMException("Unable to replace child element with new element");
+        }
     }
 
     public function removeChild(DomElementInterface $childDomElement): bool
@@ -178,12 +181,12 @@ class DomElementImpl implements DomElementInterface
         $xmlQName = new XmlQName($this->getDocument(), $this, $namespaceUri, $localName);
         if ($xmlQName->hasLocalNamespace()) {
             $this->element->setAttribute($xmlQName->getLocalName(), $value);
-            if ($isIdAttribute) {
+            if ($isIdAttribute && !$this->element->getAttributeNode("id")->isId()) {
                 $this->element->setIdAttribute($xmlQName->getLocalName(), true);
             }
         } else {
             $this->element->setAttributeNS($xmlQName->getNamespaceUri(), $xmlQName->getPrefixedName(), $value);
-            if ($isIdAttribute) {
+            if ($isIdAttribute && !$this->element->getAttributeNodeNS($xmlQName->getNamespaceUri(), "id")->isId()) {
                 $this->element->setIdAttributeNS($xmlQName->getNamespaceUri(), $xmlQName->getLocalName(), true);
             }
         }
@@ -275,14 +278,10 @@ class DomElementImpl implements DomElementInterface
 
     public function equals(?DomElementInterface $obj): bool
     {
-        if ($this == $obj) {
-            return true;
-        }
-
         if ($obj == null) {
             return false;
         }
 
-        return $this->element == $obj->element;
+        return $this->element->isSameNode($obj->getElement());
     }
 }

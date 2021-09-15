@@ -80,7 +80,7 @@ class ModelUtil
 
     public static function valueAsBoolean(string $rawValue): bool
     {
-        return boolval($rawValue);
+        return json_decode($rawValue);
     }
 
     public static function valueAsInteger(string $rawValue): int

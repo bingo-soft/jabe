@@ -66,7 +66,7 @@ abstract class AttributeImpl implements AttributeInterface
             }
         }
 
-        if ($value == null && $this->defaultValue != null) {
+        if ($value === null && $this->defaultValue !== null) {
             return $this->defaultValue;
         } else {
             return $this->convertXmlValueToModelValue($value);

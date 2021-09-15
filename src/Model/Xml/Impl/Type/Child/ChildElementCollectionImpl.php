@@ -110,7 +110,12 @@ class ChildElementCollectionImpl implements ChildElementCollectionInterface
         if ($e == null) {
             return false;
         } else {
-            return in_array($e, $this->getView($modelElement));
+            foreach ($this->getView($modelElement) as $el) {
+                if ($e->getDomElement()->equals($el)) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
@@ -191,6 +196,6 @@ class ChildElementCollectionImpl implements ChildElementCollectionInterface
 
     public function get(ModelElementInstanceInterface $modelElement): array
     {
-        return $this->getView($modelElement);
+        return ModelUtil::getModelElementCollection($this->getView($modelElement), $modelElement->getModelInstance());
     }
 }

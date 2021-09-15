@@ -5,10 +5,11 @@ namespace BpmPlatform\Model\Xml\Type\Reference;
 use BpmPlatform\Model\Xml\Exception\ModelException;
 use BpmPlatform\Model\Xml\Impl\Type\Attribute\AttributeImpl;
 use BpmPlatform\Model\Xml\Impl\Type\Reference\AttributeReferenceImpl;
-use BpmPlatform\Model\Xml\Impl\Util\StringUtil;
-use BpmPlatform\Model\Xml\Instance\{
-    ModelElementInstanceInterface
+use BpmPlatform\Model\Xml\Impl\Util\{
+    ModelUtil,
+    StringUtil
 };
+use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 
 abstract class AttributeReferenceCollection extends AttributeReferenceImpl implements AttributeReferenceInterface
 {
@@ -64,7 +65,10 @@ abstract class AttributeReferenceCollection extends AttributeReferenceImpl imple
                 throw new ModelException(sprintf("Unable to find a model element instance for id %s", $identifier));
             }
         }
-        return $referenceTargetElements;
+        return ModelUtil::getModelElementCollection(
+            $referenceTargetElements,
+            $referenceSourceElement->getModelInstance()
+        );
     }
 
     protected function performClearOperation(ModelElementInstanceInterface $referenceSourceElement): void
@@ -79,7 +83,7 @@ abstract class AttributeReferenceCollection extends AttributeReferenceImpl imple
         if (!empty($referenceIdentifier)) {
             parent::setReferenceIdentifier($referenceSourceElement, $referenceIdentifier);
         } else {
-            $this->referenceSourceAttribute->emoveAttribute($referenceSourceElement);
+            $this->referenceSourceAttribute->removeAttribute($referenceSourceElement);
         }
     }
 
@@ -92,13 +96,31 @@ abstract class AttributeReferenceCollection extends AttributeReferenceImpl imple
 
     protected function performAddOperation(
         ModelElementInstanceInterface $referenceSourceElement,
-        ModelElementInstanceInterface $referenceTargetElemen
+        ModelElementInstanceInterface $referenceTargetElement
     ): void {
         $identifier = $this->getReferenceIdentifier($referenceSourceElement);
         $references = StringUtil::splitListBySeparator($identifier, $this->separator);
         $targetIdentifier = $this->getTargetElementIdentifier($referenceTargetElement);
         $references[] = $targetIdentifier;
-        $identifier = StringUtil::joinList($references, $separator);
+        $identifier = StringUtil::joinList($references, $this->separator);
         $this->setReferenceIdentifier($referenceSourceElement, $identifier);
+    }
+
+    public function add(ModelElementInstanceInterface $modelElement, ModelElementInstanceInterface $e): bool
+    {
+        $this->performAddOperation($modelElement, $e);
+        return true;
+    }
+
+    public function remove(ModelElementInstanceInterface $modelElement, ModelElementInstanceInterface $e): bool
+    {
+        $this->performRemoveOperation($modelElement, $e);
+        return true;
+    }
+
+    public function clear(ModelElementInstanceInterface $modelElement): bool
+    {
+        $this->performClearOperation($modelElement);
+        return true;
     }
 }

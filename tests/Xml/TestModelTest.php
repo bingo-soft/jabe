@@ -39,7 +39,6 @@ abstract class TestModelTest extends TestCase
 
         $ref = new \ReflectionClass($test);
         $testXml = $ref->getShortName() + ".xml";
-        echo $ref->getShortName() + ".xml" + "\n";
         $testXmlAsStream = $test->getResourceAsStream($testXml);
         $modelInstance = $modelParser->parseModelFromStream($testXmlAsStream);
         return ["parsed", $modelInstance, $modelParser];

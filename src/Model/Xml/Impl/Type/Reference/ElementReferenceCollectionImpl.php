@@ -44,11 +44,12 @@ class ElementReferenceCollectionImpl extends ReferenceImpl implements ElementRef
         $modelInstance = $referenceSourceParentElement->getModelInstance();
         $referenceTargetIdentifier = $this->referenceTargetAttribute->getValue($referenceTargetElement);
         $existingElement = $modelInstance->getModelElementById($referenceTargetIdentifier);
-        if ($existingElement == null || $existingElement == $referenceTargetElement) {
+        if ($existingElement == null || !$referenceTargetElement->equals($existingElement)) {
             throw new ModelReferenceException("Cannot create reference to model element");
         } else {
             $referenceSourceElement = $modelInstance->newInstance($this->referenceSourceType);
             $this->referenceSourceCollection->add($referenceSourceParentElement, $referenceSourceElement);
+            $this->setReferenceIdentifier($referenceSourceElement, $referenceTargetIdentifier);
         }
     }
 
@@ -60,9 +61,18 @@ class ElementReferenceCollectionImpl extends ReferenceImpl implements ElementRef
             $this->referenceSourceType
         );
         foreach ($referenceSourceChildElements as $referenceSourceChildElement) {
-            if ($this->getReferenceTargetElement($referenceSourceChildElement) == $referenceTargetElement) {
+            if ($referenceTargetElement->equals($this->getReferenceTargetElement($referenceSourceChildElement))) {
                 $referenceSourceParentElement->removeChildElement($referenceSourceChildElement);
             }
+        }
+    }
+
+    protected function performClearOperation(
+        ModelElementInstanceImpl $referenceSourceParentElement,
+        array $elementsToRemove
+    ): void {
+        foreach ($elementsToRemove as $element) {
+            $referenceSourceParentElement->getDomElement()->removeChild($element);
         }
     }
 
@@ -133,13 +143,41 @@ class ElementReferenceCollectionImpl extends ReferenceImpl implements ElementRef
 
     public function contains(
         ModelElementInstanceImpl $referenceSourceParentElement,
-        ?ModelElementInstanceInterface $e
+        ?ModelElementInstanceInterface $elementToAdd
     ): bool {
-        if ($e == null) {
+        if ($elementToAdd == null) {
             return false;
         } else {
-            return in_array($e, $this->getView($referenceSourceParentElement));
+            foreach ($this->getView($referenceSourceParentElement) as $el) {
+                if ($elementToAdd->getDomElement()->equals($el)) {
+                    return true;
+                }
+            }
+            return false;
         }
+    }
+
+    public function containsAll(
+        ModelElementInstanceImpl $referenceSourceParentElement,
+        array $c
+    ): bool {
+        $modelElementCollection = ModelUtil::getModelElementCollection(
+            $this->getView($referenceSourceParentElement),
+            $referenceSourceParentElement->getModelInstance()
+        );
+        foreach ($modelElementCollection as $el) {
+            $flag = false;
+            foreach ($c as $elementToCheck) {
+                if ($elementToCheck->equals($el)) {
+                    $flag = true;
+                    break;
+                }
+            }
+            if (!$flag) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public function add(ModelElementInstanceImpl $referenceSourceParentElement, ModelElementInstanceInterface $e): bool
@@ -163,17 +201,6 @@ class ElementReferenceCollectionImpl extends ReferenceImpl implements ElementRef
         }
         $this->performRemoveOperation($referenceSourceParentElement, $e);
         return true;
-    }
-
-    public function containsAll(
-        ModelElementInstanceImpl $referenceSourceParentElement,
-        array $c
-    ): bool {
-        $modelElementCollection = ModelUtil::getModelElementCollection(
-            $this->getView($referenceSourceParentElement),
-            $referenceSourceParentElement->getModelInstance()
-        );
-        return $modelElementCollection->containsAll($referenceSourceParentElement, $c);
     }
 
     public function addAll(ModelElementInstanceImpl $referenceSourceParentElement, array $c): bool
@@ -220,6 +247,9 @@ class ElementReferenceCollectionImpl extends ReferenceImpl implements ElementRef
 
     public function getReferenceTargetElements(ModelElementInstanceImpl $referenceSourceParentElement): array
     {
-        return $this->getView($referenceSourceParentElement);
+        return ModelUtil::getModelElementCollection(
+            $this->getView($referenceSourceParentElement),
+            $referenceSourceParentElement->getModelInstance()
+        );
     }
 }

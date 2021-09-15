@@ -129,12 +129,15 @@ abstract class Animal extends ModelElementInstanceImpl
         return self::$isEndangeredAttr->getValue($this);
     }
 
-    public function setIsEndangered(bool $isEndangered): void
+    /**
+     * @param mixed $isEndangered
+     */
+    public function setIsEndangered($isEndangered): void
     {
         self::$isEndangeredAttr->setValue($this, $isEndangered);
     }
 
-    public function getGender(): string
+    public function getGender(): ?string
     {
         return self::$genderAttr->getValue($this);
     }
@@ -144,7 +147,7 @@ abstract class Animal extends ModelElementInstanceImpl
         self::$genderAttr->setValue($this, $gender);
     }
 
-    public function getAge(): int
+    public function getAge(): ?int
     {
         return self::$ageAttr->getValue($this);
     }
@@ -152,6 +155,10 @@ abstract class Animal extends ModelElementInstanceImpl
     public function setAge(int $age): void
     {
         self::$ageAttr->setValue($this, $age);
+    }
+
+    public function getRelationshipDefinition() {
+        return self::$relationshipDefinitionsColl;
     }
 
     public function getRelationshipDefinitions(): array
@@ -169,8 +176,63 @@ abstract class Animal extends ModelElementInstanceImpl
         return self::$relationshipDefinitionRefsColl->getReferenceSourceCollection()->get($this);
     }
 
+    public function addRelationshipDefinitionRefElement(RelationshipDefinitionRef $rel): void
+    {
+        self::$relationshipDefinitionRefsColl->getReferenceSourceCollection()->add($this, $rel);
+    }
+
+    public function removeRelationshipDefinitionRefElement(RelationshipDefinitionRef $rel): void
+    {
+        self::$relationshipDefinitionRefsColl->getReferenceSourceCollection()->remove($this, $rel);
+    }
+
+    public function clearRelationshipDefinitionRefElements(): void
+    {
+        self::$relationshipDefinitionRefsColl->getReferenceSourceCollection()->clear($this);
+    }
+
     public function getBestFriends(): array
     {
         return self::$bestFriendsRefCollection->getReferenceTargetElements($this);
+    }
+
+    public function addRelationshipDefinition(RelationshipDefinition $rel): void
+    {
+        self::$relationshipDefinitionRefsColl->add($this, $rel);
+    }
+
+    public function addRelationship(RelationshipDefinition $rel): void
+    {
+        self::$relationshipDefinitionsColl->add($this, $rel);
+    }
+
+    public function removeRelationship(RelationshipDefinition $rel): void
+    {
+        self::$relationshipDefinitionsColl->remove($this, $rel);
+    }
+
+    public function clearRelationships(): void
+    {
+        self::$relationshipDefinitionsColl->clear($this);
+    }
+
+    public function clearRelationshipDefinitions(): void
+    {
+        self::$relationshipDefinitionRefsColl->clear($this);
+    }
+
+    public function addFriend(Animal $friend): void
+    {
+        self::$bestFriendsRefCollection->add($this, $friend);
+    }
+
+    public function removeFriend(Animal $friend): void
+    {
+        self::$bestFriendsRefCollection->remove($this, $friend);
+    }
+
+    public function clearFriends(): void
+    {
+        self::$bestFriendsRefCollection->clear($this);
     }
 }
