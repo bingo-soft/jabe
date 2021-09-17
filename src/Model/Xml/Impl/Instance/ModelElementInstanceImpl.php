@@ -179,18 +179,18 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
             $elementName
         );
         if (!empty($childElements)) {
-            ModelUtil::getModelElement($childElements[0], $this->modelInstance);
+            return ModelUtil::getModelElement($childElements[0], $this->modelInstance);
         } else {
             return null;
         }
     }
 
     public function getUniqueChildElementByType(
-        ModelElementInstanceInterface $elementType
+        string $elementType
     ): ?ModelElementInstanceInterface {
         $childElements = $this->domElement->getChildElementsByType($this->modelInstance, $elementType);
         if (!empty($childElements)) {
-            ModelUtil::getModelElement($childElements[0], $this->modelInstance);
+            return ModelUtil::getModelElement($childElements[0], $this->modelInstance);
         } else {
             return null;
         }
@@ -357,8 +357,6 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
     {
         if ($obj == null) {
             return false;
-        } elseif ($obj == $this) {
-            return true;
         } else {
             return $obj->domElement->equals($this->domElement);
         }

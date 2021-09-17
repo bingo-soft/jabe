@@ -307,7 +307,7 @@ abstract class AbstractFlowNodeBuilder extends AbstractFlowElementBuilder
         return $this;
     }
 
-    public function camundaJobPriority(string $jobPriority): AbstractFlowNodeBuilder
+    public function jobPriority(string $jobPriority): AbstractFlowNodeBuilder
     {
         $this->element->setJobPriority($jobPriority);
         return $this;

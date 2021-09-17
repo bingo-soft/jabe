@@ -10,7 +10,7 @@ interface ErrorEventDefinitionInterface extends EventDefinitionInterface
 
     public function getErrorCodeVariable(): string;
 
-    public function setCamundaErrorCodeVariable(string $errorCodeVariable): void;
+    public function setErrorCodeVariable(string $errorCodeVariable): void;
 
     public function setErrorMessageVariable(string $errorCauseVariable): void;
 

@@ -4,5 +4,8 @@ namespace BpmPlatform\Model\Xml\Impl\Util\DomUtil;
 
 interface NodeListFilterInterface
 {
-    public function matches(\DomElement $element): bool;
+    /**
+     * @param mixed $element
+     */
+    public function matches($element): bool;
 }

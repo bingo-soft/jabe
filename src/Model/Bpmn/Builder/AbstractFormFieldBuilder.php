@@ -46,7 +46,7 @@ abstract class AbstractFormFieldBuilder extends AbstractBpmnModelElementBuilder
         return $this;
     }
 
-    public function camundaFormFieldDone(): AbstractFormFieldBuilder
+    public function formFieldDone(): AbstractFormFieldBuilder
     {
         return parent::builder();
     }

@@ -13,7 +13,10 @@ class ElementByNameListFilter extends ElementNodeListFilter
         $this->namespaceUri = $namespaceUri;
     }
 
-    public function matches(\DomElement $element): bool
+    /**
+     * @param mixed $element
+     */
+    public function matches($element): bool
     {
         return parent::matches($element) &&
                $this->localName == $element->localName &&

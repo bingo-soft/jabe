@@ -32,7 +32,7 @@ class EnumAttribute extends AttributeImpl
     /**
      * @param mixed $modelValue;
      */
-    protected function convertModelValueToXmlValue($modelValue): string
+    protected function convertModelValueToXmlValue($modelValue): ?string
     {
         $class = new \ReflectionClass($this->type);
         $constants = $class->getConstants();

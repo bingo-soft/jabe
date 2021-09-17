@@ -28,7 +28,7 @@ abstract class AbstractEventBasedGatewayBuilder extends AbstractGatewayBuilder
         return $this;
     }
 
-    public function asyncAfter(bool $isCamundaAsyncAfter): AbstractEventBasedGatewayBuilder
+    public function asyncAfter(bool $isAsyncAfter): AbstractEventBasedGatewayBuilder
     {
         throw new \Exception("'asyncAfter' is not supported for 'Event Based Gateway'");
     }

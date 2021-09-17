@@ -52,7 +52,7 @@ interface ModelElementInstanceInterface
     ): ?ModelElementInstanceInterface;
 
     public function getUniqueChildElementByType(
-        ModelElementInstanceInterface $elementType
+        string $elementType
     ): ?ModelElementInstanceInterface;
 
     public function setUniqueChildElementByNameNs(ModelElementInstanceInterface $newChild): void;
@@ -77,4 +77,6 @@ interface ModelElementInstanceInterface
     ): void;
 
     public function updateAfterReplacement(): void;
+
+    public function equals(?ModelElementInstanceInterface $obj): bool;
 }

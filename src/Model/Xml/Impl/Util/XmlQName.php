@@ -10,9 +10,9 @@ use BpmPlatform\Model\Xml\Instance\{
 class XmlQName
 {
     public const KNOWN_PREFIXES = [
-        'http://www.camunda.com/fox' => 'fox',
-        'http://activiti.org/bpmn' => 'camunda',
-        'http://camunda.org/schema/1.0/bpmn' => 'camunda',
+        'http://www.test.com/fox' => 'fox',
+        'http://activiti.org/bpmn' => 'test',
+        'http://test.org/schema/1.0/bpmn' => 'test',
         'http://www.omg.org/spec/BPMN/20100524/MODEL' => 'bpmn2',
         'http://www.omg.org/spec/BPMN/20100524/DI' => 'di',
         'http://www.omg.org/spec/DD/20100524/DI' => 'di',

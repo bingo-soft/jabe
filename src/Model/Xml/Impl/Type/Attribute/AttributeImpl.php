@@ -38,7 +38,7 @@ abstract class AttributeImpl implements AttributeInterface
     /**
      * @param mixed $modelValue;
      */
-    abstract protected function convertModelValueToXmlValue($modelValue): string;
+    abstract protected function convertModelValueToXmlValue($modelValue): ?string;
 
     public function getOwningElementType(): ModelElementTypeInterface
     {
@@ -68,9 +68,8 @@ abstract class AttributeImpl implements AttributeInterface
 
         if ($value === null && $this->defaultValue !== null) {
             return $this->defaultValue;
-        } else {
-            return $this->convertXmlValueToModelValue($value);
         }
+        return $this->convertXmlValueToModelValue($value);
     }
 
     /**

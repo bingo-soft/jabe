@@ -114,26 +114,26 @@ class MultiInstanceLoopCharacteristicsImpl extends LoopCharacteristicsImpl imple
         self::$completionConditionChild = $sequenceBuilder->element(CompletionConditionInterface::class)
         ->build();
 
-        self::$camundaAsyncAfter = $typeBuilder->booleanAttribute(BpmnModelConstants::ATTRIBUTE_ASYNC_AFTER)
+        self::$asyncAfter = $typeBuilder->booleanAttribute(BpmnModelConstants::ATTRIBUTE_ASYNC_AFTER)
         ->namespace(BpmnModelConstants::NS)
         ->defaultValue(false)
         ->build();
 
-        self::$camundaAsyncBefore = $typeBuilder->booleanAttribute(BpmnModelConstants::ATTRIBUTE_ASYNC_BEFORE)
+        self::$asyncBefore = $typeBuilder->booleanAttribute(BpmnModelConstants::ATTRIBUTE_ASYNC_BEFORE)
         ->namespace(BpmnModelConstants::NS)
         ->defaultValue(false)
         ->build();
 
-        self::$camundaExclusive = $typeBuilder->booleanAttribute(BpmnModelConstants::ATTRIBUTE_EXCLUSIVE)
+        self::$exclusive = $typeBuilder->booleanAttribute(BpmnModelConstants::ATTRIBUTE_EXCLUSIVE)
         ->namespace(BpmnModelConstants::NS)
         ->defaultValue(true)
         ->build();
 
-        self::$camundaCollection = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_COLLECTION)
+        self::$collection = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_COLLECTION)
         ->namespace(BpmnModelConstants::NS)
         ->build();
 
-        self::$camundaElementVariable = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_ELEMENT_VARIABLE)
+        self::$elementVariable = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_ELEMENT_VARIABLE)
         ->namespace(BpmnModelConstants::NS)
         ->build();
 

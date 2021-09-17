@@ -65,4 +65,6 @@ interface DomElementInterface
     public function registerNamespace(?string $prefix, string $namespaceUri);
 
     public function lookupPrefix(string $namespaceUri): string;
+
+    public function equals(?DomElementInterface $obj): bool;
 }

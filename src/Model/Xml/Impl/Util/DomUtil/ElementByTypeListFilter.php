@@ -20,7 +20,10 @@ class ElementByTypeListFilter extends ElementNodeListFilter
         $this->model = $modelInstance;
     }
 
-    public function matches(\DomElement $element): bool
+    /**
+     * @param mixed $element
+     */
+    public function matches($element): bool
     {
         if (!parent::matches($element)) {
             return false;

@@ -62,43 +62,43 @@ class UserTaskImpl extends TaskImpl implements UserTaskInterface
         self::$renderingCollection = $sequenceBuilder->elementCollection(RenderingInterface::class)
         ->build();
 
-        self::$camundaAssigneeAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_ASSIGNEE)
+        self::$assigneeAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_ASSIGNEE)
         ->namespace(BpmnModelConstants::NS)
         ->build();
 
-        self::$camundaCandidateGroupsAttribute = $typeBuilder->stringAttribute(
+        self::$candidateGroupsAttribute = $typeBuilder->stringAttribute(
             BpmnModelConstants::ATTRIBUTE_CANDIDATE_GROUPS
         )
         ->namespace(BpmnModelConstants::NS)
         ->build();
 
-        self::$camundaCandidateUsersAttribute = $typeBuilder->stringAttribute(
+        self::$candidateUsersAttribute = $typeBuilder->stringAttribute(
             BpmnModelConstants::ATTRIBUTE_CANDIDATE_USERS
         )
         ->namespace(BpmnModelConstants::NS)
         ->build();
 
-        self::$camundaDueDateAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_DUE_DATE)
+        self::$dueDateAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_DUE_DATE)
         ->namespace(BpmnModelConstants::NS)
         ->build();
 
-        self::$camundaFollowUpDateAttribute = $typeBuilder->stringAttribute(
+        self::$followUpDateAttribute = $typeBuilder->stringAttribute(
             BpmnModelConstants::ATTRIBUTE_FOLLOW_UP_DATE
         )
         ->namespace(BpmnModelConstants::NS)
         ->build();
 
-        self::$camundaFormHandlerClassAttribute = $typeBuilder->stringAttribute(
+        self::$formHandlerClassAttribute = $typeBuilder->stringAttribute(
             BpmnModelConstants::ATTRIBUTE_FORM_HANDLER_CLASS
         )
         ->namespace(BpmnModelConstants::NS)
         ->build();
 
-        self::$camundaFormKeyAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_FORM_KEY)
+        self::$formKeyAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_FORM_KEY)
         ->namespace(BpmnModelConstants::NS)
         ->build();
 
-        self::$camundaPriorityAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_PRIORITY)
+        self::$priorityAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_PRIORITY)
         ->namespace(BpmnModelConstants::NS)
         ->build();
 

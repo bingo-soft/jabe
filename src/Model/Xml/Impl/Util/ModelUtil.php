@@ -78,9 +78,9 @@ class ModelUtil
         }
     }
 
-    public static function valueAsBoolean(string $rawValue): bool
+    public static function valueAsBoolean(?string $rawValue): bool
     {
-        return json_decode($rawValue);
+        return $rawValue === null ? false : json_decode($rawValue);
     }
 
     public static function valueAsInteger(string $rawValue): int

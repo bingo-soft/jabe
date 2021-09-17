@@ -47,6 +47,7 @@ class IdsElementReferenceCollectionImpl extends ElementReferenceCollectionImpl
                 }
             }
         }
+        return $referenceTargetElements;
     }
 
     protected function updateReference(

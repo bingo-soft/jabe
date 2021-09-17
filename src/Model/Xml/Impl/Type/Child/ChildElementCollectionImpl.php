@@ -15,7 +15,7 @@ use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
 
 class ChildElementCollectionImpl implements ChildElementCollectionInterface
 {
-    private $childElementTypeClass;
+    protected $childElementTypeClass;
     private $parentElementType;
     private $minOccurs = 0;
     protected $maxOccurs = -1;
