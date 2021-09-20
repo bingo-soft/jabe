@@ -12,8 +12,8 @@
   <bird id="birdo" gender="Female">
    <mechanical:wings>zisch</mechanical:wings>
   </bird>
-  <bird id="donald" gender="Unknown" yans:canHazExtendedWings="true">
+  <bird id="donald" gender="Unknown" yans:canHaveExtendedWings="true">
    <yans:wings>flappy</yans:wings>
   </bird>
-  <bird id="plucky" gender="Unknown" mechanical:canHazExtendedWings="false"/>
+  <bird id="plucky" gender="Unknown" mechanical:canHaveExtendedWings="false"/>
 </animals>

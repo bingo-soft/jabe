@@ -18,7 +18,11 @@ interface DomElementInterface
 
     public function getChildElements(): array;
 
-    public function getChildElementsByNameNs(array $namespaceUri, string $elementName): array;
+    /**
+     * @param mixed $uris
+     * @param string $elementName
+     */
+    public function getChildElementsByNameNs($uris, string $elementName): array;
 
     public function getChildElementsByType(
         ModelInstanceImpl $modelInstance,
@@ -43,7 +47,7 @@ interface DomElementInterface
 
     public function getAttribute(?string $namespaceUri, string $localName): ?string;
 
-    public function setAttribute(?string $namespaceUri, string $localName, string $value, ?bool $isIdAttribute): void;
+    public function setAttribute(?string $namespaceUri, string $localName, string $value, ?bool $isIdAttribute = false): void;
 
     public function setIdAttribute(?string $namespaceUri, string $localName, string $value): void;
 
@@ -64,7 +68,7 @@ interface DomElementInterface
      */
     public function registerNamespace(?string $prefix, string $namespaceUri);
 
-    public function lookupPrefix(string $namespaceUri): string;
+    public function lookupPrefix(string $namespaceUri): ?string;
 
     public function equals(?DomElementInterface $obj): bool;
 }

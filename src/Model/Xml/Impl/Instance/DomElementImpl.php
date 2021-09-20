@@ -85,12 +85,20 @@ class DomElementImpl implements DomElementInterface
         return DomUtil::filterNodeListForElements($childNodes);
     }
 
-    public function getChildElementsByNameNs(array $namespaceUris, string $elementName): array
+    /**
+     * @param mixed $uris
+     * @param string $elementName
+     */
+    public function getChildElementsByNameNs($uris, string $elementName): array
     {
         $childNodes = $this->element->childNodes;
         $result = [];
-        foreach ($namespaceUris as $uri) {
-            $result = array_merge($result, DomUtil::filterNodeListByName($childNodes, $uri, $elementName));
+        if (is_string($uris)) {
+            $result = DomUtil::filterNodeListByName($childNodes, $uris, $elementName);
+        } elseif (is_array($uris)) {
+            foreach ($uris as $uri) {
+                $result = array_merge($result, DomUtil::filterNodeListByName($childNodes, $uri, $elementName));
+            }
         }
         return $result;
     }
@@ -175,7 +183,7 @@ class DomElementImpl implements DomElementInterface
         }
     }
 
-    public function setAttribute(?string $namespaceUri, string $localName, string $value, ?bool $isIdAttribute): void
+    public function setAttribute(?string $namespaceUri, string $localName, string $value, ?bool $isIdAttribute = false): void
     {
         $isIdAttribute = $isIdAttribute ?? false;
         $xmlQName = new XmlQName($this->getDocument(), $this, $namespaceUri, $localName);
@@ -271,7 +279,7 @@ class DomElementImpl implements DomElementInterface
         }
     }
 
-    public function lookupPrefix(string $namespaceUri): string
+    public function lookupPrefix(string $namespaceUri): ?string
     {
         return $this->element->lookupPrefix($namespaceUri);
     }

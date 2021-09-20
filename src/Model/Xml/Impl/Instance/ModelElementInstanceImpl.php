@@ -104,7 +104,7 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
         if ($isIdAttribute) {
             $this->domElement->setIdAttribute($namespaceForSetting, $attributeName, $xmlValue);
         } else {
-            $this->domElement->setAttribute($namespaceForSetting, $attributeName, $xmlValue);
+            $this->domElement->setAttribute($namespaceForSetting, $attributeName, $xmlValue, false);
         }
         $attribute = $this->elementType->getAttribute($attributeName);
         if ($attribute != null && $withReferenceUpdate) {
@@ -119,8 +119,8 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
             return $intendedNamespace;
         } else {
             $alternativeNamespaces = $this->modelInstance->getModel()->getAlternativeNamespaces($intendedNamespace);
-            if (!empty($alternativeNamespace)) {
-                foreach ($alternativeNamespace as $alternativeNamespace) {
+            if (!empty($alternativeNamespaces)) {
+                foreach ($alternativeNamespaces as $alternativeNamespace) {
                     if ($this->getAttributeValueNs($alternativeNamespace, $attributeName) != null) {
                         return $alternativeNamespace;
                     }
@@ -287,7 +287,7 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
             );
             $instances = array_merge($instances, ModelUtil::getModelElementCollection($elements, $this->modelInstance));
             return $instances;
-        } elseif ($childElementType instanceof ModelElementInstanceInterface) {
+        } elseif (is_subclass_of($childElementType, ModelElementInstanceImpl::class)) {
             return $this->getChildElementsByType($this->getModelInstance()->getModel()->getType($childElementType));
         }
         return [];

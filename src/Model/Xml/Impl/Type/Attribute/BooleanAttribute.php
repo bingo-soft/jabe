@@ -25,6 +25,6 @@ class BooleanAttribute extends AttributeImpl
      */
     protected function convertModelValueToXmlValue($modelValue): string
     {
-        return ModelUtil::valueAsString($modelValue);
+        return $modelValue == null ? "false" : json_encode($modelValue);
     }
 }

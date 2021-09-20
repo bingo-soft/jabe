@@ -80,7 +80,7 @@ class XmlQName
                 if ($lookupPrefix == null && $this->rootElement != null) {
                     $knownPrefix = array_search($this->namespaceUri, self::KNOWN_PREFIXES);
                     if ($knownPrefix === false) {
-                        return $this->rootElement->registerNamespace($this->namespaceUri);
+                        return $this->rootElement->registerNamespace(null, $this->namespaceUri);
                     } elseif (empty($knownPrefix)) {
                         return null;
                     } else {

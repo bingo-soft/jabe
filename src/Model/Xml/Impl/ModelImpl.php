@@ -27,12 +27,12 @@ class ModelImpl implements ModelInterface
     {
         if (!array_key_exists($actualNs, $this->actualNsToAlternative)) {
             $alternativeNamespaces = [];
+            $this->actualNsToAlternative[$actualNs] = [];
         } else {
             $alternativeNamespaces = $this->actualNsToAlternative[$actualNs];
         }
         if (!in_array($alternativeNs, $alternativeNamespaces)) {
-            $alternativeNamespaces[] = $alternativeNs;
-            $this->actualNsToAlternative[$actualNs] = $alternativeNamespaces;
+            $this->actualNsToAlternative[$actualNs] = [$alternativeNs, ...$this->actualNsToAlternative[$actualNs]];
             $this->alternativeNsToActual[$alternativeNs] = $actualNs;
         }
     }
@@ -43,9 +43,14 @@ class ModelImpl implements ModelInterface
             return;
         }
         $actual = $this->alternativeNsToActual[$alternativeNs];
+
         unset($this->alternativeNsToActual[$alternativeNs]);
-        //looks strange
-        unset($this->actualNsToAlternative[$actual]);
+        foreach ($this->actualNsToAlternative[$actual] as $key => $value) {
+            if ($value == $alternativeNs) {
+                unset($this->actualNsToAlternative[$actual][$key]);
+                break;
+            }
+        }
     }
 
     public function getAlternativeNamespace(string $actualNs): ?string
