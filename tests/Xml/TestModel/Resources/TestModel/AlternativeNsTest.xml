@@ -4,7 +4,7 @@
   xmlns:mechanical="http://test.org/mechanical"
   xmlns:yans="http://test.org/yans"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://test.org/animals ../Testmodel.xsd ">
+  xsi:schemaLocation="http://test.org/animals ./Testmodel.xsd ">
 
   <bird id="hedwig" gender="Male">
     <mechanical:wings>wusch</mechanical:wings>

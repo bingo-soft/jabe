@@ -137,12 +137,12 @@ abstract class AttributeImpl implements AttributeInterface
         $this->isRequired = $required;
     }
 
-    public function setNamespaceUri(string $namespaceUri): void
+    public function setNamespaceUri(?string $namespaceUri): void
     {
         $this->namespaceUri = $namespaceUri;
     }
 
-    public function getNamespaceUri(): string
+    public function getNamespaceUri(): ?string
     {
         return $this->namespaceUri;
     }

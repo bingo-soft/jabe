@@ -80,6 +80,16 @@ class ModelInstanceImpl implements ModelInstanceInterface
         return $this->model;
     }
 
+    public function registerGenericType(string $namespaceUri, string $localName): ModelElementTypeInterface
+    {
+        $elementType = $this->model->getTypeForName($namespaceUri, $localName);
+        if ($elementType == null) {
+            $elementType = $this->modelBuilder->defineGenericType($localName, $namespaceUri);
+            $model = $this->modelBuilder->build();
+        }
+        return $elementType;
+    }
+
     public function getModelElementById(?string $id): ?ModelElementInstanceInterface
     {
         if ($id == null) {

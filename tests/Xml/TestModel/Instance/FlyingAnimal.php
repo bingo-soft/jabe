@@ -47,7 +47,7 @@ abstract class FlyingAnimal extends Animal
         $typeBuilder->build();
     }
 
-    public function getWingspan(): float
+    public function getWingspan(): ?float
     {
         return self::$wingspanAttribute->getValue($this);
     }
@@ -57,7 +57,7 @@ abstract class FlyingAnimal extends Animal
         self::$wingspanAttribute->setValue($this, $wingspan);
     }
 
-    public function getFlightInstructor(): FlyingAnimal
+    public function getFlightInstructor(): ?FlyingAnimal
     {
         return self::$flightInstructorChild->getReferenceTargetElement($this);
     }
@@ -77,8 +77,38 @@ abstract class FlyingAnimal extends Animal
         return self::$flightPartnerRefsColl->getReferenceTargetElements($this);
     }
 
+    public function addFlightPartnerRef(FlyingAnimal $flightPartner): void
+    {
+        self::$flightPartnerRefsColl->add($this, $flightPartner);
+    }
+
+    public function removeFlightPartnerRef(FlyingAnimal $flightPartner): void
+    {
+        self::$flightPartnerRefsColl->remove($this, $flightPartner);
+    }
+
+    public function clearFlightPartnerRefs(): void
+    {
+        self::$flightPartnerRefsColl->clear($this);
+    }
+
     public function getFlightPartnerRefElements(): array
     {
         return self::$flightPartnerRefsColl->getReferenceSourceCollection()->get($this);
+    }
+
+    public function addFlightPartnerRefElement(FlightPartnerRef $ref): void
+    {
+        self::$flightPartnerRefsColl->getReferenceSourceCollection()->add($this, $ref);
+    }
+
+    public function removeFlightPartnerRefElement(FlightPartnerRef $ref): void
+    {
+        self::$flightPartnerRefsColl->getReferenceSourceCollection()->remove($this, $ref);
+    }
+
+    public function clearFlightPartnerRefElements(): void
+    {
+        self::$flightPartnerRefsColl->getReferenceSourceCollection()->clear($this);
     }
 }

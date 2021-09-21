@@ -30,7 +30,7 @@ interface AttributeInterface
 
     public function isRequired(): bool;
 
-    public function getNamespaceUri(): string;
+    public function getNamespaceUri(): ?string;
 
     public function getAttributeName(): string;
 
