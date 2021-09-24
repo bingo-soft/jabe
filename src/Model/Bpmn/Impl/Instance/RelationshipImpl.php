@@ -3,6 +3,7 @@
 namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 
 use BpmPlatform\Model\Xml\ModelBuilder;
+use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\RelationshipDirection;
@@ -42,12 +43,12 @@ class RelationshipImpl extends BaseElementImpl implements RelationshipInterface
             }
         );
 
-        $typeAttribute = $typeBuilder->stringAttribute(BaseElementInterface::BPMN_ATTRIBUTE_TYPE)
+        $typeAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_TYPE)
         ->required()
         ->build();
 
         $directionAttribute = $typeBuilder->enumAttribute(
-            BaseElementInterface::BPMN_ATTRIBUTE_DIRECTION,
+            BpmnModelConstants::BPMN_ATTRIBUTE_DIRECTION,
             RelationshipDirection::class
         )
         ->build();

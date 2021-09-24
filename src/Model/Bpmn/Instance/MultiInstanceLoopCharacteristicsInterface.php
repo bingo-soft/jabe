@@ -66,7 +66,7 @@ interface MultiInstanceLoopCharacteristicsInterface extends LoopCharacteristicsI
 
     public function isExclusive(): bool;
 
-    public function setExclusive(bool $isExclusive): bool;
+    public function setExclusive(bool $isExclusive): void;
 
     public function builder(): MultiInstanceLoopCharacteristicsBuilder;
 }

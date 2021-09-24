@@ -3,7 +3,7 @@
 namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 
 use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\Builder\BusinessRuleTaskBuilder;
+use BpmPlatform\Model\Bpmn\Builder\BusinessRuleTaskBuilder;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
@@ -62,81 +62,81 @@ class BusinessRuleTaskImpl extends TaskImpl implements BusinessRuleTaskInterface
         ->build();
 
         self::$classAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_CLASS
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_CLASS
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$delegateExpressionAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_DELEGATE_EXPRESSION
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_DELEGATE_EXPRESSION
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$expressionAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_EXPRESSION
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_EXPRESSION
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$resultVariableAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_RESULT_VARIABLE
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_RESULT_VARIABLE
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$topicAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_TOPIC
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_TOPIC
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$typeAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_TYPE
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_TYPE
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$decisionRefAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_DECISION_REF
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_DECISION_REF
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$decisionRefBindingAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_DECISION_REF_BINDING
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_DECISION_REF_BINDING
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$decisionRefVersionAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_DECISION_REF_VERSION
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_DECISION_REF_VERSION
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$decisionRefVersionTagAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_DECISION_REF_VERSION_TAG
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_DECISION_REF_VERSION_TAG
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$decisionRefTenantIdAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_DECISION_REF_TENANT_ID
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_DECISION_REF_TENANT_ID
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$mapDecisionResultAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_MAP_DECISION_RESULT
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_MAP_DECISION_RESULT
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$taskPriorityAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_TASK_PRIORITY
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_TASK_PRIORITY
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         $typeBuilder->build();

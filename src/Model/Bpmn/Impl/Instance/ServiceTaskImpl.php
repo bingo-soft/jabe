@@ -62,45 +62,45 @@ class ServiceTaskImpl extends TaskImpl implements ServiceTaskInterface
         ->build();
 
         self::$classAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_CLASS
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_CLASS
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$delegateExpressionAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_DELEGATE_EXPRESSION
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_DELEGATE_EXPRESSION
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$expressionAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_EXPRESSION
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_EXPRESSION
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$resultVariableAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_RESULT_VARIABLE
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_RESULT_VARIABLE
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$topicAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_TOPIC
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_TOPIC
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$typeAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_TYPE
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_TYPE
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$taskPriorityAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_TASK_PRIORITY
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_TASK_PRIORITY
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         $typeBuilder->build();

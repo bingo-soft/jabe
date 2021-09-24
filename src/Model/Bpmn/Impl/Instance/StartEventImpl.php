@@ -3,7 +3,7 @@
 namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 
 use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\Builder\StartEventBuilder;
+use BpmPlatform\Model\Bpmn\Builder\StartEventBuilder;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
@@ -50,23 +50,23 @@ class StartEventImpl extends CatchEventImpl implements StartEventInterface
         ->defaultValue(true)
         ->build();
 
-        self::$asyncAttribute = $typeBuilder->booleanAttribute(BpmnModelConstants::ATTRIBUTE_ASYNC)
-        ->namespace(BpmnModelConstants::NS)
+        self::$asyncAttribute = $typeBuilder->booleanAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_ASYNC)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->defaultValue(false)
         ->build();
 
         self::$formHandlerClassAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_FORM_HANDLER_CLASS
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_FORM_HANDLER_CLASS
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
-        self::$formKeyAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_FORM_KEY)
-        ->namespace(BpmnModelConstants::NS)
+        self::$formKeyAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_FORM_KEY)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
-        self::$initiatorAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_INITIATOR)
-        ->namespace(BpmnModelConstants::NS)
+        self::$initiatorAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_INITIATOR)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         $typeBuilder->build();

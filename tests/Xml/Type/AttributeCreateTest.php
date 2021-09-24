@@ -92,7 +92,7 @@ class AttributeCreateTest extends TestModelTest
 
     public function testSetNamespaceUri(): void
     {
-        $testNamespace = "http://camunda.org/test";
+        $testNamespace = "http://test.org/test";
 
         $this->idAttribute->setNamespaceUri($testNamespace);
         $this->assertEquals($testNamespace, $this->idAttribute->getNamespaceUri());

@@ -3,6 +3,7 @@
 namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 
 use BpmPlatform\Model\Xml\ModelBuilder;
+use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
@@ -44,12 +45,12 @@ class OperationImpl extends BaseElementImpl implements OperationInterface
             }
         );
 
-        self::$nameAttribute = $typeBuilder->stringAttribute(BaseElementInterface::BPMN_ATTRIBUTE_NAME)
+        self::$nameAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_NAME)
         ->required()
         ->build();
 
         self::$implementationRefAttribute = $typeBuilder->stringAttribute(
-            BaseElementInterface::BPMN_ELEMENT_IMPLEMENTATION_REF
+            BpmnModelConstants::BPMN_ELEMENT_IMPLEMENTATION_REF
         )
         ->build();
 

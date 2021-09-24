@@ -3,6 +3,7 @@
 namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 
 use BpmPlatform\Model\Xml\ModelBuilder;
+use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
@@ -69,12 +70,12 @@ class CorrelationPropertyImpl extends RootElementImpl implements CorrelationProp
         self::$nameAttribute->setValue($this, $name);
     }
 
-    public function getType(): string
+    public function getType(): ItemDefinitionInterface
     {
         return self::$typeAttribute->getValue($this);
     }
 
-    public function setType(string $type): void
+    public function setType(ItemDefinitionInterface $type): void
     {
         self::$typeAttribute->setValue($this, $type);
     }

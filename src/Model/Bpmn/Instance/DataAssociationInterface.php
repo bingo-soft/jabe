@@ -15,7 +15,7 @@ interface DataAssociationInterface extends BaseElementInterface
 
     public function getTransformation(): FormalExpressionInterface;
 
-    public function setTransformation(): Transformation;
+    public function setTransformation(Transformation $transformation): void;
 
     public function getAssignments(): array;
 

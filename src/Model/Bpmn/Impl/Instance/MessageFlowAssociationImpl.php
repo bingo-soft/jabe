@@ -3,6 +3,7 @@
 namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 
 use BpmPlatform\Model\Xml\ModelBuilder;
+use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
@@ -41,14 +42,14 @@ class MessageFlowAssociationImpl extends BaseElementImpl implements MessageFlowA
         );
 
         self::$innerMessageFlowRefAttribute = $typeBuilder->stringAttribute(
-            BaseElementInterface::BPMN_ATTRIBUTE_INNER_MESSAGE_FLOW_REF
+            BpmnModelConstants::BPMN_ATTRIBUTE_INNER_MESSAGE_FLOW_REF
         )
         ->required()
         ->qNameAttributeReference(MessageFlowInterface::class)
         ->build();
 
         self::$outerMessageFlowRefAttribute = $typeBuilder->stringAttribute(
-            BaseElementInterface::BPMN_ATTRIBUTE_OUTER_MESSAGE_FLOW_REF
+            BpmnModelConstants::BPMN_ATTRIBUTE_OUTER_MESSAGE_FLOW_REF
         )
         ->required()
         ->qNameAttributeReference(MessageFlowInterface::class)

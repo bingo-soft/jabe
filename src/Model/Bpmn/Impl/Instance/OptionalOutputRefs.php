@@ -8,7 +8,7 @@ use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 
-class OptionalOutputRef extends BpmnModelElementInstanceImpl
+class OptionalOutputRefs extends BpmnModelElementInstanceImpl
 {
     public function __construct(ModelTypeInstanceContext $instanceContext)
     {
@@ -18,7 +18,7 @@ class OptionalOutputRef extends BpmnModelElementInstanceImpl
     public static function registerType(ModelBuilder $modelBuilder): void
     {
         $typeBuilder = $modelBuilder->defineType(
-            OptionalOutputRef::class,
+            OptionalOutputRefs::class,
             BpmnModelConstants::BPMN_ELEMENT_OPTIONAL_OUTPUT_REFS
         )
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
@@ -27,7 +27,7 @@ class OptionalOutputRef extends BpmnModelElementInstanceImpl
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {
-                    return new OptionalOutputRef($instanceContext);
+                    return new OptionalOutputRefs($instanceContext);
                 }
             }
         );

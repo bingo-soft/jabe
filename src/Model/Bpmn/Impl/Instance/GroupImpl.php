@@ -12,6 +12,7 @@ use BpmPlatform\Model\Bpmn\Instance\{
     CategoryValueInterface,
     GroupInterface
 };
+use BpmPlatform\Model\Bpmn\Instance\Bpmndi\BpmnEdgeInterface;
 
 class GroupImpl extends ArtifactImpl implements GroupInterface
 {
@@ -47,5 +48,20 @@ class GroupImpl extends ArtifactImpl implements GroupInterface
             ->build();
 
         $typeBuilder->build();
+    }
+
+    public function getCategory(): CategoryValueInterface
+    {
+        return self::$categoryValueRefAttribute->getReferenceTargetElement($this);
+    }
+
+    public function setCategory(CategoryValueInterface $categoryValue): void
+    {
+        self::$categoryValueRefAttribute->setReferenceTargetElement($this, $categoryValue);
+    }
+
+    public function getDiagramElement(): BpmnEdgeInterface
+    {
+        return parent::getDiagramElement();
     }
 }

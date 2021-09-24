@@ -45,8 +45,8 @@ class ConditionExpressionImpl extends FormalExpressionImpl implements ConditionE
         ->defaultValue("tFormalExpression")
         ->build();
 
-        self::$resourceAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_RESOURCE)
-        ->namespace(BpmnModelConstants::NS)
+        self::$resourceAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_RESOURCE)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         $typeBuilder->build();

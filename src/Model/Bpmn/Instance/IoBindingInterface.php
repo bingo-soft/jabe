@@ -14,5 +14,5 @@ interface IoBindingInterface extends BaseElementInterface
 
     public function getOutputData(): DataOutputInterface;
 
-    public function setOutputData(DataOutputtInterface $outputData): void;
+    public function setOutputData(DataOutputInterface $outputData): void;
 }

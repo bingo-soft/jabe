@@ -11,7 +11,7 @@ use BpmPlatform\Model\Bpmn\Instance\{
     InteractionNodeInterface
 };
 
-class InteractionNodeImpl extends BpmnModelElementInstanceImpl implements InteractionNodeInterface
+abstract class InteractionNodeImpl extends BpmnModelElementInstanceImpl implements InteractionNodeInterface
 {
     protected static $idAttribute;
 

@@ -18,7 +18,7 @@ class DataInputRefs extends BpmnModelElementInstanceImpl
     public static function registerType(ModelBuilder $modelBuilder): void
     {
         $typeBuilder = $modelBuilder->defineType(
-            CorrelationPropertyRef::class,
+            DataInputRefs::class,
             BpmnModelConstants::BPMN_ELEMENT_DATA_INPUT_REFS
         )
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)

@@ -3,7 +3,7 @@
 namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 
 use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\Builder\IntermediateCatchEventBuilder;
+use BpmPlatform\Model\Bpmn\Builder\IntermediateCatchEventBuilder;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;

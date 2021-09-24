@@ -31,14 +31,20 @@ class IoUtil
 
     public static function convertXmlDocumentToString(DomDocumentInterface $document): string
     {
+        $source = new \DOMDocument();
         self::transformDocumentToXml($document, $source);
         return $source->saveXML();
     }
 
-    public static function writeDocumentToOutputStream(DomDocumentInterface $document, string &$outputStream): void
+    /**
+     * @param DomDocumentInterface $document
+     * @param resource $stream
+     */
+    public static function writeDocumentToOutputStream(DomDocumentInterface $document, $stream): void
     {
+        $source = new \DOMDocument();
         self::transformDocumentToXml($document, $source);
-        $outputStream = $source->saveXML();
+        fwrite($stream, $source->saveXML());
     }
 
     /**

@@ -4,6 +4,7 @@ namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 
 use BpmPlatform\Model\Xml\ModelBuilder;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
+use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
@@ -61,7 +62,7 @@ class CorrelationPropertyBindingImpl extends BaseElementImpl implements Correlat
         return self::$correlationPropertyRefAttribute->getReferenceTargetElement($this);
     }
 
-    public function setCorrelationProperty(CorrelationPropertyInterface $correlationProperty): voi
+    public function setCorrelationProperty(CorrelationPropertyInterface $correlationProperty): void
     {
         self::$correlationPropertyRefAttribute->setReferenceTargetElement($this, $correlationProperty);
     }

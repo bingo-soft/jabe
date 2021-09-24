@@ -8,11 +8,13 @@ use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
+    DefinitionsInterface,
     ExtensionInterface,
     ImportInterface,
     RelationshipInterface,
     RootElementInterface
 };
+use BpmPlatform\Model\Bpmn\Instance\Bpmndi\BpmnDiagramInterface;
 
 class DefinitionsImpl extends BpmnModelElementInstanceImpl implements DefinitionsInterface
 {

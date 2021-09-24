@@ -18,9 +18,9 @@ interface FieldInterface extends BpmnModelElementInstanceInterface
 
     public function setStringValue(string $stringValue): void;
 
-    public function getString(): string;
+    public function getString(): StringInterface;
 
-    public function setString(string $string): void;
+    public function setString(StringInterface $string): void;
 
     public function getExpressionChild(): ExpressionInterface;
 

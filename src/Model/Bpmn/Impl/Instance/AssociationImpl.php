@@ -9,6 +9,7 @@ use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\AssociationDirection;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
+    ArtifactInterface,
     AssociationInterface,
     BaseElementInterface
 };

@@ -35,7 +35,7 @@ abstract class BaseElementImpl extends BpmnModelElementInstanceImpl implements B
                              ->idAttribute()
                              ->build();
 
-        $sequenceBuilder = $builder->sequence();
+        $sequenceBuilder = $typeBuilder->sequence();
 
         self::$documentationCollection = $sequenceBuilder->elementCollection(DocumentationInterface::class)
                                          ->build();
@@ -61,7 +61,7 @@ abstract class BaseElementImpl extends BpmnModelElementInstanceImpl implements B
         return self::$documentationCollection->get($this);
     }
 
-    public function getExtensionElements(): array
+    public function getExtensionElements(): ExtensionElementsInterface
     {
         return self::$extensionElementsChild->getChild($this);
     }

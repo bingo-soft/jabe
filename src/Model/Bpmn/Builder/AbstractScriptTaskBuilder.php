@@ -8,7 +8,7 @@ use BpmPlatform\Model\Bpmn\Instance\{
     ScriptTaskInterface
 };
 
-abstract class AbstractScriptTaskBuilder extends AbstractBaseElementBuilder
+abstract class AbstractScriptTaskBuilder extends AbstractTaskBuilder
 {
     protected function __construct(
         BpmnModelInstanceInterface $modelInstance,

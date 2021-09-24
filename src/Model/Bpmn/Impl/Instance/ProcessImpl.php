@@ -41,7 +41,7 @@ class ProcessImpl extends CallableElementImpl implements ProcessInterface
     protected static $candidateStarterUsersAttribute;
     protected static $jobPriorityAttribute;
     protected static $taskPriorityAttribute;
-    protected static $timeToLiveAttribute;
+    protected static $historyTimeToLiveAttribute;
     protected static $isStartableInTasklistAttribute;
     protected static $versionTagAttribute;
 
@@ -50,7 +50,7 @@ class ProcessImpl extends CallableElementImpl implements ProcessInterface
         parent::__construct($instanceContext);
     }
 
-    public static function registerType(ModelBuilder $bpmnModelBuilder): void
+    public static function registerType(ModelBuilder $modelBuilder): void
     {
         $typeBuilder = $modelBuilder->defineType(
             ProcessInterface::class,
@@ -115,40 +115,44 @@ class ProcessImpl extends CallableElementImpl implements ProcessInterface
         ->build();
 
         self::$candidateStarterGroupsAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_CANDIDATE_STARTER_GROUPS
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_CANDIDATE_STARTER_GROUPS
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$candidateStarterUsersAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_CANDIDATE_STARTER_USERS
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_CANDIDATE_STARTER_USERS
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
-        self::$jobPriorityAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_JOB_PRIORITY)
-        ->namespace(BpmnModelConstants::NS)
+        self::$jobPriorityAttribute = $typeBuilder->stringAttribute(
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_JOB_PRIORITY
+        )
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
-        self::$taskPriorityAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_TASK_PRIORITY)
-        ->namespace(BpmnModelConstants::NS)
+        self::$taskPriorityAttribute = $typeBuilder->stringAttribute(
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_TASK_PRIORITY
+        )
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$historyTimeToLiveAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_HISTORY_TIME_TO_LIVE
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_HISTORY_TIME_TO_LIVE
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$isStartableInTasklistAttribute = $typeBuilder->booleanAttribute(
-            BpmnModelConstants::ATTRIBUTE_IS_STARTABLE_IN_TASKLIST
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_IS_STARTABLE_IN_TASKLIST
         )
         ->defaultValue(true)
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
-        self::$versionTagAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_VERSION_TAG)
-        ->namespace(BpmnModelConstants::NS)
+        self::$versionTagAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_VERSION_TAG)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         $typeBuilder->build();
@@ -337,7 +341,7 @@ class ProcessImpl extends CallableElementImpl implements ProcessInterface
         return self::$isStartableInTasklistAttribute->getValue($this);
     }
 
-    public function setStartableInTasklist(bool $isStartableInTasklist): void
+    public function setIsStartableInTasklist(bool $isStartableInTasklist): void
     {
         self::$isStartableInTasklistAttribute->setValue($this, $isStartableInTasklist);
     }

@@ -45,11 +45,11 @@ class BpmnDiagramImpl extends DiagramImpl implements BpmnDiagramInterface
 
         $sequenceBuilder = $typeBuilder->sequence();
 
-        self::$bpmnPlaneChild = $sequenceBuilder->element(BpmnPlaneInterace::class)
+        self::$bpmnPlaneChild = $sequenceBuilder->element(BpmnPlaneInterface::class)
         ->required()
         ->build();
 
-        self::$bpmnLabelStyleCollection = $sequenceBuilder->elementCollection(BpmnLabelStyleIntreface::class)
+        self::$bpmnLabelStyleCollection = $sequenceBuilder->elementCollection(BpmnLabelStyleInterface::class)
         ->build();
 
         $typeBuilder->build();

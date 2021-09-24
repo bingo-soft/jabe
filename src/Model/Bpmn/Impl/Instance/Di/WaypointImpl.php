@@ -21,7 +21,7 @@ class WaypointImpl extends PointImpl implements WaypointInterface
     public static function registerType(ModelBuilder $modelBuilder): void
     {
         $typeBuilder = $modelBuilder->defineType(
-            ExtensionInterface::class,
+            WaypointInterface::class,
             BpmnModelConstants::DI_ELEMENT_WAYPOINT
         )
         ->namespaceUri(BpmnModelConstants::DI_NS)

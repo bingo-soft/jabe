@@ -3,6 +3,7 @@
 namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 
 use BpmPlatform\Model\Xml\ModelBuilder;
+use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
@@ -44,7 +45,7 @@ class ResourceRoleImpl extends BaseElementImpl implements ResourceRoleInterface
             }
         );
 
-        self::$nameAttribute = $typeBuilder->stringAttribute(BPMN_ATTRIBUTE_NAME)
+        self::$nameAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_NAME)
         ->build();
 
         $sequenceBuilder = $typeBuilder->sequence();

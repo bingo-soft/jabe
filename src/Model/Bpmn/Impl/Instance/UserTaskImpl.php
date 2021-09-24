@@ -62,44 +62,44 @@ class UserTaskImpl extends TaskImpl implements UserTaskInterface
         self::$renderingCollection = $sequenceBuilder->elementCollection(RenderingInterface::class)
         ->build();
 
-        self::$assigneeAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_ASSIGNEE)
-        ->namespace(BpmnModelConstants::NS)
+        self::$assigneeAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_ASSIGNEE)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$candidateGroupsAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_CANDIDATE_GROUPS
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_CANDIDATE_GROUPS
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$candidateUsersAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_CANDIDATE_USERS
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_CANDIDATE_USERS
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
-        self::$dueDateAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_DUE_DATE)
-        ->namespace(BpmnModelConstants::NS)
+        self::$dueDateAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_DUE_DATE)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$followUpDateAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_FOLLOW_UP_DATE
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_FOLLOW_UP_DATE
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$formHandlerClassAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_FORM_HANDLER_CLASS
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_FORM_HANDLER_CLASS
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
-        self::$formKeyAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_FORM_KEY)
-        ->namespace(BpmnModelConstants::NS)
+        self::$formKeyAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_FORM_KEY)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
-        self::$priorityAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_PRIORITY)
-        ->namespace(BpmnModelConstants::NS)
+        self::$priorityAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_PRIORITY)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         $typeBuilder->build();
@@ -157,10 +157,9 @@ class UserTaskImpl extends TaskImpl implements UserTaskInterface
         self::$candidateGroupsAttribute->setValue($this, $candidateGroups);
     }
 
-    public function getCandidateUsers(): array
+    public function getCandidateUsers(): string
     {
-        $candidateUsers = self::$candidateUsersAttribute->getValue($this);
-        return StringUtil::splitCommaSeparatedList($candidateUsers);
+        return self::$candidateUsersAttribute->getValue($this);
     }
 
     public function setCandidateUsers(string $candidateUsers): void

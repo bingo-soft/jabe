@@ -3,7 +3,7 @@
 namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 
 use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\Builder\ManualTaskBuilder;
+use BpmPlatform\Model\Bpmn\Builder\ManualTaskBuilder;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
@@ -39,5 +39,10 @@ class ManualTaskImpl extends TaskImpl implements ManualTaskInterface
         );
 
         $typeBuilder->build();
+    }
+
+    public function builder(): ManualTaskBuilder
+    {
+        return new ManualTaskBuilder($this->modelInstance, $this);
     }
 }

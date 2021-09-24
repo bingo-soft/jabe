@@ -5,13 +5,16 @@ namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 use BpmPlatform\Model\Xml\ModelBuilder;
 use BpmPlatform\Model\Xml\Type\Reference\AttributeReferenceInterface;
 use BpmPlatform\Model\Bpmn\QueryInterface;
-use BpmPlatform\Model\Bpmn\Builder\AbstractFlowNodeBuilder;
+use BpmPlatform\Model\Bpmn\Builder\{
+    AbstractBaseElementBuilder,
+    AbstractFlowNodeBuilder
+};
 use BpmPlatform\Model\Bpmn\Exception\BpmnModelException;
 use BpmPlatform\Model\Bpmn\Impl\QueryImpl;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
     FlowElementInterface,
-    FlowNodetInterface,
+    FlowNodeInterface,
     SequenceFlowInterface
 };
 
@@ -46,30 +49,30 @@ abstract class FlowNodeImpl extends FlowElementImpl implements FlowNodeInterface
         ->qNameElementReferenceCollection(SequenceFlowInterface::class)
         ->build();
 
-        self::$asyncAfter = $typeBuilder->booleanAttribute(BpmnModelConstants::ATTRIBUTE_ASYNC_AFTER)
-        ->namespace(BpmnModelConstants::NS)
+        self::$asyncAfter = $typeBuilder->booleanAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_ASYNC_AFTER)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->defaultValue(false)
         ->build();
 
-        self::$syncBefore = $typeBuilder->booleanAttribute(BpmnModelConstants::ATTRIBUTE_ASYNC_BEFORE)
-        ->namespace(BpmnModelConstants::NS)
+        self::$asyncBefore = $typeBuilder->booleanAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_ASYNC_BEFORE)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->defaultValue(false)
         ->build();
 
-        slef::$exclusive = $typeBuilder->booleanAttribute(BpmnModelConstants::ATTRIBUTE_EXCLUSIVE)
-        ->namespace(BpmnModelConstants::NS)
+        self::$exclusive = $typeBuilder->booleanAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_EXCLUSIVE)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->defaultValue(true)
         ->build();
 
 
-        slef::$jobPriority = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_JOB_PRIORITY)
-        ->namespace(BpmnModelConstants::NS)
+        self::$jobPriority = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_JOB_PRIORITY)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         $typeBuilder->build();
     }
 
-    public function builder(): AbstractFlowNodeBuilder
+    public function builder(): AbstractBaseElementBuilder//AbstractFlowNodeBuilder
     {
         throw new BpmnModelException("No builder implemented");
     }

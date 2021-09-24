@@ -8,6 +8,7 @@ use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
+    DocumentationInterface,
     ExtensionInterface,
     ImportInterface,
     RelationshipInterface,

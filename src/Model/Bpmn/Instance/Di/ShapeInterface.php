@@ -6,7 +6,7 @@ use BpmPlatform\Model\Bpmn\Instance\Dc\BoundsInterface;
 
 interface ShapeInterface extends NodeInterface
 {
-    public function getBound(): BoundsInterface;
+    public function getBounds(): BoundsInterface;
 
     public function setBounds(BoundsInterface $bounds): void;
 }

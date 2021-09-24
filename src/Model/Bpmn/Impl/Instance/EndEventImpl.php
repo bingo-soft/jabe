@@ -3,14 +3,14 @@
 namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 
 use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\Builder\EndEventBuilder;
+use BpmPlatform\Model\Bpmn\Builder\EndEventBuilder;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
-    EndEventInterface,
-    ThrowEventInterface
+    ThrowEventInterface,
+    EndEventInterface
 };
 
 class EndEventImpl extends ThrowEventImpl implements EndEventInterface

@@ -3,6 +3,7 @@
 namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 
 use BpmPlatform\Model\Xml\ModelBuilder;
+use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
@@ -48,8 +49,8 @@ class ErrorImpl extends RootElementImpl implements ErrorInterface
         self::$errorCodeAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_ERROR_CODE)
         ->build();
 
-        self::$errorMessageAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_ERROR_MESSAGE)
-        ->namespace(BpmnModelConstants::NS)
+        self::$errorMessageAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_ERROR_MESSAGE)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$structureRefAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_STRUCTURE_REF)

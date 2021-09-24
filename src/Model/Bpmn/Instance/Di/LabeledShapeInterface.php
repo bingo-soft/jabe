@@ -2,6 +2,6 @@
 
 namespace BpmPlatform\Model\Bpmn\Instance\Di;
 
-interface LabelShapeInterface extends ShapeInterface
+interface LabeledShapeInterface extends ShapeInterface
 {
 }

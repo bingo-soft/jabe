@@ -11,7 +11,8 @@ use BpmPlatform\Model\Bpmn\Instance\{
     CallableElementInterface,
     InterfaceInterface,
     IoBindingInterface,
-    IoSpecificationInterface
+    IoSpecificationInterface,
+    RootElementInterface
 };
 
 class CallableElementImpl extends RootElementImpl implements CallableElementInterface
@@ -26,7 +27,7 @@ class CallableElementImpl extends RootElementImpl implements CallableElementInte
         parent::__construct($instanceContext);
     }
 
-    public static function registerType(ModelBuilder $bpmnModelBuilder): void
+    public static function registerType(ModelBuilder $modelBuilder): void
     {
         $typeBuilder = $modelBuilder->defineType(
             CallableElementInterface::class,

@@ -10,6 +10,7 @@ use BpmPlatform\Model\Bpmn\Instance\{
     DataOutputInterface,
     DataOutputAssociationInterface,
     EventDefinitionInterface,
+    EventInterface,
     OutputSetInterface
 };
 
@@ -18,7 +19,7 @@ abstract class CatchEventImpl extends EventImpl implements CatchEventInterface
     protected static $parallelMultipleAttribute;
     protected static $dataOutputCollection;
     protected static $dataOutputAssociationCollection;
-    protected static $parallelMultipleAttributeoutputSetChild;
+    protected static $outputSetChild;
     protected static $eventDefinitionCollection;
     protected static $eventDefinitionRefCollection;
 
@@ -93,7 +94,7 @@ abstract class CatchEventImpl extends EventImpl implements CatchEventInterface
         return self::$outputSetChild->getChild($this);
     }
 
-    public function etOutputSet(OutputSetInterface $outputSet): void
+    public function setOutputSet(OutputSetInterface $outputSet): void
     {
         self::$outputSetChild->setChild($this, $outputSet);
     }

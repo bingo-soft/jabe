@@ -77,7 +77,7 @@ abstract class AbstractCatchEventBuilder extends AbstractEventBuilder
         return new ConditionalEventDefinitionBuilder($this->modelInstance, $eventDefinition);
     }
 
-    public function condition(): AbstractCatchEventBuilder
+    public function condition(?string $name, string $condition): AbstractCatchEventBuilder
     {
         $this->conditionalEventDefinition()->condition($condition);
         return $this;

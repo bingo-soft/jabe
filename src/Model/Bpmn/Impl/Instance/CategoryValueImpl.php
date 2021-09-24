@@ -8,13 +8,13 @@ use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
-    CategoryValueInterface
+    CategoryValueInterface,
+    RootElementInterface
 };
 
 class CategoryValueImpl extends BaseElementImpl implements CategoryValueInterface
 {
-    protected static $nameAttribute;
-    protected static $categoryValueValuesCollection;
+    protected static $valueAttribute;
 
     public function __construct(ModelTypeInstanceContext $instanceContext)
     {
@@ -39,15 +39,9 @@ class CategoryValueImpl extends BaseElementImpl implements CategoryValueInterfac
             }
         );
 
-        self::$nameAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::BPMN_ATTRIBUTE_NAME
+        self::$valueAttribute = $typeBuilder->stringAttribute(
+            BpmnModelConstants::BPMN_ATTRIBUTE_VALUE
         )->required()->build();
-
-        $sequenceBuilder = $typeBuilder->sequence();
-
-        self::$categoryValueValuesCollection = $sequenceBuilder->elementCollection(
-            CategoryValueValueInterface::class
-        )->build();
 
         $typeBuilder->build();
     }

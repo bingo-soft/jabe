@@ -14,6 +14,7 @@ use BpmPlatform\Model\Bpmn\Instance\{
     IoSpecificationInterface,
     LoopCharacteristicsInterface,
     PropertyInterface,
+    ResourceRoleInterface,
     SequenceFlowInterface
 };
 

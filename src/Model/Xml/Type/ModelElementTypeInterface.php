@@ -14,7 +14,7 @@ interface ModelElementTypeInterface
 {
     public function getTypeName(): string;
 
-    public function getTypeNamespace(): string;
+    public function getTypeNamespace(): ?string;
 
     public function getInstanceType(): string;
 

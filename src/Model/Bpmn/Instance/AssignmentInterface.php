@@ -9,7 +9,7 @@ use BpmPlatform\Model\Bpmn\Impl\Instance\{
 
 interface AssignmentInterface extends BaseElementInterface
 {
-    public function getForm(): From;
+    public function getFrom(): From;
 
     public function setFrom(From $from): void;
 

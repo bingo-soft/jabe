@@ -8,7 +8,8 @@ use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
-    CancelEventDefinitionInterface
+    CancelEventDefinitionInterface,
+    EventDefinitionInterface
 };
 
 class CancelEventDefinitionImpl extends EventDefinitionImpl implements CancelEventDefinitionInterface

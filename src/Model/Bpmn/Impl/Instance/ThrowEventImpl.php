@@ -29,12 +29,15 @@ abstract class ThrowEventImpl extends EventImpl implements ThrowEventInterface
 
     public static function registerType(ModelBuilder $modelBuilder): void
     {
-        $typeBuilder = $modelBuilder->defineType(EventInterface::class, BpmnModelConstants::BPMN_ELEMENT_THROW_EVENT)
+        $typeBuilder = $modelBuilder->defineType(
+            ThrowEventInterface::class,
+            BpmnModelConstants::BPMN_ELEMENT_THROW_EVENT
+        )
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
         ->extendsType(EventInterface::class)
         ->abstractType();
 
-        $sequence = $typeBuilder->sequence();
+        $sequenceBuilder = $typeBuilder->sequence();
 
         self::$dataInputCollection = $sequenceBuilder->elementCollection(DataInputInterface::class)
         ->build();

@@ -118,12 +118,12 @@ class ModelElementTypeImpl implements ModelElementTypeInterface
         return $this->instanceType;
     }
 
-    public function setTypeNamespace(string $typeNamespace): void
+    public function setTypeNamespace(?string $typeNamespace): void
     {
         $this->typeNamespace = $typeNamespace;
     }
 
-    public function getTypeNamespace(): string
+    public function getTypeNamespace(): ?string
     {
         return $this->typeNamespace;
     }

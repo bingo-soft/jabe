@@ -114,27 +114,27 @@ class MultiInstanceLoopCharacteristicsImpl extends LoopCharacteristicsImpl imple
         self::$completionConditionChild = $sequenceBuilder->element(CompletionConditionInterface::class)
         ->build();
 
-        self::$asyncAfter = $typeBuilder->booleanAttribute(BpmnModelConstants::ATTRIBUTE_ASYNC_AFTER)
-        ->namespace(BpmnModelConstants::NS)
+        self::$asyncAfter = $typeBuilder->booleanAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_ASYNC_AFTER)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->defaultValue(false)
         ->build();
 
-        self::$asyncBefore = $typeBuilder->booleanAttribute(BpmnModelConstants::ATTRIBUTE_ASYNC_BEFORE)
-        ->namespace(BpmnModelConstants::NS)
+        self::$asyncBefore = $typeBuilder->booleanAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_ASYNC_BEFORE)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->defaultValue(false)
         ->build();
 
-        self::$exclusive = $typeBuilder->booleanAttribute(BpmnModelConstants::ATTRIBUTE_EXCLUSIVE)
-        ->namespace(BpmnModelConstants::NS)
+        self::$exclusive = $typeBuilder->booleanAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_EXCLUSIVE)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->defaultValue(true)
         ->build();
 
-        self::$collection = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_COLLECTION)
-        ->namespace(BpmnModelConstants::NS)
+        self::$collection = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_COLLECTION)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
-        self::$elementVariable = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_ELEMENT_VARIABLE)
-        ->namespace(BpmnModelConstants::NS)
+        self::$elementVariable = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_ELEMENT_VARIABLE)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         $typeBuilder->build();
@@ -240,7 +240,7 @@ class MultiInstanceLoopCharacteristicsImpl extends LoopCharacteristicsImpl imple
         self::$oneBehaviorEventRefAttribute->setReferenceTargetElement($this, $oneBehaviorEventRef);
     }
 
-    public function getNoneBehaviorEventRef(): string
+    public function getNoneBehaviorEventRef(): EventDefinitionInterface
     {
         return self::$noneBehaviorEventRefAttribute->getReferenceTargetElement($this);
     }

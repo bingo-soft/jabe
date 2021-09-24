@@ -3,6 +3,7 @@
 namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 
 use BpmPlatform\Model\Xml\ModelBuilder;
+use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Builder\SequenceFlowBuilder;
@@ -13,7 +14,7 @@ use BpmPlatform\Model\Bpmn\Instance\{
     FlowElementInterface,
     FlowNodeInterface
 };
-use BpmPlatform\Model\Bpmn\Instance\BpmnEdgeInterface;
+use BpmPlatform\Model\Bpmn\Instance\Bpmndi\BpmnEdgeInterface;
 
 class SequenceFlowImpl extends FlowElementImpl implements SequenceFlowInterface
 {
@@ -116,7 +117,7 @@ class SequenceFlowImpl extends FlowElementImpl implements SequenceFlowInterface
         self::$conditionExpressionCollection->removeChild($this);
     }
 
-    public function getDiagramElement(): BpmnEdgeInterface
+    public function getDiagramElement(): ?BpmnEdgeInterface
     {
         return parent::getDiagramElement();
     }

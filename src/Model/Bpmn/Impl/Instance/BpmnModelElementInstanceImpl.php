@@ -15,7 +15,7 @@ use BpmPlatform\Model\Bpmn\Instance\{
     SubProcessInterface
 };
 
-abstract class BpmnModelElementInstanceImpl extends ModelElementInstanceImpl implements BpmnModelElementInstance
+abstract class BpmnModelElementInstanceImpl extends ModelElementInstanceImpl implements BpmnModelElementInstanceInterface
 {
     public function __construct(ModelTypeInstanceContext $instanceContext)
     {
@@ -32,7 +32,7 @@ abstract class BpmnModelElementInstanceImpl extends ModelElementInstanceImpl imp
         return $this instanceof ProcessInterface || $this instanceof SubProcessInterface;
     }
 
-    public function getScope(): ?BpmnModelElementInstance
+    public function getScope(): ?BpmnModelElementInstanceInterface
     {
         $parentElement = $this->getParentElement();
         if ($parentElement != null) {

@@ -3,6 +3,7 @@
 namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 
 use BpmPlatform\Model\Xml\ModelBuilder;
+use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Builder\ParallelGatewayBuilder;
@@ -41,8 +42,8 @@ class ParallelGatewayImpl extends GatewayImpl implements ParallelGatewayInterfac
             }
         );
 
-        self::$asyncAttribute = $typeBuilder->booleanAttribute(BpmnModelConstants::ATTRIBUTE_ASYNC)
-        ->namespace(BpmnModelConstants::NS)
+        self::$asyncAttribute = $typeBuilder->booleanAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_ASYNC)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->defaultValue(false)
         ->build();
 

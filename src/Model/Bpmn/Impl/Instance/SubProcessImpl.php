@@ -3,7 +3,7 @@
 namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 
 use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\Builder\SubProcessBuilder;
+use BpmPlatform\Model\Bpmn\Builder\SubProcessBuilder;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
@@ -22,6 +22,7 @@ class SubProcessImpl extends ActivityImpl implements SubProcessInterface
     protected static $laneSetCollection;
     protected static $flowElementCollection;
     protected static $artifactCollection;
+    protected static $asyncAttribute;
 
     public function __construct(ModelTypeInstanceContext $instanceContext)
     {
@@ -63,8 +64,8 @@ class SubProcessImpl extends ActivityImpl implements SubProcessInterface
         self::$artifactCollection = $sequenceBuilder->elementCollection(ArtifactInterface::class)
         ->build();
 
-        self::$asyncAttribute = $typeBuilder->booleanAttribute(BpmnModelConstants::ATTRIBUTE_ASYNC)
-        ->namespace(BpmnModelConstants::NS)
+        self::$asyncAttribute = $typeBuilder->booleanAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_ASYNC)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->defaultValue(false)
         ->build();
 

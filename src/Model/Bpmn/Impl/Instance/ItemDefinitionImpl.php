@@ -84,7 +84,7 @@ class ItemDefinitionImpl extends RootElementImpl implements ItemDefinitionInterf
         return self::$itemKindAttribute->getValue($this);
     }
 
-    public function setItemKin(string $itemKind): void
+    public function setItemKind(string $itemKind): void
     {
         self::$itemKindAttribute->setValue($this, $itemKind);
     }

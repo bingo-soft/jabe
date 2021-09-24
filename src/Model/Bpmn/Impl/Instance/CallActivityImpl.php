@@ -3,7 +3,7 @@
 namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 
 use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\Builder\CallActivityBuilder;
+use BpmPlatform\Model\Bpmn\Builder\CallActivityBuilder;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
@@ -15,6 +15,7 @@ use BpmPlatform\Model\Bpmn\Instance\{
 
 class CallActivityImpl extends ActivityImpl implements CallActivityInterface
 {
+    protected static $calledElementAttribute;
     protected static $asyncAttribute;
     protected static $calledElementBindingAttribute;
     protected static $calledElementVersionAttribute;
@@ -53,61 +54,61 @@ class CallActivityImpl extends ActivityImpl implements CallActivityInterface
         self::$calledElementAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_CALLED_ELEMENT)
         ->build();
 
-        self::$asyncAttribute = $typeBuilder->booleanAttribute(BpmnModelConstants::ATTRIBUTE_ASYNC)
-        ->namespace(BpmnModelConstants::NS)
+        self::$asyncAttribute = $typeBuilder->booleanAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_ASYNC)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->defaultValue(false)
         ->build();
 
         self::$calledElementBindingAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_CALLED_ELEMENT_BINDING
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_CALLED_ELEMENT_BINDING
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$calledElementVersionAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_CALLED_ELEMENT_VERSION
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_CALLED_ELEMENT_VERSION
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$calledElementVersionTagAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_CALLED_ELEMENT_VERSION_TAG
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_CALLED_ELEMENT_VERSION_TAG
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
-        self::$caseRefAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_CASE_REF)
-        ->namespace(BpmnModelConstants::NS)
+        self::$caseRefAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_CASE_REF)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
-        self::$caseBindingAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_CASE_BINDING)
-        ->namespace(BpmnModelConstants::NS)
+        self::$caseBindingAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_CASE_BINDING)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
-        self::$caseVersionAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_CASE_VERSION)
-        ->namespace(BpmnModelConstants::NS)
+        self::$caseVersionAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_CASE_VERSION)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$calledElementTenantIdAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_CALLED_ELEMENT_TENANT_ID
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_CALLED_ELEMENT_TENANT_ID
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
-        self::$caseTenantIdAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_CASE_TENANT_ID)
-        ->namespace(BpmnModelConstants::NS)
+        self::$caseTenantIdAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_CASE_TENANT_ID)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$variableMappingClassAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_VARIABLE_MAPPING_CLASS
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_VARIABLE_MAPPING_CLASS
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$variableMappingDelegateExpressionAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_VARIABLE_MAPPING_DELEGATE_EXPRESSION
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_VARIABLE_MAPPING_DELEGATE_EXPRESSION
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
 
@@ -117,6 +118,16 @@ class CallActivityImpl extends ActivityImpl implements CallActivityInterface
     public function builder(): CallActivityBuilder
     {
         return new CallActivityBuilder($this->modelInstance, $this);
+    }
+
+    public function isAsync(): bool
+    {
+        return self::$asyncAttribute->getValue($this);
+    }
+
+    public function setAsync(bool $isAsync): void
+    {
+        self::$asyncAttribute->setValue($this, $isAsync);
     }
 
     public function getCalledElement(): string

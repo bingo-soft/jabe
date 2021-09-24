@@ -6,7 +6,7 @@ use BpmPlatform\Model\Xml\ModelBuilder;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstant;
+use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
     ActivationConditionInterface,
     ExpressionInterface
@@ -26,7 +26,7 @@ class ActivationConditionImpl extends ExpressionImpl implements ActivationCondit
             BpmnModelConstants::BPMN_ELEMENT_ACTIVATION_CONDITION
         )
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
-        ->extendType(ExpressionInterface::class)
+        ->extendsType(ExpressionInterface::class)
         ->instanceProvider(
             new class implements ModelTypeInstanceProviderInterface
             {

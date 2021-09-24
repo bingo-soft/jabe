@@ -2,11 +2,11 @@
 
 namespace BpmPlatform\Model\Bpmn\Instance;
 
-interface ParticipantMultiplicityInterface extends BaseElement
+interface ParticipantMultiplicityInterface extends BaseElementInterface
 {
     public function getMinimum(): int;
 
-    public function setMinimum(imt $minimum): void;
+    public function setMinimum(int $minimum): void;
 
     public function getMaximum(): int;
 

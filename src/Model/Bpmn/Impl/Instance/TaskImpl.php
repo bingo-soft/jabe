@@ -7,8 +7,10 @@ use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Exception\BpmnModelException;
+use BpmPlatform\Model\Bpmn\Builder\AbstractTaskBuilder;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
+    ActivityInterface,
     TaskInterface
 };
 use BpmPlatform\Model\Bpmn\Instance\Bpmndi\BpmnShapeInterface;
@@ -40,21 +42,31 @@ class TaskImpl extends ActivityImpl implements TaskInterface
             }
         );
 
-        self::$asyncAttribute = $typeBuilder->booleanAttribute(BpmnModelConstants::ATTRIBUTE_ASYNC)
-        ->namespace(BpmnModelConstants::NS)
+        self::$asyncAttribute = $typeBuilder->booleanAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_ASYNC)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->defaultValue(false)
         ->build();
 
         $typeBuilder->build();
     }
 
-    public function builder(): AbstractBaseElementBuilder
+    public function builder(): AbstractTaskBuilder
     {
         throw new BpmnModelException("No builder implemented");
     }
 
-    public function getDiagramElement(): BpmnShapeeInterface
+    public function getDiagramElement(): BpmnShapeInterface
     {
         return parent::getDiagramElement();
+    }
+
+    public function isAsync(): bool
+    {
+        return self::$asyncAttribute->getValue($this);
+    }
+
+    public function setAsync(bool $isAsync): void
+    {
+        self::$asyncAttribute->setValue($this, $isAsync);
     }
 }

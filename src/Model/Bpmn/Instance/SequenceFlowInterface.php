@@ -27,5 +27,5 @@ interface SequenceFlowInterface extends FlowElementInterface
 
     public function removeConditionExpression(): void;
 
-    public function getDiagramElement(): BpmnEdgeInterface;
+    public function getDiagramElement(): ?BpmnEdgeInterface;
 }

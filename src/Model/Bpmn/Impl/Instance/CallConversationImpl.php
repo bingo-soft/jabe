@@ -9,7 +9,9 @@ use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
     CallConversationInterface,
-    GlobalConversationInterface
+    GlobalConversationInterface,
+    ConversationNodeInterface,
+    ParticipantAssociationInterface
 };
 
 class CallConversationImpl extends ConversationNodeImpl implements CallConversationInterface

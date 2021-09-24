@@ -10,6 +10,8 @@ use BpmPlatform\Model\Bpmn\Instance\{
     GatewayInterface,
     FlowNodeInterface
 };
+use BpmPlatform\Model\Bpmn\Exception\BpmnModelException;
+use BpmPlatform\Model\Bpmn\Builder\AbstractGatewayBuilder;
 use BpmPlatform\Model\Bpmn\Instance\Bpmndi\BpmnShapeInterface;
 
 abstract class GatewayImpl extends FlowNodeImpl implements GatewayInterface
@@ -36,6 +38,11 @@ abstract class GatewayImpl extends FlowNodeImpl implements GatewayInterface
         ->build();
 
         $typeBuilder->build();
+    }
+
+    public function builder(): AbstractGatewayBuilder
+    {
+        throw new BpmnModelException("No builder implemented");
     }
 
     public function getGatewayDirection(): string

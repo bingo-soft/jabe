@@ -8,7 +8,7 @@ use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 
-class ErrorRefImpl extends BpmnModelElementInstanceImpl
+class ErrorRef extends BpmnModelElementInstanceImpl
 {
     public function __construct(ModelTypeInstanceContext $instanceContext)
     {
@@ -27,7 +27,7 @@ class ErrorRefImpl extends BpmnModelElementInstanceImpl
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {
-                    return new ErrorRefImpl($instanceContext);
+                    return new ErrorRef($instanceContext);
                 }
             }
         );

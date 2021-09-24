@@ -13,7 +13,8 @@
         "vendor-dir": "./vendor"  
     },
     "require": {
-        "php": ">=7.4.0"
+        "php": ">=7.4.0",
+        "symfony/expression-language": "^5.3"
     },
     "require-dev": {
         "doctrine/coding-standard": "^9",

@@ -8,7 +8,9 @@ use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
-    CategoryInterface
+    CategoryInterface,
+    CategoryValueInterface,
+    RootElementInterface
 };
 
 class CategoryImpl extends RootElementImpl implements CategoryInterface

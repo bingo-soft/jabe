@@ -57,4 +57,34 @@ class TimerEventDefinitionImpl extends EventDefinitionImpl implements TimerEvent
 
         $typeBuilder->build();
     }
+
+    public function getTimeDate(): TimeDateInterface
+    {
+        return self::$timeDateChild->getChild($this);
+    }
+
+    public function setTimeDate(TimeDateInterface $timeDate): void
+    {
+        self::$timeDateChild->setChild($this, $timeDate);
+    }
+
+    public function getTimeDuration(): TimeDurationInterface
+    {
+        return self::$timeDurationChild->getChild($this);
+    }
+
+    public function setTimeDuration(TimeDurationInterface $timeDuration): void
+    {
+        self::$timeDurationChild->setChild($this, $timeDuration);
+    }
+
+    public function getTimeCycle(): TimeCycleInterface
+    {
+        return self::$timeCycleChild->getChild($this);
+    }
+
+    public function setTimeCycle(TimeCycleInterface $timeCycle): void
+    {
+        self::$timeCycleChild->setChild($this, $timeCycle);
+    }
 }

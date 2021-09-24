@@ -48,15 +48,15 @@ class ErrorEventDefinitionImpl extends EventDefinitionImpl implements ErrorEvent
         ->build();
 
         self::$errorCodeVariableAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_ERROR_CODE_VARIABLE
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_ERROR_CODE_VARIABLE
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         self::$errorMessageVariableAttribute = $typeBuilder->stringAttribute(
-            BpmnModelConstants::ATTRIBUTE_ERROR_MESSAGE_VARIABLE
+            BpmnModelConstants::EXTENSION_ATTRIBUTE_ERROR_MESSAGE_VARIABLE
         )
-        ->namespace(BpmnModelConstants::NS)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         $typeBuilder->build();

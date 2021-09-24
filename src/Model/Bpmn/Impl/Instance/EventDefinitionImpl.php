@@ -5,7 +5,8 @@ namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 use BpmPlatform\Model\Xml\ModelBuilder;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
-    EventDefinitionInterface
+    EventDefinitionInterface,
+    RootElementInterface
 };
 
 abstract class EventDefinitionImpl extends RootElementImpl implements EventDefinitionInterface

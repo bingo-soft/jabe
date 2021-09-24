@@ -45,7 +45,7 @@ abstract class FlowElementImpl extends BaseElementImpl implements FlowElementInt
         self::$monitoringChild = $sequenceBuilder->element(MonitoringInterface::class)
                                  ->build();
 
-        self::$categoryValueRefCollection = $sequenceBuilder->elementCollection(CategoryValueRefInterface::class)
+        self::$categoryValueRefCollection = $sequenceBuilder->elementCollection(CategoryValueRef::class)
         ->qNameElementReferenceCollection(CategoryValueInterface::class)
         ->build();
 

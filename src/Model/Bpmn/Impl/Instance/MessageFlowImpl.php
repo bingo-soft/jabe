@@ -3,6 +3,7 @@
 namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 
 use BpmPlatform\Model\Xml\ModelBuilder;
+use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
@@ -44,20 +45,20 @@ class MessageFlowImpl extends BaseElementImpl implements MessageFlowInterface
             }
         );
 
-        self::$nameAttribute = $typeBuilder->stringAttribute(BPMN_ATTRIBUTE_NAME)
+        self::$nameAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_NAME)
         ->build();
 
-        self::$sourceRefAttribute = $typeBuilder->stringAttribute(BPMN_ATTRIBUTE_SOURCE_REF)
+        self::$sourceRefAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_SOURCE_REF)
         ->required()
         ->qNameAttributeReference(InteractionNodeInterface::class)
         ->build();
 
-        self::$targetRefAttribute = $typeBuilder->stringAttribute(BPMN_ATTRIBUTE_TARGET_REF)
+        self::$targetRefAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_TARGET_REF)
         ->required()
         ->qNameAttributeReference(InteractionNodeInterface::class)
         ->build();
 
-        self::$messageRefAttribute = $typeBuilder->stringAttribute(BPMN_ATTRIBUTE_MESSAGE_REF)
+        self::$messageRefAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_MESSAGE_REF)
         ->qNameAttributeReference(MessageInterface::class)
         ->build();
 

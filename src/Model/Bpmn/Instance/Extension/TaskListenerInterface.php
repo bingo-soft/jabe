@@ -10,7 +10,7 @@ interface TaskListenerInterface extends BpmnModelElementInstanceInterface
 
     public function setEvent(string $event): void;
 
-    public function getClass(string $class): string;
+    public function getClass(): string;
 
     public function setClass(string $class): void;
 

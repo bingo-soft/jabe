@@ -70,7 +70,7 @@ class ImportImpl extends BpmnModelElementInstanceImpl implements ImportInterface
         return self::$locationAttribute->getValue($this);
     }
 
-    public function setLocaltion(string $localtion): void
+    public function setLocation(string $localtion): void
     {
         self::$locationAttribute->setValue($this, $localtion);
     }

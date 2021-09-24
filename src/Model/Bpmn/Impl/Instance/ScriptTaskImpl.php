@@ -3,7 +3,7 @@
 namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 
 use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\Builder\ScriptTaskBuilder;
+use BpmPlatform\Model\Bpmn\Builder\ScriptTaskBuilder;
 use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
@@ -53,12 +53,12 @@ class ScriptTaskImpl extends TaskImpl implements ScriptTaskInterface
         self::$scriptChild = $sequenceBuilder->element(ScriptInterface::class)
         ->build();
 
-        self::$resultVariableAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_RESULT_VARIABLE)
-        ->namespace(BpmnModelConstants::NS)
+        self::$resultVariableAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_RESULT_VARIABLE)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
-        self::$resourceAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::ATTRIBUTE_RESOURCE)
-        ->namespace(BpmnModelConstants::NS)
+        self::$resourceAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_RESOURCE)
+        ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         $typeBuilder->build();

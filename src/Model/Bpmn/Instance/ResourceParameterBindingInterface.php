@@ -2,7 +2,7 @@
 
 namespace BpmPlatform\Model\Bpmn\Instance;
 
-interface ResourceParameterBinding extends BaseElementInterface
+interface ResourceParameterBindingInterface extends BaseElementInterface
 {
     public function getParameter(): ResourceParameterInterface;
 

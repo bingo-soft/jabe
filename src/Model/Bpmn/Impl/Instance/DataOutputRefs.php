@@ -18,7 +18,7 @@ class DataOutputRefs extends BpmnModelElementInstanceImpl
     public static function registerType(ModelBuilder $modelBuilder): void
     {
         $typeBuilder = $modelBuilder->defineType(
-            CorrelationPropertyRef::class,
+            DataOutputRefs::class,
             BpmnModelConstants::BPMN_ELEMENT_DATA_OUTPUT_REFS
         )
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
