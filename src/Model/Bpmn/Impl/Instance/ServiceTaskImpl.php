@@ -17,7 +17,7 @@ use BpmPlatform\Model\Bpmn\Instance\{
 class ServiceTaskImpl extends TaskImpl implements ServiceTaskInterface
 {
     protected static $implementationAttribute;
-    protected static $operationRefChild;
+    protected static $operationRefAttribute;
     protected static $classAttribute;
     protected static $delegateExpressionAttribute;
     protected static $expressionAttribute;
@@ -55,11 +55,11 @@ class ServiceTaskImpl extends TaskImpl implements ServiceTaskInterface
         ->defaultValue("##WebService")
         ->build();
 
-        $sequenceBuilder = $typeBuilder->sequence();
-
-        self::$operationRefChild = $sequenceBuilder->element(OperationRef::class)
-        ->qNameElementReference(OperationInterface::class)
+        self::$operationRefAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_OPERATION_REF)
+        ->qNameAttributeReference(OperationInterface::class)
         ->build();
+
+        $sequenceBuilder = $typeBuilder->sequence();
 
         self::$classAttribute = $typeBuilder->stringAttribute(
             BpmnModelConstants::EXTENSION_ATTRIBUTE_CLASS
@@ -123,12 +123,12 @@ class ServiceTaskImpl extends TaskImpl implements ServiceTaskInterface
 
     public function getOperation(): OperationInterface
     {
-        return self::$operationRefChild->getReferenceTargetElement($this);
+        return self::$operationRefAttribute->getReferenceTargetElement($this);
     }
 
     public function setOperation(OperationInterface $operation): void
     {
-        self::$operationRefChild->setReferenceTargetElement($this, $operation);
+        self::$operationRefAttribute->setReferenceTargetElement($this, $operation);
     }
 
     public function getClass(): string

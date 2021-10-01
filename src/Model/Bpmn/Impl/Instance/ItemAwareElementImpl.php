@@ -41,7 +41,8 @@ class ItemAwareElementImpl extends BaseElementImpl implements ItemAwareElementIn
                     return new ItemAwareElementImpl($instanceContext);
                 }
             }
-        );
+        )
+        ->abstractType();
 
         self::$itemSubjectRefAttribute = $typeBuilder->stringAttribute(
             BpmnModelConstants::BPMN_ATTRIBUTE_ITEM_SUBJECT_REF

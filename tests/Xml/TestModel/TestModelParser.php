@@ -14,7 +14,7 @@ class TestModelParser extends AbstractModelParser
 
     public function __construct()
     {
-        $this->addSchema(self::TEST_NS, file_get_contents(self::SCHEMA_LOCATION));
+        $this->addSchema(self::TEST_NS, self::SCHEMA_LOCATION);
     }
 
     protected function createModelInstance(DomDocumentInterface $document): ModelInstanceInterface

@@ -72,22 +72,22 @@ class ConditionalEventDefinitionImpl extends EventDefinitionImpl implements Cond
         self::$conditionChild->setChild($this, $condition);
     }
 
-    public function getVariableName(): string
+    public function getVariableName(): ?string
     {
         return self::$variableName->getValue($this);
     }
 
-    public function setVariableName(string $variableName): void
+    public function setVariableName(?string $variableName): void
     {
         self::$variableName->setValue($this, $variableName);
     }
 
-    public function getVariableEvents(): string
+    public function getVariableEvents(): ?string
     {
         return self::$variableEvents->getValue($this);
     }
 
-    public function setVariableEvents(string $variableEvents): void
+    public function setVariableEvents(?string $variableEvents): void
     {
         self::$variableEvents->setValue($this, $variableEvents);
     }

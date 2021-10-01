@@ -33,6 +33,7 @@ abstract class ShapeImpl extends NodeImpl implements ShapeInterface
         $sequenceBuilder = $typeBuilder->sequence();
 
         self::$boundsChild = $sequenceBuilder->element(BoundsInterface::class)
+        ->required()
         ->build();
 
         $typeBuilder->build();

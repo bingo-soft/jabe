@@ -391,7 +391,7 @@ class Bpmn
         $modelInstance = self::$INSTANCE->doCreateEmptyModel();
         $definitions = $modelInstance->newInstance(DefinitionsInterface::class);
         $definitions->setTargetNamespace(BpmnModelConstants::BPMN20_NS);
-        $definitions->getDomElement()::registerNamespace("extension", BpmnModelConstants::EXTENSION_NS);
+        $definitions->getDomElement()->registerNamespace("extension", BpmnModelConstants::EXTENSION_NS);
         $modelInstance->setDefinitions($definitions);
         $process = $modelInstance->newInstance(ProcessInterface::class);
         $definitions->addChildElement($process);

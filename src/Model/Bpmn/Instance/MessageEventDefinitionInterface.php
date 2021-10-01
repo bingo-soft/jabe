@@ -8,7 +8,7 @@ interface MessageEventDefinitionInterface extends EventDefinitionInterface
 
     public function setMessage(MessageInterface $message): void;
 
-    public function getOperation(): OperationInterface;
+    public function getOperation(): ?OperationInterface;
 
     public function setOperation(OperationInterface $operation): void;
 

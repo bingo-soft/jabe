@@ -9,7 +9,7 @@ interface ModelInterface
 {
     public function getTypes(): array;
 
-    public function getType(string $instanceClass): ?ModelElementTypeInterface;
+    public function getType(?string $instanceClass): ?ModelElementTypeInterface;
 
     public function getTypeForName(?string $namespaceUri, string $typeName): ?ModelElementTypeInterface;
 

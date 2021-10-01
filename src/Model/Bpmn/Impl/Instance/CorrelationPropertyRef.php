@@ -27,7 +27,7 @@ class CorrelationPropertyRef extends BpmnModelElementInstanceImpl
             {
                 public function newInstance(ModelTypeInstanceContext $instanceContext): ModelElementInstanceInterface
                 {
-                    return new CorrelationProperty($instanceContext);
+                    return new CorrelationPropertyRef($instanceContext);
                 }
             }
         );

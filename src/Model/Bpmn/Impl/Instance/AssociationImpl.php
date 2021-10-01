@@ -44,17 +44,17 @@ class AssociationImpl extends ArtifactImpl implements AssociationInterface
             }
         );
 
-        $sourceRefAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_SOURCE_REF)
+        self::$sourceRefAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_SOURCE_REF)
         ->required()
         ->qNameAttributeReference(BaseElementInterface::class)
         ->build();
 
-        $targetRefAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_TARGET_REF)
+        self::$targetRefAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_TARGET_REF)
         ->required()
         ->qNameAttributeReference(BaseElementInterface::class)
         ->build();
 
-        $associationDirectionAttribute = $typeBuilder->enumAttribute(
+        self::$associationDirectionAttribute = $typeBuilder->enumAttribute(
             BpmnModelConstants::BPMN_ATTRIBUTE_ASSOCIATION_DIRECTION,
             AssociationDirection::class
         )

@@ -14,7 +14,10 @@ abstract class AbstractModelParser
 {
     protected $schemas = [];
 
-    public function parseModelFromStream(string $inputStream): ModelInstanceInterface
+    /**
+     * @param resource $inputStream
+     */
+    public function parseModelFromStream($inputStream): ModelInstanceInterface
     {
         $document = DomUtil::parseInputStream($inputStream);
         $this->validateModel($document);
@@ -35,7 +38,7 @@ abstract class AbstractModelParser
         }
         $dom = $document->getDomSource();
         try {
-            $dom->schemaValidateSource($schema);
+            $dom->schemaValidate($schema);
         } catch (\Exception $e) {
             throw new ModelValidationException("Error during DOM document validation");
         }

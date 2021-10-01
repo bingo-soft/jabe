@@ -4,6 +4,7 @@ namespace BpmPlatform\Model\Bpmn\Impl\Instance;
 
 use BpmPlatform\Model\Xml\ModelBuilder;
 use BpmPlatform\Model\Xml\Type\Reference\AttributeReferenceInterface;
+use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Bpmn\QueryInterface;
 use BpmPlatform\Model\Bpmn\Builder\{
     AbstractBaseElementBuilder,
@@ -75,6 +76,16 @@ abstract class FlowNodeImpl extends FlowElementImpl implements FlowNodeInterface
     public function builder(): AbstractBaseElementBuilder//AbstractFlowNodeBuilder
     {
         throw new BpmnModelException("No builder implemented");
+    }
+
+    public function addOutgoing(SequenceFlowInterface $node): void
+    {
+        self::$outgoingCollection->add($this, $node);
+    }
+
+    public function addIncoming(SequenceFlowInterface $node): void
+    {
+        self::$incomingCollection->add($this, $node);
     }
 
     public function updateAfterReplacement(): void
@@ -158,7 +169,7 @@ abstract class FlowNodeImpl extends FlowElementImpl implements FlowNodeInterface
         self::$exclusive->setValue($this, $isExclusive);
     }
 
-    public function getJobPriority(): string
+    public function getJobPriority(): ?string
     {
         return self::$jobPriority->getValue($this);
     }

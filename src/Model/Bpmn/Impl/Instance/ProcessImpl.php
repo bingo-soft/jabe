@@ -292,7 +292,7 @@ class ProcessImpl extends CallableElementImpl implements ProcessInterface
         self::$candidateStarterUsersAttribute->setValue($this, $candidateStarterUsers);
     }
 
-    public function getJobPriority(): string
+    public function getJobPriority(): ?string
     {
         return self::$jobPriorityAttribute->getValue($this);
     }
@@ -302,7 +302,7 @@ class ProcessImpl extends CallableElementImpl implements ProcessInterface
         self::$jobPriorityAttribute->setValue($this, $jobPriority);
     }
 
-    public function getTaskPriority(): string
+    public function getTaskPriority(): ?string
     {
         return self::$taskPriorityAttribute->getValue($this);
     }

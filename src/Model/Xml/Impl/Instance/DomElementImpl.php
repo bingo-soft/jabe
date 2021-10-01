@@ -61,7 +61,7 @@ class DomElementImpl implements DomElementInterface
 
     public function getRootElement(): ?DomElementInterface
     {
-        $document = $this->getDcoument();
+        $document = $this->getDocument();
         if ($document != null) {
             return $document->getRootElement();
         } else {
@@ -189,12 +189,18 @@ class DomElementImpl implements DomElementInterface
         $xmlQName = new XmlQName($this->getDocument(), $this, $namespaceUri, $localName);
         if ($xmlQName->hasLocalNamespace()) {
             $this->element->setAttribute($xmlQName->getLocalName(), $value);
-            if ($isIdAttribute && !$this->element->getAttributeNode("id")->isId()) {
+            if ($isIdAttribute && !$this->element->getAttributeNode($localName)->isId()) {
                 $this->element->setIdAttribute($xmlQName->getLocalName(), true);
             }
         } else {
-            $this->element->setAttributeNS($xmlQName->getNamespaceUri(), $xmlQName->getPrefixedName(), $value);
-            if ($isIdAttribute && !$this->element->getAttributeNodeNS($xmlQName->getNamespaceUri(), "id")->isId()) {
+            //PHP does not create prefix automatically, like Java
+            $prefixedName = $xmlQName->getPrefixedName();
+            if (strpos($prefixedName, ":") === false) {
+                $prefix = $this->getDocument()->getUnusedGenericNsPrefix();
+                $prefixedName = $prefix . ":" . $localName;
+            }
+            $this->element->setAttributeNS($xmlQName->getNamespaceUri(), $prefixedName, $value);
+            if ($isIdAttribute && !$this->element->getAttributeNodeNS($xmlQName->getNamespaceUri(), $localName)->isId()) {
                 $this->element->setIdAttributeNS($xmlQName->getNamespaceUri(), $xmlQName->getLocalName(), true);
             }
         }
@@ -264,7 +270,7 @@ class DomElementImpl implements DomElementInterface
                 if (
                     $prefix != null &&
                     $this->getRootElement() != null &&
-                    $this->getRootElement()->hasAttributeNS(self::XMLNS_ATTRIBUTE_NS_URI, $prefix)
+                    $this->getRootElement()->element->hasAttributeNS(self::XMLNS_ATTRIBUTE_NS_URI, $prefix)
                 ) {
                     $prefix = null;
                 }

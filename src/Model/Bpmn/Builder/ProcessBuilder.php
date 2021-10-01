@@ -6,7 +6,8 @@ use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
 use BpmPlatform\Model\Bpmn\Instance\Bpmndi\BpmnShapeInterface;
 use BpmPlatform\Model\Bpmn\Instance\{
     ProcessInterface,
-    StartEventInterface
+    StartEventInterface,
+    SubProcessInterface
 };
 
 class ProcessBuilder extends AbstractProcessBuilder
@@ -18,17 +19,17 @@ class ProcessBuilder extends AbstractProcessBuilder
         parent::__construct($modelInstance, $element, ProcessBuilder::class);
     }
 
-    public function startEvent(string $id): StartEventBuilder
+    public function startEvent(?string $id = null): StartEventBuilder
     {
-        $start = $this->createChild(StartEventInterface::class, $id);
+        $start = $this->createChild(null, StartEventInterface::class, $id);
         $bpmnShape = $this->createBpmnShape($start);
         $this->setCoordinates($bpmnShape);
         return $start->builder();
     }
 
-    public function eventSubProcess(string $id): EventSubProcessBuilder
+    public function eventSubProcess(?string $id = null): EventSubProcessBuilder
     {
-        $subProcess = $this->createChild(SubProcessInterface::class, $id);
+        $subProcess = $this->createChild(null, SubProcessInterface::class, $id);
         $subProcess->setTriggeredByEvent(true);
 
         // Create Bpmn shape so subprocess will be drawn

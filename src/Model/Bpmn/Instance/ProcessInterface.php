@@ -58,11 +58,11 @@ interface ProcessInterface extends CallableElementInterface
 
     public function setCandidateStarterUsersList(array $candidateStarterUsersList): void;
 
-    public function getJobPriority(): string;
+    public function getJobPriority(): ?string;
 
     public function setJobPriority(string $jobPriority): void;
 
-    public function getTaskPriority(): string;
+    public function getTaskPriority(): ?string;
 
     public function setTaskPriority(string $taskPriority): void;
 

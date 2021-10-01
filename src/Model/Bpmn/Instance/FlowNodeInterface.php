@@ -29,7 +29,7 @@ interface FlowNodeInterface extends FlowElementInterface
 
     public function setExclusive(bool $isExclusive): void;
 
-    public function getJobPriority(): string;
+    public function getJobPriority(): ?string;
 
     public function setJobPriority(string $jobPriority): void;
 }

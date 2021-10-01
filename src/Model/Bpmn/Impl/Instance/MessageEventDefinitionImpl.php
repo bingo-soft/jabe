@@ -114,7 +114,7 @@ class MessageEventDefinitionImpl extends EventDefinitionImpl implements MessageE
         self::$messageRefAttribute->setReferenceTargetElement($this, $message);
     }
 
-    public function getOperation(): OperationInterface
+    public function getOperation(): ?OperationInterface
     {
         return self::$operationRefChild->getReferenceTargetElement($this);
     }

@@ -23,6 +23,11 @@ class BpmnModelInstanceImpl extends ModelInstanceImpl implements BpmnModelInstan
         return $this->getDocumentElement();
     }
 
+    public function setDefinitions(DefinitionsInterface $definitions): void
+    {
+        $this->setDocumentElement($definitions);
+    }
+
     public function clone(): BpmnModelInstanceInterface
     {
         return new BpmnModelInstanceImpl($this->model, $this->modelBuilder, $this->document->clone());

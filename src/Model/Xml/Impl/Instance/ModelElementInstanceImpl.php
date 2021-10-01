@@ -287,7 +287,10 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
             );
             $instances = array_merge($instances, ModelUtil::getModelElementCollection($elements, $this->modelInstance));
             return $instances;
-        } elseif (is_subclass_of($childElementType, ModelElementInstanceImpl::class)) {
+        } elseif (
+            is_subclass_of($childElementType, ModelElementInstanceImpl::class) ||
+            is_subclass_of($childElementType, ModelElementInstanceInterface::class)
+        ) {
             return $this->getChildElementsByType($this->getModelInstance()->getModel()->getType($childElementType));
         }
         return [];

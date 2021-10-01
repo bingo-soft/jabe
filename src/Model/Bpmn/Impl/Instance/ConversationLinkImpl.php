@@ -42,6 +42,9 @@ class ConversationLinkImpl extends BaseElementImpl implements ConversationLinkIn
             }
         );
 
+        self::$nameAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_NAME)
+        ->build();
+
         self::$sourceRefAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_SOURCE_REF)
         ->required()
         ->qNameAttributeReference(InteractionNodeInterface::class)

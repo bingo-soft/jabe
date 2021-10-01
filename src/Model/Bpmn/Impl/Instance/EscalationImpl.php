@@ -45,7 +45,7 @@ class EscalationImpl extends RootElementImpl implements EscalationInterface
         self::$nameAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_NAME)
         ->build();
 
-        self::$escalationCodeAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_ERROR_CODE)
+        self::$escalationCodeAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_ESCALATION_CODE)
         ->build();
 
         self::$structureRefAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::BPMN_ATTRIBUTE_STRUCTURE_REF)
@@ -65,7 +65,7 @@ class EscalationImpl extends RootElementImpl implements EscalationInterface
         self::$nameAttribute->setValue($this, $name);
     }
 
-    public function getEscalationCode(): string
+    public function getEscalationCode(): ?string
     {
         return self::$escalationCodeAttribute->getValue($this);
     }

@@ -294,10 +294,11 @@ class ModelElementTypeImpl implements ModelElementTypeInterface
         return null;
     }
 
-    public function getChildElementCollection(ModelElementTypeInterface $childElementType): array
-    {
+    public function getChildElementCollection(
+        ModelElementTypeInterface $childElementType
+    ): ChildElementCollectionInterface {
         foreach ($this->getChildElementCollections() as $childElementCollection) {
-            if ($childElementType == $childElementCollection->getChildElementType($model)) {
+            if ($childElementType == $childElementCollection->getChildElementType($this->model)) {
                 return $childElementCollection;
             }
         }

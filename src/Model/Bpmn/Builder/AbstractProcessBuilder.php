@@ -9,7 +9,7 @@ abstract class AbstractProcessBuilder extends AbstractCallableElementBuilder
 {
     protected function __construct(
         BpmnModelInstanceInterface $modelInstance,
-        ParallelGatewayInterface $element,
+        ProcessInterface $element,
         string $selfType
     ) {
         parent::__construct($modelInstance, $element, $selfType);

@@ -56,12 +56,12 @@ class SignalEventDefinitionImpl extends EventDefinitionImpl implements SignalEve
 
     public function getSignal(): SignalInterface
     {
-        return self::$messageRefAttribute->getReferenceTargetElement($this);
+        return self::$signalRefAttribute->getReferenceTargetElement($this);
     }
 
     public function setSignal(SignalInterface $message): void
     {
-        self::$messageRefAttribute->setReferenceTargetElement($this, $message);
+        self::$signalRefAttribute->setReferenceTargetElement($this, $message);
     }
 
     public function isAsync(): bool

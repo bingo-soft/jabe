@@ -270,7 +270,7 @@ abstract class AbstractBaseElementBuilder extends AbstractBpmnModelElementBuilde
         if ($bpmnPlane != null) {
             $bpmnShape = $this->createInstance(BpmnShapeInterface::class);
             $bpmnShape->setBpmnElement($node);
-            $nodeBounds = $this->createInstance();
+            $nodeBounds = $this->createInstance(BoundsInterface::class);
 
             if ($node instanceof SubProcessInterface) {
                 $bpmnShape->setExpanded(true);
@@ -424,7 +424,7 @@ abstract class AbstractBaseElementBuilder extends AbstractBpmnModelElementBuilde
     {
         $allShapes = $this->modelInstance->getModelElementsByType(BpmnShapeInterface::class);
         foreach ($allShapes as $shape) {
-            if ($shape->getBpmnElement() == $node) {
+            if ($shape->getBpmnElement()->equals($node)) {
                 return $shape;
             }
         }
@@ -435,7 +435,7 @@ abstract class AbstractBaseElementBuilder extends AbstractBpmnModelElementBuilde
     {
         $allEdges = $this->modelInstance->getModelElementsByType(BpmnEdgeInterface::class);
         foreach ($allEdges as $edge) {
-            if ($edge->getBpmnElement() == $sequenceFlow) {
+            if ($edge->getBpmnElement()->equals($sequenceFlow)) {
                 return $edge;
             }
         }

@@ -30,11 +30,10 @@ abstract class ReflectUtil
      */
     public static function getResourceAsFile(string $path)
     {
-        $resource = $this->getResource($path);
-        if (file_exists($resource)) {
-            return fopen($resource, 'r+');
+        if (file_exists($path)) {
+            return fopen($path, 'r+');
         } else {
-            throw new ModelException(sprintf("Exception while loading resource file %s", $path));
+             throw new ModelException(sprintf("Exception while loading resource file %s", $path));
         }
     }
 

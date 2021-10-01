@@ -22,14 +22,14 @@ abstract class AbstractSequenceFlowBuilder extends AbstractFlowElementBuilder
     public function from(FlowNodeInterface $source): AbstractSequenceFlowBuilder
     {
         $this->element->setSource($source);
-        $source->addOutgoing($element);
+        $source->addOutgoing($this->element);
         return $this;
     }
 
     public function to(FlowNodeInterface $target): AbstractSequenceFlowBuilder
     {
         $this->element->setTarget($target);
-        $target->addIncoming($element);
+        $target->addIncoming($this->element);
         return $this;
     }
 

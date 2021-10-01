@@ -8,7 +8,7 @@ interface EscalationInterface extends RootElementInterface
 
     public function setName(string $name): void;
 
-    public function getEscalationCode(): string;
+    public function getEscalationCode(): ?string;
 
     public function setEscalationCode(string $escalationCode): void;
 

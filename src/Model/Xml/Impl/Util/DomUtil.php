@@ -47,10 +47,14 @@ class DomUtil
         return self::filterNodeList($nodeList, new ElementByTypeListFilter($type, $modelInstance));
     }
 
-    public static function parseInputStream(string $inputStream): DomDocumentInterface
+    /**
+     * @param resource $inputStream
+     */
+    public static function parseInputStream($inputStream): DomDocumentInterface
     {
         $dom = new \DOMDocument();
-        $dom->loadXML($inputStream);
+        $meta = stream_get_meta_data($inputStream);
+        $dom->loadXML(fread($inputStream, filesize($meta['uri'])));
         return new DomDocumentImpl($dom);
     }
 

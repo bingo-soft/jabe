@@ -78,13 +78,12 @@ class ModelImpl implements ModelInterface
         return array_values($this->typesByName);
     }
 
-    public function getType(string $instanceClass): ?ModelElementTypeInterface
+    public function getType(?string $instanceClass): ?ModelElementTypeInterface
     {
-        if (array_key_exists($instanceClass, $this->typesByClass)) {
+        if ($instanceClass != null && array_key_exists($instanceClass, $this->typesByClass)) {
             return $this->typesByClass[$instanceClass];
-        } else {
-            return null;
         }
+        return null;
     }
 
     public function getTypeForName(?string $namespaceUri, string $typeName): ?ModelElementTypeInterface

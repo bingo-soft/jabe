@@ -9,7 +9,7 @@ use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
     CategoryValueInterface,
-    RootElementInterface
+    BaseElementInterface
 };
 
 class CategoryValueImpl extends BaseElementImpl implements CategoryValueInterface
@@ -28,7 +28,7 @@ class CategoryValueImpl extends BaseElementImpl implements CategoryValueInterfac
             BpmnModelConstants::BPMN_ELEMENT_CATEGORY_VALUE
         )
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
-        ->extendsType(RootElementInterface::class)
+        ->extendsType(BaseElementInterface::class)
         ->instanceProvider(
             new class implements ModelTypeInstanceProviderInterface
             {
@@ -41,7 +41,7 @@ class CategoryValueImpl extends BaseElementImpl implements CategoryValueInterfac
 
         self::$valueAttribute = $typeBuilder->stringAttribute(
             BpmnModelConstants::BPMN_ATTRIBUTE_VALUE
-        )->required()->build();
+        )->build();
 
         $typeBuilder->build();
     }

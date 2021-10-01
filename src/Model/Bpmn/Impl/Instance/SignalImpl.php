@@ -8,7 +8,7 @@ use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
-    BaseElementInterface,
+    RootElementInterface,
     ItemDefinitionInterface,
     SignalInterface
 };
@@ -30,7 +30,7 @@ class SignalImpl extends BaseElementImpl implements SignalInterface
             BpmnModelConstants::BPMN_ELEMENT_SIGNAL
         )
         ->namespaceUri(BpmnModelConstants::BPMN20_NS)
-        ->extendsType(BaseElementInterface::class)
+        ->extendsType(RootElementInterface::class)
         ->instanceProvider(
             new class implements ModelTypeInstanceProviderInterface
             {

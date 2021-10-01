@@ -32,7 +32,7 @@ abstract class PlaneImpl extends NodeImpl implements PlaneInterface
 
         $sequenceBuilder = $typeBuilder->sequence();
 
-        self::$diagramElementCollection = $sequenceBuilder->element(DiagramElementInterface::class)
+        self::$diagramElementCollection = $sequenceBuilder->elementCollection(DiagramElementInterface::class)
         ->build();
 
         $typeBuilder->build();

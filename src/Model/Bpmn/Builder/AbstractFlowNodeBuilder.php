@@ -137,87 +137,87 @@ abstract class AbstractFlowNodeBuilder extends AbstractFlowElementBuilder
         return $builder;
     }
 
-    public function serviceTask(?string $id): ServiceTaskBuilder
+    public function serviceTask(?string $id = null): ServiceTaskBuilder
     {
-        $this->createTargetBuilder(ServiceTaskInterface::class, $id);
+        return $this->createTargetBuilder(ServiceTaskInterface::class, $id);
     }
 
-    public function sendTask(?string $id): SendTaskBuilder
+    public function sendTask(?string $id = null): SendTaskBuilder
     {
-        $this->createTargetBuilder(SendTaskInterface::class, $id);
+        return $this->createTargetBuilder(SendTaskInterface::class, $id);
     }
 
-    public function userTask(?string $id): UserTaskBuilder
+    public function userTask(?string $id = null): UserTaskBuilder
     {
-        $this->createTargetBuilder(UserTaskInterface::class, $id);
+        return $this->createTargetBuilder(UserTaskInterface::class, $id);
     }
 
-    public function businessRuleTask(?string $id): BusinessRuleTaskBuilder
+    public function businessRuleTask(?string $id = null): BusinessRuleTaskBuilder
     {
-        $this->createTargetBuilder(BusinessRuleTaskInterface::class, $id);
+        return $this->createTargetBuilder(BusinessRuleTaskInterface::class, $id);
     }
 
-    public function scriptTask(?string $id): ScriptTaskBuilder
+    public function scriptTask(?string $id = null): ScriptTaskBuilder
     {
-        $this->createTargetBuilder(ScriptTaskInterface::class, $id);
+        return $this->createTargetBuilder(ScriptTaskInterface::class, $id);
     }
 
-    public function receiveTask(?string $id): ReceiveTaskBuilder
+    public function receiveTask(?string $id = null): ReceiveTaskBuilder
     {
-        $this->createTargetBuilder(ReceiveTaskInterface::class, $id);
+        return $this->createTargetBuilder(ReceiveTaskInterface::class, $id);
     }
 
-    public function manualTask(?string $id): ManualTaskBuilder
+    public function manualTask(?string $id = null): ManualTaskBuilder
     {
-        $this->createTargetBuilder(ManualTaskInterface::class, $id);
+        return $this->createTargetBuilder(ManualTaskInterface::class, $id);
     }
 
-    public function endEvent(?string $id): EndEventBuilder
+    public function endEvent(?string $id = null): EndEventBuilder
     {
-        $this->createTarget(EndEventInterface::class, $id)->builder();
+        return $this->createTarget(EndEventInterface::class, $id)->builder();
     }
 
-    public function parallelGateway(?string $id): ParallelGatewayBuilder
+    public function parallelGateway(?string $id = null): ParallelGatewayBuilder
     {
-        $this->createTarget(ParallelGatewayInterface::class, $id)->builder();
+        return $this->createTarget(ParallelGatewayInterface::class, $id)->builder();
     }
 
-    public function exclusiveGateway(?string $id): ExclusiveGatewayBuilder
+    public function exclusiveGateway(?string $id = null): ExclusiveGatewayBuilder
     {
-        $this->createTarget(ExclusiveGatewayInterface::class, $id)->builder();
+        return $this->createTarget(ExclusiveGatewayInterface::class, $id)->builder();
     }
 
-    public function inclusiveGateway(?string $id): InclusiveGatewayBuilder
+    public function inclusiveGateway(?string $id = null): InclusiveGatewayBuilder
     {
-        $this->createTarget(InclusiveGatewayInterface::class, $id)->builder();
+        return $this->createTarget(InclusiveGatewayInterface::class, $id)->builder();
     }
 
-    public function eventBasedGateway(?string $id): EventBasedGatewayBuilder
+    public function eventBasedGateway(?string $id = null): EventBasedGatewayBuilder
     {
-        $this->createTarget(EventBasedGatewayInterface::class, $id)->builder();
+        return $this->createTarget(EventBasedGatewayInterface::class, $id)->builder();
     }
 
-    public function intermediateCatchEvent(?string $id): IntermediateCatchEventBuilder
+    public function intermediateCatchEvent(?string $id = null): IntermediateCatchEventBuilder
     {
-        $this->createTarget(IntermediateCatchEventInterface::class, $id)->builder();
+        return $this->createTarget(IntermediateCatchEventInterface::class, $id)->builder();
     }
 
-    public function intermediateThrowEvent(?string $id): IntermediateThrowEventBuilder
+    public function intermediateThrowEvent(?string $id = null): IntermediateThrowEventBuilder
     {
-        $this->createTarget(IntermediateThrowEventInterface::class, $id)->builder();
+        return $this->createTarget(IntermediateThrowEventInterface::class, $id)->builder();
     }
 
-    public function callActivity(?string $id): CallActivityBuilder
+    public function callActivity(?string $id = null): CallActivityBuilder
     {
-        $this->createTarget(CallActivityInterface::class, $id)->builder();
+        return $this->createTarget(CallActivityInterface::class, $id)->builder();
     }
 
-    public function subProcess(?string $id): SubProcessBuilder
+    public function subProcess(?string $id = null): SubProcessBuilder
     {
-        $this->createTarget(SubProcessInterface::class, $id)->builder();
+        return $this->createTarget(SubProcessInterface::class, $id)->builder();
     }
 
-    public function transaction(?string $id): TransactionBuilder
+    public function transaction(?string $id = null): TransactionBuilder
     {
         $transaction = $this->createTarget(TransactionInterface::class, $id);
         return new TransactionBuilder($this->modelInstance, $transaction);

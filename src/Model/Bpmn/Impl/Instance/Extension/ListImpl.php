@@ -10,10 +10,15 @@ use BpmPlatform\Model\Xml\Impl\Util\ModelUtil;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\BpmnModelElementInstanceInterface;
 use BpmPlatform\Model\Bpmn\Impl\Instance\BpmnModelElementInstanceImpl;
-use BpmPlatform\Model\Bpmn\Instance\Extension\ListInterface;
+use BpmPlatform\Model\Bpmn\Instance\Extension\{
+    ListInterface,
+    ValueInterface
+};
 
 class ListImpl extends BpmnModelElementInstanceImpl implements ListInterface
 {
+    protected static $valueChild;
+
     public static function registerType(ModelBuilder $modelBuilder): void
     {
         $typeBuilder = $modelBuilder->defineType(
@@ -31,7 +36,22 @@ class ListImpl extends BpmnModelElementInstanceImpl implements ListInterface
             }
         );
 
+        $sequenceBuilder = $typeBuilder->sequence();
+
+        self::$valueChild = $sequenceBuilder->element(ValueInterface::class)
+        ->build();
+
         $typeBuilder->build();
+    }
+
+    public function getValue(): ?ValueInterface
+    {
+        return self::$valueAttribute->getValue($this);
+    }
+
+    public function setValue(ValueInterface $value): void
+    {
+        self::$valueAttribute->setValue($this, $value);
     }
 
     public function getValues(): array

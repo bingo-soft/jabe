@@ -25,7 +25,7 @@ abstract class TestModelTest extends TestCase
     protected function parseModel(string $test)
     {
         $this->modelParser = new TestModelParser();
-        $xml = file_get_contents('tests/Xml/TestModel/Resources/TestModel/' . $test . '.xml');
+        $xml = fopen('tests/Xml/TestModel/Resources/TestModel/' . $test . '.xml', 'r+');
         $this->modelInstance = $this->modelParser->parseModelFromStream($xml);
     }
 

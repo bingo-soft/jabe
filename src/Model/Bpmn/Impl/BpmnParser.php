@@ -11,7 +11,7 @@ class BpmnParser extends AbstractModelParser
 {
     public function __construct()
     {
-        $this->addSchema(BpmnModelConstants::BPMN20_NS, file_get_contents(BpmnModelConstants::BPMN_20_SCHEMA_LOCATION));
+        $this->addSchema(BpmnModelConstants::BPMN20_NS, BpmnModelConstants::BPMN_20_SCHEMA_LOCATION);
     }
 
     protected function createModelInstance(DomDocumentInterface $document): ModelInstanceInterface
