@@ -67,7 +67,7 @@ class InImpl extends BpmnModelElementInstanceImpl implements InInterface
         $typeBuilder->build();
     }
 
-    public function getSource(): string
+    public function getSource(): ?string
     {
         return self::$sourceAttribute->getValue($this);
     }
@@ -77,7 +77,7 @@ class InImpl extends BpmnModelElementInstanceImpl implements InInterface
         self::$sourceAttribute->setValue($this, $source);
     }
 
-    public function getSourceExpression(): string
+    public function getSourceExpression(): ?string
     {
         return self::$sourceExpressionAttribute->getValue($this);
     }
@@ -87,7 +87,7 @@ class InImpl extends BpmnModelElementInstanceImpl implements InInterface
         self::$sourceExpressionAttribute->setValue($this, $sourceExpression);
     }
 
-    public function getVariables(): string
+    public function getVariables(): ?string
     {
         return self::$variablesAttribute->getValue($this);
     }
@@ -107,7 +107,7 @@ class InImpl extends BpmnModelElementInstanceImpl implements InInterface
         self::$targetAttribute->setValue($this, $target);
     }
 
-    public function getBusinessKey(): string
+    public function getBusinessKey(): ?string
     {
         return self::$businessKeyAttribute->getValue($this);
     }

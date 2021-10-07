@@ -351,8 +351,13 @@ class Bpmn
      */
     protected function doWriteModelToOutputStream($stream, BpmnModelInstanceInterface $modelInstance): void
     {
-        $this->doValidateModel($modelInstance);
-        IoUtil::writeDocumentToOutputStream($modelInstance->getDocument(), $stream);
+        try {
+            $this->doValidateModel($modelInstance);
+            IoUtil::writeDocumentToOutputStream($modelInstance->getDocument(), $stream);
+            fclose($stream);
+        } catch (\Exception $e) {
+            throw new BpmnModelException(sprintf("Cannot write model to file, file does not exist."));
+        }
     }
 
     public static function convertToString(BpmnModelInstanceInterface $modelInstance): string

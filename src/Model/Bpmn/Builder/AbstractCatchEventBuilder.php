@@ -27,7 +27,7 @@ abstract class AbstractCatchEventBuilder extends AbstractEventBuilder
 
     public function message(string $message): AbstractCatchEventBuilder
     {
-        $messageEventDefinition = $this->createMessageEventDefinition($messageName);
+        $messageEventDefinition = $this->createMessageEventDefinition($message);
         $this->element->addEventDefinition($messageEventDefinition);
         return $this;
     }
@@ -57,7 +57,7 @@ abstract class AbstractCatchEventBuilder extends AbstractEventBuilder
         return $this;
     }
 
-    public function compensateEventDefinition(?string $id): CompensateEventDefinitionBuilder
+    public function compensateEventDefinition(?string $id = null): CompensateEventDefinitionBuilder
     {
         $eventDefinition = $this->createInstance(CompensateEventDefinitionInterface::class);
         if ($id != null) {
@@ -67,7 +67,7 @@ abstract class AbstractCatchEventBuilder extends AbstractEventBuilder
         return new CompensateEventDefinitionBuilder($this->modelInstance, $eventDefinition);
     }
 
-    public function conditionalEventDefinition(?string $id): ConditionalEventDefinitionBuilder
+    public function conditionalEventDefinition(?string $id = null): ConditionalEventDefinitionBuilder
     {
         $eventDefinition = $this->createInstance(ConditionalEventDefinitionInterface::class);
         if ($id != null) {
@@ -77,7 +77,7 @@ abstract class AbstractCatchEventBuilder extends AbstractEventBuilder
         return new ConditionalEventDefinitionBuilder($this->modelInstance, $eventDefinition);
     }
 
-    public function condition(?string $name, string $condition): AbstractCatchEventBuilder
+    public function condition(?string $name, ?string $condition): AbstractCatchEventBuilder
     {
         $this->conditionalEventDefinition()->condition($condition);
         return $this;

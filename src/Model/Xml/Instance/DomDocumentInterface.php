@@ -2,6 +2,8 @@
 
 namespace BpmPlatform\Model\Xml\Instance;
 
+use BpmPlatform\Model\Xml\Impl\Instance\DomDocumentExt;
+
 interface DomDocumentInterface
 {
     public function getRootElement(): ?DomElementInterface;
@@ -18,5 +20,5 @@ interface DomDocumentInterface
 
     public function clone(): DomDocumentInterface;
 
-    public function getDomSource(): \DOMDocument;
+    public function getDomSource(): DomDocumentExt;
 }

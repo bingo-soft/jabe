@@ -4,14 +4,14 @@ namespace BpmPlatform\Model\Bpmn\Builder;
 
 use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
 use BpmPlatform\Model\Bpmn\Instance\{
-    BusinessRuleInterface
+    BusinessRuleTaskInterface
 };
 
 abstract class AbstractBusinessRuleTaskBuilder extends AbstractTaskBuilder
 {
     protected function __construct(
         BpmnModelInstanceInterface $modelInstance,
-        BusinessRuleInterface $element,
+        BusinessRuleTaskInterface $element,
         string $selfType
     ) {
         parent::__construct($modelInstance, $element, $selfType);
@@ -37,13 +37,13 @@ abstract class AbstractBusinessRuleTaskBuilder extends AbstractTaskBuilder
 
     public function delegateExpression(string $delegateExpression): AbstractBusinessRuleTaskBuilder
     {
-        $this->element->setExpression($delegateExpression);
+        $this->element->setDelegateExpression($delegateExpression);
         return $this;
     }
 
     public function resultVariable(string $resultVariable): AbstractBusinessRuleTaskBuilder
     {
-        $this->element->setResultVariable($delegateExpression);
+        $this->element->setResultVariable($resultVariable);
         return $this;
     }
 
@@ -95,7 +95,7 @@ abstract class AbstractBusinessRuleTaskBuilder extends AbstractTaskBuilder
         return $this;
     }
 
-    public function mapTaskPriority(string $taskPriority): AbstractBusinessRuleTaskBuilder
+    public function taskPriority(string $taskPriority): AbstractBusinessRuleTaskBuilder
     {
         $this->element->setTaskPriority($taskPriority);
         return $this;

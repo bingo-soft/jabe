@@ -4,11 +4,13 @@ namespace BpmPlatform\Model\Bpmn\Builder;
 
 use BpmPlatform\Model\Bpmn\Exception\BpmnModelException;
 use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
+use BpmPlatform\Model\Bpmn\Instance\Extension\{
+    FormDataInterface,
+    FormFieldInterface
+};
 use BpmPlatform\Model\Bpmn\Instance\{
     ErrorEventDefinitionInterface,
     EscalationEventDefinitionInterface,
-    FormDataInterface,
-    FormFieldInterface,
     StartEventInterface
 };
 
@@ -44,10 +46,10 @@ abstract class AbstractStartEventBuilder extends AbstractCatchEventBuilder
     {
         $formData = $this->getCreateSingleExtensionElement(FormDataInterface::class);
         $formField = $this->createChild($formData, FormFieldInterface::class);
-        return new StartEventFormFieldBuilder($this->modelInstance, $element, $formField);
+        return new StartEventFormFieldBuilder($this->modelInstance, $this->element, $formField);
     }
 
-    public function error(?string $errorCode, ?string $errorMessage): AbstractStartEventBuilder
+    public function error(?string $errorCode = null, ?string $errorMessage = null): AbstractStartEventBuilder
     {
         if ($errorCode == null) {
             $errorEventDefinition = $this->createInstance(ErrorEventDefinitionInterface::class);
@@ -59,7 +61,7 @@ abstract class AbstractStartEventBuilder extends AbstractCatchEventBuilder
         return $this;
     }
 
-    public function errorEventDefinition(?string $id): ErrorEventDefinitionBuilder
+    public function errorEventDefinition(?string $id = null): ErrorEventDefinitionBuilder
     {
         $errorEventDefinition = $this->createEmptyErrorEventDefinition();
         if ($id != null) {
@@ -69,14 +71,14 @@ abstract class AbstractStartEventBuilder extends AbstractCatchEventBuilder
         return new ErrorEventDefinitionBuilder($this->modelInstance, $errorEventDefinition);
     }
 
-    public function escalation(?string $escalationCode): AbstractStartEventBuilder
+    public function escalation(?string $escalationCode = null): AbstractStartEventBuilder
     {
         if ($escalationCode == null) {
             $escalationEventDefinition = $this->createInstance(EscalationEventDefinitionInterface::class);
         } else {
             $escalationEventDefinition = $this->createEscalationEventDefinition($escalationCode);
         }
-        $this->element->addEventDefinition($errorEventDefinition);
+        $this->element->addEventDefinition($escalationEventDefinition);
         return $this;
     }
 

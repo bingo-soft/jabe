@@ -17,9 +17,9 @@ class EmbeddedSubProcessBuilder extends AbstractEmbeddedSubProcessBuilder
         parent::__construct($subProcessBuilder, EmbeddedSubProcessBuilder::class);
     }
 
-    public function startEvent(?string $id): StartEventBuilder
+    public function startEvent(?string $id = null): StartEventBuilder
     {
-        $start = $this->subProcessBuilder->createChild(StartEventInterface::class, $id);
+        $start = $this->subProcessBuilder->createChild(null, StartEventInterface::class, $id);
         $startShape = $this->subProcessBuilder->createBpmnShape($start);
         $subProcessShape = $this->subProcessBuilder->findBpmnShape($this->subProcessBuilder->getElement());
 
@@ -32,14 +32,14 @@ class EmbeddedSubProcessBuilder extends AbstractEmbeddedSubProcessBuilder
             $subProcessHeight = $subProcessBounds->getHeight();
             $startHeight = $startBounds->getHeight();
 
-            $startBounds->setX($subProcessX + self::SPACE);
+            $startBounds->setX($subProcessX + AbstractBaseElementBuilder::SPACE);
             $startBounds->setY($subProcessY + $subProcessHeight / 2 - $startHeight / 2);
         }
 
         return $start->builder();
     }
 
-    public function eventSubProcess(?string $id): EventSubProcessBuilder
+    public function eventSubProcess(?string $id = null): EventSubProcessBuilder
     {
         $subProcess = $this->subProcessBuilder->createChild(SubProcessInterface::class, $id);
         $subProcess->setTriggeredByEvent(true);

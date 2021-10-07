@@ -196,7 +196,7 @@ class UserTaskImpl extends TaskImpl implements UserTaskInterface
 
     public function setFollowUpDate(string $followUpDate): void
     {
-        self::$dueFollowUpAttribute->setValue($this, $followUpDate);
+        self::$followUpDateAttribute->setValue($this, $followUpDate);
     }
 
     public function getFormHandlerClass(): string

@@ -62,7 +62,7 @@ class ErrorEventDefinitionImpl extends EventDefinitionImpl implements ErrorEvent
         $typeBuilder->build();
     }
 
-    public function getError(): ErrorInterface
+    public function getError(): ?ErrorInterface
     {
         return self::$errorRefAttribute->getReferenceTargetElement($this);
     }

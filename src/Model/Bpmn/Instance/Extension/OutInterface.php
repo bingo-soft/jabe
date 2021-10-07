@@ -14,7 +14,7 @@ interface OutInterface extends BpmnModelElementInstanceInterface
 
     public function setSourceExpression(string $sourceExpression): void;
 
-    public function getVariables(): string;
+    public function getVariables(): ?string;
 
     public function setVariables(string $variables): void;
 

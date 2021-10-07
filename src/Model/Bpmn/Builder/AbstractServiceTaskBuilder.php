@@ -6,6 +6,7 @@ use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
 use BpmPlatform\Model\Bpmn\Instance\{
     ServiceTaskInterface
 };
+use BpmPlatform\Model\Bpmn\Instance\Extension\ErrorEventDefinitionInterface;
 
 abstract class AbstractServiceTaskBuilder extends AbstractTaskBuilder
 {
@@ -68,7 +69,14 @@ abstract class AbstractServiceTaskBuilder extends AbstractTaskBuilder
 
     public function taskPriority(string $taskPriority): AbstractServiceTaskBuilder
     {
-        $this->element->taskPriority($taskPriority);
+        $this->element->setTaskPriority($taskPriority);
         return $this;
+    }
+
+    public function errorEventDefinition(): ExtensionErrorEventDefinitionBuilder
+    {
+        $errorEventDefinition = $this->createInstance(ErrorEventDefinitionInterface::class);
+        $this->addExtensionElement($errorEventDefinition);
+        return new ExtensionErrorEventDefinitionBuilder($this->modelInstance, $errorEventDefinition);
     }
 }

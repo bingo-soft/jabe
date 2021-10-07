@@ -6,6 +6,7 @@ use Tests\Xml\Test\{
     AbstractTypeAssumption,
     AttributeAssumption
 };
+use BpmPlatform\Model\Xml\Impl\Instance\DomDocumentExt;
 use BpmPlatform\Model\Bpmn\Bpmn;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
 use BpmPlatform\Model\Bpmn\Instance\{
@@ -60,7 +61,7 @@ class TransactionTest extends BpmnModelElementInstanceTest
         $process->addChildElement($transaction);
 
         $doc = $newModel->getDocument()->getDomSource();
-        $newDoc = new \DOMDocument();
+        $newDoc = new DomDocumentExt();
         $newDoc->loadXML($doc->saveXML());
         $transactionElements = $newDoc->getElementsByTagName("transaction");
         $this->assertCount(1, $transactionElements);

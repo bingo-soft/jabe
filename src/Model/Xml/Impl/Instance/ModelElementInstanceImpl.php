@@ -266,7 +266,8 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
     {
         $child->unlinkAllReferences();
         $child->unlinkAllChildReferences();
-        return $this->domElement->removeChild($child->getDomElement());
+        $res = $this->domElement->removeChild($child->getDomElement());
+        return $res;
     }
 
     /**

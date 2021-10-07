@@ -80,7 +80,7 @@ class OutImpl extends BpmnModelElementInstanceImpl implements OutInterface
         self::$sourceExpressionAttribute->setValue($this, $sourceExpression);
     }
 
-    public function getVariables(): string
+    public function getVariables(): ?string
     {
         return self::$variablesAttribute->getValue($this);
     }

@@ -4,10 +4,12 @@ namespace BpmPlatform\Model\Bpmn\Builder;
 
 use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
 use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
-use BpmPlatform\Model\Bpmn\Instance\{
+use BpmPlatform\Model\Bpmn\Instance\Extension\TaskListenerInterface;
+use BpmPlatform\Model\Bpmn\Instance\Extension\{
     FormDataInterface,
     FormFieldInterface,
-    TaskListenerInterface,
+};
+use BpmPlatform\Model\Bpmn\Instance\{
     TimerEventDefinitionInterface,
     UserTaskInterface
 };
@@ -68,7 +70,7 @@ abstract class AbstractUserTaskBuilder extends AbstractTaskBuilder
 
     public function followUpDate(string $followUpDate): AbstractUserTaskBuilder
     {
-        $this->element->setFollowUpDate($dueDate);
+        $this->element->setFollowUpDate($followUpDate);
         return $this;
     }
 
@@ -244,7 +246,7 @@ abstract class AbstractUserTaskBuilder extends AbstractTaskBuilder
     }
 
     protected function createTaskListenerTimeout(
-        strig $id,
+        string $id,
         TimerEventDefinitionInterface $timerDefinition
     ): TaskListenerInterface {
         $executionListener = $this->createInstance(TaskListenerInterface::class);

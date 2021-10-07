@@ -80,7 +80,7 @@ class ErrorImpl extends RootElementImpl implements ErrorInterface
         self::$errorCodeAttribute->setValue($this, $errorCode);
     }
 
-    public function getErrorMessage(): string
+    public function getErrorMessage(): ?string
     {
         return self::$errorMessageAttribute->getValue($this);
     }

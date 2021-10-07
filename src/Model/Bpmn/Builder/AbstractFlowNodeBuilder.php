@@ -5,6 +5,10 @@ namespace BpmPlatform\Model\Bpmn\Builder;
 use BpmPlatform\Model\Bpmn\AssociationDirection;
 use BpmPlatform\Model\Bpmn\Exception\BpmnModelException;
 use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
+use BpmPlatform\Model\Bpmn\Instance\Extension\{
+    ExecutionListenerInterface,
+    FailedJobRetryTimeCycleInterface
+};
 use BpmPlatform\Model\Bpmn\Instance\{
     ActivityInterface,
     AssociationInterface,
@@ -16,8 +20,6 @@ use BpmPlatform\Model\Bpmn\Instance\{
     EndEventInterface,
     EventBasedGatewayInterface,
     ExclusiveGatewayInterface,
-    ExecutionListenerInterface,
-    FailedJobRetryTimeCycleInterface,
     FlowNodeInterface,
     GatewayInterface,
     InclusiveGatewayInterface,
@@ -131,7 +133,7 @@ abstract class AbstractFlowNodeBuilder extends AbstractFlowElementBuilder
     {
         $builder = $this->createTarget($typeClass, $id)->builder();
         if ($this->compensationStarted) {
-            $builder->compensateBoundaryEvent = $compensateBoundaryEvent;
+            $builder->compensateBoundaryEvent = $this->compensateBoundaryEvent;
         }
 
         return $builder;
@@ -301,7 +303,7 @@ abstract class AbstractFlowNodeBuilder extends AbstractFlowElementBuilder
         return $this;
     }
 
-    public function exclusive(bool $exclusive): AbstractFlowNodeBuilder
+    public function exclusive(bool $exclusive = false): AbstractFlowNodeBuilder
     {
         $this->element->setExclusive($exclusive);
         return $this;

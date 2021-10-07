@@ -17,12 +17,12 @@ class DomDocumentImpl implements DomDocumentInterface
 
     private $document;
 
-    public function __construct(\DOMDocument $document)
+    public function __construct(DomDocumentExt $document)
     {
         $this->document = $document;
     }
 
-    public function getDomSource(): \DOMDocument
+    public function getDomSource(): DomDocumentExt
     {
         return $this->document;
     }
@@ -98,7 +98,7 @@ class DomDocumentImpl implements DomDocumentInterface
     public function clone(): DomDocumentInterface
     {
         $xml = $this->document->saveXML();
-        $clone = new \DOMDocument();
+        $clone = new DomDocumentExt();
         $clone->loadXML($xml);
         return new DomDocumentImpl($clone);
     }

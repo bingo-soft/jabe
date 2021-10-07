@@ -6,7 +6,7 @@ abstract class AbstractEmbeddedSubProcessBuilder
 {
     protected $subProcessBuilder;
 
-    protected function __construct(AbstractEmbeddedSubProcessBuilder $subProcessBuilder, string $selfType)
+    protected function __construct(AbstractSubProcessBuilder $subProcessBuilder, string $selfType)
     {
         $this->subProcessBuilder = $subProcessBuilder;
     }

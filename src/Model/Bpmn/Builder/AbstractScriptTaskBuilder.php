@@ -32,7 +32,7 @@ abstract class AbstractScriptTaskBuilder extends AbstractTaskBuilder
 
     public function scriptText(string $scriptText): AbstractScriptTaskBuilder
     {
-        $script = $this->createChild(ScriptInterface::class);
+        $script = $this->createChild(null, ScriptInterface::class);
         $script->setTextContent($scriptText);
         return $this;
     }

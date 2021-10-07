@@ -8,7 +8,10 @@ use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use BpmPlatform\Model\Xml\Impl\Util\ModelUtil;
 use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
 use BpmPlatform\Model\Bpmn\QueryInterface;
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
+use BpmPlatform\Model\Bpmn\Impl\{
+    BpmnModelConstants,
+    QueryImpl
+};
 use BpmPlatform\Model\Bpmn\Instance\{
     ExtensionElementsInterface
 };

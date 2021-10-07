@@ -25,14 +25,14 @@ abstract class AbstractThrowEventBuilder extends AbstractEventBuilder
         return $this;
     }
 
-    public function messageEventDefinition(?string $id): MessageEventDefinitionBuilder
+    public function messageEventDefinition(?string $id = null): MessageEventDefinitionBuilder
     {
         $messageEventDefinition = $this->createEmptyMessageEventDefinition();
         if ($id != null) {
             $messageEventDefinition->setId($id);
         }
         $this->element->addEventDefinition($messageEventDefinition);
-        throw new MessageEventDefinitionBuilder($this->modelInstance, $messageEventDefinition);
+        return new MessageEventDefinitionBuilder($this->modelInstance, $messageEventDefinition);
     }
 
     public function signal(string $signalName): AbstractThrowEventBuilder
@@ -42,14 +42,11 @@ abstract class AbstractThrowEventBuilder extends AbstractEventBuilder
         return $this;
     }
 
-    public function signalEventDefinition(?string $id): SignalEventDefinitionBuilder
+    public function signalEventDefinition(string $signalName): SignalEventDefinitionBuilder
     {
-        $signalEventDefinition = $this->createEmptySignalEventDefinition();
-        if ($id != null) {
-            $signalEventDefinition->setId($id);
-        }
+        $signalEventDefinition = $this->createSignalEventDefinition($signalName);
         $this->element->addEventDefinition($signalEventDefinition);
-        throw new SignalEventDefinitionBuilder($this->modelInstance, $signalEventDefinition);
+        return new SignalEventDefinitionBuilder($this->modelInstance, $signalEventDefinition);
     }
 
     public function escalation(string $escalationCode): AbstractThrowEventBuilder
@@ -59,7 +56,7 @@ abstract class AbstractThrowEventBuilder extends AbstractEventBuilder
         return $this;
     }
 
-    public function compensateEventDefinition(string $id): CompensateEventDefinitionBuilder
+    public function compensateEventDefinition(?string $id = null): CompensateEventDefinitionBuilder
     {
         $eventDefinition = $this->createInstance(CompensateEventDefinitionInterface::class);
         if ($id != null) {

@@ -14,5 +14,7 @@ interface ThrowEventInterface extends EventInterface
 
     public function getEventDefinitions(): array;
 
+    public function addEventDefinition(EventDefinitionInterface $eventDefinition): void;
+
     public function getEventDefinitionRefs(): array;
 }

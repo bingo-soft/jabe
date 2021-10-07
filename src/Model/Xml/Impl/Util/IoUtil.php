@@ -2,6 +2,7 @@
 
 namespace BpmPlatform\Model\Xml\Impl\Util;
 
+use BpmPlatform\Model\Xml\Impl\Instance\DomDocumentExt;
 use BpmPlatform\Model\Xml\Instance\DomDocumentInterface;
 
 class IoUtil
@@ -31,7 +32,7 @@ class IoUtil
 
     public static function convertXmlDocumentToString(DomDocumentInterface $document): string
     {
-        $source = new \DOMDocument();
+        $source = new DomDocumentExt();
         self::transformDocumentToXml($document, $source);
         return $source->saveXML();
     }
@@ -42,7 +43,7 @@ class IoUtil
      */
     public static function writeDocumentToOutputStream(DomDocumentInterface $document, $stream): void
     {
-        $source = new \DOMDocument();
+        $source = new DomDocumentExt();
         self::transformDocumentToXml($document, $source);
         fwrite($stream, $source->saveXML());
     }

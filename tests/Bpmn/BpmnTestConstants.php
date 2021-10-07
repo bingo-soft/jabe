@@ -30,12 +30,12 @@ class BpmnTestConstants
 
     public const TEST_STRING_XML = 'test';
     public const TEST_STRING_API = 'api';
-    public const TEST_CLASS_XML = 'org.camunda.test.Test';
-    public const TEST_CLASS_API = 'org.camunda.test.Api';
-    public const TEST_EXPRESSION_XML = '${' . TEST_STRING_XML . '}';
-    public const TEST_EXPRESSION_API = '${' . TEST_STRING_API . '}';
-    public const TEST_DELEGATE_EXPRESSION_XML = '${' . TEST_CLASS_XML . '}';
-    public const TEST_DELEGATE_EXPRESSION_API = '${' . TEST_CLASS_API . '}';
+    public const TEST_CLASS_XML = 'org.test.test.Test';
+    public const TEST_CLASS_API = 'org.test.test.Api';
+    public const TEST_EXPRESSION_XML = '${' . self::TEST_STRING_XML . '}';
+    public const TEST_EXPRESSION_API = '${' . self::TEST_STRING_API . '}';
+    public const TEST_DELEGATE_EXPRESSION_XML = '${' . self::TEST_CLASS_XML . '}';
+    public const TEST_DELEGATE_EXPRESSION_API = '${' . self::TEST_CLASS_API . '}';
     public const TEST_GROUPS_XML = 'group1, ${group2(a, b)}, group3';
     public const TEST_GROUPS_LIST_XML = ['group1', '${group2(a, b)}', 'group3'];
     public const TEST_GROUPS_API = '#{group1( c,d)}, group5';

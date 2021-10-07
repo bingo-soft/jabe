@@ -47,7 +47,7 @@ class EscalationEventDefinitionImpl extends EventDefinitionImpl implements Escal
         $typeBuilder->build();
     }
 
-    public function getEscalation(): EscalationInterface
+    public function getEscalation(): ?EscalationInterface
     {
         return self::$escalationRefAttribute->getReferenceTargetElement($this);
     }

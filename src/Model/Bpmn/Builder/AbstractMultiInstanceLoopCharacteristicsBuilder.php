@@ -33,14 +33,14 @@ abstract class AbstractMultiInstanceLoopCharacteristicsBuilder extends AbstractB
 
     public function cardinality(string $expression): AbstractMultiInstanceLoopCharacteristicsBuilder
     {
-        $cardinality = $this->getCreateSingleChild(LoopCardinalityInterface::class);
+        $cardinality = $this->getCreateSingleChild(null, LoopCardinalityInterface::class);
         $cardinality->setTextContent($expression);
         return $this;
     }
 
     public function completionCondition(string $expression): AbstractMultiInstanceLoopCharacteristicsBuilder
     {
-        $condition = $this->getCreateSingleChild(CompletionConditionInterface::class);
+        $condition = $this->getCreateSingleChild(null, CompletionConditionInterface::class);
         $condition->setTextContent($expression);
         return $this;
     }

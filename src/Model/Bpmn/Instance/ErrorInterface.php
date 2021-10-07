@@ -12,7 +12,7 @@ interface ErrorInterface extends RootElementInterface
 
     public function setErrorCode(string $errorCode): void;
 
-    public function getErrorMessage(): string;
+    public function getErrorMessage(): ?string;
 
     public function setErrorMessage(string $errorMessage): void;
 

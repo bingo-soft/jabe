@@ -5,13 +5,15 @@ namespace BpmPlatform\Model\Bpmn\Builder;
 use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
 use BpmPlatform\Model\Bpmn\Instance\Bpmndi\BpmnShapeInterface;
 use BpmPlatform\Model\Bpmn\Instance\Dc\BoundsInterface;
+use BpmPlatform\Model\Bpmn\Instance\Extension\{
+    InputOutputInterface,
+    InputParameterInterface,
+    OutputParameterInterface
+};
 use BpmPlatform\Model\Bpmn\Instance\{
     ActivityInterface,
     BoundaryEventInterface,
-    InputOutputInterface,
-    InputParameterInterface,
-    MultiInstanceLoopCharacteristicsInterface,
-    OutputParameterInterface
+    MultiInstanceLoopCharacteristicsInterface
 };
 
 abstract class AbstractActivityBuilder extends AbstractFlowNodeBuilder
@@ -24,10 +26,10 @@ abstract class AbstractActivityBuilder extends AbstractFlowNodeBuilder
         parent::__construct($modelInstance, $element, $selfType);
     }
 
-    public function boundaryEvent(string $id): BoundaryEventBuilder
+    public function boundaryEvent(?string $id = null): BoundaryEventBuilder
     {
         $boundaryEvent = $this->createSibling(BoundaryEventInterface::class, $id);
-        $boundaryEvent->setAttachedTo($element);
+        $boundaryEvent->setAttachedTo($this->element);
         $boundaryEventBpmnShape = $this->createBpmnShape($boundaryEvent);
         $this->setBoundaryEventCoordinates($boundaryEventBpmnShape);
         return $boundaryEvent->builder();
@@ -35,7 +37,7 @@ abstract class AbstractActivityBuilder extends AbstractFlowNodeBuilder
 
     public function multiInstance(): MultiInstanceLoopCharacteristicsBuilder
     {
-        $miCharacteristics = $this->createChild(MultiInstanceLoopCharacteristicsInterface::class);
+        $miCharacteristics = $this->createChild(null, MultiInstanceLoopCharacteristicsInterface::class);
         return $miCharacteristics->builder();
     }
 
@@ -45,7 +47,7 @@ abstract class AbstractActivityBuilder extends AbstractFlowNodeBuilder
         $inputParameter = $this->createChild($inputOutput, InputParameterInterface::class);
         $inputParameter->setName($name);
         $inputParameter->setTextContent($value);
-        return $this->myself;
+        return $this;
     }
 
     public function outputParameter(string $name, string $value): AbstractActivityBuilder
@@ -54,7 +56,7 @@ abstract class AbstractActivityBuilder extends AbstractFlowNodeBuilder
         $inputParameter = $this->createChild($inputOutput, OutputParameterInterface::class);
         $inputParameter->setName($name);
         $inputParameter->setTextContent($value);
-        return $this->myself;
+        return $this;
     }
 
     protected function calculateXCoordinate(BoundsInterface $boundaryEventBounds): float
@@ -68,7 +70,7 @@ abstract class AbstractActivityBuilder extends AbstractFlowNodeBuilder
             $boundaryEvents = $this->element->getParentElement()->getChildElementsByType(BoundaryEventInterface::class);
             $attachedBoundaryEvents = [];
             foreach ($boundaryEvents as $tmp) {
-                if ($tmp->getAttachedTo() == $this->element) {
+                if ($tmp->getAttachedTo()->equals($this->element)) {
                     $attachedBoundaryEvents[] = $tmp;
                 }
             }
@@ -103,6 +105,7 @@ abstract class AbstractActivityBuilder extends AbstractFlowNodeBuilder
             $activityBounds = $activity->getBounds();
             $activityY = $activityBounds->getY();
             $activityHeight = $activityBounds->getHeight();
+            $boundaryHeight = $boundaryBounds->getHeight();
             $x = $this->calculateXCoordinate($boundaryBounds);
             $y = $activityY + $activityHeight - $boundaryHeight / 2;
         }

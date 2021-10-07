@@ -2,7 +2,10 @@
 
 namespace BpmPlatform\Model\Xml\Impl\Util;
 
-use BpmPlatform\Model\Xml\Impl\Instance\DomDocumentImpl;
+use BpmPlatform\Model\Xml\Impl\Instance\{
+    DomDocumentExt,
+    DomDocumentImpl
+};
 use BpmPlatform\Model\Xml\Instance\DomDocumentInterface;
 use BpmPlatform\Model\Xml\Impl\ModelInstanceImpl;
 use BpmPlatform\Model\Xml\Impl\Instance\DomElementImpl;
@@ -52,7 +55,7 @@ class DomUtil
      */
     public static function parseInputStream($inputStream): DomDocumentInterface
     {
-        $dom = new \DOMDocument();
+        $dom = new DomDocumentExt();
         $meta = stream_get_meta_data($inputStream);
         $dom->loadXML(fread($inputStream, filesize($meta['uri'])));
         return new DomDocumentImpl($dom);
@@ -60,7 +63,7 @@ class DomUtil
 
     public static function getEmptyDocument(): DomDocumentInterface
     {
-        $dom = new \DOMDocument();
+        $dom = new DomDocumentExt();
         return new DomDocumentImpl($dom);
     }
 }

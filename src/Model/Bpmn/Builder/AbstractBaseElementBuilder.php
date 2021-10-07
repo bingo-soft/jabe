@@ -6,6 +6,7 @@ use BpmPlatform\Model\Bpmn\Exception\BpmnModelException;
 use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
 use BpmPlatform\Model\Bpmn\Instance\{
     ActivityInterface,
+    AssociationInterface,
     BpmnModelElementInstanceInterface,
     BaseElementInterface,
     CompensateEventDefinitionInterface,
@@ -67,10 +68,11 @@ abstract class AbstractBaseElementBuilder extends AbstractBpmnModelElementBuilde
         return $instance;
     }
 
-    protected function createChild(
+    //protected -> public
+    public function createChild(
         ?BpmnModelElementInstanceInterface $parent,
         string $typeClass,
-        ?string $identifier
+        ?string $identifier = null
     ): BpmnModelElementInstanceInterface {
         $instance = $this->createInstance($typeClass, $identifier);
         if ($parent == null) {
@@ -155,7 +157,7 @@ abstract class AbstractBaseElementBuilder extends AbstractBpmnModelElementBuilde
             }
         }
 
-        $definitions = $this->modalInstance->getDefinitions();
+        $definitions = $this->modelInstance->getDefinitions();
         $signal = $this->createChild($definitions, SignalInterface::class);
         $signal->setName($signalName);
 
@@ -202,15 +204,23 @@ abstract class AbstractBaseElementBuilder extends AbstractBpmnModelElementBuilde
     }
 
     protected function createEmptyErrorEventDefinition(
-        ?string $errorCode,
-        ?string $errorMessage
-    ): EscalationEventDefinitionInterface {
+        ?string $errorCode = null,
+        ?string $errorMessage = null
+    ): ErrorEventDefinitionInterface {
         if (empty($errorCode) && empty($errorMessage)) {
-            $errorEventDefinition = $this->createInstance(EscalationEventDefinitionInterface::class);
+            $errorEventDefinition = $this->createInstance(ErrorEventDefinitionInterface::class);
             return $errorEventDefinition;
         }
         $error = $this->findErrorForNameAndCode($errorCode, $errorMessage);
-        $errorEventDefinition = $this->createInstance(EscalationEventDefinitionInterface::class);
+        $errorEventDefinition = $this->createInstance(ErrorEventDefinitionInterface::class);
+        $errorEventDefinition->setError($error);
+        return $errorEventDefinition;
+    }
+
+    protected function createErrorEventDefinition(string $errorCode, ?string $errorMessage = null): ErrorEventDefinitionInterface
+    {
+        $error = $this->findErrorForNameAndCode($errorCode, $errorMessage);
+        $errorEventDefinition = $this->createInstance(ErrorEventDefinitionInterface::class);
         $errorEventDefinition->setError($error);
         return $errorEventDefinition;
     }
@@ -253,13 +263,13 @@ abstract class AbstractBaseElementBuilder extends AbstractBpmnModelElementBuilde
     public function documentation(string $documentation): AbstractBaseElementBuilder
     {
         $child = $this->createChild($this->element, DocumentationInterface::class);
-        $child->setTextContext($documentation);
+        $child->setTextContent($documentation);
         return $this;
     }
 
     public function addExtensionElement(BpmnModelElementInstanceInterface $extensionElement): AbstractBaseElementBuilder
     {
-        $extensionElements = $this->getCreateSingleChild(ExtensionElementsInterface::class);
+        $extensionElements = $this->getCreateSingleChild(null, ExtensionElementsInterface::class);
         $extensionElements->addChildElement($extensionElement);
         return $this;
     }
@@ -403,7 +413,7 @@ abstract class AbstractBaseElementBuilder extends AbstractBpmnModelElementBuilde
                 $w2->setX($sourceX + $sourceWidth / 2);
                 $w2->setY($targetY + $targetHeight / 2);
 
-                $edge->addChildElement(w2);
+                $edge->addChildElement($w2);
             }
 
             $w3 = $this->createInstance(WaypointInterface::class);
@@ -420,7 +430,8 @@ abstract class AbstractBaseElementBuilder extends AbstractBpmnModelElementBuilde
         return !empty($planes) ? $planes[0] : null;
     }
 
-    protected function findBpmnShape(BaseElementInterface $node): ?BpmnShapeInterface
+    //protected -> public
+    public function findBpmnShape(BaseElementInterface $node): ?BpmnShapeInterface
     {
         $allShapes = $this->modelInstance->getModelElementsByType(BpmnShapeInterface::class);
         foreach ($allShapes as $shape) {

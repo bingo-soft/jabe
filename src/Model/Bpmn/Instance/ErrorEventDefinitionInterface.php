@@ -4,7 +4,7 @@ namespace BpmPlatform\Model\Bpmn\Instance;
 
 interface ErrorEventDefinitionInterface extends EventDefinitionInterface
 {
-    public function getError(): ErrorInterface;
+    public function getError(): ?ErrorInterface;
 
     public function setError(ErrorInterface $error): void;
 

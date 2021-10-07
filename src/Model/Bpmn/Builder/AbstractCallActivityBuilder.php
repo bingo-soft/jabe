@@ -3,10 +3,12 @@
 namespace BpmPlatform\Model\Bpmn\Builder;
 
 use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
-use BpmPlatform\Model\Bpmn\Instance\{
-    CallActivityInterface,
+use BpmPlatform\Model\Bpmn\Instance\Extension\{
     InInterface,
     OutInterface
+};
+use BpmPlatform\Model\Bpmn\Instance\{
+    CallActivityInterface
 };
 
 abstract class AbstractCallActivityBuilder extends AbstractActivityBuilder

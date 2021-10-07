@@ -262,7 +262,7 @@ class BusinessRuleTaskImpl extends TaskImpl implements BusinessRuleTaskInterface
         return self::$decisionRefTenantIdAttribute->getValue($this);
     }
 
-    public function setDecisionRefTenantId(string $decisionReTenantId): void
+    public function setDecisionRefTenantId(string $decisionRefTenantId): void
     {
         self::$decisionRefTenantIdAttribute->setValue($this, $decisionRefTenantId);
     }

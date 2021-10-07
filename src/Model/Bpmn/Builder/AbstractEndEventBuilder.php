@@ -16,7 +16,7 @@ abstract class AbstractEndEventBuilder extends AbstractThrowEventBuilder
         parent::__construct($modelInstance, $element, $selfType);
     }
 
-    public function error(string $errorCode, ?string $errorMessage): AbstractEndEventBuilder
+    public function error(string $errorCode, ?string $errorMessage = null): AbstractEndEventBuilder
     {
         $errorEventDefinition = $this->createErrorEventDefinition($errorCode, $errorMessage);
         $this->element->addEventDefinition($errorEventDefinition);

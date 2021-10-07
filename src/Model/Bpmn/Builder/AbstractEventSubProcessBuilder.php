@@ -18,7 +18,7 @@ abstract class AbstractEventSubProcessBuilder extends AbstractFlowElementBuilder
         parent::__construct($modelInstance, $element, $selfType);
     }
 
-    public function startEvent(?string $id): StartEventBuilder
+    public function startEvent(?string $id = null): StartEventBuilder
     {
         $start = $this->createChild(StartEventInterface::class, $id);
 

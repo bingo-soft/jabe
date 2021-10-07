@@ -23,13 +23,13 @@ class DomElementImpl implements DomElementInterface
 
     private $modelElementInstance;
 
-    public function __construct(\DOMElement $element)
+    public function __construct(DomElementExt $element)
     {
         $this->element = $element;
         $this->document = $element->ownerDocument;
     }
 
-    public function getElement(): \DOMElement
+    public function getElement(): DomElementExt
     {
         return $this->element;
     }
@@ -72,7 +72,7 @@ class DomElementImpl implements DomElementInterface
     public function getParentElement(): ?DomElementInterface
     {
         $parentNode = $this->element->parentNode;
-        if ($parentNode != null && $parentNode instanceof \DOMElement) {
+        if ($parentNode != null && $parentNode instanceof DomElementExt) {
             return new DomElementImpl($parentNode);
         } else {
             return null;
@@ -242,12 +242,14 @@ class DomElementImpl implements DomElementInterface
 
     public function getModelElementInstance(): ?ModelElementInstanceInterface
     {
-        return $this->modelElementInstance;
+        //return $this->modelElementInstance;
+        return $this->element->getUserData(self::MODEL_ELEMENT_KEY);
     }
 
     public function setModelElementInstance(ModelElementInstanceInterface $modelElementInstance): void
     {
-        $this->modelElementInstance = $modelElementInstance;
+        //$this->modelElementInstance = $modelElementInstance;
+        $this->element->setUserData(self::MODEL_ELEMENT_KEY, $modelElementInstance, null);
     }
 
     /**

@@ -31,7 +31,7 @@ abstract class AbstractBoundaryEventBuilder extends AbstractCatchEventBuilder
         return $this;
     }
 
-    public function error(?string $errorCode, ?string $errorMessage): AbstractBoundaryEventBuilder
+    public function error(?string $errorCode = null, ?string $errorMessage = null): AbstractBoundaryEventBuilder
     {
         if ($errorCode == null && $errorMessage == null) {
             $errorEventDefinition = $this->createInstance(ErrorEventDefinitionInterface::class);
@@ -42,7 +42,7 @@ abstract class AbstractBoundaryEventBuilder extends AbstractCatchEventBuilder
         return $this;
     }
 
-    public function errorEventDefinition(?string $id): ErrorEventDefinitionBuilder
+    public function errorEventDefinition(?string $id = null): ErrorEventDefinitionBuilder
     {
         $errorEventDefinition = $this->createEmptyErrorEventDefinition();
         if ($id != null) {
@@ -52,7 +52,7 @@ abstract class AbstractBoundaryEventBuilder extends AbstractCatchEventBuilder
         return new ErrorEventDefinitionBuilder($this->modelInstance, $errorEventDefinition);
     }
 
-    public function escalation(?string $escalationCode): AbstractBoundaryEventBuilder
+    public function escalation(?string $escalationCode = null): AbstractBoundaryEventBuilder
     {
         if ($escalationCode == null) {
             $escalationEventDefinition = $this->createInstance(EscalationEventDefinitionInterface::class);

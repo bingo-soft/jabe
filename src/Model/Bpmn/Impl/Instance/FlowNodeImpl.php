@@ -88,6 +88,16 @@ abstract class FlowNodeImpl extends FlowElementImpl implements FlowNodeInterface
         self::$incomingCollection->add($this, $node);
     }
 
+    public function removeOutgoing(SequenceFlowInterface $node): void
+    {
+        self::$outgoingCollection->remove($this, $node);
+    }
+
+    public function removeIncoming(SequenceFlowInterface $node): void
+    {
+        self::$incomingCollection->remove($this, $node);
+    }
+
     public function updateAfterReplacement(): void
     {
         parent::updateAfterReplacement();
@@ -124,7 +134,7 @@ abstract class FlowNodeImpl extends FlowElementImpl implements FlowNodeInterface
     public function getPreviousNodes(): QueryInterface
     {
         $previousNodes = [];
-        foreach ($this->getInoming() as $sequenceFlow) {
+        foreach ($this->getIncoming() as $sequenceFlow) {
             $previousNodes[] = $sequenceFlow->getSource();
         }
         return new QueryImpl($previousNodes);

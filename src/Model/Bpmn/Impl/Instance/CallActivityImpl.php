@@ -177,7 +177,7 @@ class CallActivityImpl extends ActivityImpl implements CallActivityInterface
 
     public function setCalledElementTenantId(string $calledElementTenantId): void
     {
-        self::$calledElementVTenantIdAttribute->setValue($this, $calledElementTenantId);
+        self::$calledElementTenantIdAttribute->setValue($this, $calledElementTenantId);
     }
 
     public function getCaseRef(): string

@@ -3,10 +3,8 @@
 namespace BpmPlatform\Model\Bpmn\Builder;
 
 use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
-use BpmPlatform\Model\Bpmn\Instance\{
-    BaseElementInterface,
-    FormFieldInterface
-};
+use BpmPlatform\Model\Bpmn\Instance\Extension\FormFieldInterface;
+use BpmPlatform\Model\Bpmn\Instance\BaseElementInterface;
 
 abstract class AbstractFormFieldBuilder extends AbstractBpmnModelElementBuilder
 {
@@ -30,7 +28,7 @@ abstract class AbstractFormFieldBuilder extends AbstractBpmnModelElementBuilder
 
     public function label(string $label): AbstractFormFieldBuilder
     {
-        $this->element->setLabel($id);
+        $this->element->setLabel($label);
         return $this;
     }
 
@@ -46,8 +44,11 @@ abstract class AbstractFormFieldBuilder extends AbstractBpmnModelElementBuilder
         return $this;
     }
 
-    public function formFieldDone(): AbstractFormFieldBuilder
+    /**
+     * @return mixed
+     */
+    public function formFieldDone()
     {
-        return parent::builder();
+        return $this->parent->builder();
     }
 }

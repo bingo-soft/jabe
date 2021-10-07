@@ -3,10 +3,8 @@
 namespace BpmPlatform\Model\Bpmn\Builder;
 
 use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
-use BpmPlatform\Model\Bpmn\Instance\{
-    InInterface,
-    SignalEventDefinitionInterface
-};
+use BpmPlatform\Model\Bpmn\Instance\Extension\InInterface;
+use BpmPlatform\Model\Bpmn\Instance\SignalEventDefinitionInterface;
 
 abstract class AbstractSignalEventDefinitionBuilder extends AbstractRootElementBuilder
 {

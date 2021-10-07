@@ -3,10 +3,8 @@
 namespace BpmPlatform\Model\Bpmn\Builder;
 
 use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
-use BpmPlatform\Model\Bpmn\Instance\{
-    BaseElementInterface,
-    FormFieldInterface
-};
+use BpmPlatform\Model\Bpmn\Instance\Extension\FormFieldInterface;
+use BpmPlatform\Model\Bpmn\Instance\BaseElementInterface;
 
 class UserTaskFormFieldBuilder extends AbstractFormFieldBuilder
 {

@@ -6,19 +6,19 @@ use BpmPlatform\Model\Bpmn\Instance\BpmnModelElementInstanceInterface;
 
 interface InInterface extends BpmnModelElementInstanceInterface
 {
-    public function getSource(): string;
+    public function getSource(): ?string;
 
     public function setSource(string $source): void;
 
-    public function getSourceExpression(): string;
+    public function getSourceExpression(): ?string;
 
     public function setSourceExpression(string $sourceExpression): void;
 
-    public function getVariables(): string;
+    public function getVariables(): ?string;
 
     public function setVariables(string $variables): void;
 
-    public function getBusinessKey(): string;
+    public function getBusinessKey(): ?string;
 
     public function setBusinessKey(string $businessKey): void;
 
