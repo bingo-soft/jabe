@@ -116,4 +116,14 @@ class StartEventImpl extends CatchEventImpl implements StartEventInterface
     {
         self::$initiatorAttribute->setValue($this, $initiator);
     }
+
+    public function isAsync(): bool
+    {
+        return self::$asyncAttribute->getValue($this);
+    }
+
+    public function setAsync(bool $isAsync): void
+    {
+        self::$asyncAttribute->setValue($this, $isAsync);
+    }
 }

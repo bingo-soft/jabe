@@ -54,4 +54,14 @@ class ParallelGatewayImpl extends GatewayImpl implements ParallelGatewayInterfac
     {
         return new ParallelGatewayBuilder($this->modelInstance, $this);
     }
+
+    public function isAsync(): bool
+    {
+        return self::$asyncAttribute->getValue($this);
+    }
+
+    public function setAsync(bool $isAsync): void
+    {
+        self::$asyncAttribute->setValue($this, $isAsync);
+    }
 }

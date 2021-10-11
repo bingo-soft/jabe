@@ -18,9 +18,9 @@ use BpmPlatform\Model\Xml\Validation\ValidationResultsInterface;
 
 class ModelInstanceImpl implements ModelInstanceInterface
 {
-    private $document;
-    private $model;
-    private $modelBuilder;
+    protected $document;
+    protected $model;
+    protected $modelBuilder;
 
     public function __construct(ModelImpl $model, ModelBuilder $modelBuilder, DomDocumentInterface $document)
     {

@@ -54,7 +54,7 @@ class ScriptImpl extends BpmnModelElementInstanceImpl implements ScriptInterface
         self::$scriptFormatAttribute->setValue($this, $scriptFormat);
     }
 
-    public function getResource(): string
+    public function getResource(): ?string
     {
         return self::$resourceAttribute->getValue($this);
     }

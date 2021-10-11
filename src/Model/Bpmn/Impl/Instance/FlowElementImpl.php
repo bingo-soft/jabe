@@ -53,7 +53,7 @@ abstract class FlowElementImpl extends BaseElementImpl implements FlowElementInt
         $typeBuilder->build();
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return self::$nameAttribute->getValue($this);
     }

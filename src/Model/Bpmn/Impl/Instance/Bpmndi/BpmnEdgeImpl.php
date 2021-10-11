@@ -110,7 +110,7 @@ class BpmnEdgeImpl extends LabeledEdgeImpl implements BpmnEdgeInterface
         self::$targetElementAttribute->getReferenceTargetElement($this, $targetElement);
     }
 
-    public function getMessageVisibleKind(): string
+    public function getMessageVisibleKind(): ?string
     {
         return self::$messageVisibleKindAttribute->getValue($this);
     }
@@ -120,7 +120,7 @@ class BpmnEdgeImpl extends LabeledEdgeImpl implements BpmnEdgeInterface
         self::$messageVisibleKindAttribute->setValue($this, $messageVisibleKind);
     }
 
-    public function getBpmnLabel(): BpmnLabelInterface
+    public function getBpmnLabel(): ?BpmnLabelInterface
     {
         return self::$bpmnLabelChild->getChild($this);
     }

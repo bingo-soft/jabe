@@ -26,6 +26,8 @@ interface ActivityInterface extends FlowNodeInterface, InteractionNodeInterface
 
     public function getProperties(): array;
 
+    public function addProperty(PropertyInterface $property): void;
+
     public function getDataInputAssociations(): array;
 
     public function getDataOutputAssociations(): array;

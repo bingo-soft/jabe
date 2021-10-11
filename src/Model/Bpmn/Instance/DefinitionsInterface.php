@@ -4,11 +4,11 @@ namespace BpmPlatform\Model\Bpmn\Instance;
 
 interface DefinitionsInterface extends BpmnModelElementInstanceInterface
 {
-    public function getId(): string;
+    public function getId(): ?string;
 
     public function setId(string $id): void;
 
-    public function getName(): string;
+    public function getName(): ?string;
 
     public function setName(string $name): void;
 
@@ -24,19 +24,25 @@ interface DefinitionsInterface extends BpmnModelElementInstanceInterface
 
     public function setTypeLanguage(string $typeLanguage): void;
 
-    public function getExporter(): string;
+    public function getExporter(): ?string;
 
     public function setExporter(string $exporter): void;
 
-    public function getExporterVersion(): string;
+    public function getExporterVersion(): ?string;
 
     public function setExporterVersion(string $exporterVersion): void;
 
     public function getImports(): array;
 
+    public function addImport(ImportInterface $import): void;
+
     public function getExtensions(): array;
 
     public function getRootElements(): array;
+
+    public function addRootElement(RootElementInterface $element): void;
+
+    public function removeRootElement(RootElementInterface $element): void;
 
     public function getBpmDiagrams(): array;
 

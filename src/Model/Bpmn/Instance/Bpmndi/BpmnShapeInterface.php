@@ -27,15 +27,15 @@ interface BpmnShapeInterface extends LabeledShapeInterface
 
     public function setMessageVisible(bool $isMessageVisible): void;
 
-    public function getParticipantBandKind(): string;
+    public function getParticipantBandKind(): ?string;
 
     public function setParticipantBandKind(string $participantBandKind): void;
 
-    public function getChoreographyActivityShape(): BpmnShapeInterface;
+    public function getChoreographyActivityShape(): ?BpmnShapeInterface;
 
     public function setChoreographyActivityShape(BpmnShapeInterface $choreographyActivityShape): void;
 
-    public function getBpmnLabel(): BpmnLabelInterface;
+    public function getBpmnLabel(): ?BpmnLabelInterface;
 
     public function setBpmnLabel(BpmnLabelInterface $bpmnLabel): void;
 }

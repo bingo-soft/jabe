@@ -41,6 +41,11 @@ abstract class EventImpl extends FlowNodeImpl implements EventInterface
         return self::$propertyCollection->get($this);
     }
 
+    public function addProperty(PropertyInterface $property): void
+    {
+        self::$propertyCollection->add($this, $property);
+    }
+
     public function getDiagramElement(): BpmnShapeInterface
     {
         return parent::getDiagramElement();

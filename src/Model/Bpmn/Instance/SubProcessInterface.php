@@ -16,5 +16,9 @@ interface SubProcessInterface extends ActivityInterface
 
     public function getFlowElements(): array;
 
+    public function addFlowElement(FlowElementInterface $element): void;
+
+    public function removeFlowElement(FlowElementInterface $element): void;
+
     public function getArtifacts(): array;
 }

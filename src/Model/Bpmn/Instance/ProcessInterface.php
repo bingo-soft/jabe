@@ -30,9 +30,15 @@ interface ProcessInterface extends CallableElementInterface
 
     public function getProperties(): array;
 
+    public function addProperty(PropertyInterface $property): void;
+
     public function getLaneSets(): array;
 
     public function getFlowElements(): array;
+
+    public function addFlowElement(FlowElementInterface $element): void;
+
+    public function removeFlowElement(FlowElementInterface $element): void;
 
     public function getArtifacts(): array;
 

@@ -90,8 +90,18 @@ abstract class ThrowEventImpl extends EventImpl implements ThrowEventInterface
         self::$eventDefinitionCollection->add($this, $eventDefinition);
     }
 
+    public function removeEventDefinition(EventDefinitionInterface $eventDefinition): void
+    {
+        self::$eventDefinitionCollection->remove($this, $eventDefinition);
+    }
+
     public function getEventDefinitionRefs(): array
     {
         return self::$eventDefinitionRefCollection->getReferenceTargetElements($this);
+    }
+
+    public function addEventDefinitionRef(EventDefinitionInterface $eventDefinition): void
+    {
+        self::$eventDefinitionRefCollection->add($this, $eventDefinition);
     }
 }

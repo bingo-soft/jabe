@@ -155,4 +155,9 @@ class FormFieldImpl extends BpmnModelElementInstanceImpl implements FormFieldInt
     {
         return self::$valueCollection->get($this);
     }
+
+    public function addValue(ValueInterface $value): void
+    {
+        self::$valueCollection->add($this, $value);
+    }
 }

@@ -59,6 +59,21 @@ class ListImpl extends BpmnModelElementInstanceImpl implements ListInterface
         return $this->getElements();
     }
 
+    public function addValue(ValueInterface $value): void
+    {
+        self::$valueChild->add($this, $value);
+    }
+
+    public function removeValue(ValueInterface $value): void
+    {
+        self::$valueChild->remove($this, $value);
+    }
+
+    public function clearValues(): void
+    {
+        self::$valueChild->clear($this);
+    }
+
     public function getElements(): array
     {
         return ModelUtil::getModelElementCollection(
@@ -131,7 +146,7 @@ class ListImpl extends BpmnModelElementInstanceImpl implements ListInterface
         $domElement = $this->getDomElement();
         $childElements = $domElement->getChildElements();
         foreach ($childElements as $childElement) {
-            $this->domElement->removeChild($childElement);
+            $domElement->removeChild($childElement);
         }
     }
 }

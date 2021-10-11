@@ -46,4 +46,9 @@ class MapImpl extends BpmnModelElementInstanceImpl implements MapInterface
     {
         return self::$entryCollection->get($this);
     }
+
+    public function addEntry(EntryInterface $entry): void
+    {
+        self::$entryCollection->add($this, $entry);
+    }
 }

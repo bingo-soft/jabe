@@ -22,11 +22,11 @@ interface BpmnEdgeInterface extends LabeledEdgeInterface
 
     public function setTargetElement(DiagramElementInterface $targetElement): void;
 
-    public function getMessageVisibleKind(): string;
+    public function getMessageVisibleKind(): ?string;
 
     public function setMessageVisibleKind(string $messageVisibleKind): void;
 
-    public function getBpmnLabel(): BpmnLabelInterface;
+    public function getBpmnLabel(): ?BpmnLabelInterface;
 
     public function setBpmnLabel(BpmnLabelInterface $bpmnLabel): void;
 }

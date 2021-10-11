@@ -97,6 +97,16 @@ class SubProcessImpl extends ActivityImpl implements SubProcessInterface
         return self::$flowElementCollection->get($this);
     }
 
+    public function addFlowElement(FlowElementInterface $element): void
+    {
+        self::$flowElementCollection->add($this, $element);
+    }
+
+    public function removeFlowElement(FlowElementInterface $element): void
+    {
+        self::$flowElementCollection->remove($this, $element);
+    }
+
     public function getArtifacts(): array
     {
         return self::$artifactCollection->get($this);

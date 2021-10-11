@@ -53,7 +53,7 @@ class FormalExpressionImpl extends ExpressionImpl implements FormalExpressionInt
         $typeBuilder->build();
     }
 
-    public function getLanguage(): string
+    public function getLanguage(): ?string
     {
         return self::$languageAttribute->getValue($this);
     }

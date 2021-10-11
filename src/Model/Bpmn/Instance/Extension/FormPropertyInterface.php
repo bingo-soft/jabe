@@ -47,4 +47,6 @@ interface FormPropertyInterface extends BpmnModelElementInstanceInterface
     public function setDefault(string $default): void;
 
     public function getValues(): array;
+
+    public function addValue(ValueInterface $value): void;
 }

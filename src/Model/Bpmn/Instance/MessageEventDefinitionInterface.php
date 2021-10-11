@@ -4,7 +4,7 @@ namespace BpmPlatform\Model\Bpmn\Instance;
 
 interface MessageEventDefinitionInterface extends EventDefinitionInterface
 {
-    public function getMessage(): MessageInterface;
+    public function getMessage(): ?MessageInterface;
 
     public function setMessage(MessageInterface $message): void;
 

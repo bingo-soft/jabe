@@ -75,21 +75,21 @@ class FormPropertyImpl extends BpmnModelElementInstanceImpl implements FormPrope
         ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
-        $expressionAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_EXPRESSION)
+        self::$expressionAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_EXPRESSION)
         ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
-        $datePatternAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_DATE_PATTERN)
+        self::$datePatternAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_DATE_PATTERN)
         ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
-        $defaultAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_DEFAULT)
+        self::$defaultAttribute = $typeBuilder->stringAttribute(BpmnModelConstants::EXTENSION_ATTRIBUTE_DEFAULT)
         ->namespace(BpmnModelConstants::EXTENSION_NS)
         ->build();
 
         $sequenceBuilder = $typeBuilder->sequence();
 
-        $valueCollection = $sequenceBuilder->elementCollection(ValueInterface::class)
+        self::$valueCollection = $sequenceBuilder->elementCollection(ValueInterface::class)
         ->build();
 
         $typeBuilder->build();
@@ -198,5 +198,10 @@ class FormPropertyImpl extends BpmnModelElementInstanceImpl implements FormPrope
     public function getValues(): array
     {
         return self::$valueCollection->get($this);
+    }
+
+    public function addValue(ValueInterface $value): void
+    {
+        self::$valueCollection->add($this, $value);
     }
 }

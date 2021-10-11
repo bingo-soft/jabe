@@ -18,7 +18,7 @@ class BpmnModelInstanceImpl extends ModelInstanceImpl implements BpmnModelInstan
         parent::__construct($model, $modelBuilder, $document);
     }
 
-    public function getDefinitions(): DefinitionsInterface
+    public function getDefinitions(): ?DefinitionsInterface
     {
         return $this->getDocumentElement();
     }

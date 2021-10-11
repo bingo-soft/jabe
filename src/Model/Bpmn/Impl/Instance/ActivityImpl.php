@@ -147,6 +147,11 @@ abstract class ActivityImpl extends FlowNodeImpl implements ActivityInterface
         return self::$propertyCollection->get($this);
     }
 
+    public function addProperty(PropertyInterface $property): void
+    {
+        self::$propertyCollection->add($this, $property);
+    }
+
     public function getDataInputAssociations(): array
     {
         return self::$dataInputAssociationCollection->get($this);

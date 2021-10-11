@@ -48,7 +48,7 @@ class PropertyImpl extends BpmnModelElementInstanceImpl implements PropertyInter
         $typeBuilder->build();
     }
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return self::$idAttribute->getValue($this);
     }

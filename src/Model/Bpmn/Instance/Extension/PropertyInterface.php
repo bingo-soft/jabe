@@ -6,7 +6,7 @@ use BpmPlatform\Model\Bpmn\Instance\BpmnModelElementInstanceInterface;
 
 interface PropertyInterface extends BpmnModelElementInstanceInterface
 {
-    public function getId(): string;
+    public function getId(): ?string;
 
     public function setId(string $id): void;
 

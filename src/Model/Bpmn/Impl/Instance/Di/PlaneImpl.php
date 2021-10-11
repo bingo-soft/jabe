@@ -42,4 +42,9 @@ abstract class PlaneImpl extends NodeImpl implements PlaneInterface
     {
         return self::$diagramElementCollection->get($this);
     }
+
+    public function addDiagramElement(DiagramElementInterface $element): void
+    {
+        self::$diagramElementCollection->add($this, $element);
+    }
 }

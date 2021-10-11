@@ -8,7 +8,7 @@ interface ConditionExpressionInterface extends FormalExpressionInterface
 
     public function setType(string $type): void;
 
-    public function getResource(): string;
+    public function getResource(): ?string;
 
     public function setResource(string $resource): void;
 }

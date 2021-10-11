@@ -7,7 +7,10 @@ use BpmPlatform\Model\Xml\Instance\DomDocumentInterface;
 
 class IoUtil
 {
-    public static function closeSilently(resource $file): void
+    /**
+     * @param resource $file
+     */
+    public static function closeSilently($file): void
     {
         try {
             fclose($file);
@@ -16,16 +19,26 @@ class IoUtil
         }
     }
 
-    public static function getStringFromInputStream(?string $inputStream, bool $trim = true): ?string
+    /**
+     * @param resource $inputStream
+     * @param bool $trim
+     */
+    public static function getStringFromInputStream($inputStream, bool $trim = true): ?string
     {
         if ($trim) {
-            return trim($inputStream);
+            $meta = stream_get_meta_data($inputStream);
+            $data = fread($inputStream, filesize($meta['uri']));
+            return trim($data);
         } else {
-            return $inputStream;
+            $meta = stream_get_meta_data($inputStream);
+            return fread($inputStream, filesize($meta['uri']));
         }
     }
 
-    public static function convertOutputStreamToInputStream(?string $outputStream): ?string
+    /**
+     * @param resource $outputStream
+     */
+    public static function convertOutputStreamToInputStream($outputStream): ?string
     {
         return $outputStream;
     }

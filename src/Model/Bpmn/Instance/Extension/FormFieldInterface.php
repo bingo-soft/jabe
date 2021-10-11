@@ -35,4 +35,6 @@ interface FormFieldInterface extends BpmnModelElementInstanceInterface
     public function setValidation(ValidationInterface $validation): void;
 
     public function getValues(): array;
+
+    public function addValue(ValueInterface $value): void;
 }

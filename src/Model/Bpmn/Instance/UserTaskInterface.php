@@ -26,9 +26,9 @@ interface UserTaskInterface extends TaskInterface
 
     public function setCandidateGroupsList(array $candidateGroupsList): void;
 
-    public function getCandidateUsers(): string;
+    public function getCandidateUsers(): ?string;
 
-    public function setCandidateUsers(string $candidateUsers): void;
+    public function setCandidateUsers(?string $candidateUsers): void;
 
     public function getCandidateUsersList(): array;
 

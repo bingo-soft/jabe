@@ -7,4 +7,6 @@ use BpmPlatform\Model\Bpmn\Instance\BpmnModelElementInstanceInterface;
 interface MapInterface extends BpmnModelElementInstanceInterface
 {
     public function getEntries(): array;
+
+    public function addEntry(EntryInterface $entry): void;
 }

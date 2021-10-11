@@ -62,7 +62,7 @@ class ConditionExpressionImpl extends FormalExpressionImpl implements ConditionE
         self::$typeAttribute->setValue($this, $type);
     }
 
-    public function getResource(): string
+    public function getResource(): ?string
     {
         return self::$resourceAttribute->getValue($this);
     }

@@ -104,7 +104,7 @@ class MessageEventDefinitionImpl extends EventDefinitionImpl implements MessageE
         $typeBuilder->build();
     }
 
-    public function getMessage(): MessageInterface
+    public function getMessage(): ?MessageInterface
     {
         return self::$messageRefAttribute->getReferenceTargetElement($this);
     }

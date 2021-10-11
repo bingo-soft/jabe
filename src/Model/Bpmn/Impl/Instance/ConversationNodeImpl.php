@@ -67,16 +67,16 @@ class ConversationNodeImpl extends BaseElementImpl implements ConversationNodeIn
 
     public function getParticipants(): array
     {
-        self::$participantRefCollection->getReferenceTargetElements($this);
+        return self::$participantRefCollection->getReferenceTargetElements($this);
     }
 
     public function getMessageFlows(): array
     {
-        self::$messageFlowRefCollection->getReferenceTargetElements($this);
+        return self::$messageFlowRefCollection->getReferenceTargetElements($this);
     }
 
     public function getCorrelationKeys(): array
     {
-        self::$correlationKeyCollection->getReferenceTargetElements($this);
+        return self::$correlationKeyCollection->get($this);
     }
 }

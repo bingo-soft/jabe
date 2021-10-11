@@ -104,7 +104,7 @@ class DefinitionsImpl extends BpmnModelElementInstanceImpl implements Definition
         $typeBuilder->build();
     }
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return self::$idAttribute->getValue($this);
     }
@@ -114,7 +114,7 @@ class DefinitionsImpl extends BpmnModelElementInstanceImpl implements Definition
         self::$idAttribute->setValue($this, $id);
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return self::$nameAttribute->getValue($this);
     }
@@ -154,7 +154,7 @@ class DefinitionsImpl extends BpmnModelElementInstanceImpl implements Definition
         self::$typeLanguageAttribute->setValue($this, $typeLanguage);
     }
 
-    public function getExporter(): string
+    public function getExporter(): ?string
     {
         return self::$exporterAttribute->getValue($this);
     }
@@ -164,7 +164,7 @@ class DefinitionsImpl extends BpmnModelElementInstanceImpl implements Definition
         self::$exporterAttribute->setValue($this, $exporter);
     }
 
-    public function getExporterVersion(): string
+    public function getExporterVersion(): ?string
     {
         return self::$exporterVersionAttribute->getValue($this);
     }
@@ -179,6 +179,11 @@ class DefinitionsImpl extends BpmnModelElementInstanceImpl implements Definition
         return self::$importCollection->get($this);
     }
 
+    public function addImport(ImportInterface $import): void
+    {
+        self::$importCollection->add($this, $import);
+    }
+
     public function getExtensions(): array
     {
         return self::$extensionCollection->get($this);
@@ -187,6 +192,16 @@ class DefinitionsImpl extends BpmnModelElementInstanceImpl implements Definition
     public function getRootElements(): array
     {
         return self::$rootElementCollection->get($this);
+    }
+
+    public function addRootElement(RootElementInterface $element): void
+    {
+        self::$rootElementCollection->add($this, $element);
+    }
+
+    public function removeRootElement(RootElementInterface $element): void
+    {
+        self::$rootElementCollection->remove($this, $element);
     }
 
     public function getBpmDiagrams(): array

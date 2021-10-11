@@ -157,12 +157,12 @@ class UserTaskImpl extends TaskImpl implements UserTaskInterface
         self::$candidateGroupsAttribute->setValue($this, $candidateGroups);
     }
 
-    public function getCandidateUsers(): string
+    public function getCandidateUsers(): ?string
     {
         return self::$candidateUsersAttribute->getValue($this);
     }
 
-    public function setCandidateUsers(string $candidateUsers): void
+    public function setCandidateUsers(?string $candidateUsers): void
     {
         self::$candidateUsersAttribute->setValue($this, $candidateUsers);
     }

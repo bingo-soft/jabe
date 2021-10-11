@@ -7,7 +7,7 @@ use BpmPlatform\Model\Xml\ModelInstanceInterface;
 
 interface BpmnModelInstanceInterface extends ModelInstanceInterface
 {
-    public function getDefinitions(): DefinitionsInterface;
+    public function getDefinitions(): ?DefinitionsInterface;
 
     public function setDefinitions(DefinitionsInterface $definitions): void;
 

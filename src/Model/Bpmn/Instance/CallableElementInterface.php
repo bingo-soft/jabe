@@ -4,7 +4,7 @@ namespace BpmPlatform\Model\Bpmn\Instance;
 
 interface CallableElementInterface extends RootElementInterface
 {
-    public function getName(): string;
+    public function getName(): ?string;
 
     public function setName(string $name): void;
 

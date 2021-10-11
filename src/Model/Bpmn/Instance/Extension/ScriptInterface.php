@@ -10,7 +10,7 @@ interface ScriptInterface extends BpmnModelElementInstanceInterface
 
     public function setScriptFormat(string $scriptFormat): void;
 
-    public function getResource(): string;
+    public function getResource(): ?string;
 
     public function setResource(string $resource): void;
 }

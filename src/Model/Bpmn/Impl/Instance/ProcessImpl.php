@@ -218,6 +218,11 @@ class ProcessImpl extends CallableElementImpl implements ProcessInterface
         return self::$propertyCollection->get($this);
     }
 
+    public function addProperty(PropertyInterface $property): void
+    {
+        self::$propertyCollection->add($this, $property);
+    }
+
     public function getLaneSets(): array
     {
         return self::$laneSetCollection->get($this);
@@ -226,6 +231,16 @@ class ProcessImpl extends CallableElementImpl implements ProcessInterface
     public function getFlowElements(): array
     {
         return self::$flowElementCollection->get($this);
+    }
+
+    public function addFlowElement(FlowElementInterface $element): void
+    {
+        self::$flowElementCollection->add($this, $element);
+    }
+
+    public function removeFlowElement(FlowElementInterface $element): void
+    {
+        self::$flowElementCollection->remove($this, $element);
     }
 
     public function getArtifacts(): array
@@ -288,7 +303,7 @@ class ProcessImpl extends CallableElementImpl implements ProcessInterface
 
     public function setCandidateStarterUsersList(array $candidateStarterUsersList): void
     {
-        $candidateStarterUsers = StringUtil::joinCommaSeparatedList(self::$candidateStarterUsersList);
+        $candidateStarterUsers = StringUtil::joinCommaSeparatedList($candidateStarterUsersList);
         self::$candidateStarterUsersAttribute->setValue($this, $candidateStarterUsers);
     }
 

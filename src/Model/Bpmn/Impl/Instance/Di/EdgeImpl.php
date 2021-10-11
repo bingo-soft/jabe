@@ -43,4 +43,9 @@ abstract class EdgeImpl extends DiagramElementImpl implements EdgeInterface
     {
         return self::$waypointCollection->get($this);
     }
+
+    public function addWaypoint(WaypointInterface $point): void
+    {
+        self::$waypointCollection->add($this, $point);
+    }
 }

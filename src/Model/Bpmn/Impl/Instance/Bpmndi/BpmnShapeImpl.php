@@ -143,7 +143,7 @@ class BpmnShapeImpl extends LabeledShapeImpl implements BpmnShapeInterface
         self::$isMessageVisibleAttribute->setValue($this, $isMessageVisible);
     }
 
-    public function getParticipantBandKind(): string
+    public function getParticipantBandKind(): ?string
     {
         return self::$participantBandKindAttribute->getValue($this);
     }
@@ -153,7 +153,7 @@ class BpmnShapeImpl extends LabeledShapeImpl implements BpmnShapeInterface
         self::$participantBandKindAttribute->setValue($this, $participantBandKind);
     }
 
-    public function getChoreographyActivityShape(): BpmnShapeInterface
+    public function getChoreographyActivityShape(): ?BpmnShapeInterface
     {
         return self::$choreographyActivityShapeAttribute->getReferenceTargetElement($this);
     }
@@ -163,7 +163,7 @@ class BpmnShapeImpl extends LabeledShapeImpl implements BpmnShapeInterface
         self::$choreographyActivityShapeAttribute->setReferenceTargetElement($this, $choreographyActivityShape);
     }
 
-    public function getBpmnLabel(): BpmnLabelInterface
+    public function getBpmnLabel(): ?BpmnLabelInterface
     {
         return self::$bpmnLabelChild->getChild($this);
     }
