@@ -411,7 +411,7 @@ class ProcessBuilderTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testProcessCamundaExtensions(): void
+    public function testProcessExtensions(): void
     {
         $this->modelInstance = Bpmn::getInstance()->createProcess(BpmnTestConstants::PROCESS_ID)
           ->jobPriority('${somePriority}')
@@ -615,7 +615,7 @@ class ProcessBuilderTest extends TestCase
         $this->assertFailedJobRetryTimeCycle($serviceTask);
     }
 
-    public function testSendTaskCamundaClass(): void
+    public function testSendTaskClass(): void
     {
         $this->modelInstance = Bpmn::getInstance()->createProcess()
         ->startEvent()
@@ -805,7 +805,7 @@ class ProcessBuilderTest extends TestCase
         $this->assertErrorEventDefinitionForErrorVariables("start", "errorCodeVariable", "errorMessageVariable");
     }
 
-    public function testCallActivityCamundaExtension(): void
+    public function testCallActivityExtension(): void
     {
         $this->modelInstance = Bpmn::getInstance()->createProcess()
           ->startEvent()
@@ -2057,7 +2057,7 @@ class ProcessBuilderTest extends TestCase
         $this->assertNull($timeout->getTimeDuration());
     }
 
-    public function testCamundaTimeoutDateTaskListenerByDelegateExpression(): void
+    public function testTimeoutDateTaskListenerByDelegateExpression(): void
     {
         $this->modelInstance = Bpmn::getInstance()->createProcess()
             ->startEvent()
@@ -3264,7 +3264,7 @@ class ProcessBuilderTest extends TestCase
             ->done();
     }
 
-    public function testConditionalEventDefinitionCamundaExtensions(): void
+    public function testConditionalEventDefinitionExtensions(): void
     {
         $this->modelInstance = Bpmn::getInstance()->createProcess()
           ->startEvent()

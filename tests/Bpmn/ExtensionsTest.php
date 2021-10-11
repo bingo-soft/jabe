@@ -523,7 +523,7 @@ class ExtensionsTest extends TestCase
         $this->assertEquals(BpmnTestConstants::TEST_EXECUTION_EVENT_API, $serviceTaskListener->getEvent());
     }
 
-    public function testCamundaScriptExecutionListener(): void
+    public function testScriptExecutionListener(): void
     {
         $sequenceFlowListener = $this->sequenceFlow->getExtensionElements()->getElementsQuery()->filterByType(ExecutionListenerInterface::class)->singleResult();
 
