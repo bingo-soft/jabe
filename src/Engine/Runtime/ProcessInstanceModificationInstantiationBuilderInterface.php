@@ -1,0 +1,7 @@
+<?php
+
+namespace BpmPlatform\Engine\Runtime;
+
+interface ProcessInstanceModificationInstantiationBuilderInterface extends ProcessInstanceModificationBuilderInterface, ActivityInstantiationBuilderInterface
+{
+}
