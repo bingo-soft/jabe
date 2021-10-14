@@ -15,7 +15,7 @@ interface FileValueBuilderInterface extends TypedValueBuilderInterface
     /**
      * Sets the value to the specified {@link File}.
      */
-    public function file($stream): FileValueBuilderInterface;
+    public function file($inputStream): FileValueBuilderInterface;
 
     /**
      * Sets the encoding for the file in the value infos (optional).

@@ -1,0 +1,50 @@
+<?php
+
+namespace BpmPlatform\Engine\Variable\Impl\Value;
+
+use BpmPlatform\Engine\Variable\Type\PrimitiveValueTypeInterface;
+use BpmPlatform\Engine\Variable\Value\PrimitiveTypeValueInterface;
+
+class PrimitiveTypeValueImpl extends AbstractTypedValue implements PrimitiveTypeValue
+{
+    public function __construct($value, PrimitiveValueTypeInterface $type)
+    {
+        parent::__construct($value, $type);
+    }
+
+    public function getType(): PrimitiveValueTypeInterface
+    {
+        return parent::getType();
+    }
+
+    public function equals($obj): bool
+    {
+        if ($this == $obj) {
+            return true;
+        }
+        if ($obj == null) {
+            return false;
+        }
+        if (get_class($this) != get_class($obj)) {
+            return false;
+        }
+        if ($this->type == null) {
+            if ($obj->type != null) {
+                return false;
+            }
+        } elseif (!$this->type->equals($obj->type)) {
+            return false;
+        }
+        if ($this->value == null) {
+            if ($obj->value != null) {
+                return false;
+            }
+        } elseif ($this->value != $obj->value) {
+            return false;
+        }
+        if ($this->isTransient != $obj->isTransient()) {
+            return false;
+        }
+        return true;
+    }
+}

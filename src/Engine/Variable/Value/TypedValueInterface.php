@@ -17,7 +17,7 @@ interface TypedValueInterface extends \Serializable
      * The type of the value. See ValueType for a list of built-in ValueTypes.
      * @return the type of the value.
      */
-    public function getType(): ValueTypeInterface;
+    public function getType(): ?ValueTypeInterface;
 
     /**
      * Indicator for transience of the value
