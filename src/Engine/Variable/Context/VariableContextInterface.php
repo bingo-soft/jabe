@@ -12,7 +12,7 @@ interface VariableContextInterface
      * @param variableName the name of the variable to resolve.
      * @return the value of the variable or null in case the variable does not exist.
      */
-    public function resolve(string $variableName): TypedValueInterface;
+    public function resolve(string $variableName): ?TypedValueInterface;
 
     /**
      * Checks whether a variable with the given name is resolve through this context.
