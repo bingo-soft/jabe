@@ -4,18 +4,16 @@ namespace BpmPlatform\Engine\Variable\Impl\Value\Builder;
 
 use BpmPlatform\Engine\Variable\Value\FileValueInterface;
 use BpmPlatform\Engine\Variable\Value\Builder\FileValueBuilderInterface;
-use BpmPlatform\Engine\Variable\Type\ValueTypeTrait;
 use BpmPlatform\Engine\Variable\Impl\Value\FileValueImpl;
+use BpmPlatform\Engine\Variable\Type\ValueTypeTrait;
 
 class FileValueBuilderImpl implements FileValueBuilderInterface
 {
-    use ValueTypeTrait;
-
     protected $fileValue;
 
     public function __construct(string $filename)
     {
-        $this->fileValue = new FileValueImpl($this->getFile(), $filename);
+        $this->fileValue = new FileValueImpl(ValueTypeTrait::getFile(), $filename);
     }
 
     public function create(): FileValueInterface
@@ -31,10 +29,14 @@ class FileValueBuilderImpl implements FileValueBuilderInterface
 
     public function file($inputStream): FileValueBuilderInterface
     {
-        $meta = stream_get_meta_data($inputStream);
-        $data = fread($inputStream, filesize($meta['uri']));
-        $this->fileValue->setValue($data);
-        return $this;
+        if (is_resource($inputStream)) {
+            $meta = stream_get_meta_data($inputStream);
+            $data = fread($inputStream, filesize($meta['uri']));
+            $this->fileValue->setValue($data);
+            return $this;
+        } else {
+            throw new \InvalidArgumentException("Input is not of type file");
+        }
     }
 
     public function encoding(string $encoding): FileValueBuilderInterface

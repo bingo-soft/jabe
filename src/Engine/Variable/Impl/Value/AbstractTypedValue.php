@@ -3,6 +3,7 @@
 namespace BpmPlatform\Engine\Variable\Impl\Value;
 
 use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use BpmPlatform\Engine\Variable\Type\ValueTypeInterface;
 
 class AbstractTypedValue implements TypedValueInterface
 {
@@ -31,6 +32,23 @@ class AbstractTypedValue implements TypedValueInterface
     public function __toString()
     {
         return sprintf("Value '%s' of type '%s', isTransient=%s", $this->value, $this->type, $this->isTransient);
+    }
+
+    public function serialize()
+    {
+        return json_encode([
+            'value' => $this->value,
+            'type' => serialize($this->type),
+            'isTransient' => $this->isTransient
+        ]);
+    }
+
+    public function unserialize($data)
+    {
+        $json = json_decode($data);
+        $this->value = $json->value;
+        $this->type = unserialize($json->type);
+        $this->isTransient = $json->isTransient;
     }
 
     public function isTransient(): bool

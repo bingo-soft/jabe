@@ -3,16 +3,17 @@
 namespace BpmPlatform\Engine\Variable\Impl\Value;
 
 use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use BpmPlatform\Engine\Variable\Type\ValueTypeInterface;
 
 class UntypedValueImpl implements TypedValueInterface
 {
-
     protected $value;
     protected $isTransient;
 
-    public function __construct($value, ?bool $isTransient = null)
+    public function __construct($object, ?bool $isTransient = null)
     {
-        parent::__construct($value, $isTransient ?? false);
+        $this->value = $object;
+        $this->isTransient = $isTransient ?? false;
     }
 
     public function getValue()
@@ -28,6 +29,21 @@ class UntypedValueImpl implements TypedValueInterface
     public function __toString()
     {
         return sprintf("Untyped value '%s', isTransient = %s", $this->value, $this->isTransient);
+    }
+
+    public function serialize()
+    {
+        return json_encode([
+            'value' => $this->value,
+            'isTransient' => $this->isTransient
+        ]);
+    }
+
+    public function unserialize($data)
+    {
+        $json = json_decode($data);
+        $this->value = $json->value;
+        $this->isTransient = $isTransient;
     }
 
     public function isTransient(): bool

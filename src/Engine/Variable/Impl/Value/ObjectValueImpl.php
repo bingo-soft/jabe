@@ -3,15 +3,13 @@
 namespace BpmPlatform\Engine\Variable\Impl\Value;
 
 use BpmPlatform\Engine\Variable\Type\{
-    SerializableValueTypeInterface,
-    ValueTypeTrait
+    SerializableValueTypeInterface
 };
 use BpmPlatform\Engine\Variable\Value\ObjectValueInterface;
+use BpmPlatform\Engine\Variable\Type\ValueTypeTrait;
 
 class ObjectValueImpl extends AbstractTypedValue implements ObjectValueInterface
 {
-    use ValueTypeTrait;
-
     protected $objectTypeName;
     protected $serializationDataFormat;
     protected $serializedValue;
@@ -25,7 +23,7 @@ class ObjectValueImpl extends AbstractTypedValue implements ObjectValueInterface
         ?bool $isDeserialized = true,
         ?bool $isTransient = null
     ) {
-        parent::__construct($deserializedValue, $this->getObject());
+        parent::__construct($deserializedValue, ValueTypeTrait::getObject());
 
         $this->serializedValue = $serializedValue;
         $this->serializationDataFormat = $serializationDataFormat;
@@ -46,7 +44,7 @@ class ObjectValueImpl extends AbstractTypedValue implements ObjectValueInterface
         $this->serializationDataFormat = $serializationDataFormat;
     }
 
-    public function getObjectTypeName(): string
+    public function getObjectTypeName(): ?string
     {
         return $this->objectTypeName;
     }
@@ -74,7 +72,8 @@ class ObjectValueImpl extends AbstractTypedValue implements ObjectValueInterface
     public function getValue(?string $type = null)
     {
         if ($type != null) {
-            if (is_a($this->type, $type)) {
+            $value = $this->getValue();
+            if (is_a($value, $type)) {
                 return $this->getValue();
             } else {
                 throw new \Exception("Object is not deserialized.");
@@ -96,7 +95,7 @@ class ObjectValueImpl extends AbstractTypedValue implements ObjectValueInterface
         }
     }
 
-    public function getType(): SerializableValueType
+    public function getType(): SerializableValueTypeInterface
     {
         return parent::getType();
     }

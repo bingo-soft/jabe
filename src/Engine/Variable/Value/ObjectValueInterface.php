@@ -22,7 +22,7 @@ interface ObjectValueInterface extends SerializableValueInterface
      * @return the object represented by this TypedValue.
      * @throws IllegalStateException in case the object is not deserialized. See {@link #isDeserialized()}.
      */
-    public function getValue(?string $type);
+    public function getValue(?string $type = null);
 
     /**
      * Returns the Class this object is an instance of.
@@ -30,7 +30,7 @@ interface ObjectValueInterface extends SerializableValueInterface
      * @return the Class this object is an instance of
      * @throws IllegalStateException in case the object is not deserialized. See {@link #isDeserialized()}.
      */
-    public function getObjectType(): string;
+    public function getObjectType(): ?string;
 
     /**
     * A String representation of the Object's type name.
@@ -39,5 +39,5 @@ interface ObjectValueInterface extends SerializableValueInterface
     *
     * @return the Object's type name.
     */
-    public function getObjectTypeName(): string;
+    public function getObjectTypeName(): ?string;
 }

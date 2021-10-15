@@ -3,9 +3,9 @@
 namespace BpmPlatform\Engine\Variable\Impl\Value;
 
 use BpmPlatform\Engine\Variable\Type\PrimitiveValueTypeInterface;
-use BpmPlatform\Engine\Variable\Value\PrimitiveTypeValueInterface;
+use BpmPlatform\Engine\Variable\Value\PrimitiveValueInterface;
 
-class PrimitiveTypeValueImpl extends AbstractTypedValue implements PrimitiveTypeValue
+class PrimitiveTypeValueImpl extends AbstractTypedValue implements PrimitiveValueInterface
 {
     public function __construct($value, PrimitiveValueTypeInterface $type)
     {

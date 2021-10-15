@@ -7,51 +7,58 @@ use BpmPlatform\Engine\Variable\Impl\Type\{
     BooleanTypeImpl,
     DoubleTypeImpl,
     IntegerTypeImpl,
+    NumberTypeImpl,
     StringTypeImpl,
     DateTypeImpl,
     ObjectTypeImpl,
-    FileTypeImpl
+    FileValueTypeImpl
 };
+use BpmPlatform\Engine\Variable\Type\ValueTypeInterface;
 
-trait ValueTypeTrait
+class ValueTypeTrait
 {
-    public function getNull(): PrimitiveValueTypeInterface
+    public static function getNull(): PrimitiveValueTypeInterface
     {
         return new NullTypeImpl();
     }
 
-    public function getBoolean(): PrimitiveValueTypeInterface
+    public static function getBoolean(): PrimitiveValueTypeInterface
     {
         return new BooleanTypeImpl();
     }
 
-    public function getDouble(): PrimitiveValueTypeInterface
+    public static function getDouble(): PrimitiveValueTypeInterface
     {
         return new DoubleTypeImpl();
     }
 
-    public function getInteger(): PrimitiveValueTypeInterface
+    public static function getInteger(): PrimitiveValueTypeInterface
     {
         return new IntegerTypeImpl();
     }
 
-    public function getString(): PrimitiveValueTypeInterface
+    public static function getNumber(): PrimitiveValueTypeInterface
+    {
+        return new NumberTypeImpl();
+    }
+
+    public static function getString(): PrimitiveValueTypeInterface
     {
         return new StringTypeImpl();
     }
 
-    public function getDate(): PrimitiveValueTypeInterface
+    public static function getDate(): PrimitiveValueTypeInterface
     {
         return new DateTypeImpl();
     }
 
-    public function getObject(): PrimitiveValueTypeInterface
+    public static function getObject(): ValueTypeInterface
     {
         return new ObjectTypeImpl();
     }
 
-    public function getFile(): PrimitiveValueTypeInterface
+    public static function getFile(): FileValueTypeInterface
     {
-        return new FileTypeImpl();
+        return new FileValueTypeImpl();
     }
 }

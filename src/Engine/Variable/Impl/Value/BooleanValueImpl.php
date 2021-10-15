@@ -7,11 +7,9 @@ use BpmPlatform\Engine\Variable\Value\BooleanValueInterface;
 
 class BooleanValueImpl extends PrimitiveTypeValueImpl implements BooleanValueInterface
 {
-    use ValueTypeTrait;
-
-    public function __construct(bool $value, ?bool $isTransient = null)
+    public function __construct(?bool $value, ?bool $isTransient = null)
     {
-        parent::__construct($value, $this->getBoolean());
+        parent::__construct($value, ValueTypeTrait::getBoolean());
         if ($isTransient != null) {
             $this->isTransient = $isTransient;
         }

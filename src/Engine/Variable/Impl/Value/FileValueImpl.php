@@ -18,17 +18,17 @@ class FileValueImpl implements FileValueInterface
     protected $isTransient;
 
     public function __construct(
-        ?string $value,
         FileValueTypeInterface $type,
         string $filename,
-        ?string $mimeType,
-        ?string $encoding
+        ?string $mimeType = null,
+        ?string $encoding = null,
+        ?string $value = null
     ) {
-        $this->value = $value;
         $this->type = $type;
         $this->filename = $filename;
         $this->mimeType = $mimeType;
         $this->encoding = $encoding;
+        $this->value = $value;
     }
 
     public function getFilename(): string
@@ -51,7 +51,7 @@ class FileValueImpl implements FileValueInterface
         $this->value = $value;
     }
 
-    public function getValue(): string
+    public function getValue(): ?string
     {
         return $this->value;
     }
@@ -80,6 +80,25 @@ class FileValueImpl implements FileValueInterface
     {
         return "FileValueImpl [mimeType=" . $this->mimeType . ", filename=" . $this->filename
                . ", type=" . $this->type . ", isTransient=" . $this->isTransient . "]";
+    }
+
+    public function serialize()
+    {
+        return json_encode([
+            'mimeType' => $this->mimeType,
+            'filename' => $this->filename,
+            'type' => serialize($this->type),
+            'isTransient' => $this->isTransient
+        ]);
+    }
+
+    public function unserialize($data)
+    {
+        $json = json_decode($data);
+        $this->mimeType = $json->mimeType;
+        $this->filename = $json->filename;
+        $this->type = unserialize($json->type);
+        $this->isTransient = $json->isTransient;
     }
 
     public function isTransient(): bool

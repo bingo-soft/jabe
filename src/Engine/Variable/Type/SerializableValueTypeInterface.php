@@ -2,6 +2,8 @@
 
 namespace BpmPlatform\Engine\Variable\Type;
 
+use BpmPlatform\Engine\Variable\Value\SerializableValueInterface;
+
 interface SerializableValueTypeInterface extends ValueTypeInterface
 {
     /**
@@ -19,5 +21,5 @@ interface SerializableValueTypeInterface extends ValueTypeInterface
      * @param serializedValue the value in serialized form
      * @return the typed value for the value
      */
-    public function createValueFromSerialized(string $serializedValue, array $valueInfo): SerializableValueInterface;
+    public function createValueFromSerialized(string $serializedValue, ?array $valueInfo = null): SerializableValueInterface;
 }

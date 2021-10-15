@@ -36,7 +36,7 @@ interface ValueTypeInterface extends \Serializable
      * @param value the value
      * @return the typed value for the value
      */
-    public function createValue($value, array $valueInfo): TypedValueInterface;
+    public function createValue($value, ?array $valueInfo = null): TypedValueInterface;
 
     /**
      * <p>Gets the parent value type.</p>
@@ -48,13 +48,13 @@ interface ValueTypeInterface extends \Serializable
      * supported when the parent value type's implementation of {@link #isAbstract()}
      * returns <code>true</code>.</p>
      */
-    public function getParent(): TypedValueInterface;
+    public function getParent(): ?ValueTypeInterface;
 
     /**
      * Determines whether the argument typed value can be converted to a
      * typed value of this value type.
      */
-    public function canConvertFromTypedValue(TypedValueInterface $typedValue): bool;
+    public function canConvertFromTypedValue(?TypedValueInterface $typedValue): bool;
 
     /**
      * Converts a typed value to a typed value of this type.
