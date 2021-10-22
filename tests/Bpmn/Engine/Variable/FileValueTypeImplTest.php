@@ -159,7 +159,7 @@ class FileValueTypeImplTest extends TestCase
         $fileName = 'tests/Bpmn/Engine/Variable/Resources/simpleFile.txt';
         $file = fopen($fileName, 'r+');
         $fileValue = Variables::fileValue($fileName)->file($file)->create();
-        $this->assertEquals(IoUtil::getStringFromInputStream(fopen($fileName, 'r+')), $fileValue->getValue());
+        $this->assertEquals(IoUtil::getStringFromInputStream(fopen($fileName, 'r+')), $fileValue->getByteArray());
     }
 
     public function testDoesNotHaveParent(): void
@@ -169,6 +169,6 @@ class FileValueTypeImplTest extends TestCase
 
     private function checkStreamFromValue(TypedValueInterface $value, string $expected): void
     {
-        $this->assertEquals($expected, $value->getValue());
+        $this->assertEquals($expected, $value->getByteArray());
     }
 }

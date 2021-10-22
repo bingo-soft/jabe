@@ -9,7 +9,7 @@ class DateTypeImpl extends PrimitiveValueTypeImpl
 {
     public function __construct()
     {
-        parent::__construct(null, "date");
+        parent::__construct(null, "string");
     }
 
     public function createValue($value, ?array $valueInfo = null): DateValueInterface

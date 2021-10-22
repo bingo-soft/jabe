@@ -37,11 +37,6 @@ class ValueTypeTrait
         return new IntegerTypeImpl();
     }
 
-    public static function getNumber(): PrimitiveValueTypeInterface
-    {
-        return new NumberTypeImpl();
-    }
-
     public static function getString(): PrimitiveValueTypeInterface
     {
         return new StringTypeImpl();

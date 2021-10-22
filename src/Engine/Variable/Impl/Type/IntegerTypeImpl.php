@@ -14,7 +14,7 @@ class IntegerTypeImpl extends PrimitiveValueTypeImpl
 {
     public function __construct()
     {
-        parent::__construct(null, "int");
+        parent::__construct(null, "integer");
     }
 
     public function createValue($value, ?array $valueInfo = null): IntegerValueInterface
@@ -22,24 +22,19 @@ class IntegerTypeImpl extends PrimitiveValueTypeImpl
         return Variables::dateValue(floatval($value), $this->isTransient($valueInfo));
     }
 
-    public function getParent(): ValueTypeInterface
-    {
-        return ValueTypeTrait::getNumber();
-    }
-
     public function canConvertFromTypedValue(?TypedValueInterface $typedValue): bool
     {
-        if ($typedValue->getType() != ValueTypeTrait::getNumber()) {
+        if ($typedValue->getType() != ValueTypeTrait::getInteger()) {
             return false;
         }
 
         if ($typedValue->getType() != null) {
             $numberValue = $typedValue;
-            $doubleValue = $numberValue->getValue()->doubleValue();
+            $numberValue2 = $numberValue->getValue()->integerValue();
 
             // returns false if the value changes due to conversion (e.g. by overflows
             // or by loss in precision)
-            if ($numberValue->getValue()->intValue() != $doubleValue) {
+            if ($numberValue->getValue()->intValue() != $numberValue2) {
                 return false;
             }
         }
@@ -49,7 +44,7 @@ class IntegerTypeImpl extends PrimitiveValueTypeImpl
 
     public function convertFromTypedValue(TypedValueInterface $typedValue): IntegerValueInterface
     {
-        if ($typedValue->getType() != ValueTypeTrait::getNumber()) {
+        if ($typedValue->getType() != ValueTypeTrait::getInteger()) {
             throw new \Exception("unsupported conversion");
         }
         $integerValue = null;

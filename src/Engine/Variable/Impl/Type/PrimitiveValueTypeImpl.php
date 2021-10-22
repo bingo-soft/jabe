@@ -18,7 +18,7 @@ abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl implements P
         $this->phpType = $phpType;
     }
 
-    public function getPHPType(): string
+    public function getPhpType(): string
     {
         return $this->phpType;
     }

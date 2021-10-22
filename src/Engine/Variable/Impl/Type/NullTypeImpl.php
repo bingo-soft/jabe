@@ -9,7 +9,7 @@ class NullTypeImpl extends PrimitiveValueTypeImpl
 {
     public function __construct()
     {
-        parent::__construct(null, "null");
+        parent::__construct(null, "NULL");
     }
 
     public function createValue($value, ?array $valueInfo = null): TypedValueInterface

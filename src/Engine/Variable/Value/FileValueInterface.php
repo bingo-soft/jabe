@@ -6,7 +6,7 @@ interface FileValueInterface extends TypedValueInterface
 {
     public function getFilename(): string;
 
-    public function getMimeType(): string;
+    public function getMimeType(): ?string;
 
     /**
      * Convenience method to save the transformation. This method will perform no
@@ -16,15 +16,17 @@ interface FileValueInterface extends TypedValueInterface
      * If no encoding has been saved it will return null.
      *
      */
-    public function getEncodingAsCharset(): string;
+    public function getEncodingAsCharset(): ?string;
 
     /**
      * @return the saved encoding or null if none has been saved
      */
-    public function getEncoding(): string;
+    public function getEncoding(): ?string;
 
     /**
      * @return resource
      */
     public function getValue();
+
+    public function getByteArray(): ?string;
 }

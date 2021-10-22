@@ -36,7 +36,7 @@ class FileValueImpl implements FileValueInterface
         return $this->filename;
     }
 
-    public function getMimeType(): string
+    public function getMimeType(): ?string
     {
         return $this->mimeType;
     }
@@ -51,9 +51,15 @@ class FileValueImpl implements FileValueInterface
         $this->value = $value;
     }
 
-    public function getValue(): ?string
+    public function getValue()
     {
-        return $this->value;
+        if (file_exists($this->filename)) {
+            $file = fopen($this->filename, 'r+');
+        } else {
+            $file = tmpfile();
+            fwrite($file, $this->value);
+        }
+        return $file;
     }
 
     public function getType(): ValueTypeInterface
@@ -66,14 +72,19 @@ class FileValueImpl implements FileValueInterface
         $this->encoding = $encoding;
     }
 
-    public function getEncodingAsCharset(): string
+    public function getEncodingAsCharset(): ?string
     {
         return $this->encoding;
     }
 
-    public function getEncoding(): string
+    public function getEncoding(): ?string
     {
         return $this->encoding;
+    }
+
+    public function getByteArray(): ?string
+    {
+        return $this->value;
     }
 
     public function __toString()

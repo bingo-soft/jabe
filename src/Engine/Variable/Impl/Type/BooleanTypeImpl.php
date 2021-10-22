@@ -9,7 +9,7 @@ class BooleanTypeImpl extends PrimitiveValueTypeImpl
 {
     public function __construct()
     {
-        parent::__construct(null, "bool");
+        parent::__construct(null, "boolean");
     }
 
     public function createValue($value, ?array $valueInfo = null): BooleanValueInterface

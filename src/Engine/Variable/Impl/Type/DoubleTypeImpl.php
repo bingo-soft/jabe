@@ -14,7 +14,7 @@ class DoubleTypeImpl extends PrimitiveValueTypeImpl
 {
     public function __construct()
     {
-        parent::__construct(null, "float");
+        parent::__construct(null, "double");
     }
 
     public function createValue($value, ?array $valueInfo = null): DoubleValueInterface
@@ -22,14 +22,9 @@ class DoubleTypeImpl extends PrimitiveValueTypeImpl
         return Variables::dateValue(floatval($value), $this->isTransient($valueInfo));
     }
 
-    public function getParent(): ValueTypeInterface
-    {
-        return ValueTypeTrait::getNumber();
-    }
-
     public function canConvertFromTypedValue(?TypedValueInterface $typedValue): bool
     {
-        if ($typedValue->getType() != ValueTypeTrait::getNumber()) {
+        if ($typedValue->getType() != ValueTypeTrait::getDouble()) {
             return false;
         }
 
@@ -38,7 +33,7 @@ class DoubleTypeImpl extends PrimitiveValueTypeImpl
 
     public function convertFromTypedValue(TypedValueInterface $typedValue): DoubleValueInterface
     {
-        if ($typedValue->getType() != ValueTypeTrait::getNumber()) {
+        if ($typedValue->getType() != ValueTypeTrait::getDouble()) {
             throw new \Exception("unsupported conversion");
         }
         $doubleValue = null;

@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine;
+namespace BpmPlatform\Engine\Impl;
 
 use BpmPlatform\Commons\Logging\BaseLogger;
 
