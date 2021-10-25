@@ -17,9 +17,7 @@ use BpmPlatform\Engine\Identity\{
     UserInterface,
     UserQueryInterface
 };
-use BpmPlatform\Engine\Impl\Identity\{
-    Authentication
-};
+use BpmPlatform\Engine\Impl\Identity\Authentication;
 
 interface IdentityServiceInterface
 {
