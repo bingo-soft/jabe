@@ -18,7 +18,7 @@ class MethodInfo
      * @param paramTypes
      *            The types of each of the method's parameters
      */
-    public function __construct(string $name, string $returnType, array $paramTypes)
+    public function __construct(string $name, ?string $returnType = null, ?array $paramTypes = [])
     {
         $this->name = $name;
         $this->returnType = $returnType;

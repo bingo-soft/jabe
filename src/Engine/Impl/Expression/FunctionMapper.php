@@ -15,5 +15,5 @@ abstract class FunctionMapper
      *            the short name of the function. For example, "method" in ${fn:method()}.
      * @return the static method to invoke, or null if no match was found.
      */
-    abstract public function resolveFunction(string $prefix, string $localName): ?callable;
+    abstract public function resolveFunction(string $prefix, string $localName): ?\ReflectionMethod;
 }

@@ -12,7 +12,7 @@ abstract class VariableMapper
      * @return the ValueExpression assigned to the variable, null if there is no previous assignment
      *         to this variable.
      */
-    abstract public function resolveVariable(string $variable): ValueExpression;
+    abstract public function resolveVariable(string $variable): ?ValueExpression;
 
     /**
      * Assign a ValueExpression to an EL variable, replacing any previously assignment to the same

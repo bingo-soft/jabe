@@ -233,7 +233,7 @@ abstract class ELResolver
      *             <code>cause</code> and pass it to the <code>ELException</code> constructor.
      * @since 2.2
      */
-    public function invoke(?ELContext $context, &$base, $method, array $paramTypes, array $params)
+    public function invoke(?ELContext $context, &$base, $method, ?array $paramTypes = [], ?array $params = [])
     {
         return null;
     }

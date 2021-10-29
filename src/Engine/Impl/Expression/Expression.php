@@ -28,7 +28,7 @@ abstract class Expression implements \Serializable
      *
      * @return The original expression String.
      */
-    abstract public function getExpressionString(): string;
+    abstract public function getExpressionString(): ?string;
 
     /**
      * Returns whether this expression was created from only literal text. This method must return

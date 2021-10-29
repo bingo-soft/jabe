@@ -34,7 +34,7 @@ abstract class ValueExpression extends Expression
      *             thrown exception must be included as the cause property of this exception, if
      *             available.
      */
-    abstract public function getType(ELContext $context): string;
+    abstract public function getType(ELContext $context): ?string;
 
     /**
      * Evaluates the expression relative to the provided context, and returns the resulting value.

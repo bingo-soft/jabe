@@ -335,7 +335,7 @@ class CompositeELResolver extends ELResolver
      *         <code>void</code> return type).
      * @since 2.2
      */
-    public function invoke(?ELContext $context, &$base, $method, array $paramTypes, array $params)
+    public function invoke(?ELContext $context, &$base, $method, ?array $paramTypes = [], ?array $params = [])
     {
         $context->setPropertyResolved(false);
         foreach ($this->resolvers as $resolver) {
