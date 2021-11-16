@@ -25,14 +25,14 @@ class AstIdentifier extends AstNode implements IdentifierNode
 
     public function getType(Bindings $bindings, ELContext $context): ?string
     {
-        $expression = $bindings->getVariable($index);
+        $expression = $bindings->getVariable($this->index);
         if ($expression != null) {
             return $expression->getType($context);
         }
         $context->setPropertyResolved(false);
-        $result = $context->getELResolver()->getType($context, null, $name);
+        $result = $context->getELResolver()->getType($context, null, $this->name);
         if (!$context->isPropertyResolved()) {
-            throw new PropertyNotFoundException(LocalMessages::get("error.identifier.property.notfound", $name));
+            throw new PropertyNotFoundException(LocalMessages::get("error.identifier.property.notfound", $this->name));
         }
         return $result;
     }
@@ -55,51 +55,51 @@ class AstIdentifier extends AstNode implements IdentifierNode
 
     public function getValueReference(Bindings $bindings, ELContext $context): ?ValueReference
     {
-        $expression = $bindings->getVariable($index);
+        $expression = $bindings->getVariable($this->index);
         if ($expression != null) {
             return $expression->getValueReference($context);
         }
-        return new ValueReference(null, $name);
+        return new ValueReference(null, $this->name);
     }
 
     public function eval(Bindings $bindings, ELContext $context)
     {
-        $expression = $bindings->getVariable($index);
+        $expression = $bindings->getVariable($this->index);
         if ($expression != null) {
             return $expression->getValue($context);
         }
         $context->setPropertyResolved(false);
-        $result = $context->getELResolver()->getValue($context, null, $name);
+        $result = $context->getELResolver()->getValue($context, null, $this->name);
         if (!$context->isPropertyResolved()) {
-            throw new PropertyNotFoundException(LocalMessages::get("error.identifier.property.notfound", $name));
+            throw new PropertyNotFoundException(LocalMessages::get("error.identifier.property.notfound", $this->name));
         }
         return $result;
     }
 
     public function setValue(Bindings $bindings, ELContext $context, $value): void
     {
-        $expression = $bindings->getVariable($index);
+        $expression = $bindings->getVariable($this->index);
         if ($expression != null) {
             $expression->setValue($context, $value);
             return;
         }
         $context->setPropertyResolved(false);
-        $context->getELResolver()->setValue($context, null, $name, $value);
+        $context->getELResolver()->setValue($context, null, $this->name, $value);
         if (!$context->isPropertyResolved()) {
-            throw new PropertyNotFoundException(LocalMessages::get("error.identifier.property.notfound", $name));
+            throw new PropertyNotFoundException(LocalMessages::get("error.identifier.property.notfound", $this->name));
         }
     }
 
     public function isReadOnly(Bindings $bindings, ELContext $context): bool
     {
-        $expression = $bindings->getVariable($index);
+        $expression = $bindings->getVariable($this->index);
         if ($expression != null) {
             return $expression->isReadOnly($context);
         }
         $context->setPropertyResolved(false);
-        $result = $context->getELResolver()->isReadOnly($context, null, $name);
+        $result = $context->getELResolver()->isReadOnly($context, null, $this->name);
         if (!$context->isPropertyResolved()) {
-            throw new PropertyNotFoundException(LocalMessages::get("error.identifier.property.notfound", $name));
+            throw new PropertyNotFoundException(LocalMessages::get("error.identifier.property.notfound", $this->name));
         }
         return $result;
     }
@@ -108,16 +108,16 @@ class AstIdentifier extends AstNode implements IdentifierNode
     {
         $value = $this->eval($bindings, $context);
         if ($value == null) {
-            throw new MethodNotFoundException(LocalMessages::get("error.identifier.method.notfound", $name));
+            throw new MethodNotFoundException(LocalMessages::get("error.identifier.method.notfound", $this->name));
         }
         if ($value instanceof \ReflectionMethod) {
             $method = $value;
             if ($returnType != null && $returnType != $method->getReturnType()) {
-                throw new MethodNotFoundException(LocalMessages::get("error.identifier.method.notfound", $name));
+                throw new MethodNotFoundException(LocalMessages::get("error.identifier.method.notfound", $this->name));
             }
             return $method;
         }
-        throw new MethodNotFoundException(LocalMessages::get("error.identifier.method.notamethod", $name, gettype($value)));
+        throw new MethodNotFoundException(LocalMessages::get("error.identifier.method.notamethod", $this->name, gettype($value)));
     }
 
     public function getMethodInfo(Bindings $bindings, ELContext $context, ?string $returnType = null, ?array $paramTypes = []): ?MethodInfo
@@ -132,7 +132,7 @@ class AstIdentifier extends AstNode implements IdentifierNode
         try {
             return $method->invoke(null, ...$params);
         } catch (\Exception $e) {
-            throw new ELException(LocalMessages::get("error.identifier.method.invocation", $name));
+            throw new ELException(LocalMessages::get("error.identifier.method.invocation", $this->name));
         }
     }
 
@@ -143,7 +143,7 @@ class AstIdentifier extends AstNode implements IdentifierNode
 
     public function appendStructure(string &$b, Bindings $bindings): void
     {
-        $b .= $bindings != null && $bindings->isVariableBound($index) ? "<var>" : $name;
+        $b .= $bindings != null && $bindings->isVariableBound($this->index) ? "<var>" : $this->name;
     }
 
     public function getIndex(): int

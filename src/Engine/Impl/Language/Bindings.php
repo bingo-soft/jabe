@@ -99,7 +99,8 @@ class Bindings extends TypeConverter implements \Serializable
             $wrappers = serialize(new MethodWrapper($function));
         }
         return json_encode([
-            'wrappers' => $wrappers
+            'wrappers' => $wrappers,
+            'converter' => serialize($this->converter)
         ]);
     }
 
@@ -111,5 +112,6 @@ class Bindings extends TypeConverter implements \Serializable
             $wrapperObj = unserialize($wrapper);
             $this->functions[] = $wrapperObj->method;
         }
+        $this->converter = unserialize($json->converter);
     }
 }

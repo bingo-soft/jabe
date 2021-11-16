@@ -36,7 +36,7 @@ class TreeStore
         if ($this->cache == null) {
             return $this->builder->build($expression);
         }
-        $tree = $this->get($expression);
+        $tree = $this->cache->get($expression);
         if ($tree == null) {
             $tree = $this->builder->build($expression);
             $this->cache->put($expression, $tree);

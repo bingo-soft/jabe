@@ -39,7 +39,7 @@ class CompositeELResolver extends ELResolver
      *         Object.class if any type of property is accepted; otherwise the most general property
      *         type accepted for the given base.
      */
-    public function getCommonPropertyType(?ELContext $context, &$base)
+    public function getCommonPropertyType(?ELContext $context, $base): ?string
     {
         $result = null;
         foreach ($this->resolvers as $resolver) {
@@ -73,7 +73,7 @@ class CompositeELResolver extends ELResolver
      *         objects, or null if this resolver does not handle the given base object or that the
      *         results are too complex to represent with this method
      */
-    public function getFeatureDescriptors(?ELContext $context, &$base)
+    public function getFeatureDescriptors(?ELContext $context, $base): ?array
     {
         $features = [];
         foreach ($this->resolvers as $resolver) {
@@ -122,7 +122,7 @@ class CompositeELResolver extends ELResolver
      *             The thrown exception must be included as the cause property of this exception, if
      *             available.
      */
-    public function getType(?ELContext $context, &$base, $property): ?string
+    public function getType(?ELContext $context, $base, $property)
     {
         $context->setPropertyResolved(false);
         foreach ($this->resolvers as $resolver) {
@@ -169,7 +169,7 @@ class CompositeELResolver extends ELResolver
      *             The thrown exception must be included as the cause property of this exception, if
      *             available.
      */
-    public function getValue(?ELContext $context, &$base, $property)
+    public function getValue(?ELContext $context, $base, $property)
     {
         $context->setPropertyResolved(false);
         foreach ($this->resolvers as $resolver) {
@@ -217,13 +217,13 @@ class CompositeELResolver extends ELResolver
      *             The thrown exception must be included as the cause property of this exception, if
      *             available.
      */
-    public function isReadOnly(?ELContext $context, &$base, $property): bool
+    public function isReadOnly(?ELContext $context, $base, $property): bool
     {
         $context->setPropertyResolved(false);
-        foreach ($resolvers as $resolver) {
+        foreach ($this->resolvers as $resolver) {
             $readOnly = $resolver->isReadOnly($context, $base, $property);
             if ($context->isPropertyResolved()) {
-                return $this->readOnly;
+                return $readOnly;
             }
         }
         return false;
@@ -267,7 +267,7 @@ class CompositeELResolver extends ELResolver
      *             thrown exception must be included as the cause property of this exception, if
      *             available.
      */
-    public function setValue(?ELContext $context, &$base, $property, $value): void
+    public function setValue(?ELContext $context, $base, $property, $value): void
     {
         $context->setPropertyResolved(false);
         foreach ($this->resolvers as $resolver) {
@@ -335,7 +335,7 @@ class CompositeELResolver extends ELResolver
      *         <code>void</code> return type).
      * @since 2.2
      */
-    public function invoke(?ELContext $context, &$base, $method, ?array $paramTypes = [], ?array $params = [])
+    public function invoke(?ELContext $context, $base, $method, ?array $paramTypes = [], ?array $params = [])
     {
         $context->setPropertyResolved(false);
         foreach ($this->resolvers as $resolver) {

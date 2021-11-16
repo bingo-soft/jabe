@@ -2,7 +2,7 @@
 
 namespace BpmPlatform\Engine\Impl\Db\EntityManager\Operation;
 
-class DbBulkOperation extends AbstractDbOperation
+class DbBulkOperation extends DbOperation
 {
     protected $statement;
     protected $parameter;

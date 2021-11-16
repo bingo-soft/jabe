@@ -32,9 +32,9 @@ class AstFunction extends AstRightValue implements FunctionNode
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      */
-    protected function invoke(Bindings $bindings, ELContext $context, $base, \ReflectionMethod $method)
+    public function invoke(Bindings $bindings, ELContext $context, $base, \ReflectionMethod $method)
     {
-        $parameters = $this->method->getParameters();
+        $parameters = $method->getParameters();
         $types = [];
         if (!empty($parameters)) {
             foreach ($parameters as $param) {
@@ -60,11 +60,13 @@ class AstFunction extends AstRightValue implements FunctionNode
 
     public function eval(Bindings $bindings, ELContext $context)
     {
-        $method = $bindings->getFunction($index);
+        $method = $bindings->getFunction($this->index);
         try {
             return $this->invoke($bindings, $context, null, $method);
         } catch (\Exception $e) {
-            throw new ELException(LocalMessages::get("error.function.invocation", $name));
+            var_dump($method);
+            echo $e->getTraceAsString();
+            //throw new ELException(LocalMessages::get("error.function.invocation", $this->name));
         }
     }
 
@@ -75,7 +77,7 @@ class AstFunction extends AstRightValue implements FunctionNode
 
     public function appendStructure(string &$b, Bindings $bindings): void
     {
-        $b .= $bindings != null && $bindings->isFunctionBound($index) ? "<fn>" : $name;
+        $b .= $bindings != null && $bindings->isFunctionBound($this->index) ? "<fn>" : $this->name;
         $this->params->appendStructure($b, $bindings);
     }
 
@@ -101,7 +103,7 @@ class AstFunction extends AstRightValue implements FunctionNode
 
     protected function getParam(int $i): ?AstNode
     {
-        return $params->getChild($i);
+        return $this->params->getChild($i);
     }
 
     public function getCardinality(): int

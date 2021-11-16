@@ -2,6 +2,13 @@
 
 namespace BpmPlatform\Engine\Impl\Context;
 
+use BpmPlatform\Engine\ProcessEngineException;
+use BpmPlatform\Engine\Application\{
+    InvocationContext,
+    ProcessApplicationInterface,
+    ProcessApplicationReferenceInterface,
+    ProcessApplicationUnavailableException
+};
 use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 
 class Context

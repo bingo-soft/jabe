@@ -16,5 +16,5 @@ interface ProcessApplicationReferenceInterface
      * @throws ProcessApplicationUnavailableException
      *           if the process application is unavailable
      */
-    public function getProcessApplication(): ProcessApplicationInterface;
+    public function getProcessApplication(): ?AbstractProcessApplication;
 }

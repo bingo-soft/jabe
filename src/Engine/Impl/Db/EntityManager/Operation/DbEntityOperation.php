@@ -5,7 +5,7 @@ namespace BpmPlatform\Engine\Impl\Db\EntityManager\Operation;
 use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
 use BpmPlatform\Engine\Impl\Db\DbEntityInterface;
 
-class DbEntityOperation extends AbstractDbOperation
+class DbEntityOperation extends DbOperation
 {
     /**
      * The entity the operation is performed on.
@@ -48,12 +48,12 @@ class DbEntityOperation extends AbstractDbOperation
         return $this->operationType . " " . ClassNameUtil::getClassNameWithoutPackage(get_class($this->entity)) . "[" . $this->entity->getId() . "]";
     }
 
-    public function setDependency(AbstractDbOperation $owner): void
+    public function setDependency(DbOperation $owner): void
     {
         $this->dependentOperation = $owner;
     }
 
-    public function getDependentOperation(): ?AbstractDbOperation
+    public function getDependentOperation(): ?DbOperation
     {
         return $this->dependentOperation;
     }

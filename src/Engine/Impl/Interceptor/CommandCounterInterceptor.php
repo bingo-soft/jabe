@@ -1,0 +1,35 @@
+<?php
+
+namespace BpmPlatform\Engine\Impl\Interceptor;
+
+use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use BpmPlatform\Engine\Impl\Telemetry\TelemetryRegistry;
+use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+
+class CommandCounterInterceptor extends CommandInterceptor
+{
+    protected $processEngineConfiguration;
+
+    public function __construct(ProcessEngineConfigurationImpl $processEngineConfiguration)
+    {
+        $this->processEngineConfiguration = $processEngineConfiguration;
+    }
+
+    public function execute(CommandInterface $command)
+    {
+        try {
+            return $this->next->execute($command);
+        } finally {
+            $telemetryRegistry = $processEngineConfiguration->getTelemetryRegistry();
+            if ($telemetryRegistry != null && $telemetryRegistry->isCollectingTelemetryDataEnabled()) {
+                $class = get_class($command);
+                $className = ClassNameUtil::getClassNameWithoutPackage($class);
+                $ref = new \ReflectionClass($class);
+                // anonymous class/lambda implementations of the Command interface are excluded
+                if (!$ref->isAnonymous()) {
+                    $telemetryRegistry->markOccurrence($className);
+                }
+            }
+        }
+    }
+}

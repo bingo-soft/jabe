@@ -8,7 +8,7 @@ class Scanner
     private static $FIXMAP = [];
 
     private $token;  // current token
-    private $position; // start position of current token
+    private $position = 0; // start position of current token
     private $input;
     protected $builder = "";
 
@@ -49,7 +49,7 @@ class Scanner
             self::addFixToken(new Token(Symbol::LBRACK, "["));
             self::addFixToken(new Token(Symbol::RBRACK, "]"));
             self::addFixToken(new Token(Symbol::START_EVAL_DEFERRED, "#{"));
-            self::addFixToken(new Token(Symbol::START_EVAL_DYNAMIC, "${"));
+            self::addFixToken(new Token(Symbol::START_EVAL_DYNAMIC, '${'));
             self::addFixToken(new Token(Symbol::END_EVAL, "}"));
             self::addFixToken(new Token(Symbol::EOF, null, 0));
 
@@ -120,7 +120,7 @@ class Scanner
     protected function fixed(string $symbol): ?Token
     {
         if (array_key_exists($symbol, self::$FIXMAP)) {
-            return self::$FIXMAP[$s];
+            return self::$FIXMAP[$symbol];
         }
         return null;
     }
@@ -250,7 +250,7 @@ class Scanner
                 $i = $e;
             }
         }
-        return $this->token($symbol, substr($this->input, $this->position, $i), $i - $this->position);
+        return $this->token($symbol, substr($this->input, $this->position, $i - $this->position), $i - $this->position);
     }
 
     /**
@@ -336,7 +336,7 @@ class Scanner
             while ($i < $l && preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $this->input[$i])) {
                 $i++;
             }
-            $name = substr($this->input, $this->position, $i);
+            $name = substr($this->input, $this->position, $i - $this->position);
             $keyword = $this->keyword($name);
             return $keyword == null ? $this->token(Symbol::IDENTIFIER, $name, $i - $this->position) : $keyword;
         }
@@ -372,7 +372,7 @@ class Scanner
      */
     public function next(): Token
     {
-        if ($this->token != null) {
+        if ($this->token !== null) {
             $this->position += $this->token->getSize();
         }
 
@@ -385,9 +385,11 @@ class Scanner
         }
 
         if ($this->position == $length) {
-            return $token = $this->fixed(Symbol::EOF);
+            $this->token = $this->fixed(Symbol::EOF);
+            return $this->token;
         }
 
-        return $token = $this->nextToken();
+        $this->token = $this->nextToken();
+        return $this->token;
     }
 }

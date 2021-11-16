@@ -39,7 +39,7 @@ class Builder implements TreeBuilder
         } catch (ParseException $e) {
             throw new TreeBuilderException($expression, $e->position, $e->encountered, $e->expected, $e->getMessage());
         } catch (\Exception $e) {
-            throw new \Exception("Unknown exception occurred during parsing");
+            throw new \Exception($e->getTraceAsString());
         }
     }
 

@@ -22,8 +22,7 @@ class ObjectValueExpression extends ValueExpression
      */
     public function __construct(TypeConverter $converter, $object = null, ?string $type = null)
     {
-        parent::__construct();
-
+        //parent::__construct();
         $this->converter = $converter;
         $this->object = $object;
         $this->type = $type;
@@ -56,7 +55,7 @@ class ObjectValueExpression extends ValueExpression
     public function equals($obj): bool
     {
         if ($obj != null && get_class($obj) == get_class($this)) {
-            if ($type != $obj->type) {
+            if ($this->type != $obj->type) {
                 return false;
             }
             return $this->object == $obj->object || $object != null && $object == $obj->object;
@@ -69,7 +68,7 @@ class ObjectValueExpression extends ValueExpression
      */
     public function getValue(ELContext $context)
     {
-        return $this->converter->convert($this->object, $type);
+        return $this->converter->convert($this->object, $this->type);
     }
 
     /**

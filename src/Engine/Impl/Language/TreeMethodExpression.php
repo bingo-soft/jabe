@@ -37,10 +37,8 @@ class TreeMethodExpression extends MethodExpression
      * @param returnType the expected return type (may be <code>null</code>)
      * @param paramTypes the expected parameter types (must not be <code>null</code> for lvalues)
      */
-    public function __construct(TreeStore $store, FunctionMapper $functions, VariableMapper $variables, TypeConverter $converter, string $expr, ?string $returnType = null, ?array $paramTypes = [])
+    public function __construct(TreeStore $store, ?FunctionMapper $functions, ?VariableMapper $variables, ?TypeConverter $converter, string $expr, ?string $returnType = null, ?array $paramTypes = [])
     {
-        parent::__construct();
-
         $tree = $store->get($expr);
 
         $this->builder = $store->getBuilder();
@@ -58,9 +56,6 @@ class TreeMethodExpression extends MethodExpression
         } elseif (!$this->node->isMethodInvocation()) {
             if (!$this->node->isLeftValue()) {
                 throw new ELException(LocalMessages::get("error.method.invalid", $expr));
-            }
-            if ($paramTypes == null) {
-                throw new ELException(LocalMessages::get("error.method.notypes"));
             }
         }
     }
@@ -86,7 +81,7 @@ class TreeMethodExpression extends MethodExpression
         $this->type = $json->type;
         $this->types = $json->types;
         $this->deferred = $json->deferred;
-        $this->node = $this->builder->build($expr)->getRoot();
+        $this->node = $this->builder->build($this->expr)->getRoot();
     }
 
     private function getStructuralId(): string
@@ -120,7 +115,7 @@ class TreeMethodExpression extends MethodExpression
     * @return method result or <code>null</code> if this is a literal text expression
     * @throws ELException if evaluation fails (e.g. suitable method not found)
     */
-    public function invoke(ELContext $context, array $paramValues)
+    public function invoke(ELContext $context, ?array $paramValues = [])
     {
         return $this->node->invoke($this->bindings, $context, $this->type, $this->types, $paramValues);
     }

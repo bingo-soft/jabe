@@ -135,7 +135,7 @@ abstract class AstProperty extends AstNode
     {
         $method = null;
         try {
-            $method = (new ReflectionClass($clazz))->getMethod($name);
+            $method = (new \ReflectionClass($clazz))->getMethod($name);
         } catch (\Exception $e) {
             throw new \Exception(LocalMessages::get("error.property.method.notfound", $name, $clazz));
         }

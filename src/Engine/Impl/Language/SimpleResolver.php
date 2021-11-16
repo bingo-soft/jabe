@@ -24,7 +24,7 @@ class SimpleResolver extends ELResolver
      * Create a read/write resolver capable of resolving top-level identifiers. Everything else is
      * passed to the supplied delegate.
      */
-    public function __construct(?ELResolver $resolver, bool $readOnly = false)
+    public function __construct(?ELResolver $resolver = null, bool $readOnly = false)
     {
         if (self::$DEFAULT_RESOLVER_READ_ONLY == null) {
             self::$DEFAULT_RESOLVER_READ_ONLY = new CompositeELResolver();
@@ -55,37 +55,37 @@ class SimpleResolver extends ELResolver
         return $this->root;
     }
 
-    public function getCommonPropertyType(?ELContext $context, &$base)
+    public function getCommonPropertyType(?ELContext $context, $base): ?string
     {
         return $this->delegate->getCommonPropertyType($context, $base);
     }
 
-    public function getFeatureDescriptors(?ELContext $context, &$base): ?array
+    public function getFeatureDescriptors(?ELContext $context, $base): ?array
     {
         return $this->delegate->getFeatureDescriptors($context, $base);
     }
 
-    public function getType(?ELContext $context, &$base, $property): ?string
+    public function getType(?ELContext $context, $base, $property): ?string
     {
         return $this->delegate->getType($context, $base, $property);
     }
 
-    public function getValue(?ELContext $context, &$base, $property)
+    public function getValue(?ELContext $context, $base, $property)
     {
         return $this->delegate->getValue($context, $base, $property);
     }
 
-    public function isReadOnly(?ELContext $context, &$base, $property): bool
+    public function isReadOnly(?ELContext $context, $base, $property): bool
     {
         return $this->delegate->isReadOnly($context, $base, $property);
     }
 
-    public function setValue(?ELContext $context, &$base, $property, $value): void
+    public function setValue(?ELContext $context, $base, $property, $value): void
     {
         $this->delegate->setValue($context, $base, $property, $value);
     }
 
-    public function invoke(?ELContext $context, &$base, $method, ?array $paramTypes = [], ?array $params = [])
+    public function invoke(?ELContext $context, $base, $method, ?array $paramTypes = [], ?array $params = [])
     {
         return $this->delegate->invoke($context, $base, $method, $paramTypes, $params);
     }

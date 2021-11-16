@@ -29,28 +29,28 @@ class RootPropertyResolver extends ELResolver
         return $base == null;
     }
 
-    private function resolve(?ELContext $context, &$base, $property): bool
+    private function resolve(?ELContext $context, $base, $property): bool
     {
         $context->setPropertyResolved($this->isResolvable($base) && gettype($property) == "string");
         return $context->isPropertyResolved();
     }
 
-    public function getCommonPropertyType(?ELContext $context, &$base): ?string
+    public function getCommonPropertyType(?ELContext $context, $base): ?string
     {
         return $this->isResolvable($context) ? "string" : null;
     }
 
-    public function getFeatureDescriptors(?ELContext $context, &$base): ?array
+    public function getFeatureDescriptors(?ELContext $context, $base): ?array
     {
         return null;
     }
 
-    public function getType(?ELContext $context, &$base, $property): ?string
+    public function getType(?ELContext $context, $base, $property)
     {
         return $this->resolve($context, $base, $property) ? "object" : null;
     }
 
-    public function getValue(?ELContext $context, &$base, $property)
+    public function getValue(?ELContext $context, $base, $property)
     {
         if ($this->resolve($context, $base, $property)) {
             if (!$this->isProperty($property)) {
@@ -61,12 +61,12 @@ class RootPropertyResolver extends ELResolver
         return null;
     }
 
-    public function isReadOnly(?ELContext $context, &$base, $property): bool
+    public function isReadOnly(?ELContext $context, $base, $property): bool
     {
         return $this->resolve($context, $base, $property) ? $this->readOnly : false;
     }
 
-    public function setValue(?ELContext $context, &$base, $property, $value): void
+    public function setValue(?ELContext $context, $base, $property, $value): void
     {
         if ($this->resolve($context, $base, $property)) {
             if ($this->readOnly) {
@@ -76,7 +76,7 @@ class RootPropertyResolver extends ELResolver
         }
     }
 
-    public function invoke(?ELContext $context, &$base, $method, ?array $paramTypes = [], ?array $params = [])
+    public function invoke(?ELContext $context, $base, $method, ?array $paramTypes = [], ?array $params = [])
     {
         if ($this->resolve($context, $base, $method)) {
             throw new \Exception("Cannot invoke method " . $method . " on null");

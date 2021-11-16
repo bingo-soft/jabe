@@ -30,7 +30,7 @@ class ArrayELResolver extends ELResolver
      *            this resolver.
      * @return null if base is not a Java language array; otherwise Integer.class.
      */
-    public function getCommonPropertyType(?ELContext $context, &$base): ?string
+    public function getCommonPropertyType(?ELContext $context, $base): ?string
     {
         return $this->isResolvable($base) ? gettype(1) : null;
     }
@@ -47,7 +47,7 @@ class ArrayELResolver extends ELResolver
      *            this resolver.
      * @return null.
      */
-    public function getFeatureDescriptors(?ELContext $context, &$base)
+    public function getFeatureDescriptors(?ELContext $context, $base): ?array
     {
         return null;
     }
@@ -79,7 +79,7 @@ class ArrayELResolver extends ELResolver
      *             The thrown exception must be included as the cause property of this exception, if
      *             available.
      */
-    public function getType(?ELContext $context, &$base, $property): ?string
+    public function getType(?ELContext $context, $base, $property)
     {
         if ($context == null) {
             throw new \Exception("context is null");
@@ -120,7 +120,7 @@ class ArrayELResolver extends ELResolver
      *             The thrown exception must be included as the cause property of this exception, if
      *             available.
      */
-    public function getValue(?ELContext $context, &$base, $property)
+    public function getValue(?ELContext $context, $base, $property)
     {
         if ($context == null) {
             throw new \Exception("context is null");
@@ -162,7 +162,7 @@ class ArrayELResolver extends ELResolver
      *             The thrown exception must be included as the cause property of this exception, if
      *             available.
      */
-    public function isReadOnly(?ELContext $context, &$base, $property): bool
+    public function isReadOnly(?ELContext $context, $base, $property): bool
     {
         if ($context == null) {
             throw new \Exception("context is null");
@@ -210,7 +210,7 @@ class ArrayELResolver extends ELResolver
      *             The thrown exception must be included as the cause property of this exception, if
      *             available.
      */
-    public function setValue(?ELContext $context, &$base, $property, $value): void
+    public function setValue(?ELContext $context, $base, $property, $value): void
     {
         if ($context == null) {
             throw new \Exception("context is null");

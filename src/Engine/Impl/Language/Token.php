@@ -4,11 +4,11 @@ namespace BpmPlatform\Engine\Impl\Language;
 
 class Token
 {
-    private $ymbol;
+    private $symbol;
     private $image;
     private $length;
 
-    public function __construct(string $symbol, string $image, ?int $length = null)
+    public function __construct(string $symbol, ?string $image = null, ?int $length = null)
     {
         $this->symbol = $symbol;
         $this->image = $image;
@@ -20,9 +20,9 @@ class Token
         return $this->symbol;
     }
 
-    public function getImage(): string
+    public function getImage(): ?string
     {
-        return $this->mage;
+        return $this->image;
     }
 
     public function getSize(): int

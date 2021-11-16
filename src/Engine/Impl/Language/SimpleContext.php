@@ -19,7 +19,7 @@ class SimpleContext extends ELContext
     /**
      * Create a context, use the specified resolver.
      */
-    public function __construct(ELResolver $resolver)
+    public function __construct(?ELResolver $resolver = null)
     {
         $this->resolver = $resolver;
     }

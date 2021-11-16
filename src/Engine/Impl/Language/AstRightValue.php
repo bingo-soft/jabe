@@ -48,10 +48,10 @@ abstract class AstRightValue extends AstNode
         return null;
     }
 
-    public function invoke(Bindings $bindings, ELContext $context, ?string $returnType = null, ?array $paramTypes = [], ?array $paramValues = [])
+    /*public function invoke(Bindings $bindings, ELContext $context, ?string $returnType = null, ?array $paramTypes = [], ?array $paramValues = [])
     {
         throw new ELException(LocalMessages::get("error.method.invalid", getStructuralId($bindings)));
-    }
+    }*/
 
     public function isLeftValue(): bool
     {

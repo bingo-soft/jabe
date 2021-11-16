@@ -113,7 +113,7 @@ interface ExpressionNode extends Node
      *            parameter values
      * @return result of the method invocation
      */
-    public function invoke(Bindings $bindings, ELContext $context, ?string $returnType = null, ?array $paramTypes = [], ?array $paramValues = []);
+    //public function invoke(Bindings $bindings, ELContext $context, ?string $returnType = null, ?array $paramTypes = [], ?array $paramValues = []);
 
     /**
      * Get the canonical expression string for this node. Variable and funtion names will be

@@ -31,9 +31,9 @@ class TreeValueExpression extends ValueExpression
      * @param expr the expression string
      * @param type the expected type (may be <code>null</code>)
      */
-    public function __construct(TreeStore $store, FunctionMapper $functions, VariableMapper $variables, TypeConverter $converter, string $expr, ?string $type = null)
+    public function __construct(TreeStore $store, ?FunctionMapper $functions, ?VariableMapper $variables, ?TypeConverter $converter, string $expr, ?string $type = null)
     {
-        parent::__construct();
+        //parent::__construct();
 
         $tree = $store->get($expr);
 

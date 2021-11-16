@@ -81,8 +81,8 @@ abstract class ExpressionFactory
     abstract public function createMethodExpression(
         ELContext $context,
         string $expression,
-        string $expectedReturnType,
-        array $expectedParamTypes
+        ?string $expectedReturnType = null,
+        ?array $expectedParamTypes = []
     ): MethodExpression;
 
     /**
@@ -113,8 +113,9 @@ abstract class ExpressionFactory
      *             if paramTypes is null.
      */
     abstract public function createValueExpression(
-        ELContext $context,
-        string $expression,
-        string $expectedType
+        ?ELContext $context = null,
+        ?string $expression = null,
+        $instance = null,
+        ?string $expectedType = null
     ): ValueExpression;
 }

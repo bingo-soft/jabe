@@ -33,7 +33,7 @@ abstract class ELResolver
      *         Object.class if any type of property is accepted; otherwise the most general property
      *         type accepted for the given base.
      */
-    abstract public function getCommonPropertyType(?ELContext $context, &$base): string;
+    abstract public function getCommonPropertyType(?ELContext $context, $base): ?string;
 
     /**
      * Returns information about the set of variables or properties that can be resolved for the
@@ -74,7 +74,7 @@ abstract class ELResolver
      *         objects, or null if this resolver does not handle the given base object or that the
      *         results are too complex to represent with this method
      */
-    abstract public function getFeatureDescriptors(?ELContext $context, &$base): ?array;
+    abstract public function getFeatureDescriptors(?ELContext $context, $base): ?array;
 
     /**
      * For a given base and property, attempts to identify the most general type that is acceptable
@@ -106,7 +106,7 @@ abstract class ELResolver
      *             The thrown exception must be included as the cause property of this exception, if
      *             available.
      */
-    abstract public function getType(?ELContext $context, &$base, $property): ?string;
+    abstract public function getType(?ELContext $context, $base, $property);
 
     /**
      * Attempts to resolve the given property object on the given base object. If this resolver
@@ -133,7 +133,7 @@ abstract class ELResolver
      *             The thrown exception must be included as the cause property of this exception, if
      *             available.
      */
-    abstract public function getValue(?ELContext $context, &$base, $property);
+    abstract public function getValue(?ELContext $context, $base, $property);
 
     /**
      * For a given base and property, attempts to determine whether a call to
@@ -161,7 +161,7 @@ abstract class ELResolver
      *             The thrown exception must be included as the cause property of this exception, if
      *             available.
      */
-    abstract public function isReadOnly(?ELContext $context, &$base, $property): bool;
+    abstract public function isReadOnly(?ELContext $context, $base, $property): bool;
 
     /**
      * Attempts to set the value of the given property object on the given base object. If this
@@ -191,7 +191,7 @@ abstract class ELResolver
      *             thrown exception must be included as the cause property of this exception, if
      *             available.
      */
-    abstract public function setValue(?ELContext $context, &$base, $property, $value): void;
+    abstract public function setValue(?ELContext $context, $base, $property, $value): void;
 
     /**
      * Attempts to resolve and invoke the given <code>method</code> on the given <code>base</code>
@@ -233,7 +233,7 @@ abstract class ELResolver
      *             <code>cause</code> and pass it to the <code>ELException</code> constructor.
      * @since 2.2
      */
-    public function invoke(?ELContext $context, &$base, $method, ?array $paramTypes = [], ?array $params = [])
+    public function invoke(?ELContext $context, $base, $method, ?array $paramTypes = [], ?array $params = [])
     {
         return null;
     }

@@ -104,7 +104,7 @@ class Parser
 
     protected function createAstFunction(string $name, int $index, AstParameters $params): AstFunction
     {
-        return new AstFunction($name, $index, $params, $context->isEnabled(Feature::VARARGS));
+        return new AstFunction($name, $index, $params, $this->context->isEnabled(Feature::VARARGS));
     }
 
     protected function createAstIdentifier(string $name, int $index): AstIdentifier
@@ -160,7 +160,7 @@ class Parser
      * consume current token ($this->get next token).
      * @return the consumed token (which was the current token when calling this method)
      */
-    protected function consumeToken(?string $expected = null): Token
+    protected function consumeToken(?string $expected = null): ?Token
     {
         if ($expected != null) {
             if ($this->token->getSymbol() != $expected) {
@@ -189,22 +189,22 @@ class Parser
         $this->consumeToken();
         $t = $this->text();
         if ($this->token->getSymbol() == Symbol::EOF) {
-            if ($t == null) {
+            if ($t === null) {
                 $t = new AstText("");
             }
             return new Tree($t, $this->functions, $this->identifiers, false);
         }
         $e = $this->eval();
-        if ($this->token->getSymbol() == Symbol::EOF && $t == null) {
+        if ($this->token->getSymbol() == Symbol::EOF && $t === null) {
             return new Tree($e, $this->functions, $this->identifiers, $e->isDeferred());
         }
         $list = [];
-        if ($t != null) {
+        if ($t !== null) {
             $list[] = $t;
         }
         $list[] = $e;
         $t = $this->text();
-        if ($t != null) {
+        if ($t !== null) {
             $list[] = $t;
         }
         while ($this->token->getSymbol() != Symbol::EOF) {
@@ -214,7 +214,7 @@ class Parser
                 $list[] = $this->eval(true, false);
             }
             $t = $this->text();
-            if ($t != null) {
+            if ($t !== null) {
                 $list[] = $t;
             }
         }
@@ -240,11 +240,11 @@ class Parser
      */
     protected function eval(?bool $required = null, ?bool $deferred = null): ?AstEval
     {
-        if ($required == null && $deferred == null) {
+        if ($required === null && $deferred === null) {
             $e = $this->eval(false, false);
-            if ($e == null) {
+            if ($e === null) {
                 $e = $this->eval(false, true);
-                if ($e == null) {
+                if ($e === null) {
                     $this->fail(Symbol::START_EVAL_DEFERRED . "|" . Symbol::START_EVAL_DYNAMIC);
                 }
             }
@@ -269,7 +269,7 @@ class Parser
     protected function expr(bool $required): ?AstNode
     {
         $v = $this->or($required);
-        if ($v == null) {
+        if ($v === null) {
             return null;
         }
         if ($this->token->getSymbol() == Symbol::QUESTION) {
@@ -288,11 +288,11 @@ class Parser
     protected function or(bool $required): ?AstNode
     {
         $v = $this->and($required);
-        if ($v == null) {
+        if ($v === null) {
             return null;
         }
         while (true) {
-            switch ($token->getSymbol()) {
+            switch ($this->token->getSymbol()) {
                 case Symbol::OR:
                     $this->consumeToken();
                     $v = $this->createAstBinary($v, $this->and(true), AstBinary::or());
@@ -315,7 +315,7 @@ class Parser
     protected function and(bool $required): ?AstNode
     {
         $v = $this->eq($required);
-        if ($v == null) {
+        if ($v === null) {
             return null;
         }
         while (true) {
@@ -342,7 +342,7 @@ class Parser
     protected function eq(bool $required): ?AstNode
     {
         $v = $this->cmp($required);
-        if ($v == null) {
+        if ($v === null) {
             return null;
         }
         while (true) {
@@ -373,7 +373,7 @@ class Parser
     protected function cmp(bool $required): ?AstNode
     {
         $v = $this->add($required);
-        if ($v == null) {
+        if ($v === null) {
             return null;
         }
         while (true) {
@@ -412,7 +412,7 @@ class Parser
     protected function add(bool $required): ?AstNode
     {
         $v = $this->mul($required);
-        if ($v == null) {
+        if ($v === null) {
             return null;
         }
         while (true) {
@@ -443,7 +443,7 @@ class Parser
     protected function mul(bool $required): ?AstNode
     {
         $v = $this->unary($required);
-        if ($v == null) {
+        if ($v === null) {
             return null;
         }
         while (true) {
@@ -500,7 +500,8 @@ class Parser
             default:
                 $v = $this->value();
         }
-        if ($v == null && $required) {
+        if ($v === null && $required) {
+            var_dump($this->token);
             $this->fail(self::EXPR_FIRST);
         }
         return $v;
@@ -513,9 +514,9 @@ class Parser
     {
         $lvalue = true;
         $v = $this->nonliteral();
-        if ($v == null) {
+        if ($v === null) {
             $v = $this->literal();
-            if ($v == null) {
+            if ($v === null) {
                 return null;
             }
             $lvalue = false;
@@ -566,9 +567,9 @@ class Parser
                     $this->consumeToken();
                 }
                 if ($this->token->getSymbol() == Symbol::LPAREN) { // function
-                    $v = function0($name, $this->params());
+                    $v = $this->function0($name, $this->params());
                 } else { // identifier
-                    $v = identifier($name);
+                    $v = $this->identifier($name);
                 }
                 break;
             case Symbol::LPAREN:
@@ -620,11 +621,11 @@ class Parser
                 $this->consumeToken();
                 break;
             case Symbol::INTEGER:
-                $v = new AstNumber(parseInteger($this->token->getImage()));
+                $v = new AstNumber($this->parseInteger($this->token->getImage()));
                 $this->consumeToken();
                 break;
             case Symbol::FLOAT:
-                $v = new AstNumber(parseFloat($this->token->getImage()));
+                $v = new AstNumber($this->parseFloat($this->token->getImage()));
                 $this->consumeToken();
                 break;
             case Symbol::NULL:

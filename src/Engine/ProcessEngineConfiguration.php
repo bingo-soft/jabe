@@ -1122,7 +1122,7 @@ abstract class ProcessEngineConfiguration
         return $this;
     }
 
-    public function getTelemetryRegistry(): TelemetryRegistry
+    public function getTelemetryRegistry(): ?TelemetryRegistry
     {
         return $this->telemetryRegistry;
     }

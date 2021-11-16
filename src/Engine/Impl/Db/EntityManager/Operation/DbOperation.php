@@ -4,7 +4,7 @@ namespace BpmPlatform\Engine\Impl\Db\EntityManager\Operation;
 
 use BpmPlatform\Engine\Impl\Db\EntityManager\RecyclableInterface;
 
-abstract class AbstractDbOperation implements RecyclableInterface
+abstract class DbOperation implements RecyclableInterface
 {
     /**
      * The type of the operation.
