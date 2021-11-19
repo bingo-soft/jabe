@@ -516,7 +516,7 @@ interface TaskServiceInterface
     *
     * @since 7.2
     */
-    public function getVariableTyped(string $taskId, string $variableName, ?bool $deserializeValue = false): TypedValueInterface;
+    public function getVariableTyped(string $taskId, string $variableName, ?bool $deserializeValue = false): ?TypedValueInterface;
 
     /**
     * Get a variables and only search in the task scope.
@@ -708,7 +708,7 @@ interface TaskServiceInterface
     *           <li>{@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}</li>
     *           </ul>
     */
-    public function removeVariables(string $taskId, array $variableNames): void;
+    public function removeVariables(string $taskId, ?array $variableNames = []): void;
 
     /**
     * Removes all variables in the given collection from the task (not considering parent scopes).
@@ -726,7 +726,7 @@ interface TaskServiceInterface
     *           <li>{@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}</li>
     *           </ul>
     */
-    public function removeVariablesLocal(string $taskId, array $variableNames): void;
+    public function removeVariablesLocal(string $taskId, ?array $variableNames = []): void;
 
     /** Creates a comment to a task and/or process instance and returns the comment. */
     public function createComment(string $taskId, string $processInstanceId, string $message): CommentInterface;

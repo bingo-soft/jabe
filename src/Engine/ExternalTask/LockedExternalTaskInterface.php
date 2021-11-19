@@ -96,7 +96,7 @@ interface LockedExternalTaskInterface
      * @return the id of the tenant the task belongs to. Can be <code>null</code>
      * if the task belongs to no single tenant.
      */
-    public function getTenantId(): string;
+    public function getTenantId(): ?string;
 
     /**
      * Returns the priority of the locked external task.

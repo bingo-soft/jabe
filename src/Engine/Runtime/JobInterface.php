@@ -81,7 +81,7 @@ interface JobInterface
      * The id of the tenant this job belongs to. Can be <code>null</code>
      * if the job belongs to no single tenant.
      */
-    public function getTenantId(): string;
+    public function getTenantId(): ?string;
 
     /** The date/time when this job has been created */
     public function getCreateTime(): string;

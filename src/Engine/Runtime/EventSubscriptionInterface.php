@@ -41,7 +41,7 @@ interface EventSubscriptionInterface
      * The id of the tenant this event subscription belongs to. Can be <code>null</code>
      * if the subscription belongs to no single tenant.
      */
-    public function getTenantId(): string;
+    public function getTenantId(): ?string;
 
     /**
      * The time this event subscription was created.

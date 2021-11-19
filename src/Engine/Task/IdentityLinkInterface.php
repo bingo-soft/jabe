@@ -39,5 +39,5 @@ interface IdentityLinkInterface
     /**
      * The id of the tenant associated with this identity link
      */
-    public function getTenantId(): string;
+    public function getTenantId(): ?string;
 }

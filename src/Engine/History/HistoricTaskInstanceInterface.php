@@ -71,7 +71,7 @@ interface HistoricTaskInstanceInterface
      * The id of the tenant this historic task instance belongs to. Can be <code>null</code>
      * if the historic task instance belongs to no single tenant.
      */
-    public function getTenantId(): string;
+    public function getTenantId(): ?string;
 
     /** The time the historic task instance will be removed. */
     public function getRemovalTime(): string;

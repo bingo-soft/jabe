@@ -511,7 +511,7 @@ interface RuntimeServiceInterface
      * @since 7.2
      *
      */
-    public function getVariableTyped(string $executionId, string $variableName, ?bool $deserializeValue = false): TypedValueInterface;
+    public function getVariableTyped(string $executionId, string $variableName, ?bool $deserializeValue = false): ?TypedValueInterface;
 
     /**
      * The variable value for an execution. Returns the value when the variable is set
@@ -717,7 +717,7 @@ interface RuntimeServiceInterface
      *          <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
      *          <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
      */
-    public function removeVariables(string $executionId, array $variableNames): void;
+    public function removeVariables(string $executionId, ?array $variableNames = []): void;
 
     /**
      * Remove variables for an execution (not considering parent scopes).
@@ -734,7 +734,7 @@ interface RuntimeServiceInterface
      *          <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
      *          <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
      */
-    public function removeVariablesLocal(string $executionId, array $variableNames): void;
+    public function removeVariablesLocal(string $executionId, ?array $variableNames = []): void;
 
     // Queries ////////////////////////////////////////////////////////
 

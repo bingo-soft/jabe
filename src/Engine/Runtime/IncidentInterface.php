@@ -94,7 +94,7 @@ interface IncidentInterface
      * Returns the id of the tenant this incident belongs to. Can be <code>null</code>
      * if the incident belongs to no single tenant.
      */
-    public function getTenantId(): string;
+    public function getTenantId(): ?string;
 
     /**
      * Returns the id of the job definition the incident belongs to. Can be <code>null</code>

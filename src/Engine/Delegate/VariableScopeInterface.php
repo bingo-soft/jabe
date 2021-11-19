@@ -11,19 +11,19 @@ interface VariableScopeInterface
 
     public function getVariables(): array;
 
-    public function getVariablesTyped(?bool $deserializeValues = null): VariableMapInterface;
+    public function getVariablesTyped(?bool $deserializeValues = false): VariableMapInterface;
 
     public function getVariablesLocal(): array;
 
-    public function getVariablesLocalTyped(?bool $deserializeValues): VariableMapInterface;
+    public function getVariablesLocalTyped(?bool $deserializeValues = false): VariableMapInterface;
 
     public function getVariable(string $variableName);
 
     public function getVariableLocal(string $variableName);
 
-    public function getVariableTyped(string $variableName, ?bool $deserializeValue = null): TypedValueInterface;
+    public function getVariableTyped(string $variableName, ?bool $deserializeValue = false): ?TypedValueInterface;
 
-    public function getVariableLocalTyped(string $variableName, ?bool $deserializeValue = null): TypedValueInterface;
+    public function getVariableLocalTyped(string $variableName, ?bool $deserializeValue = false): ?TypedValueInterface;
 
     public function getVariableNames(): array;
 
@@ -61,11 +61,11 @@ interface VariableScopeInterface
      * Removes the variables and creates a new
      * {@link HistoricVariableUpdateEntity} for each of them.
      */
-    public function removeVariables(?array $variableNames = null): void;
+    public function removeVariables(?array $variableNames = []): void;
 
     /**
      * Removes the local variables and creates a new
      * {@link HistoricVariableUpdateEntity} for each of them.
      */
-    public function removeVariablesLocal(?array $variableNames = null): void;
+    public function removeVariablesLocal(?array $variableNames = []): void;
 }

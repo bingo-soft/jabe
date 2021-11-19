@@ -27,5 +27,5 @@ interface ExecutionInterface
      * The id of the tenant this execution belongs to. Can be <code>null</code>
      * if the execution belongs to no single tenant.
      */
-    public function getTenantId(): string;
+    public function getTenantId(): ?string;
 }

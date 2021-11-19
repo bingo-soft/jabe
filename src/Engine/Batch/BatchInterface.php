@@ -66,7 +66,7 @@ interface BatchInterface
     /**
      * @return the batch's tenant id or null
      */
-    public function getTenantId(): string;
+    public function getTenantId(): ?string;
 
     /**
      * @return the batch creator's user id
