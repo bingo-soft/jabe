@@ -15,7 +15,7 @@ use BpmPlatform\Engine\Impl\Core\Variable\Event\{
     VariableEventDispatcherInterface
 };
 use BpmPlatform\Engine\Impl\Db\EntityManager\DbEntityManager;
-use BpmPlatform\Engine\Impl\Expression\ELContext;
+use BpmPlatform\Engine\Impl\Util\El\ELContext;
 use BpmPlatform\Engine\Impl\Persistence\Entity\VariableInstanceEntity;
 use BpmPlatform\Engine\Variable\Variables;
 use BpmPlatform\Engine\Variable\Impl\VariableMapImpl;
@@ -111,13 +111,15 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
         return null;
     }
 
-    public function getVariableTyped(string $variableName, ?bool $deserializeValue = true): ?TypedValueInterface
+    public function getVariableTyped(string $variableName, ?bool $deserializeValue = null): ?TypedValueInterface
     {
+        $deserializeValue = $deserializeValue ?? true;
         return $this->getTypedValueFromVariableInstance($deserializeValue, $this->getVariableInstance($variableName));
     }
 
-    public function getVariableLocalTyped(string $variableName, ?bool $deserializeValue = true): ?TypedValueInterface
+    public function getVariableLocalTyped(string $variableName, ?bool $deserializeValue = null): ?TypedValueInterface
     {
+        $deserializeValue = $deserializeValue ?? true;
         return $this->getTypedValueFromVariableInstance($deserializeValue, $this->getVariableInstanceLocal($variableName));
     }
 

@@ -11,7 +11,7 @@ interface VariableScopeInterface
 
     public function getVariables(): array;
 
-    public function getVariablesTyped(?bool $deserializeValues = false): VariableMapInterface;
+    public function getVariablesTyped(?bool $deserializeValues = true): VariableMapInterface;
 
     public function getVariablesLocal(): array;
 
@@ -21,9 +21,9 @@ interface VariableScopeInterface
 
     public function getVariableLocal(string $variableName);
 
-    public function getVariableTyped(string $variableName, ?bool $deserializeValue = false): ?TypedValueInterface;
+    public function getVariableTyped(string $variableName, ?bool $deserializeValue = null): ?TypedValueInterface;
 
-    public function getVariableLocalTyped(string $variableName, ?bool $deserializeValue = false): ?TypedValueInterface;
+    public function getVariableLocalTyped(string $variableName, ?bool $deserializeValue = null): ?TypedValueInterface;
 
     public function getVariableNames(): array;
 

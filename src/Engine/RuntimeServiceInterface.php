@@ -430,7 +430,7 @@ interface RuntimeServiceInterface
      * @since 7.2
      *
      */
-    public function getVariablesTyped(string $executionId, ?array $variableNames = null, ?bool $deserializeValues = false): VariableMapInterface;
+    public function getVariablesTyped(string $executionId, ?array $variableNames = null, ?bool $deserializeValues = true): VariableMapInterface;
 
     /**
      * The variable values for the given variableNames only taking the given execution scope into account, not looking in outer scopes.
@@ -511,7 +511,7 @@ interface RuntimeServiceInterface
      * @since 7.2
      *
      */
-    public function getVariableTyped(string $executionId, string $variableName, ?bool $deserializeValue = false): ?TypedValueInterface;
+    public function getVariableTyped(string $executionId, string $variableName, ?bool $deserializeValue = null): ?TypedValueInterface;
 
     /**
      * The variable value for an execution. Returns the value when the variable is set
@@ -553,7 +553,7 @@ interface RuntimeServiceInterface
      * @since 7.2
      *
      */
-    public function getVariableLocalTyped(string $executionId, string $variableName, ?bool $deserializeValue = false): TypedValueInterface;
+    public function getVariableLocalTyped(string $executionId, string $variableName, ?bool $deserializeValue = null): TypedValueInterface;
 
     /**
      * Update or create a variable for an execution.  If the variable does not already exist

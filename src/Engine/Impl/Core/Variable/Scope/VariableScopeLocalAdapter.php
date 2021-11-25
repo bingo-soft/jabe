@@ -25,7 +25,7 @@ class VariableScopeLocalAdapter implements VariableScopeInterface
         return $this->getVariablesLocal();
     }
 
-    public function getVariablesTyped(?bool $deserializeValues = false): VariableMapInterface
+    public function getVariablesTyped(?bool $deserializeValues = true): VariableMapInterface
     {
         return $this->getVariablesLocalTyped($deserializeValues);
     }
@@ -35,7 +35,7 @@ class VariableScopeLocalAdapter implements VariableScopeInterface
         return $this->wrappedScope->getVariablesLocal();
     }
 
-    public function getVariablesLocalTyped(?bool $deserializeValues = false): VariableMapInterface
+    public function getVariablesLocalTyped(?bool $deserializeValues = true): VariableMapInterface
     {
         return $this->wrappedScope->getVariablesLocalTyped($deserializeValues);
     }
@@ -50,12 +50,12 @@ class VariableScopeLocalAdapter implements VariableScopeInterface
         return $this->wrappedScope->getVariableLocal($variableName);
     }
 
-    public function getVariableTyped(string $variableName, ?bool $deserializeValue = false): ?TypedValueInterface
+    public function getVariableTyped(string $variableName, ?bool $deserializeValue = null): ?TypedValueInterface
     {
         return $this->getVariableLocalTyped($variableName, $deserializeValue);
     }
 
-    public function getVariableLocalTyped(string $variableName, ?bool $deserializeValue = false): ?TypedValueInterface
+    public function getVariableLocalTyped(string $variableName, ?bool $deserializeValue = null): ?TypedValueInterface
     {
         return $this->wrappedScope->getVariableLocalTyped($variableName, $deserializeValue);
     }

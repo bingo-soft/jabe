@@ -2,9 +2,9 @@
 
 namespace BpmPlatform\Engine\Application;
 
-use BpmPlatform\Engine\Impl\Expression\{
+use BpmPlatform\Engine\Impl\Util\El\{
     ELResolver,
-    ObjectELResolver
+    BeanELResolver
 };
 use BpmPlatform\Engine\Repository\DeploymentBuilderInterface;
 use BpmPlatform\Engine\Delegate\{
@@ -72,14 +72,14 @@ interface ProcessApplicationInterface
      * <p>The process engine must only call this method from Callable implementations passed
      * to {@link #execute(Callable)}</p>
      */
-    public function getElResolver(): ELResolver;
+    public function getElResolver(): ?ELResolver;
 
     /**
-     * <p>Returns an instance of {@link ObjectELResolver} that a process application caches.</p>
-     * <p>Has to be managed by the process application since {@link ObjectELResolver} keeps
+     * <p>Returns an instance of {@link BeanELResolver} that a process application caches.</p>
+     * <p>Has to be managed by the process application since {@link BeanELResolver} keeps
      * hard references to classes in a cache.</p>
      */
-    public function getObjectElResolver(): ObjectELResolver;
+    public function getObjectElResolver(): BeanELResolver;
 
     /**
      * <p>Override this method in order to programmatically add resources to the

@@ -516,7 +516,7 @@ interface TaskServiceInterface
     *
     * @since 7.2
     */
-    public function getVariableTyped(string $taskId, string $variableName, ?bool $deserializeValue = false): ?TypedValueInterface;
+    public function getVariableTyped(string $taskId, string $variableName, ?bool $deserializeValue = null): ?TypedValueInterface;
 
     /**
     * Get a variables and only search in the task scope.
@@ -564,7 +564,7 @@ interface TaskServiceInterface
     *
     * @since 7.2
     */
-    public function getVariableLocalTyped(string $taskId, string $variableName, ?bool $deserializeValue = false): TypedValueInterface;
+    public function getVariableLocalTyped(string $taskId, string $variableName, ?bool $deserializeValue = null): TypedValueInterface;
 
     /**
     * Get values for all given variableNames
@@ -609,7 +609,7 @@ interface TaskServiceInterface
     *
     * @since 7.2
     * */
-    public function getVariablesTyped(string $taskId, ?array $variableNames = null, ?bool $deserializeValues = false): VariableMapInterface;
+    public function getVariablesTyped(string $taskId, ?array $variableNames = null, ?bool $deserializeValues = true): VariableMapInterface;
 
     /**
     * Get a variable on a task

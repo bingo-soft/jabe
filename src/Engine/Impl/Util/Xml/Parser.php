@@ -10,7 +10,7 @@ class Parser
     {
     }
 
-    public function getInstance(): Parser
+    public static function getInstance(): Parser
     {
         if (self::$INSTANCE == null) {
             self::$INSTANCE = new Parser();

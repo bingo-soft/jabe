@@ -10,11 +10,6 @@ class Parse
     protected $name;
     protected $streamSource;
     protected $rootElement = null;
-    protected $errors = [];
-    protected $warnings = [];
-    protected $schemaResource;
-    protected $enableXxeProcessing = true;
-    protected $saxParser;
 
     public function __construct(Parser $parser)
     {

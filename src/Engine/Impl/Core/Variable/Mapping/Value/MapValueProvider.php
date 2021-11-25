@@ -16,7 +16,7 @@ class MapValueProvider implements ParameterValueProviderInterface
     public function getValue(VariableScopeInterface $variableScope)
     {
         $valueMap = [];
-        foreach ($providerMap as $pair) {
+        foreach ($this->providerMap as $pair) {
             $valueMap[] = [$pair[0]->getValue($variableScope), $pair[1]->getValue($variableScope)];
         }
         return $valueMap;

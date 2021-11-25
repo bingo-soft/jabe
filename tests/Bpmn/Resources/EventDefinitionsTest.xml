@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions
   xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
-  xmlns:test="http://test.org/schema/1.0/bpmn"
+  xmlns:extension="http://test.org/schema/1.0/bpmn"
   targetNamespace="http://test.org/test">
   <message id="message"/>
   <error id="error"/>
@@ -21,7 +21,7 @@
         <source>link</source>
         <target>link</target>
       </linkEventDefinition>
-      <messageEventDefinition messageRef="message" test:taskPriority="5"/>
+      <messageEventDefinition messageRef="message" extension:taskPriority="5"/>
       <signalEventDefinition signalRef="signal"/>
       <terminateEventDefinition/>
       <timerEventDefinition id="date">

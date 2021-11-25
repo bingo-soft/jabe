@@ -35,11 +35,30 @@ class Element
         }
         $selectedElements = [];
         foreach ($this->elements as $element) {
-            if ($element->getTagName() == $tagName) {
+            if (strcmp(strtoupper($element->getTagName()), strtoupper($tagName)) == 0) {
                 $selectedElements[] = $element;
             }
         }
         return $selectedElements;
+    }
+
+    public function elementsNS($nameSpace, string $tagName): array
+    {
+        $elementsNS = [];
+        if ($nameSpace instanceof XmlNamespace) {
+            $elementsNS = $this->elementsNS($nameSpace->getNamespaceUri(), $tagName);
+            if (empty($elementsNS) && $nameSpace->hasAlternativeUri()) {
+                $elementsNS = $this->elementsNS($nameSpace->getAlternativeUri(), $tagName);
+            }
+        } elseif (is_string($nameSpace) || $nameSpace == null) {
+            foreach ($this->elements($tagName) as $element) {
+                if ($nameSpace == null || $nameSpace == $element->getUri()) {
+                    $elementsNS[] = $element;
+                }
+            }
+        }
+
+        return $elementsNS;
     }
 
     public function element(string $tagName): ?Element
@@ -48,7 +67,18 @@ class Element
         if (empty($elements)) {
             return null;
         } elseif (count($elements) > 1) {
-            throw new ProcessEngineException("Parsing exception: multiple elements with tag name " . $this->tagName . " found");
+            throw new ProcessEngineException("Parsing exception: multiple elements with tag name " . $tagName . " found");
+        }
+        return $elements[0];
+    }
+
+    public function elementNS(XmlNamespace $nameSpace, string $tagName): ?Element
+    {
+        $elements = $this->elementsNS($nameSpace, $tagName);
+        if (count($elements) == 0) {
+            return null;
+        } elseif (count($elements) > 1) {
+            throw new ProcessEngineException("Parsing exception: multiple elements with tag name " . $tagName . " found");
         }
         return $elements[0];
     }
@@ -61,7 +91,15 @@ class Element
     public function attribute(string $name, ?string $defaultValue = null): ?string
     {
         if (array_key_exists($name, $this->attributeMap)) {
-            return $this->attributeMap[$name];
+            return $this->attributeMap[$name]->getValue();
+        }
+        $lcname = strtolower($name);
+        if (array_key_exists($lcname, $this->attributeMap)) {
+            return $this->attributeMap[$lcname]->getValue();
+        }
+        $luname = strtoupper($name);
+        if (array_key_exists($luname, $this->attributeMap)) {
+            return $this->attributeMap[$luname]->getValue();
         }
         return $defaultValue;
     }

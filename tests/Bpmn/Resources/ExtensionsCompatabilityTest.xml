@@ -1,222 +1,222 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions
   xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
-  xmlns:test="http://activiti.org/bpmn"
+  xmlns:extension="http://activiti.org/bpmn"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   targetNamespace="http://test.org/test">
 
   <process id="process"
-      test:candidateStarterGroups="group1, ${group2(a, b)}, group3"
-      test:candidateStarterUsers="user1, ${user2(a, b)}, user3"
-      test:jobPriority="15"
-      test:taskPriority="13"
-      test:historyTimeToLive="5"
-      test:isStartableInTasklist="false"
-      test:versionTag="v1.0.0">
+      extension:candidateStarterGroups="group1, ${group2(a, b)}, group3"
+      extension:candidateStarterUsers="user1, ${user2(a, b)}, user3"
+      extension:jobPriority="15"
+      extension:taskPriority="13"
+      extension:historyTimeToLive="5"
+      extension:isStartableInTasklist="false"
+      extension:versionTag="v1.0.0">
     <extensionElements>
-      <test:executionListener event="start" class="org.test.test.Test"/>
+      <extension:executionListener event="start" class="org.test.test.Test"/>
     </extensionElements>
 
     <startEvent id="startEvent"
-        test:initiator="test"
-        test:formHandlerClass="org.test.test.Test"
-        test:formKey="test"
-        test:asyncBefore="true"
-        test:asyncAfter="true"
-        test:jobPriority="${test}">
+        extension:initiator="test"
+        extension:formHandlerClass="org.test.test.Test"
+        extension:formKey="test"
+        extension:asyncBefore="true"
+        extension:asyncAfter="true"
+        extension:jobPriority="${test}">
       <extensionElements>
-        <test:executionListener event="start" expression="${test}"/>
-        <test:potentialStarter>
+        <extension:executionListener event="start" expression="${test}"/>
+        <extension:potentialStarter>
           <resourceAssignmentExpression>
             <formalExpression>group1, ${group2(a, b)}, group3</formalExpression>
           </resourceAssignmentExpression>
-        </test:potentialStarter>
-        <test:formProperty id="test" name="test" type="test" variable="test" expression="${test}" datePattern="test" default="test"/>
+        </extension:potentialStarter>
+        <extension:formProperty id="test" name="test" type="test" variable="test" expression="${test}" datePattern="test" default="test"/>
       </extensionElements>
-      <errorEventDefinition test:errorCodeVariable="errorVariable" test:errorMessageVariable="errorMessageVariable"/>
+      <errorEventDefinition extension:errorCodeVariable="errorVariable" extension:errorMessageVariable="errorMessageVariable"/>
     </startEvent>
 
     <sequenceFlow id="sequenceFlow" sourceRef="startEvent" targetRef="userTask">
       <extensionElements>
-        <test:executionListener>
-          <test:script scriptFormat="groovy">println 'Hello World'</test:script>
-        </test:executionListener>
+        <extension:executionListener>
+          <extension:script scriptFormat="groovy">println 'Hello World'</extension:script>
+        </extension:executionListener>
       </extensionElements>
     </sequenceFlow>
 
     <userTask id="userTask"
-        test:assignee="test"
-        test:async="true"
-        test:asyncBefore="true"
-        test:asyncAfter="true"
-        test:candidateGroups="group1, ${group2(a, b)}, group3"
-        test:candidateUsers="user1, ${user2(a, b)}, user3"
-        test:dueDate="2014-02-27"
-        test:exclusive="false"
-        test:formHandlerClass="org.test.test.Test"
-        test:formKey="test"
-        test:priority="12"
-        test:jobPriority="${test}">
+        extension:assignee="test"
+        extension:async="true"
+        extension:asyncBefore="true"
+        extension:asyncAfter="true"
+        extension:candidateGroups="group1, ${group2(a, b)}, group3"
+        extension:candidateUsers="user1, ${user2(a, b)}, user3"
+        extension:dueDate="2014-02-27"
+        extension:exclusive="false"
+        extension:formHandlerClass="org.test.test.Test"
+        extension:formKey="test"
+        extension:priority="12"
+        extension:jobPriority="${test}">
       <extensionElements>
-        <test:taskListener event="create" class="org.test.test.Test" expression="${test}" delegateExpression="${org.test.test.Test}">
-          <test:field name="test">
-            <test:string>test</test:string>
-          </test:field>
+        <extension:taskListener event="create" class="org.test.test.Test" expression="${test}" delegateExpression="${org.test.test.Test}">
+          <extension:field name="test">
+            <extension:string>test</extension:string>
+          </extension:field>
           <timerEventDefinition>
             <timeDuration xsi:type="tFormalExpression">PT1H</timeDuration>
           </timerEventDefinition>
-        </test:taskListener>
-        <test:taskListener>
-          <test:script scriptFormat="groovy" resource="test.groovy" />
-        </test:taskListener>
-        <test:formData>
-          <test:formField id="test" label="test" type="test" datePattern="test" defaultValue="test">
-            <test:properties>
-              <test:property id="test" value="test"/>
-            </test:properties>
-            <test:validation>
-              <test:constraint name="test" config="test"/>
-            </test:validation>
-            <test:value id="test" name="test"/>
-          </test:formField>
-        </test:formData>
+        </extension:taskListener>
+        <extension:taskListener>
+          <extension:script scriptFormat="groovy" resource="test.groovy" />
+        </extension:taskListener>
+        <extension:formData>
+          <extension:formField id="test" label="test" type="test" datePattern="test" defaultValue="test">
+            <extension:properties>
+              <extension:property id="test" value="test"/>
+            </extension:properties>
+            <extension:validation>
+              <extension:constraint name="test" config="test"/>
+            </extension:validation>
+            <extension:value id="test" name="test"/>
+          </extension:formField>
+        </extension:formData>
       </extensionElements>
     </userTask>
 
     <serviceTask id="serviceTask"
-        test:expression="${test}"
-        test:class="org.test.test.Test"
-        test:delegateExpression="${org.test.test.Test}"
-        test:resultVariable="test"
-        test:topic="test"
-        test:type="mail"
-        test:taskPriority="${test}">
+        extension:expression="${test}"
+        extension:class="org.test.test.Test"
+        extension:delegateExpression="${org.test.test.Test}"
+        extension:resultVariable="test"
+        extension:topic="test"
+        extension:type="mail"
+        extension:taskPriority="${test}">
       <extensionElements>
-        <test:executionListener event="start" delegateExpression="${org.test.test.Test}"/>
-        <test:connector>
-          <test:connectorId>soap-http-connector</test:connectorId>
-          <test:inputOutput>
-            <test:inputParameter name="endpointUrl">http://example.com/webservice</test:inputParameter>
-            <test:outputParameter name="result">output</test:outputParameter>
-          </test:inputOutput>
-        </test:connector>
-        <test:inputOutput>
-          <test:inputParameter name="shouldBeNull"/>
-          <test:inputParameter name="shouldBeConstant">foo</test:inputParameter>
-          <test:inputParameter name="shouldBeExpression">${1 + 1}</test:inputParameter>
-          <test:inputParameter name="shouldBeList">
-            <test:list>
-              <test:value>a</test:value>
-              <test:value>b</test:value>
-              <test:value>c</test:value>
-            </test:list>
-          </test:inputParameter>
-          <test:inputParameter name="shouldBeMap">
-            <test:map>
-              <test:entry key="foo">bar</test:entry>
-              <test:entry key="hello">world</test:entry>
-            </test:map>
-          </test:inputParameter>
-          <test:inputParameter name="shouldBeScript">
-            <test:script scriptFormat="groovy">1 + 1</test:script>
-          </test:inputParameter>
-          <test:outputParameter name="nested">
-            <test:list>
-              <test:value>
-                <test:list>
-                  <test:value>list</test:value>
-                  <test:value>list</test:value>
-                </test:list>
-              </test:value>
-              <test:value>
-                <test:map>
-                  <test:entry key="list">
-                    <test:list>
-                      <test:value>map</test:value>
-                      <test:value>map</test:value>
-                      <test:value>map</test:value>
-                    </test:list>
-                  </test:entry>
-                  <test:entry key="map">
-                    <test:map>
-                      <test:entry key="so">nested</test:entry>
-                    </test:map>
-                  </test:entry>
-                </test:map>
-              </test:value>
-            </test:list>
-          </test:outputParameter>
-        </test:inputOutput>
+        <extension:executionListener event="start" delegateExpression="${org.test.test.Test}"/>
+        <extension:connector>
+          <extension:connectorId>soap-http-connector</extension:connectorId>
+          <extension:inputOutput>
+            <extension:inputParameter name="endpointUrl">http://example.com/webservice</extension:inputParameter>
+            <extension:outputParameter name="result">output</extension:outputParameter>
+          </extension:inputOutput>
+        </extension:connector>
+        <extension:inputOutput>
+          <extension:inputParameter name="shouldBeNull"/>
+          <extension:inputParameter name="shouldBeConstant">foo</extension:inputParameter>
+          <extension:inputParameter name="shouldBeExpression">${1 + 1}</extension:inputParameter>
+          <extension:inputParameter name="shouldBeList">
+            <extension:list>
+              <extension:value>a</extension:value>
+              <extension:value>b</extension:value>
+              <extension:value>c</extension:value>
+            </extension:list>
+          </extension:inputParameter>
+          <extension:inputParameter name="shouldBeMap">
+            <extension:map>
+              <extension:entry key="foo">bar</extension:entry>
+              <extension:entry key="hello">world</extension:entry>
+            </extension:map>
+          </extension:inputParameter>
+          <extension:inputParameter name="shouldBeScript">
+            <extension:script scriptFormat="groovy">1 + 1</extension:script>
+          </extension:inputParameter>
+          <extension:outputParameter name="nested">
+            <extension:list>
+              <extension:value>
+                <extension:list>
+                  <extension:value>list</extension:value>
+                  <extension:value>list</extension:value>
+                </extension:list>
+              </extension:value>
+              <extension:value>
+                <extension:map>
+                  <extension:entry key="list">
+                    <extension:list>
+                      <extension:value>map</extension:value>
+                      <extension:value>map</extension:value>
+                      <extension:value>map</extension:value>
+                    </extension:list>
+                  </extension:entry>
+                  <extension:entry key="map">
+                    <extension:map>
+                      <extension:entry key="so">nested</extension:entry>
+                    </extension:map>
+                  </extension:entry>
+                </extension:map>
+              </extension:value>
+            </extension:list>
+          </extension:outputParameter>
+        </extension:inputOutput>
       </extensionElements>
     </serviceTask>
 
     <sendTask id="sendTask">
       <extensionElements>
-        <test:failedJobRetryTimeCycle>test</test:failedJobRetryTimeCycle>
-        <test:field name="test" stringValue="test" expression="${test}">
-          <test:expression>${test}</test:expression>
-          <test:string>test</test:string>
-        </test:field>
+        <extension:failedJobRetryTimeCycle>test</extension:failedJobRetryTimeCycle>
+        <extension:field name="test" stringValue="test" expression="${test}">
+          <extension:expression>${test}</extension:expression>
+          <extension:string>test</extension:string>
+        </extension:field>
       </extensionElements>
     </sendTask>
 
-    <scriptTask id="scriptTask" scriptFormat="groovy" test:resource="test.groovy" />
+    <scriptTask id="scriptTask" scriptFormat="groovy" extension:resource="test.groovy" />
 
     <callActivity id="callActivity"
-                  test:calledElementBinding="test"
-                  test:calledElementVersion="test"
-                  test:calledElementVersionTag="test"
-                  test:calledElementTenantId="test"
-                  test:caseRef="test"
-                  test:caseBinding="test"
-                  test:caseVersion="test"
-                  test:caseTenantId="test"
-                  test:exclusive="false"
-                  test:variableMappingClass="org.test.test.Test"
-                  test:variableMappingDelegateExpression="${org.test.test.Test}">
+                  extension:calledElementBinding="test"
+                  extension:calledElementVersion="test"
+                  extension:calledElementVersionTag="test"
+                  extension:calledElementTenantId="test"
+                  extension:caseRef="test"
+                  extension:caseBinding="test"
+                  extension:caseVersion="test"
+                  extension:caseTenantId="test"
+                  extension:exclusive="false"
+                  extension:variableMappingClass="org.test.test.Test"
+                  extension:variableMappingDelegateExpression="${org.test.test.Test}">
       <extensionElements>
-        <test:in source="test" sourceExpression="${test}" variables="test" businessKey="${test}" target="test" local="true"/>
-        <test:out source="test" sourceExpression="${test}" variables="test" target="test" local="true"/>
+        <extension:in source="test" sourceExpression="${test}" variables="test" businessKey="${test}" target="test" local="true"/>
+        <extension:out source="test" sourceExpression="${test}" variables="test" target="test" local="true"/>
       </extensionElements>
     </callActivity>
 
     <businessRuleTask id="businessRuleTask"
-                      test:decisionRef="test"
-                      test:decisionRefBinding="test"
-                      test:decisionRefVersion="test"
-                      test:decisionRefVersionTag="test"
-                      test:decisionRefTenantId="test"
-                      test:mapDecisionResult="test"
-                      test:taskPriority="test"    />
+                      extension:decisionRef="test"
+                      extension:decisionRefBinding="test"
+                      extension:decisionRefVersion="test"
+                      extension:decisionRefVersionTag="test"
+                      extension:decisionRefTenantId="test"
+                      extension:mapDecisionResult="test"
+                      extension:taskPriority="test"    />
 
     <endEvent id="endEvent"
-              test:asyncAfter="true"
-              test:asyncBefore="true"
-              test:jobPriority="${test}">
+              extension:asyncAfter="true"
+              extension:asyncBefore="true"
+              extension:jobPriority="${test}">
       <extensionElements>
-        <test:properties>
-          <test:property name="name1" value="value1"/>
-          <test:property name="name2" value="value2"/>
-        </test:properties>
+        <extension:properties>
+          <extension:property name="name1" value="value1"/>
+          <extension:property name="name2" value="value2"/>
+        </extension:properties>
       </extensionElements>
       <messageEventDefinition
-        test:class="org.test.test.Test"
-        test:expression="${test}"
-        test:delegateExpression="${org.test.test.Test}"
-        test:resultVariable="test"
-        test:topic="test"
-        test:type="test"/>
+        extension:class="org.test.test.Test"
+        extension:expression="${test}"
+        extension:delegateExpression="${org.test.test.Test}"
+        extension:resultVariable="test"
+        extension:topic="test"
+        extension:type="test"/>
     </endEvent>
 
     <parallelGateway id="parallelGateway"
-                     test:async="true"
-                     test:asyncBefore="true"
-                     test:asyncAfter="true"
-                     test:jobPriority="${test}">
+                     extension:async="true"
+                     extension:asyncBefore="true"
+                     extension:asyncAfter="true"
+                     extension:jobPriority="${test}">
 
     </parallelGateway>
 
   </process>
 
-  <error id="error" test:errorMessage="test" />
+  <error id="error" extension:errorMessage="test" />
 </definitions>

@@ -3,7 +3,7 @@
 namespace Tests\Bpmn\Engine\Language;
 
 use PHPUnit\Framework\TestCase;
-use BpmPlatform\Engine\Impl\Language\{
+use BpmPlatform\Engine\Impl\Juel\{
     Builder,
     Feature,
     ExpressionFactoryImpl,
@@ -13,7 +13,7 @@ use BpmPlatform\Engine\Impl\Language\{
     TreeMethodExpression,
     TreeValueExpression
 };
-use BpmPlatform\Engine\Impl\Expression\ObjectELResolver;
+use BpmPlatform\Engine\Impl\Util\El\BeanELResolver;
 
 class SimpleContextTest extends TestCase
 {
@@ -99,7 +99,7 @@ class SimpleContextTest extends TestCase
 
     public function testMethodInvocation(): void
     {
-        $context = new SimpleContext(new SimpleResolver(new ObjectELResolver()));
+        $context = new SimpleContext(new SimpleResolver(new BeanELResolver()));
         $store = new TreeStore(new Builder([Feature::METHOD_INVOCATIONS]), null);
 
         $simple = new SimpleClass();
