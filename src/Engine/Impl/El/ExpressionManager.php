@@ -89,7 +89,7 @@ class ExpressionManager
         return $this->elResolver;
     }
 
-    protected function createElResolver(): ELResolver
+    protected function createElResolver(?VariableScopeInterface $scope = null): ELResolver
     {
         $elResolver = new CompositeELResolver();
         $elResolver->add(new VariableScopeElResolver());
