@@ -3,7 +3,7 @@
 namespace BpmPlatform\Engine\Impl\Scripting\Engine;
 
 use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Impl\Scripting\BindingsInterface;
+use BpmPlatform\Engine\Impl\Util\Scripting\BindingsInterface;
 
 class ScriptBindingsFactory
 {

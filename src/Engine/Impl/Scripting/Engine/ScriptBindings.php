@@ -5,7 +5,10 @@ namespace BpmPlatform\Engine\Impl\Scripting\Engine;
 use BpmPlatform\Engine\Delegate\VariableScopeInterface;
 use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Scripting\BindingsInterface;
+use BpmPlatform\Engine\Impl\Util\Scripting\{
+    BindingsInterface,
+    ScriptEngineInterface
+};
 
 class ScriptBindings implements BindingsInterface
 {
@@ -26,7 +29,7 @@ class ScriptBindings implements BindingsInterface
         "S", // Spin Internal Variable
         "XML", // Spin Internal Variable
         "JSON", // Spin Internal Variable
-        "argv", // jRuby is only setting this variable and execution instead of exporting any other variables
+        ScriptEngineInterface::ARGV,
         "execution",
         "__doc__" // do not export python doc string
     ];

@@ -7,7 +7,7 @@ use BpmPlatform\Engine\Impl\Context\Context;
 
 class BeansResolverFactory implements ResolverFactoryInterface, ResolverInterface
 {
-    public function createResolver(VariableScopeInterface $variableScope): ResolverInterface
+    public function createResolver(?VariableScopeInterface $variableScope = null): ?ResolverInterface
     {
         return $this;
     }
@@ -19,7 +19,10 @@ class BeansResolverFactory implements ResolverFactoryInterface, ResolverInterfac
 
     public function get($key)
     {
-        return Context::getProcessEngineConfiguration()->getBeans()[$key];
+        if ($this->containsKey($key)) {
+            return Context::getProcessEngineConfiguration()->getBeans()[$key];
+        }
+        return null;
     }
 
     public function keySet(): array
