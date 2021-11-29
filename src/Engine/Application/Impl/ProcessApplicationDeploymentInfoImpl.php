@@ -20,7 +20,7 @@ class ProcessApplicationDeploymentInfoImpl implements ProcessApplicationDeployme
         $this->processEngineName = $processEngineName;
     }
 
-    public function getDeploymentId(): string
+    public function getDeploymentId(): ?string
     {
         return $this->deploymentId;
     }

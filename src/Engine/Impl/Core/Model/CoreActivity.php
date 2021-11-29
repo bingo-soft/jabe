@@ -38,7 +38,7 @@ abstract class CoreActivity extends CoreModelElement
 
     abstract public function getActivities(): array;
 
-    abstract public function getActivityBehavior(): CoreActivityBehaviorInterface;
+    abstract public function getActivityBehavior(): ?CoreActivityBehaviorInterface;
 
     public function getIoMapping(): ?IoMapping
     {

@@ -14,7 +14,7 @@ interface AttachmentInterface
     public function setName(string $name): void;
 
     /** long (max 255 chars) explanation what this attachment is about in context of the task and/or process instance it's linked to. */
-    public function getDescription(): string;
+    public function getDescription(): ?string;
 
     /** long (max 255 chars) explanation what this attachment is about in context of the task and/or process instance it's linked to. */
     public function setDescription(string $description): void;

@@ -70,5 +70,5 @@ interface JobDefinitionInterface
      * The id of the deployment this job definition is related to. In a deployment-aware setup,
      * this leads to all jobs of the same definition being executed on the same node.
      */
-    public function getDeploymentId(): string;
+    public function getDeploymentId(): ?string;
 }

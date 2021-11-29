@@ -16,7 +16,7 @@ interface DelegateTaskInterface extends VariableScopeInterface, BpmnModelExecuti
     public function setName(string $name): void;
 
     /** Free text description of the task. */
-    public function getDescription(): string;
+    public function getDescription(): ?string;
 
     /** Change the description of the task */
     public function setDescription(string $description): void;

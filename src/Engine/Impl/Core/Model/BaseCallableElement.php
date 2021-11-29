@@ -113,7 +113,7 @@ class BaseCallableElement
         $this->tenantIdProvider = $tenantIdProvider;
     }
 
-    public function getDeploymentId(): string
+    public function getDeploymentId(): ?string
     {
         return $this->deploymentId;
     }

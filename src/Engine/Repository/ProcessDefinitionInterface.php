@@ -5,7 +5,7 @@ namespace BpmPlatform\Engine\Repository;
 interface ProcessDefinitionInterface extends ResourceDefinitionInterface
 {
     /** description of this process **/
-    public function getDescription(): string;
+    public function getDescription(): ?string;
 
     /** Does this process definition has a {@link FormService#getStartFormData(String) start form key}. */
     public function hasStartFormKey(): bool;

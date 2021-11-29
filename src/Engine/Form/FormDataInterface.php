@@ -12,7 +12,7 @@ interface FormDataInterface
 
     /** The deployment id of the process definition to which this form is related
      *  */
-    public function getDeploymentId(): string;
+    public function getDeploymentId(): ?string;
 
     /** returns the form fields which make up this form. */
     public function getFormFields(): array;

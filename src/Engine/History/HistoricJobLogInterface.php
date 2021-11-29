@@ -97,7 +97,7 @@ interface HistoricJobLogInterface
     /**
      * Returns the specific deployment id on which the associated job was created.
      */
-    public function getDeploymentId(): string;
+    public function getDeploymentId(): ?string;
 
     /**
      * Returns the id of the tenant this job log entry belongs to. Can be <code>null</code>

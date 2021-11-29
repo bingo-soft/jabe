@@ -40,7 +40,7 @@ interface PvmScopeInterface extends PvmProcessElementInterface
     *
     * @return the event scope of the activity
     */
-    public function getEventScope(): PvmScopeInterface;
+    public function getEventScope(): ?PvmScopeInterface;
 
     /**
      * The flow scope of the activity. The scope in which the activity itself is executed.
@@ -48,7 +48,7 @@ interface PvmScopeInterface extends PvmProcessElementInterface
     * Note: in order to ensure backwards compatible behavior,  a flow scope is not necessarily
     * a {@link #isScope() a scope}. Example: event sub processes.
     */
-    public function getFlowScope(): ScopeImpl;
+    public function getFlowScope(): ?ScopeImpl;
 
     /**
      * The "level of subprocess scope" as defined in bpmn: this is the subprocess
@@ -59,7 +59,7 @@ interface PvmScopeInterface extends PvmProcessElementInterface
      *
      * @return the level of subprocess scope as defined in bpmn
      */
-    public function getLevelOfSubprocessScope(): PvmScopeInterface;
+    public function getLevelOfSubprocessScope(): ?PvmScopeInterface;
 
     /**
      * Returns the flow activities of this scope. This is the list of activities for which this scope is

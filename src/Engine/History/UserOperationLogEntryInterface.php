@@ -69,7 +69,7 @@ interface UserOperationLogEntryInterface
     public function getId(): string;
 
     /** Deployment reference */
-    public function getDeploymentId(): string;
+    public function getDeploymentId(): ?string;
 
     /** Process definition reference. */
     public function getProcessDefinitionId(): string;

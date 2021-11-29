@@ -12,5 +12,5 @@ interface ProcessApplicationDeploymentInfoInterface
     /**
      * @return the id of the deployment that was performed.
      */
-    public function getDeploymentId(): string;
+    public function getDeploymentId(): ?string;
 }

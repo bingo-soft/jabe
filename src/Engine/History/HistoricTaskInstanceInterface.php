@@ -32,7 +32,7 @@ interface HistoricTaskInstanceInterface
     public function getName(): string;
 
     /** The latest description given to this task. */
-    public function getDescription(): string;
+    public function getDescription(): ?string;
 
     /** The reason why this task was deleted {'completed' | 'deleted' | any other user defined string }. */
     public function getDeleteReason(): string;

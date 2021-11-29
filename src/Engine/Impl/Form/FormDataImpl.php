@@ -56,7 +56,7 @@ class FormDataImpl implements FormDataInterface, \Serializable
     {
         return $this->formKey;
     }
-    public function getDeploymentId(): string
+    public function getDeploymentId(): ?string
     {
         return $this->deploymentId;
     }

@@ -23,10 +23,10 @@ interface ResourceDefinitionInterface
     public function getResourceName(): string;
 
     /** The deployment in which this definition is contained. */
-    public function getDeploymentId(): string;
+    public function getDeploymentId(): ?string;
 
     /** The diagram resource name for this definition if exist */
-    public function getDiagramResourceName(): string;
+    public function getDiagramResourceName(): ?string;
 
     /**
      * The id of the tenant this definition belongs to. Can be <code>null</code>

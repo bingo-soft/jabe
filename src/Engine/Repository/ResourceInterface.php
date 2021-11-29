@@ -8,5 +8,5 @@ interface ResourceInterface
 
     public function getName(): string;
 
-    public function getDeploymentId(): string;
+    public function getDeploymentId(): ?string;
 }

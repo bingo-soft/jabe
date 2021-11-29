@@ -57,7 +57,7 @@ interface JobInterface
     /**
      * Returns the id of the deployment in which context the job was created.
      */
-    public function getDeploymentId(): string;
+    public function getDeploymentId(): ?string;
 
     /**
      * The id of the JobDefinition for this job.
