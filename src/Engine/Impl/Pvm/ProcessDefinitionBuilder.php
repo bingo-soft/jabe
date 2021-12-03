@@ -122,7 +122,7 @@ class ProcessDefinitionBuilder
         return $this->processDefinition;
     }
 
-    protected function getActivity(): ActivityImpl
+    protected function getActivity(): ?ActivityImpl
     {
         return $this->scopeStack[0];
     }

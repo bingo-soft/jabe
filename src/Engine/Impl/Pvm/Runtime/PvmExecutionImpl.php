@@ -1205,7 +1205,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
     /**
      * ensures initialization and returns the activity
      */
-    public function getActivity(): ActivityImpl
+    public function getActivity(): ?ActivityImpl
     {
         return $this->activity;
     }
@@ -2268,11 +2268,11 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
      * activity as before an operation was executed. The activity instance id's can be null on transitions.
      * In this case the activity Id's have to be equal, otherwise the execution changed.
      *
-     * @param string|null lastActivityInstanceId    the last activity instance id
-     * @param string|null lastActivityId            the last activity id
-     * @param string|null currentActivityInstanceId the current activity instance id
-     * @param string|null currentActivityId         the current activity id
-     * @return bool, true if the execution is on the same activity, otherwise false
+     * @param string|null - lastActivityInstanceId    the last activity instance id
+     * @param string|null - lastActivityId            the last activity id
+     * @param string|null - currentActivityInstanceId the current activity instance id
+     * @param string|null - currentActivityId         the current activity id
+     * @return bool - true if the execution is on the same activity, otherwise false
      */
     private function isOnSameActivity(
         ?string $lastActivityInstanceId,
