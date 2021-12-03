@@ -53,7 +53,7 @@ class CompensationBehavior
             return $scopeExecution->isScope()
                 && $currentActivity->isScope()
                 && !empty($scopeExecution->getNonEventScopeExecutions())
-                && !$this->isCompensationThrowing($scopeExecution);
+                && !self::isCompensationThrowing($scopeExecution);
         }
         return false;
     }
@@ -65,9 +65,9 @@ class CompensationBehavior
             $scopeExecution = $execution->getActivity()->getFlowScope();
             if ($map[0] == $scopeExecution) {
                 $parentScopeExecution = $scopeExecution;
-                break;
+                return $parentScopeExecution->getParentActivityInstanceId();
             }
         }
-        return $parentScopeExecution->getParentActivityInstanceId();
+        return null;
     }
 }

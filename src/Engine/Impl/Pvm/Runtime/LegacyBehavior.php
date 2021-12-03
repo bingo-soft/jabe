@@ -15,7 +15,7 @@ use BpmPlatform\Engine\Impl\Bpmn\Behavior\{
     SequentialMultiInstanceActivityBehavior,
     SubProcessActivityBehavior
 };
-use BpmPlatform\Engine\Impl\Bpmn\Parse\BpmnParse;
+use BpmPlatform\Engine\Impl\Bpmn\Parser\BpmnParse;
 use BpmPlatform\Engine\Impl\Cmd\GetActivityInstanceCmd;
 use BpmPlatform\Engine\Impl\Jobexecutor\AsyncContinuationJobHandler;
 use BpmPlatform\Engine\Impl\Persistence\Entity\{
@@ -74,7 +74,7 @@ class LegacyBehavior
      *
      * @param execution the concurrent scope execution to destroy
      * @param cancelledScopeActivity the activity that cancels the execution; it must hold that
-     *   cancellingActivity's event scope is the scope the execution is responsible for
+     *  cancellingActivity's event scope is the scope the execution is responsible for
      */
     public static function cancelConcurrentScope(PvmExecutionImpl $execution, PvmActivityInterface $cancelledScopeActivity): void
     {
@@ -264,7 +264,7 @@ class LegacyBehavior
      * <p>Exception to that rule: compensation throwing executions.</p>
      * <p>Legacy exception (<= 7.2) to that rule: miBody executions and parallel gateway executions</p>
      *
-     * @return true, if the argument is not a leaf and has an invalid (i.e. legacy) non-null activity id
+     * @return bool - true, if the argument is not a leaf and has an invalid (i.e. legacy) non-null activity id
      */
     public static function hasInvalidIntermediaryActivityId(PvmExecutionImpl $execution): bool
     {

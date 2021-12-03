@@ -1205,7 +1205,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
     /**
      * ensures initialization and returns the activity
      */
-    public function getActivity(): ?ActivityImpl
+    public function getActivity(): ActivityImpl
     {
         return $this->activity;
     }
@@ -1300,7 +1300,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         }
     }
 
-    public function setActivityInstanceId(string $activityInstanceId): void
+    public function setActivityInstanceId(?string $activityInstanceId): void
     {
         $this->activityInstanceId = $activityInstanceId;
     }
@@ -1358,7 +1358,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
     abstract public function getSubProcessInstance(): ?PvmExecutionImpl;
 
-    abstract public function setSubProcessInstance(PvmExecutionImpl $subProcessInstance): void;
+    abstract public function setSubProcessInstance(?PvmExecutionImpl $subProcessInstance): void;
 
     // super case execution /////////////////////////////////////////////////////
 
@@ -1631,7 +1631,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
             if (!$this->isScope()) {
                 throw new ProcessEngineException("Execution must be a scope execution");
             }
-            if (!$this->currentScope->isScope()) {
+            if (!$currentScope->isScope()) {
                 throw new ProcessEngineException("Current scope must be a scope.");
             }
 
@@ -1722,9 +1722,9 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
     /**
      * {@inheritDoc}
      */
-    public function setVariable(string $variableName, $value, string $targetActivityId): void
+    public function setVariable(string $variableName, $value, ?string $targetActivityId = null): void
     {
-        $activityId = getActivityId();
+        $activityId = $this->getActivityId();
         if ($activityId != null && $activityId == $targetActivityId) {
             $this->setVariableLocal($variableName, $value);
         } else {
@@ -2303,13 +2303,11 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
                 $targetActivity = $targetScope->getActivity();
                 if (($targetActivity != null && empty($targetActivity->getActivities()))) {
                     return $targetScope->getActivityInstanceId();
-                } else {
-                    return $targetScope->getParentActivityInstanceId();
                 }
+                return $targetScope->getParentActivityInstanceId();
             }
-        } else {
-            $this->activityInstanceId;
         }
+        return $this->activityInstanceId;
     }
 
     /**

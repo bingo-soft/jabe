@@ -48,7 +48,7 @@ interface PvmScopeInterface extends PvmProcessElementInterface
     * Note: in order to ensure backwards compatible behavior,  a flow scope is not necessarily
     * a {@link #isScope() a scope}. Example: event sub processes.
     */
-    public function getFlowScope(): ?ScopeImpl;
+    public function getFlowScope(): ?PvmScopeInterface;
 
     /**
      * The "level of subprocess scope" as defined in bpmn: this is the subprocess

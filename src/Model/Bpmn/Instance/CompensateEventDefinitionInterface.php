@@ -8,7 +8,7 @@ interface CompensateEventDefinitionInterface extends EventDefinitionInterface
 
     public function setWaitForCompletion(bool $isWaitForCompletion): void;
 
-    public function getActivity(): ?ActivityInterface;
+    public function getActivity(): ActivityInterface;
 
     public function setActivity(ActivityInterface $activity): void;
 }

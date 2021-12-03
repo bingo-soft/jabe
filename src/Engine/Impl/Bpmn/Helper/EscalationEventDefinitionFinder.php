@@ -22,7 +22,7 @@ class EscalationEventDefinitionFinder implements TreeVisitorInterface
         $this->throwEscalationActivity = $throwEscalationActivity;
     }
 
-    public function visit(PvmScopeInterface $scope): void
+    public function visit($scope): void
     {
         $escalationEventDefinitions = $scope->getProperties()->get(BpmnProperties::escalationEventDefinitions());
         $this->escalationEventDefinition = $this->findMatchingEscalationEventDefinition($escalationEventDefinitions);

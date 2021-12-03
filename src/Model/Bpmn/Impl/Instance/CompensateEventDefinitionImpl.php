@@ -63,7 +63,7 @@ class CompensateEventDefinitionImpl extends EventDefinitionImpl implements Compe
         self::$waitForCompletionAttribute->setValue($this, $isWaitForCompletion);
     }
 
-    public function getActivity(): ?ActivityInterface
+    public function getActivity(): ActivityInterface
     {
         return self::$activityRefAttribute->getReferenceTargetElement($this);
     }

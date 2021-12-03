@@ -165,20 +165,27 @@ class CompensationUtil
         // <LEGACY>: different flow scopes may have the same scope execution =>
         // collect subscriptions in a set
         $subscriptions = [];
-        $eventSubscriptionCollector = new class ($scopeExecutionMapping, $subscriptions) implements TreeVisitorInterface {
-            private $scopeExecutionMapping;
-            private $subscriptions;
 
-            public function __construct(array $scopeExecutionMapping, array &$subscriptions)
+        $scope = new stdClass();
+        $scope->scopeExecutionMapping = $scopeExecutionMapping;
+        $scope->subscriptions = $subscriptions;
+
+        $eventSubscriptionCollector = new class ($scope) implements TreeVisitorInterface {
+            private $scope;
+
+            public function __construct($scope)
             {
-                $this->scopeExecutionMapping = $scopeExecutionMapping;
-                $this->subscriptions = $subscriptions;
+                $this->scope = $scope;
             }
 
-            public function visit(ScopeImpl $obj): void
+            public function visit($obj): void
             {
-                $execution = $scopeExecutionMapping[$obj];
-                $this->subscriptions = array_merge($this->subscriptions, $execution->getCompensateEventSubscriptions());
+                foreach ($this->scope->scopeExecutionMapping as $map) {
+                    if ($map[0] == $obj) {
+                        $execution = $map[1];
+                        $this->scope->subscriptions = array_merge($this->scope->subscriptions, $execution->getCompensateEventSubscriptions());
+                    }
+                }
             }
         };
 
@@ -190,7 +197,7 @@ class CompensationUtil
             }
         });
 
-        return $subscriptions;
+        return $scope->subscriptions;
     }
 
     /**

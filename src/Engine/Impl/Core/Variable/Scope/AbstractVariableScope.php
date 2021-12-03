@@ -78,10 +78,10 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
                 !$resultVariables->containsKey($var->getName()) &&
                 ($collectAll || in_array($var->getName(), $variableNames))
             ) {
-                $this->resultVariables->put($var->getName(), $var->getTypedValue($deserializeValues));
+                $resultVariables->put($var->getName(), $var->getTypedValue($deserializeValues));
             }
         }
-        if (!$this->isLocal) {
+        if (!$isLocal) {
             $parentScope = $this->getParentVariableScope();
             // Do not propagate to parent if all variables in 'variableNames' are already collected!
             if ($parentScope != null && ($collectAll || array_keys($resultVariables) != $variableNames)) {

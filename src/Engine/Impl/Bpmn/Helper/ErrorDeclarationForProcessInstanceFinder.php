@@ -18,14 +18,14 @@ class ErrorDeclarationForProcessInstanceFinder implements TreeVisitorInterface
     protected $errorEventDefinition;
     protected $currentActivity;
 
-    public function __construct(\Exception $exception, string $errorCode, PvmActivityInterface $currentActivity)
+    public function __construct(\Exception $exception, string $errorCode, ?PvmActivityInterface $currentActivity)
     {
         $this->exception = $exception;
         $this->errorCode = $errorCode;
         $this->currentActivity = $currentActivity;
     }
 
-    public function visit(PvmScopeInterface $scope): void
+    public function visit($scope): void
     {
         $errorEventDefinitions = $scope->getProperties()->get(BpmnProperties::errorEventDefinitions());
         foreach ($errorEventDefinitions as $errorEventDefinition) {

@@ -23,7 +23,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
     /**
      * returns the current {@link PvmActivity} of the execution.
      */
-    public function getActivity(): ?PvmActivityInterface;
+    public function getActivity(): PvmActivityInterface;
 
     /** invoked to notify the execution that a new activity instance is started */
     public function enterActivityInstance(): void;
@@ -31,7 +31,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
     /** invoked to notify the execution that an activity instance is ended. */
     public function leaveActivityInstance(): void;
 
-    public function setActivityInstanceId(string $id): void;
+    public function setActivityInstanceId(?string $id): void;
 
     /** return the Id of the activity instance currently executed by this execution */
     public function getActivityInstanceId(): string;

@@ -77,7 +77,7 @@ class ExecutionImpl extends PvmExecutionImpl implements ActivityExecutionInterfa
         // initialize the new execution
         $createdExecution->setProcessDefinition($this->getProcessDefinition());
         $createdExecution->setProcessInstance($this->getProcessInstance());
-        $createdExecution->setActivity(getActivity());
+        $createdExecution->setActivity($this->getActivity());
 
         // make created execution start in same activity instance
         $createdExecution->activityInstanceId = $this->activityInstanceId;
@@ -148,7 +148,7 @@ class ExecutionImpl extends PvmExecutionImpl implements ActivityExecutionInterfa
         return $this->subProcessInstance;
     }
 
-    public function setSubProcessInstance(PvmExecutionImpl $subProcessInstance): void
+    public function setSubProcessInstance(?PvmExecutionImpl $subProcessInstance): void
     {
         $this->subProcessInstance = $subProcessInstance;
     }
@@ -209,7 +209,7 @@ class ExecutionImpl extends PvmExecutionImpl implements ActivityExecutionInterfa
 
     public function getBusinessKey(): ?string
     {
-        return getProcessInstance()->getBusinessKey();
+        return $this->getProcessInstance()->getBusinessKey();
     }
 
     public function setBusinessKey(string $businessKey): void
@@ -252,7 +252,7 @@ class ExecutionImpl extends PvmExecutionImpl implements ActivityExecutionInterfa
             return "ProcessInstance[" . $this->getToStringIdentity() . "]";
         } else {
             return ($this->isEventScope ? "EventScope" : "") . ($this->isConcurrent ? "Concurrent" : "") .
-                   (isScope() ? "Scope" : "") . "Execution[" . $this->getToStringIdentity() . "]";
+                   ($this->isScope() ? "Scope" : "") . "Execution[" . $this->getToStringIdentity() . "]";
         }
     }
 
@@ -299,7 +299,7 @@ class ExecutionImpl extends PvmExecutionImpl implements ActivityExecutionInterfa
     {
         $currentActivityName = null;
         if ($this->activity != null) {
-            $currentActivityName = $activity->getProperty("name");
+            $currentActivityName = $this->activity->getProperty("name");
         }
         return $currentActivityName;
     }

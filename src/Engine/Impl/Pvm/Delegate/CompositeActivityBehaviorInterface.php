@@ -10,7 +10,7 @@ interface CompositeActivityBehaviorInterface extends ActivityBehaviorInterface
      * @param scopeExecution scope execution for the activity which defined the behavior
      * @param endedExecution the execution which ended
      */
-    public function concurrentChildExecutionEnded(ActivityExecutionInterface $scopeExecution, ActivityExecutionInterface $endedExecution): void;
+    public function concurrentChildExecutionEnded(?ActivityExecutionInterface $scopeExecution, ActivityExecutionInterface $endedExecution): void;
 
     public function complete(ActivityExecutionInterface $scopeExecution): void;
 }

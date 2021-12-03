@@ -95,7 +95,7 @@ class PvmAtomicOperationActivityEnd implements PvmAtomicOperationInterface
                 // activity behavior is not composite => this is unexpected
                 throw new ProcessEngineException(
                     "Expected behavior of composite scope " . $activity .
-                    " to be a CompositeActivityBehavior but got " . $activityBehavior
+                    " to be a CompositeActivityBehavior but got " . get_class($activityBehavior)
                 );
             }
         }
