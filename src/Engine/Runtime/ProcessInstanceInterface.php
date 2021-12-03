@@ -12,7 +12,7 @@ interface ProcessInstanceInterface extends ExecutionInterface
     /**
      * The business key of this process instance.
      */
-    public function getBusinessKey(): string;
+    public function getBusinessKey(): ?string;
 
     /**
      * The id of the root process instance associated with this process instance.

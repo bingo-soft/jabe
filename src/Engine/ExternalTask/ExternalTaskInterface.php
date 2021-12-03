@@ -108,5 +108,5 @@ interface ExternalTaskInterface
      *
      * @return the business key
      */
-    public function getBusinessKey(): string;
+    public function getBusinessKey(): ?string;
 }

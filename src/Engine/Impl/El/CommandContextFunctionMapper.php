@@ -16,7 +16,7 @@ class CommandContextFunctionMapper extends FunctionMapper
     {
         // Context functions are used un-prefixed
         $this->ensureContextFunctionMapInitialized();
-        if (is_array(self::$COMMAND_CONTEXT_FUNCTION_MAP) && array_key_exists($localName, self::$COMMAND_CONTEXT_FUNCTION_MAP)) {
+        if (array_key_exists($localName, self::$COMMAND_CONTEXT_FUNCTION_MAP)) {
             return self::$COMMAND_CONTEXT_FUNCTION_MAP[$localName];
         }
         return null;

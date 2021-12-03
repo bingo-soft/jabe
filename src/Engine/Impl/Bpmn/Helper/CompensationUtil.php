@@ -183,7 +183,7 @@ class CompensationUtil
         };
 
         (new FlowScopeWalker($activity))->addPostVisitor($eventSubscriptionCollector)->walkUntil(new class () implements WalkConditionInterface {
-            public function isFulfilled(ScopeImpl $element): bool
+            public function isFulfilled($element = null): bool
             {
                 $consumesCompensationProperty = $element->getProperty(BpmnParse::PROPERTYNAME_CONSUMES_COMPENSATION);
                 return empty($consumesCompensationProperty) || $consumesCompensationProperty == true;

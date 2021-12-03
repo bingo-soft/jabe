@@ -14,5 +14,11 @@ interface PvmProcessInstanceInterface extends PvmExecutionInterface
 
     public function isEnded(): bool;
 
-    public function deleteCascade(string $deleteReason): void;
+    public function deleteCascade(
+        string $deleteReason,
+        ?bool $skipCustomListeners = false,
+        ?bool $skipIoMappings = false,
+        ?bool $externallyTerminated = false,
+        ?bool $skipSubprocesses = false
+    ): void;
 }

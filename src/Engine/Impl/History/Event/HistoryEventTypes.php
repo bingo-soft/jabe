@@ -5,145 +5,487 @@ namespace BpmPlatform\Engine\Impl\History\Event;
 class HistoryEventTypes implements HistoryEventTypeInterface
 {
     /** fired when a process instance is started. */
-    public const PROCESS_INSTANCE_START = ["process-instance", "start"];
+    private static $PROCESS_INSTANCE_START;
     /** fired when a process instance is updated */
-    public const PROCESS_INSTANCE_UPDATE = ["process-instance-update", "update"];
+    private static $PROCESS_INSTANCE_UPDATE;
     /** fired when a process instance is migrated */
-    public const PROCESS_INSTANCE_MIGRATE = ["process-instance", "migrate"];
+    private static $PROCESS_INSTANCE_MIGRATE;
     /** fired when a process instance is ended. */
-    public const PROCESS_INSTANCE_END = ["process-instance", "end"];
+    private static $PROCESS_INSTANCE_END;
+
+    public static function processInstanceStart(): HistoryEventTypeInterface
+    {
+        if (self::$PROCESS_INSTANCE_START == null) {
+            self::$PROCESS_INSTANCE_START = new HistoryEventTypes("process-instance", "start");
+        }
+        return self::$PROCESS_INSTANCE_START;
+    }
+
+    public static function processInstanceUpdate(): HistoryEventTypeInterface
+    {
+        if (self::$PROCESS_INSTANCE_UPDATE == null) {
+            self::$PROCESS_INSTANCE_UPDATE = new HistoryEventTypes("process-instance-update", "update");
+        }
+        return self::$PROCESS_INSTANCE_UPDATE;
+    }
+
+    public static function processInstanceMigrate(): HistoryEventTypeInterface
+    {
+        if (self::$PROCESS_INSTANCE_MIGRATE == null) {
+            self::$PROCESS_INSTANCE_MIGRATE = new HistoryEventTypes("process-instance", "migrate");
+        }
+        return self::$PROCESS_INSTANCE_MIGRATE;
+    }
+
+    public static function processInstanceEnd(): HistoryEventTypeInterface
+    {
+        if (self::$PROCESS_INSTANCE_END == null) {
+            self::$PROCESS_INSTANCE_END = new HistoryEventTypes("process-instance", "end");
+        }
+        return self::$PROCESS_INSTANCE_END;
+    }
 
     /** fired when an activity instance is started. */
-    public const ACTIVITY_INSTANCE_START = ["activity-instance", "start"];
+    private static $ACTIVITY_INSTANCE_START;
     /** fired when an activity instance is updated. */
-    public const ACTIVITY_INSTANCE_UPDATE = ["activity-instance", "update"];
+    private static $ACTIVITY_INSTANCE_UPDATE;
     /** fired when an activity instance is migrated. */
-    public const ACTIVITY_INSTANCE_MIGRATE = ["activity-instance", "migrate"];
+    private static $ACTIVITY_INSTANCE_MIGRATE;
     /** fired when an activity instance is ended. */
-    public const ACTIVITY_INSTANCE_END = ["activity-instance", "end"];
+    private static $ACTIVITY_INSTANCE_END;
+
+    public static function activityInstanceStart(): HistoryEventTypeInterface
+    {
+        if (self::$ACTIVITY_INSTANCE_START == null) {
+            self::$ACTIVITY_INSTANCE_START = new HistoryEventTypes("activity-instance", "start");
+        }
+        return self::$ACTIVITY_INSTANCE_START;
+    }
+
+    public static function activityInstanceUpdate(): HistoryEventTypeInterface
+    {
+        if (self::$ACTIVITY_INSTANCE_UPDATE == null) {
+            self::$ACTIVITY_INSTANCE_UPDATE = new HistoryEventTypes("activity-instance", "update");
+        }
+        return self::$ACTIVITY_INSTANCE_UPDATE;
+    }
+
+    public static function activityInstanceMigrate(): HistoryEventTypeInterface
+    {
+        if (self::$ACTIVITY_INSTANCE_MIGRATE == null) {
+            self::$ACTIVITY_INSTANCE_MIGRATE = new HistoryEventTypes("activity-instance", "migrate");
+        }
+        return self::$ACTIVITY_INSTANCE_MIGRATE;
+    }
+
+    public static function activityInstanceEnd(): HistoryEventTypeInterface
+    {
+        if (self::$ACTIVITY_INSTANCE_END == null) {
+            self::$ACTIVITY_INSTANCE_END = new HistoryEventTypes("activity-instance", "end");
+        }
+        return self::$ACTIVITY_INSTANCE_END;
+    }
 
     /** fired when a task instance is created. */
-    public const TASK_INSTANCE_CREATE = ["task-instance", "create"];
+    private static $TASK_INSTANCE_CREATE;
     /** fired when a task instance is updated. */
-    public const TASK_INSTANCE_UPDATE = ["task-instance", "update"];
+    private static $TASK_INSTANCE_UPDATE;
     /** fired when a task instance is migrated. */
-    public const TASK_INSTANCE_MIGRATE = ["task-instance", "migrate"];
+    private static $TASK_INSTANCE_MIGRATE;
     /** fired when a task instance is completed. */
-    public const TASK_INSTANCE_COMPLETE = ["task-instance", "complete"];
+    private static $TASK_INSTANCE_COMPLETE;
     /** fired when a task instance is deleted. */
-    public const TASK_INSTANCE_DELETE = ["task-instance", "delete"];
+    private static $TASK_INSTANCE_DELETE;
+
+    public static function taskInstanceCreate(): HistoryEventTypeInterface
+    {
+        if (self::$TASK_INSTANCE_CREATE == null) {
+            self::$TASK_INSTANCE_CREATE = new HistoryEventTypes("task-instance", "create");
+        }
+        return self::$TASK_INSTANCE_CREATE;
+    }
+
+    public static function taskInstanceUpdate(): HistoryEventTypeInterface
+    {
+        if (self::$TASK_INSTANCE_UPDATE == null) {
+            self::$TASK_INSTANCE_UPDATE = new HistoryEventTypes("task-instance", "update");
+        }
+        return self::$TASK_INSTANCE_UPDATE;
+    }
+
+    public static function taskInstanceMigrate(): HistoryEventTypeInterface
+    {
+        if (self::$TASK_INSTANCE_MIGRATE == null) {
+            self::$TASK_INSTANCE_MIGRATE = new HistoryEventTypes("task-instance", "migrate");
+        }
+        return self::$TASK_INSTANCE_MIGRATE;
+    }
+
+    public static function taskInstanceComplete(): HistoryEventTypeInterface
+    {
+        if (self::$TASK_INSTANCE_COMPLETE == null) {
+            self::$TASK_INSTANCE_COMPLETE = new HistoryEventTypes("task-instance", "complete");
+        }
+        return self::$TASK_INSTANCE_COMPLETE;
+    }
+
+    public static function taskInstanceDelete(): HistoryEventTypeInterface
+    {
+        if (self::$TASK_INSTANCE_DELETE == null) {
+            self::$TASK_INSTANCE_DELETE = new HistoryEventTypes("task-instance", "delete");
+        }
+        return self::$TASK_INSTANCE_DELETE;
+    }
 
     /** fired when a variable instance is created. */
-    public const VARIABLE_INSTANCE_CREATE = ["variable-instance", "create"];
+    private static $VARIABLE_INSTANCE_CREATE;
     /** fired when a variable instance is updated. */
-    public const VARIABLE_INSTANCE_UPDATE = ["variable-instance", "update"];
+    private static $VARIABLE_INSTANCE_UPDATE;
     /** fired when a variable instance is migrated. */
-    public const VARIABLE_INSTANCE_MIGRATE = ["variable-instance", "migrate"];
+    private static $VARIABLE_INSTANCE_MIGRATE;
     /** fired when a variable instance is updated. */
-    public const VARIABLE_INSTANCE_UPDATE_DETAIL = ["variable-instance", "update-detail"];
+    private static $VARIABLE_INSTANCE_UPDATE_DETAIL;
     /** fired when a variable instance is deleted. */
-    public const VARIABLE_INSTANCE_DELETE = ["variable-instance", "delete"];
+    private static $VARIABLE_INSTANCE_DELETE;
+
+    public static function variableInstanceCreate(): HistoryEventTypeInterface
+    {
+        if (self::$VARIABLE_INSTANCE_CREATE == null) {
+            self::$VARIABLE_INSTANCE_CREATE = new HistoryEventTypes("variable-instance", "create");
+        }
+        return self::$VARIABLE_INSTANCE_CREATE;
+    }
+
+    public static function variableInstanceUpdate(): HistoryEventTypeInterface
+    {
+        if (self::$VARIABLE_INSTANCE_UPDATE == null) {
+            self::$VARIABLE_INSTANCE_UPDATE = new HistoryEventTypes("variable-instance", "update");
+        }
+        return self::$VARIABLE_INSTANCE_UPDATE;
+    }
+
+    public static function variableInstanceMigrate(): HistoryEventTypeInterface
+    {
+        if (self::$VARIABLE_INSTANCE_MIGRATE == null) {
+            self::$VARIABLE_INSTANCE_MIGRATE = new HistoryEventTypes("variable-instance", "migrate");
+        }
+        return self::$VARIABLE_INSTANCE_MIGRATE;
+    }
+
+    public static function variableInstanceUpdateDetail(): HistoryEventTypeInterface
+    {
+        if (self::$VARIABLE_INSTANCE_UPDATE_DETAIL == null) {
+            self::$VARIABLE_INSTANCE_UPDATE_DETAIL = new HistoryEventTypes("variable-instance", "update-detail");
+        }
+        return self::$VARIABLE_INSTANCE_UPDATE_DETAIL;
+    }
+
+    public static function variableInstanceDelete(): HistoryEventTypeInterface
+    {
+        if (self::$VARIABLE_INSTANCE_DELETE == null) {
+            self::$VARIABLE_INSTANCE_DELETE = new HistoryEventTypes("variable-instance", "delete");
+        }
+        return self::$VARIABLE_INSTANCE_DELETE;
+    }
 
     /** fired when a form property is updated. */
-    public const FORM_PROPERTY_UPDATE = ["form-property", "form-property-update"];
+    private static $FORM_PROPERTY_UPDATE;
+
+    public static function formPropertyUpdate(): HistoryEventTypeInterface
+    {
+        if (self::$FORM_PROPERTY_UPDATE == null) {
+            self::$FORM_PROPERTY_UPDATE = new HistoryEventTypes("form-property", "form-property-update");
+        }
+        return self::$FORM_PROPERTY_UPDATE;
+    }
 
     /** fired when an incident is created. */
-    public const INCIDENT_CREATE = ["incident", "create"];
+    private static $INCIDENT_CREATE;
     /** fired when an incident is migrated. */
-    public const INCIDENT_MIGRATE = ["incident", "migrate"];
+    private static $INCIDENT_MIGRATE;
     /** fired when an incident is deleted. */
-    public const INCIDENT_DELETE = ["incident", "delete"];
+    private static $INCIDENT_DELETE;
     /** fired when an incident is resolved. */
-    public const INCIDENT_RESOLVE = ["incident", "resolve"];
+    private static $INCIDENT_RESOLVE;
     /** fired when an incident is updated. */
-    public const INCIDENT_UPDATE = ["incident", "update"];
+    private static $INCIDENT_UPDATE;
+
+    public static function incidentCreate(): HistoryEventTypeInterface
+    {
+        if (self::$INCIDENT_CREATE == null) {
+            self::$INCIDENT_CREATE = new HistoryEventTypes("incident", "create");
+        }
+        return self::$INCIDENT_CREATE;
+    }
+
+    public static function incidentMigrate(): HistoryEventTypeInterface
+    {
+        if (self::$INCIDENT_MIGRATE == null) {
+            self::$INCIDENT_MIGRATE = new HistoryEventTypes("incident", "migrate");
+        }
+        return self::$INCIDENT_MIGRATE;
+    }
+
+    public static function incidentDelete(): HistoryEventTypeInterface
+    {
+        if (self::$INCIDENT_DELETE == null) {
+            self::$INCIDENT_DELETE = new HistoryEventTypes("incident", "delete");
+        }
+        return self::$INCIDENT_DELETE;
+    }
+
+    public static function incidentResolve(): HistoryEventTypeInterface
+    {
+        if (self::$INCIDENT_RESOLVE == null) {
+            self::$INCIDENT_RESOLVE = new HistoryEventTypes("incident", "resolve");
+        }
+        return self::$INCIDENT_RESOLVE;
+    }
+
+    public static function incidentUpdate(): HistoryEventTypeInterface
+    {
+        if (self::$INCIDENT_UPDATE == null) {
+            self::$INCIDENT_UPDATE = new HistoryEventTypes("incident", "update");
+        }
+        return self::$INCIDENT_UPDATE;
+    }
 
     /** fired when a case instance is created. */
-    public const CASE_INSTANCE_CREATE = ["case-instance", "create"];
+    private static $CASE_INSTANCE_CREATE;
     /** fired when a case instance is updated. */
-    public const CASE_INSTANCE_UPDATE = ["case-instance", "update"];
+    private static $CASE_INSTANCE_UPDATE;
     /** fired when a case instance is closed. */
-    public const CASE_INSTANCE_CLOSE = ["case-instance", "close"];
-
+    private static $CASE_INSTANCE_CLOSE;
     /** fired when a case activity instance is created. */
-    public const CASE_ACTIVITY_INSTANCE_CREATE = ["case-activity-instance", "create"];
+    private static $CASE_ACTIVITY_INSTANCE_CREATE;
     /** fired when a case activity instance is updated. */
-    public const CASE_ACTIVITY_INSTANCE_UPDATE = ["case-activity-instance", "update"];
+    private static $CASE_ACTIVITY_INSTANCE_UPDATE;
     /** fired when a case instance is ended. */
-    public const CASE_ACTIVITY_INSTANCE_END = ["case-activity_instance", "end"];
+    private static $CASE_ACTIVITY_INSTANCE_END;
+
+    public static function caseInstanceCreate(): HistoryEventTypeInterface
+    {
+        if (self::$CASE_INSTANCE_CREATE == null) {
+            self::$CASE_INSTANCE_CREATE = new HistoryEventTypes("case-instance", "create");
+        }
+        return self::$CASE_INSTANCE_CREATE;
+    }
+
+    public static function caseInstanceUpdate(): HistoryEventTypeInterface
+    {
+        if (self::$CASE_INSTANCE_UPDATE == null) {
+            self::$CASE_INSTANCE_UPDATE = new HistoryEventTypes("case-instance", "update");
+        }
+        return self::$CASE_INSTANCE_UPDATE;
+    }
+
+    public static function caseInstanceClose(): HistoryEventTypeInterface
+    {
+        if (self::$CASE_INSTANCE_CLOSE == null) {
+            self::$CASE_INSTANCE_CLOSE = new HistoryEventTypes("case-instance", "close");
+        }
+        return self::$CASE_INSTANCE_CLOSE;
+    }
+
+    public static function caseActivityInstanceCreate(): HistoryEventTypeInterface
+    {
+        if (self::$CASE_ACTIVITY_INSTANCE_CREATE == null) {
+            self::$CASE_ACTIVITY_INSTANCE_CREATE = new HistoryEventTypes("case-activity-instance", "create");
+        }
+        return self::$CASE_ACTIVITY_INSTANCE_CREATE;
+    }
+
+    public static function caseActivityInstanceUpdate(): HistoryEventTypeInterface
+    {
+        if (self::$CASE_ACTIVITY_INSTANCE_UPDATE == null) {
+            self::$CASE_ACTIVITY_INSTANCE_UPDATE = new HistoryEventTypes("case-activity-instance", "update");
+        }
+        return self::$CASE_ACTIVITY_INSTANCE_UPDATE;
+    }
+
+    public static function caseActivityInstanceEnd(): HistoryEventTypeInterface
+    {
+        if (self::$CASE_ACTIVITY_INSTANCE_END == null) {
+            self::$CASE_ACTIVITY_INSTANCE_END = new HistoryEventTypes("case-activity-instance", "end");
+        }
+        return self::$CASE_ACTIVITY_INSTANCE_END;
+    }
 
     /**
      * fired when a job is created.
      */
-    public const JOB_CREATE = ["job", "create"];
-
+    private static $JOB_CREATE;
     /**
      * fired when a job is failed.
      */
-    public const JOB_FAIL = ["job", "fail"];
-
+    private static $JOB_FAIL;
     /**
      * fired when a job is succeeded.
      */
-    public const JOB_SUCCESS = ["job", "success"];
-
+    private static $JOB_SUCCESS;
     /**
      * fired when a job is deleted.
      */
-    public const JOB_DELETE = ["job", "delete"];
+    private static $JOB_DELETE;
+
+    public static function jobCreate(): HistoryEventTypeInterface
+    {
+        if (self::$JOB_CREATE == null) {
+            self::$JOB_CREATE = new HistoryEventTypes("job", "create");
+        }
+        return self::$JOB_CREATE;
+    }
+
+    public static function jobFail(): HistoryEventTypeInterface
+    {
+        if (self::$JOB_FAIL == null) {
+            self::$JOB_FAIL = new HistoryEventTypes("job", "fail");
+        }
+        return self::$JOB_FAIL;
+    }
+
+    public static function jobSuccess(): HistoryEventTypeInterface
+    {
+        if (self::$JOB_SUCCESS == null) {
+            self::$JOB_SUCCESS = new HistoryEventTypes("job", "success");
+        }
+        return self::$JOB_SUCCESS;
+    }
+
+    public static function jobDelete(): HistoryEventTypeInterface
+    {
+        if (self::$JOB_DELETE == null) {
+            self::$JOB_DELETE = new HistoryEventTypes("job", "delete");
+        }
+        return self::$JOB_DELETE;
+    }
 
     /**
      * fired when a decision is evaluated.
      */
-    public const DMN_DECISION_EVALUATE = ["decision", "evaluate"];
+    private static $DMN_DECISION_EVALUATE;
+
+    public static function dmnDecisionEvaluate(): HistoryEventTypeInterface
+    {
+        if (self::$DMN_DECISION_EVALUATE == null) {
+            self::$DMN_DECISION_EVALUATE = new HistoryEventTypes("decision", "evaluate");
+        }
+        return self::$DMN_DECISION_EVALUATE;
+    }
 
     /**
      * fired when a batch was started.
      */
-    public const BATCH_START = ["batch", "start"];
-
+    private static $BATCH_START;
     /**
      * fired when a batch was completed.
      */
-    public const BATCH_END = ["batch", "end"];
+    private static $BATCH_END;
+
+    public static function batchStart(): HistoryEventTypeInterface
+    {
+        if (self::$BATCH_START == null) {
+            self::$BATCH_START = new HistoryEventTypes("batch", "start");
+        }
+        return self::$BATCH_START;
+    }
+
+    public static function batchEnd(): HistoryEventTypeInterface
+    {
+        if (self::$BATCH_END == null) {
+            self::$BATCH_END = new HistoryEventTypes("batch", "end");
+        }
+        return self::$BATCH_END;
+    }
 
     /**
      * fired when an identity link is added
      */
-    public const IDENTITY_LINK_ADD = ["identity-link-add", "add-identity-link"];
-
+    private static $IDENTITY_LINK_ADD;
     /**
      * fired when an identity link is removed
      */
-    public const IDENTITY_LINK_DELETE = ["identity-link-delete", "delete-identity-link"];
+    private static $IDENTITY_LINK_DELETE;
+
+    public static function identityLinkAdd(): HistoryEventTypeInterface
+    {
+        if (self::$IDENTITY_LINK_ADD == null) {
+            self::$IDENTITY_LINK_ADD = new HistoryEventTypes("identity-link-add", "add-identity-link");
+        }
+        return self::$IDENTITY_LINK_ADD;
+    }
+
+    public static function identityLinkDelete(): HistoryEventTypeInterface
+    {
+        if (self::$IDENTITY_LINK_DELETE == null) {
+            self::$IDENTITY_LINK_DELETE = new HistoryEventTypes("identity-link-delete", "delete-identity-link");
+        }
+        return self::$IDENTITY_LINK_DELETE;
+    }
 
     /**
      * fired when an external task is created.
      */
-    public const EXTERNAL_TASK_CREATE = ["external-task", "create"];
-
+    private static $EXTERNAL_TASK_CREATE;
     /**
      * fired when an external task has failed.
      */
-    public const EXTERNAL_TASK_FAIL = ["external-task", "fail"];
-
+    private static $EXTERNAL_TASK_FAIL;
     /**
      * fired when an external task has succeeded.
      */
-    public const EXTERNAL_TASK_SUCCESS = ["external-task", "success"];
-
+    private static $EXTERNAL_TASK_SUCCESS;
     /**
      * fired when an external task is deleted.
      */
-    public const EXTERNAL_TASK_DELETE = ["external-task", "delete"];
+    private static $EXTERNAL_TASK_DELETE;
 
+    public static function externalTaskCreate(): HistoryEventTypeInterface
+    {
+        if (self::$EXTERNAL_TASK_CREATE == null) {
+            self::$EXTERNAL_TASK_CREATE = new HistoryEventTypes("external-task", "create");
+        }
+        return self::$EXTERNAL_TASK_CREATE;
+    }
+
+    public static function externalTaskFail(): HistoryEventTypeInterface
+    {
+        if (self::$EXTERNAL_TASK_FAIL == null) {
+            self::$EXTERNAL_TASK_FAIL = new HistoryEventTypes("external-task", "fail");
+        }
+        return self::$EXTERNAL_TASK_FAIL;
+    }
+
+    public static function externalTaskSuccess(): HistoryEventTypeInterface
+    {
+        if (self::$EXTERNAL_TASK_SUCCESS == null) {
+            self::$EXTERNAL_TASK_SUCCESS = new HistoryEventTypes("external-task", "success");
+        }
+        return self::$EXTERNAL_TASK_SUCCESS;
+    }
+
+    public static function externalTaskDelete(): HistoryEventTypeInterface
+    {
+        if (self::$EXTERNAL_TASK_DELETE == null) {
+            self::$EXTERNAL_TASK_DELETE = new HistoryEventTypes("external-task", "delete");
+        }
+        return self::$EXTERNAL_TASK_DELETE;
+    }
 
     /**
      * fired when used operation log is created.
      */
-    public const USER_OPERATION_LOG = ["user-operation-log", "create"];
+    private static $USER_OPERATION_LOG;
 
-    public function __construct(string $entityType, string $eventName)
+    public static function userOperationLog(): HistoryEventTypeInterface
+    {
+        if (self::$USER_OPERATION_LOG == null) {
+            self::$USER_OPERATION_LOG = new HistoryEventTypes("user-operation-log", "create");
+        }
+        return self::$USER_OPERATION_LOG;
+    }
+
+    private function __construct(string $entityType, string $eventName)
     {
         $this->entityType = $entityType;
         $this->eventName = $eventName;

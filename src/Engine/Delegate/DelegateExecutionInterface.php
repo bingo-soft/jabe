@@ -13,7 +13,7 @@ interface DelegateExecutionInterface extends BaseDelegateExecutionInterface, Bpm
      * The business key for the process instance this execution is associated
      * with.
      */
-    public function getProcessBusinessKey(): string;
+    public function getProcessBusinessKey(): ?string;
 
     /**
      * Configure a business key on the process instance this execution is associated

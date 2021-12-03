@@ -109,7 +109,7 @@ class BpmnExceptionHandler
                     $this->errorDeclarationFinder = $errorDeclarationFinder;
                 }
 
-                public function isFulfilled(ActivityExecutionTuple $element): bool
+                public function isFulfilled($element = null): bool
                 {
                     return $this->errorDeclarationFinder->getErrorEventDefinition() != null || $element == null;
                 }

@@ -9,9 +9,25 @@ use BpmPlatform\Engine\Impl\Db\{
 
 class HistoryEvent implements \Serializable, DbEntityInterface, HistoricEntityInterface
 {
-    public const IDENTITY_LINK_ADD = HistoryEventTypes::IDENTITY_LINK_ADD[1];
+    private static $IDENTITY_LINK_ADD;
 
-    public const IDENTITY_LINK_DELETE = HistoryEventTypes::IDENTITY_LINK_DELETE[1];
+    private static $IDENTITY_LINK_DELETE;
+
+    public static function identityLinkAdd(): string
+    {
+        if (self::$IDENTITY_LINK_ADD == null) {
+            self::$IDENTITY_LINK_ADD = HistoryEventTypes::identityLinkAdd()->getEventName();
+        }
+        return self::$IDENTITY_LINK_ADD;
+    }
+
+    public static function identityLinkDelete(): string
+    {
+        if (self::$IDENTITY_LINK_DELETE == null) {
+            self::$IDENTITY_LINK_DELETE = HistoryEventTypes::identityLinkDelete()->getEventName();
+        }
+        return self::$IDENTITY_LINK_DELETE;
+    }
 
     /** each {@link HistoryEvent} has a unique id */
     protected $id;

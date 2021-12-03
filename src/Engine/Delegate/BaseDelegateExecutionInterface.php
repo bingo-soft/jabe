@@ -12,5 +12,5 @@ interface BaseDelegateExecutionInterface extends VariableScopeInterface
 
     /** The business key for the root execution (e.g. process instance).
      */
-    public function getBusinessKey(): string;
+    public function getBusinessKey(): ?string;
 }

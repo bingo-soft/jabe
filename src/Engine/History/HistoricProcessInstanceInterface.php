@@ -14,7 +14,7 @@ interface HistoricProcessInstanceInterface
     public function getId(): string;
 
     /** The user provided unique reference to this process instance. */
-    public function getBusinessKey(): string;
+    public function getBusinessKey(): ?string;
 
     /** The process definition key reference. */
     public function getProcessDefinitionKey(): string;

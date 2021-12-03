@@ -23,7 +23,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
     /**
      * returns the current {@link PvmActivity} of the execution.
      */
-    public function getActivity(): PvmActivityInterface;
+    public function getActivity(): ?PvmActivityInterface;
 
     /** invoked to notify the execution that a new activity instance is started */
     public function enterActivityInstance(): void;
@@ -176,7 +176,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
      */
     public function leaveActivityViaTransitions(array $outgoingTransitions, array $joinedExecutions): void;
 
-    public function leaveActivityViaTransition(PvmTransitionInterface $outgoingTransition): void;
+    public function leaveActivityViaTransition($outgoingTransition, ?array $_recyclableExecutions = []): void;
 
     /**
      * Executes the {@link ActivityBehavior} associated with the given activity.
@@ -187,7 +187,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
      * Called when an execution is interrupted. This will remove all associated entities
      * such as event subscriptions, jobs, ...
      */
-    public function interrupt(string $reason): void;
+    public function interrupt(string $reason, ?bool $skipCustomListeners = false, ?bool $skipIoMappings = false, ?bool $externallyTerminated = false): void;
 
     /** An activity which is to be started next. */
     public function getNextActivity(): ?PvmActivityInterface;

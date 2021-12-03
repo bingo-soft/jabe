@@ -22,4 +22,13 @@ class LeafActivityInstanceExecutionCollector implements TreeVisitorInterface
     {
         return $this->leaves;
     }
+
+    public function removeLeaf(/*PvmExecutionImpl */$obj): void
+    {
+        foreach ($this->leaves as $key => $leaf) {
+            if ($leaf == $obj) {
+                unset($this->leaves[$key]);
+            }
+        }
+    }
 }

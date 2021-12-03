@@ -56,7 +56,7 @@ class EscalationHandler
                 $this->escalationEventDefinitionFinder = $escalationEventDefinitionFinder;
             }
 
-            public function isFulfilled(ActivityExecutionTuple $element): bool
+            public function isFulfilled($element = null): bool
             {
                 return $this->escalationEventDefinitionFinder->getEscalationEventDefinition() != null || $element == null;
             }
