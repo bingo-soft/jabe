@@ -27,7 +27,7 @@ interface PvmScopeInterface extends PvmProcessElementInterface
      * <li>leaf scope activities which are pure event scopes (Example: User task with attached boundary event)</li>
      * </ul>
      *
-     * @return true if this is a sub process scope
+     * @return bool - true if this is a sub process scope
      */
     public function isSubProcessScope(): bool;
 

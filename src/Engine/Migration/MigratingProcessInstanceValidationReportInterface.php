@@ -15,7 +15,7 @@ interface MigratingProcessInstanceValidationReportInterface
     public function getFailures(): array;
 
     /**
-     * @return true if general failures or activity instance validation reports exist, false otherwise
+     * @return bool - true if general failures or activity instance validation reports exist, false otherwise
      */
     public function hasFailures(): bool;
 

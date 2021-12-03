@@ -8,7 +8,7 @@ interface ResolverInterface
      * Allows checking whether there is currently an object bound to the key.
      *
      * @param key the key to check
-     * @return true if there is currently an object bound to the key. False otherwise.
+     * @return bool - true if there is currently an object bound to the key. False otherwise.
      */
     public function containsKey($key): bool;
 

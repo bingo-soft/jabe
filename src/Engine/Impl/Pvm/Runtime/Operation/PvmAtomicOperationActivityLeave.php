@@ -34,7 +34,7 @@ class PvmAtomicOperationActivityLeave implements PvmAtomicOperationInterface
 
             $activity = $execution->getActivity();
             $activityInstanceId = $execution->getActivityInstanceId();
-            if ($activityInstanceId != null) {
+            if (!empty($activityInstanceId)) {
                 //LOG.debugLeavesActivityInstance(execution, activityInstanceId);
             }
 

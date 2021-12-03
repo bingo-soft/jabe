@@ -48,14 +48,14 @@ interface PvmActivityInterface extends PvmScopeInterface
      * This can be done <em>after</em> the {@link #getActivityStartBehavior() activity start behavior} and
      * <em>before</em> the {@link ExecutionListener#EVENTNAME_START start} listeners are invoked.
      *
-     * @return true if the activity is executed asynchronously.
+     * @return bool - true if the activity is executed asynchronously.
      */
     public function isAsyncBefore(): bool;
 
     /**
      * Indicates whether execution after this execution should continue asynchronously.
      * This can be done <em>after</em> the {@link ExecutionListener#EVENTNAME_END end} listeners are invoked.
-     * @return true if execution after this activity continues asynchronously.
+     * @return bool - true if execution after this activity continues asynchronously.
      */
     public function isAsyncAfter(): bool;
 }

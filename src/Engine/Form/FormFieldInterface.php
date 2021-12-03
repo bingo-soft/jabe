@@ -45,7 +45,7 @@ interface FormFieldInterface
     public function getProperties(): array;
 
     /**
-     * @return true if field is defined as businessKey, false otherwise
+     * @return bool true - if field is defined as businessKey, false otherwise
      */
     public function isBusinessKey(): bool;
 }

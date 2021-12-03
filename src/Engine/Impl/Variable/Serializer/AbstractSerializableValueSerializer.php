@@ -114,7 +114,7 @@ abstract class AbstractSerializableValueSerializer extends AbstractTypedValueSer
      * return true if this serializer is able to serialize the provided object.
      *
      * @param value the object to test (guaranteed to be a non-null value)
-     * @return true if the serializer can handle the object.
+     * @return bool - true if the serializer can handle the object.
      */
     abstract protected function canSerializeValue($value): bool;
 

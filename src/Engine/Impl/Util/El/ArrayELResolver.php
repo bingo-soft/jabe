@@ -87,7 +87,7 @@ class ArrayELResolver extends ELResolver
         $result = null;
         if ($this->isResolvable($base)) {
             $this->toIndex($base, $property);
-            $result = gettype(new stdClass());
+            $result = gettype(new \stdClass());
             $context->setPropertyResolved(true);
         }
         return $result;

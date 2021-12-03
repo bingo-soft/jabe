@@ -36,7 +36,7 @@ interface HistoricVariableUpdateInterface
     public function getErrorMessage(): string;
 
     /**
-     * @return true if the detail historic variable update is created during the process instance start
+     * @return bool - true if the detail historic variable update is created during the process instance start
      */
     public function isInitial(): bool;
 }

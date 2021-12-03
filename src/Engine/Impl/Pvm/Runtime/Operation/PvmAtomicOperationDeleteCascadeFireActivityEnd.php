@@ -102,7 +102,7 @@ class PvmAtomicOperationDeleteCascadeFireActivityEnd extends PvmAtomicOperationA
 
     protected function isAsyncBeforeActivity(PvmExecutionImpl $execution): bool
     {
-        return $execution->getActivityId() != null && $execution->getActivityInstanceId() == null;
+        return !empty($execution->getActivityId()) && empty($execution->getActivityInstanceId());
     }
 
     protected function getFlowScopeActivity(PvmActivityInterface $activity): ActivityImpl

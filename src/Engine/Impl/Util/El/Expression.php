@@ -14,7 +14,7 @@ abstract class Expression implements \Serializable
      *
      * @param obj
      *            the Object to test for equality.
-     * @return true if obj equals this Expression; false otherwise.
+     * @return bool - true if obj equals this Expression; false otherwise.
      */
     abstract public function equals($obj): bool;
 
@@ -35,7 +35,7 @@ abstract class Expression implements \Serializable
      * true if and only if the expression string this expression was created from contained no
      * unescaped EL delimeters (${...} or #{...}).
      *
-     * @return true if this expression was created from only literal text; false otherwise.
+     * @return bool - true if this expression was created from only literal text; false otherwise.
      */
     abstract public function isLiteralText(): bool;
 }

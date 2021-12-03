@@ -37,14 +37,14 @@ interface PurgeReportingInterface
     /**
      * Returns true if the key is present in the current report.
      * @param key the key
-     * @return true if the key is present
+     * @return bool - true if the key is present
      */
     public function containsReport(string $key): bool;
 
     /**
      * Returns true if the report is empty.
      *
-     * @return true if the report is empty, false otherwise
+     * @return bool - true if the report is empty, false otherwise
      */
     public function isEmpty(): bool;
 }

@@ -17,7 +17,7 @@ interface ValueTypeInterface extends \Serializable
      * Indicates whether this type is primitive valued. Primitive valued types can be handled
      * natively by the process engine.
      *
-     * @return true if this is a primitive valued type. False otherwise
+     * @return bool - true if this is a primitive valued type. False otherwise
      */
     public function isPrimitiveValueType(): bool;
 

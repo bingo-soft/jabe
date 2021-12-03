@@ -18,7 +18,7 @@ interface VariableContextInterface
      * Checks whether a variable with the given name is resolve through this context.
      *
      * @param variableName the name of the variable to check
-     * @return true if the variable is resolve.
+     * @return bool - true if the variable is resolve.
      */
     public function containsVariable(string $variableName): bool;
 

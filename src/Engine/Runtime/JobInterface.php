@@ -68,7 +68,7 @@ interface JobInterface
      * Indicates whether this job is suspended. If a job is suspended,
      * the job will be not acquired by the job executor.
      *
-     * @return true if this Job is currently suspended.
+     * @return bool - true if this Job is currently suspended.
      */
     public function isSuspended(): bool;
 

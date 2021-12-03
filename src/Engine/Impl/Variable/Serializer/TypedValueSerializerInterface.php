@@ -47,7 +47,7 @@ interface TypedValueSerializerInterface
      * An implementation must return true if it is able to write values of the provided type.
      *
      * @param value the value
-     * @return true if this {@link TypedValueSerializer} is able to handle the provided value
+     * @return bool - true if this {@link TypedValueSerializer} is able to handle the provided value
      */
     public function canHandle(TypedValueInterface $value): bool;
 

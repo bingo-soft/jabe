@@ -39,7 +39,7 @@ class PvmAtomicOperationActivityEnd implements PvmAtomicOperationInterface
     public function execute(PvmExecutionImpl $execution): void
     {
         // restore activity instance id
-        if ($execution->getActivityInstanceId() == null) {
+        if (empty($execution->getActivityInstanceId())) {
             $execution->setActivityInstanceId($execution->getParentActivityInstanceId());
         }
 
@@ -95,7 +95,7 @@ class PvmAtomicOperationActivityEnd implements PvmAtomicOperationInterface
                 // activity behavior is not composite => this is unexpected
                 throw new ProcessEngineException(
                     "Expected behavior of composite scope " . $activity .
-                    " to be a CompositeActivityBehavior but got " . get_class($activityBehavior)
+                    " to be a CompositeActivityBehavior"
                 );
             }
         }

@@ -46,7 +46,7 @@ interface JobDefinitionInterface
      * Indicates whether this job definition is suspended. If a job Definition is suspended,
      * No Jobs created form the job definition will be acquired by the job executor.
      *
-     * @return true if this Job Definition is currently suspended.
+     * @return bool - true if this Job Definition is currently suspended.
      */
     public function isSuspended(): bool;
 

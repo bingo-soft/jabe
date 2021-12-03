@@ -10,7 +10,7 @@ interface MigrationPlanValidationReportInterface
     public function getMigrationPlan(): MigrationPlanInterface;
 
     /**
-     * @return true if instructions reports exist, false otherwise
+     * @return bool - true if instructions reports exist, false otherwise
      */
     public function hasInstructionReports(): bool;
 

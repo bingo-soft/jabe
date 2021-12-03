@@ -85,7 +85,7 @@ interface BatchInterface
      * not change the suspension state of the batch.
      * </p>
      *
-     * @return true if this batch is currently suspended, false otherwise
+     * @return bool - true if this batch is currently suspended, false otherwise
      * @see ManagementService#suspendBatchById(String)
      * @see ManagementService#activateBatchById(String)
      */

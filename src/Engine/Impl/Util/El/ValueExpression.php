@@ -62,7 +62,7 @@ abstract class ValueExpression extends Expression
      *
      * @param context
      *            The context of this evaluation.
-     * @return true if the expression is read-only or false if not.
+     * @return bool - true if the expression is read-only or false if not.
      * @throws NullPointerException
      *             if context is null.
      * @throws PropertyNotFoundException

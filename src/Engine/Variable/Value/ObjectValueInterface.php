@@ -12,7 +12,7 @@ interface ObjectValueInterface extends SerializableValueInterface
     *   <li>{@link #getObjectType()}</li>
     * </ul>
     *
-    * @return true if the object is deserialized.
+    * @return bool - true if the object is deserialized.
     */
     public function isDeserialized(): bool;
 

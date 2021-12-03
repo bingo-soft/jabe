@@ -69,7 +69,7 @@ class DefaultScriptEngineResolver implements ScriptEngineResolverInterface
      * Allows checking whether the script engine can be cached.
      *
      * @param scriptEngine the script engine to check.
-     * @return true if the script engine may be cached.
+     * @return bool - true if the script engine may be cached.
      */
     protected function isCachable(ScriptEngineInterface $scriptEngine): bool
     {

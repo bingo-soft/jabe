@@ -97,7 +97,7 @@ abstract class ScopeImpl extends CoreActivity implements PvmScopeInterface
     /**
      * Returns true if the backlog is empty.
      *
-     * @return true if empty, false otherwise
+     * @return bool - true if empty, false otherwise
      */
     public function isBacklogEmpty(): bool
     {

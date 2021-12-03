@@ -31,7 +31,7 @@ class CachedDbEntity implements RecyclableInterface
 
     /**
      * Allows checking whether this entity is dirty.
-     * @return true if the entity is dirty (state has changed since it was put into the cache)
+     * @return bool - true if the entity is dirty (state has changed since it was put into the cache)
      */
     public function isDirty(): bool
     {

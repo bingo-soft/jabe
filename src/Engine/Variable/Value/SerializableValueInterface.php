@@ -10,7 +10,7 @@ interface SerializableValueInterface extends TypedValueInterface
      * Returns true in case the value is deserialized. If this method returns true,
      * it is safe to call the {@link #getValue()} method
      *
-     * @return true if the object is deserialized.
+     * @return bool - true if the object is deserialized.
      */
     public function isDeserialized(): bool;
 

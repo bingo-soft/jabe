@@ -78,7 +78,7 @@ interface ExternalTaskInterface
     public function getErrorMessage(): string;
 
     /**
-     * @return true if the external task is suspended; a suspended external task
+     * @return bool - true if the external task is suspended; a suspended external task
      * cannot be completed, thereby preventing process continuation
      */
     public function isSuspended(): bool;

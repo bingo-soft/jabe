@@ -37,7 +37,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
     public function getActivityInstanceId(): string;
 
     /** return the Id of the parent activity instance currently executed by this execution */
-    public function getParentActivityInstanceId(): string;
+    public function getParentActivityInstanceId(): ?string;
 
     /* Execution management */
 
@@ -94,7 +94,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
     public function getNonEventScopeExecutions(): array;
 
     /**
-     * @return true if this execution has child executions (event scope executions or not)
+     * @return bool - true if this execution has child executions (event scope executions or not)
      */
     public function hasChildren(): bool;
 

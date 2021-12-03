@@ -48,7 +48,7 @@ class CompositeELResolver extends ELResolver
                 if ($result == null || gettype($result) == $type) {
                     $result = $type;
                 } elseif (gettype($result) != $type) {
-                    $result = gettype(new stdClass());
+                    $result = gettype(new \stdClass());
                 }
             }
         }

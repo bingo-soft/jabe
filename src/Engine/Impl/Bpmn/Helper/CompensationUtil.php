@@ -166,7 +166,7 @@ class CompensationUtil
         // collect subscriptions in a set
         $subscriptions = [];
 
-        $scope = new stdClass();
+        $scope = new \stdClass();
         $scope->scopeExecutionMapping = $scopeExecutionMapping;
         $scope->subscriptions = $subscriptions;
 

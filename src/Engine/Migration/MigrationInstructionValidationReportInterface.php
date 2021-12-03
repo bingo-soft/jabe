@@ -10,7 +10,7 @@ interface MigrationInstructionValidationReportInterface
     public function getMigrationInstruction(): MigrationInstructionInterface;
 
     /**
-     * @return true if the report contains failures, false otherwise
+     * @return bool - true if the report contains failures, false otherwise
      */
     public function hasFailures(): bool;
 

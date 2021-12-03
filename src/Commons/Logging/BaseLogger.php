@@ -91,7 +91,7 @@ abstract class BaseLogger
     }
 
     /**
-     * @return true if the logger will log 'DEBUG' messages
+     * @return bool - true if the logger will log 'DEBUG' messages
      */
     public function isDebugEnabled(): bool
     {
@@ -99,7 +99,7 @@ abstract class BaseLogger
     }
 
     /**
-     * @return true if the logger will log 'INFO' messages
+     * @return bool - true if the logger will log 'INFO' messages
      */
     public function isInfoEnabled(): bool
     {
@@ -107,7 +107,7 @@ abstract class BaseLogger
     }
 
     /**
-     * @return true if the logger will log 'WARN' messages
+     * @return bool - true if the logger will log 'WARN' messages
      */
     public function isWarnEnabled(): bool
     {
@@ -115,7 +115,7 @@ abstract class BaseLogger
     }
 
     /**
-     * @return true if the logger will log 'ERROR' messages
+     * @return bool - true if the logger will log 'ERROR' messages
      */
     public function isErrorEnabled(): bool
     {

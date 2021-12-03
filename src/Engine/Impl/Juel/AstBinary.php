@@ -298,6 +298,6 @@ class AstBinary extends AstRightValue
 
     public function getChild(int $i): ?AstNode
     {
-        return $i == 0 ? $left : $i == 1 ? $right : null;
+        return $i == 0 ? $left : ($i == 1 ? $right : null);
     }
 }

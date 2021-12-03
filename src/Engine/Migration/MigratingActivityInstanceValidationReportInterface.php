@@ -20,7 +20,7 @@ interface MigratingActivityInstanceValidationReportInterface
     public function getMigrationInstruction(): MigrationInstructionInterface;
 
     /**
-     * @return true if the reports contains failures, false otherwise
+     * @return bool - true if the reports contains failures, false otherwise
      */
     public function hasFailures(): bool;
 

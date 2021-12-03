@@ -1404,7 +1404,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
      * Precondition: the execution is active and executing an activity.
      * Can be invoked for scope and non scope executions.
      *
-     * @param targetFlowScope scope activity or process definition for which the scope execution should be found
+     * @param targetFlowScope mixed - scope activity or process definition for which the scope execution should be found
      * @return the scope execution for the provided targetFlowScope
      */
     public function findExecutionForFlowScope($targetFlowScope): ?PvmExecutionImpl
@@ -1571,7 +1571,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
                 });
 
             $scopes = $scopeCollector->getScopes();
-            $outerScope = new stdClass();
+            $outerScope = new \stdClass();
             $outerScope->scopes = $scopes;
             $outerScope->scopeExecutions = $scopeExecutions;
 
@@ -1725,7 +1725,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
     public function setVariable(string $variableName, $value, ?string $targetActivityId = null): void
     {
         $activityId = $this->getActivityId();
-        if ($activityId != null && $activityId == $targetActivityId) {
+        if (!empty($activityId) && $activityId == $targetActivityId) {
             $this->setVariableLocal($variableName, $value);
         } else {
             $executionForFlowScope = $this->findExecutionForFlowScope($targetActivityId);
@@ -2249,7 +2249,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
      * Starting, Execute or Ending. For this states it is
      * prohibited to trigger conditional events, otherwise unexpected behavior can appear.
      *
-     * @return true if the execution is on a dispatchable state, false otherwise
+     * @return bool - true if the execution is on a dispatchable state, false otherwise
      */
     private function isOnDispatchableState(PvmExecutionImpl $targetScope): bool
     {
@@ -2268,11 +2268,11 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
      * activity as before an operation was executed. The activity instance id's can be null on transitions.
      * In this case the activity Id's have to be equal, otherwise the execution changed.
      *
-     * @param lastActivityInstanceId    the last activity instance id
-     * @param lastActivityId            the last activity id
-     * @param currentActivityInstanceId the current activity instance id
-     * @param currentActivityId         the current activity id
-     * @return true if the execution is on the same activity, otherwise false
+     * @param string|null lastActivityInstanceId    the last activity instance id
+     * @param string|null lastActivityId            the last activity id
+     * @param string|null currentActivityInstanceId the current activity instance id
+     * @param string|null currentActivityId         the current activity id
+     * @return bool, true if the execution is on the same activity, otherwise false
      */
     private function isOnSameActivity(
         ?string $lastActivityInstanceId,
@@ -2291,7 +2291,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
     /**
      * Returns the activity instance id for the given execution.
      *
-     * @param targetScope the execution for which the activity instance id should be returned
+     * @param PvmExecutionImpl|null - targetScope the execution for which the activity instance id should be returned
      * @return the activity instance id
      */
     private function getActivityInstanceId(?PvmExecutionImpl $targetScope = null): ?string

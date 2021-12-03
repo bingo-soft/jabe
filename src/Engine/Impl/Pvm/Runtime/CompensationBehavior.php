@@ -64,7 +64,7 @@ class CompensationBehavior
         foreach ($activityExecutionMapping as $map) {
             $scopeExecution = $execution->getActivity()->getFlowScope();
             if ($map[0] == $scopeExecution) {
-                $parentScopeExecution = $scopeExecution;
+                $parentScopeExecution = $map[1];
                 return $parentScopeExecution->getParentActivityInstanceId();
             }
         }

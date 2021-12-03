@@ -8,7 +8,7 @@ interface ProcessElementInstanceInterface
     public function getId(): string;
 
     /** The id of the parent activity instance. */
-    public function getParentActivityInstanceId(): string;
+    public function getParentActivityInstanceId(): ?string;
 
     /** the process definition id */
     public function getProcessDefinitionId(): string;

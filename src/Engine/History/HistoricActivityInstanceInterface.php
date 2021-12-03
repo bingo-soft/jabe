@@ -8,7 +8,7 @@ interface HistoricActivityInstanceInterface
     public function getId(): string;
 
     /** return the id of the parent activity instance */
-    public function getParentActivityInstanceId(): string;
+    public function getParentActivityInstanceId(): ?string;
 
     /** The unique identifier of the activity in the process */
     public function getActivityId(): string;

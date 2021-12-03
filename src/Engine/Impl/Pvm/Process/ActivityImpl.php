@@ -252,7 +252,7 @@ class ActivityImpl extends ScopeImpl implements PvmActivityInterface, HasDIBound
     /**
      * Indicates whether activity is for compensation.
      *
-     * @return true if this activity is for compensation.
+     * @return bool - true if this activity is for compensation.
      */
     public function isCompensationHandler(): bool
     {
@@ -277,7 +277,7 @@ class ActivityImpl extends ScopeImpl implements PvmActivityInterface, HasDIBound
     /**
      * Indicates whether activity is a multi instance activity.
      *
-     * @return true if this activity is a multi instance activity.
+     * @return bool - true if this activity is a multi instance activity.
      */
     public function isMultiInstance(): bool
     {

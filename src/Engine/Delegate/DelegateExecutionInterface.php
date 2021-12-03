@@ -54,7 +54,7 @@ interface DelegateExecutionInterface extends BaseDelegateExecutionInterface, Bpm
      * return the Id of the parent activity instance currently executed by this
      * execution
      */
-    public function getParentActivityInstanceId(): string;
+    public function getParentActivityInstanceId(): ?string;
 
     /** return the Id of the current transition */
     public function getCurrentTransitionId(): string;
