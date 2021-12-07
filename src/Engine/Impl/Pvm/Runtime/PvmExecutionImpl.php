@@ -2057,7 +2057,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
                     $this->atomicOperation = $atomicOperation;
                 }
 
-                public function callback(PvmExecutionImpl $param)
+                public function callback($param)
                 {
                     $param->performOperation($this->atomicOperation);
                     return null;
