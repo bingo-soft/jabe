@@ -13,22 +13,20 @@ class DiagramLayout
 
     public function getNode(string $id): ?DiagramNode
     {
-        $element = $this->getElements()[$id];
-        if ($element instanceof DiagramNode) {
+        $elements = $this->getElements();
+        if (array_key_exists($id, $elements) && (($element = $elements[$id]) instanceof DiagramNode)) {
             return $element;
-        } else {
-            return null;
         }
+        return null;
     }
 
     public function getEdge(string $id): ?DiagramEdge
     {
-        $element = $this->getElements()[$id];
-        if ($element instanceof DiagramEdge) {
+        $elements = $this->getElements();
+        if (array_key_exists($id, $elements) && (($element = $elements[$id]) instanceof DiagramEdge)) {
             return $element;
-        } else {
-            return null;
         }
+        return null;
     }
 
     public function getElements(): array

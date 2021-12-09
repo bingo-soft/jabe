@@ -9,7 +9,7 @@ class DiagramNode extends DiagramElement
     private $width = null;
     private $height = null;
 
-    public function __construct(string $id, ?float $x = null, ?float $y = null, ?float $width = null, ?float $height = null)
+    public function __construct(?string $id = null, ?float $x = null, ?float $y = null, ?float $width = null, ?float $height = null)
     {
         parent::__construct($id);
         $this->x = $x;

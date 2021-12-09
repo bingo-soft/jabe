@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b1572bd32dae1ec5acfe94898917b4f8",
+    "content-hash": "606f8e2b87b6cc654b7a3adc0ac2fd70",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -1118,6 +1118,57 @@
                 }
             ],
             "time": "2021-10-01T21:08:31+00:00"
+        },
+        {
+            "name": "phpixie/image",
+            "version": "3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPixie/Image.git",
+                "reference": "a75f6cb484c8b8a5f26c4e2772d81fdff71b3265"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPixie/Image/zipball/a75f6cb484c8b8a5f26c4e2772d81fdff71b3265",
+                "reference": "a75f6cb484c8b8a5f26c4e2772d81fdff71b3265",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpixie/test": "~3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PHPixie\\": "src/PHPixie",
+                    "PHPixie\\Tests\\": "tests/PHPixie/Tests"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Tsiupa",
+                    "email": "draconyster@gmail.com",
+                    "homepage": "http://dracony.org"
+                }
+            ],
+            "description": "PHPixie imageprocessing library",
+            "homepage": "http://phpixie.com",
+            "keywords": [
+                "ImageMagick",
+                "gd",
+                "gmagick",
+                "image",
+                "imagick"
+            ],
+            "time": "2018-02-15T23:57:34+00:00"
         },
         {
             "name": "phpmailer/phpmailer",

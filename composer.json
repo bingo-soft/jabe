@@ -19,7 +19,8 @@
         "symfony/expression-language": "^5.3",
         "monolog/monolog": "^2.3",
         "phpmailer/phpmailer": "^6.5",
-        "symfony/process": "^5.4"
+        "symfony/process": "^5.4",
+        "phpixie/image": "^3.3"
     },
     "require-dev": {
         "doctrine/coding-standard": "^9",

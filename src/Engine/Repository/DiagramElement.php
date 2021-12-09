@@ -6,7 +6,7 @@ abstract class DiagramElement implements \Serializable
 {
     protected $id = null;
 
-    public function __construct(string $id)
+    public function __construct(?string $id = null)
     {
         $this->id = $id;
     }
