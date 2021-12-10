@@ -4,19 +4,13 @@ namespace BpmPlatform\Engine;
 
 class ProcessEngineException extends \Exception
 {
-    private $cause;
-
-    public function __construct(string $message, $code = 0, \Exception $cause = null)
+    public function __construct(string $message, \Throwable $previous = null)
     {
-        parent::__construct($message, $code);
-
-        if ($cause != null) {
-            $this->cause = $cause;
-        }
+        parent::__construct($message, 0, $previous);
     }
 
-    public function getCause(): ?\Exception
+    public function getCause(): ?\Throwable
     {
-        return $this->cause;
+        return $this->getPrevious();
     }
 }

@@ -87,7 +87,7 @@ class ProcessDiagramLayoutFactory
             $meta = stream_get_meta_data($bpmnXmlStream);
             $bpmnModel->loadXML(fread($bpmnXmlStream, filesize($meta['uri'])));
         } catch (\Exception $e) {
-            throw new ProcessEngineException($e->getMessage());
+            throw new ProcessEngineException("Error while parsing BPMN model.", $e);
         }
         return $bpmnModel;
     }

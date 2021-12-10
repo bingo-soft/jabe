@@ -7,7 +7,7 @@ interface ActivityStatisticsInterface
     /**
      * The activity id.
      */
-    public function getId(): string;
+    public function getId(): ?string;
 
     /**
      * The number of all instances of the activity.

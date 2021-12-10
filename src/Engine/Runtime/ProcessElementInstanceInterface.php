@@ -5,7 +5,7 @@ namespace BpmPlatform\Engine\Runtime;
 interface ProcessElementInstanceInterface
 {
     /** The id of the process element instance */
-    public function getId(): string;
+    public function getId(): ?string;
 
     /** The id of the parent activity instance. */
     public function getParentActivityInstanceId(): ?string;
