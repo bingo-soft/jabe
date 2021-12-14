@@ -421,6 +421,6 @@ class Permissions implements PermissionInterface
             }
         }
 
-        return self::$func;
+        return self::$func();
     }
 }

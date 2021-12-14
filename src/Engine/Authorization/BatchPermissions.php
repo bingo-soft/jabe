@@ -201,11 +201,19 @@ class BatchPermissions implements PermissionInterface
         return self::$CREATE_BATCH_SET_VARIABLES;
     }
 
-    private static $RESOURCES = [ Resources::BATCH ];
+    private static $RESOURCES;
+
+    public static function resources(): array
+    {
+        if (self::$RESOURCES == null) {
+            self::$RESOURCES = [ Resources::batch() ];
+        }
+        return self::$RESOURCES;
+    }
 
     public function getTypes(): array
     {
-        return self::RESOURCES;
+        return self::resources();
     }
 
     private function __construct(string $name, int $id)

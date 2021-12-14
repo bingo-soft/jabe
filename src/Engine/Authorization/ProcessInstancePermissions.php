@@ -101,7 +101,15 @@ class ProcessInstancePermissions implements PermissionInterface
         return self::$UPDATE_VARIABLE;
     }
 
-    private const RESOURCES = [ Resources::PROCESS_INSTANCE ];
+    private static $RESOURCES;
+
+    public static function resources(): array
+    {
+        if (self::$RESOURCES == null) {
+            self::$RESOURCES = [ Resources::processInstance() ];
+        }
+        return self::$RESOURCES;
+    }
 
     private function __construct(string $name, int $id)
     {
@@ -111,6 +119,6 @@ class ProcessInstancePermissions implements PermissionInterface
 
     public function getTypes(): array
     {
-        return self::RESOURCES;
+        return self::resources();
     }
 }

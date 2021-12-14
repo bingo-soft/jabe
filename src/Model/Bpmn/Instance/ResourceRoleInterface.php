@@ -8,7 +8,7 @@ interface ResourceRoleInterface extends BaseElementInterface
 
     public function setName(string $name): void;
 
-    public function getResource(): ResourceInterface;
+    public function getResource(): ?ResourceInterface;
 
     public function setResource(ResourceInterface $resource): void;
 

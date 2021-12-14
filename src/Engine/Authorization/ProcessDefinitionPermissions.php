@@ -261,7 +261,15 @@ class ProcessDefinitionPermissions implements PermissionInterface
         return self::$UPDATE_HISTORY;
     }
 
-    private static $RESOURCES = [ Resources::PROCESS_DEFINITION ];
+    private static $RESOURCES;
+
+    public static function resources(): array
+    {
+        if (self::$RESOURCES == null) {
+            self::$RESOURCES = [ Resources::processDefinition() ];
+        }
+        return self::$RESOURCES;
+    }
 
     private function __construct(string $name, int $id)
     {
@@ -271,6 +279,6 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public function getTypes(): array
     {
-        return self::RESOURCES;
+        return self::resources();
     }
 }

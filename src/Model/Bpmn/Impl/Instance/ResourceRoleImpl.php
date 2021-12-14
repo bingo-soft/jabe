@@ -77,7 +77,7 @@ class ResourceRoleImpl extends BaseElementImpl implements ResourceRoleInterface
         self::$nameAttribute->setValue($this, $name);
     }
 
-    public function getResource(): ResourceInterface
+    public function getResource(): ?ResourceInterface
     {
         return self::$resourceRefChild->getReferenceTargetElement($this);
     }

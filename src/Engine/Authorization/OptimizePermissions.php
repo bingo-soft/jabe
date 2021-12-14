@@ -51,7 +51,15 @@ class OptimizePermissions implements PermissionInterface
         return self::$SHARE;
     }
 
-    private const RESOURCES = [ Resources::OPTIMIZE ];
+    private static $RESOURCES;
+
+    public static function resources(): array
+    {
+        if (self::$RESOURCES == null) {
+            self::$RESOURCES = [ Resources::optimize() ];
+        }
+        return self::$RESOURCES;
+    }
 
     private function __construct(string $name, int $id)
     {
@@ -61,6 +69,6 @@ class OptimizePermissions implements PermissionInterface
 
     public function getTypes(): array
     {
-        return self::RESOURCES;
+        return self::resources();
     }
 }

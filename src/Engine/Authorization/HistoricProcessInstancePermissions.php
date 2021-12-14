@@ -41,7 +41,15 @@ class HistoricProcessInstancePermissions implements PermissionInterface
         return self::$READ;
     }
 
-    private const RESOURCES = [ Resources::HISTORIC_PROCESS_INSTANCE ];
+    private static $RESOURCES;
+
+    public static function resources(): array
+    {
+        if (self::$RESOURCES == null) {
+            self::$RESOURCES = [ Resources::historicProcessInstance() ];
+        }
+        return self::$RESOURCES;
+    }
 
     private function __construct(string $name, int $id)
     {
@@ -51,6 +59,6 @@ class HistoricProcessInstancePermissions implements PermissionInterface
 
     public function getTypes(): array
     {
-        return self::RESOURCES;
+        return self::resources();
     }
 }

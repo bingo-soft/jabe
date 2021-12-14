@@ -122,7 +122,15 @@ class TaskPermissions implements PermissionInterface
         return self::$TASK_ASSIGN;
     }
 
-    private static $RESOURCES = [ Resources::TASK ];
+    private static $RESOURCES;
+
+    public static function resources(): array
+    {
+        if (self::$RESOURCES == null) {
+            self::$RESOURCES = [ Resources::task() ];
+        }
+        return self::$RESOURCES;
+    }
 
     private function __construct(string $name, int $id)
     {
@@ -132,6 +140,6 @@ class TaskPermissions implements PermissionInterface
 
     public function getTypes(): array
     {
-        return self::RESOURCES;
+        return self::resources();
     }
 }

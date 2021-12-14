@@ -61,7 +61,15 @@ class UserOperationLogCategoryPermissions implements PermissionInterface
         return self::$DELETE;
     }
 
-    private const RESOURCES = [ Resources::OPERATION_LOG_CATEGORY ];
+    private static $RESOURCES;
+
+    public static function resources(): array
+    {
+        if (self::$RESOURCES == null) {
+            self::$RESOURCES = [ Resources::operationLogCategory() ];
+        }
+        return self::$RESOURCES;
+    }
 
     private function __construct(string $name, int $id)
     {
@@ -71,6 +79,6 @@ class UserOperationLogCategoryPermissions implements PermissionInterface
 
     public function getTypes(): array
     {
-        return self::RESOURCES;
+        return self::resources();
     }
 }

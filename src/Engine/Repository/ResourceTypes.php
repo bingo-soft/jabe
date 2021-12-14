@@ -4,11 +4,35 @@ namespace BpmPlatform\Engine\Repository;
 
 class ResourceTypes implements ResourceTypeInterface
 {
-    public const REPOSITORY = 1;
+    private static $REPOSITORY;
 
-    public const RUNTIME = 2;
+    private static $RUNTIME;
 
-    public const HISTORY = 3;
+    private static $HISTORY;
+
+    public static function repository(): ResourceTypeInterface
+    {
+        if (self::$REPOSITORY == null) {
+            self::$REPOSITORY = new ResourceTypes('REPOSITORY', 1);
+        }
+        return self::$REPOSITORY;
+    }
+
+    public static function runtime(): ResourceTypeInterface
+    {
+        if (self::$RUNTIME == null) {
+            self::$RUNTIME = new ResourceTypes('RUNTIME', 2);
+        }
+        return self::$RUNTIME;
+    }
+
+    public static function history(): ResourceTypeInterface
+    {
+        if (self::$HISTORY == null) {
+            self::$HISTORY = new ResourceTypes('HISTORY', 3);
+        }
+        return self::$HISTORY;
+    }
 
     // implmentation //////////////////////////
 
@@ -36,9 +60,17 @@ class ResourceTypes implements ResourceTypeInterface
         return $this->id;
     }
 
-    public static function forName(string $name): ResourceTypeInterface
+    public static function forName(string $name): ?ResourceTypeInterface
     {
-        $type = new ResourceTypes($name, constant("self::$name"));
-        return $type;
+        switch (strtolower($name)) {
+            case "repository":
+                return self::repository();
+            case "runtime":
+                return self::runtime();
+            case "history":
+                return self::history();
+            default:
+                return null;
+        }
     }
 }

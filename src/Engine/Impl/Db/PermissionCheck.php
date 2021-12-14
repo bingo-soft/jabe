@@ -43,7 +43,7 @@ class PermissionCheck
         return $this->perms;
     }
 
-    public function getResource(): ResourceInterface
+    public function getResource(): ?ResourceInterface
     {
         return $this->resource;
     }
