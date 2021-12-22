@@ -97,7 +97,7 @@ class FormDefinitionEntity implements FormDefinitionInterface, ResourceDefinitio
         $this->version = $version;
     }
 
-    public function getDeploymentId(): string
+    public function getDeploymentId(): ?string
     {
         return $this->deploymentId;
     }

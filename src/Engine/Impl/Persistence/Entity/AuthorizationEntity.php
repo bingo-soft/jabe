@@ -21,7 +21,7 @@ use BpmPlatform\Engine\Impl\Db\{
 };
 use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
 
-class AuthorizationEntity implements AuthorizationInterface, DbEntityInterface, HasDbRevisionInterface, HasDbReferencesInterface, \Serializable
+class AuthorizationEntity implements AuthorizationInterface, DbEntityInterface, HasDbReferencesInterface, HasDbRevisionInterface, \Serializable
 {
     //protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
     //private static final long serialVersionUID = 1L;

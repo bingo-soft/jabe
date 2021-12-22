@@ -2,7 +2,7 @@
 
 namespace BpmPlatform\Engine\Impl\Db;
 
-abstract class AbstractHasDbReferences
+interface HasDbReferencesInterface
 {
     /**
      * <p>Scope: IN-MEMORY references
@@ -10,7 +10,7 @@ abstract class AbstractHasDbReferences
      * @return the ids of the entities that this entity references. Should
      *   only return ids for entities of the same type
      */
-    abstract public function getReferencedEntityIds(): array;
+    public function getReferencedEntityIds(): array;
 
     /**
      * <p>Scope: IN-MEMORY references
@@ -20,13 +20,10 @@ abstract class AbstractHasDbReferences
      * was an Optimistic Locking occurrence on an INSERT or UPDATE of
      * an object of this type.
      */
-    abstract public function getReferencedEntitiesIdAndClass(): array;
+    public function getReferencedEntitiesIdAndClass(): array;
 
     /**
      * <p>Scope: PERSISTED references
      */
-    public function getDependentEntities(): array
-    {
-        return [];
-    }
+    public function getDependentEntities(): array;
 }

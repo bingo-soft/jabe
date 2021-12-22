@@ -17,7 +17,7 @@ use BpmPlatform\Engine\Impl\Bpmn\Behavior\{
 };
 use BpmPlatform\Engine\Impl\Bpmn\Parser\BpmnParse;
 use BpmPlatform\Engine\Impl\Cmd\GetActivityInstanceCmd;
-use BpmPlatform\Engine\Impl\Jobexecutor\AsyncContinuationJobHandler;
+use BpmPlatform\Engine\Impl\JobExecutor\AsyncContinuationJobHandler;
 use BpmPlatform\Engine\Impl\Persistence\Entity\{
     ActivityInstanceImpl,
     EventSubscriptionEntity,

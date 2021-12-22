@@ -16,7 +16,7 @@ class ActivityExecutionTuple
         $this->scope = $scope;
     }
 
-    public function getExecution(): ActivityExecutionInterface
+    public function getExecution(): ?ActivityExecutionInterface
     {
         return $this->execution;
     }

@@ -35,7 +35,7 @@ interface ProcessApplicationInterface
      *
      * @return a globally sharable reference to this process application.
      */
-    public function getReference(): ProcessApplicationReferenceInterface;
+    public function getReference(): ?ProcessApplicationReferenceInterface;
 
     /**
      * Since {@link #getReference()} may return a proxy object, this method returs the actual, unproxied object and is

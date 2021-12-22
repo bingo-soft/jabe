@@ -4,7 +4,7 @@ namespace BpmPlatform\Engine\Impl\History;
 
 use BpmPlatform\Engine\Impl\Event\HistoryEventTypeInterface;
 
-abstract class AbstractHistoryLevel
+abstract class AbstractHistoryLevel implements HistoryLevelInterface
 {
     private static $HISTORY_LEVEL_NONE;
     private static $HISTORY_LEVEL_ACTIVITY;

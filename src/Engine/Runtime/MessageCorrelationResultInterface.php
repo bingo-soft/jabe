@@ -9,7 +9,7 @@ interface MessageCorrelationResultInterface
      *
      * @return the execution
      */
-    public function getExecution(): ExecutionInterface;
+    public function getExecution(): ?ExecutionInterface;
 
     /**
      * Returns the process instance id on which the message was correlated to.

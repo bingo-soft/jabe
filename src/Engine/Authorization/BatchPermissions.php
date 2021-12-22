@@ -232,6 +232,6 @@ class BatchPermissions implements PermissionInterface
             }
         }
 
-        return self::$func;
+        return self::$func();
     }
 }

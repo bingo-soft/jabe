@@ -49,7 +49,7 @@ interface DelegateTaskInterface extends VariableScopeInterface, BpmnModelExecuti
     public function getTaskDefinitionKey(): string;
 
     /** Returns the execution currently at the task. */
-    public function getExecution(): DelegateExecutionInterface;
+    public function getExecution(): ?DelegateExecutionInterface;
 
     /** Returns the event name which triggered the task listener to fire for this task. */
     public function getEventName(): string;

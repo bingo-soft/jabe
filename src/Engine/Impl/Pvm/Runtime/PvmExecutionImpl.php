@@ -1233,7 +1233,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         return $this->getActivityId();
     }
 
-    public function setActivity(PvmActivityInterface $activity): void
+    public function setActivity(?PvmActivityInterface $activity = null): void
     {
         $this->activity = $activity;
     }

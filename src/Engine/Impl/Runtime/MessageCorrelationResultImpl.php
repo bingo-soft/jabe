@@ -22,7 +22,7 @@ class MessageCorrelationResultImpl implements MessageCorrelationResultWithVariab
         $this->resultType = $handlerResult->getResultType();
     }
 
-    public function getExecution(): ExecutionInterface
+    public function getExecution(): ?ExecutionInterface
     {
         return $this->execution;
     }

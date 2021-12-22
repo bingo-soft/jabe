@@ -10,5 +10,5 @@ interface CompensateEventDefinitionInterface extends EventDefinitionInterface
 
     public function getActivity(): ?ActivityInterface;
 
-    public function setActivity(ActivityInterface $activity): void;
+    public function setActivity(?ActivityInterface $activity = null): void;
 }

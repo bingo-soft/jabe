@@ -6,6 +6,7 @@ use BpmPlatform\Engine\Impl\Db\{
     DbEntityInterface,
     HistoricEntityInterface
 };
+use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
 
 class HistoryEvent implements \Serializable, DbEntityInterface, HistoricEntityInterface
 {
@@ -283,7 +284,8 @@ class HistoryEvent implements \Serializable, DbEntityInterface, HistoricEntityIn
 
     public function __toString()
     {
-        return get_class($this)
+        $className = ClassNameUtil::getClassNameWithoutPackage(get_class($this));
+        return $className
             . "[id=" . $this->id
             . ", eventType=" . $this->eventType
             . ", executionId=" . $this->executionId

@@ -18,7 +18,7 @@ class EmbeddedProcessApplication extends AbstractProcessApplication
         return self::DEFAULT_NAME;
     }
 
-    public function getReference(): ProcessApplicationReferenceInterface
+    public function getReference(): ?ProcessApplicationReferenceInterface
     {
         return new EmbeddedProcessApplicationReferenceImpl($this);
     }

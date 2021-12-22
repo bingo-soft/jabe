@@ -494,6 +494,11 @@ class HistoryEventTypes implements HistoryEventTypeInterface
     protected $entityType;
     protected $eventName;
 
+    public function equals(HistoryEventTypeInterface $obj): bool
+    {
+        return $this->eventName == $obj->getEventName() && $this->entityType == $obj->getEntityType();
+    }
+
     public function getEntityType(): string
     {
         return $this->entityType;

@@ -68,7 +68,7 @@ class CompensateEventDefinitionImpl extends EventDefinitionImpl implements Compe
         return self::$activityRefAttribute->getReferenceTargetElement($this);
     }
 
-    public function setActivity(ActivityInterface $activity): void
+    public function setActivity(?ActivityInterface $activity = null): void
     {
         self::$activityRefAttribute->setReferenceTargetElement($this, $activity);
     }

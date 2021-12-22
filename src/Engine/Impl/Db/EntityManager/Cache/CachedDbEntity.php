@@ -3,7 +3,7 @@
 namespace BpmPlatform\Engine\Impl\Db\EntityManager\Cache;
 
 use BpmPlatform\Engine\Impl\Db\{
-    AbstractHasDbReferences,
+    HasDbReferencesInterface,
     DbEntityInterface
 };
 use BpmPlatform\Engine\Impl\Db\EntityManager\RecyclableInterface;
@@ -56,7 +56,7 @@ class CachedDbEntity implements RecyclableInterface
 
     public function determineEntityReferences(): void
     {
-        if ($this->dbEntity instanceof AbstractHasDbReferences) {
+        if ($this->dbEntity instanceof HasDbReferencesInterface) {
             $this->flushRelevantEntityReferences = $this->dbEntity->getReferencedEntityIds();
         } else {
             $this->flushRelevantEntityReferences = [];

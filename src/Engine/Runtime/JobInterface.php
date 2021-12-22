@@ -7,7 +7,7 @@ interface JobInterface
     /**
      * Returns the unique identifier for this job.
      */
-    public function getId(): string;
+    public function getId(): ?string;
 
     /**
      * Returns the date on which this job is supposed to be processed.
@@ -49,10 +49,10 @@ interface JobInterface
      * To get the full exception stacktrace,
      * use ManagementService#getJobExceptionStacktrace
      */
-    public function getExceptionMessage(): string;
+    public function getExceptionMessage(): ?string;
 
     /** Returns the id of the activity on which the last exception occurred. */
-    public function getFailedActivityId(): string;
+    public function getFailedActivityId(): ?string;
 
     /**
      * Returns the id of the deployment in which context the job was created.
@@ -62,7 +62,7 @@ interface JobInterface
     /**
      * The id of the JobDefinition for this job.
      */
-    public function getJobDefinitionId(): string;
+    public function getJobDefinitionId(): ?string;
 
     /**
      * Indicates whether this job is suspended. If a job is suspended,

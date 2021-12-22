@@ -198,7 +198,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
 
     public function signal(string $string, $signalData): void;
 
-    public function setActivity(PvmActivityInterface $activity): void;
+    public function setActivity(?PvmActivityInterface $activity = null): void;
 
     public function tryPruneLastConcurrentChild(): bool;
 

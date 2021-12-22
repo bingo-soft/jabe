@@ -80,7 +80,7 @@ class ByteArrayEntity implements \Serializable, DbEntityInterface, HasDbRevision
         $this->name = $name;
     }
 
-    public function getDeploymentId(): string
+    public function getDeploymentId(): ?string
     {
         return $this->deploymentId;
     }

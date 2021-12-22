@@ -43,7 +43,7 @@ class CorrelationHandlerResult
 
     // getters ////////////////////////////////////////////
 
-    public function getExecutionEntity(): ExecutionEntity
+    public function getExecutionEntity(): ?ExecutionEntity
     {
         return $this->executionEntity;
     }
@@ -63,7 +63,7 @@ class CorrelationHandlerResult
         return $this->resultType;
     }
 
-    public function getExecution(): ExecutionInterface
+    public function getExecution(): ?ExecutionInterface
     {
         return $this->executionEntity;
     }

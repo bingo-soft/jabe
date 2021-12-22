@@ -31,7 +31,7 @@ class ConditionHandlerResult
         return $this->activity;
     }
 
-    public function setActivity(ActivityImpl $activity): void
+    public function setActivity(?ActivityImpl $activity = null): void
     {
         $this->activity = $activity;
     }
