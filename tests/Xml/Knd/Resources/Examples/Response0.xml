@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:KndResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://tor.knd.evolenta.ru/do_knd/1.0.0">
+	<tns:inspectionResult>
+		<tns:status>
+			<tns:code>101</tns:code>
+		</tns:status>
+		<tns:inspection>
+			<tns:id>11111111</tns:id>
+			<tns:fullKnmComplexType erpId="111111" erpIdDateCreate="2020-12-01" knmType="2" knmStatus="3" fedLaw="4"/>
+			<tns:classificationKnmComplexType knmForm="1" knmKind="2" notifyWay="3"/>
+			<tns:eventComplexType event="мероприятие по контролю" startDate="2020-12-01" endDate="2020-12-30" LiadTime="4" isPlanKnm="true" Objective="цели, задачи"/>
+			<tns:basisComplexType>
+				<tns:basisKnm>Основание проведения КНМ</tns:basisKnm>
+				<tns:dateBasisKnm>2020-12-15</tns:dateBasisKnm>
+				<tns:basisNumber>1</tns:basisNumber>
+			</tns:basisComplexType>
+			<tns:subjectKnmComplexType inn="100000000001" ogrn="1000000000000"/>
+			<tns:objectKnmComplexType>
+				<tns:typeAddress typeAddress="1">
+					<tns:addressInfoType>
+						<tns:fullAddress>г. Москва, ул. Тверская, д.11, стр. 1, кв. 1</tns:fullAddress>
+						<tns:index>125009</tns:index>
+						<tns:city code="11111111">Москва</tns:city>
+						<tns:street code="22222222">Тверская</tns:street>
+						<tns:house code="33333333">11</tns:house>
+						<tns:building1>1</tns:building1>
+						<tns:apartment>1</tns:apartment>
+					</tns:addressInfoType>
+				</tns:typeAddress>
+				<tns:knmResultGroup actDateTime="2020-12-01T10:00:00" actPlace="1" typeAddress="2" startDate="2020-12-01" knmDurationH="1" knmDurationD="2"/>
+				<tns:knmInspectorGroup fullNameInspector="Петров Петр Петрович" positionInspector="Инспектор" typeInspector="1"/>
+			</tns:objectKnmComplexType>
+		</tns:inspection>
+	</tns:inspectionResult>
+</tns:KndResponse>

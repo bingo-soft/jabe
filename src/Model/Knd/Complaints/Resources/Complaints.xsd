@@ -1,0 +1,1604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2020 rel. 2 (x64) (http://www.altova.com) by  () -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tor.knd.evolenta.ru/do_knd/1.0.0" targetNamespace="http://tor.knd.evolenta.ru/do_knd/1.0.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="KndRequest">
+		<xs:annotation>
+			<xs:documentation>Запрос с основными операциями</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="getComplaints" type="tns:getComplaintsType">
+					<xs:annotation>
+						<xs:documentation>Запрос списка жалоб</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="sendComplaintEvent" type="tns:sendComplaintEventType">
+					<xs:annotation>
+						<xs:documentation>Отправка события по жалобе</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="inspectionRequest" type="tns:inspectionRequestType">
+					<xs:annotation>
+						<xs:documentation>Операции с проверками</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="KndResponse">
+		<xs:annotation>
+			<xs:documentation>Ответ по операциям</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="getComplaintsResult" type="tns:getComplaintsResultType">
+					<xs:annotation>
+						<xs:documentation>Ответ со списком жалоб</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="sendComplaintEventResult" type="tns:sendComplaintEventResultType">
+					<xs:annotation>
+						<xs:documentation>Результат отправки события по жалобе</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="inspectionResult" type="tns:inspectionResultType">
+					<xs:annotation>
+						<xs:documentation>Ответ по операциям с проверками</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="petitionType">
+		<xs:annotation>
+			<xs:documentation>Ходатайство</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="content" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Описание к ходатайству</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="result" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Результат рассмотрения ходатайства</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="isApprove" type="xs:boolean">
+							<xs:annotation>
+								<xs:documentation>Признак положительного решения</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="date" type="xs:dateTime">
+							<xs:annotation>
+								<xs:documentation>Время принятия решения</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="number" type="xs:string" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Номер ходатайства</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="file" type="tns:fileType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Файл решения</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="justification" type="xs:string" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Обоснование</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="decision" type="xs:string" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Решение</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="status" type="xs:string" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Статус</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="signer" type="tns:userType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Лицо, осуществившее подписание документа</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="coordinator" type="tns:coordinatorType" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Лица, осуществившие согласование документа </xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="voidType">
+		<xs:annotation>
+			<xs:documentation>Тип элемента, который передаёт информацию фактом своего наличия.</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:complexType name="userType">
+		<xs:annotation>
+			<xs:documentation>Пользователь</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>ФИО</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="login" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Логин</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="email" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Электронная почта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="complaintType">
+		<xs:sequence>
+			<xs:element name="id" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Идентификатор в ТОР КНД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="previousComplaintId" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор жалобы в ТОР КНД, решение по которой необходимо обжаловать</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="status" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Статус</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Название</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="number" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Номер жалобы в ТОР КНД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="appealId" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор проверки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="baseUnit" type="tns:unitType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Контрольно-надзорный орган, на который сформирована жалоба</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="unit" type="tns:unitType">
+				<xs:annotation>
+					<xs:documentation>Подразделение органа, на которое сформирована жалоба</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="commentInfo" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Пояснительный текст к жалобе</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="applicantData" type="tns:applicantDataType">
+				<xs:annotation>
+					<xs:documentation>Данные о заявителе, подающем жалобу</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="epguData" type="tns:epguDataType">
+				<xs:annotation>
+					<xs:documentation>Данные ЕПГУ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="typeAppealDecision" type="tns:codeNameType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Вид обжалуемого решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lifeEvent" type="tns:codeNameType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Жизненная ситуация</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="violationType" type="tns:violationTypeType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Вид нарушения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pauseResolutionPetition" type="tns:petitionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ходатайство о приостановлении исполнения решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="renewTermPetition" type="tns:petitionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ходатайство о восстановлении срока рассмотрения жалобы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="incomingFiles" type="tns:fileType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Прикрепленные файлы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="executor" type="tns:userType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Исполнитель</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="reservedElement" type="tns:reservedElementType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Резервное поле данных</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="datePlanReject" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Плановая дата отказа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="datePlanPetition" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Плановая дата рассмотрения ходатайства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="datePlanComplete" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Плановая дата решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dateProcessing" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата начала обработки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dateComplete" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата принятия решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dateReject" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата отказа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isApproveExecutor" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Принято исполнителем</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isRejectExecutor" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Отказ исполнителя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="applicantPersonType">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru">Сведения о ФЛ, ИГ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="lastName" type="tns:string-256"/>
+			<xs:element name="firstName" type="tns:string-256"/>
+			<xs:element name="middleName" type="tns:string-256" minOccurs="0"/>
+			<xs:element name="identityDocument" type="tns:identityDocumentType"/>
+			<xs:element name="inn" type="tns:physicalPersonInnType" minOccurs="0"/>
+			<xs:element name="snils" type="tns:snilsType"/>
+			<xs:element name="birthDate" type="xsd:date"/>
+			<xs:element name="birthAddress" type="tns:string-256"/>
+			<xs:element name="gender" type="tns:genderType"/>
+			<xs:element name="nationality" type="tns:nationalityType"/>
+			<xs:element name="registrationAddress" type="tns:addressInfoType" minOccurs="0"/>
+			<xs:element name="email" type="tns:string-256" minOccurs="0"/>
+			<xs:element name="mobilePhone" type="tns:stringNN-20" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="applicantBusinessmanType">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru">Сведения о ИП</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="applicantPerson" type="tns:applicantPersonType"/>
+			<xs:element name="ogrnip" type="tns:ogrnipType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="applicantLegalType">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru">Сведения о ЮЛ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="legalFullName" type="tns:string-4000"/>
+			<xs:element name="legalShortName" type="tns:string-500"/>
+			<xs:element name="ogrn" type="tns:ogrnType"/>
+			<xs:element name="inn" type="tns:legalPersonInnType"/>
+			<xs:element name="kpp" type="tns:kppType"/>
+			<xs:element name="legalAddress" type="tns:addressInfoType"/>
+			<xs:element name="workingPosition" type="tns:string-256"/>
+			<xs:element name="lastName" type="tns:string-256"/>
+			<xs:element name="firstName" type="tns:string-256"/>
+			<xs:element name="middleName" type="tns:string-256" minOccurs="0"/>
+			<xs:element name="email" type="tns:string-256" minOccurs="0"/>
+			<xs:element name="mobilePhone" type="tns:stringNN-20" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="identityDocumentType">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru">Документ, удостоверяющий личность</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="passportRf" type="tns:passportRfType"/>
+			<xs:element name="foreignPassport" type="tns:notRestrictedDocumentType"/>
+			<xs:element name="internationalPassportRf" type="tns:internationalPassportRfType"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="passportRfType">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru">Паспорт РФ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="series">
+				<xs:annotation>
+					<xs:documentation xml:lang="ru">Серия</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xsd:string">
+						<xs:length value="4"/>
+						<xs:pattern value="\d{4}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="number">
+				<xs:annotation>
+					<xs:documentation xml:lang="ru">Номер</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xsd:string">
+						<xs:length value="6"/>
+						<xs:pattern value="\d{6}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="issueDate" type="xsd:date">
+				<xs:annotation>
+					<xs:documentation xml:lang="ru">Дата выдачи</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="issuer" type="tns:string-256">
+				<xs:annotation>
+					<xs:documentation xml:lang="ru">Кем выдан</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="notRestrictedDocumentType">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru">Паспорт ИГ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="series" type="tns:stringNN-20" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="ru">Серия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="number" type="tns:stringNN-20">
+				<xs:annotation>
+					<xs:documentation xml:lang="ru">Номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="issueDate" type="xsd:date">
+				<xs:annotation>
+					<xs:documentation xml:lang="ru">Дата выдачи</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="issuer" type="tns:string-256" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="ru">Кем выдан</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="internationalPassportRfType">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru">Загранпаспорт</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="series">
+				<xs:annotation>
+					<xs:documentation xml:lang="ru">Серия</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xsd:string">
+						<xs:length value="2"/>
+						<xs:pattern value="\d{2}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="number">
+				<xs:annotation>
+					<xs:documentation xml:lang="ru">Номер</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xsd:string">
+						<xs:length value="7"/>
+						<xs:pattern value="\d{7}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="issueDate" type="xsd:date">
+				<xs:annotation>
+					<xs:documentation xml:lang="ru">Дата выдачи</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="issuer" type="tns:string-256">
+				<xs:annotation>
+					<xs:documentation xml:lang="ru">Кем выдан</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="genderType">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru">Пол</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xsd:string">
+			<xs:enumeration value="Male"/>
+			<xs:enumeration value="Female"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="physicalPersonInnType">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru">ИНН</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xsd:string">
+			<xs:length value="12"/>
+			<xs:pattern value="\d{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="snilsType">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru">СНИЛС</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xsd:string">
+			<xs:length value="11"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="nationalityType">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru"> Код страны гражданства (код ОКСМ)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xsd:string">
+			<xs:length value="3"/>
+			<xs:pattern value="\d{3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ogrnipType">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru">ОГРНИП</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xsd:string">
+			<xs:length value="15"/>
+			<xs:pattern value="\d{15}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="legalPersonInnType">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru">ИНН ЮЛ</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xsd:string">
+			<xs:length value="10"/>
+			<xs:pattern value="\d{10}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ogrnType">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru">ОГРН</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xsd:string">
+			<xs:length value="13"/>
+			<xs:pattern value="\d{13}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="kppType">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru">КПП</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xsd:string">
+			<xs:length value="9"/>
+			<xs:pattern value="\d{9}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="addressInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru">Адрес</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="fullAddress" type="tns:string-1024"/>
+			<xs:element name="index" type="tns:string-6" minOccurs="0"/>
+			<xs:element name="region" type="tns:dataElementType" minOccurs="0"/>
+			<xs:element name="area" type="tns:dataElementType" minOccurs="0"/>
+			<xs:element name="city" type="tns:dataElementType" minOccurs="0"/>
+			<xs:element name="cityArea" type="tns:dataElementType" minOccurs="0"/>
+			<xs:element name="place" type="tns:dataElementType" minOccurs="0"/>
+			<xs:element name="street" type="tns:dataElementType" minOccurs="0"/>
+			<xs:element name="additionalArea" type="tns:dataElementType" minOccurs="0"/>
+			<xs:element name="additionalStreet" type="tns:dataElementType" minOccurs="0"/>
+			<xs:element name="house" type="tns:dataElementType" minOccurs="0"/>
+			<xs:element name="building1" type="tns:string-50" minOccurs="0"/>
+			<xs:element name="building2" type="tns:string-50" minOccurs="0"/>
+			<xs:element name="apartment" type="tns:string-50" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="stringNN-20">
+		<xs:restriction base="xsd:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-9000">
+		<xs:restriction base="xsd:string">
+			<xs:maxLength value="9000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-4000">
+		<xs:restriction base="xsd:string">
+			<xs:maxLength value="4000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-2048">
+		<xs:restriction base="xsd:string">
+			<xs:maxLength value="2048"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-1024">
+		<xs:restriction base="xsd:string">
+			<xs:maxLength value="1024"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-500">
+		<xs:restriction base="xsd:string">
+			<xs:maxLength value="500"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-256">
+		<xs:restriction base="xsd:string">
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-50">
+		<xs:restriction base="xsd:string">
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-6">
+		<xs:restriction base="xsd:string">
+			<xs:maxLength value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="requesterRoleType">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru">Категория заявителя</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xsd:string">
+			<xs:enumeration value="PERSON">
+				<xs:annotation>
+					<xs:documentation xml:lang="ru">Физическое лицо, в т.ч. иностранный гражданин</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EMPLOYEE">
+				<xs:annotation>
+					<xs:documentation xml:lang="ru">Юридическое лицо</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BUSINESSMAN">
+				<xs:annotation>
+					<xs:documentation xml:lang="ru">Индивидуальный предприниматель</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="dataElementType">
+		<xs:simpleContent>
+			<xs:extension base="tns:string-256">
+				<xs:attribute name="code" type="tns:string-50" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="unitType">
+		<xs:annotation>
+			<xs:documentation>Подразделение</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="id" type="xs:string" use="required">
+					<xs:annotation>
+						<xs:documentation>Идентификатор</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="fileType">
+		<xs:sequence>
+			<xs:element name="url" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Путь к файлу (в архиве)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Имя файла</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Описание файла</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="codeNameType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="code" type="xs:string" use="required">
+					<xs:annotation>
+						<xs:documentation>Код</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="violationTypeType">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Название</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Описание</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="code" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Код</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="reservedElementType">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Имя поля (для понимания назначения резервного элемента)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="code" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код поля (при необходимости передачи идентификатора)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="stringVal" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Содержимое поля - строка</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="numberVal" type="xs:long">
+					<xs:annotation>
+						<xs:documentation>Содержимое поля - число</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="dataVal" type="xs:date">
+					<xs:annotation>
+						<xs:documentation>Содержимое поля - дата</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="applicantDataType">
+		<xs:sequence>
+			<xs:element name="esiaOid" type="xs:string">
+				<xs:annotation>
+					<xs:documentation xml:lang="ru">Идентификатор заявителя в ЕСИА</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="requesterRole" type="tns:requesterRoleType">
+				<xs:annotation>
+					<xs:documentation xml:lang="ru">Вид контроллируемого лица (заявителя)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="applicantPerson" type="tns:applicantPersonType">
+					<xs:annotation>
+						<xs:documentation>Данные ФЛ (в том числе ИГ)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="applicantBusinessman" type="tns:applicantBusinessmanType">
+					<xs:annotation>
+						<xs:documentation>Данные ИП</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="applicantLegal" type="tns:applicantLegalType">
+					<xs:annotation>
+						<xs:documentation>Данные ЮЛ</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="epguDataType">
+		<xs:sequence>
+			<xs:element name="orderId" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Идентификатор на ЕПГУ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="complaintDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Дата отправки жалобы с ЕПГУ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="okato" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ОКАТО региона, в котором находится орган, на который сформирована жалоба</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="11"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="appealNumber" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер проверки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="coordinatorType">
+		<xs:complexContent>
+			<xs:extension base="tns:userType">
+				<xs:sequence>
+					<xs:element name="result">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="isApprove" type="xs:boolean">
+									<xs:annotation>
+										<xs:documentation>Результат согласования</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="date" type="xs:dateTime">
+									<xs:annotation>
+										<xs:documentation>Дата согласования</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="statusType">
+		<xs:sequence>
+			<xs:element name="code" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Код статуса</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="error" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Описание ошибки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="getComplaintsType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="newAndEvents" type="xs:boolean" fixed="true">
+					<xs:annotation>
+						<xs:documentation>Новые жалобы и по которым есть события</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="interval">
+					<xs:annotation>
+						<xs:documentation>Все за интервал времени</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="fromDate" type="xs:dateTime"/>
+							<xs:element name="toDate" type="xs:dateTime" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="id" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Идентификатор жалобы</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="unit" type="tns:unitType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Подразделение</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="uploadFiles" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак необходимости выгружать файлы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="sendComplaintEventType">
+		<xs:sequence>
+			<xs:element name="id" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Идентификатор жалобы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="unit" type="tns:unitType">
+				<xs:annotation>
+					<xs:documentation>Подразделение</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventTime" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Время формирования события</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="revokeFlag" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Флаг отзыва жалобы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="assignStage">
+					<xs:annotation>
+						<xs:documentation>Этап назначения исполнителя</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="redirect">
+								<xs:annotation>
+									<xs:documentation>Перенаправить жалобу</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="toUnit" type="tns:unitType">
+											<xs:annotation>
+												<xs:documentation>Подразделение, в которое перенаправляется жалоба</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="reason" type="xs:string" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Обоснование принятого решения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="cancel">
+								<xs:annotation>
+									<xs:documentation>Отказаться</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="reason" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>Обоснование принятого решения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="accept" type="tns:voidType">
+								<xs:annotation>
+									<xs:documentation>Взять в работу</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="assign">
+								<xs:annotation>
+									<xs:documentation>Назначить исполнителя</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="executor" type="tns:userType">
+											<xs:annotation>
+												<xs:documentation>ФИО ответственного инспектора</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="changeAssign">
+								<xs:annotation>
+									<xs:documentation>Изменить исполнителя</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="executor" type="tns:userType">
+											<xs:annotation>
+												<xs:documentation>ФИО ответственного инспектора</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="rejectAction">
+					<xs:annotation>
+						<xs:documentation>Отказ в рассмотрении</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="cause" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Причина отказа</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="reason" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Обоснование принятого решения</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="signer" type="tns:userType">
+								<xs:annotation>
+									<xs:documentation>Лицо, осуществившее подписание документа</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="coordinator" type="tns:coordinatorType" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Лица, осуществившие согласование документа </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="renewTermStep">
+					<xs:annotation>
+						<xs:documentation>Шаг рассмотрения ходатайства о восстановлении срока</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="notNeeded">
+								<xs:annotation>
+									<xs:documentation>Восстановление срока не требуется</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="reason" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>Обоснование принятого решения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="accept">
+								<xs:annotation>
+									<xs:documentation>Восстановить срок</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="renewDate" type="xs:date">
+											<xs:annotation>
+												<xs:documentation>Дата восстановления срока</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="reason" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>Обоснование принятого решения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="signer" type="tns:userType">
+											<xs:annotation>
+												<xs:documentation>Лицо, осуществившее подписание документа</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="coordinator" type="tns:coordinatorType" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Лица, осуществившие согласование документа </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="reject">
+								<xs:annotation>
+									<xs:documentation>Отказать в восстановлении срока</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="reason" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>Обоснование принятого решения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="signer" type="tns:userType">
+											<xs:annotation>
+												<xs:documentation>Лицо, осуществившее подписание документа</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="coordinator" type="tns:coordinatorType" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Лица, осуществившие согласование документа </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="pauseResolutionStep">
+					<xs:annotation>
+						<xs:documentation>Шаг рассмотрения ходотайства о приостановлении исполнения решения</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="accept">
+								<xs:annotation>
+									<xs:documentation>Приостановить исполнение</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="reason" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>Обоснование принятого решения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="signer" type="tns:userType">
+											<xs:annotation>
+												<xs:documentation>Лицо, осуществившее подписание документа</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="coordinator" type="tns:coordinatorType" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Лица, осуществившие согласование документа </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="reject">
+								<xs:annotation>
+									<xs:documentation>Отказать в приостановлении</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="reason" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>Обоснование принятого решения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="signer" type="tns:userType">
+											<xs:annotation>
+												<xs:documentation>Лицо, осуществившее подписание документа</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="coordinator" type="tns:coordinatorType" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Лица, осуществившие согласование документа </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="processingStep" type="tns:voidType">
+					<xs:annotation>
+						<xs:documentation>Перейти к рассмотрению</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="resolutionStage">
+					<xs:annotation>
+						<xs:documentation>Этап вынесения решения </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="prolong">
+								<xs:annotation>
+									<xs:documentation>Продлить срок рассмотрения</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="duration" type="xs:int">
+											<xs:annotation>
+												<xs:documentation>Срок продления (в рабочих днях)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="reason" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>Обоснование принятого решения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="signer" type="tns:userType">
+											<xs:annotation>
+												<xs:documentation>Лицо, осуществившее подписание документа</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="coordinator" type="tns:coordinatorType" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Лица, осуществившие согласование документа </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="result">
+								<xs:annotation>
+									<xs:documentation>Принять итоговое решение</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="resolution" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>Итоговое решение (Справочник)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="reason" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>Обоснование принятого решения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="signer" type="tns:userType">
+											<xs:annotation>
+												<xs:documentation>Лицо, осуществившее подписание документа</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="coordinator" type="tns:coordinatorType" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Лица, осуществившие согласование документа </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="requestData">
+								<xs:annotation>
+									<xs:documentation>Запросить дополнительную информацию</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="addDocList" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>Список запрашиваемых документов</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="reason" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>Обоснование принятого решения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="signer" type="tns:userType">
+											<xs:annotation>
+												<xs:documentation>Лицо, осуществившее подписание документа</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="coordinator" type="tns:coordinatorType" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Лица, осуществившие согласование документа </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="reservedElement" type="tns:reservedElementType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Резервное поле данных</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="inspectionRequestType">
+		<xs:choice>
+			<xs:element name="get">
+				<xs:annotation>
+					<xs:documentation>Получение</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="id" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>Иденитфикатор</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="create" type="tns:inspectionType">
+				<xs:annotation>
+					<xs:documentation>Создание</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="update" type="tns:inspectionType">
+				<xs:annotation>
+					<xs:documentation>Обновление</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="getComplaintsResultType">
+		<xs:sequence>
+			<xs:element name="complaint" type="tns:complaintType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Жалоба</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hasMoreFromDate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Имеются еще жалобы с указанной даты (используется если список с жалобами был очень большой).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="sendComplaintEventResultType">
+		<xs:sequence>
+			<xs:element name="status" type="tns:statusType">
+				<xs:annotation>
+					<xs:documentation>Статус обработки события</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="complaint" type="tns:complaintType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Обновленная жалоба</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="violationKnmComplexType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип: Нарушение, связанное с результатом КНМ</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="tns:violationKnm"/>
+	</xs:complexType>
+	<xs:complexType name="violationKnmNpaComplexType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип: Список положений нарушенных правовых актов</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="tns:violationKnmNpa"/>
+	</xs:complexType>
+	<xs:complexType name="regulationKnmComplexType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип: Список сведений о выданных предписаниях об устранении выявленных нарушений</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="tns:regulationKnm"/>
+	</xs:complexType>
+	<xs:complexType name="actionTakenViolationComplexType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип: Список сведений о мерах, принятых по результатам КНМ</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="tns:actionTakenViolation"/>
+	</xs:complexType>
+	<xs:complexType name="inspectionResultType">
+		<xs:sequence>
+			<xs:element name="status" type="tns:statusType">
+				<xs:annotation>
+					<xs:documentation>Статус операции с проверкой</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="inspection" type="tns:inspectionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Проверка</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:attributeGroup name="violationKnmNpa">
+		<xs:annotation>
+			<xs:documentation>Список положений нарушенных правовых актов</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="violationNpa" type="xs:string" use="required"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="regulationKnm">
+		<xs:annotation>
+			<xs:documentation>Список сведений о выданных предписаниях об устранении выявленных нарушений</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="regulationNumber" type="xs:string" use="required"/>
+		<xs:attribute name="regulationDate" type="xs:date" use="required"/>
+		<xs:attribute name="violationDate" type="xs:date" use="required"/>
+		<xs:attribute name="regulationContent" type="xs:string" use="required"/>
+		<xs:attribute name="executionStatus" type="xs:boolean" use="optional"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="actionTakenViolation">
+		<xs:annotation>
+			<xs:documentation>Список сведений о мерах, принятых по результатам КНМ</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="violationAction" type="xs:string" use="required"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="violationKnm">
+		<xs:annotation>
+			<xs:documentation>Нарушение, связанное с результатом КНМ</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="violationName" type="xs:string" use="optional"/>
+	</xs:attributeGroup>
+	<xs:complexType name="fullKnmComplexType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип: состав атрибутов паспорта КНМ</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="tns:fullKnmGroup"/>
+	</xs:complexType>
+	<xs:complexType name="classificationKnmComplexType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип: Общий состав атрибутов для классификации КНМ</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="tns:classificationKnmGroup"/>
+	</xs:complexType>
+	<xs:attributeGroup name="classificationKnmGroup">
+		<xs:annotation>
+			<xs:documentation>Общий состав атрибутов для классификации КНМ</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="knmForm" type="xs:integer" use="required"/>
+		<xs:attribute name="knmKind" type="xs:integer" use="required"/>
+		<xs:attribute name="notifyWay" type="xs:integer" use="required"/>
+	</xs:attributeGroup>
+	<xs:complexType name="eventComplexType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип: Перечень мероприятий по контролю, необходимых для достижения целей и задач проведения проверки</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="tns:eventGroupComplex"/>
+	</xs:complexType>
+	<xs:attributeGroup name="eventGroup">
+		<xs:annotation>
+			<xs:documentation>Мероприятие по контролю, необходимое для достижения целей и задач проведения КНМ</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="event" type="xs:string" use="required"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="eventlApprove">
+		<xs:annotation>
+			<xs:documentation>Сведения о согласовании проведения КНМ с органом прокуратуры</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="startDate" type="xs:date" use="required"/>
+		<xs:attribute name="endDate" type="xs:date" use="required"/>
+		<xs:attribute name="LiadTime" type="xs:integer" use="required"/>
+		<xs:attribute name="isPlanKnm" type="xs:boolean" use="optional"/>
+		<xs:attribute name="Objective" type="xs:string" use="required"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="eventGroupComplex">
+		<xs:annotation>
+			<xs:documentation>Группа атрибутов по мероприятиям</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="tns:eventGroup"/>
+		<xs:attributeGroup ref="tns:eventlApprove"/>
+	</xs:attributeGroup>
+	<xs:complexType name="basisComplexType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип: Перечень правовых оснований</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="basisKnm" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Основание проведения КНМ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dateBasisKnm" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Дата основания проведения КНМ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="basisNumber" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:attributeGroup name="basisList">
+		<xs:annotation>
+			<xs:documentation>Перечень правовых оснований</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="basisKnm" type="xs:string" use="required"/>
+		<xs:attribute name="dateBasisKnm" type="xs:date" use="required"/>
+		<xs:attribute name="basisNumber" type="xs:string" use="required"/>
+	</xs:attributeGroup>
+	<xs:complexType name="prosecComplexType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип: Информация об органе прокуратуры</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="tns:prosecGroup"/>
+	</xs:complexType>
+	<xs:attributeGroup name="prosecGroup">
+		<xs:annotation>
+			<xs:documentation>Информация об органе прокуратуры</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="nameProsec" type="xs:integer"/>
+	</xs:attributeGroup>
+	<xs:complexType name="subjectKnmComplexType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип: Информация о проверяемом лице</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="tns:subjectKnmGroup"/>
+	</xs:complexType>
+	<xs:attributeGroup name="subjectKnmGroup">
+		<xs:annotation>
+			<xs:documentation>Информация о проверяемом лице</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="inn" type="xs:string" use="required"/>
+		<xs:attribute name="ogrn" type="xs:string" use="required"/>
+	</xs:attributeGroup>
+	<xs:complexType name="objectKnmComplexType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип: Объект проведения КНМ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="typeAddress" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="addressInfoType" type="tns:addressInfoType"/>
+					</xs:choice>
+					<xs:attributeGroup ref="tns:objectKnmGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="knmResultGroup" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attributeGroup ref="tns:knmResultGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="knmInspectorGroup" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attributeGroup ref="tns:knmInspectorGroup"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:attributeGroup name="objectKnmGroup">
+		<xs:annotation>
+			<xs:documentation>Тип адреса места составления акта о проведении КНМ</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="typeAddress" type="xs:integer" use="optional"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="knmResultGroup">
+		<xs:annotation>
+			<xs:documentation>Результат проведения КНМ</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="actDateTime" type="xs:dateTime" use="required"/>
+		<xs:attribute name="actPlace" type="xs:integer" use="required"/>
+		<xs:attribute name="typeAddress" type="xs:integer" use="optional"/>
+		<xs:attribute name="startDate" type="xs:date" use="required"/>
+		<xs:attribute name="knmDurationH" type="xs:integer" use="required"/>
+		<xs:attribute name="knmDurationD" type="xs:integer" use="required"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="knmInspectorGroup">
+		<xs:annotation>
+			<xs:documentation>Список должностных лиц, проводивших КНМ</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="fullNameInspector" type="xs:string" use="required"/>
+		<xs:attribute name="positionInspector" type="xs:string" use="required"/>
+		<xs:attribute name="typeInspector" type="xs:integer" use="optional"/>
+	</xs:attributeGroup>
+	<xs:complexType name="violationActionKnmComplexType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип: Нарушение, связанное с результатом КНМ, принятые меры</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="violationKnmComplexType" type="tns:violationKnmComplexType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Комплексный тип: Нарушение, связанное с результатом КНМ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="violationKnmNpaComplexType" type="tns:violationKnmNpaComplexType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Комплексный тип: Список положений нарушенных правовых актов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="regulationKnmComplexType" type="tns:regulationKnmComplexType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Комплексный тип: Список сведений о выданных предписаниях об устранении выявленных нарушений</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="actionTakenViolationComplexType" type="tns:actionTakenViolationComplexType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Комплексный тип: Список сведений о мерах, принятых по результатам КНМ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:attributeGroup name="fullKnmGroup">
+		<xs:annotation>
+			<xs:documentation>Общий состав атрибутов паспорта КНМ</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="erpId" type="xs:string" use="required"/>
+		<xs:attribute name="erpIdDateCreate" type="xs:date" use="required"/>
+		<xs:attribute name="knmType" type="xs:integer" use="required"/>
+		<xs:attribute name="knmStatus" type="xs:integer" use="required"/>
+		<xs:attribute name="fedLaw" type="xs:integer" use="required"/>
+	</xs:attributeGroup>
+	<xs:complexType name="inspectionType">
+		<xs:annotation>
+			<xs:documentation>КНМ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Иденитфикатор</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="externalId" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Внешний идентификатор</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fullKnmComplexType">
+				<xs:annotation>
+					<xs:documentation>Комплексный тип: состав атрибутов паспорта КНМ</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:fullKnmComplexType"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="classificationKnmComplexType">
+				<xs:annotation>
+					<xs:documentation>Комплексный тип: Общий состав атрибутов для классификации КНМ</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:classificationKnmComplexType"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eventComplexType">
+				<xs:annotation>
+					<xs:documentation>Комплексный тип: Перечень мероприятий по контролю, необходимых для достижения целей и задач проведения проверки</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:eventComplexType"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="basisComplexType" type="tns:basisComplexType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Комплексный тип: Перечень правовых оснований</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="prosecComplexType" type="tns:prosecComplexType" minOccurs="0"/>
+			<xs:element name="subjectKnmComplexType">
+				<xs:annotation>
+					<xs:documentation>Комплексный тип: Информация о проверяемом лице</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:subjectKnmComplexType"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="objectKnmComplexType">
+				<xs:annotation>
+					<xs:documentation>Комплексный тип: Объект проведения КНМ</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:objectKnmComplexType"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="violationActionKnmComplexType" type="tns:violationActionKnmComplexType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Комплексный тип: Нарушение, связанное с результатом КНМ, принятые меры</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

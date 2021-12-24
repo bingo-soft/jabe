@@ -43,7 +43,7 @@ interface DelegateExecutionInterface extends BaseDelegateExecutionInterface, Bpm
     /**
      * Gets the name of the current activity.
      */
-    public function getCurrentActivityName(): string;
+    public function getCurrentActivityName(): ?string;
 
     /**
      * return the Id of the activity instance currently executed by this execution

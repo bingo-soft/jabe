@@ -34,13 +34,13 @@ abstract class CoreExecution extends AbstractVariableScope implements BaseDelega
     protected $skipSubprocesses;
 
     // atomic operations ////////////////////////////////////////////////////////
-    public function performOperation(CoreAtomicOperation $operation): void
+    public function performOperation(/*CoreAtomicOperation*/$operation): void
     {
         //LOG.debugPerformingAtomicOperation(operation, this);
         $operation->execute($this);
     }
 
-    public function performOperationSync(CoreAtomicOperation $operation): void
+    public function performOperationSync(/*CoreAtomicOperation*/$operation): void
     {
         //LOG.debugPerformingAtomicOperation(operation, this);
         $operation->execute($this);
