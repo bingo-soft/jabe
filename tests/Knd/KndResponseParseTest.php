@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Xml\Knd;
+namespace Tests\Knd;
 
 use PHPUnit\Framework\TestCase;
 use BpmPlatform\Model\Xml\ModelInstanceInterface;
@@ -19,7 +19,7 @@ class KndResponseParseTest extends TestCase
     protected function parseModel(string $test)
     {
         $this->modelParser = new KndResponseParser();
-        $xml = fopen('tests/Xml/Knd/Resources/Examples/' . $test . '.xml', 'r+');
+        $xml = fopen('tests/Knd/Resources/Examples/' . $test . '.xml', 'r+');
         $this->modelInstance = $this->modelParser->parseModelFromStream($xml);
     }
 

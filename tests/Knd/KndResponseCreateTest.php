@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Xml\Knd;
+namespace Tests\Knd;
 
 use PHPUnit\Framework\TestCase;
 use BpmPlatform\Model\Xml\ModelInstanceInterface;
