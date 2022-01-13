@@ -2,6 +2,8 @@
 
 namespace BpmPlatform\Engine\Impl\Variable\Serializer;
 
+use BpmPlatform\Engine\Impl\Persistence\Entity\NameableInterface;
+
 interface ValueFieldsInterface extends NameableInterface
 {
     public function getTextValue(): ?string;

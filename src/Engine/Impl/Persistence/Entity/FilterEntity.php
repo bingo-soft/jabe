@@ -48,6 +48,31 @@ class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface,
         }
     }
 
+    public function serialize()
+    {
+        return json_encode([
+            'id' => $this->id,
+            'resourceType' => $this->resourceType,
+            'name' => $this->name,
+            'owner' => $this->owner,
+            'query' => serialize($this->query),
+            'properties' => $this->properties,
+            'revision' => $this->revision
+        ]);
+    }
+
+    public function unserialize($data)
+    {
+        $json = json_decode($data);
+        $this->id = $json->id;
+        $this->resourceType = $json->resourceType;
+        $this->name = $json->name;
+        $this->owner = $json->owner;
+        $this->query = unserialize($json->query);
+        $this->properties = $json->properties;
+        $this->revision = $json->revision;
+    }
+
     public function setId(string $id): void
     {
         $this->id = $id;
