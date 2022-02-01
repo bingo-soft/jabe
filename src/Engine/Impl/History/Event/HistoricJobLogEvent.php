@@ -245,7 +245,7 @@ class HistoricJobLogEvent extends HistoryEvent
         $this->rootProcessInstanceId = $rootProcessInstanceId;
     }
 
-    public function getFailedActivityId(): string
+    public function getFailedActivityId(): ?string
     {
         return $this->failedActivityId;
     }

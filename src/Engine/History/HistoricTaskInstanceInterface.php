@@ -62,7 +62,7 @@ interface HistoricTaskInstanceInterface
     public function getDueDate(): string;
 
     /** The parent task of this task, in case this task was a subtask */
-    public function getParentTaskId(): string;
+    public function getParentTaskId(): ?string;
 
     /** Task follow-up date */
     public function getFollowUpDate(): string;

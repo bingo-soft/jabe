@@ -130,7 +130,7 @@ interface HistoricIncidentInterface
     /**
      * Returns the id of the activity on which the last exception occurred.
      */
-    public function getFailedActivityId(): string;
+    public function getFailedActivityId(): ?string;
 
     /**
      * Returns the annotation of this incident

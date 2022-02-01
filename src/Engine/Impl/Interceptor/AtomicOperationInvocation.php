@@ -105,7 +105,7 @@ class AtomicOperationInvocation
         return $this->operation;
     }
 
-    public function getExecution(): ExecutionEntity
+    public function getExecution(): ?ExecutionEntity
     {
         return $this->execution;
     }

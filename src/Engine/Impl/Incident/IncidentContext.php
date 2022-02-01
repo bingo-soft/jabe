@@ -95,7 +95,7 @@ class IncidentContext
         $this->historyConfiguration = $historicConfiguration;
     }
 
-    public function getFailedActivityId(): string
+    public function getFailedActivityId(): ?string
     {
         return $this->failedActivityId;
     }

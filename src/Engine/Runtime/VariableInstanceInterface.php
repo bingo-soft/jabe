@@ -31,7 +31,7 @@ interface VariableInstanceInterface
     /**
      * Returns the TypedValue of this variable instance.
      */
-    public function getTypedValue(): TypedValueInterface;
+    public function getTypedValue(?bool $deserializeValue = null): TypedValueInterface;
 
     /**
      * Returns the corresponding process instance id.

@@ -19,5 +19,5 @@ interface ValueFieldsInterface extends NameableInterface
     public function setDoubleValue(floar $doubleValue): void;
 
     public function getByteArrayValue(): ?string;
-    public function setByteArrayValue(string $bytes): void;
+    public function setByteArrayValue($bytes): void;
 }

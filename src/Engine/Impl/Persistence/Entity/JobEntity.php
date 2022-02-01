@@ -675,7 +675,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         $this->lastFailureLogId = $lastFailureLogId;
     }
 
-    public function getFailedActivityId(): string
+    public function getFailedActivityId(): ?string
     {
         return $this->failedActivityId;
     }

@@ -92,7 +92,7 @@ class HistoricDetailVariableInstanceUpdateEntity extends HistoricVariableUpdateE
         return $this->byteArrayField->getByteArrayValue();
     }
 
-    public function setByteArrayValue(string $bytes): void
+    public function setByteArrayValue($bytes): void
     {
         $this->byteArrayField->setByteArrayValue($bytes);
     }

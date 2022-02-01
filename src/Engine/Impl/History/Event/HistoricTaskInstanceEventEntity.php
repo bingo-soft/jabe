@@ -95,7 +95,7 @@ class HistoricTaskInstanceEventEntity extends HistoricScopeInstanceEvent
         $this->priority = $priority;
     }
 
-    public function getParentTaskId(): int
+    public function getParentTaskId(): ?string
     {
         return $this->parentTaskId;
     }

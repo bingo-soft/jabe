@@ -60,7 +60,7 @@ class ValueFieldsImpl implements ValueFieldsInterface
         return $this->byteArrayValue;
     }
 
-    public function setByteArrayValue(string $bytes): void
+    public function setByteArrayValue($bytes): void
     {
         $this->byteArrayValue = $bytes;
     }

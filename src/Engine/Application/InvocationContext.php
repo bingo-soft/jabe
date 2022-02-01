@@ -13,7 +13,7 @@ class InvocationContext
         $this->execution = $execution;
     }
 
-    public function getExecution(): BaseDelegateExecutionInterface
+    public function getExecution(): ?BaseDelegateExecutionInterface
     {
         return $this->execution;
     }

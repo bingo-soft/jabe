@@ -66,7 +66,7 @@ interface HistoricJobLogInterface
     /**
      * Returns the id of the activity on which the last exception occurred.
      */
-    public function getFailedActivityId(): string;
+    public function getFailedActivityId(): ?string;
 
     /**
      * Returns the specific execution id on which the associated job was created.
