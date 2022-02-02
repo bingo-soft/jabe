@@ -7,7 +7,7 @@ use BpmPlatform\Engine\Variable\Impl\Value\{
     FileValueImpl,
     UntypedValueImpl
 };
-use BpmPlatform\Engine\Variable\Type\ValueTypeTrait;
+use BpmPlatform\Engine\Variable\Type\ValueType;
 use BpmPlatform\Engine\Variable\Value\{
     FileValueInterface,
     TypedValueInterface
@@ -30,7 +30,7 @@ class FileValueSerializer extends PrimitiveValueSerializer
 
     public function __construct()
     {
-        parent::__construct(ValueTypeTrait::getFile());
+        parent::__construct(ValueType::getFile());
     }
 
     public function writeValue(FileValueInterface $value, ValueFieldsInterface $valueFields): void

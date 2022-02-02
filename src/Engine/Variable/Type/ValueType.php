@@ -15,7 +15,7 @@ use BpmPlatform\Engine\Variable\Impl\Type\{
 };
 use BpmPlatform\Engine\Variable\Type\ValueTypeInterface;
 
-class ValueTypeTrait
+class ValueType
 {
     public static function getNull(): PrimitiveValueTypeInterface
     {

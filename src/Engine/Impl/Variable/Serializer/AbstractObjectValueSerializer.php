@@ -10,7 +10,7 @@ use BpmPlatform\Engine\Variable\Impl\Value\{
 };
 use BpmPlatform\Engine\Variable\Type\{
     ValueTypeInterface,
-    ValueTypeTrait
+    ValueType
 };
 use BpmPlatform\Engine\Variable\Value\ObjectValueInterface;
 
@@ -18,7 +18,7 @@ abstract class AbstractObjectValueSerializer extends AbstractSerializableValueSe
 {
     public function __construct(string $serializationDataFormat)
     {
-        parent::__construct(ValueTypeTrait::getObject(), $serializationDataFormat);
+        parent::__construct(ValueType::getObject(), $serializationDataFormat);
     }
 
     public function convertToTypedValue(UntypedValueImpl $untypedValue): ObjectValueInterface

@@ -6,7 +6,7 @@ use BpmPlatform\Engine\Variable\Variables;
 use BpmPlatform\Engine\Variable\Value\IntegerValueInterface;
 use BpmPlatform\Engine\Variable\Type\{
     ValueTypeInterface,
-    ValueTypeTrait
+    ValueType
 };
 use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
 
@@ -24,7 +24,7 @@ class IntegerTypeImpl extends PrimitiveValueTypeImpl
 
     public function canConvertFromTypedValue(?TypedValueInterface $typedValue): bool
     {
-        if ($typedValue->getType() != ValueTypeTrait::getInteger()) {
+        if ($typedValue->getType() != ValueType::getInteger()) {
             return false;
         }
 
@@ -44,7 +44,7 @@ class IntegerTypeImpl extends PrimitiveValueTypeImpl
 
     public function convertFromTypedValue(TypedValueInterface $typedValue): IntegerValueInterface
     {
-        if ($typedValue->getType() != ValueTypeTrait::getInteger()) {
+        if ($typedValue->getType() != ValueType::getInteger()) {
             throw new \Exception("unsupported conversion");
         }
         $integerValue = null;

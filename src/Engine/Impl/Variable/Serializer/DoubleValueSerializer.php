@@ -4,14 +4,14 @@ namespace BpmPlatform\Engine\Impl\Variable\Serializer;
 
 use BpmPlatform\Engine\Variable\Variables;
 use BpmPlatform\Engine\Variable\Impl\Value\UntypedValueImpl;
-use BpmPlatform\Engine\Variable\Type\ValueTypeTrait;
+use BpmPlatform\Engine\Variable\Type\ValueType;
 use BpmPlatform\Engine\Variable\Value\DoubleValueInterface;
 
 class DoubleValueSerializer extends PrimitiveValueSerializer
 {
     public function __construct()
     {
-        parent::__construct(ValueTypeTrait::getDouble());
+        parent::__construct(ValueType::getDouble());
     }
 
     public function convertToTypedValue(UntypedValueImpl $untypedValue): DoubleValueInterface

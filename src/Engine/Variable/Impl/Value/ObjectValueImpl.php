@@ -6,7 +6,7 @@ use BpmPlatform\Engine\Variable\Type\{
     SerializableValueTypeInterface
 };
 use BpmPlatform\Engine\Variable\Value\ObjectValueInterface;
-use BpmPlatform\Engine\Variable\Type\ValueTypeTrait;
+use BpmPlatform\Engine\Variable\Type\ValueType;
 
 class ObjectValueImpl extends AbstractTypedValue implements ObjectValueInterface
 {
@@ -23,7 +23,7 @@ class ObjectValueImpl extends AbstractTypedValue implements ObjectValueInterface
         ?bool $isDeserialized = true,
         ?bool $isTransient = null
     ) {
-        parent::__construct($deserializedValue, ValueTypeTrait::getObject());
+        parent::__construct($deserializedValue, ValueType::getObject());
 
         $this->serializedValue = $serializedValue;
         $this->serializationDataFormat = $serializationDataFormat;

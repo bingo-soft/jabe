@@ -5,7 +5,7 @@ namespace BpmPlatform\Engine\Variable\Impl\Value\Builder;
 use BpmPlatform\Engine\Variable\Value\FileValueInterface;
 use BpmPlatform\Engine\Variable\Value\Builder\FileValueBuilderInterface;
 use BpmPlatform\Engine\Variable\Impl\Value\FileValueImpl;
-use BpmPlatform\Engine\Variable\Type\ValueTypeTrait;
+use BpmPlatform\Engine\Variable\Type\ValueType;
 
 class FileValueBuilderImpl implements FileValueBuilderInterface
 {
@@ -13,7 +13,7 @@ class FileValueBuilderImpl implements FileValueBuilderInterface
 
     public function __construct(string $filename)
     {
-        $this->fileValue = new FileValueImpl(ValueTypeTrait::getFile(), $filename);
+        $this->fileValue = new FileValueImpl(ValueType::getFile(), $filename);
     }
 
     public function create(): FileValueInterface

@@ -1,0 +1,15 @@
+<?php
+
+namespace BpmPlatform\Engine\Impl\Persistence\Entity\Util;
+
+use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+
+interface TypedValueUpdateListenerInterface
+{
+    /**
+     * Called when an implicit update to a typed value is detected
+     *
+     * @param updatedValue
+     */
+    public function onImplicitValueUpdate(TypedValueInterface $updatedValue): void;
+}

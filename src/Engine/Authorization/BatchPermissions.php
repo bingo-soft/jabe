@@ -221,17 +221,4 @@ class BatchPermissions implements PermissionInterface
         $this->name = $name;
         $this->id = $id;
     }
-
-    public static function forName(string $name): PermissionInterface
-    {
-        $names = explode("_", strtolower($name));
-        $func = $names[0];
-        if (count($names) > 1) {
-            for ($i = 1; $i < count($names); $i += 1) {
-                $func .= ucfirst($names[$i]);
-            }
-        }
-
-        return self::$func();
-    }
 }

@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use BpmPlatform\Engine\Variable\Variables;
 use BpmPlatform\Engine\Variable\Type\{
     ValueTypeInterface,
-    ValueTypeTrait
+    ValueType
 };
 use BpmPlatform\Engine\Variable\Impl\Value\NullValueImpl;
 
@@ -22,19 +22,19 @@ class PrimitiveValueTest extends TestCase
         $date = time();
         $this->values = [
             [
-                ValueTypeTrait::getString(), "someString", Variables::stringValue("someString"), Variables::stringValue(null)
+                ValueType::getString(), "someString", Variables::stringValue("someString"), Variables::stringValue(null)
             ],
             [
-                ValueTypeTrait::getInteger(), 1, Variables::integerValue(1), Variables::integerValue(null)
+                ValueType::getInteger(), 1, Variables::integerValue(1), Variables::integerValue(null)
             ],
             [
-                ValueTypeTrait::getBoolean(), true, Variables::booleanValue(true), Variables::booleanValue(null)
+                ValueType::getBoolean(), true, Variables::booleanValue(true), Variables::booleanValue(null)
             ],
             [
-                ValueTypeTrait::getDouble(), 1.0, Variables::doubleValue(1.0), Variables::doubleValue(null)
+                ValueType::getDouble(), 1.0, Variables::doubleValue(1.0), Variables::doubleValue(null)
             ],
             [
-                ValueTypeTrait::getDate(), $date, Variables::dateValue($date), Variables::dateValue(null)
+                ValueType::getDate(), $date, Variables::dateValue($date), Variables::dateValue(null)
             ]
         ];
     }

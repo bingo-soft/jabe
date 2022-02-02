@@ -6,7 +6,7 @@ use BpmPlatform\Engine\Variable\Variables;
 use BpmPlatform\Engine\Variable\Value\DoubleValueInterface;
 use BpmPlatform\Engine\Variable\Type\{
     ValueTypeInterface,
-    ValueTypeTrait
+    ValueType
 };
 use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
 
@@ -24,7 +24,7 @@ class DoubleTypeImpl extends PrimitiveValueTypeImpl
 
     public function canConvertFromTypedValue(?TypedValueInterface $typedValue): bool
     {
-        if ($typedValue->getType() != ValueTypeTrait::getDouble()) {
+        if ($typedValue->getType() != ValueType::getDouble()) {
             return false;
         }
 
@@ -33,7 +33,7 @@ class DoubleTypeImpl extends PrimitiveValueTypeImpl
 
     public function convertFromTypedValue(TypedValueInterface $typedValue): DoubleValueInterface
     {
-        if ($typedValue->getType() != ValueTypeTrait::getDouble()) {
+        if ($typedValue->getType() != ValueType::getDouble()) {
             throw new \Exception("unsupported conversion");
         }
         $doubleValue = null;

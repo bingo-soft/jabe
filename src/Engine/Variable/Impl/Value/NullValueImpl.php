@@ -6,7 +6,7 @@ use BpmPlatform\Engine\Variable\Type\{
     ValueTypeInterface
 };
 use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
-use BpmPlatform\Engine\Variable\Type\ValueTypeTrait;
+use BpmPlatform\Engine\Variable\Type\ValueType;
 
 class NullValueImpl implements TypedValueInterface
 {
@@ -39,7 +39,7 @@ class NullValueImpl implements TypedValueInterface
 
     public function getType(): ?ValueTypeInterface
     {
-        return ValueTypeTrait::getNull();
+        return ValueType::getNull();
     }
 
     public function __toString()

@@ -5,7 +5,7 @@ namespace BpmPlatform\Engine\Impl\Variable;
 use BpmPlatform\Engine\Variable\Type\{
     ValueTypeInterface,
     ValueTypeResolverInterface,
-    ValueTypeTrait
+    ValueType
 };
 
 class ValueTypeResolverImpl implements ValueTypeResolverInterface
@@ -14,15 +14,15 @@ class ValueTypeResolverImpl implements ValueTypeResolverInterface
 
     public function __construct()
     {
-        $this->addType(ValueTypeTrait::getBoolean());
-        $this->addType(ValueTypeTrait::getDate());
-        $this->addType(ValueTypeTrait::getDouble());
-        $this->addType(ValueTypeTrait::getInteger());
-        $this->addType(ValueTypeTrait::getNull());
-        $this->addType(ValueTypeTrait::getString());
-        $this->addType(ValueTypeTrait::getObject());
-        $this->addType(ValueTypeTrait::getNumber());
-        $this->addType(ValueTypeTrait::getFile());
+        $this->addType(ValueType::getBoolean());
+        $this->addType(ValueType::getDate());
+        $this->addType(ValueType::getDouble());
+        $this->addType(ValueType::getInteger());
+        $this->addType(ValueType::getNull());
+        $this->addType(ValueType::getString());
+        $this->addType(ValueType::getObject());
+        $this->addType(ValueType::getNumber());
+        $this->addType(ValueType::getFile());
     }
 
     public function addType(ValueTypeInterface $type): void

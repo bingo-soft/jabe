@@ -4,14 +4,14 @@ namespace BpmPlatform\Engine\Impl\Variable\Serializer;
 
 use BpmPlatform\Engine\Variable\Variables;
 use BpmPlatform\Engine\Variable\Impl\Value\UntypedValueImpl;
-use BpmPlatform\Engine\Variable\Type\ValueTypeTrait;
+use BpmPlatform\Engine\Variable\Type\ValueType;
 use BpmPlatform\Engine\Variable\Value\DateValueInterface;
 
 class DateValueSerializer extends PrimitiveValueSerializer
 {
     public function __construct()
     {
-        parent::__construct(ValueTypeTrait::getDate());
+        parent::__construct(ValueType::getDate());
     }
 
     public function convertToTypedValue(UntypedValueImpl $untypedValue): DateValueInterface

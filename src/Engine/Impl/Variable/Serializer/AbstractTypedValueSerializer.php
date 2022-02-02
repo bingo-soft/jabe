@@ -4,7 +4,7 @@ namespace BpmPlatform\Engine\Impl\Variable\Serializer;
 
 use BpmPlatform\Engine\Variable\Type\{
     ValueTypeInterface,
-    ValueTypeTrait
+    ValueType
 };
 use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
 

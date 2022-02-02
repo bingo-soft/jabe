@@ -7,7 +7,7 @@ use BpmPlatform\Engine\Variable\Impl\Value\{
     NullValueImpl,
     UntypedValueImpl
 };
-use BpmPlatform\Engine\Variable\Type\ValueTypeTrait;
+use BpmPlatform\Engine\Variable\Type\ValueType;
 use BpmPlatform\Engine\Variable\Value\{
     NullValueInterface,
     TypedValueInterface
@@ -17,12 +17,12 @@ class NullValueSerializer extends PrimitiveValueSerializer
 {
     public function __construct()
     {
-        parent::__construct(ValueTypeTrait::getNull());
+        parent::__construct(ValueType::getNull());
     }
 
     public function getName(): string
     {
-        return strtolower(ValueTypeTrait::getNull()->getName());
+        return strtolower(ValueType::getNull()->getName());
     }
 
     public function convertToTypedValue(UntypedValueImpl $untypedValue): NullValueInterface
