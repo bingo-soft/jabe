@@ -20,7 +20,8 @@
         "monolog/monolog": "^2.3",
         "phpmailer/phpmailer": "^6.5",
         "symfony/process": "^5.4",
-        "phpixie/image": "^3.3"
+        "phpixie/image": "^3.3",
+        "ramsey/uuid": "^4.2"
     },
     "require-dev": {
         "doctrine/coding-standard": "^9",

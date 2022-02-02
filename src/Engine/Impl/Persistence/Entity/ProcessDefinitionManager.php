@@ -402,37 +402,37 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
         return $this->getTenantManager()->configureQuery($parameter);
     }
 
-    public function findLatestDefinitionByKey(string $key): ?ProcessDefinitionEntity
+    public function findLatestDefinitionByKey(string $key)
     {
         return $this->findLatestProcessDefinitionByKey($key);
     }
 
-    public function findLatestDefinitionById(string $id): ?ProcessDefinitionEntity
+    public function findLatestDefinitionById(string $id)
     {
         return $this->findLatestProcessDefinitionById($id);
     }
 
-    public function getCachedResourceDefinitionEntity(string $definitionId): ?ProcessDefinitionEntity
+    public function getCachedResourceDefinitionEntity(string $definitionId)
     {
         return $this->getDbEntityManager()->getCachedEntity(ProcessDefinitionEntity::class, $definitionId);
     }
 
-    public function findLatestDefinitionByKeyAndTenantId(string $definitionKey, ?string $tenantId): ?ProcessDefinitionEntity
+    public function findLatestDefinitionByKeyAndTenantId(string $definitionKey, ?string $tenantId)
     {
         return $this->findLatestProcessDefinitionByKeyAndTenantId($definitionKey, $tenantId);
     }
 
-    public function findDefinitionByKeyVersionAndTenantId(string $definitionKey, int $definitionVersion, ?string $tenantId): ?ProcessDefinitionEntity
+    public function findDefinitionByKeyVersionAndTenantId(string $definitionKey, int $definitionVersion, ?string $tenantId)
     {
         return $this->findProcessDefinitionByKeyVersionAndTenantId($definitionKey, $definitionVersion, $tenantId);
     }
 
-    public function findDefinitionByKeyVersionTagAndTenantId(string $definitionKey, string $definitionVersionTag, ?string $tenantId): ?ProcessDefinitionEntity
+    public function findDefinitionByKeyVersionTagAndTenantId(string $definitionKey, string $definitionVersionTag, ?string $tenantId)
     {
         return $this->findProcessDefinitionByKeyVersionTagAndTenantId($definitionKey, $definitionVersionTag, $tenantId);
     }
 
-    public function findDefinitionByDeploymentAndKey(string $deploymentId, string $definitionKey): ?ProcessDefinitionEntity
+    public function findDefinitionByDeploymentAndKey(string $deploymentId, string $definitionKey)
     {
         return $this->findProcessDefinitionByDeploymentAndKey($deploymentId, $definitionKey);
     }
