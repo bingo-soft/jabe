@@ -39,6 +39,27 @@ abstract class JobDeclaration implements \Serializable
         $this->jobHandlerType = $jobHandlerType;
     }
 
+    public function serialize()
+    {
+        return json_encode([
+            'jobDefinitionId' => $this->jobDefinitionId,
+            'jobHandlerType' => $this->jobHandlerType,
+            'jobHandlerConfiguration' => $this->jobHandlerConfigurationl,
+            'jobConfiguration' => $this->jobConfiguration,
+            'exclusive' => $this->exclusive
+        ]);
+    }
+
+    public function unserialize($data)
+    {
+        $json = json_decode($data);
+        $this->jobDefinitionId = $json->jobDefinitionId;
+        $this->jobHandlerType = $json->jobHandlerType;
+        $this->jobHandlerConfiguration = $json->jobHandlerConfiguration;
+        $this->jobConfiguration = $json->jobConfiguration;
+        $this->exclusive = $json->exclusive;
+    }
+
     // Job instance factory //////////////////////////////////////////
 
     /**
