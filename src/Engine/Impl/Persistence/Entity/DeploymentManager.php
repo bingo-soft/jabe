@@ -32,7 +32,7 @@ class DeploymentManager extends AbstractManager
         foreach ($deployment->getResources() as $resource) {
             $resource->setDeploymentId($deployment->getId());
             $resource->setType(ResourceTypes::repository()->getValue());
-            $resource->setCreateTime(ClockUtil::getCurrentTime());
+            $resource->setCreateTime(ClockUtil::getCurrentTime()->format('c'));
             $this->getResourceManager()->insertResource($resource);
         }
 

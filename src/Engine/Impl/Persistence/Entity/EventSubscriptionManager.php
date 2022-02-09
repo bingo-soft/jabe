@@ -321,7 +321,7 @@ class EventSubscriptionManager extends AbstractManager
 
     protected function matchesSubscription(EventSubscriptionEntity $subscription, string $type, string $eventName): bool
     {
-        EnsureUtil::ensureNotNull("event type", $type);
+        EnsureUtil::ensureNotNull("event type", "type", $type);
         $subscriptionEventName = $subscription->getEventName();
 
         return $type == $subscription->getEventType() &&

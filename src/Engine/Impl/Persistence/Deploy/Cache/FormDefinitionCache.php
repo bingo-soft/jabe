@@ -26,17 +26,17 @@ class FormDefinitionCache extends ResourceDefinitionCache
 
     protected function checkDefinitionFound(string $definitionId, FormDefinitionEntity $definition): void
     {
-        EnsureUtil::ensureNotNull("no deployed form definition found with id '" . $definitionId . "'", "camundaFormDefinition", $definition);
+        EnsureUtil::ensureNotNull("no deployed form definition found with id '" . $definitionId . "'", "formDefinition", $definition);
     }
 
     protected function checkInvalidDefinitionByKey(string $definitionKey, FormDefinitionEntity $definition): void
     {
-        EnsureUtil::ensureNotNull("no deployed form definition found with key '" . $definitionKey . "'", "camundaFormDefinition", $definition);
+        EnsureUtil::ensureNotNull("no deployed form definition found with key '" . $definitionKey . "'", "formDefinition", $definition);
     }
 
     protected function checkInvalidDefinitionByKeyAndTenantId(string $definitionKey, string $tenantId, FormDefinitionEntity $definition): void
     {
-        EnsureUtil::ensureNotNull("no deployed form definition found with key '" . $definitionKey . "' and tenant-id '" . $tenantId + "'", "camundaFormDefinition", $definition);
+        EnsureUtil::ensureNotNull("no deployed form definition found with key '" . $definitionKey . "' and tenant-id '" . $tenantId + "'", "formDefinition", $definition);
     }
 
     protected function checkInvalidDefinitionByKeyVersionAndTenantId(
@@ -46,7 +46,7 @@ class FormDefinitionCache extends ResourceDefinitionCache
         FormDefinitionEntity $definition
     ): void {
         EnsureUtil::ensureNotNull("no deployed camunda form definition found with key '" . $definitionKey . "', version '" . $definitionVersion
-          . "' and tenant-id '" . $tenantId . "'", "camundaFormDefinition", $definition);
+          . "' and tenant-id '" . $tenantId . "'", "formDefinition", $definition);
     }
 
     protected function checkInvalidDefinitionByKeyVersionTagAndTenantId(
@@ -60,7 +60,7 @@ class FormDefinitionCache extends ResourceDefinitionCache
 
     protected function checkInvalidDefinitionByDeploymentAndKey(string $deploymentId, string $definitionKey, FormDefinitionEntity $definition): void
     {
-        EnsureUtil::ensureNotNull("no deployed camunda form definition found with key '" . $definitionKey . "' in deployment '" . $deploymentId . "'", "camundaFormDefinition", $definition);
+        EnsureUtil::ensureNotNull("no deployed camunda form definition found with key '" . $definitionKey . "' in deployment '" . $deploymentId . "'", "formDefinition", $definition);
     }
 
     protected function checkInvalidDefinitionWasCached(string $deploymentId, string $definitionId, FormDefinitionEntity $definition): void

@@ -33,9 +33,9 @@ class CompositeHistoryEventHandler implements HistoryEventHandlerInterface
      */
     private function initializeHistoryEventHandlers(array $historyEventHandlers): void
     {
-        EnsureUtil::ensureNotNull("History event handler", $historyEventHandlers);
+        EnsureUtil::ensureNotNull("History event handler", "historyEventHandlers", $historyEventHandlers);
         foreach ($historyEventHandlers as $historyEventHandler) {
-            EnsureUtil::ensureNotNull("History event handler", $historyEventHandler);
+            EnsureUtil::ensureNotNull("History event handler", "historyEventHandlers", $historyEventHandler);
             $this->historyEventHandlers[] = $historyEventHandler;
         }
     }
@@ -49,7 +49,7 @@ class CompositeHistoryEventHandler implements HistoryEventHandlerInterface
      */
     public function add(HistoryEventHandlerInterface $historyEventHandler): void
     {
-        EnsureUtil::ensureNotNull("History event handler", $historyEventHandler);
+        EnsureUtil::ensureNotNull("History event handler", "historyEventHandler", $historyEventHandler);
         $this->historyEventHandlers[] = $historyEventHandler;
     }
 

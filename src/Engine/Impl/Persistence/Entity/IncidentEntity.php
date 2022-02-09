@@ -134,7 +134,7 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
         // decorate new incident
         $newIncident = new IncidentEntity();
         $newIncident->setId($incidentId);
-        $newIncident->setIncidentTimestamp(ClockUtil::getCurrentTime());
+        $newIncident->setIncidentTimestamp(ClockUtil::getCurrentTime()->format('c'));
         $newIncident->setIncidentType($incidentType);
         $newIncident->setCauseIncidentId($incidentId);
         $newIncident->setRootCauseIncidentId($incidentId);

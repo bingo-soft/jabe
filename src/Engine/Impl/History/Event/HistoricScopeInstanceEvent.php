@@ -36,7 +36,12 @@ class HistoricScopeInstanceEvent extends HistoryEvent
             return $this->durationInMillis;
         } elseif ($this->startTime != null && $this->endTime != null) {
             //@TODO. Probably should multiply by 1000?
-            return intval($this->endTime) * 1000 - intval($this->startTime) * 1000;
+            $et = new \DateTime($this->endTime);
+            $endTimeUt = $et->getTimestamp();
+
+            $st = new \DateTime($this->startTime);
+            $startTimeUt = $st->getTimestamp();
+            return $endTimeUt * 1000 - $startTimeUt * 1000;
         } else {
             return null;
         }

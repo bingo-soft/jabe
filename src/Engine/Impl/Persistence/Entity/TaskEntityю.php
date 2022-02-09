@@ -164,15 +164,15 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         if (is_string($data)) {
             $this->id = $data;
             $this->isIdentityLinksInitialized = true;
-            $this->setCreateTime(ClockUtil::getCurrentTime());
+            $this->setCreateTime(ClockUtil::getCurrentTime()->format('c'));
             $this->lifecycleState = TaskState::STATE_INIT;
         } elseif (is_int($data)) {
             $this->isIdentityLinksInitialized = true;
-            $this->setCreateTime(ClockUtil::getCurrentTime());
+            $this->setCreateTime(ClockUtil::getCurrentTime()->format('c'));
             $this->lifecycleState = $data;
         } elseif ($data instanceof ExecutionEntity) {
             $this->isIdentityLinksInitialized = true;
-            $this->setCreateTime(ClockUtil::getCurrentTime());
+            $this->setCreateTime(ClockUtil::getCurrentTime()->format('c'));
             $this->lifecycleState = TaskState::STATE_INIT;
             $this->setExecution($data);
             $this->skipCustomListeners = $data->isSkipCustomListeners();
@@ -903,7 +903,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
 
     public function setAssignee(?string $assignee): void
     {
-        $timestamp = ClockUtil::getCurrentTime();
+        $timestamp = ClockUtil::getCurrentTime()->format('c');
         $this->ensureTaskActive();
         $this->registerCommandContextCloseListener();
 
@@ -1754,7 +1754,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
             $assignee != null && array_key_exists(self::ASSIGNEE, $propertyChanges)
         ) {
             // assignee has changed and is not null, so mark a new task worker
-            $commandContext->getMeterLogManager()->insert(new TaskMeterLogEntity($assignee, ClockUtil::getCurrentTime()));
+            $commandContext->getMeterLogManager()->insert(new TaskMeterLogEntity($assignee, ClockUtil::getCurrentTime()->format('c')));
         }
     }
 

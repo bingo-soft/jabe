@@ -63,7 +63,7 @@ class JobManager extends AbstractManager
 
     public function insertJob(JobEntity $job): void
     {
-        $job->setCreateTime(ClockUtil::getCurrentTime());
+        $job->setCreateTime(ClockUtil::getCurrentTime()->format('c'));
 
         $this->getDbEntityManager()->insert($job);
         $this->getHistoricJobLogManager()->fireJobCreatedEvent($job);
@@ -97,7 +97,7 @@ class JobManager extends AbstractManager
     public function schedule(TimerEntity $timer): void
     {
         $duedate = $timer->getDuedate();
-        EnsureUtil::ensureNotNull("duedate", $duedate);
+        EnsureUtil::ensureNotNull("duedate", "duedate", $duedate);
         $timer->insert();
         $this->hintJobExecutorIfNeeded($timer, $duedate);
     }
@@ -117,7 +117,9 @@ class JobManager extends AbstractManager
         // and timers are usually set further in the future
         $jobExecutor = Context::getProcessEngineConfiguration()->getJobExecutor();
         $waitTimeInMillis = $jobExecutor->getWaitTimeInMillis();
-        if (intval($duedate) < (ClockUtil::getCurrentTime()->getTime() + $waitTimeInMillis)) {
+        $duedateUt = (new \DateTime($duedate))->getTimestamp() * 1000;
+        $currentDateUt = ClockUtil::getCurrentTime()->getTimestamp() * 1000 + $waitTimeInMillis;
+        if ($duedateUt < $currentDateUt) {
             $this->hintJobExecutor($jobEntity);
         }
     }
@@ -143,7 +145,8 @@ class JobManager extends AbstractManager
             ) {
                 // lock job & add to the queue of the current processor
                 $currentTime = ClockUtil::getCurrentTime();
-                $job->setLockExpirationTime(intval($currentTime) * 1000 + $jobExecutor->getLockTimeInMillis());
+                $currentTimeUt = $currentTime->getTimestamp() * 1000;
+                $job->setLockExpirationTime($currentTimeUt + $jobExecutor->getLockTimeInMillis());
                 $job->setLockOwner($jobExecutor->getLockOwner());
                 $transactionListener = new ExclusiveJobAddedNotification($job->getId(), $jobExecutorContext);
             } else {
@@ -199,7 +202,7 @@ class JobManager extends AbstractManager
         $engineConfiguration = Context::getProcessEngineConfiguration();
 
         $params = [];
-        $now = ClockUtil::getCurrentTime();
+        $now = ClockUtil::getCurrentTime()->format('c');
         $params["now"] = $now;
         $params["alwaysSetDueDate"] = $this->isEnsureJobDueDateNotNull();
         $params["deploymentAware"] = $engineConfiguration->isJobExecutorDeploymentAware();
@@ -433,7 +436,11 @@ class JobManager extends AbstractManager
     protected function isJobDue(JobEntity $job): bool
     {
         $duedate = $job->getDuedate();
+        $now = ClockUtil::getCurrentTime();
 
-        return $duedate == null || intval($duedate) <= time();
+        $duedateUt = (new \DateTime($duedate))->getTimestamp();
+        $nowUt = $now->getTimestamp();
+
+        return $duedate == null || $duedateUt <= $nowUt;
     }
 }

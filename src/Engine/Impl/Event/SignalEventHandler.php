@@ -33,6 +33,7 @@ class SignalEventHandler extends EventHandlerImpl
         $processDefinitionId = $eventSubscription->getConfiguration();
         EnsureUtil::ensureNotNull(
             "Configuration of signal start event subscription '" . $eventSubscription->getId() . "' contains no process definition id.",
+            "processDefinitionId",
             $processDefinitionId
         );
 

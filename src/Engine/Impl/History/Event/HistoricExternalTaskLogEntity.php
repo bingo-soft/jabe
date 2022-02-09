@@ -127,7 +127,7 @@ class HistoricExternalTaskLogEntity extends HistoryEvent implements HistoricExte
 
     public function setErrorDetails(string $exception): void
     {
-        EnsureUtil::ensureNotNull("exception", $exception);
+        EnsureUtil::ensureNotNull("exception", "exception", $exception);
 
         $exceptionBytes = $this->toByteArray($exception);
         $byteArray = $this->createExceptionByteArray(self::EXCEPTION_NAME, $exceptionBytes, ResourceTypes::history());

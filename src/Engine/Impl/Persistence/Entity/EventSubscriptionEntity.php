@@ -50,7 +50,7 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
     //only for mybatis
     public function __construct(?ExecutionEntity $executionEntity = null, ?EventType $eventType = null)
     {
-        $this->created = ClockUtil::getCurrentTime();
+        $this->created = ClockUtil::getCurrentTime()->format('c');
         $this->eventType = $eventType != null ? $eventType->name() : null;
 
         $this->setExecution($executionEntity);

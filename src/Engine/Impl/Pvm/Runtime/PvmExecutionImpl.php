@@ -1411,10 +1411,10 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
     {
         if (is_string($targetFlowScope)) {
             $targetScopeId = $targetFlowScope;
-            EnsureUtil::ensureNotNull("target scope id", $targetScopeId);
+            EnsureUtil::ensureNotNull("target scope id", "targetScopeId", "targetScopeId", $targetScopeId);
 
             $currentActivity = $this->getActivity();
-            EnsureUtil::ensureNotNull("activity of current execution", $currentActivity);
+            EnsureUtil::ensureNotNull("activity of current execution", "currentActivity", $currentActivity);
 
             $walker = new FlowScopeWalker($currentActivity);
             $targetFlowScope = $walker->walkUntil(new class ($targetScopeId) implements WalkConditionInterface {
@@ -1442,7 +1442,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
             $scopeExecution = $this->isScope() ? $this : $this->getParent();
 
             $currentActivity = $this->getActivity();
-            EnsureUtil::ensureNotNull("activity of current execution", $currentActivity);
+            EnsureUtil::ensureNotNull("activity of current execution", "currentActivity", $currentActivity);
 
             // if this is a scope execution currently executing a non scope activity
             $currentActivity = $currentActivity->isScope() ? $currentActivity : $currentActivity->getFlowScope();
@@ -1682,7 +1682,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
             return $mapping;
         } elseif ($currentScope == null && $mapping == null) {
             $currentActivity = $this->getActivity();
-            EnsureUtil::ensureNotNull("activity of current execution", $currentActivity);
+            EnsureUtil::ensureNotNull("activity of current execution", "currentActivity", $currentActivity);
 
             $flowScope = $this->getFlowScope();
             $flowScopeExecution = $this->getFlowScopeExecution();

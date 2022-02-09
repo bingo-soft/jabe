@@ -96,7 +96,7 @@ class MeterLogManager extends AbstractManager
             ->getReportingIntervalInSeconds();
 
         return ($query->getEndDate() == null
-            || $query->getEndDateMilliseconds() >= ClockUtil::getCurrentTime() * 1000 - (1000 * $reportingIntervalInSeconds));
+            || $query->getEndDateMilliseconds() >= ClockUtil::getCurrentTime()->getTimestamp() * 1000 - (1000 * $reportingIntervalInSeconds));
     }
 
     protected function shouldAddCurrentUnloggedCount(MetricsQueryImpl $query): bool
@@ -114,7 +114,8 @@ class MeterLogManager extends AbstractManager
     {
         $parameters = [];
         if ($timestamp != null) {
-            $parameters["milliseconds"] = intval($timestamp) * 1000;
+            $ut = (new \DateTime($timestamp))->getTimestamp();
+            $parameters["milliseconds"] = $ut * 1000;
         }
         $parameters["reporter"] = $reporter;
         $this->getDbEntityManager()->delete(MeterLogEntity::class, self::DELETE_ALL_METER_BY_TIMESTAMP_AND_REPORTER, $parameters);
@@ -145,7 +146,8 @@ class MeterLogManager extends AbstractManager
     {
         $parameters = [];
         // data inserted prior to now minus timeToLive-days can be removed
-        $removalTime = intval($currentTimestamp) - $timeToLive * 86400;
+        $ut = (new \DateTime($currentTimestamp))->getTimestamp();
+        $removalTime = $ut - $timeToLive * 86400;
         $parameters["removalTime"] = $removalTime;
         if ($minuteTo - $minuteFrom + 1 < 60) {
             $parameters["minuteFrom"] = $minuteFrom;
@@ -164,7 +166,7 @@ class MeterLogManager extends AbstractManager
     public function findTaskMetricsForCleanup(int $batchSize, int $timeToLive, int $minuteFrom, int $minuteTo): array
     {
         $queryParameters = [];
-        $queryParameters["currentTimestamp"] = ClockUtil::getCurrentTime();
+        $queryParameters["currentTimestamp"] = ClockUtil::getCurrentTime()->format('c');
         $queryParameters["timeToLive"] = $timeToLive;
         if ($minuteTo - $minuteFrom + 1 < 60) {
             $queryParameters["minuteFrom"] = $minuteFrom;

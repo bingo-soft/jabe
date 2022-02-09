@@ -168,7 +168,7 @@ class ActivityInstanceImpl extends ProcessElementInstanceImpl implements Activit
 
     public function getActivityInstances(string $activityId): array
     {
-        EnsureUtil::ensureNotNull("activityId", $activityId);
+        EnsureUtil::ensureNotNull("activityId", "activityId", $activityId);
 
         $instances = [];
         $this->collectActivityInstances($activityId, $instances);
@@ -189,7 +189,7 @@ class ActivityInstanceImpl extends ProcessElementInstanceImpl implements Activit
 
     public function getTransitionInstances(string $activityId): array
     {
-        EnsureUtil::ensureNotNull("activityId", $activityId);
+        EnsureUtil::ensureNotNull("activityId", "activityId", $activityId);
 
         $instances = [];
         $this->collectTransitionInstances($activityId, $instances);

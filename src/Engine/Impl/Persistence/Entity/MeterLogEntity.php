@@ -26,7 +26,8 @@ class MeterLogEntity implements DbEntityInterface, HasDbReferencesInterface, \Se
         $this->reporter = $reporter;
         $this->value = $value;
         $this->timestamp = $timestamp;
-        $this->milliseconds = intval($timestamp) * 1000;
+        $ut = (new \DateTime($timestamp))->getTimestamp();
+        $this->milliseconds = $ut * 1000;
     }
 
     public function serialize()

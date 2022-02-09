@@ -88,6 +88,11 @@ class DefaultHistoryRemovalTimeProvider implements HistoryRemovalTimeProvider
 
     public static function determineRemovalTime(string $initTime, int $timeToLive): string
     {
-        return intval($initTime) + $timeToLive;
+        $dt = new \DateTime($initTime);
+        $offsetTimestamp = $dt->getTimestamp() + $timeToLive * 86400;
+
+        $removalTime = new \DateTime();
+        $removalTime->setTimestamp($offsetTimestamp);
+        return $removalTime->format('c');
     }
 }

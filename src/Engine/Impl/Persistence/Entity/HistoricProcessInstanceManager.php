@@ -119,7 +119,7 @@ class HistoricProcessInstanceManager extends AbstractHistoricManager
     public function findHistoricProcessInstanceIdsForCleanup(int $batchSize, int $minuteFrom, int $minuteTo): array
     {
         $parameters = [];
-        $parameters["currentTimestamp"] = ClockUtil::getCurrentTime();
+        $parameters["currentTimestamp"] = ClockUtil::getCurrentTime()->format('c');
         if ($minuteTo - $minuteFrom + 1 < 60) {
             $parameters["minuteFrom"] = $minuteFrom;
             $parameters["minuteTo"] = $minuteTo;
@@ -151,7 +151,7 @@ class HistoricProcessInstanceManager extends AbstractHistoricManager
 
     public function findCleanableHistoricProcessInstancesReportCountByCriteria(CleanableHistoricProcessInstanceReportImpl $query): int
     {
-        $query->setCurrentTimestamp(ClockUtil::getCurrentTime());
+        $query->setCurrentTimestamp(ClockUtil::getCurrentTime()->format('c'));
 
         $this->getAuthorizationManager()->configureQueryHistoricFinishedInstanceReport($query, Resources::processDefinition());
         $this->getTenantManager()->configureQuery($query);

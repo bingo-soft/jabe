@@ -10,7 +10,10 @@
     "homepage": "https://github.com/bingo-soft/bpmplatform",
     "type": "project",
     "config": {
-        "vendor-dir": "./vendor"  
+        "vendor-dir": "./vendor",
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }  
     },
     "require": {
         "php": ">=7.4.0",
@@ -21,7 +24,8 @@
         "phpmailer/phpmailer": "^6.5",
         "symfony/process": "^5.4",
         "phpixie/image": "^3.3",
-        "ramsey/uuid": "^4.2"
+        "ramsey/uuid": "^4.2",
+        "dragonmantank/cron-expression": "^3.3"
     },
     "require-dev": {
         "doctrine/coding-standard": "^9",

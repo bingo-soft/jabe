@@ -292,12 +292,12 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
 
         // init properties
         $evt->setEventType($eventType->getEventName());
-        $evt->setTimestamp(ClockUtil::getCurrentTime());
+        $evt->setTimestamp(ClockUtil::getCurrentTime()->format('c'));
         $evt->setVariableInstanceId($variableInstance->getId());
         $evt->setProcessInstanceId($variableInstance->getProcessInstanceId());
         $evt->setExecutionId($variableInstance->getExecutionId());
-        $evt->setCaseInstanceId($variableInstance->getCaseInstanceId());
-        $evt->setCaseExecutionId($variableInstance->getCaseExecutionId());
+        //$evt->setCaseInstanceId($variableInstance->getCaseInstanceId());
+        //$evt->setCaseExecutionId($variableInstance->getCaseExecutionId());
         $evt->setTaskId($variableInstance->getTaskId());
         $evt->setRevision($variableInstance->getRevision());
         $evt->setVariableName($variableInstance->getName());
@@ -362,7 +362,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         $evt->setJobDefinitionId($contextEntry->getJobDefinitionId());
         $evt->setBatchId($contextEntry->getBatchId());
         $evt->setCategory($contextEntry->getCategory());
-        $evt->setTimestamp(ClockUtil::getCurrentTime());
+        $evt->setTimestamp(ClockUtil::getCurrentTime()->format('c'));
         $evt->setRootProcessInstanceId($contextEntry->getRootProcessInstanceId());
         $evt->setExternalTaskId($contextEntry->getExternalTaskId());
         $evt->setAnnotation($contextEntry->getAnnotation());
@@ -592,7 +592,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         $this->initProcessInstanceEvent($evt, $executionEntity, HistoryEventTypes::processInstanceStart());
 
         $evt->setStartActivityId($executionEntity->getActivityId());
-        $evt->setStartTime(ClockUtil::getCurrentTime());
+        $evt->setStartTime(ClockUtil::getCurrentTime()->format('c'));
 
         // set super process instance id
         $superExecution = $executionEntity->getSuperExecution();
@@ -670,10 +670,16 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
 
         // set end activity id
         $evt->setEndActivityId($executionEntity->getActivityId());
-        $evt->setEndTime(ClockUtil::getCurrentTime());
+        $evt->setEndTime(ClockUtil::getCurrentTime()->format('c'));
 
         if ($evt->getStartTime() != null) {
-            $evt->setDurationInMillis(intval($evt->getEndTime()) * 1000 - intval($evt->getStartTime()) * 1000);
+            $et = new \DateTime($evt->getEndTime());
+            $endTimeUt = $et->getTimestamp();
+
+            $st = new \DateTime($evt->getStartTime());
+            $startTimeUt = $st->getTimestamp();
+
+            $evt->setDurationInMillis($endTimeUt * 1000 - $startTimeUt * 1000);
         }
 
         if ($this->isRootProcessInstance($evt) && $this->isHistoryRemovalTimeStrategyEnd()) {
@@ -742,7 +748,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         // initialize sequence counter
         $this->initSequenceCounter($executionEntity, $evt);
 
-        $evt->setStartTime(ClockUtil::getCurrentTime());
+        $evt->setStartTime(ClockUtil::getCurrentTime()->format('c'));
 
         return $evt;
     }
@@ -789,9 +795,9 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         // initialize event
         $this->initActivityInstanceEvent($evt, $execution, HistoryEventTypes::activityInstanceEnd());
 
-        $evt->setEndTime(ClockUtil::getCurrentTime());
+        $evt->setEndTime(ClockUtil::getCurrentTime()->format('c'));
         if ($evt->getStartTime() != null) {
-            $evt->setDurationInMillis($evt->getEndTime() * 1000 - $evt->getStartTime() * 1000);
+            $evt->setDurationInMillis((new \DateTime($evt->getEndTime()))->getTimestamp() * 1000 - (new \DateTime($evt->getStartTime()))->getTimestamp() * 1000);
         }
 
         return $evt;
@@ -806,7 +812,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         // initialize event
         $this->initTaskInstanceEvent($evt, $task, HistoryEventTypes::taskInstanceCreate());
 
-        $evt->setStartTime(ClockUtil::getCurrentTime());
+        $evt->setStartTime(ClockUtil::getCurrentTime()->format('c'));
 
         return $evt;
     }
@@ -843,9 +849,9 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         $this->initTaskInstanceEvent($evt, $task, HistoryEventTypes::taskInstanceComplete());
 
         // set end time
-        $evt->setEndTime(ClockUtil::getCurrentTime());
+        $evt->setEndTime(ClockUtil::getCurrentTime()->format('c'));
         if ($evt->getStartTime() != null) {
-            $evt->setDurationInMillis($evt->getEndTime() * 1000 - $evt->getStartTime() * 1000);
+            $evt->setDurationInMillis((new \DateTime($evt->getEndTime()))->getTimestamp() * 1000 - (new \DateTime($evt->getStartTime()))->getTimestamp() * 1000);
         }
 
         // set delete reason
@@ -908,7 +914,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
 
         $historicFormPropertyEntity->setId($idGenerator->getNextId());
         $historicFormPropertyEntity->setEventType(HistoryEventTypes::formPropertyUpdate()->getEventName());
-        $historicFormPropertyEntity->setTimestamp(ClockUtil::getCurrentTime());
+        $historicFormPropertyEntity->setTimestamp(ClockUtil::getCurrentTime()->format('c'));
         $historicFormPropertyEntity->setExecutionId($execution->getId());
         $historicFormPropertyEntity->setProcessDefinitionId($execution->getProcessDefinitionId());
         $historicFormPropertyEntity->setProcessInstanceId($execution->getProcessInstanceId());
@@ -977,7 +983,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         $this->initHistoricIncidentEvent($evt, $incident, $eventType);
 
         if (HistoryEventTypes::incidentResolve()->equals($eventType) || HistoryEventTypes::incidentDelete()->equals($eventType)) {
-            $evt->setEndTime(ClockUtil::getCurrentTime());
+            $evt->setEndTime(ClockUtil::getCurrentTime()->format('c'));
         }
 
         return $evt;
@@ -1039,7 +1045,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
             $evt->setProcessDefinitionKey($definition->getKey());
         }
 
-        $evt->setTime(ClockUtil::getCurrentTime());
+        $evt->setTime(ClockUtil::getCurrentTime()->format('c'));
         $evt->setType($identityLink->getType());
         $evt->setUserId($identityLink->getUserId());
         $evt->setGroupId($identityLink->getGroupId());
@@ -1103,12 +1109,12 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         $event->setEventType($eventType->getEventName());
 
         if (HistoryEventTypes::batchStart()->equals($eventType)) {
-            $event->setStartTime(ClockUtil::getCurrentTime());
+            $event->setStartTime(ClockUtil::getCurrentTime()->format('c'));
             $event->setCreateUserId(Context::getCommandContext()->getAuthenticatedUserId());
         }
 
         if (HistoryEventTypes::batchEnd()->equals($eventType)) {
-            $event->setEndTime(ClockUtil::getCurrentTime());
+            $event->setEndTime(ClockUtil::getCurrentTime()->format('c'));
         }
 
         return $event;
@@ -1165,7 +1171,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
 
     protected function initHistoricJobLogEvent(HistoricJobLogEventEntity $evt, JobInterface $job, HistoryEventTypeInterface $eventType): void
     {
-        $currentTime = ClockUtil::getCurrentTime();
+        $currentTime = ClockUtil::getCurrentTime()->format('c');
         $evt->setTimestamp($currentTime);
 
         $jobEntity = $job;
@@ -1274,7 +1280,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
     protected function initHistoricExternalTaskLog(ExternalTaskEntity $entity, ExternalTaskStateInterface $state): HistoricExternalTaskLogEntity
     {
         $event = new HistoricExternalTaskLogEntity();
-        $event->setTimestamp(ClockUtil::getCurrentTime());
+        $event->setTimestamp(ClockUtil::getCurrentTime()->format('c'));
         $event->setExternalTaskId($entity->getId());
         $event->setTopicName($entity->getTopicName());
         $event->setWorkerId($entity->getWorkerId());

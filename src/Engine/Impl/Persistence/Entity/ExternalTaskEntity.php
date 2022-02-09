@@ -339,7 +339,7 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
 
     protected function setErrorDetails(string $exception): void
     {
-        EnsureUtil::ensureNotNull("exception", $exception);
+        EnsureUtil::ensureNotNull("exception", "exception", $exception);
 
         $exceptionBytes = StringUtil::toByteArray($exception);
 
@@ -449,8 +449,9 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
         if ($this->evaluateThrowBpmnError($associatedExecution, true)) {
             return;
         }
-
-        $this->lockExpirationTime = ClockUtil::getCurrentTime()->getTime() + $this->retryDuration;
+        $dt = new \DateTime();
+        $dt->setTimestamp(ClockUtil::getCurrentTime()->getTimestamp() + $retryDuration);
+        $this->lockExpirationTime = $dt->format('c');
         $this->produceHistoricExternalTaskFailedEvent();
         $this->setRetriesAndManageIncidents($retries);
     }
@@ -510,8 +511,9 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
     public function lock(string $workerId, int $lockDuration): void
     {
         $this->workerId = $workerId;
-        //@TODO. Check it out
-        $this->lockExpirationTime = ClockUtil::getCurrentTime()->getTime() . $this->lockDuration;
+        $dt = new \DateTime();
+        $dt->setTimestamp(ClockUtil::getCurrentTime()->getTimestamp() + $lockDuration);
+        $this->lockExpirationTime = $dt->format('c');
     }
 
     public function getExecution(?bool $validateExistence = true): ExecutionEntity
@@ -660,7 +662,9 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
     public function extendLock(int $newLockExpirationTime): void
     {
         $this->ensureActive();
-        $newTime = ClockUtil::getCurrentTime()->getTime() . $this->$newLockExpirationTime;
+        $dt = new \DateTime();
+        $dt->setTimestamp(ClockUtil::getCurrentTime()->getTimestamp() + $newLockExpirationTime);
+        $newTime = $dt->format('c');
         $this->lockExpirationTime = $newTime;
     }
 

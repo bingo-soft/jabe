@@ -89,7 +89,7 @@ class HistoricExternalTaskLogManager extends AbstractManager
 
     protected function deleteExceptionByteArrayByParameterMap(string $key, $value): void
     {
-        EnsureUtil::ensureNotNull($key, $value);
+        EnsureUtil::ensureNotNull($key, $key, $value);
         $parameterMap = [];
         $parameterMap[$key] = $value;
         $this->getDbEntityManager()->delete(ByteArrayEntity::class, "deleteErrorDetailsByteArraysByIds", $parameterMap);
