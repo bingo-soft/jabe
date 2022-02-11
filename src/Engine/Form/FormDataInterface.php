@@ -16,4 +16,6 @@ interface FormDataInterface
 
     /** returns the form fields which make up this form. */
     public function getFormFields(): array;
+
+    public function addFormField(FormFieldInterface $field): void;
 }

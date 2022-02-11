@@ -121,6 +121,11 @@ class FormFieldImpl implements FormFieldInterface, \Serializable
         return $this->validationConstraints;
     }
 
+    public function addValidationConstraint(FormFieldValidationConstraintInterface $constraint): void
+    {
+        $this->validationConstraints[] = $constraint;
+    }
+
     public function setValidationConstraints(array $validationConstraints): void
     {
         $this->validationConstraints = $validationConstraints;

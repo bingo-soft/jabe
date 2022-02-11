@@ -37,6 +37,8 @@ interface FormFieldInterface
      */
     public function getValidationConstraints(): array;
 
+    public function addValidationConstraint(FormFieldValidationConstraintInterface $constraint): void;
+
     /**
      * @return a {@link Map} of additional properties. This map may be used for adding additional configuration
      * to a form field. An example may be layout hints such as the size of the rendered form field or information

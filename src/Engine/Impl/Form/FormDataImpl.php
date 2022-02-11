@@ -84,6 +84,12 @@ class FormDataImpl implements FormDataInterface, \Serializable
     {
         return $this->formFields;
     }
+
+    public function addFormField(FormFieldInterface $field): void
+    {
+        $this->formFields[] = $field;
+    }
+
     public function setFormFields(array $formFields): void
     {
         $this->formFields = $formFields;

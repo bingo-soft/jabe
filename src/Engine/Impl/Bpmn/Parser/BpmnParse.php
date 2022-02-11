@@ -16,6 +16,47 @@ use BpmPlatform\Engine\Impl\{
     ConditionInterface,
     ProcessEngineLogger
 };
+use BpmPlatform\Engine\Impl\Bpmn\Behavior\{
+    BoundaryConditionalEventActivityBehavior,
+    BoundaryEventActivityBehavior,
+    CallActivityBehavior,
+    CallableElementActivityBehavior,
+    CancelBoundaryEventActivityBehavior,
+    CancelEndEventActivityBehavior,
+    ClassDelegateActivityBehavior,
+    CompensationEventActivityBehavior,
+    ErrorEndEventActivityBehavior,
+    EventBasedGatewayActivityBehavior,
+    EventSubProcessActivityBehavior,
+    EventSubProcessStartConditionalEventActivityBehavior,
+    EventSubProcessStartEventActivityBehavior,
+    ExclusiveGatewayActivityBehavior,
+    ExternalTaskActivityBehavior,
+    InclusiveGatewayActivityBehavior,
+    IntermediateCatchEventActivityBehavior,
+    IntermediateCatchLinkEventActivityBehavior,
+    IntermediateConditionalEventBehavior,
+    IntermediateThrowNoneEventActivityBehavior,
+    MailActivityBehavior,
+    ManualTaskActivityBehavior,
+    MultiInstanceActivityBehavior,
+    NoneEndEventActivityBehavior,
+    NoneStartEventActivityBehavior,
+    ParallelGatewayActivityBehavior,
+    ParallelMultiInstanceActivityBehavior,
+    ReceiveTaskActivityBehavior,
+    ScriptTaskActivityBehavior,
+    SequentialMultiInstanceActivityBehavior,
+    ServiceTaskDelegateExpressionActivityBehavior,
+    ServiceTaskExpressionActivityBehavior,
+    ShellActivityBehavior,
+    SubProcessActivityBehavior,
+    TaskActivityBehavior,
+    TerminateEndEventActivityBehavior,
+    ThrowEscalationEventActivityBehavior,
+    ThrowSignalEventActivityBehavior,
+    UserTaskActivityBehavior
+};
 use BpmPlatform\Engine\Impl\Bpmn\Helper\BpmnProperties;
 use BpmPlatform\Engine\Impl\Bpmn\Listener\{
     ClassDelegateExecutionListener,
@@ -25,7 +66,9 @@ use BpmPlatform\Engine\Impl\Bpmn\Listener\{
 };
 use BpmPlatform\Engine\Impl\Context\Context;
 use BpmPlatform\Engine\Impl\Core\Model\{
+    BaseCallableElement,
     CallableElementBinding,
+    CallableElementParameter,
     Properties
 };
 use BpmPlatform\Engine\Impl\Core\Variable\Mapping\IoMapping;
@@ -33,6 +76,13 @@ use BpmPlatform\Engine\Impl\Core\Variable\Value\{
     ConstantValueProvider,
     NullValueProvider,
     ParameterValueProvider
+};
+use BpmPlatform\Engine\Impl\El\{
+    ElValueProvider,
+    ExpressionInterface,
+    ExpressionManager,
+    FixedValue,
+    UelExpressionCondition
 };
 use BpmPlatform\Engine\Impl\Event\EventType;
 use BpmPlatform\Engine\Impl\Persistence\Entity\{
