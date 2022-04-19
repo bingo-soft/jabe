@@ -66,7 +66,7 @@ abstract class JobDeclaration implements \Serializable
      *
      * @return the created Job instances
      */
-    public function createJobInstance($context): JobEntity
+    public function createJobInstance($context = null): JobEntity
     {
         $job = $this->newJobInstance($context);
 
@@ -142,7 +142,7 @@ abstract class JobDeclaration implements \Serializable
      */
     abstract protected function resolveExecution($context): ?ExecutionEntity;
 
-    abstract protected function newJobInstance($context): JobEntity;
+    abstract protected function newJobInstance($context = null): JobEntity;
 
     // Getter / Setters //////////////////////////////////////////
 

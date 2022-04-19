@@ -40,4 +40,9 @@ class AsyncContinuationConfiguration implements JobHandlerConfigurationInterface
 
         return $configuration;
     }
+
+    public function __toString()
+    {
+        return $this->toCanonicalString();
+    }
 }

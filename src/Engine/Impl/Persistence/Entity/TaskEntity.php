@@ -1763,9 +1763,9 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         $this->identityLinkChanges[] = new PropertyChange($type, $oldProperty, $newProperty);
     }
 
-    public function setVariablesLocal(array $variables, bool $skipJavaSerializationFormatCheck): void
+    public function setVariablesLocal(array $variables, ?bool $skipSerializationFormatCheck = null): void
     {
-        parent::setVariablesLocal($variables, $skipJavaSerializationFormatCheck);
+        parent::setVariablesLocal($variables, $skipSerializationFormatCheck);
         Context::getCommandContext()->getDbEntityManager()->forceUpdate($this);
     }
 

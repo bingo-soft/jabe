@@ -20,4 +20,9 @@ class EventSubscriptionJobConfiguration implements JobHandlerConfigurationInterf
     {
         return $this->eventSubscriptionId;
     }
+
+    public function __toString()
+    {
+        return $this->toCanonicalString();
+    }
 }

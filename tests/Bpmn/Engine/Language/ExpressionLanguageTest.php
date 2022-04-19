@@ -30,6 +30,9 @@ class SimpleContextTest extends TestCase
         $this->assertEquals(M_E, $vmapper->resolveVariable("e")->getValue($context));
         $this->assertEquals(M_PI, $vmapper->resolveVariable("pi")->getValue($context));
 
+        $expr = $factory->createValueExpression($context, '${e < pi}', null, "boolean");
+        $this->assertTrue($expr->getValue($context));
+
         $expr = $factory->createValueExpression($context, '${e + 1}', null, "double");
         $this->assertEquals(M_E + 1, $expr->getValue($context));
 

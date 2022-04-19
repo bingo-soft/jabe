@@ -1149,7 +1149,14 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
         $historyLevel = Context::getCommandContext()->getProcessEngineConfiguration()->getHistoryLevel();
         if ($historyLevel->isHistoryEventProduced(HistoryEventTypes::processInstanceUpdate(), $processInstance)) {
-            HistoryEventProcessor::processHistoryEvents(new class () extends HistoryEventCreator {
+            HistoryEventProcessor::processHistoryEvents(new class ($processInstance) extends HistoryEventCreator {
+                private $processInstance;
+
+                public function __construct($processInstance)
+                {
+                    $this->processInstance = $processInstance;
+                }
+
                 public function createHistoryEvent(HistoryEventProducerInterface $producer): HistoryEvent
                 {
                     return $producer->createProcessInstanceUpdateEvt($processInstance);
@@ -2046,7 +2053,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
      *
      * @param continuation the atomic operation continuation which should be executed
      */
-    public function dispatchDelayedEventsAndPerformOperation($continuation): void
+    public function dispatchDelayedEventsAndPerformOperation($continuation = null): void
     {
         if ($continuation instanceof PvmAtomicOperationInterface) {
             $this->dispatchDelayedEventsAndPerformOperation(new class ($continuation) implements CallbackInterface {

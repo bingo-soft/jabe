@@ -275,7 +275,7 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         return $this->getProperty(BpmnParse::PROPERTYNAME_DOCUMENTATION);
     }
 
-    public function getDeploymentId(): string
+    public function getDeploymentId(): ?string
     {
         return $this->deploymentId;
     }

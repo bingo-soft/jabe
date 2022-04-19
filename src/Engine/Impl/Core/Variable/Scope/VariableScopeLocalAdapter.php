@@ -80,12 +80,12 @@ class VariableScopeLocalAdapter implements VariableScopeInterface
         $this->wrappedScope->setVariableLocal($variableName, $value);
     }
 
-    public function setVariables(array $variables): void
+    public function setVariables(array $variables, ?bool $skipSerializationFormatCheck = null): void
     {
         $this->setVariablesLocal($variables);
     }
 
-    public function setVariablesLocal(array $variables): void
+    public function setVariablesLocal(array $variables, ?bool $skipSerializationFormatCheck = null): void
     {
         $this->wrappedScope->setVariablesLocal($variables);
     }

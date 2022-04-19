@@ -61,7 +61,8 @@ class CreateModelTest extends TestCase
         return $sequenceFlow;
     }
 
-    public function testCreateProcessWithOneTask() {
+    public function testCreateProcessWithOneTask()
+    {
         // create process
         $process = $this->createElement($this->definitions, "process-with-one-task", ProcessInterface::class);
 

@@ -216,7 +216,7 @@ abstract class CallableElementActivityBehavior extends AbstractBpmnActivityBehav
         return $this->getCallableElement()->getVersion($execution);
     }
 
-    protected function getDeploymentId(ActivityExecutionInterface $execution): string
+    protected function getDeploymentId(ActivityExecutionInterface $execution): ?string
     {
         return $this->getCallableElement()->getDeploymentId();
     }

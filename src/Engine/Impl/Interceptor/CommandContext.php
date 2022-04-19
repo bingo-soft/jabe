@@ -605,7 +605,7 @@ class CommandContext
             $commandContext = Context::getCommandContext();
             return $this->runWithoutAuthorization(
                 function () use ($command, $commandContext) {
-                    $command->execute($commandContext);
+                    return $command->execute($commandContext);
                 },
                 $commandContext
             );

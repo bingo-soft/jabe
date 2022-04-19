@@ -221,9 +221,9 @@ class IdentityLinkEntity implements \Serializable, IdentityLinkInterface, DbEnti
                 public function createHistoryEvent(HistoryEventProducerInterface $producer): HistoryEvent
                 {
                     $event = null;
-                    if (HistoryEvent::identityLinkAdd() == $eventType->getEventName()) {
+                    if (HistoryEvent::identityLinkAdd() == $this->eventType->getEventName()) {
                         $event = $producer->createHistoricIdentityLinkAddEvent($this->scope);
-                    } elseif (HistoryEvent::identityLinkDelete() == $eventType->getEventName()) {
+                    } elseif (HistoryEvent::identityLinkDelete() == $this->eventType->getEventName()) {
                         $event = $producer->createHistoricIdentityLinkDeleteEvent($this->scope);
                     }
                     return $event;

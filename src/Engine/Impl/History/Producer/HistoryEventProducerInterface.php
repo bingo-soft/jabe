@@ -11,7 +11,7 @@ use BpmPlatform\Engine\Delegate\{
 use BpmPlatform\Engine\ExternalTask\ExternalTaskInterface;
 use BpmPlatform\Engine\Impl\History\Event\HistoryEvent;
 use BpmPlatform\Engine\Impl\Migration\Instance\MigratingActivityInstance;
-use BpmPlatform\Engine\Impl\Oplog\UserOperationLogContext;
+use BpmPlatform\Engine\Impl\OpLog\UserOperationLogContext;
 use BpmPlatform\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     VariableInstanceEntity

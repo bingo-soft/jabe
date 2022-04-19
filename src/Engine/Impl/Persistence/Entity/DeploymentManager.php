@@ -87,15 +87,16 @@ class DeploymentManager extends AbstractManager
             // Represents no problem if only one process definition is deleted
             // in a transaction! We have to set the instances flag to false.
             $commandContext = Context::getCommandContext();
-            $commandContext->runWithoutAuthorization(
-                new DeleteProcessDefinitionsByIdsCmd(
+            $commandContext->runWithoutAuthorization(function () use ($commandContext, $processDefinitionId, $cascade, $skipCustomListeners) {
+                $cmd = new DeleteProcessDefinitionsByIdsCmd(
                     [$processDefinitionId],
                     $cascade,
                     false,
                     $skipCustomListeners,
                     false
-                )
-            );
+                );
+                $cmd->execute();
+            });
         }
 
         //deleteCaseDeployment(deploymentId, cascade);

@@ -39,6 +39,11 @@ class ProcessDefinitionSuspensionStateConfiguration implements JobHandlerConfigu
         return json_encode($json);
     }
 
+    public function __toString()
+    {
+        return $this->toCanonicalString();
+    }
+
     public function createBuilder(): UpdateProcessDefinitionSuspensionStateBuilderImpl
     {
         $builder = new UpdateProcessDefinitionSuspensionStateBuilderImpl();

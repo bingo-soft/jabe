@@ -210,7 +210,7 @@ class JobDefinitionEntity implements JobDefinitionInterface, HasDbRevisionInterf
         $this->tenantId = $tenantId;
     }
 
-    public function getDeploymentId(): string
+    public function getDeploymentId(): ?string
     {
         return $this->deploymentId;
     }

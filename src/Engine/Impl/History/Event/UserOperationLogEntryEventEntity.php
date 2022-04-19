@@ -135,7 +135,7 @@ class UserOperationLogEntryEventEntity extends HistoryEvent implements UserOpera
         $this->jobDefinitionId = $jobDefinitionId;
     }
 
-    public function getDeploymentId(): string
+    public function getDeploymentId(): ?string
     {
         return $this->deploymentId;
     }

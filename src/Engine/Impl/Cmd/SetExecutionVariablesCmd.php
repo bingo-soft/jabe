@@ -1,0 +1,60 @@
+<?php
+
+namespace BpmPlatform\Engine\Impl\Cmd;
+
+use BpmPlatform\Engine\Impl\Core\Variable\Scope\AbstractVariableScope;
+use BpmPlatform\Engine\Impl\Persistence\Entity\{
+    ExecutionEntity,
+    PropertyChange
+};
+use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+
+class SetExecutionVariablesCmd extends AbstractSetVariableCmd
+{
+    public function __construct(
+        string $executionId,
+        array $variables,
+        bool $isLocal,
+        bool $skipPhpSerializationFormatCheck = false
+    ) {
+        parent::__construct($executionId, $variables, $isLocal, $skipPhpSerializationFormatCheck);
+    }
+
+    protected function getEntity(): ExecutionEntity
+    {
+        EnsureUtil::ensureNotNull("executionId", "executionId", $this->entityId);
+
+        $execution = $commandContext
+            ->getExecutionManager()
+            ->findExecutionById($this->entityId);
+
+            EnsureUtil::ensureNotNull("execution " . $this->entityId . " doesn't exist", "execution", $execution);
+
+        $this->checkSetExecutionVariables($execution);
+
+        return $execution;
+    }
+
+    protected function getContextExecution(): ExecutionEntity
+    {
+        return $this->getEntity();
+    }
+
+    protected function logVariableOperation(AbstractVariableScope $scope): void
+    {
+        $execution = $scope;
+        $commandContext->getOperationLogManager()->logVariableOperation(
+            $this->getLogEntryOperation(),
+            $execution->getId(),
+            null,
+            PropertyChange::emptyChange()
+        );
+    }
+
+    protected function checkSetExecutionVariables(ExecutionEntity $execution): void
+    {
+        foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
+            $checker->checkUpdateProcessInstanceVariables($execution);
+        }
+    }
+}

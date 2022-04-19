@@ -141,7 +141,7 @@ class HistoricExternalTaskLogManager extends AbstractManager
     public function fireExternalTaskSuccessfulEvent(ExternalTaskInterface $externalTask): void
     {
         if ($this->isHistoryEventProduced(HistoryEventTypes::externalTaskSuccess(), $externalTask)) {
-            HistoryEventProcessor::processHistoryEvents(new class () extends HistoryEventCreator {
+            HistoryEventProcessor::processHistoryEvents(new class ($externalTask) extends HistoryEventCreator {
                 private $externalTask;
 
                 public function __construct(ExternalTaskInterface $externalTask)
@@ -151,7 +151,7 @@ class HistoricExternalTaskLogManager extends AbstractManager
 
                 public function createHistoryEvent(HistoryEventProducerInterface $producer): HistoryEvent
                 {
-                    return $producer->createHistoricExternalTaskLogSuccessfulEvt($externalTask);
+                    return $producer->createHistoricExternalTaskLogSuccessfulEvt($this->externalTask);
                 }
             });
         }
@@ -160,7 +160,7 @@ class HistoricExternalTaskLogManager extends AbstractManager
     public function fireExternalTaskDeletedEvent(ExternalTaskInterface $externalTask): void
     {
         if ($this->isHistoryEventProduced(HistoryEventTypes::externalTaskDelete(), $externalTask)) {
-            HistoryEventProcessor::processHistoryEvents(new class () extends HistoryEventCreator {
+            HistoryEventProcessor::processHistoryEvents(new class ($externalTask) extends HistoryEventCreator {
                 private $externalTask;
 
                 public function __construct(ExternalTaskInterface $externalTask)
@@ -170,7 +170,7 @@ class HistoricExternalTaskLogManager extends AbstractManager
 
                 public function createHistoryEvent(HistoryEventProducerInterface $producer): HistoryEvent
                 {
-                    return $producer->createHistoricExternalTaskLogDeletedEvt($externalTask);
+                    return $producer->createHistoricExternalTaskLogDeletedEvt($this->externalTask);
                 }
             });
         }

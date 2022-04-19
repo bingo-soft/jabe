@@ -29,7 +29,7 @@ use BpmPlatform\Engine\Impl\History\Event\{
 use BpmPlatform\Engine\Impl\History\Producer\HistoryEventProducerInterface;
 use BpmPlatform\Engine\Impl\Identity\IdentityOperationResult;
 use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Oplog\{
+use BpmPlatform\Engine\Impl\OpLog\{
     UserOperationLogContext,
     UserOperationLogContextEntryBuilder
 };

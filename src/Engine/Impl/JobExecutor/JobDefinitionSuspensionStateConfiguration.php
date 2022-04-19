@@ -41,6 +41,11 @@ class JobDefinitionSuspensionStateConfiguration implements JobHandlerConfigurati
         return json_encode($json);
     }
 
+    public function __toString()
+    {
+        return $this->toCanonicalString();
+    }
+
     public function createBuilder(): UpdateJobDefinitionSuspensionStateBuilderImpl
     {
         $builder = new UpdateJobDefinitionSuspensionStateBuilderImpl();

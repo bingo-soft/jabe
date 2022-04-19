@@ -23,7 +23,7 @@ class MessageJobDeclaration extends JobDeclaration
         $this->operationIdentifier = $operationsIdentifier;
     }
 
-    protected function newJobInstance(AtomicOperationInvocation $context): MessageEntity
+    protected function newJobInstance($context = null): MessageEntity
     {
         $message = new MessageEntity();
         $message->setExecution($context->getExecution());

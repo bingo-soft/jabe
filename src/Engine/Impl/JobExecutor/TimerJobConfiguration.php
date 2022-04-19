@@ -56,4 +56,9 @@ class TimerJobConfiguration implements JobHandlerConfigurationInterface
 
         return $canonicalString;
     }
+
+    public function __toString()
+    {
+        return $this->toCanonicalString();
+    }
 }

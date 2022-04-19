@@ -33,9 +33,9 @@ interface VariableScopeInterface
 
     public function setVariableLocal(string $variableName, $value): void;
 
-    public function setVariables(array $variables): void;
+    public function setVariables(array $variables, ?bool $skipSerializationFormatCheck = null): void;
 
-    public function setVariablesLocal(array $variables): void;
+    public function setVariablesLocal($variables, ?bool $skipSerializationFormatCheck = null): void;
 
     public function hasVariables(): bool;
 

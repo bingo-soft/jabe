@@ -377,7 +377,7 @@ class DefaultFormHandler implements FormHandlerInterface
 
     // getters and setters //////////////////////////////////////////////////////
 
-    public function getDeploymentId(): string
+    public function getDeploymentId(): ?string
     {
         return $this->deploymentId;
     }

@@ -26,7 +26,7 @@ class EventSubscriptionJobDeclaration extends JobDeclaration
         $this->eventSubscriptionDeclaration = $eventSubscriptionDeclaration;
     }
 
-    protected function newJobInstance(EventSubscriptionEntity $eventSubscription): MessageEntity
+    protected function newJobInstance($eventSubscription = null): MessageEntity
     {
         $message = new MessageEntity();
 

@@ -205,7 +205,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
         return $this->getVariableStore()->getKeys();
     }
 
-    public function setVariables($variables): void
+    public function setVariables($variables, ?bool $skipSerializationFormatCheck = null): void
     {
         VariableUtil::setVariables($variables, new class ($this) implements SetVariableFunctionInterface {
             private $scope;
@@ -222,7 +222,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
         });
     }
 
-    public function setVariablesLocal($variables): void
+    public function setVariablesLocal($variables, ?bool $skipSerializationFormatCheck = null): void
     {
         VariableUtil::setVariables($variables, new class ($this) implements SetVariableFunctionInterface {
             private $scope;

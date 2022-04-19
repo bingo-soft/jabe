@@ -37,7 +37,7 @@ class ResourceEntity implements \Serializable, DbEntityInterface, ResourceInterf
         $this->name = $name;
     }
 
-    public function getBytes(): string
+    public function getBytes(): ?string
     {
         return $this->bytes;
     }
@@ -47,7 +47,7 @@ class ResourceEntity implements \Serializable, DbEntityInterface, ResourceInterf
         $this->bytes = $bytes;
     }
 
-    public function getDeploymentId(): string
+    public function getDeploymentId(): ?string
     {
         return $this->deploymentId;
     }
