@@ -49,7 +49,7 @@ abstract class AbstractRestartProcessInstanceCmd implements CommandInterface
         return $collectedProcessInstanceIds;
     }
 
-    protected function writeUserOperationLog(
+    public function writeUserOperationLog(
         CommandContext $commandContext,
         ProcessDefinitionInterface $processDefinition,
         int $numInstances,

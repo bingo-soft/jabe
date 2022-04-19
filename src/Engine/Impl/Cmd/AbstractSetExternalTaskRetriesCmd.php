@@ -85,7 +85,7 @@ abstract class AbstractSetExternalTaskRetriesCmd implements CommandInterface
         return $elementConfiguration;
     }
 
-    protected function writeUserOperationLog(
+    public function writeUserOperationLog(
         CommandContext $commandContext,
         int $numInstances,
         bool $async
@@ -102,7 +102,7 @@ abstract class AbstractSetExternalTaskRetriesCmd implements CommandInterface
         );
     }
 
-    protected function writeUserOperationLogAsync(CommandContext $commandContext, int $numInstances): void
+    public function writeUserOperationLogAsync(CommandContext $commandContext, int $numInstances): void
     {
         $this->writeUserOperationLog($commandContext, $numInstances, true);
     }

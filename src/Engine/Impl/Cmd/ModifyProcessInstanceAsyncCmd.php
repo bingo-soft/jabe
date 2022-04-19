@@ -92,7 +92,7 @@ class ModifyProcessInstanceAsyncCmd implements CommandInterface
         return UserOperationLogEntryInterface::OPERATION_TYPE_MODIFY_PROCESS_INSTANCE;
     }
 
-    protected function writeOperationLog(CommandContext $commandContext): void
+    public function writeOperationLog(CommandContext $commandContext): void
     {
         $commandContext->getOperationLogManager()->logProcessInstanceOperation(
             $this->getLogEntryOperation(),

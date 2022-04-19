@@ -201,6 +201,17 @@ class BatchPermissions implements PermissionInterface
         return self::$CREATE_BATCH_SET_VARIABLES;
     }
 
+    private static $CREATE_BATCH_CORRELATE_MESSAGE;
+
+    public static function createBatchCorrelateMessage(): PermissionInterface
+    {
+        if (self::$CREATE_BATCH_CORRELATE_MESSAGE == null) {
+            self::$CREATE_BATCH_CORRELATE_MESSAGE = new ProcessDefinitionPermissions("CREATE_BATCH_CORRELATE_MESSAGE", 262144);
+        }
+        return self::$CREATE_BATCH_CORRELATE_MESSAGE;
+    }
+
+
     private static $RESOURCES;
 
     public static function resources(): array

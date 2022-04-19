@@ -187,7 +187,7 @@ class HistoryCleanupCmd implements CommandInterface
         return new HistoryCleanupContext($this->immediatelyDue, $minuteFrom, $minuteTo);
     }
 
-    protected function writeUserOperationLog(CommandContext $commandContext): void
+    public function writeUserOperationLog(CommandContext $commandContext): void
     {
         $propertyChange = new PropertyChange("immediatelyDue", null, $this->immediatelyDue);
         $commandContext->getOperationLogManager()

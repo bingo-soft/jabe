@@ -87,7 +87,7 @@ class DeleteHistoricProcessInstancesCmd implements CommandInterface, \Serializab
         return null;
     }
 
-    protected function writeUserOperationLog(CommandContext $commandContext, int $numInstances): void
+    public function writeUserOperationLog(CommandContext $commandContext, int $numInstances): void
     {
         $propertyChanges = [];
         $propertyChanges[] = new PropertyChange("nrOfInstances", null, $numInstances);

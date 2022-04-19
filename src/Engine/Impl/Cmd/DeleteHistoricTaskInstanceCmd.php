@@ -54,7 +54,7 @@ class DeleteHistoricTaskInstanceCmd implements CommandInterface, \Serializable
         return null;
     }
 
-    protected function writeUserOperationLog(CommandContext $commandContext, HistoricTaskInstanceEntity $historicTask): void
+    public function writeUserOperationLog(CommandContext $commandContext, HistoricTaskInstanceEntity $historicTask): void
     {
         $propertyChanges = [];
         $propertyChanges[] = new PropertyChange("nrOfInstances", null, 1);

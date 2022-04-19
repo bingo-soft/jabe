@@ -53,7 +53,7 @@ abstract class ExternalTaskCmd implements CommandInterface
         return null;
     }
 
-    protected function writeUserOperationLog(
+    public function writeUserOperationLog(
         CommandContext $commandContext,
         ExternalTaskEntity $externalTask,
         ?string $operationType,
