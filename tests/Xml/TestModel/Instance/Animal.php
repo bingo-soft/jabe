@@ -59,8 +59,8 @@ abstract class Animal extends ModelElementInstanceImpl
         self::$bestFriendsRefCollection = $typeBuilder->stringAttribute(
             TestModelConstants::ATTRIBUTE_NAME_BEST_FRIEND_REFS
         )
-            ->idAttributeReferenceCollection(Animal::class, AnimalAttributeReferenceCollection::class)
-            ->build();
+        ->idAttributeReferenceCollection(Animal::class, AnimalAttributeReferenceCollection::class)
+        ->build();
 
         $sequence = $typeBuilder->sequence();
 

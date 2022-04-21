@@ -97,11 +97,13 @@ class TypeConverterImpl extends TypeConverter
     {
         switch ($type) {
             case "boolean":
+            case "bool":
                 return $this->coerceToBoolean($value);
             case "double":
             case "float":
                 return $this->coerceToDouble($value);
             case "integer":
+            case "int":
                 return $this->coerceToInteger($value);
             case "string":
                 return $this->coerceToString($value);

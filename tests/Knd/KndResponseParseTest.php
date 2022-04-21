@@ -4,7 +4,6 @@ namespace Tests\Knd;
 
 use PHPUnit\Framework\TestCase;
 use BpmPlatform\Model\Xml\ModelInstanceInterface;
-use BpmPlatform\Model\Xml\Impl\Parser\AbstractModelParser;
 use BpmPlatform\Model\Knd\Complaints\Impl\KndResponseParser;
 
 class KndResponseParseTest extends TestCase

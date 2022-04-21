@@ -134,10 +134,12 @@ class ModelElementTypeImpl implements ModelElementTypeInterface
             $this->baseType = $baseType;
         } elseif ($this->baseType != $baseType) {
             throw new ModelException(
-                "Type can not have multiple base types. %s already extends type %s and can not also extend type %s",
-                get_class($this),
-                get_class($this->baseType),
-                get_class($this)
+                sprintf(
+                    "Type can not have multiple base types. %s already extends type %s and can not also extend type %s",
+                    get_class($this),
+                    get_class($this->baseType),
+                    get_class($this)
+                )
             );
         }
     }

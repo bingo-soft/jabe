@@ -50,7 +50,7 @@ class Animals extends ModelElementInstanceImpl
 
     public function getDescription(): Description
     {
-        return self::$descriptionChild->getChild(this);
+        return self::$descriptionChild->getChild($this);
     }
 
     public function setDescription(Description $description): void

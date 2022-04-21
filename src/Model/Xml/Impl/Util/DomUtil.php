@@ -57,7 +57,11 @@ class DomUtil
     {
         $dom = new DomDocumentExt();
         $meta = stream_get_meta_data($inputStream);
-        $dom->loadXML(fread($inputStream, filesize($meta['uri'])));
+        if ($meta['wrapper_type'] == 'plainfile') {
+            $dom->loadXML(fread($inputStream, filesize($meta['uri'])));
+        } elseif ($meta['wrapper_type'] == 'http') {
+            $dom->loadXML(stream_get_contents($inputStream));
+        }
         return new DomDocumentImpl($dom);
     }
 
