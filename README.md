@@ -1,20 +1,20 @@
-[![Latest Stable Version](https://poser.pugx.org/bingo-soft/bpmplatform/v/stable.png)](https://packagist.org/packages/bingo-soft/bpmplatform)
-[![Build Status](https://app.travis-ci.com/bingo-soft/bpmplatform.svg?branch=main)](https://app.travis-ci.com/bingo-soft/bpmplatform.svg?branch=main)
+[![Latest Stable Version](https://poser.pugx.org/bingo-soft/jabe/v/stable.png)](https://packagist.org/packages/bingo-soft/jabe)
+[![Build Status](https://app.travis-ci.com/bingo-soft/jabe.svg?branch=main)](https://app.travis-ci.com/bingo-soft/jabe.svg?branch=main)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.0-8892BF.svg)](https://php.net/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bingo-soft/bpmplatform/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/bingo-soft/bpmplatform/?branch=main)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bingo-soft/jabe/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/bingo-soft/jabe/?branch=main)
 
 
-# About
+# Jabe - Just another BPMN engine
 
-BpmPlatform is a PHP framework for workflow and process automation. Its core consists of XML model, on top of which you can create custom models with domain-specific elements and relationships. It also implements BPMN model fully compatible with BPMN 2.0 specification.
+Jabe (/dʒæbi/) - is a full-fledged PHP framework for workflow and process automation. Its core consists of XML model, on top of which you can create custom models with domain-specific elements and relationships. It also implements BPMN model fully compatible with BPMN 2.0 specification.
 
 # Installation
 
-Install BpmPlatform, using Composer:
+Install Jabe, using Composer:
 
 ```
-composer require bingo-soft/bpmplatform
+composer require bingo-soft/jabe
 ```
 
 # Running tests
@@ -22,6 +22,14 @@ composer require bingo-soft/bpmplatform
 ```
 ./vendor/bin/phpunit ./tests
 ```
+
+# Current state
+
+- XML model - done
+- BPMN model - done
+- DMN model - not yet
+- CMMN model - not yet
+- Engine - under heavy development
 
 # Example 1
 
@@ -83,7 +91,7 @@ $modelInstance = Bpmn::getInstance()->readModelFromStream($fd);
 
 ## Acknowledgements
 
-BpmPlatform draws inspiration from [camunda](https://github.com/camunda/camunda-bpm-platform) library.
+jabe draws inspiration from [camunda](https://github.com/camunda/camunda-bpm-platform) and [flowable](https://github.com/flowable/flowable-engine) libraries.
 
 ## License
 
