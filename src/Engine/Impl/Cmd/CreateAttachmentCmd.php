@@ -1,30 +1,30 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\EntityManager\DbEntityManager;
-use BpmPlatform\Engine\Impl\History\Event\HistoricProcessInstanceEventEntity;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\EntityManager\DbEntityManager;
+use Jabe\Engine\Impl\History\Event\HistoricProcessInstanceEventEntity;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     AttachmentEntity,
     ByteArrayEntity,
     ExecutionEntity,
     PropertyChange,
     TaskEntity
 };
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Util\{
     ClockUtil,
     EnsureUtil,
     IoUtil
 };
-use BpmPlatform\Engine\ProcessEngineConfiguration;
-use BpmPlatform\Engine\Repository\ResourceTypes;
-use BpmPlatform\Engine\Task\AttachmentInterface;
+use Jabe\Engine\ProcessEngineConfiguration;
+use Jabe\Engine\Repository\ResourceTypes;
+use Jabe\Engine\Task\AttachmentInterface;
 
 class CreateAttachmentCmd implements CommandInterface
 {

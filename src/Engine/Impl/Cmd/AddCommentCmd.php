@@ -1,27 +1,27 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\{
+use Jabe\Engine\{
     ProcessEngineConfiguration,
     ProcessEngineException
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\History\Event\HistoricProcessInstanceEventEntity;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\History\Event\HistoricProcessInstanceEventEntity;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     CommentEntity,
     ExecutionEntity,
     TaskEntity
 };
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Util\{
     ClockUtil,
     EnsureUtil
 };
-use BpmPlatform\Engine\Task\{
+use Jabe\Engine\Task\{
     CommentInterface,
     EventInterface
 };

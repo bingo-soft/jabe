@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\BadUserRequestException;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\BadUserRequestException;
+use Jabe\Engine\Impl\{
     ModificationBuilderImpl,
     ProcessEngineLogger,
     ProcessInstanceModificationBuilderImpl
 };
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class ProcessInstanceModificationCmd extends AbstractModificationCmd
 {

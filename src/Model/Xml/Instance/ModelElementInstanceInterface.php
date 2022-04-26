@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Instance;
+namespace Jabe\Model\Xml\Instance;
 
-use BpmPlatform\Model\Xml\ModelInstanceInterface;
-use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
+use Jabe\Model\Xml\ModelInstanceInterface;
+use Jabe\Model\Xml\Type\ModelElementTypeInterface;
 
 interface ModelElementInstanceInterface
 {

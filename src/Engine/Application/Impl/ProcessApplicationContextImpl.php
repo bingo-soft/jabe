@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Application\Impl;
+namespace Jabe\Engine\Application\Impl;
 
 class ProcessApplicationContextImpl
 {

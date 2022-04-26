@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable\Impl\Context;
+namespace Jabe\Engine\Variable\Impl\Context;
 
-use BpmPlatform\Engine\Variable\Context\VariableContextInterface;
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Variable\Context\VariableContextInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 class CompositeVariableContext implements VariableContextInterface
 {

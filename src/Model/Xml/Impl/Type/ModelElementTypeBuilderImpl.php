@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type;
+namespace Jabe\Model\Xml\Impl\Type;
 
-use BpmPlatform\Model\Xml\ModelInterface;
-use BpmPlatform\Model\Xml\Exception\ModelException;
-use BpmPlatform\Model\Xml\Impl\{
+use Jabe\Model\Xml\ModelInterface;
+use Jabe\Model\Xml\Exception\ModelException;
+use Jabe\Model\Xml\Impl\{
     ModelBuildOperationInterface,
     ModelImpl
 };
-use  BpmPlatform\Model\Xml\Impl\Type\Attribute\{
+use  Jabe\Model\Xml\Impl\Type\Attribute\{
     BooleanAttributeBuilder,
     StringAttributeBuilderImpl,
     IntegerAttributeBuilder,
@@ -16,17 +16,17 @@ use  BpmPlatform\Model\Xml\Impl\Type\Attribute\{
     EnumAttributeBuilder,
     NamedEnumAttributeBuilder
 };
-use  BpmPlatform\Model\Xml\Impl\Type\Child\SequenceBuilderImpl;
-use BpmPlatform\Model\Xml\Type\{
+use  Jabe\Model\Xml\Impl\Type\Child\SequenceBuilderImpl;
+use Jabe\Model\Xml\Type\{
     ModelElementTypeBuilderInterface,
     ModelTypeInstanceProviderInterface,
     ModelElementTypeInterface
 };
-use BpmPlatform\Model\Xml\Type\Attribute\{
+use Jabe\Model\Xml\Type\Attribute\{
     AttributeBuilderInterface,
     StringAttributeBuilderInterface
 };
-use BpmPlatform\Model\Xml\Type\Child\SequenceBuilderInterface;
+use Jabe\Model\Xml\Type\Child\SequenceBuilderInterface;
 
 class ModelElementTypeBuilderImpl implements ModelElementTypeBuilderInterface, ModelBuildOperationInterface
 {

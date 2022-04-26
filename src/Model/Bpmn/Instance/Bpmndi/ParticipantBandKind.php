@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance\Bpmndi;
+namespace Jabe\Model\Bpmn\Instance\Bpmndi;
 
 class ParticipantBandKind
 {

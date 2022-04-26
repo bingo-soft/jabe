@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Delegate;
+namespace Jabe\Engine\Impl\Bpmn\Delegate;
 
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Delegate\{
     DelegateExecutionInterface,
     ExecutionListenerInterface
 };
-use BpmPlatform\Engine\Impl\Delegate\DelegateInvocation;
+use Jabe\Engine\Impl\Delegate\DelegateInvocation;
 
 class ExecutionListenerInvocation extends DelegateInvocation
 {

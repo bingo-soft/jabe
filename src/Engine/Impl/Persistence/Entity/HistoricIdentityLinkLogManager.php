@@ -1,21 +1,21 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\History\HistoricIdentityLinkLogInterface;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\History\HistoricIdentityLinkLogInterface;
+use Jabe\Engine\Impl\{
     HistoricIdentityLinkLogQueryImpl,
     Page
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\ListQueryParameterObject;
-use BpmPlatform\Engine\Impl\Db\EntityManager\Operation\DbOperation;
-use BpmPlatform\Engine\Impl\History\HistoryLevel;
-use BpmPlatform\Engine\Impl\History\Event\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\ListQueryParameterObject;
+use Jabe\Engine\Impl\Db\EntityManager\Operation\DbOperation;
+use Jabe\Engine\Impl\History\HistoryLevel;
+use Jabe\Engine\Impl\History\Event\{
     HistoricIdentityLinkLogEventEntity,
     HistoryEventTypes
 };
-use BpmPlatform\Engine\Impl\Persistence\AbstractHistoricManager;
+use Jabe\Engine\Impl\Persistence\AbstractHistoricManager;
 
 class HistoricIdentityLinkLogManager extends AbstractHistoricManager
 {

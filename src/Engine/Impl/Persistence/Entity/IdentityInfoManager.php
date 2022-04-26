@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Impl\Persistence\AbstractManager;
 
 class IdentityInfoManager extends AbstractManager
 {

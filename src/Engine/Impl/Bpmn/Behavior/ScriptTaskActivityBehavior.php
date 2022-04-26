@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Behavior;
+namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use BpmPlatform\Engine\Delegate\BpmnError;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Delegate\ScriptInvocation;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\{
+use Jabe\Engine\Delegate\BpmnError;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Delegate\ScriptInvocation;
+use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityBehaviorInterface,
     ActivityExecutionInterface
 };
-use BpmPlatform\Engine\Impl\Scripting\ExecutableScript;
+use Jabe\Engine\Impl\Scripting\ExecutableScript;
 
 class ScriptTaskActivityBehavior extends TaskActivityBehavior
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Model;
+namespace Jabe\Engine\Impl\Core\Model;
 
-use BpmPlatform\Engine\Delegate\BaseDelegateExecutionInterface;
-use BpmPlatform\Engine\Impl\Core\Delegate\CoreActivityBehaviorInterface;
-use BpmPlatform\Engine\Impl\Core\Variable\Mapping\IoMapping;
+use Jabe\Engine\Delegate\BaseDelegateExecutionInterface;
+use Jabe\Engine\Impl\Core\Delegate\CoreActivityBehaviorInterface;
+use Jabe\Engine\Impl\Core\Variable\Mapping\IoMapping;
 
 abstract class CoreActivity extends CoreModelElement
 {

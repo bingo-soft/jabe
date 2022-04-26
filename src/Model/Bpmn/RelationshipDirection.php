@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn;
+namespace Jabe\Model\Bpmn;
 
 class RelationshipDirection
 {

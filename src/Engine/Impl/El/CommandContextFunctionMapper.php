@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\El;
+namespace Jabe\Engine\Impl\El;
 
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Util\El\FunctionMapper;
-use BpmPlatform\Engine\Impl\Util\ReflectUtil;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Util\El\FunctionMapper;
+use Jabe\Engine\Impl\Util\ReflectUtil;
 
 class CommandContextFunctionMapper extends FunctionMapper
 {

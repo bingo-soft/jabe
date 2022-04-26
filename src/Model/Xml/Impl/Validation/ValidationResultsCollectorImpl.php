@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Validation;
+namespace Jabe\Model\Xml\Impl\Validation;
 
-use BpmPlatform\Model\Xml\Validation\{
+use Jabe\Model\Xml\Validation\{
     ValidationResultCollectorInterface,
     ValidationResultType,
     ValidationResultsInterface
 };
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
 
 class ValidationResultsCollectorImpl implements ValidationResultCollector
 {

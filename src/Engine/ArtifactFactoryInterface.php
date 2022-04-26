@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine;
+namespace Jabe\Engine;
 
 interface ArtifactFactoryInterface
 {

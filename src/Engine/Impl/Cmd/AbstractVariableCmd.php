@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Impl\Core\Variable\Scope\AbstractVariableScope;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Core\Variable\Scope\AbstractVariableScope;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\{
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Impl\Pvm\Runtime\{
     CallbackInterface,
     PvmExecutionImpl
 };

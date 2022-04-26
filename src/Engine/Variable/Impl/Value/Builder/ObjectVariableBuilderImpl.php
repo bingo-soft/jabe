@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable\Impl\Value\Builder;
+namespace Jabe\Engine\Variable\Impl\Value\Builder;
 
-use BpmPlatform\Engine\Variable\Value\Builder\{
+use Jabe\Engine\Variable\Value\Builder\{
     ObjectValueBuilderInterface,
     TypedValueBuilderInterface
 };
-use BpmPlatform\Engine\Variable\Value\{
+use Jabe\Engine\Variable\Value\{
     ObjectValueInterface,
     SerializationDataFormatInterface
 };
-use BpmPlatform\Engine\Variable\Impl\Value\ObjectValueImpl;
+use Jabe\Engine\Variable\Impl\Value\ObjectValueImpl;
 
 class ObjectVariableBuilderImpl implements ObjectValueBuilderInterface
 {

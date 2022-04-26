@@ -2,8 +2,8 @@
 
 namespace Tests\Bpmn;
 
-use BpmPlatform\Model\Bpmn\Bpmn;
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Bpmn\Bpmn;
+use Jabe\Model\Bpmn\Instance\{
     DefinitionsInterface,
     MessageEventDefinitionInterface,
     MessageInterface,

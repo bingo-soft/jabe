@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Runtime;
+namespace Jabe\Engine\Impl\Pvm\Runtime;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Bpmn\Behavior\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Bpmn\Behavior\{
     BpmnBehaviorLogger,
     CancelBoundaryEventActivityBehavior,
     CancelEndEventActivityBehavior,
@@ -15,10 +15,10 @@ use BpmPlatform\Engine\Impl\Bpmn\Behavior\{
     SequentialMultiInstanceActivityBehavior,
     SubProcessActivityBehavior
 };
-use BpmPlatform\Engine\Impl\Bpmn\Parser\BpmnParse;
-use BpmPlatform\Engine\Impl\Cmd\GetActivityInstanceCmd;
-use BpmPlatform\Engine\Impl\JobExecutor\AsyncContinuationJobHandler;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
+use Jabe\Engine\Impl\Cmd\GetActivityInstanceCmd;
+use Jabe\Engine\Impl\JobExecutor\AsyncContinuationJobHandler;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ActivityInstanceImpl,
     EventSubscriptionEntity,
     ExecutionEntity,
@@ -27,20 +27,20 @@ use BpmPlatform\Engine\Impl\Persistence\Entity\{
     VariableInstanceEntity,
     VariableInstanceHistoryListener
 };
-use BpmPlatform\Engine\Impl\Pvm\{
+use Jabe\Engine\Impl\Pvm\{
     PvmActivityInterface,
     PvmScopeInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Delegate\{
+use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityBehaviorInterface,
     ActivityExecutionInterface,
     CompositeActivityBehaviorInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ScopeImpl
 };
-use BpmPlatform\Engine\Impl\Tree\{
+use Jabe\Engine\Impl\Tree\{
     ExecutionWalker,
     ReferenceWalker
 };

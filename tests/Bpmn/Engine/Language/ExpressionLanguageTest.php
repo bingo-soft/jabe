@@ -3,7 +3,7 @@
 namespace Tests\Bpmn\Engine\Language;
 
 use PHPUnit\Framework\TestCase;
-use BpmPlatform\Engine\Impl\Juel\{
+use Jabe\Engine\Impl\Juel\{
     Builder,
     Feature,
     ExpressionFactoryImpl,
@@ -13,7 +13,7 @@ use BpmPlatform\Engine\Impl\Juel\{
     TreeMethodExpression,
     TreeValueExpression
 };
-use BpmPlatform\Engine\Impl\Util\El\BeanELResolver;
+use Jabe\Engine\Impl\Util\El\BeanELResolver;
 
 class SimpleContextTest extends TestCase
 {

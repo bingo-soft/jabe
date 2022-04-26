@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Db;
+namespace Jabe\Engine\Impl\Db;
 
 class CompositePermissionCheck
 {

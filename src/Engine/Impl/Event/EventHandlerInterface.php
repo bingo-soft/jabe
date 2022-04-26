@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Event;
+namespace Jabe\Engine\Impl\Event;
 
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\Entity\EventSubscriptionEntity;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\Entity\EventSubscriptionEntity;
 
 interface EventHandlerInterface
 {

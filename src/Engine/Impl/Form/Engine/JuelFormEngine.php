@@ -1,27 +1,27 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Engine;
+namespace Jabe\Engine\Impl\Form\Engine;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Form\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Form\{
     FormDataInterface,
     StartFormDataInterface,
     TaskFormDataInterface
 };
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Delegate\ScriptInvocation;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Delegate\ScriptInvocation;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ResourceEntity,
     TaskEntity
 };
-use BpmPlatform\Engine\Impl\Scripting\{
+use Jabe\Engine\Impl\Scripting\{
     ExecutableScript,
     ScriptFactory
 };
-use BpmPlatform\Engine\Impl\Scripting\Engine\ScriptingEngines;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Scripting\Engine\ScriptingEngines;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class JuelFormEngine implements FormEngineInterface
 {

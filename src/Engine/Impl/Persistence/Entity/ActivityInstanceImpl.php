@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
-use BpmPlatform\Engine\Runtime\{
+use Jabe\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Runtime\{
     ActivityInstanceInterface,
     IncidentInterface,
     TransitionInstanceInterface

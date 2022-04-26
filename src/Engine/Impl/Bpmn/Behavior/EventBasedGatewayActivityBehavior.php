@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Behavior;
+namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use BpmPlatform\Engine\Impl\Bpmn\Parser\ConditionalEventDefinition;
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\{
+use Jabe\Engine\Impl\Bpmn\Parser\ConditionalEventDefinition;
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityBehaviorInterface,
     ActivityExecutionInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\ActivityImpl;
+use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
 
 class EventBasedGatewayActivityBehavior extends FlowNodeActivityBehavior
 {

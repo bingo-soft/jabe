@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Authorization;
+namespace Jabe\Engine\Authorization;
 
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\Authorization\{
     PermissionInterface,
     ResourceInterface
 };
-use BpmPlatform\Engine\Query\QueryInterface;
+use Jabe\Engine\Query\QueryInterface;
 
 interface AuthorizationQuery extends QueryInterface
 {

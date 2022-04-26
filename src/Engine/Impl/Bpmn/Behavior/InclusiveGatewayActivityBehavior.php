@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Behavior;
+namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Impl\{
     ConditionInterface,
     ProcessEngineLogger
 };
-use BpmPlatform\Engine\Impl\Bpmn\Parser\BpmnParse;
-use BpmPlatform\Engine\Impl\Pvm\{
+use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
+use Jabe\Engine\Impl\Pvm\{
     PvmActivityInterface,
     PvmTransitionInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
+use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ScopeImpl
 };

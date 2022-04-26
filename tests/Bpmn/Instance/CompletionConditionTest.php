@@ -3,7 +3,7 @@
 namespace Tests\Bpmn\Instance;
 
 use Tests\Xml\Test\AbstractTypeAssumption;
-use BpmPlatform\Model\Bpmn\Instance\ExpressionInterface;
+use Jabe\Model\Bpmn\Instance\ExpressionInterface;
 
 class CompletionConditionTest extends BpmnModelElementInstanceTest
 {

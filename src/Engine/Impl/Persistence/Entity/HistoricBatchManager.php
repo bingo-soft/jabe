@@ -1,36 +1,36 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Batch\History\HistoricBatchInterface;
-use BpmPlatform\Engine\History\CleanableHistoricBatchReportResultInterface;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Batch\History\HistoricBatchInterface;
+use Jabe\Engine\History\CleanableHistoricBatchReportResultInterface;
+use Jabe\Engine\Impl\{
     CleanableHistoricBatchReportImpl,
     Direction,
     Page,
     QueryOrderingProperty,
     QueryPropertyImpl
 };
-use BpmPlatform\Engine\Impl\Batch\BatchEntity;
-use BpmPlatform\Engine\Impl\Batch\History\{
+use Jabe\Engine\Impl\Batch\BatchEntity;
+use Jabe\Engine\Impl\Batch\History\{
     HistoricBatchEntity,
     HistoricBatchQueryImpl
 };
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\ListQueryParameterObject;
-use BpmPlatform\Engine\Impl\Db\EntityManager\Operation\DbOperation;
-use BpmPlatform\Engine\Impl\History\HistoryLevel;
-use BpmPlatform\Engine\Impl\History\Event\{
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\ListQueryParameterObject;
+use Jabe\Engine\Impl\Db\EntityManager\Operation\DbOperation;
+use Jabe\Engine\Impl\History\HistoryLevel;
+use Jabe\Engine\Impl\History\Event\{
     HistoryEvent,
     HistoryEventCreator,
     HistoryEventProcessor,
     HistoryEventTypes
 };
-use BpmPlatform\Engine\Impl\History\Producer\HistoryEventProducerInterface;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
-use BpmPlatform\Engine\Impl\Util\ClockUtil;
+use Jabe\Engine\Impl\History\Producer\HistoryEventProducerInterface;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Impl\Util\ClockUtil;
 
 class HistoricBatchManager extends AbstractManager
 {

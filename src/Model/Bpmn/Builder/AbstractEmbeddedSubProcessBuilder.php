@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Builder;
+namespace Jabe\Model\Bpmn\Builder;
 
 abstract class AbstractEmbeddedSubProcessBuilder
 {

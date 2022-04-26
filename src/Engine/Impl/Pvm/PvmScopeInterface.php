@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm;
+namespace Jabe\Engine\Impl\Pvm;
 
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\Impl\Pvm\Process\{
     ScopeImpl,
     TransitionImpl
 };

@@ -1,29 +1,29 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Exception\NotValidException;
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Exception\NotValidException;
+use Jabe\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\Impl\{
     ProcessEngineLogger,
     ProcessInstanceModificationBuilderImpl,
     ProcessInstantiationBuilderImpl
 };
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionVariableSnapshotObserver,
     ProcessInstanceWithVariablesImpl,
     PropertyChange
 };
-use BpmPlatform\Engine\Impl\Pvm\{
+use Jabe\Engine\Impl\Pvm\{
     ActivityImpl,
     ProcessDefinitionImpl,
     TransitionImpl
 };
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class StartProcessInstanceAtActivitiesCmd implements CommandInterface
 {

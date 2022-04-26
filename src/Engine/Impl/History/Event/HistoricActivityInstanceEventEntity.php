@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History\Event;
+namespace Jabe\Engine\Impl\History\Event;
 
-use BpmPlatform\Engine\Impl\Pvm\Runtime\ActivityInstanceState;
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Impl\Pvm\Runtime\ActivityInstanceState;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class HistoricActivityInstanceEventEntity extends HistoricScopeInstanceEvent
 {

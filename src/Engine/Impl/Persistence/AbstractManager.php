@@ -1,24 +1,24 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence;
+namespace Jabe\Engine\Impl\Persistence;
 
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\Authorization\{
     PermissionInterface,
     ResourceInterface
 };
-use BpmPlatform\Engine\Impl\AbstractQuery;
-use BpmPlatform\Engine\Impl\Cfg\Auth\ResourceAuthorizationProviderInterface;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\DbEntityInterface;
-use BpmPlatform\Engine\Impl\Db\EntityManager\DbEntityManager;
-use BpmPlatform\Engine\Impl\Db\Sql\DbSqlSession;
-use BpmPlatform\Engine\Impl\Form\Entity\FormDefinitionManager;
-use BpmPlatform\Engine\Impl\Identity\Authentication;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\AbstractQuery;
+use Jabe\Engine\Impl\Cfg\Auth\ResourceAuthorizationProviderInterface;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\DbEntityInterface;
+use Jabe\Engine\Impl\Db\EntityManager\DbEntityManager;
+use Jabe\Engine\Impl\Db\Sql\DbSqlSession;
+use Jabe\Engine\Impl\Form\Entity\FormDefinitionManager;
+use Jabe\Engine\Impl\Identity\Authentication;
+use Jabe\Engine\Impl\Interceptor\{
     CommandContext,
     SessionInterface
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     AttachmentManager,
     AuthorizationEntity,
     AuthorizationManager,

@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable\Impl\Value\Builder;
+namespace Jabe\Engine\Variable\Impl\Value\Builder;
 
-use BpmPlatform\Engine\Variable\Value\FileValueInterface;
-use BpmPlatform\Engine\Variable\Value\Builder\FileValueBuilderInterface;
-use BpmPlatform\Engine\Variable\Impl\Value\FileValueImpl;
-use BpmPlatform\Engine\Variable\Type\ValueType;
+use Jabe\Engine\Variable\Value\FileValueInterface;
+use Jabe\Engine\Variable\Value\Builder\FileValueBuilderInterface;
+use Jabe\Engine\Variable\Impl\Value\FileValueImpl;
+use Jabe\Engine\Variable\Type\ValueType;
 
 class FileValueBuilderImpl implements FileValueBuilderInterface
 {

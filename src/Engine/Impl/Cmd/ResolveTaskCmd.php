@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
-use BpmPlatform\Engine\Impl\Persistence\Entity\TaskEntity;
+use Jabe\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\Impl\Persistence\Entity\TaskEntity;
 
 class ResolveTaskCmd extends CompleteTaskCmd
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Tree;
+namespace Jabe\Engine\Impl\Tree;
 
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
 
 class ExecutionTopDownWalker extends ReferenceWalker
 {

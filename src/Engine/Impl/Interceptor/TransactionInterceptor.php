@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Interceptor;
+namespace Jabe\Engine\Impl\Interceptor;
 
 use Doctrine\DBAL\Connection;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Cmd\CommandLogger;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Cmd\CommandLogger;
 
 class TransactionInterceptor extends CommandInterceptor
 {

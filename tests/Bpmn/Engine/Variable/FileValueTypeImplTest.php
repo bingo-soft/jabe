@@ -3,11 +3,11 @@
 namespace Tests\Bpmn\Engine\Variable;
 
 use PHPUnit\Framework\TestCase;
-use BpmPlatform\Engine\Variable\Variables;
-use BpmPlatform\Engine\Variable\Impl\Type\FileValueTypeImpl;
-use BpmPlatform\Engine\Variable\Value\FileValueInterface;
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
-use BpmPlatform\Model\Xml\Impl\Util\IoUtil;
+use Jabe\Engine\Variable\Variables;
+use Jabe\Engine\Variable\Impl\Type\FileValueTypeImpl;
+use Jabe\Engine\Variable\Value\FileValueInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Model\Xml\Impl\Util\IoUtil;
 
 class FileValueTypeImplTest extends TestCase
 {

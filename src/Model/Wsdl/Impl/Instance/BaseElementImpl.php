@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Model\Wsdl\Impl\Instance;
+namespace Jabe\Model\Wsdl\Impl\Instance;
 
-use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Wsdl\Impl\WsdlModelConstants;
-use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
-use BpmPlatform\Model\Wsdl\Instance\BaseElementInterface;
+use Jabe\Model\Xml\ModelBuilder;
+use Jabe\Model\Wsdl\Impl\WsdlModelConstants;
+use Jabe\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
+use Jabe\Model\Wsdl\Instance\BaseElementInterface;
 
 abstract class BaseElementImpl extends WsdlModelElementInstanceImpl implements BaseElementInterface
 {

@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Process;
+namespace Jabe\Engine\Impl\Pvm\Process;
 
-use BpmPlatform\Engine\Delegate\BaseDelegateExecutionInterface;
-use BpmPlatform\Engine\Impl\Core\Delegate\CoreActivityBehaviorInterface;
-use BpmPlatform\Engine\Impl\Pvm\{
+use Jabe\Engine\Delegate\BaseDelegateExecutionInterface;
+use Jabe\Engine\Impl\Core\Delegate\CoreActivityBehaviorInterface;
+use Jabe\Engine\Impl\Pvm\{
     PvmProcessDefinitionInterface,
     PvmProcessInstanceInterface,
     PvmScopeInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Runtime\{
+use Jabe\Engine\Impl\Pvm\Runtime\{
     ExecutionImpl,
     PvmExecutionImpl
 };

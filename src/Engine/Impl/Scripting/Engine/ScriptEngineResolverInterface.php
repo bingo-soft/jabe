@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Scripting\Engine;
+namespace Jabe\Engine\Impl\Scripting\Engine;
 
-use BpmPlatform\Engine\Impl\Util\Scripting\{
+use Jabe\Engine\Impl\Util\Scripting\{
     ScriptEngineInterface,
     ScriptEngineFactoryInterface,
     ScriptEngineManager

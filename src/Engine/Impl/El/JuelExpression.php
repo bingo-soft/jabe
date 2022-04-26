@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\El;
+namespace Jabe\Engine\Impl\El;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\{
     BaseDelegateExecutionInterface,
     VariableScopeInterface
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Delegate\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Delegate\{
     ExpressionGetInvocation,
     ExpressionSetInvocation
 };
-use BpmPlatform\Engine\Impl\Util\El\{
+use Jabe\Engine\Impl\Util\El\{
     ELContext,
     ELException,
     MethodNotFoundException,

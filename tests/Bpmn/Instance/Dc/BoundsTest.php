@@ -6,7 +6,7 @@ use Tests\Xml\Test\{
     AbstractTypeAssumption,
     AttributeAssumption
 };
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
 use Tests\Bpmn\Instance\{
     BpmnModelElementInstanceTest,
     BpmnTypeAssumption

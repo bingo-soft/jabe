@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Identity\{
+use Jabe\Engine\Identity\{
     PasswordPolicyResultInterface,
     UserInterface
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\{
     HasDbRevisionInterface,
     DbEntityInterface
 };
-use BpmPlatform\Engine\Impl\Util\EncryptionUtil;
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Impl\Util\EncryptionUtil;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class UserEntity implements UserInterface, \Serializable, DbEntityInterface, HasDbRevisionInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Runtime;
+namespace Jabe\Engine\Runtime;
 
-use BpmPlatform\Engine\History\HistoricProcessInstanceQueryInterface;
+use Jabe\Engine\History\HistoricProcessInstanceQueryInterface;
 
 interface UpdateProcessInstancesRequestInterface
 {

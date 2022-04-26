@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl;
+namespace Jabe\Engine\Impl;
 
-use BpmPlatform\Engine\Impl\Variable\Serializer\VariableSerializersInterface;
-use BpmPlatform\Engine\Variable\Variables;
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Impl\Variable\Serializer\VariableSerializersInterface;
+use Jabe\Engine\Variable\Variables;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 class QueryVariableValue implements \Serializable
 {

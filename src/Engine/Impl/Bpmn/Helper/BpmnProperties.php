@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Helper;
+namespace Jabe\Engine\Impl\Bpmn\Helper;
 
-use BpmPlatform\Engine\Impl\Core\Model\{
+use Jabe\Engine\Impl\Core\Model\{
     Properties,
     PropertyKey,
     PropertyListKey,

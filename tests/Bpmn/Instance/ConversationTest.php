@@ -3,7 +3,7 @@
 namespace Tests\Bpmn\Instance;
 
 use Tests\Xml\Test\AbstractTypeAssumption;
-use BpmPlatform\Model\Bpmn\Instance\ConversationNodeInterface;
+use Jabe\Model\Bpmn\Instance\ConversationNodeInterface;
 
 class ConversationTest extends BpmnModelElementInstanceTest
 {

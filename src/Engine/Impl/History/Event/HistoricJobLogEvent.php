@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History\Event;
+namespace Jabe\Engine\Impl\History\Event;
 
-use BpmPlatform\Engine\History\JobStateImpl;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Persistence\Entity\ByteArrayEntity;
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\History\JobStateImpl;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Persistence\Entity\ByteArrayEntity;
+use Jabe\Engine\Impl\Util\{
     ExceptionUtil,
     StringUtil
 };

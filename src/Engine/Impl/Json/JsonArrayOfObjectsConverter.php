@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Json;
+namespace Jabe\Engine\Impl\Json;
 
-use BpmPlatform\Engine\Impl\Util\JsonUtil;
+use Jabe\Engine\Impl\Util\JsonUtil;
 
 class JsonArrayOfObjectsConverter extends JsonArrayConverter
 {

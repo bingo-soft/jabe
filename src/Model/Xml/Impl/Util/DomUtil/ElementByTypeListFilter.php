@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Util\DomUtil;
+namespace Jabe\Model\Xml\Impl\Util\DomUtil;
 
-use BpmPlatform\Model\Xml\Impl\ModelInstanceImpl;
-use BpmPlatform\Model\Xml\Impl\Instance\DomElementImpl;
-use BpmPlatform\Model\Xml\Impl\Util\ModelUtil;
+use Jabe\Model\Xml\Impl\ModelInstanceImpl;
+use Jabe\Model\Xml\Impl\Instance\DomElementImpl;
+use Jabe\Model\Xml\Impl\Util\ModelUtil;
 
 class ElementByTypeListFilter extends ElementNodeListFilter
 {

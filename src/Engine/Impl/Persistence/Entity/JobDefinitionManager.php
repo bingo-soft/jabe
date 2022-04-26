@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Impl\{
     JobDefinitionQueryImpl,
     Page
 };
-use BpmPlatform\Engine\Impl\Db\ListQueryParameterObject;
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
-use BpmPlatform\Engine\Management\JobDefinitionInterface;
+use Jabe\Engine\Impl\Db\ListQueryParameterObject;
+use Jabe\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Management\JobDefinitionInterface;
 
 class JobDefinitionManager extends AbstractManager
 {

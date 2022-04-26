@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence;
+namespace Jabe\Engine\Impl\Persistence;
 
 interface AbstractResourceDefinitionManagerInterface
 {

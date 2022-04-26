@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Authorization;
+namespace Jabe\Engine\Authorization;
 
 /**
  * The set of built-in Permission types.

@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Engine;
+namespace Jabe\Engine\Impl\Form\Engine;
 
 class StringWriter
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable;
+namespace Jabe\Engine\Variable;
 
-use BpmPlatform\Engine\Variable\Value\SerializationDataFormatInterface;
+use Jabe\Engine\Variable\Value\SerializationDataFormatInterface;
 
 class SerializationDataFormats implements SerializationDataFormatInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Parser;
+namespace Jabe\Engine\Impl\Bpmn\Parser;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\ProcessEngineLogger;
 
 class BpmnParseLogger extends ProcessEngineLogger
 {

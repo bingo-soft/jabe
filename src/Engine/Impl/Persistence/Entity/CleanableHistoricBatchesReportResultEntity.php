@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\History\CleanableHistoricBatchReportResultInterface;
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\History\CleanableHistoricBatchReportResultInterface;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class CleanableHistoricBatchesReportResultEntity implements CleanableHistoricBatchReportResultInterface
 {

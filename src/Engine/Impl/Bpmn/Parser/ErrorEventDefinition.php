@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Parser;
+namespace Jabe\Engine\Impl\Bpmn\Parser;
 
-use BpmPlatform\Engine\ProcessEngineException;
+use Jabe\Engine\ProcessEngineException;
 
 class ErrorEventDefinition implements \Serializable
 {

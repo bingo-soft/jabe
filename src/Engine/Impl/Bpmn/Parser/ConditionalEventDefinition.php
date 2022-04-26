@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Parser;
+namespace Jabe\Engine\Impl\Bpmn\Parser;
 
-use BpmPlatform\Engine\Delegate\DelegateExecutionInterface;
-use BpmPlatform\Engine\Impl\ConditionInterface;
-use BpmPlatform\Engine\Impl\Core\Variable\Event\VariableEvent;
-use BpmPlatform\Engine\Impl\Event\EventType;
-use BpmPlatform\Engine\Impl\Pvm\Process\ActivityImpl;
+use Jabe\Engine\Delegate\DelegateExecutionInterface;
+use Jabe\Engine\Impl\ConditionInterface;
+use Jabe\Engine\Impl\Core\Variable\Event\VariableEvent;
+use Jabe\Engine\Impl\Event\EventType;
+use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
 
 class ConditionalEventDefinition extends EventSubscriptionDeclaration
 {

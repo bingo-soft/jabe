@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\Authorization\{
     Permissions,
     Resources
 };
-use BpmPlatform\Engine\History\HistoricActivityStatisticsInterface;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\History\HistoricActivityStatisticsInterface;
+use Jabe\Engine\Impl\{
     HistoricActivityStatisticsQueryImpl,
     Page
 };
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\AbstractManager;
 
 class HistoricStatisticsManager extends AbstractManager
 {

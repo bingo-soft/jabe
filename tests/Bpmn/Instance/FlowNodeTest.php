@@ -6,13 +6,13 @@ use Tests\Xml\Test\{
     AbstractTypeAssumption,
     AttributeAssumption
 };
-use BpmPlatform\Model\Bpmn\Bpmn;
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
-use BpmPlatform\Model\Bpmn\Impl\Instance\{
+use Jabe\Model\Bpmn\Bpmn;
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Impl\Instance\{
     Incoming,
     Outgoing
 };
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Bpmn\Instance\{
     FlowElementInterface,
     ServiceTaskInterface,
     TaskInterface

@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Delegate;
+namespace Jabe\Engine\Impl\Delegate;
 
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Delegate\{
     BaseDelegateExecutionInterface,
     VariableScopeInterface
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Scripting\ExecutableScript;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Scripting\ExecutableScript;
 
 class ScriptInvocation extends DelegateInvocation
 {

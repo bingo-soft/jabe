@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl;
+namespace Jabe\Engine\Impl;
 
 class QueryOperator
 {

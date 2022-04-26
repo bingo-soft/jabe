@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Identity;
+namespace Jabe\Engine\Impl\Identity;
 
-use BpmPlatform\Engine\Identity\PasswordPolicyRuleInterface;
+use Jabe\Engine\Identity\PasswordPolicyRuleInterface;
 
 class PasswordPolicyLowerCaseRuleImpl implements PasswordPolicyRuleInterface
 {

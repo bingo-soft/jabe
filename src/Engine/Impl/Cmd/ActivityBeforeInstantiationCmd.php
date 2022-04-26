@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\Core\Model\CoreModelElement;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use BpmPlatform\Engine\Impl\Pvm\PvmActivityInterface;
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\Core\Model\CoreModelElement;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
+use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ProcessDefinitionImpl,
     ScopeImpl

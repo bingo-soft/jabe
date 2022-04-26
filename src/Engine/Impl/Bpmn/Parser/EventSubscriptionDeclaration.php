@@ -1,23 +1,23 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Parser;
+namespace Jabe\Engine\Impl\Bpmn\Parser;
 
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Impl\Bpmn\Helper\BpmnProperties;
-use BpmPlatform\Engine\Impl\Core\Model\CallableElement;
-use BpmPlatform\Engine\Impl\El\{
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Impl\Bpmn\Helper\BpmnProperties;
+use Jabe\Engine\Impl\Core\Model\CallableElement;
+use Jabe\Engine\Impl\El\{
     ExpressionInterface,
     StartProcessVariableScope
 };
-use BpmPlatform\Engine\Impl\Event\EventType;
-use BpmPlatform\Engine\Impl\JobExecutor\EventSubscriptionJobDeclaration;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Event\EventType;
+use Jabe\Engine\Impl\JobExecutor\EventSubscriptionJobDeclaration;
+use Jabe\Engine\Impl\Persistence\Entity\{
     EventSubscriptionEntity,
     ExecutionEntity,
     ProcessDefinitionEntity
 };
-use BpmPlatform\Engine\Impl\Pvm\PvmScopeInterface;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\LegacyBehavior;
+use Jabe\Engine\Impl\Pvm\PvmScopeInterface;
+use Jabe\Engine\Impl\Pvm\Runtime\LegacyBehavior;
 
 class EventSubscriptionDeclaration
 {

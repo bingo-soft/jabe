@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Variable;
+namespace Jabe\Engine\Impl\Core\Variable;
 
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 interface CoreVariableInstanceInterface
 {

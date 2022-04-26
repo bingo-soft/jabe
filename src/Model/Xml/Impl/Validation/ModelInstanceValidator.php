@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Validation;
+namespace Jabe\Model\Xml\Impl\Validation;
 
-use BpmPlatform\Model\Xml\Impl\ModelInstanceImpl;
-use BpmPlatform\Model\Xml\Validation\ValidationResultsInterface;
+use Jabe\Model\Xml\Impl\ModelInstanceImpl;
+use Jabe\Model\Xml\Validation\ValidationResultsInterface;
 
 class ModelInstanceValidator
 {

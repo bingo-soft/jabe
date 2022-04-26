@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Runtime\Operation;
+namespace Jabe\Engine\Impl\Pvm\Runtime\Operation;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\ExecutionListenerInterface;
-use BpmPlatform\Engine\Impl\Pvm\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\ExecutionListenerInterface;
+use Jabe\Engine\Impl\Pvm\{
     PvmActivityInterface,
     PvmLogger
 };
-use BpmPlatform\Engine\Impl\Pvm\Delegate\SubProcessActivityBehaviorInterface;
-use BpmPlatform\Engine\Impl\Pvm\Process\ScopeImpl;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
-use BpmPlatform\Engine\Impl\Core\Model\CoreModelElement;
-use BpmPlatform\Engine\Impl\Core\Instance\CoreExecution;
+use Jabe\Engine\Impl\Pvm\Delegate\SubProcessActivityBehaviorInterface;
+use Jabe\Engine\Impl\Pvm\Process\ScopeImpl;
+use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
+use Jabe\Engine\Impl\Core\Model\CoreModelElement;
+use Jabe\Engine\Impl\Core\Instance\CoreExecution;
 
 class PvmAtomicOperationProcessEnd extends PvmAtomicOperationActivityInstanceEnd
 {

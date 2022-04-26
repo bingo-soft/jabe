@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Runtime;
+namespace Jabe\Engine\Impl\Runtime;
 
-use BpmPlatform\Engine\Impl\Persistence\Entity\ProcessDefinitionEntity;
-use BpmPlatform\Engine\Impl\Pvm\Process\ActivityImpl;
+use Jabe\Engine\Impl\Persistence\Entity\ProcessDefinitionEntity;
+use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
 
 class ConditionHandlerResult
 {

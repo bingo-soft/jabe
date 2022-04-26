@@ -1,20 +1,20 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\Authorization\{
     AuthorizationInterface,
     Permissions,
     Resources
 };
-use BpmPlatform\Engine\Filter\FilterInterface;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Filter\FilterInterface;
+use Jabe\Engine\Impl\{
     AbstractQuery,
     StoredQueryValidator
 };
-use BpmPlatform\Engine\Impl\Filter\FilterQueryImpl;
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Filter\FilterQueryImpl;
+use Jabe\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class FilterManager extends AbstractManager
 {

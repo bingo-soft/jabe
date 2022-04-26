@@ -1,28 +1,28 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\ExternalTask\ExternalTaskInterface;
-use BpmPlatform\Engine\History\HistoricExternalTaskLogInterface;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\ExternalTask\ExternalTaskInterface;
+use Jabe\Engine\History\HistoricExternalTaskLogInterface;
+use Jabe\Engine\Impl\{
     HistoricExternalTaskLogQueryImpl,
     Page
 };
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\ListQueryParameterObject;
-use BpmPlatform\Engine\Impl\Db\EntityManager\Operation\DbOperation;
-use BpmPlatform\Engine\Impl\History\HistoryLevel;
-use BpmPlatform\Engine\Impl\History\Event\{
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\ListQueryParameterObject;
+use Jabe\Engine\Impl\Db\EntityManager\Operation\DbOperation;
+use Jabe\Engine\Impl\History\HistoryLevel;
+use Jabe\Engine\Impl\History\Event\{
     HistoryEvent,
     HistoryEventCreator,
     HistoryEventProcessor,
     HistoryEventTypeInterface,
     HistoryEventTypes
 };
-use BpmPlatform\Engine\Impl\History\Producer\HistoryEventProducerInterface;
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\History\Producer\HistoryEventProducerInterface;
+use Jabe\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class HistoricExternalTaskLogManager extends AbstractManager
 {

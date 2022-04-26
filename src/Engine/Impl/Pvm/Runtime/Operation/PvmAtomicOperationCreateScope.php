@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Runtime\Operation;
+namespace Jabe\Engine\Impl\Pvm\Runtime\Operation;
 
-use BpmPlatform\Engine\Impl\Pvm\{
+use Jabe\Engine\Impl\Pvm\{
     PvmActivityInterface,
     PvmLogger
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\ActivityImpl;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
+use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
+use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
 
 abstract class PvmAtomicOperationCreateScope implements PvmAtomicOperationInterface
 {

@@ -1,20 +1,20 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     ExecutionVariableSnapshotObserver,
     TaskEntity,
     TaskManager
 };
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
-use BpmPlatform\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Variable\VariableMapInterface;
 
 class CompleteTaskCmd implements CommandInterface, \Serializable
 {

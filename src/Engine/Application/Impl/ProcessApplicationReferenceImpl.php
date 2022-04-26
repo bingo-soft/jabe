@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Application\Impl;
+namespace Jabe\Engine\Application\Impl;
 
-use BpmPlatform\Engine\ProcessEngineInterface;
-use BpmPlatform\Engine\Application\{
+use Jabe\Engine\ProcessEngineInterface;
+use Jabe\Engine\Application\{
     AbstractProcessApplication,
     ProcessApplicationReferenceInterface
 };

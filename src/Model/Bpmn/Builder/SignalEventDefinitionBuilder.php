@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Builder;
+namespace Jabe\Model\Bpmn\Builder;
 
-use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
-use BpmPlatform\Model\Bpmn\Instance\SignalEventDefinitionInterface;
+use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
+use Jabe\Model\Bpmn\Instance\SignalEventDefinitionInterface;
 
 class SignalEventDefinitionBuilder extends AbstractSignalEventDefinitionBuilder
 {

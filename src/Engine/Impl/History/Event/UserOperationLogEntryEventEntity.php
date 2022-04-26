@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History\Event;
+namespace Jabe\Engine\Impl\History\Event;
 
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class UserOperationLogEntryEventEntity extends HistoryEvent implements UserOperationLogEntryInterface
 {

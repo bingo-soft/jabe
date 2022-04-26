@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\BadUserRequestException;
-use BpmPlatform\Engine\Impl\Batch\BatchElementConfiguration;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\BadUserRequestException;
+use Jabe\Engine\Impl\Batch\BatchElementConfiguration;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class SetExternalTasksRetriesCmd extends AbstractSetExternalTaskRetriesCmd
 {

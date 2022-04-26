@@ -2,7 +2,7 @@
 
 namespace Tests\Xml\TestModel;
 
-use BpmPlatform\Model\Xml\{
+use Jabe\Model\Xml\{
     ModelBuilder,
     ModelInterface
 };

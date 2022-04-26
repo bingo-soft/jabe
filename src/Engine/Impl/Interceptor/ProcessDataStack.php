@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Interceptor;
+namespace Jabe\Engine\Impl\Interceptor;
 
-use BpmPlatform\Commons\Logging\MdcAccess;
+use Jabe\Commons\Logging\MdcAccess;
 
 class ProcessDataStack
 {

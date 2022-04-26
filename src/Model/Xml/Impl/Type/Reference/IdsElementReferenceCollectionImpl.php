@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type\Reference;
+namespace Jabe\Model\Xml\Impl\Type\Reference;
 
-use BpmPlatform\Model\Xml\Exception\ModelException;
-use BpmPlatform\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
-use BpmPlatform\Model\Xml\Impl\Util\StringUtil;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Xml\Type\Child\ChildElementCollectionInterface;
+use Jabe\Model\Xml\Exception\ModelException;
+use Jabe\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
+use Jabe\Model\Xml\Impl\Util\StringUtil;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Type\Child\ChildElementCollectionInterface;
 
 class IdsElementReferenceCollectionImpl extends ElementReferenceCollectionImpl
 {

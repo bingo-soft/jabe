@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Behavior;
+namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
 
 class TaskActivityBehavior extends AbstractBpmnActivityBehavior
 {

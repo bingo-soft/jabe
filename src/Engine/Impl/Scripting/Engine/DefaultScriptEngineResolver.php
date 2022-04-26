@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Scripting\Engine;
+namespace Jabe\Engine\Impl\Scripting\Engine;
 
-use BpmPlatform\Engine\Impl\Util\Scripting\{
+use Jabe\Engine\Impl\Util\Scripting\{
     ScriptContextInterface,
     ScriptEngineInterface,
     ScriptEngineFactoryInterface,
     ScriptEngineManager
 };
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Context\Context;
 
 class DefaultScriptEngineResolver implements ScriptEngineResolverInterface
 {

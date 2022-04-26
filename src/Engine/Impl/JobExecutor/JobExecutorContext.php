@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\Impl\Db\EntityManager\Cache\DbEntityCache;
-use BpmPlatform\Engine\Impl\Persistence\Entity\JobEntity;
+use Jabe\Engine\Impl\Db\EntityManager\Cache\DbEntityCache;
+use Jabe\Engine\Impl\Persistence\Entity\JobEntity;
 
 class JobExecutorContext
 {

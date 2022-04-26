@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Runtime;
+namespace Jabe\Engine\Runtime;
 
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 interface VariableInstanceInterface
 {

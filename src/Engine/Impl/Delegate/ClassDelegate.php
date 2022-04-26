@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Delegate;
+namespace Jabe\Engine\Impl\Delegate;
 
 abstract class ClassDelegate
 {

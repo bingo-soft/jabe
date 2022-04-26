@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Model;
+namespace Jabe\Engine\Impl\Core\Model;
 
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
-use BpmPlatform\Engine\Variable\{
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
+use Jabe\Engine\Variable\{
     VariableMapInterface,
     Variables
 };

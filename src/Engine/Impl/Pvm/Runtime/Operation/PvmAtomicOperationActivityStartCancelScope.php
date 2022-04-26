@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Runtime\Operation;
+namespace Jabe\Engine\Impl\Pvm\Runtime\Operation;
 
-use BpmPlatform\Engine\Impl\Pvm\PvmActivityInterface;
-use BpmPlatform\Engine\Impl\Pvm\Process\ActivityImpl;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
+use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
+use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
+use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
 
 class PvmAtomicOperationActivityStartCancelScope extends PvmAtomicOperationCancelActivity
 {

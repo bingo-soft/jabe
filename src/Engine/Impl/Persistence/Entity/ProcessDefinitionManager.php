@@ -1,28 +1,28 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\{
     Page,
     ProcessDefinitionQueryImpl,
     ProcessEngineLogger,
     ProcessInstanceQueryImpl
 };
-use BpmPlatform\Engine\Impl\Cfg\Auth\ResourceAuthorizationProvider;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Cfg\Auth\ResourceAuthorizationProvider;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\{
     EnginePersistenceLogger,
     ListQueryParameterObject
 };
-use BpmPlatform\Engine\Impl\Event\EventType;
-use BpmPlatform\Engine\Impl\JobExecutor\TimerStartEventJobHandler;
-use BpmPlatform\Engine\Impl\Persistence\{
+use Jabe\Engine\Impl\Event\EventType;
+use Jabe\Engine\Impl\JobExecutor\TimerStartEventJobHandler;
+use Jabe\Engine\Impl\Persistence\{
     AbstractManager,
     AbstractResourceDefinitionManagerInterface
 };
-use BpmPlatform\Engine\Repository\ProcessDefinitionInterface;
-use BpmPlatform\Engine\Runtime\JobInterface;
+use Jabe\Engine\Repository\ProcessDefinitionInterface;
+use Jabe\Engine\Runtime\JobInterface;
 
 class ProcessDefinitionManager extends AbstractManager implements AbstractResourceDefinitionManagerInterface
 {

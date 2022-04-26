@@ -3,7 +3,7 @@
 namespace Tests\Bpmn\Instance;
 
 use Tests\Xml\Test\AbstractTypeAssumption;
-use BpmPlatform\Model\Bpmn\Instance\DataAssociationInterface;
+use Jabe\Model\Bpmn\Instance\DataAssociationInterface;
 
 class DataInputAssociationTest extends BpmnModelElementInstanceTest
 {

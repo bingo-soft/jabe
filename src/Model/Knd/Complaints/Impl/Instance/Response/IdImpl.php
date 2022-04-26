@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Model\Knd\Complaints\Impl\Instance\Response;
+namespace Jabe\Model\Knd\Complaints\Impl\Instance\Response;
 
-use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
-use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
-use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
-use BpmPlatform\Model\Knd\Complaints\Impl\KndResponseModelConstants;
-use BpmPlatform\Model\Knd\Complaints\Instance\Response\IdInterface;
+use Jabe\Model\Xml\ModelBuilder;
+use Jabe\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
+use Jabe\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
+use Jabe\Model\Xml\Type\ModelTypeInstanceProviderInterface;
+use Jabe\Model\Knd\Complaints\Impl\KndResponseModelConstants;
+use Jabe\Model\Knd\Complaints\Instance\Response\IdInterface;
 
 class IdImpl extends ModelElementInstanceImpl implements IdInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Webservice;
+namespace Jabe\Engine\Impl\Bpmn\Webservice;
 
 interface OperationImplementationInterface
 {

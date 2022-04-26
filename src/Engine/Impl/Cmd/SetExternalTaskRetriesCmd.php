@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\BadUserRequestException;
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\BadUserRequestException;
+use Jabe\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExternalTaskEntity,
     PropertyChange
 };
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class SetExternalTaskRetriesCmd extends ExternalTaskCmd
 {

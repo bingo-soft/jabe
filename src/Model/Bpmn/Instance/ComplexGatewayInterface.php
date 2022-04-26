@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance;
+namespace Jabe\Model\Bpmn\Instance;
 
-use BpmPlatform\Model\Bpmn\Builder\ComplexGatewayBuilder;
+use Jabe\Model\Bpmn\Builder\ComplexGatewayBuilder;
 
 interface ComplexGatewayInterface extends GatewayInterface
 {

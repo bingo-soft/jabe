@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Identity;
+namespace Jabe\Engine\Identity;
 
 interface PasswordPolicyResultInterface
 {

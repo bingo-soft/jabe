@@ -1,25 +1,25 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Behavior;
+namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use BpmPlatform\Engine\Delegate\ExpressionInterface;
-use BpmPlatform\Engine\Impl\Migration\Instance\{
+use Jabe\Engine\Delegate\ExpressionInterface;
+use Jabe\Engine\Impl\Migration\Instance\{
     MigratingActivityInstance,
     MigratingCalledProcessInstance
 };
-use BpmPlatform\Engine\Impl\Migration\Instance\Parser\MigratingInstanceParseContext;
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use BpmPlatform\Engine\Impl\Pvm\PvmProcessInstanceInterface;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\{
+use Jabe\Engine\Impl\Migration\Instance\Parser\MigratingInstanceParseContext;
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Impl\Pvm\PvmProcessInstanceInterface;
+use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
     MigrationObserverBehaviorInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ProcessDefinitionImpl
 };
-use BpmPlatform\Engine\Variable\VariableMapInterface;
-use BpmPlatform\Engine\Impl\Util\CallableElementUtil;
+use Jabe\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Impl\Util\CallableElementUtil;
 
 class CallActivityBehavior extends CallableElementActivityBehavior implements MigrationObserverBehaviorInterface
 {

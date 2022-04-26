@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cfg;
+namespace Jabe\Engine\Impl\Cfg;
 
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
 
 interface TransactionContextFactoryInterface
 {

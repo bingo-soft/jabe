@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\ExternalTask;
+namespace Jabe\Engine\ExternalTask;
 
 interface ExternalTaskQueryBuilderInterface
 {

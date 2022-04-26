@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable\Value;
+namespace Jabe\Engine\Variable\Value;
 
 interface IntegerValueInterface extends PrimitiveValueInterface
 {

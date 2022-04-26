@@ -1,39 +1,39 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Application\{
+use Jabe\Engine\Application\{
     InvocationContext,
     ProcessApplicationReferenceInterface
 };
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Context\{
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Context\{
     Context,
     ProcessApplicationContextUtil
 };
-use BpmPlatform\Engine\Impl\Core\Variable\CoreVariableInstanceInterface;
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Core\Variable\CoreVariableInstanceInterface;
+use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     DbEntityLifecycleAwareInterface,
     EnginePersistenceLogger,
     HasDbReferencesInterface,
     HasDbRevisionInterface
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\Util\{
+use Jabe\Engine\Impl\Persistence\Entity\Util\{
     ByteArrayField,
     TypedValueField,
     TypedValueUpdateListenerInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Runtime\LegacyBehavior;
-use BpmPlatform\Engine\Impl\Variable\Serializer\{
+use Jabe\Engine\Impl\Pvm\Runtime\LegacyBehavior;
+use Jabe\Engine\Impl\Variable\Serializer\{
     TypedValueSerializerInterface,
     ValueFieldsInterface
 };
-use BpmPlatform\Engine\Repository\ResourceTypes;
-use BpmPlatform\Engine\Runtime\VariableInstanceInterface;
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Repository\ResourceTypes;
+use Jabe\Engine\Runtime\VariableInstanceInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableInstanceInterface, ValueFieldsInterface, DbEntityInterface, DbEntityLifecycleAwareInterface, TypedValueUpdateListenerInterface, HasDbRevisionInterface, HasDbReferencesInterface, \Serializable
 {

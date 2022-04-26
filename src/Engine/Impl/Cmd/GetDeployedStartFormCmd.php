@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\BadUserRequestException;
-use BpmPlatform\Engine\Form\FormDataInterface;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\BadUserRequestException;
+use Jabe\Engine\Form\FormDataInterface;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class GetDeployedStartFormCmd extends AbstractGetDeployedFormCmd
 {

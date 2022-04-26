@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Parser;
+namespace Jabe\Engine\Impl\Bpmn\Parser;
 
-use BpmPlatform\Engine\Impl\Pvm\Process\ProcessDefinitionImpl;
+use Jabe\Engine\Impl\Pvm\Process\ProcessDefinitionImpl;
 
 interface UnresolvedReferenceInterface
 {

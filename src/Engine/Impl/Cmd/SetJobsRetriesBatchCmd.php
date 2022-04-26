@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Impl\JobQueryImpl;
-use BpmPlatform\Engine\Impl\Batch\BatchElementConfiguration;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Util\CollectionUtil;
-use BpmPlatform\Engine\Runtime\JobQueryInterface;
+use Jabe\Engine\Impl\JobQueryImpl;
+use Jabe\Engine\Impl\Batch\BatchElementConfiguration;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Util\CollectionUtil;
+use Jabe\Engine\Runtime\JobQueryInterface;
 
 class SetJobsRetriesBatchCmd extends AbstractSetJobsRetriesBatchCmd
 {

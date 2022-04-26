@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Delegate;
+namespace Jabe\Engine\Impl\Delegate;
 
-use BpmPlatform\Engine\Delegate\BaseDelegateExecutionInterface;
-use BpmPlatform\Engine\Impl\Interceptor\DelegateInterceptorInterface;
-use BpmPlatform\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
+use Jabe\Engine\Delegate\BaseDelegateExecutionInterface;
+use Jabe\Engine\Impl\Interceptor\DelegateInterceptorInterface;
+use Jabe\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
 
 abstract class DelegateInvocation
 {

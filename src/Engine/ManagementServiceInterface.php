@@ -1,26 +1,26 @@
 <?php
 
-namespace BpmPlatform\Engine;
+namespace Jabe\Engine;
 
 use Doctrine\DBAL\Connection;
-use BpmPlatform\Engine\Application\{
+use Jabe\Engine\Application\{
     ProcessApplicationReferenceInterface,
     ProcessApplicationRegistrationInterface
 };
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\Authorization\{
     BatchPermissions,
     GroupsInterface,
     Permissions,
     ProcessDefinitionPermissions,
     ProcessInstancePermissions
 };
-use BpmPlatform\Engine\Batch\{
+use Jabe\Engine\Batch\{
     BatchInterface,
     BatchQueryInterface,
     BatchStatisticsQueryInterface
 };
-use BpmPlatform\Engine\History\HistoricProcessInstanceQueryInterface;
-use BpmPlatform\Engine\Management\{
+use Jabe\Engine\History\HistoricProcessInstanceQueryInterface;
+use Jabe\Engine\Management\{
     ActivityStatisticsQueryInterface,
     DeploymentStatisticsQueryInterface,
     JobDefinitionInterface,
@@ -35,14 +35,14 @@ use BpmPlatform\Engine\Management\{
     UpdateJobSuspensionStateBuilderInterface,
     UpdateJobSuspensionStateSelectBuilderInterface
 };
-use BpmPlatform\Engine\Runtime\{
+use Jabe\Engine\Runtime\{
     ExecutionInterface,
     IncidentInterface,
     JobInterface,
     JobQueryInterface,
     ProcessInstanceQueryInterface
 };
-use BpmPlatform\Engine\Task\TaskInterface;
+use Jabe\Engine\Task\TaskInterface;
 
 interface ManagementServiceInterface
 {

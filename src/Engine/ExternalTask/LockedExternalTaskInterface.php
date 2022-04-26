@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\ExternalTask;
+namespace Jabe\Engine\ExternalTask;
 
-use BpmPlatform\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Variable\VariableMapInterface;
 
 interface LockedExternalTaskInterface
 {

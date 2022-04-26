@@ -1,19 +1,19 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Event;
+namespace Jabe\Engine\Impl\Event;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Cmd\CommandLogger;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\Deploy\Cache\DeploymentCache;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Cmd\CommandLogger;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\Deploy\Cache\DeploymentCache;
+use Jabe\Engine\Impl\Persistence\Entity\{
     EventSubscriptionEntity,
     ProcessDefinitionEntity
 };
-use BpmPlatform\Engine\Impl\Pvm\PvmProcessInstanceInterface;
-use BpmPlatform\Engine\Impl\Pvm\Process\ActivityImpl;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Pvm\PvmProcessInstanceInterface;
+use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class SignalEventHandler extends EventHandlerImpl
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\History\ReportResultInterface;
-use BpmPlatform\Engine\Impl\HistoricProcessInstanceReportImpl;
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\History\ReportResultInterface;
+use Jabe\Engine\Impl\HistoricProcessInstanceReportImpl;
+use Jabe\Engine\Impl\Persistence\AbstractManager;
 
 class ReportManager extends AbstractManager
 {

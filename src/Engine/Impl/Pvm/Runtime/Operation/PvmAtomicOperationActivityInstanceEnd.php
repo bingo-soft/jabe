@@ -1,19 +1,19 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Runtime\Operation;
+namespace Jabe\Engine\Impl\Pvm\Runtime\Operation;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Pvm\{
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Pvm\{
     PvmActivityInterface,
     PvmLogger
 };
-use BpmPlatform\Engine\Impl\Pvm\Delegate\CompositeActivityBehaviorInterface;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\{
+use Jabe\Engine\Impl\Pvm\Delegate\CompositeActivityBehaviorInterface;
+use Jabe\Engine\Impl\Pvm\Runtime\{
     CompensationBehavior,
     LegacyBehavior,
     PvmExecutionImpl
 };
-use BpmPlatform\Engine\Impl\Core\Instance\CoreExecution;
+use Jabe\Engine\Impl\Core\Instance\CoreExecution;
 
 abstract class PvmAtomicOperationActivityInstanceEnd extends AbstractPvmEventAtomicOperation
 {

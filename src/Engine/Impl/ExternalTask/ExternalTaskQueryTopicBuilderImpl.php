@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\ExternalTask;
+namespace Jabe\Engine\Impl\ExternalTask;
 
-use BpmPlatform\Engine\ExternalTask\{
+use Jabe\Engine\ExternalTask\{
     ExternalTaskQueryBuilderInterface,
     LockedExternalTaskInterface
 };
-use BpmPlatform\Engine\Impl\Cmd\FetchExternalTasksCmd;
-use BpmPlatform\Engine\Impl\Interceptor\CommandExecutorInterface;
+use Jabe\Engine\Impl\Cmd\FetchExternalTasksCmd;
+use Jabe\Engine\Impl\Interceptor\CommandExecutorInterface;
 
 class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopicBuilderInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Webservice;
+namespace Jabe\Engine\Impl\Bpmn\Webservice;
 
-use BpmPlatform\Engine\Impl\Bpmn\Parser\MessageDefinition;
+use Jabe\Engine\Impl\Bpmn\Parser\MessageDefinition;
 
 class Operation
 {

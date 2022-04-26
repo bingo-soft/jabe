@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Deploy\Cache;
+namespace Jabe\Engine\Impl\Persistence\Deploy\Cache;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\AbstractResourceDefinitionManagerInterface;
-use BpmPlatform\Engine\Impl\Persistence\Entity\DeploymentEntity;
-use BpmPlatform\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
-use BpmPlatform\Commons\Utils\Cache\CacheInterface;
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\AbstractResourceDefinitionManagerInterface;
+use Jabe\Engine\Impl\Persistence\Entity\DeploymentEntity;
+use Jabe\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
+use Jabe\Commons\Utils\Cache\CacheInterface;
 
 abstract class ResourceDefinitionCache
 {

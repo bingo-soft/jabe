@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\ExternalTask;
+namespace Jabe\Engine\ExternalTask;
 
-use BpmPlatform\Engine\Query\QueryInterface;
+use Jabe\Engine\Query\QueryInterface;
 
 interface ExternalTaskQueryInterface extends QueryInterface
 {

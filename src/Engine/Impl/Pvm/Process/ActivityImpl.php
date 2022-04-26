@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Process;
+namespace Jabe\Engine\Impl\Pvm\Process;
 
-use BpmPlatform\Engine\Impl\Bpmn\Helper\BpmnProperties;
-use BpmPlatform\Engine\Impl\Bpmn\Parser\BpmnParse;
-use BpmPlatform\Engine\Impl\Pvm\{
+use Jabe\Engine\Impl\Bpmn\Helper\BpmnProperties;
+use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
+use Jabe\Engine\Impl\Pvm\{
     PvmActivityInterface,
     PvmException,
     PvmScopeInterface,
     PvmTransitionInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityBehaviorInterface;
+use Jabe\Engine\Impl\Pvm\Delegate\ActivityBehaviorInterface;
 
 class ActivityImpl extends ScopeImpl implements PvmActivityInterface, HasDIBoundsInterface
 {

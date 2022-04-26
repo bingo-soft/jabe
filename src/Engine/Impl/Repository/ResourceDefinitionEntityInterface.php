@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Repository;
+namespace Jabe\Engine\Impl\Repository;
 
-use BpmPlatform\Engine\Repository\ResourceDefinitionInterface;
+use Jabe\Engine\Repository\ResourceDefinitionInterface;
 
 interface ResourceDefinitionEntityInterface extends ResourceDefinitionInterface
 {

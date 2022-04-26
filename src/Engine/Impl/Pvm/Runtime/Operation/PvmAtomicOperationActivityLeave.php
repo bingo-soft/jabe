@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Runtime\Operation;
+namespace Jabe\Engine\Impl\Pvm\Runtime\Operation;
 
-use BpmPlatform\Engine\Impl\Util\ActivityBehaviorUtil;
-use BpmPlatform\Engine\Impl\Bpmn\Behavior\FlowNodeActivityBehavior;
-use BpmPlatform\Engine\Impl\Pvm\{
+use Jabe\Engine\Impl\Util\ActivityBehaviorUtil;
+use Jabe\Engine\Impl\Bpmn\Behavior\FlowNodeActivityBehavior;
+use Jabe\Engine\Impl\Pvm\{
     PvmException,
     PvmLogger
 };
-use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityBehaviorInterface;
-use BpmPlatform\Engine\Impl\Pvm\Process\ActivityImpl;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
+use Jabe\Engine\Impl\Pvm\Delegate\ActivityBehaviorInterface;
+use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
+use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
 
 class PvmAtomicOperationActivityLeave implements PvmAtomicOperationInterface
 {

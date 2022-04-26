@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Scripting;
+namespace Jabe\Engine\Impl\Scripting;
 
-use BpmPlatform\Engine\{
+use Jabe\Engine\{
     ProcessEngineException,
     ScriptEvaluationException
 };
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Delegate\{
     DelegateExecutionInterface,
     VariableScopeInterface
 };
-use BpmPlatform\Engine\Impl\ConditionInterface;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Delegate\ScriptInvocation;
+use Jabe\Engine\Impl\ConditionInterface;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Delegate\ScriptInvocation;
 
 class ScriptCondition implements ConditionInterface
 {

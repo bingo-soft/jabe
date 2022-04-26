@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Helper;
+namespace Jabe\Engine\Impl\Bpmn\Helper;
 
-use BpmPlatform\Engine\Impl\Bpmn\Parser\ErrorEventDefinition;
-use BpmPlatform\Engine\Impl\Pvm\{
+use Jabe\Engine\Impl\Bpmn\Parser\ErrorEventDefinition;
+use Jabe\Engine\Impl\Pvm\{
     PvmActivityInterface,
     PvmScopeInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\ScopeImpl;
-use BpmPlatform\Engine\Impl\Tree\TreeVisitorInterface;
+use Jabe\Engine\Impl\Pvm\Process\ScopeImpl;
+use Jabe\Engine\Impl\Tree\TreeVisitorInterface;
 
 class ErrorDeclarationForProcessInstanceFinder implements TreeVisitorInterface
 {

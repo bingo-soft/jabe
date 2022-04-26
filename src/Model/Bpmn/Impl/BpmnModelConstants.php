@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Impl;
+namespace Jabe\Model\Bpmn\Impl;
 
 class BpmnModelConstants
 {

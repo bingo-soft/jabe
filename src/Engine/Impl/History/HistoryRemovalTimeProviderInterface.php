@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History;
+namespace Jabe\Engine\Impl\History;
 
-use BpmPlatform\Engine\Impl\Batch\History\HistoricBatchEntity;
-use BpmPlatform\Engine\Impl\History\Event\{
+use Jabe\Engine\Impl\Batch\History\HistoricBatchEntity;
+use Jabe\Engine\Impl\History\Event\{
     HistoricProcessInstanceEventEntity
 };
-use BpmPlatform\Engine\Repository\{
+use Jabe\Engine\Repository\{
     ProcessDefinitionInterface
 };
 

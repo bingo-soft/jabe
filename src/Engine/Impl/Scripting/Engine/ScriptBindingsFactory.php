@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Scripting\Engine;
+namespace Jabe\Engine\Impl\Scripting\Engine;
 
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Impl\Util\Scripting\BindingsInterface;
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Impl\Util\Scripting\BindingsInterface;
 
 class ScriptBindingsFactory
 {

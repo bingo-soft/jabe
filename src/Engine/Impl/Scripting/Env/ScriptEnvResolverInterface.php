@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Scripting\Env;
+namespace Jabe\Engine\Impl\Scripting\Env;
 
 interface ScriptEnvResolverInterface
 {

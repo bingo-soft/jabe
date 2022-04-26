@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Scripting\Engine;
+namespace Jabe\Engine\Impl\Scripting\Engine;
 
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Delegate\VariableScopeInterface;
 
 class VariableScopeResolverFactory implements ResolverFactoryInterface
 {

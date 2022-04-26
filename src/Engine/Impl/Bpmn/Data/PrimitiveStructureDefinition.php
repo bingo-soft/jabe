@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Data;
+namespace Jabe\Engine\Impl\Bpmn\Data;
 
 class PrimitiveStructureDefinition implements StructureDefinitionInterface
 {

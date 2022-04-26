@@ -1,17 +1,17 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext,
     CommandExecutorInterface
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\JobEntity;
-use BpmPlatform\Engine\Management\Metrics;
+use Jabe\Engine\Impl\Persistence\Entity\JobEntity;
+use Jabe\Engine\Management\Metrics;
 
 class FailedJobListener implements CommandInterface
 {

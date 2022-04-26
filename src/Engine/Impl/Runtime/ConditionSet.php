@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Runtime;
+namespace Jabe\Engine\Impl\Runtime;
 
-use BpmPlatform\Engine\Impl\ConditionEvaluationBuilderImpl;
-use BpmPlatform\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Impl\ConditionEvaluationBuilderImpl;
+use Jabe\Engine\Variable\VariableMapInterface;
 
 class ConditionSet
 {

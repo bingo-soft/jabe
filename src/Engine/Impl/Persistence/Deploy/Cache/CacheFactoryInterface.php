@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Deploy\Cache;
+namespace Jabe\Engine\Impl\Persistence\Deploy\Cache;
 
-use BpmPlatform\Commons\Utils\Cache\CacheInterface;
+use Jabe\Commons\Utils\Cache\CacheInterface;
 
 interface CacheFactoryInterface
 {

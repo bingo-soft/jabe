@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Listener;
+namespace Jabe\Engine\Impl\Bpmn\Listener;
 
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Delegate\{
     DelegateExecutionInterface,
     ExecutionListenerInterface,
     ExpressionInterface

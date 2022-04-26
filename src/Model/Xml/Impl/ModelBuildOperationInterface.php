@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl;
+namespace Jabe\Model\Xml\Impl;
 
-use BpmPlatform\Model\Xml\ModelInterface;
+use Jabe\Model\Xml\ModelInterface;
 
 interface ModelBuildOperationInterface
 {

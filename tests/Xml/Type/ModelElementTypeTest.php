@@ -3,7 +3,7 @@
 namespace Tests\Xml\Type;
 
 use PHPUnit\Framework\TestCase;
-use BpmPlatform\Model\Xml\ModelBuilder;
+use Jabe\Model\Xml\ModelBuilder;
 use Tests\Xml\TestModel\{
     TestModelConstants,
     TestModelParser
@@ -127,7 +127,7 @@ class ModelElementTypeTest extends TestCase
         $this->assertEmpty($this->flyingAnimalType->getInstances($this->modelInstance));
         $this->assertCount(3, $this->birdType->getInstances($this->modelInstance));
 
-        $this->expectException(\BpmPlatform\Model\Xml\Exception\ModelTypeException::class);
+        $this->expectException(\Jabe\Model\Xml\Exception\ModelTypeException::class);
         $this->animalType->newInstance($this->modelInstance);
     }
 

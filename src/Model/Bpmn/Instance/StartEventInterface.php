@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance;
+namespace Jabe\Model\Bpmn\Instance;
 
-use BpmPlatform\Model\Bpmn\Builder\StartEventBuilder;
+use Jabe\Model\Bpmn\Builder\StartEventBuilder;
 
 interface StartEventInterface extends CatchEventInterface
 {

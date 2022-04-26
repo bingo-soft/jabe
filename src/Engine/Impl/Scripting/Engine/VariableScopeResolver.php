@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Scripting\Engine;
+namespace Jabe\Engine\Impl\Scripting\Engine;
 
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\ExecutionImpl;
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Impl\Pvm\Runtime\ExecutionImpl;
 
 class VariableScopeResolver implements ResolverInterface
 {

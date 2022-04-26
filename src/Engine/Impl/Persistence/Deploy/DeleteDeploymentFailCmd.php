@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Deploy;
+namespace Jabe\Engine\Impl\Persistence\Deploy;
 
-use BpmPlatform\Engine\Application\ProcessApplicationReferenceInterface;
-use BpmPlatform\Engine\Impl\Cmd\{
+use Jabe\Engine\Application\ProcessApplicationReferenceInterface;
+use Jabe\Engine\Impl\Cmd\{
     RegisterDeploymentCmd,
     RegisterProcessApplicationCmd
 };
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Interceptor\{
     AbstractCommand,
     CommandContext
 };

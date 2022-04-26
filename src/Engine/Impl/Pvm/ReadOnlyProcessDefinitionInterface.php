@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm;
+namespace Jabe\Engine\Impl\Pvm;
 
 interface ReadOnlyProcessDefinitionInterface extends PvmScopeInterface
 {

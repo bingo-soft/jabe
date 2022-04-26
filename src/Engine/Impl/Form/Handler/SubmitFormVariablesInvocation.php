@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Handler;
+namespace Jabe\Engine\Impl\Form\Handler;
 
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Impl\Delegate\DelegateInvocation;
-use BpmPlatform\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Impl\Delegate\DelegateInvocation;
+use Jabe\Engine\Variable\VariableMapInterface;
 
 class SubmitFormVariablesInvocation extends DelegateInvocation
 {

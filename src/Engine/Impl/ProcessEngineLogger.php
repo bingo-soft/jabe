@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl;
+namespace Jabe\Engine\Impl;
 
-use BpmPlatform\Commons\Logging\BaseLogger;
+use Jabe\Commons\Logging\BaseLogger;
 
 class ProcessEngineLogger extends BaseLogger
 {

@@ -4,9 +4,9 @@ namespace Tests\Bpmn;
 
 use PHPUnit\Framework\TestCase;
 use Tests\Bpmn\BpmnTestConstants;
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
-use BpmPlatform\Model\Bpmn\Bpmn;
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Bpmn;
+use Jabe\Model\Bpmn\Instance\{
     BaseElementInterface,
     BpmnModelElementInstanceInterface,
     BusinessRuleTaskInterface,
@@ -26,7 +26,7 @@ use BpmPlatform\Model\Bpmn\Instance\{
     TimerEventDefinitionInterface,
     UserTaskInterface
 };
-use BpmPlatform\Model\Bpmn\Instance\Extension\{
+use Jabe\Model\Bpmn\Instance\Extension\{
     ConnectorInterface,
     ConnectorIdInterface,
     ConstraintInterface,

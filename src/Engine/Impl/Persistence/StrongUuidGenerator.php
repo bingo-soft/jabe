@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence;
+namespace Jabe\Engine\Impl\Persistence;
 
 use Ramsey\Uuid\Uuid;
-use BpmPlatform\Engine\Impl\Cfg\IdGenerator;
+use Jabe\Engine\Impl\Cfg\IdGenerator;
 
 class StrongUuidGenerator implements IdGeneratorInterface
 {

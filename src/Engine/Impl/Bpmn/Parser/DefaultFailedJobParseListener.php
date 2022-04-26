@@ -1,17 +1,17 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Parser;
+namespace Jabe\Engine\Impl\Bpmn\Parser;
 
-use BpmPlatform\Engine\Impl\Bpmn\Behavior\MultiInstanceActivityBehavior;
-use BpmPlatform\Engine\Impl\Bpmn\Helper\BpmnProperties;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Core\Model\PropertyKey;
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\Impl\Bpmn\Behavior\MultiInstanceActivityBehavior;
+use Jabe\Engine\Impl\Bpmn\Helper\BpmnProperties;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Core\Model\PropertyKey;
+use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ScopeImpl
 };
-use BpmPlatform\Engine\Impl\Util\ParseUtil;
-use BpmPlatform\Engine\Impl\Util\Xml\Element;
+use Jabe\Engine\Impl\Util\ParseUtil;
+use Jabe\Engine\Impl\Util\Xml\Element;
 
 class DefaultFailedJobParseListener extends AbstractBpmnParseListener
 {

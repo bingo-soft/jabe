@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Variable\VariableMapInterface;
 
 class ExecutionVariableSnapshotObserver implements ExecutionObserverInterface
 {

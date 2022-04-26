@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Util\Xml;
+namespace Jabe\Engine\Impl\Util\Xml;
 
-use BpmPlatform\Model\Xml\Impl\Util\ReflectUtil;
+use Jabe\Model\Xml\Impl\Util\ReflectUtil;
 
 class Parse
 {

@@ -1,19 +1,19 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Impl\{
     Direction,
     QueryOrderingProperty,
     QueryPropertyImpl
 };
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     ListQueryParameterObject
 };
-use BpmPlatform\Engine\Impl\Db\EntityManager\Operation\DbOperation;
-use BpmPlatform\Engine\Impl\Persistence\AbstractHistoricManager;
-use BpmPlatform\Engine\Task\{
+use Jabe\Engine\Impl\Db\EntityManager\Operation\DbOperation;
+use Jabe\Engine\Impl\Persistence\AbstractHistoricManager;
+use Jabe\Engine\Task\{
     CommentInterface,
     EventInterface
 };

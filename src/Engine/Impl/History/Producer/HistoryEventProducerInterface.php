@@ -1,26 +1,26 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History\Handler;
+namespace Jabe\Engine\Impl\History\Handler;
 
-use BpmPlatform\Engine\Batch\BatchInterface;
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Batch\BatchInterface;
+use Jabe\Engine\Delegate\{
     DelegateExecutionInterface,
     DelegateTaskInterface,
     VariableScopeInterface
 };
-use BpmPlatform\Engine\ExternalTask\ExternalTaskInterface;
-use BpmPlatform\Engine\Impl\History\Event\HistoryEvent;
-use BpmPlatform\Engine\Impl\Migration\Instance\MigratingActivityInstance;
-use BpmPlatform\Engine\Impl\OpLog\UserOperationLogContext;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\ExternalTask\ExternalTaskInterface;
+use Jabe\Engine\Impl\History\Event\HistoryEvent;
+use Jabe\Engine\Impl\Migration\Instance\MigratingActivityInstance;
+use Jabe\Engine\Impl\OpLog\UserOperationLogContext;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     VariableInstanceEntity
 };
-use BpmPlatform\Engine\Runtime\{
+use Jabe\Engine\Runtime\{
     IncidentInterface,
     JobInterface
 };
-use BpmPlatform\Engine\Task\IdentityLinkInterface;
+use Jabe\Engine\Task\IdentityLinkInterface;
 
 interface HistoryEventProducerInterface
 {

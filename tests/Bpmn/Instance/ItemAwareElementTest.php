@@ -6,7 +6,7 @@ use Tests\Xml\Test\{
     AbstractTypeAssumption,
     AttributeAssumption
 };
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Bpmn\Instance\{
     BaseElementInterface,
     DataStateInterface
 };

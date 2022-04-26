@@ -3,7 +3,7 @@
 namespace Tests\Bpmn\Instance;
 
 use Tests\Xml\Test\AbstractTypeAssumption;
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Bpmn\Instance\{
     HumanPerformerInterface
 };
 

@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Impl\Instance\Bpmndi;
+namespace Jabe\Model\Bpmn\Impl\Instance\Bpmndi;
 
-use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
-use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
-use BpmPlatform\Model\Bpmn\Instance\Bpmndi\{
+use Jabe\Model\Xml\ModelBuilder;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
+use Jabe\Model\Xml\Type\ModelTypeInstanceProviderInterface;
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Instance\Bpmndi\{
     BpmnLabelInterface,
     BpmnLabelStyleInterface
 };
-use BpmPlatform\Model\Bpmn\Instance\Di\LabelInterface;
-use BpmPlatform\Model\Bpmn\Impl\Instance\Di\LabelImpl;
+use Jabe\Model\Bpmn\Instance\Di\LabelInterface;
+use Jabe\Model\Bpmn\Impl\Instance\Di\LabelImpl;
 
 class BpmnLabelImpl extends LabelImpl implements BpmnLabelInterface
 {

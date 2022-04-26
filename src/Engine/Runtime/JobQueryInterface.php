@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Runtime;
+namespace Jabe\Engine\Runtime;
 
-use BpmPlatform\Engine\Query\QueryInterface;
+use Jabe\Engine\Query\QueryInterface;
 
 interface JobQueryInterface extends QueryInterface
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Delegate;
+namespace Jabe\Engine\Impl\Pvm\Delegate;
 
-use BpmPlatform\Engine\Impl\Migration\Instance\MigratingActivityInstance;
-use BpmPlatform\Engine\Impl\Migration\Instance\Parser\MigratingInstanceParseContext;
+use Jabe\Engine\Impl\Migration\Instance\MigratingActivityInstance;
+use Jabe\Engine\Impl\Migration\Instance\Parser\MigratingInstanceParseContext;
 
 interface MigrationObserverBehaviorInterface
 {

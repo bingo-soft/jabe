@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable\Impl\Type;
+namespace Jabe\Engine\Variable\Impl\Type;
 
-use BpmPlatform\Engine\Variable\Variables;
-use BpmPlatform\Engine\Variable\Type\SerializableValueTypeInterface;
-use BpmPlatform\Engine\Variable\Value\{
+use Jabe\Engine\Variable\Variables;
+use Jabe\Engine\Variable\Type\SerializableValueTypeInterface;
+use Jabe\Engine\Variable\Value\{
     ObjectValueInterface,
     SerializableValueInterface,
     TypedValueInterface
 };
-use BpmPlatform\Engine\Variable\Value\Builder\{
+use Jabe\Engine\Variable\Value\Builder\{
     ObjectValueBuilderInterface,
     SerializedObjectValueBuilderInterface
 };

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable\Type;
+namespace Jabe\Engine\Variable\Type;
 
-use BpmPlatform\Engine\Variable\Value\SerializableValueInterface;
+use Jabe\Engine\Variable\Value\SerializableValueInterface;
 
 interface SerializableValueTypeInterface extends ValueTypeInterface
 {

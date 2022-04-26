@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Util;
+namespace Jabe\Engine\Impl\Util;
 
 class CollectionUtil
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Delegate;
+namespace Jabe\Engine\Delegate;
 
-use BpmPlatform\Model\Cmmn\CmmnModelInstanceInterface;
-use BpmPlatform\Model\Cmmn\Instance\CmmnElementInterface;
+use Jabe\Model\Cmmn\CmmnModelInstanceInterface;
+use Jabe\Model\Cmmn\Instance\CmmnElementInterface;
 
 interface CmmnModelExecutionContextInterface
 {

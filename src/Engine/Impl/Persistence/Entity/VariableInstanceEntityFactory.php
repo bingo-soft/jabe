@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\Core\Variable\Scope\VariableInstanceFactoryInterface;
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Impl\Core\Variable\Scope\VariableInstanceFactoryInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 class VariableInstanceEntityFactory implements VariableInstanceFactoryInterface
 {

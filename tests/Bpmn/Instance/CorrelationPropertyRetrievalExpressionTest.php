@@ -6,8 +6,8 @@ use Tests\Xml\Test\{
     AbstractTypeAssumption,
     AttributeAssumption
 };
-use BpmPlatform\Model\Bpmn\Impl\Instance\MessagePath;
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Bpmn\Impl\Instance\MessagePath;
+use Jabe\Model\Bpmn\Instance\{
     BaseElementInterface
 };
 

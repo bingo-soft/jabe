@@ -1,24 +1,24 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\BadUserRequestException;
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\BadUserRequestException;
+use Jabe\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\Impl\{
     HistoricProcessInstanceQueryImpl,
     RestartProcessInstanceBuilderImpl
 };
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext,
     CommandExecutorInterface
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     ProcessDefinitionEntity,
     PropertyChange
 };
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
-use BpmPlatform\Engine\Repository\ProcessDefinitionInterface;
+use Jabe\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Repository\ProcessDefinitionInterface;
 
 abstract class AbstractRestartProcessInstanceCmd implements CommandInterface
 {

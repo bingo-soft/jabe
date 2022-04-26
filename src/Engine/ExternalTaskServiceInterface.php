@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine;
+namespace Jabe\Engine;
 
-use BpmPlatform\Engine\Batch\BatchInterface;
-use BpmPlatform\Engine\ExternalTask\{
+use Jabe\Engine\Batch\BatchInterface;
+use Jabe\Engine\ExternalTask\{
     ExternalTaskInterface,
     ExternalTaskQueryInterface,
     ExternalTaskQueryBuilderInterface,

@@ -1,23 +1,23 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Impl\{
     Direction,
     JobQueryImpl,
     JobQueryProperty,
     Page,
     QueryOrderingProperty
 };
-use BpmPlatform\Engine\Impl\Cfg\{
+use Jabe\Engine\Impl\Cfg\{
     ProcessEngineConfigurationImpl,
     TransactionListenerInterface,
     TransactionState
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\ListQueryParameterObject;
-use BpmPlatform\Engine\Impl\Db\Sql\DbSqlSessionFactory;
-use BpmPlatform\Engine\Impl\JobExecutor\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\ListQueryParameterObject;
+use Jabe\Engine\Impl\Db\Sql\DbSqlSessionFactory;
+use Jabe\Engine\Impl\JobExecutor\{
     ExclusiveJobAddedNotification,
     JobExecutor,
     JobExecutorContext,
@@ -28,14 +28,14 @@ use BpmPlatform\Engine\Impl\JobExecutor\{
     TimerStartEventJobHandler,
     TimerStartEventSubprocessJobHandler
 };
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Impl\Util\{
     ClockUtil,
     CollectionUtil,
     EnsureUtil,
     ImmutablePair
 };
-use BpmPlatform\Engine\Runtime\JobInterface;
+use Jabe\Engine\Runtime\JobInterface;
 
 class JobManager extends AbstractManager
 {

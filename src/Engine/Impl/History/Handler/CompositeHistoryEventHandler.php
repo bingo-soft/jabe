@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History\Handler;
+namespace Jabe\Engine\Impl\History\Handler;
 
-use BpmPlatform\Engine\Impl\History\Event\HistoryEvent;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\History\Event\HistoryEvent;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class CompositeHistoryEventHandler implements HistoryEventHandlerInterface
 {

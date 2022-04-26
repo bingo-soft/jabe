@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Impl;
+namespace Jabe\Model\Bpmn\Impl;
 
-use BpmPlatform\Model\Bpmn\Bpmn;
-use BpmPlatform\Model\Xml\Impl\Parser\AbstractModelParser;
-use BpmPlatform\Model\Xml\Instance\DomDocumentInterface;
-use BpmPlatform\Model\Xml\ModelInstanceInterface;
+use Jabe\Model\Bpmn\Bpmn;
+use Jabe\Model\Xml\Impl\Parser\AbstractModelParser;
+use Jabe\Model\Xml\Instance\DomDocumentInterface;
+use Jabe\Model\Xml\ModelInstanceInterface;
 
 class BpmnParser extends AbstractModelParser
 {

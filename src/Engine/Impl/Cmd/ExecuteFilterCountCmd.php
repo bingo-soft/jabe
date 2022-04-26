@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Query\QueryInterface;
+use Jabe\Engine\Query\QueryInterface;
 
 class ExecuteFilterCountCmd extends AbstractExecuteFilterCmd implements CommandInterface
 {

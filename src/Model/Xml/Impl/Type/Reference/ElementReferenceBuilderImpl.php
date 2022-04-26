@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type\Reference;
+namespace Jabe\Model\Xml\Impl\Type\Reference;
 
-use BpmPlatform\Model\Xml\Impl\Type\Child\ChildElementImpl;
-use BpmPlatform\Model\Xml\Type\Reference\{
+use Jabe\Model\Xml\Impl\Type\Child\ChildElementImpl;
+use Jabe\Model\Xml\Type\Reference\{
     ElementReferenceInterface,
     ElementReferenceBuilderInterface
 };

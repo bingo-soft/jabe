@@ -1,17 +1,17 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History;
+namespace Jabe\Engine\Impl\History;
 
-use BpmPlatform\Engine\BadUserRequestException;
-use BpmPlatform\Engine\Batch\BatchInterface;
-use BpmPlatform\Engine\Batch\History\HistoricBatchQueryInterface;
-use BpmPlatform\Engine\History\{
+use Jabe\Engine\BadUserRequestException;
+use Jabe\Engine\Batch\BatchInterface;
+use Jabe\Engine\Batch\History\HistoricBatchQueryInterface;
+use Jabe\Engine\History\{
     SetRemovalTimeSelectModeForHistoricBatchesBuilderInterface,
     SetRemovalTimeToHistoricBatchesBuilderInterface
 };
-use BpmPlatform\Engine\Impl\Cmd\Batch\RemovalTime\SetRemovalTimeToHistoricBatchesCmd;
-use BpmPlatform\Engine\Impl\Interceptor\CommandExecutorInterface;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Cmd\Batch\RemovalTime\SetRemovalTimeToHistoricBatchesCmd;
+use Jabe\Engine\Impl\Interceptor\CommandExecutorInterface;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class SetRemovalTimeToHistoricBatchesBuilderImpl implements SetRemovalTimeSelectModeForHistoricBatchesBuilderInterface
 {

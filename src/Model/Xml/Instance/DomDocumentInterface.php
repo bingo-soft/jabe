@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Instance;
+namespace Jabe\Model\Xml\Instance;
 
-use BpmPlatform\Model\Xml\Impl\Instance\DomDocumentExt;
+use Jabe\Model\Xml\Impl\Instance\DomDocumentExt;
 
 interface DomDocumentInterface
 {

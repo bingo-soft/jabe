@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Builder;
+namespace Jabe\Model\Bpmn\Builder;
 
-use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
-use BpmPlatform\Model\Bpmn\Instance\Bpmndi\{
+use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
+use Jabe\Model\Bpmn\Instance\Bpmndi\{
     BpmnEdgeInterface,
     BpmnShapeInterface
 };
-use BpmPlatform\Model\Bpmn\Instance\Di\WaypointInterface;
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Bpmn\Instance\Di\WaypointInterface;
+use Jabe\Model\Bpmn\Instance\{
     BoundaryEventInterface,
     ErrorEventDefinitionInterface,
     EscalationEventDefinitionInterface,

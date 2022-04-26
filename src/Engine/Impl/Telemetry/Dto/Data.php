@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Telemetry\Dto;
+namespace Jabe\Engine\Impl\Telemetry\Dto;
 
-use BpmPlatform\Engine\Impl\Util\JsonUtil;
+use Jabe\Engine\Impl\Util\JsonUtil;
 
 class Data
 {

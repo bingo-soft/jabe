@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Variable;
+namespace Jabe\Engine\Impl\Variable;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\{
     ExpressionInterface,
     VariableScopeInterface
 };

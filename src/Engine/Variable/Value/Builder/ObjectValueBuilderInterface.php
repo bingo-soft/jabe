@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable\Value\Builder;
+namespace Jabe\Engine\Variable\Value\Builder;
 
-use BpmPlatform\Engine\Variable\Value\SerializationDataFormatInterface;
+use Jabe\Engine\Variable\Value\SerializationDataFormatInterface;
 
 interface ObjectValueBuilderInterface extends TypedValueBuilderInterface
 {

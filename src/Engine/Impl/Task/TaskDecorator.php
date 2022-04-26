@@ -1,19 +1,19 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Task;
+namespace Jabe\Engine\Impl\Task;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\{
     ExpressionInterface,
     VariableScopeInterface
 };
-use BpmPlatform\Engine\Impl\Calendar\{
+use Jabe\Engine\Impl\Calendar\{
     BusinessCalendarInterface,
     DueDateBusinessCalendar
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\El\ExpressionManager;
-use BpmPlatform\Engine\Impl\Persistence\Entity\TaskEntity;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\El\ExpressionManager;
+use Jabe\Engine\Impl\Persistence\Entity\TaskEntity;
 
 class TaskDecorator
 {

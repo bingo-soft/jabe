@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity\Util;
+namespace Jabe\Engine\Impl\Persistence\Entity\Util;
 
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ByteArrayEntity,
     NameableInterface
 };
-use BpmPlatform\Engine\Impl\Variable\Serializer\ValueFieldsInterface;
-use BpmPlatform\Engine\Repository\ResourceTypeInterface;
+use Jabe\Engine\Impl\Variable\Serializer\ValueFieldsInterface;
+use Jabe\Engine\Repository\ResourceTypeInterface;
 
 class ByteArrayField
 {

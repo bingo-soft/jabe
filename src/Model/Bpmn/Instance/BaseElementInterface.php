@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance;
+namespace Jabe\Model\Bpmn\Instance;
 
-use BpmPlatform\Model\Bpmn\Instance\Di\DiagramElementInterface;
+use Jabe\Model\Bpmn\Instance\Di\DiagramElementInterface;
 
 interface BaseElementInterface extends BpmnModelElementInstanceInterface
 {

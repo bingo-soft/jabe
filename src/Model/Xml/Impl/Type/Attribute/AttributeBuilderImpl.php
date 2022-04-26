@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type\Attribute;
+namespace Jabe\Model\Xml\Impl\Type\Attribute;
 
-use BpmPlatform\Model\Xml\ModelInterface;
-use BpmPlatform\Model\Xml\Impl\ModelBuildOperationInterface;
-use BpmPlatform\Model\Xml\Impl\Type\ModelElementTypeImpl;
-use BpmPlatform\Model\Xml\Type\Attribute\{
+use Jabe\Model\Xml\ModelInterface;
+use Jabe\Model\Xml\Impl\ModelBuildOperationInterface;
+use Jabe\Model\Xml\Impl\Type\ModelElementTypeImpl;
+use Jabe\Model\Xml\Type\Attribute\{
     AttributeInterface,
     AttributeBuilderInterface
 };

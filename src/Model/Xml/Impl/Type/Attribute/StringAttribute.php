@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type\Attribute;
+namespace Jabe\Model\Xml\Impl\Type\Attribute;
 
-use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
+use Jabe\Model\Xml\Type\ModelElementTypeInterface;
 
 class StringAttribute extends AttributeImpl
 {

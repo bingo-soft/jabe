@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Management;
+namespace Jabe\Engine\Management;
 
 interface UpdateJobSuspensionStateTenantBuilderInterface
 {

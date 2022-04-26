@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Interceptor;
+namespace Jabe\Engine\Impl\Interceptor;
 
 interface CommandContextListenerInterface
 {

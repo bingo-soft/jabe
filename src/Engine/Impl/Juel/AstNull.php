@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Juel;
+namespace Jabe\Engine\Impl\Juel;
 
-use BpmPlatform\Engine\Impl\Util\El\ELContext;
+use Jabe\Engine\Impl\Util\El\ELContext;
 
 class AstNull extends AstLiteral
 {

@@ -1,22 +1,22 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\{
     ExpressionInterface,
     VariableScopeInterface
 };
-use BpmPlatform\Engine\Impl\Bpmn\Helper\BpmnProperties;
-use BpmPlatform\Engine\Impl\Calendar\BusinessCalendarInterface;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\El\StartProcessVariableScope;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Bpmn\Helper\BpmnProperties;
+use Jabe\Engine\Impl\Calendar\BusinessCalendarInterface;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\El\StartProcessVariableScope;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     TimerEntity
 };
-use BpmPlatform\Engine\Impl\Pvm\PvmScopeInterface;
-use BpmPlatform\Engine\Impl\Util\ClockUtil;
+use Jabe\Engine\Impl\Pvm\PvmScopeInterface;
+use Jabe\Engine\Impl\Util\ClockUtil;
 
 class TimerDeclarationImpl extends JobDeclaration
 {

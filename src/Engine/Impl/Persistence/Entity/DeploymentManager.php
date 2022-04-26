@@ -1,22 +1,22 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Authorization\Resources;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Authorization\Resources;
+use Jabe\Engine\Impl\{
     DeploymentQueryImpl,
     Page
 };
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Cfg\Auth\ResourceAuthorizationProviderInterface;
-use BpmPlatform\Engine\Impl\Cmd\DeleteProcessDefinitionsByIdsCmd;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Form\Entity\FormDefinitionManager;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
-use BpmPlatform\Engine\Impl\Persistence\Deploy\Cache\DeploymentCache;
-use BpmPlatform\Engine\Impl\Util\ClockUtil;
-use BpmPlatform\Engine\Repository\{
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Cfg\Auth\ResourceAuthorizationProviderInterface;
+use Jabe\Engine\Impl\Cmd\DeleteProcessDefinitionsByIdsCmd;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Form\Entity\FormDefinitionManager;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Impl\Persistence\Deploy\Cache\DeploymentCache;
+use Jabe\Engine\Impl\Util\ClockUtil;
+use Jabe\Engine\Repository\{
     DeploymentInterface,
     ProcessDefinitionInterface,
     ResourceTypes

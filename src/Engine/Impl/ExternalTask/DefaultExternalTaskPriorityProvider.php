@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\ExternalTask;
+namespace Jabe\Engine\Impl\ExternalTask;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\{
     DefaultPriorityProvider,
     ProcessEngineLogger
 };
-use BpmPlatform\Engine\Impl\Bpmn\Behavior\ExternalTaskActivityBehavior;
-use BpmPlatform\Engine\Impl\Bpmn\Parser\BpmnParse;
-use BpmPlatform\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Impl\Bpmn\Behavior\ExternalTaskActivityBehavior;
+use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
+use Jabe\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
 
 class DefaultExternalTaskPriorityProvider extends DefaultPriorityProvider
 {

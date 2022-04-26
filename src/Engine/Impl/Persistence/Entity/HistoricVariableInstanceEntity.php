@@ -1,29 +1,29 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\History\HistoricVariableInstanceInterface;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\History\HistoricVariableInstanceInterface;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     DbEntityLifecycleAwareInterface,
     EnginePersistenceLogger,
     HasDbRevisionInterface,
     HistoricEntityInterface
 };
-use BpmPlatform\Engine\Impl\History\Event\HistoricVariableUpdateEventEntity;
-use BpmPlatform\Engine\Impl\Persistence\Entity\Util\{
+use Jabe\Engine\Impl\History\Event\HistoricVariableUpdateEventEntity;
+use Jabe\Engine\Impl\Persistence\Entity\Util\{
     ByteArrayField,
     TypedValueField
 };
-use BpmPlatform\Engine\Impl\Variable\Serializer\{
+use Jabe\Engine\Impl\Variable\Serializer\{
     TypedValueSerializerInterface,
     ValueFieldsInterface
 };
-use BpmPlatform\Engine\Repository\ResourceTypes;
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Repository\ResourceTypes;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class HistoricVariableInstanceEntity implements ValueFieldsInterface, HistoricVariableInstanceInterface, DbEntityInterface, HasDbRevisionInterface, HistoricEntityInterface, \Serializable, DbEntityLifecycleAwareInterface
 {

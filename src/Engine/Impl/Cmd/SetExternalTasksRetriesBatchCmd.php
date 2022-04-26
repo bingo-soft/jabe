@@ -1,21 +1,21 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\BadUserRequestException;
-use BpmPlatform\Engine\Authorization\BatchPermissions;
-use BpmPlatform\Engine\Batch\BatchInterface;
-use BpmPlatform\Engine\Impl\Batch\Builder\{
+use Jabe\Engine\BadUserRequestException;
+use Jabe\Engine\Authorization\BatchPermissions;
+use Jabe\Engine\Batch\BatchInterface;
+use Jabe\Engine\Impl\Batch\Builder\{
     BatchBuilder,
     OperationLogInstanceCountHandlerInterface
 };
-use BpmPlatform\Engine\Impl\Batch\{
+use Jabe\Engine\Impl\Batch\{
     BatchConfiguration,
     BatchElementConfiguration,
     SetRetriesBatchConfiguration
 };
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class SetExternalTasksRetriesBatchCmd extends AbstractSetExternalTaskRetriesCmd
 {

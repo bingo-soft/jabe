@@ -1,21 +1,21 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Diagram;
+namespace Jabe\Engine\Impl\Bpmn\Diagram;
 
 use PHPixie\Image as PImage;
 use PHPixie\Image\Drivers\Driver\Resource as ImageResource;
-use BpmPlatform\Engine\{
+use Jabe\Engine\{
     ProcessEngineException,
     RepositoryServiceInterface
 };
-use BpmPlatform\Engine\Impl\Bpmn\Parser\BpmnParser;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Repository\{
+use Jabe\Engine\Impl\Bpmn\Parser\BpmnParser;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Repository\{
     DiagramElement,
     DiagramLayout,
     DiagramNode
 };
-use BpmPlatform\Model\Xml\Impl\Instance\{
+use Jabe\Model\Xml\Impl\Instance\{
     DomDocumentExt,
     DomElementExt
 };

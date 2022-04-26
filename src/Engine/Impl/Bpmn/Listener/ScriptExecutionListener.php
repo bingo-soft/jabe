@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Listener;
+namespace Jabe\Engine\Impl\Bpmn\Listener;
 
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Delegate\{
     DelegateExecutionInterface,
     ExecutionListenerInterface
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Delegate\ScriptInvocation;
-use BpmPlatform\Engine\Impl\Scripting\ExecutableScript;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Delegate\ScriptInvocation;
+use Jabe\Engine\Impl\Scripting\ExecutableScript;
 
 class ScriptExecutionListener implements ExecutionListenerInterface
 {

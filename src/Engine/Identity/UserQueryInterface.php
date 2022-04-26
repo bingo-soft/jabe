@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Identity;
+namespace Jabe\Engine\Identity;
 
-use BpmPlatform\Engine\Query\QueryInterface;
+use Jabe\Engine\Query\QueryInterface;
 
 interface UserQueryInterface extends QueryInterface
 {

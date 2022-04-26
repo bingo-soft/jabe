@@ -1,26 +1,26 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Exception\NotFoundException;
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
-use BpmPlatform\Engine\Impl\Bpmn\Deployer\BpmnDeployer;
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Exception\NotFoundException;
+use Jabe\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\Impl\Bpmn\Deployer\BpmnDeployer;
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Deploy\DeployerInterface;
-use BpmPlatform\Engine\Impl\Persistence\Deploy\Cache\DeploymentCache;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Deploy\DeployerInterface;
+use Jabe\Engine\Impl\Persistence\Deploy\Cache\DeploymentCache;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ProcessDefinitionEntity,
     ProcessDefinitionManager,
     PropertyChange,
     UserOperationLogManager
 };
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
-use BpmPlatform\Engine\Repository\ProcessDefinitionInterface;
+use Jabe\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Repository\ProcessDefinitionInterface;
 
 class DeleteProcessDefinitionsByIdsCmd implements CommandInterface, \Serializable
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Application;
+namespace Jabe\Engine\Application;
 
-use BpmPlatform\Engine\Delegate\BaseDelegateExecutionInterface;
+use Jabe\Engine\Delegate\BaseDelegateExecutionInterface;
 
 class InvocationContext
 {

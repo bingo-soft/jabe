@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\El;
+namespace Jabe\Engine\Impl\El;
 
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Impl\Core\Variable\Mapping\IoParameter;
-use BpmPlatform\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Impl\Core\Variable\Mapping\IoParameter;
+use Jabe\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
 
 class ElValueProvider implements ParameterValueProviderInterface
 {

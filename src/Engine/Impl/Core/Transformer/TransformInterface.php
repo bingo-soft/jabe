@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Transformer;
+namespace Jabe\Engine\Impl\Core\Transformer;
 
 interface TransformInterface
 {

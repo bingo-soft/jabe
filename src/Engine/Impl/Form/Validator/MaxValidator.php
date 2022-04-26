@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Validator;
+namespace Jabe\Engine\Impl\Form\Validator;
 
 class MaxValidator extends AbstractNumericValidator
 {

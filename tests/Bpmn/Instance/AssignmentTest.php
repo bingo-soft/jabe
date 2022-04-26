@@ -3,8 +3,8 @@
 namespace Tests\Bpmn\Instance;
 
 use Tests\Xml\Test\AbstractTypeAssumption;
-use BpmPlatform\Model\Bpmn\Instance\BaseElementInterface;
-use BpmPlatform\Model\Bpmn\Impl\Instance\{
+use Jabe\Model\Bpmn\Instance\BaseElementInterface;
+use Jabe\Model\Bpmn\Impl\Instance\{
     From,
     To
 };

@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable\Impl\Value;
+namespace Jabe\Engine\Variable\Impl\Value;
 
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
-use BpmPlatform\Engine\Variable\Type\ValueTypeInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Variable\Type\ValueTypeInterface;
 
 class AbstractTypedValue implements TypedValueInterface
 {

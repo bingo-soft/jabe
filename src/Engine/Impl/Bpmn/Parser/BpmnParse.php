@@ -1,22 +1,22 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Parser;
+namespace Jabe\Engine\Impl\Bpmn\Parser;
 
-use BpmPlatform\Engine\{
+use Jabe\Engine\{
     ActivityTypes,
     BpmnParseException,
     ProcessEngineException
 };
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Delegate\{
     ExecutionListenerInterface,
     TaskListenerInterface,
     VariableListenerInterface
 };
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Impl\{
     ConditionInterface,
     ProcessEngineLogger
 };
-use BpmPlatform\Engine\Impl\Bpmn\Behavior\{
+use Jabe\Engine\Impl\Bpmn\Behavior\{
     BoundaryConditionalEventActivityBehavior,
     BoundaryEventActivityBehavior,
     CallActivityBehavior,
@@ -57,38 +57,38 @@ use BpmPlatform\Engine\Impl\Bpmn\Behavior\{
     ThrowSignalEventActivityBehavior,
     UserTaskActivityBehavior
 };
-use BpmPlatform\Engine\Impl\Bpmn\Helper\BpmnProperties;
-use BpmPlatform\Engine\Impl\Bpmn\Listener\{
+use Jabe\Engine\Impl\Bpmn\Helper\BpmnProperties;
+use Jabe\Engine\Impl\Bpmn\Listener\{
     ClassDelegateExecutionListener,
     DelegateExpressionExecutionListener,
     ExpressionExecutionListener,
     ScriptExecutionListener
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Core\Model\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Core\Model\{
     BaseCallableElement,
     CallableElement,
     CallableElementBinding,
     CallableElementParameter,
     Properties
 };
-use BpmPlatform\Engine\Impl\Core\Variable\Mapping\IoMapping;
-use BpmPlatform\Engine\Impl\Core\Variable\Value\{
+use Jabe\Engine\Impl\Core\Variable\Mapping\IoMapping;
+use Jabe\Engine\Impl\Core\Variable\Value\{
     ConstantValueProvider,
     NullValueProvider,
     ParameterValueProvider
 };
-use BpmPlatform\Engine\Impl\Cxf\Webservice\CxfWSDLImporter;
-use BpmPlatform\Engine\Impl\El\{
+use Jabe\Engine\Impl\Cxf\Webservice\CxfWSDLImporter;
+use Jabe\Engine\Impl\El\{
     ElValueProvider,
     ExpressionInterface,
     ExpressionManager,
     FixedValue,
     UelExpressionCondition
 };
-use BpmPlatform\Engine\Impl\Event\EventType;
-use BpmPlatform\Engine\Impl\Form\FormDefinition;
-use BpmPlatform\Engine\Impl\Form\Handler\{
+use Jabe\Engine\Impl\Event\EventType;
+use Jabe\Engine\Impl\Form\FormDefinition;
+use Jabe\Engine\Impl\Form\Handler\{
     DefaultStartFormHandler,
     DefaultTaskFormHandler,
     DelegateStartFormHandler,
@@ -96,7 +96,7 @@ use BpmPlatform\Engine\Impl\Form\Handler\{
     StartFormHandlerInterface,
     TaskFormHandlerInterface
 };
-use BpmPlatform\Engine\Impl\JobExecutor\{
+use Jabe\Engine\Impl\JobExecutor\{
     AsyncAfterMessageJobDeclaration,
     AsyncBeforeMessageJobDeclaration,
     EventSubscriptionJobDeclaration,
@@ -111,14 +111,14 @@ use BpmPlatform\Engine\Impl\JobExecutor\{
     TimerStartEventSubprocessJobHandler,
     TimerTaskListenerJobHandler
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     DeploymentEntity,
     JobEntity,
     ProcessDefinitionEntity
 };
-use BpmPlatform\Engine\Impl\Pvm\PvmTransitionInterface;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityBehaviorInterface;
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\Impl\Pvm\PvmTransitionInterface;
+use Jabe\Engine\Impl\Pvm\Delegate\ActivityBehaviorInterface;
+use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ActivityStartBehavior,
     AsyncAfterUpdateInterface,
@@ -132,35 +132,35 @@ use BpmPlatform\Engine\Impl\Pvm\Process\{
     ScopeImpl,
     TransitionImpl
 };
-use BpmPlatform\Engine\Impl\Pvm\Runtime\LegacyBehavior;
-use BpmPlatform\Engine\Impl\Scripting\{
+use Jabe\Engine\Impl\Pvm\Runtime\LegacyBehavior;
+use Jabe\Engine\Impl\Scripting\{
     ExecutableScript,
     ScriptCondition
 };
-use BpmPlatform\Engine\Impl\Scripting\Engine\ScriptingEngines;
-use BpmPlatform\Engine\Impl\Task\{
+use Jabe\Engine\Impl\Scripting\Engine\ScriptingEngines;
+use Jabe\Engine\Impl\Task\{
     TaskDecorator,
     TaskDefinition
 };
-use BpmPlatform\Engine\Impl\Task\Listener\{
+use Jabe\Engine\Impl\Task\Listener\{
     ClassDelegateTaskListener,
     DelegateExpressionTaskListener,
     ExpressionTaskListener,
     ScriptTaskListener
 };
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Util\{
     ParseUtil,
     ReflectUtil,
     ScriptUtil,
     StringUtil
 };
-use BpmPlatform\Engine\Impl\Util\Xml\{
+use Jabe\Engine\Impl\Util\Xml\{
     Element,
     Parse,
     XmlNamespace
 };
-use BpmPlatform\Engine\Impl\Variable\VariableDeclaration;
-use BpmPlatform\Engine\Repository\ProcessDefinitionInterface;
+use Jabe\Engine\Impl\Variable\VariableDeclaration;
+use Jabe\Engine\Repository\ProcessDefinitionInterface;
 
 class BpmnParse extends Parse
 {

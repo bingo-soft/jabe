@@ -3,7 +3,7 @@
 namespace Tests\Bpmn\Engine\Diagram;
 
 use PHPUnit\Framework\TestCase;
-use BpmPlatform\Engine\Impl\Bpmn\Diagram\ProcessDiagramLayoutFactory;
+use Jabe\Engine\Impl\Bpmn\Diagram\ProcessDiagramLayoutFactory;
 
 class ProcessDiagramLayoutFactoryTest extends TestCase
 {

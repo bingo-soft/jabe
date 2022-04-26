@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Parser;
+namespace Jabe\Engine\Impl\Bpmn\Parser;
 
-use BpmPlatform\Engine\Impl\Util\Xml\Element;
+use Jabe\Engine\Impl\Util\Xml\Element;
 
 interface XMLImporterInterface
 {

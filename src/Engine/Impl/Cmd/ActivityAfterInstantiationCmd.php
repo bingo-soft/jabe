@@ -1,17 +1,17 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Exception\NotValidException;
-use BpmPlatform\Engine\Impl\Core\Model\CoreModelElement;
-use BpmPlatform\Engine\Impl\Pvm\PvmActivityInterface;
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Exception\NotValidException;
+use Jabe\Engine\Impl\Core\Model\CoreModelElement;
+use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
+use Jabe\Engine\Impl\Pvm\Process\{
     ProcessDefinitionImpl,
     ScopeImpl,
     TransitionImpl
 };
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class ActivityAfterInstantiationCmd extends AbstractInstantiationCmd
 {

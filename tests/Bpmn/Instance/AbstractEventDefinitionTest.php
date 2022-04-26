@@ -3,10 +3,10 @@
 namespace Tests\Bpmn\Instance;
 
 use Tests\Xml\Test\AbstractTypeAssumption;
-use BpmPlatform\Model\Bpmn\Bpmn;
-use BpmPlatform\Model\Bpmn\Impl\QueryImpl;
-use BpmPlatform\Model\Bpmn\Instance\EventDefinitionInterface;
-use BpmPlatform\Model\Xml\Impl\Util\ReflectUtil;
+use Jabe\Model\Bpmn\Bpmn;
+use Jabe\Model\Bpmn\Impl\QueryImpl;
+use Jabe\Model\Bpmn\Instance\EventDefinitionInterface;
+use Jabe\Model\Xml\Impl\Util\ReflectUtil;
 
 abstract class AbstractEventDefinitionTest extends BpmnModelElementInstanceTest
 {

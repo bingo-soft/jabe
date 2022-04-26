@@ -1,23 +1,23 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\ProcessEngine;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\ProcessEngine;
+use Jabe\Engine\Impl\{
     ProcessEngineImpl,
     ProcessEngineLogger
 };
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Cmd\{
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Cmd\{
     ExecuteJobsCmd,
     UnlockJobCmd
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Interceptor\{
     CommandExecutorInterface,
     ProcessDataContext
 };
-use BpmPlatform\Engine\Impl\Util\ClassLoaderUtil;
+use Jabe\Engine\Impl\Util\ClassLoaderUtil;
 
 class ExecuteJobsRunnable implements RunnableInterface
 {

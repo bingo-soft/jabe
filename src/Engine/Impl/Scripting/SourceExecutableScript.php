@@ -1,25 +1,25 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Scripting;
+namespace Jabe\Engine\Impl\Scripting;
 
-use BpmPlatform\Engine\Impl\Util\Scripting\{
+use Jabe\Engine\Impl\Util\Scripting\{
     BindingsInterface,
     CompilableInterface,
     CompiledScript,
     ScriptEngineInterface,
     ScriptException
 };
-use BpmPlatform\Engine\{
+use Jabe\Engine\{
     ScriptCompilationException,
     ScriptEvaluationException
 };
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Delegate\{
     BpmnError,
     VariableScopeInterface
 };
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Context\Context;
 
 class SourceExecutableScript extends CompiledExecutableScript
 {

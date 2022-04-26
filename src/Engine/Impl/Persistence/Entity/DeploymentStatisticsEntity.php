@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Management\{
+use Jabe\Engine\Management\{
     DeploymentStatisticsInterface,
     IncidentStatisticsInterface
 };
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class DeploymentStatisticsEntity extends DeploymentEntity implements DeploymentStatisticsInterface
 {

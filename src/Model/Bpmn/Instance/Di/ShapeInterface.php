@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance\Di;
+namespace Jabe\Model\Bpmn\Instance\Di;
 
-use BpmPlatform\Model\Bpmn\Instance\Dc\BoundsInterface;
+use Jabe\Model\Bpmn\Instance\Dc\BoundsInterface;
 
 interface ShapeInterface extends NodeInterface
 {

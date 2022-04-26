@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Util\DomUtil;
+namespace Jabe\Model\Xml\Impl\Util\DomUtil;
 
 interface NodeListFilterInterface
 {

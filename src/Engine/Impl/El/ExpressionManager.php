@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\El;
+namespace Jabe\Engine\Impl\El;
 
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Impl\Core\Variable\Scope\AbstractVariableScope;
-use BpmPlatform\Engine\Impl\Util\El\{
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Impl\Core\Variable\Scope\AbstractVariableScope;
+use Jabe\Engine\Impl\Util\El\{
     ArrayELResolver,
     CompositeELResolver,
     ELContext,
@@ -15,9 +15,9 @@ use BpmPlatform\Engine\Impl\Util\El\{
     MapELResolver,
     ValueExpression
 };
-use BpmPlatform\Engine\Impl\Juel\ExpressionFactoryImpl;
-use BpmPlatform\Engine\Test\Mock\MockElResolver;
-use BpmPlatform\Engine\Variable\Context\VariableContextInterface;
+use Jabe\Engine\Impl\Juel\ExpressionFactoryImpl;
+use Jabe\Engine\Test\Mock\MockElResolver;
+use Jabe\Engine\Variable\Context\VariableContextInterface;
 
 class ExpressionManager
 {

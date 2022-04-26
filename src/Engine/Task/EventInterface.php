@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Task;
+namespace Jabe\Engine\Task;
 
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\History\UserOperationLogEntryInterface;
 
 interface EventInterface
 {

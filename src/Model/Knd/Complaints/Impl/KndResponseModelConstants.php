@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Model\Knd\Complaints\Impl;
+namespace Jabe\Model\Knd\Complaints\Impl;
 
 class KndResponseModelConstants
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History;
+namespace Jabe\Engine\Impl\History;
 
-use BpmPlatform\Engine\Impl\Event\HistoryEventTypeInterface;
+use Jabe\Engine\Impl\Event\HistoryEventTypeInterface;
 
 abstract class AbstractHistoryLevel implements HistoryLevelInterface
 {

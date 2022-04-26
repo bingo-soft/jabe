@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Variable\Serializer;
+namespace Jabe\Engine\Impl\Variable\Serializer;
 
 class ValueFieldsImpl implements ValueFieldsInterface
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Scripting;
+namespace Jabe\Engine\Impl\Scripting;
 
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Delegate\{
     ExpressionInterface,
     VariableScopeInterface
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Persistence\Entity\DeploymentEntity;
-use BpmPlatform\Engine\Impl\Util\ResourceUtil;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Persistence\Entity\DeploymentEntity;
+use Jabe\Engine\Impl\Util\ResourceUtil;
 
 class DynamicResourceExecutableScript extends DynamicExecutableScript
 {

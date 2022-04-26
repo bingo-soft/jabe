@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Delegate;
+namespace Jabe\Engine\Impl\Pvm\Delegate;
 
-use BpmPlatform\Engine\Delegate\DelegateExecutionInterface;
-use BpmPlatform\Engine\Impl\Pvm\{
+use Jabe\Engine\Delegate\DelegateExecutionInterface;
+use Jabe\Engine\Impl\Pvm\{
     PvmActivityInterface,
     PvmProcessDefinitionInterface,
     PvmProcessInstanceInterface,
     PvmScopeInterface,
     PvmTransitionInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\Impl\Pvm\Process\{
     ScopeImpl,
     TransitionImpl,
     PvmExecutionImpl

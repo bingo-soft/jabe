@@ -2,8 +2,8 @@
 
 namespace Tests\Xml\TestModel\Instance;
 
-use BpmPlatform\Model\Xml\ModelInstanceInterface;
-use BpmPlatform\Model\Xml\Impl\Parser\AbstractModelParser;
+use Jabe\Model\Xml\ModelInstanceInterface;
+use Jabe\Model\Xml\Impl\Parser\AbstractModelParser;
 use Tests\Xml\TestModel\{
     Gender,
     TestModelConstants,
@@ -262,7 +262,7 @@ class AnimalCreateModelTest extends TestModelTest
         $this->assertNull($this->tweety->getGender());
 
         try {
-            $this->expectException(\BpmPlatform\Model\Xml\Exception\ModelValidationException::class);
+            $this->expectException(\Jabe\Model\Xml\Exception\ModelValidationException::class);
             $this->validateModel();
         } finally {
             $this->tweety->setGender(Gender::FEMALE);

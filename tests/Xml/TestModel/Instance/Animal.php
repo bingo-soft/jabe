@@ -2,13 +2,13 @@
 
 namespace Tests\Xml\TestModel\Instance;
 
-use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
+use Jabe\Model\Xml\ModelBuilder;
+use Jabe\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
 use Tests\Xml\TestModel\{
     Gender,
     TestModelConstants
 };
-use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
+use Jabe\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 
 abstract class Animal extends ModelElementInstanceImpl
 {

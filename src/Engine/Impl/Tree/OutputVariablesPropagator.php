@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Tree;
+namespace Jabe\Engine\Impl\Tree;
 
-use BpmPlatform\Engine\Impl\Pvm\Delegate\{
+use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
     SubProcessActivityBehaviorInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\ActivityImpl;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
+use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
+use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
 
 class OutputVariablesPropagator implements TreeVisitorInterface
 {

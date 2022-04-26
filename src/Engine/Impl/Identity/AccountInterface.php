@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Identity;
+namespace Jabe\Engine\Impl\Identity;
 
 interface AccountInterface
 {

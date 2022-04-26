@@ -1,24 +1,24 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\DelegateExecutionInterface;
-use BpmPlatform\Engine\History\HistoricProcessInstanceInterface;
-use BpmPlatform\Engine\Impl\ProcessInstanceQueryImpl;
-use BpmPlatform\Engine\Impl\History\HistoryLevel;
-use BpmPlatform\Engine\Impl\History\Event\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\DelegateExecutionInterface;
+use Jabe\Engine\History\HistoricProcessInstanceInterface;
+use Jabe\Engine\Impl\ProcessInstanceQueryImpl;
+use Jabe\Engine\Impl\History\HistoryLevel;
+use Jabe\Engine\Impl\History\Event\{
     HistoricProcessInstanceEventEntity,
     HistoryEvent,
     HistoryEventCreator,
     HistoryEventProcessor,
     HistoryEventTypes
 };
-use BpmPlatform\Engine\Impl\History\Producer\HistoryEventProducerInterface;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Management\UpdateJobSuspensionStateBuilderImpl;
-use BpmPlatform\Engine\Impl\Runtime\UpdateProcessInstanceSuspensionStateBuilderImpl;
-use BpmPlatform\Engine\Runtime\ProcessInstanceInterface;
+use Jabe\Engine\Impl\History\Producer\HistoryEventProducerInterface;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Management\UpdateJobSuspensionStateBuilderImpl;
+use Jabe\Engine\Impl\Runtime\UpdateProcessInstanceSuspensionStateBuilderImpl;
+use Jabe\Engine\Runtime\ProcessInstanceInterface;
 
 abstract class AbstractSetProcessInstanceStateCmd extends AbstractSetStateCmd
 {

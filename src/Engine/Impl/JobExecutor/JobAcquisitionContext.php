@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\Impl\Util\CollectionUtil;
+use Jabe\Engine\Impl\Util\CollectionUtil;
 
 class JobAcquisitionContext
 {

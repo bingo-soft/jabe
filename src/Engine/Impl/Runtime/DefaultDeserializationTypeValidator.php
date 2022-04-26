@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Runtime;
+namespace Jabe\Engine\Impl\Runtime;
 
-use BpmPlatform\Engine\Runtime\WhitelistingDeserializationTypeValidatorInterface;
+use Jabe\Engine\Runtime\WhitelistingDeserializationTypeValidatorInterface;
 
 class DefaultDeserializationTypeValidator implements WhitelistingDeserializationTypeValidatorInterface
 {

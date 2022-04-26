@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Delegate;
+namespace Jabe\Engine\Impl\Pvm\Delegate;
 
 interface ModificationObserverBehaviorInterface extends ActivityBehaviorInterface
 {

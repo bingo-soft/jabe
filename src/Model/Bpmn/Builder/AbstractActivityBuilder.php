@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Builder;
+namespace Jabe\Model\Bpmn\Builder;
 
-use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
-use BpmPlatform\Model\Bpmn\Instance\Bpmndi\BpmnShapeInterface;
-use BpmPlatform\Model\Bpmn\Instance\Dc\BoundsInterface;
-use BpmPlatform\Model\Bpmn\Instance\Extension\{
+use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
+use Jabe\Model\Bpmn\Instance\Bpmndi\BpmnShapeInterface;
+use Jabe\Model\Bpmn\Instance\Dc\BoundsInterface;
+use Jabe\Model\Bpmn\Instance\Extension\{
     InputOutputInterface,
     InputParameterInterface,
     OutputParameterInterface
 };
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Bpmn\Instance\{
     ActivityInterface,
     BoundaryEventInterface,
     MultiInstanceLoopCharacteristicsInterface

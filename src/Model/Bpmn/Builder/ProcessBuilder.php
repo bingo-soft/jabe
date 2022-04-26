@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Builder;
+namespace Jabe\Model\Bpmn\Builder;
 
-use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
-use BpmPlatform\Model\Bpmn\Instance\Bpmndi\BpmnShapeInterface;
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
+use Jabe\Model\Bpmn\Instance\Bpmndi\BpmnShapeInterface;
+use Jabe\Model\Bpmn\Instance\{
     ProcessInterface,
     StartEventInterface,
     SubProcessInterface

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Webservice;
+namespace Jabe\Engine\Impl\Webservice;
 
-use BpmPlatform\Engine\Impl\Bpmn\Webservice\{
+use Jabe\Engine\Impl\Bpmn\Webservice\{
     Operation,
     OperationImplementationInterface
 };

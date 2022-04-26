@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Runtime;
+namespace Jabe\Engine\Impl\Runtime;
 
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
 
 interface CorrelationHandlerInterface
 {

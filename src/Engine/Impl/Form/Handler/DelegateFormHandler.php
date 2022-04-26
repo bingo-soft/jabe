@@ -1,21 +1,21 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Handler;
+namespace Jabe\Engine\Impl\Form\Handler;
 
-use BpmPlatform\Engine\Application\ProcessApplicationReferenceInterface;
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Impl\Bpmn\Parser\BpmnParse;
-use BpmPlatform\Engine\Impl\Context\{
+use Jabe\Engine\Application\ProcessApplicationReferenceInterface;
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
+use Jabe\Engine\Impl\Context\{
     Context,
     ProcessApplicationContextUtil
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     DeploymentEntity,
     ProcessDefinitionEntity
 };
-use BpmPlatform\Engine\Impl\Util\Xml\Element;
-use BpmPlatform\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Impl\Util\Xml\Element;
+use Jabe\Engine\Variable\VariableMapInterface;
 
 abstract class DelegateFormHandler
 {

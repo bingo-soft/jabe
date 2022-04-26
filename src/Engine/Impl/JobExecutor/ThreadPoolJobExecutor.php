@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
 use Composer\Autoload\ClassLoader;
 use parallel\Runtime;
-use BpmPlatform\Engine\Impl\ProcessEngineImpl;
+use Jabe\Engine\Impl\ProcessEngineImpl;
 
 class ThreadPoolJobExecutor extends JobExecutor
 {

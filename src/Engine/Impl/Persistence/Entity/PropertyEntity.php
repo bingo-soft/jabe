@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Db\{
     EnginePersistenceLogger,
     HasDbRevisionInterface,
     DbEntityInterface
 };
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class PropertyEntity implements DbEntityInterface, HasDbRevisionInterface, \Serializable
 {

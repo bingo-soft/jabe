@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Model\Wsdl\Impl;
+namespace Jabe\Model\Wsdl\Impl;
 
-use BpmPlatform\Model\Xml\ModelInstanceInterface;
-use BpmPlatform\Model\Xml\Impl\ModelInstanceImpl;
-use BpmPlatform\Model\Xml\Impl\Parser\AbstractModelParser;
-use BpmPlatform\Model\Xml\Instance\DomDocumentInterface;
+use Jabe\Model\Xml\ModelInstanceInterface;
+use Jabe\Model\Xml\Impl\ModelInstanceImpl;
+use Jabe\Model\Xml\Impl\Parser\AbstractModelParser;
+use Jabe\Model\Xml\Instance\DomDocumentInterface;
 
 class WsdlParser extends AbstractModelParser
 {

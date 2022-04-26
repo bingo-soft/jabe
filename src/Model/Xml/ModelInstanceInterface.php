@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Model\Xml;
+namespace Jabe\Model\Xml;
 
-use BpmPlatform\Model\Xml\Instance\{
+use Jabe\Model\Xml\Instance\{
     DomDocumentInterface,
     ModelElementInstanceInterface
 };
-use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
-use BpmPlatform\Model\Xml\Validation\ValidationResultsInterface;
+use Jabe\Model\Xml\Type\ModelElementTypeInterface;
+use Jabe\Model\Xml\Validation\ValidationResultsInterface;
 
 interface ModelInstanceInterface
 {

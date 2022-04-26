@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Handler;
+namespace Jabe\Engine\Impl\Form\Handler;
 
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Impl\Bpmn\Parser\BpmnParse;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
+use Jabe\Engine\Impl\Persistence\Entity\{
     DeploymentEntity,
     ProcessDefinitionEntity
 };
-use BpmPlatform\Engine\Impl\Util\Xml\Element;
-use BpmPlatform\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Impl\Util\Xml\Element;
+use Jabe\Engine\Variable\VariableMapInterface;
 
 interface FormHandlerInterface
 {

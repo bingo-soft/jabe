@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History;
+namespace Jabe\Engine\Impl\History;
 
 class Mode
 {

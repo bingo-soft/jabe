@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Type\Reference;
+namespace Jabe\Model\Xml\Type\Reference;
 
-use BpmPlatform\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
 
 interface ElementReferenceInterface extends ElementReferenceCollectionInterface
 {

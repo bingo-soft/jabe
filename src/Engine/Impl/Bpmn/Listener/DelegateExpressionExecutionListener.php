@@ -1,22 +1,22 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Listener;
+namespace Jabe\Engine\Impl\Bpmn\Listener;
 
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Delegate\{
     DelegateExecutionInterface,
     ExecutionListenerInterface,
     ExpressionInterface,
     PhpDelegateInterface
 };
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Bpmn\Behavior\BpmnBehaviorLogger;
-use BpmPlatform\Engine\Impl\Bpmn\Delegate\{
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Bpmn\Behavior\BpmnBehaviorLogger;
+use Jabe\Engine\Impl\Bpmn\Delegate\{
     ExecutionListenerInvocation,
     PhpDelegateInvocation
 };
-use BpmPlatform\Engine\Impl\Bpmn\Parser\FieldDeclaration;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Util\ClassDelegateUtil;
+use Jabe\Engine\Impl\Bpmn\Parser\FieldDeclaration;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Util\ClassDelegateUtil;
 
 class DelegateExpressionExecutionListener implements ExecutionListener
 {

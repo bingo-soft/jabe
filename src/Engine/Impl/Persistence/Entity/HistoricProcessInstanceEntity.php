@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\History\HistoricProcessInstanceInterface;
-use BpmPlatform\Engine\Impl\History\Event\HistoricProcessInstanceEventEntity;
+use Jabe\Engine\History\HistoricProcessInstanceInterface;
+use Jabe\Engine\Impl\History\Event\HistoricProcessInstanceEventEntity;
 
 class HistoricProcessInstanceEntity extends HistoricProcessInstanceEventEntity implements HistoricProcessInstanceInterface
 {

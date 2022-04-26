@@ -1,32 +1,32 @@
 <?php
 
-namespace BpmPlatform\Engine;
+namespace Jabe\Engine;
 
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\Authorization\{
     BatchPermissions,
     Permissions,
     ProcessDefinitionPermissions,
     ProcessInstancePermissions,
     Resources
 };
-use BpmPlatform\Engine\Batch\BatchInterface;
-use BpmPlatform\Engine\Delegate\ExecutionListenerInterface;
-use BpmPlatform\Engine\Exception\{
+use Jabe\Engine\Batch\BatchInterface;
+use Jabe\Engine\Delegate\ExecutionListenerInterface;
+use Jabe\Engine\Exception\{
     NullValueException,
     NotFoundException,
     NotValidException
 };
-use BpmPlatform\Engine\History\HistoricProcessInstanceQueryInterface;
-use BpmPlatform\Engine\Migration\{
+use Jabe\Engine\History\HistoricProcessInstanceQueryInterface;
+use Jabe\Engine\Migration\{
     MigrationPlanInterface,
     MigrationPlanBuilderInterface,
     MigrationPlanExecutionBuilderInterface
 };
-use BpmPlatform\Engine\Repository\{
+use Jabe\Engine\Repository\{
     DeploymentInterface,
     ResourceDefinitionInterface
 };
-use BpmPlatform\Engine\Runtime\{
+use Jabe\Engine\Runtime\{
     ActivityInstanceInterface,
     ConditionEvaluationBuilderInterface,
     EventSubscriptionQueryInterface,
@@ -48,8 +48,8 @@ use BpmPlatform\Engine\Runtime\{
     UpdateProcessInstanceSuspensionStateSelectBuilderInterface,
     VariableInstanceQueryInterface
 };
-use BpmPlatform\Engine\Variable\VariableMapInterface;
-use BpmPlatform\Engine\Variable\Value\{
+use Jabe\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Variable\Value\{
     SerializableValueInterface,
     TypedValueInterface
 };

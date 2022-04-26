@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Parser;
+namespace Jabe\Engine\Impl\Bpmn\Parser;
 
-use BpmPlatform\Engine\Impl\El\ExpressionInterface;
+use Jabe\Engine\Impl\El\ExpressionInterface;
 
 class SignalDefinition implements \Serializable
 {

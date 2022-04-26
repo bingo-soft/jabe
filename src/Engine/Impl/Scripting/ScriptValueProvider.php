@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Scripting;
+namespace Jabe\Engine\Impl\Scripting;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Core\Variable\Mapping\IoParameter;
-use BpmPlatform\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
-use BpmPlatform\Engine\Impl\Delegate\ScriptInvocation;
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Core\Variable\Mapping\IoParameter;
+use Jabe\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
+use Jabe\Engine\Impl\Delegate\ScriptInvocation;
 
 class ScriptValueProvider implements ParameterValueProviderInterface
 {

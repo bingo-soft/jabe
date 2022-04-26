@@ -1,31 +1,31 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\EntityTypes;
-use BpmPlatform\Engine\Exception\NotValidException;
-use BpmPlatform\Engine\Filter\FilterInterface;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\EntityTypes;
+use Jabe\Engine\Exception\NotValidException;
+use Jabe\Engine\Filter\FilterInterface;
+use Jabe\Engine\Impl\{
     AbstractQuery,
     ProcessEngineLogger,
     StoredQueryValidator
 };
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     DbEntityLifecycleAwareInterface,
     EnginePersistenceLogger,
     HasDbReferencesInterface,
     HasDbRevision
 };
-use BpmPlatform\Engine\Impl\Json\{
+use Jabe\Engine\Impl\Json\{
     JsonObjectConverter,
     JsonTaskQueryConverter
 };
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Util\{
     EnsureUtil,
     JsonUtil
 };
-use BpmPlatform\Engine\Query\QueryInterface;
+use Jabe\Engine\Query\QueryInterface;
 
 class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface, HasDbRevisionInterface, HasDbReferencesInterface, DbEntityLifecycleAwareInterface
 {

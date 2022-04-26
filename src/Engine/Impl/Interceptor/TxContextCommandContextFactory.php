@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Interceptor;
+namespace Jabe\Engine\Impl\Interceptor;
 
-use BpmPlatform\Engine\Impl\Cfg\TransactionContextFactoryInterface;
+use Jabe\Engine\Impl\Cfg\TransactionContextFactoryInterface;
 
 class TxContextCommandContextFactory extends CommandContextFactory
 {

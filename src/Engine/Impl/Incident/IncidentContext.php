@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Incident;
+namespace Jabe\Engine\Impl\Incident;
 
-use BpmPlatform\Engine\Runtime\IncidentInterface;
+use Jabe\Engine\Runtime\IncidentInterface;
 
 class IncidentContext
 {

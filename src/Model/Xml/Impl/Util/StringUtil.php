@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Util;
+namespace Jabe\Model\Xml\Impl\Util;
 
 class StringUtil
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\History;
+namespace Jabe\Engine\History;
 
-use BpmPlatform\Engine\Query\QueryInterface;
+use Jabe\Engine\Query\QueryInterface;
 
 interface HistoricActivityStatisticsQueryInterface extends QueryInterface
 {

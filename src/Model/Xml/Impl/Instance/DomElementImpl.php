@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Instance;
+namespace Jabe\Model\Xml\Impl\Instance;
 
-use BpmPlatform\Model\Xml\Impl\ModelInstanceImpl;
-use BpmPlatform\Model\Xml\Instance\{
+use Jabe\Model\Xml\Impl\ModelInstanceImpl;
+use Jabe\Model\Xml\Instance\{
     DomDocumentInterface,
     DomElementInterface,
     ModelElementInstanceInterface
 };
-use BpmPlatform\Model\Xml\Impl\Util\XmlQName;
-use BpmPlatform\Model\Xml\Impl\Util\DomUtil;
+use Jabe\Model\Xml\Impl\Util\XmlQName;
+use Jabe\Model\Xml\Impl\Util\DomUtil;
 
 class DomElementImpl implements DomElementInterface
 {

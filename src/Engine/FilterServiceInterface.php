@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine;
+namespace Jabe\Engine;
 
-use BpmPlatform\Engine\Filter\{
+use Jabe\Engine\Filter\{
     FilterInterface,
     FilterQueryInterface
 };
-use BpmPlatform\Engine\Query\QueryInterface;
+use Jabe\Engine\Query\QueryInterface;
 
 interface FilterServiceInterface
 {

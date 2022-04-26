@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Behavior;
+namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use BpmPlatform\Engine\Impl\Bpmn\Helper\CompensationUtil;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Bpmn\Helper\CompensationUtil;
+use Jabe\Engine\Impl\Persistence\Entity\{
     EventSubscriptionEntity,
     ExecutionEntity
 };
-use BpmPlatform\Engine\Impl\Pvm\PvmActivityInterface;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
-use BpmPlatform\Engine\Impl\Pvm\Process\ScopeImpl;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
+use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
+use Jabe\Engine\Impl\Pvm\Process\ScopeImpl;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class CancelEndEventActivityBehavior extends AbstractBpmnActivityBehavior
 {

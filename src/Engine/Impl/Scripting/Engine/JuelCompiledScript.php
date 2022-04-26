@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Scripting\Engine;
+namespace Jabe\Engine\Impl\Scripting\Engine;
 
-use BpmPlatform\Engine\Impl\Util\Scripting\{
+use Jabe\Engine\Impl\Util\Scripting\{
     CompiledScript,
     ScriptContextInterface,
     ScriptEngineInterface
 };
-use BpmPlatform\Engine\Impl\Util\El\ValueExpression;
+use Jabe\Engine\Impl\Util\El\ValueExpression;
 
 class JuelCompiledScript extends CompiledScript
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Type;
+namespace Jabe\Model\Xml\Type;
 
-use BpmPlatform\Model\Xml\Type\Attribute\{
+use Jabe\Model\Xml\Type\Attribute\{
     AttributeBuilderInterface,
     StringAttributeBuilderInterface
 };
-use BpmPlatform\Model\Xml\Type\Child\SequenceBuilderInterface;
+use Jabe\Model\Xml\Type\Child\SequenceBuilderInterface;
 
 interface ModelElementTypeBuilderInterface
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence;
+namespace Jabe\Engine\Impl\Persistence;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\EnginePersistenceLogger;
-use BpmPlatform\Engine\Impl\History\HistoryLevel;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\EnginePersistenceLogger;
+use Jabe\Engine\Impl\History\HistoryLevel;
 
 class AbstractHistoricManager extends AbstractManager
 {

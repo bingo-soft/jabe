@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form;
+namespace Jabe\Engine\Impl\Form;
 
-use BpmPlatform\Engine\Delegate\ExpressionInterface;
+use Jabe\Engine\Delegate\ExpressionInterface;
 
 class FormDefinition
 {

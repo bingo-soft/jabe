@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Variable\Event;
+namespace Jabe\Engine\Impl\Core\Variable\Event;
 
-use BpmPlatform\Engine\Impl\Core\Variable\Scope\AbstractVariableScope;
-use BpmPlatform\Engine\Runtime\VariableInstanceInterface;
+use Jabe\Engine\Impl\Core\Variable\Scope\AbstractVariableScope;
+use Jabe\Engine\Runtime\VariableInstanceInterface;
 
 class VariableEvent
 {

@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Deploy\Cache;
+namespace Jabe\Engine\Impl\Persistence\Deploy\Cache;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Persistence\Deploy\DeployerInterface;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Persistence\Deploy\DeployerInterface;
+use Jabe\Engine\Impl\Persistence\Entity\{
     FormDefinitionEntity,
     DeploymentEntity,
     ProcessDefinitionEntity
 };
-use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
-use BpmPlatform\Commons\Utils\Cache\CacheInterface;
+use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
+use Jabe\Commons\Utils\Cache\CacheInterface;
 
 class DeploymentCache
 {

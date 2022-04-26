@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Task;
+namespace Jabe\Engine\Task;
 
 interface TaskCountByCandidateGroupResultInterface
 {

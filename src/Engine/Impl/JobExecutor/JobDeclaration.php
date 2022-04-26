@@ -1,20 +1,20 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\ProcessEngineConfiguration;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\ProcessEngineConfiguration;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     JobDefinitionEntity,
     JobEntity
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ProcessDefinitionImpl
 };
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Util\{
     ClockUtil,
     EnsureUtil
 };

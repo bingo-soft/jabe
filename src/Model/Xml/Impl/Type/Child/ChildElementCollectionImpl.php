@@ -1,17 +1,17 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type\Child;
+namespace Jabe\Model\Xml\Impl\Type\Child;
 
-use BpmPlatform\Model\Xml\Exception\UnsupportedModelOperationException;
-use BpmPlatform\Model\Xml\ModelInterface;
-use BpmPlatform\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
-use BpmPlatform\Model\Xml\Impl\Type\ModelElementTypeImpl;
-use BpmPlatform\Model\Xml\Impl\Util\ModelUtil;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Xml\Type\Child\{
+use Jabe\Model\Xml\Exception\UnsupportedModelOperationException;
+use Jabe\Model\Xml\ModelInterface;
+use Jabe\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
+use Jabe\Model\Xml\Impl\Type\ModelElementTypeImpl;
+use Jabe\Model\Xml\Impl\Util\ModelUtil;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Type\Child\{
     ChildElementCollectionInterface
 };
-use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
+use Jabe\Model\Xml\Type\ModelElementTypeInterface;
 
 class ChildElementCollectionImpl implements ChildElementCollectionInterface
 {

@@ -1,19 +1,19 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Impl\Instance\Bpmndi;
+namespace Jabe\Model\Bpmn\Impl\Instance\Bpmndi;
 
-use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
-use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
-use BpmPlatform\Model\Bpmn\Instance\BaseElementInterface;
-use BpmPlatform\Model\Bpmn\Instance\Bpmndi\{
+use Jabe\Model\Xml\ModelBuilder;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
+use Jabe\Model\Xml\Type\ModelTypeInstanceProviderInterface;
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Instance\BaseElementInterface;
+use Jabe\Model\Bpmn\Instance\Bpmndi\{
     BpmnPlaneInterface
 };
-use BpmPlatform\Model\Bpmn\Instance\Dc\FontInterface;
-use BpmPlatform\Model\Bpmn\Instance\Di\PlaneInterface;
-use BpmPlatform\Model\Bpmn\Impl\Instance\Di\PlaneImpl;
+use Jabe\Model\Bpmn\Instance\Dc\FontInterface;
+use Jabe\Model\Bpmn\Instance\Di\PlaneInterface;
+use Jabe\Model\Bpmn\Impl\Instance\Di\PlaneImpl;
 
 class BpmnPlaneImpl extends PlaneImpl implements BpmnPlaneInterface
 {

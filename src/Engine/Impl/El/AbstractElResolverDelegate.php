@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\El;
+namespace Jabe\Engine\Impl\El;
 
-use BpmPlatform\Engine\Impl\Util\El\{
+use Jabe\Engine\Impl\Util\El\{
     ELContext,
     ELResolver
 };

@@ -1,37 +1,37 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\EntityTypes;
-use BpmPlatform\Engine\Delegate\BpmnError;
-use BpmPlatform\Engine\ExternalTask\ExternalTaskInterface;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Bpmn\Helper\{
+use Jabe\Engine\EntityTypes;
+use Jabe\Engine\Delegate\BpmnError;
+use Jabe\Engine\ExternalTask\ExternalTaskInterface;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Bpmn\Helper\{
     BpmnExceptionHandler,
     BpmnProperties
 };
-use BpmPlatform\Engine\Impl\Bpmn\Parser\ErrorEventDefinition;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Bpmn\Parser\ErrorEventDefinition;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     EnginePersistenceLogger,
     HasDbReferencesInterface,
     HasDbRevisionInterface
 };
-use BpmPlatform\Engine\Impl\Incident\{
+use Jabe\Engine\Impl\Incident\{
     IncidentContext,
     IncidentHandling
 };
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
+use Jabe\Engine\Impl\Util\{
     ClockUtil,
     EnsureUtil,
     ExceptionUtil,
     StringUtil
 };
-use BpmPlatform\Engine\Repository\ResourceTypes;
-use BpmPlatform\Engine\Runtime\IncidentInterface;
+use Jabe\Engine\Repository\ResourceTypes;
+use Jabe\Engine\Runtime\IncidentInterface;
 
 class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, HasDbRevisionInterface, HasDbReferencesInterface
 {

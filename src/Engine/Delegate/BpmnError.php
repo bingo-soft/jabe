@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Delegate;
+namespace Jabe\Engine\Delegate;
 
-use BpmPlatform\Engine\ProcessEngineException;
+use Jabe\Engine\ProcessEngineException;
 
 class BpmnError extends ProcessEngineException
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Db\EnginePersistenceLogger;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\JobExecutor\JobHandlerInterface;
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Db\EnginePersistenceLogger;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\JobExecutor\JobHandlerInterface;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class EverLivingJobEntity extends JobEntity
 {

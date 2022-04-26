@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Authorization;
+namespace Jabe\Engine\Authorization;
 
 /**
  * Resources are entities for which a user or a group is authorized. Examples of

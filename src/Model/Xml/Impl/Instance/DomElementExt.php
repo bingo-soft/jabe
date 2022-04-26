@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Instance;
+namespace Jabe\Model\Xml\Impl\Instance;
 
 class DomElementExt extends \DOMElement
 {

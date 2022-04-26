@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Impl\Instance;
+namespace Jabe\Model\Bpmn\Impl\Instance;
 
-use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Xml\ModelBuilder;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Instance\{
     ActivityInterface,
     DataInputAssociationInterface,
     DataOutputAssociationInterface,

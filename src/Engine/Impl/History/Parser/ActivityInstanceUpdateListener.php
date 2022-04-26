@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History\Parser;
+namespace Jabe\Engine\Impl\History\Parser;
 
-use BpmPlatform\Engine\Delegate\DelegateTaskInterface;
-use BpmPlatform\Engine\Impl\History\Event\{
+use Jabe\Engine\Delegate\DelegateTaskInterface;
+use Jabe\Engine\Impl\History\Event\{
     HistoryEvent,
     HistoryEventTypes
 };
-use BpmPlatform\Engine\Impl\History\Producer\HistoryEventProducerInterface;
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Impl\History\Producer\HistoryEventProducerInterface;
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
 
 class ActivityInstanceUpdateListener extends HistoryExecutionListener
 {

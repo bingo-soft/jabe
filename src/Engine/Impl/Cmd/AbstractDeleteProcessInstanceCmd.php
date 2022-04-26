@@ -1,30 +1,30 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\BadUserRequestException;
-use BpmPlatform\Engine\Delegate\DelegateExecutionInterface;
-use BpmPlatform\Engine\Exception\NotFoundException;
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
-use BpmPlatform\Engine\Impl\ProcessInstanceModificationBuilderImpl;
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\History\HistoryLevel;
-use BpmPlatform\Engine\Impl\History\Event\{
+use Jabe\Engine\BadUserRequestException;
+use Jabe\Engine\Delegate\DelegateExecutionInterface;
+use Jabe\Engine\Exception\NotFoundException;
+use Jabe\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\Impl\ProcessInstanceModificationBuilderImpl;
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\History\HistoryLevel;
+use Jabe\Engine\Impl\History\Event\{
     HistoryEvent,
     HistoryEventCreator,
     HistoryEventProcessor,
     HistoryEventTypes
 };
-use BpmPlatform\Engine\Impl\History\Producer\HistoryEventProducerInterface;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\History\Producer\HistoryEventProducerInterface;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     ExecutionManager,
     PropertyChange
 };
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
-use BpmPlatform\Engine\Runtime\ProcessInstanceInterface;
+use Jabe\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Runtime\ProcessInstanceInterface;
 
 abstract class AbstractDeleteProcessInstanceCmd
 {

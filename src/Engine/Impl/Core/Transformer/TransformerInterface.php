@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Transformer;
+namespace Jabe\Engine\Impl\Core\Transformer;
 
-use BpmPlatform\Engine\Impl\Core\CoreActivity;
+use Jabe\Engine\Impl\Core\CoreActivity;
 
 interface TransformerInterface
 {

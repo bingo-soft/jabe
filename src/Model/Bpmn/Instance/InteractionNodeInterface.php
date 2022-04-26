@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance;
+namespace Jabe\Model\Bpmn\Instance;
 
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
 
 interface InteractionNodeInterface extends ModelElementInstanceInterface
 {

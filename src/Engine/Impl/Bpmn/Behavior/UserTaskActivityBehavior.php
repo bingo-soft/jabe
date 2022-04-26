@@ -1,24 +1,24 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Behavior;
+namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use BpmPlatform\Engine\Impl\El\ExpressionManager;
-use BpmPlatform\Engine\Impl\Migration\Instance\{
+use Jabe\Engine\Impl\El\ExpressionManager;
+use Jabe\Engine\Impl\Migration\Instance\{
     MigratingActivityInstance,
     MigratingUserTaskInstance
 };
-use BpmPlatform\Engine\Impl\Migration\Instance\Parser\MigratingInstanceParseContext;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Migration\Instance\Parser\MigratingInstanceParseContext;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     TaskEntity,
     TaskState,
     VariableInstanceEntity
 };
-use BpmPlatform\Engine\Impl\Pvm\Delegate\{
+use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
     MigrationObserverBehaviorInterface
 };
-use BpmPlatform\Engine\Impl\Task\{
+use Jabe\Engine\Impl\Task\{
     TaskDecorator,
     TaskDefinition
 };

@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cfg;
+namespace Jabe\Engine\Impl\Cfg;
 
-use BpmPlatform\Engine\ProcessEngineConfiguration;
-use BpmPlatform\Engine\Variable\SerializationDataFormats;
+use Jabe\Engine\ProcessEngineConfiguration;
+use Jabe\Engine\Variable\SerializationDataFormats;
 
 abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
 {

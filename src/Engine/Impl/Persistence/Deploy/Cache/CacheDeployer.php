@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Deploy\Cache;
+namespace Jabe\Engine\Impl\Persistence\Deploy\Cache;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Cmd\CommandLogger;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Persistence\Deploy\DeployerInterface;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Cmd\CommandLogger;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Persistence\Deploy\DeployerInterface;
+use Jabe\Engine\Impl\Persistence\Entity\{
     DeploymentEntity,
     ResourceEntity
 };
-use BpmPlatform\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
+use Jabe\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
 
 class CacheDeployer
 {

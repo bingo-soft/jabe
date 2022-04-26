@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance;
+namespace Jabe\Model\Bpmn\Instance;
 
-use BpmPlatform\Model\Bpmn\Instance\Bpmndi\BpmnShapeInterface;
+use Jabe\Model\Bpmn\Instance\Bpmndi\BpmnShapeInterface;
 
 interface TaskInterface extends ActivityInterface
 {

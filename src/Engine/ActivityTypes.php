@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine;
+namespace Jabe\Engine;
 
 /**
  * Class contains constants that identifies the activity types.

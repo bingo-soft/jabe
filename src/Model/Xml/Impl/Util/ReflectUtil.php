@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Util;
+namespace Jabe\Model\Xml\Impl\Util;
 
-use BpmPlatform\Model\Xml\Exception\ModelException;
+use Jabe\Model\Xml\Exception\ModelException;
 
 abstract class ReflectUtil
 {

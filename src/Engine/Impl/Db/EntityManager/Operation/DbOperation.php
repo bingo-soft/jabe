@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Db\EntityManager\Operation;
+namespace Jabe\Engine\Impl\Db\EntityManager\Operation;
 
-use BpmPlatform\Engine\Impl\Db\EntityManager\RecyclableInterface;
+use Jabe\Engine\Impl\Db\EntityManager\RecyclableInterface;
 
 abstract class DbOperation implements RecyclableInterface
 {

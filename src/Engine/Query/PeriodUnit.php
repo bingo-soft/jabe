@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Query;
+namespace Jabe\Engine\Query;
 
 class PeriodUnit
 {

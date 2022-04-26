@@ -2,7 +2,7 @@
 
 namespace Tests\Bpmn\Instance;
 
-use BpmPlatform\Model\Bpmn\Instance\CancelEventDefinitionInterface;
+use Jabe\Model\Bpmn\Instance\CancelEventDefinitionInterface;
 
 class CancelEventDefinitionTest extends AbstractEventDefinitionTest
 {

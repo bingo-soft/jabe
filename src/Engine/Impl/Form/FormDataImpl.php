@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form;
+namespace Jabe\Engine\Impl\Form;
 
-use BpmPlatform\Engine\Form\{
+use Jabe\Engine\Form\{
     FormDataInterface,
     FormFieldInterface,
     FormPropertyInterface

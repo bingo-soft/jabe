@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm;
+namespace Jabe\Engine\Impl\Pvm;
 
-use BpmPlatform\Engine\ProcessEngineException;
+use Jabe\Engine\ProcessEngineException;
 
 class PvmException extends ProcessEngineException
 {

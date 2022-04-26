@@ -2,7 +2,7 @@
 
 namespace Tests\Xml\Test;
 
-use BpmPlatform\Model\Xml\ModelInterface;
+use Jabe\Model\Xml\ModelInterface;
 
 abstract class AbstractTypeAssumption
 {

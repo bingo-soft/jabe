@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl;
+namespace Jabe\Engine\Impl;
 
-use BpmPlatform\Engine\SchemaOperationsCommandInterface;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\SchemaOperationsCommandInterface;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
 
 class SchemaOperationsProcessEngineBuild implements SchemaOperationsCommandInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Data;
+namespace Jabe\Engine\Impl\Bpmn\Data;
 
-use BpmPlatform\Engine\Impl\Juel\TypeConverterImpl;
+use Jabe\Engine\Impl\Juel\TypeConverterImpl;
 
 class FieldBaseStructureInstance implements StructureInstanceInterface
 {

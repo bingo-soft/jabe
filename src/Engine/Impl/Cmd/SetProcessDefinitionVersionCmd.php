@@ -1,21 +1,21 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
-use BpmPlatform\Engine\Impl\History\Event\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\Impl\History\Event\{
     HistoryEvent,
     HistoryEventProcessor,
     HistoryEventCreator,
     HistoryEventTypes
 };
-use BpmPlatform\Engine\Impl\History\Producer\HistoryEventProducerInterface;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\History\Producer\HistoryEventProducerInterface;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     IncidentEntity,
     JobDefinitionEntity,
@@ -23,7 +23,7 @@ use BpmPlatform\Engine\Impl\Persistence\Entity\{
     ProcessDefinitionEntity,
     PropertyChange
 };
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class SetProcessDefinitionVersionCmd implements CommandInterface, \Serializable
 {

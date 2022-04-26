@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\Impl\Interceptor\AtomicOperationInvocation;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Interceptor\AtomicOperationInvocation;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     MessageEntity
 };
-use BpmPlatform\Engine\Impl\Pvm\PvmActivityInterface;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\AtomicOperationInterface;
+use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
+use Jabe\Engine\Impl\Pvm\Runtime\AtomicOperationInterface;
 
 class MessageJobDeclaration extends JobDeclaration
 {

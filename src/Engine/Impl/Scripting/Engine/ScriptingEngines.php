@@ -1,24 +1,24 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Scripting\Engine;
+namespace Jabe\Engine\Impl\Scripting\Engine;
 
-use BpmPlatform\Engine\Impl\Util\Scripting\{
+use Jabe\Engine\Impl\Util\Scripting\{
     BindingsInterface,
     ScriptEngineInterface,
     ScriptEngineFactoryInterface,
     ScriptEngineManager
 };
-use BpmPlatform\Engine\Application\{
+use Jabe\Engine\Application\{
     AbstractProcessApplication,
     ProcessApplicationInterface,
     ProcessApplicationReferenceInterface,
     ProcessApplicationUnavailableException
 };
-use BpmPlatform\EngineDmn\Impl\Spi\El\DmnScriptEngineResolverInterface;
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Context\Context;
+use Jabe\EngineDmn\Impl\Spi\El\DmnScriptEngineResolverInterface;
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Context\Context;
 
 class ScriptingEngines implements DmnScriptEngineResolverInterface
 {

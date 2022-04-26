@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type\Attribute;
+namespace Jabe\Model\Xml\Impl\Type\Attribute;
 
 class NamedEnumAttribute extends EnumAttribute
 {

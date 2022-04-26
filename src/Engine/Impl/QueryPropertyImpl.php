@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl;
+namespace Jabe\Engine\Impl;
 
-use BpmPlatform\Engine\Query\QueryPropertyInterface;
+use Jabe\Engine\Query\QueryPropertyInterface;
 
 class QueryPropertyImpl implements QueryPropertyInterface
 {

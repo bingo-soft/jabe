@@ -6,9 +6,9 @@ use Tests\Xml\Test\{
     AbstractTypeAssumption,
     AttributeAssumption
 };
-use BpmPlatform\Model\Bpmn\Instance\Di\NodeInterface;
-use BpmPlatform\Model\Bpmn\Instance\Dc\BoundsInterface;
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Instance\Di\NodeInterface;
+use Jabe\Model\Bpmn\Instance\Dc\BoundsInterface;
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
 use Tests\Bpmn\Instance\{
     BpmnChildElementAssumption,
     BpmnModelElementInstanceTest,

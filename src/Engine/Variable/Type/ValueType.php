@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable\Type;
+namespace Jabe\Engine\Variable\Type;
 
-use BpmPlatform\Engine\Variable\Impl\Type\{
+use Jabe\Engine\Variable\Impl\Type\{
     NullTypeImpl,
     BooleanTypeImpl,
     DoubleTypeImpl,
@@ -13,7 +13,7 @@ use BpmPlatform\Engine\Variable\Impl\Type\{
     ObjectTypeImpl,
     FileValueTypeImpl
 };
-use BpmPlatform\Engine\Variable\Type\ValueTypeInterface;
+use Jabe\Engine\Variable\Type\ValueTypeInterface;
 
 class ValueType
 {

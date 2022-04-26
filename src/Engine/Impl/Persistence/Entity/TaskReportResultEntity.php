@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\History\HistoricTaskInstanceReportResultInterface;
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\History\HistoricTaskInstanceReportResultInterface;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class TaskReportResultEntity implements HistoricTaskInstanceReportResultInterface
 {

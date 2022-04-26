@@ -1,27 +1,27 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Runtime;
+namespace Jabe\Engine\Impl\Pvm\Runtime;
 
-use BpmPlatform\Engine\{
+use Jabe\Engine\{
     ProcessEngineInterface,
     ProcessEngineServicesInterface
 };
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Delegate\{
     BpmnModelExecutionContextInterface,
     DelegateExecutionInterface,
     ProcessEngineServicesAwareInterface
 };
-use BpmPlatform\Engine\Impl\Core\Variable\CoreVariableInstanceInterface;
-use BpmPlatform\Engine\Impl\Core\Variable\Scope\{
+use Jabe\Engine\Impl\Core\Variable\CoreVariableInstanceInterface;
+use Jabe\Engine\Impl\Core\Variable\Scope\{
     SimpleVariableInstanceFactory,
     VariableInstanceFactoryInterface,
     VariableInstanceLifecycleListenerInterface,
     VariableStore
 };
-use BpmPlatform\Engine\Impl\Pvm\PvmProcessInstanceInterface;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
-use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
-use BpmPlatform\Model\Bpmn\Instance\FlowElementInterface;
+use Jabe\Engine\Impl\Pvm\PvmProcessInstanceInterface;
+use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
+use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
+use Jabe\Model\Bpmn\Instance\FlowElementInterface;
 
 class ExecutionImpl extends PvmExecutionImpl implements ActivityExecutionInterface, PvmProcessInstanceInterface
 {

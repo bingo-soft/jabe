@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\ProcessEngineInterface;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\ProcessEngineInterface;
+use Jabe\Engine\Impl\{
     ProcessEngineImpl,
     ProcessEngineLogger
 };
-use BpmPlatform\Engine\Impl\Interceptor\CommandExecutorInterface;
-use BpmPlatform\Engine\Impl\Util\ClassLoaderUtil;
+use Jabe\Engine\Impl\Interceptor\CommandExecutorInterface;
+use Jabe\Engine\Impl\Util\ClassLoaderUtil;
 
 class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable
 {

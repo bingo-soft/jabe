@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\BadUserRequestException;
-use BpmPlatform\Engine\Form\{
+use Jabe\Engine\BadUserRequestException;
+use Jabe\Engine\Form\{
     FormFieldInterface,
     TaskFormDataInterface
 };
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\Entity\{
     TaskEntity
 };
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
-use BpmPlatform\Engine\Variable\Impl\VariableMapImpl;
+use Jabe\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Variable\Impl\VariableMapImpl;
 
 class GetTaskFormVariablesCmd extends AbstractGetFormVariablesCmd
 {

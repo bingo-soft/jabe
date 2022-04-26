@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Runtime\Operation;
+namespace Jabe\Engine\Impl\Pvm\Runtime\Operation;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Pvm\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Pvm\{
     PvmActivityInterface,
     PvmLogger,
     PvmTransitionInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Runtime\{
+use Jabe\Engine\Impl\Pvm\Runtime\{
     LegacyBehavior,
     OutgoingExecution,
     PvmExecutionImpl

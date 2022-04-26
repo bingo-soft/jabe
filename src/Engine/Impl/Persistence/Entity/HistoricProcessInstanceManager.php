@@ -1,28 +1,28 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Authorization\Resources;
-use BpmPlatform\Engine\History\{
+use Jabe\Engine\Authorization\Resources;
+use Jabe\Engine\History\{
     CleanableHistoricProcessInstanceReportResultInterface,
     HistoricProcessInstanceInterface
 };
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Impl\{
     CleanableHistoricProcessInstanceReportImpl,
     HistoricProcessInstanceQueryImpl,
     Page
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     ListQueryParameterObject
 };
-use BpmPlatform\Engine\Impl\Db\EntityManager\Operation\DbOperation;
-use BpmPlatform\Engine\Impl\Db\Sql\DbSqlSessionFactory;
-use BpmPlatform\Engine\Impl\History\Event\HistoricProcessInstanceEventEntity;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\AbstractHistoricManager;
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Db\EntityManager\Operation\DbOperation;
+use Jabe\Engine\Impl\Db\Sql\DbSqlSessionFactory;
+use Jabe\Engine\Impl\History\Event\HistoricProcessInstanceEventEntity;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\AbstractHistoricManager;
+use Jabe\Engine\Impl\Util\{
     ClockUtil,
     CollectionUtil,
     ImmutablePair

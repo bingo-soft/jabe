@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Validation;
+namespace Jabe\Model\Xml\Validation;
 
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
 
 interface ValidationResultInterface
 {

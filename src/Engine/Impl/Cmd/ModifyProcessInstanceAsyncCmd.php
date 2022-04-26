@@ -1,29 +1,29 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Authorization\BatchPermissions;
-use BpmPlatform\Engine\Batch\BatchInterface;
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Authorization\BatchPermissions;
+use Jabe\Engine\Batch\BatchInterface;
+use Jabe\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\Impl\{
     ModificationBatchConfiguration,
     ProcessEngineLogger,
     ProcessInstanceModificationBuilderImpl
 };
-use BpmPlatform\Engine\Impl\Batch\Builder\{
+use Jabe\Engine\Impl\Batch\Builder\{
     BatchBuilder,
     OperationLogHandlerInterface
 };
-use BpmPlatform\Engine\Impl\Batch\{
+use Jabe\Engine\Impl\Batch\{
     BatchConfiguration,
     DeploymentMapping,
     DeploymentMappings
 };
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     PropertyChange
 };

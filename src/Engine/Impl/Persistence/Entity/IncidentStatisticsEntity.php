@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Management\IncidentStatisticsInterface;
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Management\IncidentStatisticsInterface;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class IncidentStatisticsEntity implements IncidentStatisticsInterface
 {

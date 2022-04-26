@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\History;
+namespace Jabe\Engine\History;
 
 interface HistoricTaskInstanceInterface
 {

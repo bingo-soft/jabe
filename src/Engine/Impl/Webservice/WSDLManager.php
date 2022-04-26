@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Webservice;
+namespace Jabe\Engine\Impl\Webservice;
 
-use BpmPlatform\Model\Wsdl\Impl\WsdlParser;
-use BpmPlatform\Model\Wsdl\Instance\DefinitionsInterface;
+use Jabe\Model\Wsdl\Impl\WsdlParser;
+use Jabe\Model\Wsdl\Instance\DefinitionsInterface;
 
 class WSDLManager
 {

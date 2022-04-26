@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type\Child;
+namespace Jabe\Model\Xml\Impl\Type\Child;
 
-use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
-use BpmPlatform\Model\Xml\Impl\Type\Reference\{
+use Jabe\Model\Xml\Type\ModelElementTypeInterface;
+use Jabe\Model\Xml\Impl\Type\Reference\{
     QNameElementReferenceBuilderImpl,
     ElementReferenceBuilderImpl,
     UriElementReferenceBuilderImpl
 };
-use BpmPlatform\Model\Xml\Type\Child\{
+use Jabe\Model\Xml\Type\Child\{
     ChildElementBuilderInterface,
     ChildElementInterface
 };
-use BpmPlatform\Model\Xml\Type\Reference\ElementReferenceBuilderInterface;
+use Jabe\Model\Xml\Type\Reference\ElementReferenceBuilderInterface;
 
 class ChildElementBuilderImpl extends ChildElementCollectionBuilderImpl implements ChildElementBuilderInterface
 {

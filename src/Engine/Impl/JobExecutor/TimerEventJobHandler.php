@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\Persistence\Entity\JobEntity;
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\Persistence\Entity\JobEntity;
 
 abstract class TimerEventJobHandler implements JobHandlerInterface
 {

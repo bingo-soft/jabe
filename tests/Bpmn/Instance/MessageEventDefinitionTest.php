@@ -3,9 +3,9 @@
 namespace Tests\Bpmn\Instance;
 
 use Tests\Xml\Test\AttributeAssumption;
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
-use BpmPlatform\Model\Bpmn\Impl\Instance\OperationRef;
-use BpmPlatform\Model\Bpmn\Instance\MessageEventDefinitionInterface;
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Impl\Instance\OperationRef;
+use Jabe\Model\Bpmn\Instance\MessageEventDefinitionInterface;
 
 class MessageEventDefinitionTest extends AbstractEventDefinitionTest
 {

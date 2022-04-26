@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\History;
+namespace Jabe\Engine\History;
 
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 interface HistoricVariableUpdateInterface
 {

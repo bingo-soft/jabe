@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Util;
+namespace Jabe\Model\Xml\Impl\Util;
 
-use BpmPlatform\Model\Xml\Impl\Instance\DomDocumentExt;
-use BpmPlatform\Model\Xml\Instance\DomDocumentInterface;
+use Jabe\Model\Xml\Impl\Instance\DomDocumentExt;
+use Jabe\Model\Xml\Instance\DomDocumentInterface;
 
 class IoUtil
 {

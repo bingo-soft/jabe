@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Delegate;
+namespace Jabe\Engine\Delegate;
 
 interface DelegateCaseVariableInstanceInterface extends DelegateVariableInstanceInterface
 {

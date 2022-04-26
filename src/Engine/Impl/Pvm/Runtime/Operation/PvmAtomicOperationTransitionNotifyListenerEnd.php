@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Runtime\Operation;
+namespace Jabe\Engine\Impl\Pvm\Runtime\Operation;
 
-use BpmPlatform\Engine\Delegate\ExecutionListenerInterface;
-use BpmPlatform\Engine\Impl\Core\Model\CoreModelElement;
-use BpmPlatform\Engine\Impl\Core\Instance\CoreExecution;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\{
+use Jabe\Engine\Delegate\ExecutionListenerInterface;
+use Jabe\Engine\Impl\Core\Model\CoreModelElement;
+use Jabe\Engine\Impl\Core\Instance\CoreExecution;
+use Jabe\Engine\Impl\Pvm\Runtime\{
     CallbackInterface,
     ScopeInstantiationContext,
     PvmExecutionImpl

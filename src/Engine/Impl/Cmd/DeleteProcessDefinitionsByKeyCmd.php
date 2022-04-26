@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Exception\NotFoundException;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Repository\ResourceDefinitionEntityInterface;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Exception\NotFoundException;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Repository\ResourceDefinitionEntityInterface;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class DeleteProcessDefinitionsByKeyCmd extends AbstractDeleteProcessDefinitionCmd
 {

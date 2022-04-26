@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance;
+namespace Jabe\Model\Bpmn\Instance;
 
-use BpmPlatform\Model\Bpmn\Builder\EndEventBuilder;
+use Jabe\Model\Bpmn\Builder\EndEventBuilder;
 
 interface EndEventInterface extends ThrowEventInterface
 {

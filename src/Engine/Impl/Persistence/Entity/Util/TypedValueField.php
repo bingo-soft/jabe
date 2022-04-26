@@ -1,34 +1,34 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity\Util;
+namespace Jabe\Engine\Impl\Persistence\Entity\Util;
 
-use BpmPlatform\Engine\Application\{
+use Jabe\Engine\Application\{
     AbstractProcessApplication,
     ProcessApplicationInterface,
     ProcessApplicationReferenceInterface,
     ProcessApplicationUnavailableException
 };
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\{
     DbEntityLifecycleAwareInterface,
     EnginePersistenceLogger
 };
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Interceptor\{
     CommandContext,
     CommandContextListenerInterface
 };
-use BpmPlatform\Engine\Impl\Variable\Serializer\{
+use Jabe\Engine\Impl\Variable\Serializer\{
     TypedValueSerializerInterface,
     ValueFieldsInterface,
     ValueFieldsImpl,
     VariableSerializerFactoryInterface,
     VariableSerializersInterface
 };
-use BpmPlatform\Engine\Variable\Impl\Value\UntypedValueImpl;
-use BpmPlatform\Engine\Variable\Type\ValueType;
-use BpmPlatform\Engine\Variable\Value\{
+use Jabe\Engine\Variable\Impl\Value\UntypedValueImpl;
+use Jabe\Engine\Variable\Type\ValueType;
+use Jabe\Engine\Variable\Value\{
     SerializableValueInterface,
     TypedValueInterface
 };

@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Interceptor;
+namespace Jabe\Engine\Impl\Interceptor;
 
-use BpmPlatform\Engine\Application\{
+use Jabe\Engine\Application\{
     InvocationContext,
     ProcessApplicationReferenceInterface
 };
-use BpmPlatform\Engine\{
+use Jabe\Engine\{
     AuthorizationException,
     BadUserRequestException,
     IdentityServiceInterface,
@@ -14,28 +14,28 @@ use BpmPlatform\Engine\{
     ProcessEngineException,
     TaskAlreadyClaimedException
 };
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Cfg\{
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Cfg\{
     ProcessEngineConfigurationImpl,
     TransactionContextInterface,
     TransactionContextFactoryInterface
 };
-use BpmPlatform\Engine\Impl\Context\{
+use Jabe\Engine\Impl\Context\{
     Context,
     ProcessApplicationContextUtil
 };
-use BpmPlatform\Engine\Impl\Db\EntityManager\DbEntityManager;
-use BpmPlatform\Engine\Impl\Db\Sql\DbSqlSession;
-use BpmPlatform\Engine\Impl\Form\Entity\FormDefinitionManager;
-//use BpmPlatform\Engine\Impl\History\Event\HistoricDecisionInstanceManager;
-use BpmPlatform\Engine\Impl\Identity\{
+use Jabe\Engine\Impl\Db\EntityManager\DbEntityManager;
+use Jabe\Engine\Impl\Db\Sql\DbSqlSession;
+use Jabe\Engine\Impl\Form\Entity\FormDefinitionManager;
+//use Jabe\Engine\Impl\History\Event\HistoricDecisionInstanceManager;
+use Jabe\Engine\Impl\Identity\{
     Authentication,
     ReadOnlyIdentityProviderInterface,
     WritableIdentityProviderInterface
 };
-use BpmPlatform\Engine\Impl\JobExecutor\FailedJobCommandFactoryInterface;
-use BpmPlatform\Engine\Impl\Optimize\OptimizeManager;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\JobExecutor\FailedJobCommandFactoryInterface;
+use Jabe\Engine\Impl\Optimize\OptimizeManager;
+use Jabe\Engine\Impl\Persistence\Entity\{
     AttachmentManager,
     AuthorizationManager,
     BatchManager,
@@ -79,7 +79,7 @@ use BpmPlatform\Engine\Impl\Persistence\Entity\{
     UserOperationLogManager,
     VariableInstanceManager
 };
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class CommandContext
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Handler;
+namespace Jabe\Engine\Impl\Form\Handler;
 
-use BpmPlatform\Engine\Form\StartFormDataInterface;
-use BpmPlatform\Engine\Impl\Persistence\Entity\ProcessDefinitionEntity;
+use Jabe\Engine\Form\StartFormDataInterface;
+use Jabe\Engine\Impl\Persistence\Entity\ProcessDefinitionEntity;
 
 interface StartFormHandlerInterface extends FormHandlerInterface
 {

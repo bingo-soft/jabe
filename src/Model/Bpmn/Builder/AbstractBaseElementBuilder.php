@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Builder;
+namespace Jabe\Model\Bpmn\Builder;
 
-use BpmPlatform\Model\Bpmn\Exception\BpmnModelException;
-use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Bpmn\Exception\BpmnModelException;
+use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
+use Jabe\Model\Bpmn\Instance\{
     ActivityInterface,
     AssociationInterface,
     BpmnModelElementInstanceInterface,
@@ -32,15 +32,15 @@ use BpmPlatform\Model\Bpmn\Instance\{
     TimeDurationInterface,
     TimerEventDefinitionInterface
 };
-use BpmPlatform\Model\Bpmn\Instance\Bpmndi\{
+use Jabe\Model\Bpmn\Instance\Bpmndi\{
     BpmnShapeInterface,
     BpmnEdgeInterface,
     BpmnPlaneInterface
 };
-use BpmPlatform\Model\Bpmn\Instance\Dc\{
+use Jabe\Model\Bpmn\Instance\Dc\{
     BoundsInterface
 };
-use BpmPlatform\Model\Bpmn\Instance\Di\{
+use Jabe\Model\Bpmn\Instance\Di\{
     WaypointInterface
 };
 

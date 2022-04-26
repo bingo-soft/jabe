@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Delegate;
+namespace Jabe\Engine\Delegate;
 
-use BpmPlatform\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Variable\VariableMapInterface;
 
 interface DelegateVariableMappingInterface
 {

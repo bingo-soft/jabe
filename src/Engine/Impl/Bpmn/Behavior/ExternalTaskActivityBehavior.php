@@ -1,20 +1,20 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Behavior;
+namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use BpmPlatform\Engine\Impl\PriorityProviderInterface;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
-use BpmPlatform\Engine\Impl\Migration\Instance\{
+use Jabe\Engine\Impl\PriorityProviderInterface;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
+use Jabe\Engine\Impl\Migration\Instance\{
     MigratingActivityInstance,
     MigratingExternalTaskInstance
 };
-use BpmPlatform\Engine\Impl\Migration\Instance\Parser\MigratingInstanceParseContext;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Migration\Instance\Parser\MigratingInstanceParseContext;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     ExternalTaskEntity
 };
-use BpmPlatform\Engine\Impl\Pvm\Delegate\{
+use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
     MigrationObserverBehaviorInterface
 };

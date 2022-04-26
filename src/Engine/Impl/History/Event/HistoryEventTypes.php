@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History\Event;
+namespace Jabe\Engine\Impl\History\Event;
 
 class HistoryEventTypes implements HistoryEventTypeInterface
 {

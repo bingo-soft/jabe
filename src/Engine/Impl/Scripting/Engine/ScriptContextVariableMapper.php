@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Scripting\Engine;
+namespace Jabe\Engine\Impl\Scripting\Engine;
 
-use BpmPlatform\Engine\Impl\Util\Scripting\ScriptContextInterface;
-use BpmPlatform\Engine\Impl\Util\El\{
+use Jabe\Engine\Impl\Util\Scripting\ScriptContextInterface;
+use Jabe\Engine\Impl\Util\El\{
     ExpressionFactory,
     ValueExpression,
     VariableMapper

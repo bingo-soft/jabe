@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\History\ReportResultInterface;
+use Jabe\Engine\History\ReportResultInterface;
 
 abstract class ReportResultEntity implements ReportResultInterface
 {

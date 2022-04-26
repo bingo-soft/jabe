@@ -9,7 +9,7 @@ use Tests\Bpmn\Instance\{
     BpmnModelElementInstanceTest,
     BpmnTypeAssumption
 };
-use BpmPlatform\Model\Bpmn\Instance\LaneSetInterface;
+use Jabe\Model\Bpmn\Instance\LaneSetInterface;
 
 class ChildLaneSetTest extends BpmnModelElementInstanceTest
 {

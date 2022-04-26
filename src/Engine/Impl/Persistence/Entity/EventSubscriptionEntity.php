@@ -1,29 +1,29 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     HasDbReferencesInterface,
     HasDbRevisionInterface
 };
-use BpmPlatform\Engine\Impl\Event\{
+use Jabe\Engine\Impl\Event\{
     EventHandlerInterface,
     EventType
 };
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\JobExecutor\EventSubscriptionJobDeclaration;
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\JobExecutor\EventSubscriptionJobDeclaration;
+use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ProcessDefinitionImpl
 };
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Util\{
     ClassNameUtil,
     ClockUtil,
     EnsureUtil
 };
-use BpmPlatform\Engine\Runtime\EventSubscriptionInterface;
+use Jabe\Engine\Runtime\EventSubscriptionInterface;
 
 class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInterface, HasDbRevisionInterface, HasDbReferencesInterface, \Serializable
 {

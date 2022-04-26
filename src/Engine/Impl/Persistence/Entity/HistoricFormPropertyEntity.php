@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\History\{
+use Jabe\Engine\History\{
     HistoricFormFieldInterface,
     HistoricFormPropertyInterface
 };
-use BpmPlatform\Engine\Impl\History\Event\HistoricFormPropertyEventEntity;
+use Jabe\Engine\Impl\History\Event\HistoricFormPropertyEventEntity;
 
 class HistoricFormPropertyEntity extends HistoricFormPropertyEventEntity implements HistoricFormPropertyInterface, HistoricFormFieldInterface
 {

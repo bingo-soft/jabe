@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Builder;
+namespace Jabe\Model\Bpmn\Builder;
 
-use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
-use BpmPlatform\Model\Bpmn\Instance\MessageEventDefinitionInterface;
+use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
+use Jabe\Model\Bpmn\Instance\MessageEventDefinitionInterface;
 
 class MessageEventDefinitionBuilder extends AbstractMessageEventDefinitionBuilder
 {

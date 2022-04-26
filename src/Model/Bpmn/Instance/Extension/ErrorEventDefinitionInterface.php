@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance\Extension;
+namespace Jabe\Model\Bpmn\Instance\Extension;
 
-use BpmPlatform\Model\Bpmn\Instance\ErrorEventDefinitionInterface as BaseErrorEventDefinitionInterface;
+use Jabe\Model\Bpmn\Instance\ErrorEventDefinitionInterface as BaseErrorEventDefinitionInterface;
 
 interface ErrorEventDefinitionInterface extends BaseErrorEventDefinitionInterface
 {

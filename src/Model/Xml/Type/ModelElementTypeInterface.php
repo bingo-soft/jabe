@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Type;
+namespace Jabe\Model\Xml\Type;
 
-use BpmPlatform\Model\Xml\ModelInterface;
-use BpmPlatform\Model\Xml\ModelInstanceInterface;
-use BpmPlatform\Model\Xml\Instance\{
+use Jabe\Model\Xml\ModelInterface;
+use Jabe\Model\Xml\ModelInstanceInterface;
+use Jabe\Model\Xml\Instance\{
     DomElementInterface,
     ModelElementInstanceInterface
 };
-use BpmPlatform\Model\Xml\Type\Attribute\AttributeInterface;
+use Jabe\Model\Xml\Type\Attribute\AttributeInterface;
 
 interface ModelElementTypeInterface
 {

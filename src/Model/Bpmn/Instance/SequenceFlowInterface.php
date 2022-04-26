@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance;
+namespace Jabe\Model\Bpmn\Instance;
 
-use BpmPlatform\Model\Bpmn\Builder\SequenceFlowBuilder;
-use BpmPlatform\Model\Bpmn\Instance\Bpmndi\BpmnEdgeInterface;
+use Jabe\Model\Bpmn\Builder\SequenceFlowBuilder;
+use Jabe\Model\Bpmn\Instance\Bpmndi\BpmnEdgeInterface;
 
 interface SequenceFlowInterface extends FlowElementInterface
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable\Impl\Value;
+namespace Jabe\Engine\Variable\Impl\Value;
 
-use BpmPlatform\Engine\Variable\Type\{
+use Jabe\Engine\Variable\Type\{
     SerializableValueTypeInterface
 };
-use BpmPlatform\Engine\Variable\Value\ObjectValueInterface;
-use BpmPlatform\Engine\Variable\Type\ValueType;
+use Jabe\Engine\Variable\Value\ObjectValueInterface;
+use Jabe\Engine\Variable\Type\ValueType;
 
 class ObjectValueImpl extends AbstractTypedValue implements ObjectValueInterface
 {

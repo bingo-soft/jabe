@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Handler;
+namespace Jabe\Engine\Impl\Core\Handler;
 
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
 
 interface ModelElementHandlerInterface
 {

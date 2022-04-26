@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance;
+namespace Jabe\Model\Bpmn\Instance;
 
-use BpmPlatform\Model\Bpmn\Instance\Bpmndi\BpmnEdgeInterface;
-use BpmPlatform\Model\Bpmn\Impl\Instance\Transformation;
+use Jabe\Model\Bpmn\Instance\Bpmndi\BpmnEdgeInterface;
+use Jabe\Model\Bpmn\Impl\Instance\Transformation;
 
 interface DataAssociationInterface extends BaseElementInterface
 {

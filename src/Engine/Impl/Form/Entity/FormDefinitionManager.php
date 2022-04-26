@@ -1,17 +1,17 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Entity;
+namespace Jabe\Engine\Impl\Form\Entity;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Db\{
     EnginePersistenceLogger,
     ListQueryParameterObject
 };
-use BpmPlatform\Engine\Impl\Persistence\{
+use Jabe\Engine\Impl\Persistence\{
     AbstractManager,
     AbstractResourceDefinitionManagerInterface
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\FormDefinitionEntity;
+use Jabe\Engine\Impl\Persistence\Entity\FormDefinitionEntity;
 
 class FormDefinitionManager extends AbstractManager implements AbstractResourceDefinitionManagerInterface
 {

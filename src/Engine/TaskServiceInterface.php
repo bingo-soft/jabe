@@ -1,23 +1,23 @@
 <?php
 
-namespace BpmPlatform\Engine;
+namespace Jabe\Engine;
 
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\Authorization\{
     Permissions,
     ProcessDefinitionPermissions,
     ProcessInstancePermissions,
     Resources,
     TaskPermissions
 };
-use BpmPlatform\Engine\Exception\{
+use Jabe\Engine\Exception\{
     NullValueException,
     NotFoundException
 };
-use BpmPlatform\Engine\History\{
+use Jabe\Engine\History\{
     UserOperationLogEntryInterface,
     UserOperationLogQueryInterface
 };
-use BpmPlatform\Engine\Task\{
+use Jabe\Engine\Task\{
     AttachmentInterface,
     CommentInterface,
     EventInterface,
@@ -27,8 +27,8 @@ use BpmPlatform\Engine\Task\{
     TaskQueryInterface,
     TaskReportInterface
 };
-use BpmPlatform\Engine\Variable\VariableMapInterface;
-use BpmPlatform\Engine\Variable\Value\{
+use Jabe\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Variable\Value\{
     SerializableValueInterface,
     TypedValueInterface
 };

@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Behavior;
+namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\LegacyBehavior;
+use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
+use Jabe\Engine\Impl\Pvm\Runtime\LegacyBehavior;
 
 class EventSubProcessActivityBehavior extends SubProcessActivityBehavior
 {

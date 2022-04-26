@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\ProcessEngineLogger;
 use parallel\Sync;
 
 abstract class AcquireJobsRunnable implements RunnableInterface

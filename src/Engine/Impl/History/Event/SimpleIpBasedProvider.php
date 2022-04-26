@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History\Event;
+namespace Jabe\Engine\Impl\History\Event;
 
-//use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+//use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 
 class SimpleIpBasedProvider implements HostnameProviderInterface
 {

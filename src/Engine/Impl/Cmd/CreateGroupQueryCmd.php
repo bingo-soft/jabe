@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Identity\GroupQueryInterface;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Identity\GroupQueryInterface;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };

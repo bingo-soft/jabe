@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Task\Delegate;
+namespace Jabe\Engine\Impl\Task\Delegate;
 
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Delegate\{
     BaseDelegateExecutionInterface,
     DelegateTaskInterface,
     TaskListenerInterface
 };
-use BpmPlatform\Engine\Impl\Delegate\DelegateInvocation;
+use Jabe\Engine\Impl\Delegate\DelegateInvocation;
 
 class TaskListenerInvocation extends DelegateInvocation
 {

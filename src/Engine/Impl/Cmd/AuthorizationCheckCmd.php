@@ -1,20 +1,20 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\Authorization\{
     PermissionInterface,
     ResourceInterface,
     Resources
 };
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Db\EnginePersistenceLogger;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Db\EnginePersistenceLogger;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\AuthorizationManager;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Persistence\Entity\AuthorizationManager;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class AuthorizationCheckCmd implements CommandInterface
 {

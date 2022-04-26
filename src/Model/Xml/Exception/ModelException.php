@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Exception;
+namespace Jabe\Model\Xml\Exception;
 
 class ModelException extends \Exception
 {

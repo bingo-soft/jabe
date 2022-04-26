@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     HasDbReferencesInterface,
     HasDbRevisionInterface
 };
-use BpmPlatform\Engine\Impl\JobExecutor\JobDeclaration;
-use BpmPlatform\Engine\Management\JobDefinitionInterface;
+use Jabe\Engine\Impl\JobExecutor\JobDeclaration;
+use Jabe\Engine\Management\JobDefinitionInterface;
 
 class JobDefinitionEntity implements JobDefinitionInterface, HasDbRevisionInterface, HasDbReferencesInterface, DbEntityInterface, \Serializable
 {

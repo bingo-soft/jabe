@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Batch;
+namespace Jabe\Engine\Batch;
 
 interface BatchInterface
 {

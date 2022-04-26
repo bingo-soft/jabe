@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Management\{
+use Jabe\Engine\Management\{
     ActivityStatisticsInterface,
     IncidentStatisticsInterface
 };
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class ActivityStatisticsImpl implements ActivityStatisticsInterface
 {

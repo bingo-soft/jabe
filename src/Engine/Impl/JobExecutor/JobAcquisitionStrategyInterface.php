@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
 interface JobAcquisitionStrategyInterface
 {

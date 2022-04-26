@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form;
+namespace Jabe\Engine\Impl\Form;
 
-use BpmPlatform\Engine\Form\FormFieldValidationConstraintInterface;
+use Jabe\Engine\Form\FormFieldValidationConstraintInterface;
 
 class FormFieldValidationConstraintImpl implements FormFieldValidationConstraintInterface, \Serializable
 {

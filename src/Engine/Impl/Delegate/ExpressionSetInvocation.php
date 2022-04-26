@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Delegate;
+namespace Jabe\Engine\Impl\Delegate;
 
-use BpmPlatform\Engine\Delegate\BaseDelegateExecutionInterface;
-use BpmPlatform\Engine\Impl\Util\El\{
+use Jabe\Engine\Delegate\BaseDelegateExecutionInterface;
+use Jabe\Engine\Impl\Util\El\{
     ELContext,
     ValueExpression
 };

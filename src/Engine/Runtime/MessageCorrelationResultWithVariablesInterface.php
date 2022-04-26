@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Runtime;
+namespace Jabe\Engine\Runtime;
 
-use BpmPlatform\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Variable\VariableMapInterface;
 
 interface MessageCorrelationResultWithVariablesInterface extends MessageCorrelationResultInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Runtime\Operation;
+namespace Jabe\Engine\Impl\Pvm\Runtime\Operation;
 
 class PvmAtomicOperationStartTransitionNotifyListenerTake extends AbstractPvmAtomicOperationTransitionNotifyListenerTake
 {

@@ -5,9 +5,9 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bingo-soft/jabe/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/bingo-soft/jabe/?branch=main)
 
 
-# Jabe - Just another BPMN engine
+# Jabe - Just Another Bpmn Engine
 
-Jabe (/dʒæbi/) - is a full-fledged PHP framework for workflow and process automation. Its core consists of XML model, on top of which you can create custom models with domain-specific elements and relationships. It also implements BPMN model fully compatible with BPMN 2.0 specification.
+Jabe (/dʒæbi/) - is a full-fledged framework for workflow and process automation. Its core consists of XML model, on top of which you can create custom models with domain-specific elements and relationships. It also implements BPMN model fully compatible with BPMN 2.0 specification.
 
 # Installation
 

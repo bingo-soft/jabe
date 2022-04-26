@@ -1,77 +1,77 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\{
+use Jabe\Engine\{
     ProcessEngineInterface,
     ProcessEngineException,
     ProcessEngineServicesInterface
 };
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Delegate\{
     BpmnError,
     DelegateTaskInterface,
     ExpressionInterface,
     TaskListenerInterface
 };
-use BpmPlatform\Engine\Exception\{
+use Jabe\Engine\Exception\{
     NotFoundException,
     NullValueException
 };
-use BpmPlatform\Engine\Form\FormRefInterface;
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Bpmn\Helper\{
+use Jabe\Engine\Form\FormRefInterface;
+use Jabe\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Bpmn\Helper\{
     BpmnExceptionHandler,
     ErrorPropagationException,
     EscalationHandler
 };
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Cfg\Auth\ResourceAuthorizationProviderInterface;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Core\Instance\CoreExecution;
-use BpmPlatform\Engine\Impl\Core\Variable\CoreVariableInstanceInterface;
-use BpmPlatform\Engine\Impl\Core\Variable\Event\VariableEvent;
-use BpmPlatform\Engine\Impl\Core\Variable\Scope\{
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Cfg\Auth\ResourceAuthorizationProviderInterface;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Core\Instance\CoreExecution;
+use Jabe\Engine\Impl\Core\Variable\CoreVariableInstanceInterface;
+use Jabe\Engine\Impl\Core\Variable\Event\VariableEvent;
+use Jabe\Engine\Impl\Core\Variable\Scope\{
     AbstractVariableScope,
     VariableInstanceFactoryInterface,
     VariableInstanceLifecycleListenerInterface,
     VariableStore,
     VariablesProviderInterface
 };
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     EnginePersistenceLogger,
     HasDbReferencesInterface,
     HasDbRevisionInterface
 };
-use BpmPlatform\Engine\Impl\Db\EntityManager\DbEntityManager;
-use BpmPlatform\Engine\Impl\Form\FormRefImpl;
-use BpmPlatform\Engine\Impl\Form\Handler\DefaultFormHandler;
-use BpmPlatform\Engine\Impl\History\Event\HistoryEventTypes;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Db\EntityManager\DbEntityManager;
+use Jabe\Engine\Impl\Form\FormRefImpl;
+use Jabe\Engine\Impl\Form\Handler\DefaultFormHandler;
+use Jabe\Engine\Impl\History\Event\HistoryEventTypes;
+use Jabe\Engine\Impl\Interceptor\{
     CommandContext,
     CommandContextListenerInterface,
     CommandInvocationContext
 };
-use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityExecution;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
-use BpmPlatform\Engine\Impl\Task\TaskDefinition;
-use BpmPlatform\Engine\Impl\Task\Delegate\TaskListenerInvocation;
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecution;
+use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
+use Jabe\Engine\Impl\Task\TaskDefinition;
+use Jabe\Engine\Impl\Task\Delegate\TaskListenerInvocation;
+use Jabe\Engine\Impl\Util\{
     ClockUtil,
     EnsureUtil
 };
-use BpmPlatform\Engine\Management\Metrics;
-use BpmPlatform\Engine\Task\{
+use Jabe\Engine\Management\Metrics;
+use Jabe\Engine\Task\{
     DelegationState,
     IdentityLinkInterface,
     IdentityLinkType,
     TaskInterface
 };
-use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
-use BpmPlatform\Model\Bpmn\Instance\UserTaskInterface;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
+use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
+use Jabe\Model\Bpmn\Instance\UserTaskInterface;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Type\ModelElementTypeInterface;
 
 class TaskEntity extends AbstractVariableScope implements TaskInterface, DelegateTaskInterface, \Serializable, DbEntityInterface, HasDbRevisionInterface, HasDbReferencesInterface, CommandContextListenerInterface, VariablesProviderInterface
 {

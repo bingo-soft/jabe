@@ -1,20 +1,20 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Impl\Instance;
+namespace Jabe\Model\Bpmn\Impl\Instance;
 
-use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Xml\ModelBuilder;
+use Jabe\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Type\ModelTypeInstanceProviderInterface;
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Instance\{
     AssignmentInterface,
     BaseElementInterface,
     DataAssociationInterface,
     FormalExpressionInterface,
     ItemAwareElementInterface
 };
-use BpmPlatform\Model\Bpmn\Instance\Bpmndi\BpmnEdgeInterface;
+use Jabe\Model\Bpmn\Instance\Bpmndi\BpmnEdgeInterface;
 
 class DataAssociationImpl extends BaseElementImpl implements DataAssociationInterface
 {

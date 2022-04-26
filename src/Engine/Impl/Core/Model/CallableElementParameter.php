@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Model;
+namespace Jabe\Engine\Impl\Core\Model;
 
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Impl\Core\Variable\Mapping\Value\{
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Impl\Core\Variable\Mapping\Value\{
     ConstantValueProvider,
     ParameterValueProviderInterface
 };
-use BpmPlatform\Engine\Impl\Core\Variable\Scope\VariableScopeLocalAdapter;
-use BpmPlatform\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Impl\Core\Variable\Scope\VariableScopeLocalAdapter;
+use Jabe\Engine\Variable\VariableMapInterface;
 
 class CallableElementParameter
 {

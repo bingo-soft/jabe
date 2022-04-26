@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Identity;
+namespace Jabe\Engine\Impl\Identity;
 
-use BpmPlatform\Engine\Identity\{
+use Jabe\Engine\Identity\{
     GroupInterface,
     GroupQueryInterface,
     NativeUserQueryInterface,
@@ -11,7 +11,7 @@ use BpmPlatform\Engine\Identity\{
     UserInterface,
     UserQueryInterface
 };
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Interceptor\{
     CommandContext,
     SessionInterface
 };

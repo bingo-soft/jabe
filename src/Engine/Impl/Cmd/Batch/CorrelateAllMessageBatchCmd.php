@@ -1,39 +1,39 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd\Batch;
+namespace Jabe\Engine\Impl\Cmd\Batch;
 
-use BpmPlatform\Engine\BadUserRequestException;
-use BpmPlatform\Engine\Authorization\BatchPermissions;
-use BpmPlatform\Engine\Batch\BatchInterface;
-use BpmPlatform\Engine\History\{
+use Jabe\Engine\BadUserRequestException;
+use Jabe\Engine\Authorization\BatchPermissions;
+use Jabe\Engine\Batch\BatchInterface;
+use Jabe\Engine\History\{
     HistoricProcessInstanceQueryInterface,
     UserOperationLogEntryInterface
 };
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Impl\{
     HistoricProcessInstanceQueryImpl,
     MessageCorrelationAsyncBuilderImpl,
     ProcessInstanceQueryImpl
 };
-use BpmPlatform\Engine\Impl\Batch\{
+use Jabe\Engine\Impl\Batch\{
     BatchConfiguration,
     BatchElementConfiguration
 };
-use BpmPlatform\Engine\Impl\Batch\Builder\{
+use Jabe\Engine\Impl\Batch\Builder\{
     BatchBuilder,
     OperationLogInstanceCountHandlerInterface
 };
-use BpmPlatform\Engine\Impl\Batch\Message\MessageCorrelationBatchConfiguration;
-use BpmPlatform\Engine\Impl\Core\Variable\Util\VariableUtil;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Batch\Message\MessageCorrelationBatchConfiguration;
+use Jabe\Engine\Impl\Core\Variable\Util\VariableUtil;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\PropertyChange;
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Persistence\Entity\PropertyChange;
+use Jabe\Engine\Impl\Util\{
     CollectionUtil,
     EnsureUtil
 };
-use BpmPlatform\Engine\Runtime\ProcessInstanceQueryInterface;
+use Jabe\Engine\Runtime\ProcessInstanceQueryInterface;
 
 class CorrelateAllMessageBatchCmd implements CommandInterface
 {

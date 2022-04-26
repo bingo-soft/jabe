@@ -3,7 +3,7 @@
 namespace Tests\Bpmn\Engine\Variable;
 
 use PHPUnit\Framework\TestCase;
-use BpmPlatform\Engine\Variable\{
+use Jabe\Engine\Variable\{
     SerializationDataFormats,
     Variables
 };

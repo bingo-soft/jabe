@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Runtime\Operation;
+namespace Jabe\Engine\Impl\Pvm\Runtime\Operation;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\Pvm\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\Pvm\{
     PvmActivityInterface,
     PvmScopeInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Delegate\{
+use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityBehaviorInterface,
     CompositeActivityBehaviorInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\ScopeImpl;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\{
+use Jabe\Engine\Impl\Pvm\Process\ScopeImpl;
+use Jabe\Engine\Impl\Pvm\Runtime\{
     LegacyBehavior,
     PvmExecutionImpl
 };

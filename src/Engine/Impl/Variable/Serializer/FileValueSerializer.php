@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Variable\Serializer;
+namespace Jabe\Engine\Impl\Variable\Serializer;
 
-use BpmPlatform\Engine\Variable\Variables;
-use BpmPlatform\Engine\Variable\Impl\Value\{
+use Jabe\Engine\Variable\Variables;
+use Jabe\Engine\Variable\Impl\Value\{
     FileValueImpl,
     UntypedValueImpl
 };
-use BpmPlatform\Engine\Variable\Type\ValueType;
-use BpmPlatform\Engine\Variable\Value\{
+use Jabe\Engine\Variable\Type\ValueType;
+use Jabe\Engine\Variable\Value\{
     FileValueInterface,
     TypedValueInterface
 };
-use BpmPlatform\Engine\Variable\Value\FileValueBuiilderInterface;
+use Jabe\Engine\Variable\Value\FileValueBuiilderInterface;
 
 class FileValueSerializer extends PrimitiveValueSerializer
 {

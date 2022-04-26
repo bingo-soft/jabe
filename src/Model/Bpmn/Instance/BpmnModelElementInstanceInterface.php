@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance;
+namespace Jabe\Model\Bpmn\Instance;
 
-use BpmPlatform\Model\Bpmn\Builder\AbstractBaseElementBuilder;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Bpmn\Builder\AbstractBaseElementBuilder;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
 
 interface BpmnModelElementInstanceInterface extends ModelElementInstanceInterface
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable\Impl\Value;
+namespace Jabe\Engine\Variable\Impl\Value;
 
-use BpmPlatform\Engine\Variable\Type\ValueType;
-use BpmPlatform\Engine\Variable\Value\IntegerValueInterface;
+use Jabe\Engine\Variable\Type\ValueType;
+use Jabe\Engine\Variable\Value\IntegerValueInterface;
 
 class IntegerValueImpl extends PrimitiveTypeValueImpl implements IntegerValueInterface
 {

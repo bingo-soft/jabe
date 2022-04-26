@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence;
+namespace Jabe\Engine\Impl\Persistence;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Db\EnginePersistenceLogger;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Db\EnginePersistenceLogger;
+use Jabe\Engine\Impl\Interceptor\{
     SessionInterface,
     SessionFactoryInterface
 };
-use BpmPlatform\Engine\Impl\Util\ReflectUtil;
+use Jabe\Engine\Impl\Util\ReflectUtil;
 
 class GenericManagerFactory implements SessionFactoryInterface
 {

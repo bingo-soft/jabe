@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Diagram;
+namespace Jabe\Engine\Impl\Bpmn\Diagram;
 
 class Bpmn20NamespaceContext
 {

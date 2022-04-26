@@ -3,7 +3,7 @@
 namespace Tests\Bpmn;
 
 use PHPUnit\Framework\TestCase;
-use BpmPlatform\Model\Bpmn\Bpmn;
+use Jabe\Model\Bpmn\Bpmn;
 
 class DataStoreTest extends TestCase
 {

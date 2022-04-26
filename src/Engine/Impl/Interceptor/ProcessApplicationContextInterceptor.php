@@ -1,17 +1,17 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Interceptor;
+namespace Jabe\Engine\Impl\Interceptor;
 
-use BpmPlatform\Engine\Application\ProcessApplicationReferenceInterface;
-use BpmPlatform\Engine\Application\Impl\{
+use Jabe\Engine\Application\ProcessApplicationReferenceInterface;
+use Jabe\Engine\Application\Impl\{
     ProcessApplicationContextImpl,
     ProcessApplicationIdentifier
 };
-use BpmPlatform\Engine\Container\RuntimeContainerDelegate;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Cmd\CommandLogger;
-use BpmPlatform\Engine\Impl\Context\Context;
+use Jabe\Engine\Container\RuntimeContainerDelegate;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Cmd\CommandLogger;
+use Jabe\Engine\Impl\Context\Context;
 
 class ProcessApplicationContextInterceptor extends CommandInterceptor
 {

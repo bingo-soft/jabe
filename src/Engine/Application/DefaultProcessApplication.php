@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Application;
+namespace Jabe\Engine\Application;
 
 abstract class DefaultProcessApplication
 {

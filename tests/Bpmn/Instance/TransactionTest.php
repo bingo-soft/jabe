@@ -6,10 +6,10 @@ use Tests\Xml\Test\{
     AbstractTypeAssumption,
     AttributeAssumption
 };
-use BpmPlatform\Model\Xml\Impl\Instance\DomDocumentExt;
-use BpmPlatform\Model\Bpmn\Bpmn;
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Xml\Impl\Instance\DomDocumentExt;
+use Jabe\Model\Bpmn\Bpmn;
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Instance\{
     SubProcessInterface,
     TransactionInterface
 };
@@ -37,7 +37,7 @@ class TransactionTest extends BpmnModelElementInstanceTest
     {
         $ref = new \ReflectionClass(static::class);
         $className = str_replace('Test', 'Interface', $ref->getShortName());
-        $instanceClass = sprintf("%s\%s", str_replace('Tests', 'BpmPlatform\Model', __NAMESPACE__), $className);
+        $instanceClass = sprintf("%s\%s", str_replace('Tests', 'Jabe\Model', __NAMESPACE__), $className);
         $modelInstance = Bpmn::getInstance()->readModelFromStream(
             fopen(realpath(".") . "/tests/Bpmn/Resources/TransactionTest.xml", "r+")
         );

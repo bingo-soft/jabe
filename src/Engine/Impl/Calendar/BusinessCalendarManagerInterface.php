@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Calendar;
+namespace Jabe\Engine\Impl\Calendar;
 
 interface BusinessCalendarManagerInterface
 {

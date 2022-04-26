@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Task;
+namespace Jabe\Engine\Impl\Task;
 
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Delegate\{
     ExpressionInterface,
     TaskListenerInterface
 };
-use BpmPlatform\Engine\Impl\Form\FormDefinition;
-use BpmPlatform\Engine\Impl\Form\Handler\TaskFormHandlerInterface;
-use BpmPlatform\Engine\Impl\Util\CollectionUtil;
+use Jabe\Engine\Impl\Form\FormDefinition;
+use Jabe\Engine\Impl\Form\Handler\TaskFormHandlerInterface;
+use Jabe\Engine\Impl\Util\CollectionUtil;
 
 class TaskDefinition
 {

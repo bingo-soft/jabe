@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Delegate;
+namespace Jabe\Engine\Impl\Pvm\Delegate;
 
-use BpmPlatform\Engine\Delegate\DelegateTaskInterface;
+use Jabe\Engine\Delegate\DelegateTaskInterface;
 
 interface TaskListenerInterface
 {

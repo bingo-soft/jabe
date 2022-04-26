@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity\Util;
+namespace Jabe\Engine\Impl\Persistence\Entity\Util;
 
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\Authorization\{
     HistoricTaskPermissions,
     PermissionInterface,
     ProcessDefinitionPermissions

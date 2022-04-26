@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Db\{
     HasDbRevisionInterface,
     DbEntityInterface,
     HistoricEntityInterface
 };
-use BpmPlatform\Engine\Task\AttachmentInterface;
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Task\AttachmentInterface;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class AttachmentEntity implements AttachmentInterface, DbEntityInterface, HasDbRevisionInterface, HistoricEntityInterface, \Serializable
 {

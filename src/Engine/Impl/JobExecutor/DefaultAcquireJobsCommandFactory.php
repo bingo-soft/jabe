@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\Impl\Cmd\AcquireJobsCmd;
-use BpmPlatform\Engine\Impl\Interceptor\CommandInterface;
+use Jabe\Engine\Impl\Cmd\AcquireJobsCmd;
+use Jabe\Engine\Impl\Interceptor\CommandInterface;
 
 class DefaultAcquireJobsCommandFactory implements AcquireJobsCommandFactoryInterface
 {

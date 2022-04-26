@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Identity;
+namespace Jabe\Engine\Impl\Identity;
 
-use BpmPlatform\Engine\ProcessEngineException;
+use Jabe\Engine\ProcessEngineException;
 
 class IdentityProviderException extends ProcessEngineException
 {

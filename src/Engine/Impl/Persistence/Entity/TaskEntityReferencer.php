@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\Core\Variable\Scope\VariableStoreObserverInterface;
+use Jabe\Engine\Impl\Core\Variable\Scope\VariableStoreObserverInterface;
 
 class TaskEntityReferencer implements VariableStoreObserverInterface
 {

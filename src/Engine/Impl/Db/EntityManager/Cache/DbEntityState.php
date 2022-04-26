@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Db\EntityManager\Cache;
+namespace Jabe\Engine\Impl\Db\EntityManager\Cache;
 
 class DbEntityState
 {

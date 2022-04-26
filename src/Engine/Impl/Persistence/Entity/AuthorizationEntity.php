@@ -1,25 +1,25 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Util\{
     EnsureUtil,
     ResourceTypeUtil
 };
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\Authorization\{
     AuthorizationInterface,
     PermissionInterface,
     Permissions,
     ResourceInterface
 };
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     EnginePersistenceLogger,
     HasDbReferencesInterface,
     HasDbRevisionInterface
 };
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class AuthorizationEntity implements AuthorizationInterface, DbEntityInterface, HasDbReferencesInterface, HasDbRevisionInterface, \Serializable
 {

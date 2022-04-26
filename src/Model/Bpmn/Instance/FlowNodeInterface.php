@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance;
+namespace Jabe\Model\Bpmn\Instance;
 
-use BpmPlatform\Model\Bpmn\QueryInterface;
-use BpmPlatform\Model\Bpmn\Builder\AbstractBaseElementBuilder;
+use Jabe\Model\Bpmn\QueryInterface;
+use Jabe\Model\Bpmn\Builder\AbstractBaseElementBuilder;
 
 interface FlowNodeInterface extends FlowElementInterface
 {

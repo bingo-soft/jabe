@@ -2,7 +2,7 @@
 
 namespace Tests\Bpmn\Instance;
 
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
 use Tests\Xml\Test\AbstractChildElementAssumption;
 
 class BpmnChildElementAssumption extends AbstractChildElementAssumption

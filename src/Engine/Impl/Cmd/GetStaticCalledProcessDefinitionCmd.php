@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\AuthorizationException;
-use BpmPlatform\Engine\Impl\Bpmn\Behavior\CallActivityBehavior;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\AuthorizationException;
+use Jabe\Engine\Impl\Bpmn\Behavior\CallActivityBehavior;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\ProcessDefinitionEntity;
-use BpmPlatform\Engine\Impl\Repository\CalledProcessDefinitionImpl;
-use BpmPlatform\Engine\Impl\Util\CallableElementUtil;
+use Jabe\Engine\Impl\Persistence\Entity\ProcessDefinitionEntity;
+use Jabe\Engine\Impl\Repository\CalledProcessDefinitionImpl;
+use Jabe\Engine\Impl\Util\CallableElementUtil;
 
 class GetStaticCalledProcessDefinitionCmd implements CommandInterface
 {

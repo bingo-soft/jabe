@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Task\Listener;
+namespace Jabe\Engine\Impl\Task\Listener;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\{
     DelegateTaskInterface,
     TaskListenerInterface
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Delegate\ScriptInvocation;
-use BpmPlatform\Engine\Impl\Scripting\ExecutableScript;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Delegate\ScriptInvocation;
+use Jabe\Engine\Impl\Scripting\ExecutableScript;
 
 class ScriptTaskListener implements TaskListenerInterface
 {

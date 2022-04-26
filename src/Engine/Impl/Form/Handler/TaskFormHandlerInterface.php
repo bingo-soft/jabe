@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Handler;
+namespace Jabe\Engine\Impl\Form\Handler;
 
-use BpmPlatform\Engine\Form\TaskFormDataInterface;
-use BpmPlatform\Engine\Impl\Persistence\Entity\TaskEntity;
+use Jabe\Engine\Form\TaskFormDataInterface;
+use Jabe\Engine\Impl\Persistence\Entity\TaskEntity;
 
 interface TaskFormHandlerInterface extends FormHandlerInterface
 {

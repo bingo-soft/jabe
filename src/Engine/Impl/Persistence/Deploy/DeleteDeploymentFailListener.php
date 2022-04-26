@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Deploy;
+namespace Jabe\Engine\Impl\Persistence\Deploy;
 
-use BpmPlatform\Engine\Application\ProcessApplicationReferenceInterface;
-use BpmPlatform\Engine\Impl\Cfg\TransactionListenerInterface;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Application\ProcessApplicationReferenceInterface;
+use Jabe\Engine\Impl\Cfg\TransactionListenerInterface;
+use Jabe\Engine\Impl\Interceptor\{
     CommandContext,
     CommandExecutorInterface
 };

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Webservice;
+namespace Jabe\Engine\Impl\Webservice;
 
-use BpmPlatform\Model\Wsdl\Instance\{
+use Jabe\Model\Wsdl\Instance\{
     DefinitionsInterface,
     ServiceInterface
 };

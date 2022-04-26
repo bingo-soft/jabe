@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\ProcessDefinitionEntity;
-use BpmPlatform\Engine\Variable\Impl\VariableMapImpl;
+use Jabe\Engine\Impl\Persistence\Entity\ProcessDefinitionEntity;
+use Jabe\Engine\Variable\Impl\VariableMapImpl;
 
 class GetStartFormVariablesCmd extends AbstractGetFormVariablesCmd
 {

@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Builder;
+namespace Jabe\Model\Bpmn\Builder;
 
-use BpmPlatform\Model\Bpmn\AssociationDirection;
-use BpmPlatform\Model\Bpmn\Exception\BpmnModelException;
-use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
-use BpmPlatform\Model\Bpmn\Instance\Extension\{
+use Jabe\Model\Bpmn\AssociationDirection;
+use Jabe\Model\Bpmn\Exception\BpmnModelException;
+use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
+use Jabe\Model\Bpmn\Instance\Extension\{
     ExecutionListenerInterface,
     FailedJobRetryTimeCycleInterface
 };
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Bpmn\Instance\{
     ActivityInterface,
     AssociationInterface,
     BoundaryEventInterface,

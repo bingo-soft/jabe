@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Runtime\{
+use Jabe\Engine\Runtime\{
     IncidentInterface,
     TransitionInstanceInterface
 };
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class TransitionInstanceImpl extends ProcessElementInstanceImpl implements TransitionInstanceInterface
 {

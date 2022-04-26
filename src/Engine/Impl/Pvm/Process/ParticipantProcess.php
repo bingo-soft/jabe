@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Process;
+namespace Jabe\Engine\Impl\Pvm\Process;
 
 class ParticipantProcess implements HasDIBoundsInterface
 {

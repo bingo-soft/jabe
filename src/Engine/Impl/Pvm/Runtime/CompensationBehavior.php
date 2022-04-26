@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Runtime;
+namespace Jabe\Engine\Impl\Pvm\Runtime;
 
-use BpmPlatform\Engine\Impl\Bpmn\Parser\BpmnParse;
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
+use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ScopeImpl
 };

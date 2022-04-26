@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Parser;
+namespace Jabe\Engine\Impl\Bpmn\Parser;
 
-use BpmPlatform\Engine\Delegate\ExpressionInterface;
+use Jabe\Engine\Delegate\ExpressionInterface;
 
 class DataAssociation
 {

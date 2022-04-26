@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine;
+namespace Jabe\Engine;
 
 class ScriptEvaluationException extends ScriptEngineException
 {

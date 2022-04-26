@@ -3,8 +3,8 @@
 namespace Tests\Bpmn\Engine\Util;
 
 use PHPUnit\Framework\TestCase;
-use BpmPlatform\Engine\Impl\Calendar\DurationBusinessCalendar;
-use BpmPlatform\Engine\Impl\Util\ClockUtil;
+use Jabe\Engine\Impl\Calendar\DurationBusinessCalendar;
+use Jabe\Engine\Impl\Util\ClockUtil;
 
 class DurationBusinessCalendarTest extends TestCase
 {

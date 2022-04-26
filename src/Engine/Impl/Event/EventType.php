@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Event;
+namespace Jabe\Engine\Impl\Event;
 
 class EventType
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Db\EntityManager;
+namespace Jabe\Engine\Impl\Db\EntityManager;
 
 interface RecyclableInterface
 {

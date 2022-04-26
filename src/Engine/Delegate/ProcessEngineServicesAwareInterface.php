@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Delegate;
+namespace Jabe\Engine\Delegate;
 
-use BpmPlatform\Engine\{
+use Jabe\Engine\{
     ProcessEngineInterface,
     ProcessEngineServicesInterface
 };

@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Context;
+namespace Jabe\Engine\Impl\Context;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Application\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Application\{
     InvocationContext,
     ProcessApplicationInterface,
     ProcessApplicationReferenceInterface,
     ProcessApplicationUnavailableException
 };
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 
 class Context
 {

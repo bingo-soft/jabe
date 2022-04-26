@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Exception;
+namespace Jabe\Model\Bpmn\Exception;
 
-use BpmPlatform\Model\Xml\Exception\ModelException;
+use Jabe\Model\Xml\Exception\ModelException;
 
 class BpmnModelException extends ModelException
 {

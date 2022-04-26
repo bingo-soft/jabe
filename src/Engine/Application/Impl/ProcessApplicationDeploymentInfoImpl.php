@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Application\Impl;
+namespace Jabe\Engine\Application\Impl;
 
-use BpmPlatform\Engine\Application\ProcessApplicationDeploymentInfoInterface;
+use Jabe\Engine\Application\ProcessApplicationDeploymentInfoInterface;
 
 class ProcessApplicationDeploymentInfoImpl implements ProcessApplicationDeploymentInfoInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Db;
+namespace Jabe\Engine\Impl\Db;
 
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\Authorization\{
     PermissionInterface,
     ResourceInterface
 };

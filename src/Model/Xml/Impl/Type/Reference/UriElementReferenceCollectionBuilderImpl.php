@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type\Reference;
+namespace Jabe\Model\Xml\Impl\Type\Reference;
 
-use BpmPlatform\Model\Xml\Impl\Type\Child\ChildElementCollectionImpl;
+use Jabe\Model\Xml\Impl\Type\Child\ChildElementCollectionImpl;
 
 class UriElementReferenceCollectionBuilderImpl extends ElementReferenceCollectionBuilderImpl
 {

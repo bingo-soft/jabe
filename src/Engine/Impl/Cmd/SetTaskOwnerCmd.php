@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\History\UserOperationLogEntry;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Task\IdentityLinkType;
+use Jabe\Engine\History\UserOperationLogEntry;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Task\IdentityLinkType;
 
 class SetTaskOwnerCmd extends AddIdentityLinkCmd
 {

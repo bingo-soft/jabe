@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Interceptor;
+namespace Jabe\Engine\Impl\Interceptor;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\ProcessEngineLogger;
 
 class BpmnStackTrace
 {

@@ -1,20 +1,20 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Behavior;
+namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use BpmPlatform\Engine\Impl\Migration\Instance\MigratingActivityInstance;
-use BpmPlatform\Engine\Impl\Migration\Instance\Parser\MigratingInstanceParseContext;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Migration\Instance\MigratingActivityInstance;
+use Jabe\Engine\Impl\Migration\Instance\Parser\MigratingInstanceParseContext;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     VariableInstanceEntity
 };
-use BpmPlatform\Engine\Impl\Pvm\PvmActivityInterface;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\{
+use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
+use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
     MigrationObserverBehavior
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\ActivityImpl;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\{
+use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
+use Jabe\Engine\Impl\Pvm\Runtime\{
     CallbackInterface,
     PvmExecutionImpl
 };

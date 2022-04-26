@@ -4,11 +4,11 @@ namespace Tests\Bpmn\Builder;
 
 use PHPUnit\Framework\TestCase;
 use Tests\Bpmn\BpmnTestConstants;
-use BpmPlatform\Model\Bpmn\Exception\BpmnModelException;
-use BpmPlatform\Model\Bpmn\Instance\Extension\ErrorEventDefinitionInterface as ExtensionErrorEventDefinitionInterface;
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
-use BpmPlatform\Model\Bpmn\Bpmn;
-use BpmPlatform\Model\Bpmn\Instance\Extension\{
+use Jabe\Model\Bpmn\Exception\BpmnModelException;
+use Jabe\Model\Bpmn\Instance\Extension\ErrorEventDefinitionInterface as ExtensionErrorEventDefinitionInterface;
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Bpmn;
+use Jabe\Model\Bpmn\Instance\Extension\{
     ExecutionListenerInterface,
     FailedJobRetryTimeCycleInterface,
     FormDataInterface,
@@ -17,7 +17,7 @@ use BpmPlatform\Model\Bpmn\Instance\Extension\{
     OutInterface,
     TaskListenerInterface
 };
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Bpmn\Instance\{
     AssociationInterface,
     BaseElementInterface,
     CompensateEventDefinitionInterface,

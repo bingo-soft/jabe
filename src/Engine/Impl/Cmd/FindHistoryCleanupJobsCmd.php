@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\JobExecutor\HistoryCleanup\HistoryCleanupJobHandler;
-use BpmPlatform\Engine\Runtime\JobInterface;
+use Jabe\Engine\Impl\JobExecutor\HistoryCleanup\HistoryCleanupJobHandler;
+use Jabe\Engine\Runtime\JobInterface;
 
 class FindHistoryCleanupJobsCmd implements CommandInterface
 {

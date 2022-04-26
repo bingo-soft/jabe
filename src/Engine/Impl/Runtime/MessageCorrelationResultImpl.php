@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Runtime;
+namespace Jabe\Engine\Impl\Runtime;
 
-use BpmPlatform\Engine\Runtime\{
+use Jabe\Engine\Runtime\{
     ExecutionInterface,
     MessageCorrelationResultWithVariablesInterface,
     ProcessInstanceInterface
 };
-use BpmPlatform\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Variable\VariableMapInterface;
 
 class MessageCorrelationResultImpl implements MessageCorrelationResultWithVariablesInterface
 {

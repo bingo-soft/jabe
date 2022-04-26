@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Scripting;
+namespace Jabe\Engine\Impl\Scripting;
 
-use BpmPlatform\Engine\Impl\Util\Scripting\{
+use Jabe\Engine\Impl\Util\Scripting\{
     BindingsInterface,
     ScriptEngineInterface
 };
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\{
     //DelegateCaseExecutionInterface,
     DelegateExecutionInterface,
     VariableScopeInterface
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\TaskEntity;
+use Jabe\Engine\Impl\Persistence\Entity\TaskEntity;
 
 abstract class ExecutableScript
 {

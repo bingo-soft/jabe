@@ -9,7 +9,7 @@ use Tests\Bpmn\Instance\{
     BpmnModelElementInstanceTest,
     BpmnTypeAssumption
 };
-use BpmPlatform\Model\Bpmn\Instance\ExpressionInterface;
+use Jabe\Model\Bpmn\Instance\ExpressionInterface;
 
 class ToTest extends BpmnModelElementInstanceTest
 {

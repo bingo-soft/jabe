@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Validation;
+namespace Jabe\Model\Xml\Impl\Validation;
 
-use BpmPlatform\Model\Xml\StringWriter;
-use BpmPlatform\Model\Xml\Validation\{
+use Jabe\Model\Xml\StringWriter;
+use Jabe\Model\Xml\Validation\{
     ValidationResultsInterface,
     ValidationResultFormatterInterface
 };

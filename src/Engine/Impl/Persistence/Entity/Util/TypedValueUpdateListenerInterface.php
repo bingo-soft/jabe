@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity\Util;
+namespace Jabe\Engine\Impl\Persistence\Entity\Util;
 
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 interface TypedValueUpdateListenerInterface
 {

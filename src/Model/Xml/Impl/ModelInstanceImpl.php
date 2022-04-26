@@ -1,20 +1,20 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl;
+namespace Jabe\Model\Xml\Impl;
 
-use BpmPlatform\Model\Xml\ModelInterface;
-use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\ModelInstanceInterface;
-use BpmPlatform\Model\Xml\Exception\ModelException;
-use BpmPlatform\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
-use BpmPlatform\Model\Xml\Impl\Util\ModelUtil;
-use BpmPlatform\Model\Xml\Impl\Validation\ModelInstanceValidator;
-use BpmPlatform\Model\Xml\Instance\{
+use Jabe\Model\Xml\ModelInterface;
+use Jabe\Model\Xml\ModelBuilder;
+use Jabe\Model\Xml\ModelInstanceInterface;
+use Jabe\Model\Xml\Exception\ModelException;
+use Jabe\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
+use Jabe\Model\Xml\Impl\Util\ModelUtil;
+use Jabe\Model\Xml\Impl\Validation\ModelInstanceValidator;
+use Jabe\Model\Xml\Instance\{
     DomDocumentInterface,
     ModelElementInstanceInterface
 };
-use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
-use BpmPlatform\Model\Xml\Validation\ValidationResultsInterface;
+use Jabe\Model\Xml\Type\ModelElementTypeInterface;
+use Jabe\Model\Xml\Validation\ValidationResultsInterface;
 
 class ModelInstanceImpl implements ModelInstanceInterface
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Runtime;
+namespace Jabe\Engine\Runtime;
 
-use BpmPlatform\Engine\Batch\BatchInterface;
-use BpmPlatform\Engine\History\HistoricProcessInstanceQueryInterface;
+use Jabe\Engine\Batch\BatchInterface;
+use Jabe\Engine\History\HistoricProcessInstanceQueryInterface;
 
 interface RestartProcessInstanceBuilderInterface extends InstantiationBuilderInterface
 {

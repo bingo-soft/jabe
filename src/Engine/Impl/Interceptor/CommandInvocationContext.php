@@ -1,21 +1,21 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Interceptor;
+namespace Jabe\Engine\Impl\Interceptor;
 
-use BpmPlatform\Engine\Application\{
+use Jabe\Engine\Application\{
     InvocationContext,
     ProcessApplicationReferenceInterface
 };
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Cmd\CommandLogger;
-use BpmPlatform\Engine\Impl\Context\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Cmd\CommandLogger;
+use Jabe\Engine\Impl\Context\{
     Context,
     ProcessApplicationContextUtil
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\AtomicOperation;
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Impl\Pvm\Runtime\AtomicOperation;
 
 class CommandInvocationContext
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Scripting;
+namespace Jabe\Engine\Impl\Scripting;
 
-use BpmPlatform\Engine\Impl\Util\Scripting\{
+use Jabe\Engine\Impl\Util\Scripting\{
     BindingsInterface,
     ScriptEngineInterface,
     ScriptException
 };
-use BpmPlatform\Engine\ScriptEvaluationException;
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\ScriptEvaluationException;
+use Jabe\Engine\Delegate\{
     ExpressionInterface,
     VariableScopeInterface
 };

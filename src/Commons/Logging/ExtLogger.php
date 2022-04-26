@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Commons\Logging;
+namespace Jabe\Commons\Logging;
 
 use Monolog\Logger;
 

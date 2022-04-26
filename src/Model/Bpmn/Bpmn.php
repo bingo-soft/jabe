@@ -1,23 +1,23 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn;
+namespace Jabe\Model\Bpmn;
 
-use BpmPlatform\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
-use BpmPlatform\Model\Bpmn\Builder\ProcessBuilder;
-use BpmPlatform\Model\Bpmn\Exception\BpmnModelException;
-use BpmPlatform\Model\Bpmn\Impl\{
+use Jabe\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
+use Jabe\Model\Bpmn\Builder\ProcessBuilder;
+use Jabe\Model\Bpmn\Exception\BpmnModelException;
+use Jabe\Model\Bpmn\Impl\{
     BpmnModelConstants,
     BpmnParser
 };
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Bpmn\Instance\{
     DefinitionsInterface,
     ProcessInterface
 };
-use BpmPlatform\Model\Bpmn\Instance\Bpmndi\{
+use Jabe\Model\Bpmn\Instance\Bpmndi\{
     BpmnDiagramInterface,
     BpmnPlaneInterface
 };
-use BpmPlatform\Model\Bpmn\Impl\Instance\{
+use Jabe\Model\Bpmn\Impl\Instance\{
     ActivationConditionImpl,
     ActivityImpl,
     ArtifactImpl,
@@ -190,7 +190,7 @@ use BpmPlatform\Model\Bpmn\Impl\Instance\{
     WhileExecutingInputRefs,
     WhileExecutingOutputRefs
 };
-use BpmPlatform\Model\Bpmn\Impl\Instance\Bpmndi\{
+use Jabe\Model\Bpmn\Impl\Instance\Bpmndi\{
     BpmnDiagramImpl,
     BpmnEdgeImpl,
     BpmnLabelImpl,
@@ -198,12 +198,12 @@ use BpmPlatform\Model\Bpmn\Impl\Instance\Bpmndi\{
     BpmnPlaneImpl,
     BpmnShapeImpl
 };
-use BpmPlatform\Model\Bpmn\Impl\Instance\Dc\{
+use Jabe\Model\Bpmn\Impl\Instance\Dc\{
     BoundsImpl,
     FontImpl,
     PointImpl
 };
-use BpmPlatform\Model\Bpmn\Impl\Instance\Di\{
+use Jabe\Model\Bpmn\Impl\Instance\Di\{
     DiagramElementImpl,
     DiagramImpl,
     EdgeImpl,
@@ -217,7 +217,7 @@ use BpmPlatform\Model\Bpmn\Impl\Instance\Di\{
     StyleImpl,
     WaypointImpl
 };
-use BpmPlatform\Model\Bpmn\Impl\Instance\Extension\{
+use Jabe\Model\Bpmn\Impl\Instance\Extension\{
     ConnectorIdImpl,
     ConnectorImpl,
     ConstraintImpl,
@@ -247,11 +247,11 @@ use BpmPlatform\Model\Bpmn\Impl\Instance\Extension\{
     ValidationImpl,
     ValueImpl
 };
-use BpmPlatform\Model\Xml\{
+use Jabe\Model\Xml\{
     ModelBuilder,
     ModelInterface
 };
-use BpmPlatform\Model\Xml\Impl\Util\IoUtil;
+use Jabe\Model\Xml\Impl\Util\IoUtil;
 
 class Bpmn
 {

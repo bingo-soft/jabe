@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn;
+namespace Jabe\Model\Bpmn;
 
-use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
+use Jabe\Model\Xml\Type\ModelElementTypeInterface;
 
 interface BpmnModelTypeInterface extends ModelElementTypeInterface
 {

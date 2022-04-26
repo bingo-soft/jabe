@@ -1,22 +1,22 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Instance;
+namespace Jabe\Model\Xml\Impl\Instance;
 
-use BpmPlatform\Model\Xml\{
+use Jabe\Model\Xml\{
     ModelBuilder
 };
-use BpmPlatform\Model\Xml\Impl\{
+use Jabe\Model\Xml\Impl\{
     ModelInstanceImpl
 };
-use BpmPlatform\Model\Xml\Impl\Util\ModelUtil;
-use BpmPlatform\Model\Xml\Instance\{
+use Jabe\Model\Xml\Impl\Util\ModelUtil;
+use Jabe\Model\Xml\Instance\{
     DomElementInterface,
     ModelElementInstanceInterface
 };
-use BpmPlatform\Model\Xml\Type\{
+use Jabe\Model\Xml\Type\{
     ModelElementTypeInterface
 };
-use BpmPlatform\Model\Xml\Exception\ModelException;
+use Jabe\Model\Xml\Exception\ModelException;
 
 class ModelElementInstanceImpl implements ModelElementInstanceInterface
 {

@@ -1,22 +1,22 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type\Child;
+namespace Jabe\Model\Xml\Impl\Type\Child;
 
-use BpmPlatform\Model\Xml\ModelInterface;
-use BpmPlatform\Model\Xml\Exception\ModelException;
-use BpmPlatform\Model\Xml\Impl\ModelBuildOperationInterface;
-use BpmPlatform\Model\Xml\Impl\Type\Reference\{
+use Jabe\Model\Xml\ModelInterface;
+use Jabe\Model\Xml\Exception\ModelException;
+use Jabe\Model\Xml\Impl\ModelBuildOperationInterface;
+use Jabe\Model\Xml\Impl\Type\Reference\{
     ElementReferenceCollectionBuilderImpl,
     IdsElementReferenceCollectionBuilderImpl,
     QNameElementReferenceCollectionBuilderImpl,
     UriElementReferenceCollectionBuilderImpl
 };
-use BpmPlatform\Model\Xml\Type\Child\{
+use Jabe\Model\Xml\Type\Child\{
     ChildElementCollectionBuilderInterface,
     ChildElementCollectionInterface
 };
-use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
-use BpmPlatform\Model\Xml\Type\Reference\ElementReferenceCollectionBuilderInterface;
+use Jabe\Model\Xml\Type\ModelElementTypeInterface;
+use Jabe\Model\Xml\Type\Reference\ElementReferenceCollectionBuilderInterface;
 
 class ChildElementCollectionBuilderImpl implements ChildElementCollectionBuilderInterface, ModelBuildOperationInterface
 {

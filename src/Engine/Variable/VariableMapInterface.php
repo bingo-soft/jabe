@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable;
+namespace Jabe\Engine\Variable;
 
-use BpmPlatform\Engine\Variable\Context\VariableContextInterface;
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Variable\Context\VariableContextInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 interface VariableMapInterface
 {

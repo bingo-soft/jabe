@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\El;
+namespace Jabe\Engine\Impl\El;
 
-use BpmPlatform\Engine\Impl\Util\El\FunctionMapper;
+use Jabe\Engine\Impl\Util\El\FunctionMapper;
 
 class CompositeFunctionMapper extends FunctionMapper
 {

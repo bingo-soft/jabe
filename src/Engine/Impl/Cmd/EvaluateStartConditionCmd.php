@@ -1,23 +1,23 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Impl\ConditionEvaluationBuilderImpl;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\ConditionEvaluationBuilderImpl;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     ProcessDefinitionEntity
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\ActivityImpl;
-use BpmPlatform\Engine\Impl\Runtime\{
+use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
+use Jabe\Engine\Impl\Runtime\{
     ConditionHandlerInterface,
     ConditionHandlerResult,
     CorrelationSet
 };
-use BpmPlatform\Engine\Runtime\ProcessInstanceInterface;
+use Jabe\Engine\Runtime\ProcessInstanceInterface;
 
 class EvaluateStartConditionCmd implements CommandInterface
 {

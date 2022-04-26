@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\El;
+namespace Jabe\Engine\Impl\El;
 
-use BpmPlatform\Engine\Impl\Util\El\FunctionMapper;
-use BpmPlatform\Engine\Impl\Util\ReflectUtil;
+use Jabe\Engine\Impl\Util\El\FunctionMapper;
+use Jabe\Engine\Impl\Util\ReflectUtil;
 
 class DateTimeFunctionMapper extends FunctionMapper
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Commons\Utils\Cache;
+namespace Jabe\Commons\Utils\Cache;
 
 interface CacheInterface
 {

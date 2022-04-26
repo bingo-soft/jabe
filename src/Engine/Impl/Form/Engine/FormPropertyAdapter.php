@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Engine;
+namespace Jabe\Engine\Impl\Form\Engine;
 
-use BpmPlatform\Engine\Form\{
+use Jabe\Engine\Form\{
     FormFieldInterface,
     FormFieldValidationConstraintInterface,
     FormPropertyInterface,
     FormTypeInterface
 };
-use BpmPlatform\Engine\Impl\Form\FormFieldValidationConstraintImpl;
-use BpmPlatform\Engine\Variable\Variables;
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Impl\Form\FormFieldValidationConstraintImpl;
+use Jabe\Engine\Variable\Variables;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 class FormPropertyAdapter implements FormFieldInterface
 {

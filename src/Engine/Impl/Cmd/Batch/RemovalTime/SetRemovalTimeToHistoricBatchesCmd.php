@@ -1,31 +1,31 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd\Batch\Variables;
+namespace Jabe\Engine\Impl\Cmd\Batch\Variables;
 
-use BpmPlatform\Engine\BadUserRequestException;
-use BpmPlatform\Engine\Authorization\BatchPermissions;
-use BpmPlatform\Engine\Batch\BatchInterface;
-use BpmPlatform\Engine\Batch\History\{
+use Jabe\Engine\BadUserRequestException;
+use Jabe\Engine\Authorization\BatchPermissions;
+use Jabe\Engine\Batch\BatchInterface;
+use Jabe\Engine\Batch\History\{
     HistoricBatchInterface,
     HistoricBatchQueryInterface
 };
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
-use BpmPlatform\Engine\Impl\Batch\BatchConfiguration;
-use BpmPlatform\Engine\Impl\Batch\Builder\{
+use Jabe\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\Impl\Batch\BatchConfiguration;
+use Jabe\Engine\Impl\Batch\Builder\{
     BatchBuilder,
     OperationLogInstanceCountHandlerInterface
 };
-use BpmPlatform\Engine\Impl\Batch\RemovalTime\SetRemovalTimeBatchConfiguration;
-use BpmPlatform\Engine\Impl\History\{
+use Jabe\Engine\Impl\Batch\RemovalTime\SetRemovalTimeBatchConfiguration;
+use Jabe\Engine\Impl\History\{
     SetRemovalTimeToHistoricBatchesBuilderImpl,
     Mode
 };
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\PropertyChange;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Persistence\Entity\PropertyChange;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class SetRemovalTimeToHistoricBatchesCmd implements CommandInterface
 {

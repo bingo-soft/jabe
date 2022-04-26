@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Validator;
+namespace Jabe\Engine\Impl\Form\Validator;
 
-use BpmPlatform\Engine\ProcessEngineException;
+use Jabe\Engine\ProcessEngineException;
 
 abstract class AbstractTextValueValidator implements FormFieldValidatorInterface
 {

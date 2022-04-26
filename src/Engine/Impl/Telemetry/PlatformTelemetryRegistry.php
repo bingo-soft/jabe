@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Telemetry;
+namespace Jabe\Engine\Impl\Telemetry;
 
-use BpmPlatform\Engine\Impl\Telemetry\Dto\ApplicationServer;
+use Jabe\Engine\Impl\Telemetry\Dto\ApplicationServer;
 
 class PlatformTelemetryRegistry
 {

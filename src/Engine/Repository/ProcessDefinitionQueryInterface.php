@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Repository;
+namespace Jabe\Engine\Repository;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\ProcessDefinitionQueryImpl;
-use BpmPlatform\Engine\Query\QueryInterface;
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\ProcessDefinitionQueryImpl;
+use Jabe\Engine\Query\QueryInterface;
 
 interface ProcessDefinitionQueryInterface extends QueryInterface
 {

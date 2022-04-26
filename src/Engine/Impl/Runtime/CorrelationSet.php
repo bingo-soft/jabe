@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Runtime;
+namespace Jabe\Engine\Impl\Runtime;
 
-use BpmPlatform\Engine\Impl\MessageCorrelationBuilderImpl;
+use Jabe\Engine\Impl\MessageCorrelationBuilderImpl;
 
 class CorrelationSet
 {

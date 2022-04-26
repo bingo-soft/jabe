@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Handler;
+namespace Jabe\Engine\Impl\Form\Handler;
 
-use BpmPlatform\Engine\Impl\Delegate\DelegateInvocation;
-use BpmPlatform\Engine\Impl\Persistence\Entity\ProcessDefinitionEntity;
+use Jabe\Engine\Impl\Delegate\DelegateInvocation;
+use Jabe\Engine\Impl\Persistence\Entity\ProcessDefinitionEntity;
 
 class CreateStartFormInvocation extends DelegateInvocation
 {

@@ -1,17 +1,17 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Exception\NotFoundException;
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
-use BpmPlatform\Engine\Impl\Bpmn\Parser\BpmnParse;
-use BpmPlatform\Engine\Impl\Context\ProcessApplicationContextUtil;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Exception\NotFoundException;
+use Jabe\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
+use Jabe\Engine\Impl\Context\ProcessApplicationContextUtil;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\JobExecutor\{
+use Jabe\Engine\Impl\JobExecutor\{
     RunnableInterface,
     TimerCatchIntermediateEventJobHandler,
     TimerDeclarationImpl,
@@ -21,13 +21,13 @@ use BpmPlatform\Engine\Impl\JobExecutor\{
     TimerTaskListenerJobHandler,
     TimerJobConfiguration
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     JobEntity,
     PropertyChange,
     TimerEntity
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\ActivityImpl;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class RecalculateJobDuedateCmd implements CommandInterface, \Serializable
 {

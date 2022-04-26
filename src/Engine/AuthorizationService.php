@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine;
+namespace Jabe\Engine;
 
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\Authorization\{
     AuthorizationInterface,
     AuthorizationQueryInterface,
     PermissionInterface,

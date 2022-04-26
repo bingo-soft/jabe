@@ -3,8 +3,8 @@
 namespace Tests\Bpmn\Instance;
 
 use Tests\Xml\Test\AttributeAssumption;
-use BpmPlatform\Model\Bpmn\EventBasedGatewayType;
-use BpmPlatform\Model\Bpmn\Instance\ActivationConditionInterface;
+use Jabe\Model\Bpmn\EventBasedGatewayType;
+use Jabe\Model\Bpmn\Instance\ActivationConditionInterface;
 
 class EventBasedGatewayTest extends AbstractGatewayTest
 {

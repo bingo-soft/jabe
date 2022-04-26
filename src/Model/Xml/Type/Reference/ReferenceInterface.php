@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Type\Reference;
+namespace Jabe\Model\Xml\Type\Reference;
 
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
-use BpmPlatform\Model\Xml\Type\Attribute\AttributeInterface;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Type\ModelElementTypeInterface;
+use Jabe\Model\Xml\Type\Attribute\AttributeInterface;
 
 interface ReferenceInterface
 {

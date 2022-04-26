@@ -2,17 +2,17 @@
 
 namespace Tests\Xml\TestModel\Instance;
 
-use BpmPlatform\Model\Xml\Impl\Util\StringUtil;
-use BpmPlatform\Model\Xml\ModelInstanceInterface;
-use BpmPlatform\Model\Xml\Impl\Parser\AbstractModelParser;
+use Jabe\Model\Xml\Impl\Util\StringUtil;
+use Jabe\Model\Xml\ModelInstanceInterface;
+use Jabe\Model\Xml\Impl\Parser\AbstractModelParser;
 use Tests\Xml\TestModel\{
     Gender,
     TestModelConstants,
     TestModelParser
 };
 use Tests\Xml\TestModel\TestModelTest;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
 
 class AlternativeNsTest extends TestModelTest
 {

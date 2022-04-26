@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance\Dc;
+namespace Jabe\Model\Bpmn\Instance\Dc;
 
-use BpmPlatform\Model\Bpmn\Instance\BpmnModelElementInstanceInterface;
+use Jabe\Model\Bpmn\Instance\BpmnModelElementInstanceInterface;
 
 interface FontInterface extends BpmnModelElementInstanceInterface
 {

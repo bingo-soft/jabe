@@ -1,25 +1,25 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Variable\Scope;
+namespace Jabe\Engine\Impl\Core\Variable\Scope;
 
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Core\Variable\{
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Core\Variable\{
     CoreVariableInstanceInterface,
     SetVariableFunctionInterface,
     VariableUtil
 };
-use BpmPlatform\Engine\Impl\Core\Variable\Event\{
+use Jabe\Engine\Impl\Core\Variable\Event\{
     VariableEvent,
     VariableEventDispatcherInterface
 };
-use BpmPlatform\Engine\Impl\Db\EntityManager\DbEntityManager;
-use BpmPlatform\Engine\Impl\Util\El\ELContext;
-use BpmPlatform\Engine\Impl\Persistence\Entity\VariableInstanceEntity;
-use BpmPlatform\Engine\Variable\Variables;
-use BpmPlatform\Engine\Variable\Impl\VariableMapImpl;
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Impl\Db\EntityManager\DbEntityManager;
+use Jabe\Engine\Impl\Util\El\ELContext;
+use Jabe\Engine\Impl\Persistence\Entity\VariableInstanceEntity;
+use Jabe\Engine\Variable\Variables;
+use Jabe\Engine\Variable\Impl\VariableMapImpl;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 abstract class AbstractVariableScope implements VariableScopeInterface, VariableEventDispatcherInterface
 {

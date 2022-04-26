@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Behavior;
+namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use BpmPlatform\Engine\Impl\Bpmn\Delegate\{
+use Jabe\Engine\Impl\Bpmn\Delegate\{
     ActivityBehaviorInvocation,
     ActivityBehaviorSignalInvocation
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityBehaviorInterface,
     ActivityExecutionInterface,
     SignallableActivityBehaviorInterface

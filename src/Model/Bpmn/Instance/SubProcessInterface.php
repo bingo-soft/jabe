@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance;
+namespace Jabe\Model\Bpmn\Instance;
 
-use BpmPlatform\Model\Bpmn\Builder\SubProcessBuilder;
+use Jabe\Model\Bpmn\Builder\SubProcessBuilder;
 
 interface SubProcessInterface extends ActivityInterface
 {

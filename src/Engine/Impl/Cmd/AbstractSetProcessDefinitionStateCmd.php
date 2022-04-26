@@ -1,23 +1,23 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\JobExecutor\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\JobExecutor\{
     JobHandlerInterface,
     JobHandlerConfigurationInterface,
     ProcessDefinitionSuspensionStateConfiguration
 };
-use BpmPlatform\Engine\Impl\Management\UpdateJobDefinitionSuspensionStateBuilderImpl;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Management\UpdateJobDefinitionSuspensionStateBuilderImpl;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ProcessDefinitionManager,
     PropertyChange,
     SuspensionState
 };
-use BpmPlatform\Engine\Impl\Repository\UpdateProcessDefinitionSuspensionStateBuilderImpl;
-use BpmPlatform\Engine\Impl\Runtime\UpdateProcessInstanceSuspensionStateBuilderImpl;
-use BpmPlatform\Engine\Management\JobDefinitionInterface;
+use Jabe\Engine\Impl\Repository\UpdateProcessDefinitionSuspensionStateBuilderImpl;
+use Jabe\Engine\Impl\Runtime\UpdateProcessInstanceSuspensionStateBuilderImpl;
+use Jabe\Engine\Management\JobDefinitionInterface;
 
 abstract class AbstractSetProcessDefinitionStateCmd extends AbstractSetStateCmd
 {

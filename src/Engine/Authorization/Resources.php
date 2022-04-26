@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Authorization;
+namespace Jabe\Engine\Authorization;
 
-use BpmPlatform\Engine\EntityTypes;
-use BpmPlatform\Engine\Authorization\Exception\ResourceNotFound;
+use Jabe\Engine\EntityTypes;
+use Jabe\Engine\Authorization\Exception\ResourceNotFound;
 
 /**
  * The set of built-in Resource names.

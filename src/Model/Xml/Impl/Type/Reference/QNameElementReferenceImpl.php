@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type\Reference;
+namespace Jabe\Model\Xml\Impl\Type\Reference;
 
-use BpmPlatform\Model\Xml\Impl\Util\QName;
-use BpmPlatform\Model\Xml\Type\Child\ChildElementInterface;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Impl\Util\QName;
+use Jabe\Model\Xml\Type\Child\ChildElementInterface;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
 
 class QNameElementReferenceImpl extends ElementReferenceImpl
 {

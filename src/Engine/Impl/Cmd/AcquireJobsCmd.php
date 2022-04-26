@@ -1,27 +1,27 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Impl\Page;
-use BpmPlatform\Engine\Impl\Db\DbEntityInterface;
-use BpmPlatform\Engine\Impl\Db\EntityManager\{
+use Jabe\Engine\Impl\Page;
+use Jabe\Engine\Impl\Db\DbEntityInterface;
+use Jabe\Engine\Impl\Db\EntityManager\{
     OptimisticLockingListenerInterface,
     OptimisticLockingResult,
 };
-use BpmPlatform\Engine\Impl\Db\EntityManager\Operation\{
+use Jabe\Engine\Impl\Db\EntityManager\Operation\{
     DbEntityOperation,
     DbOperation
 };
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\JobExecutor\{
+use Jabe\Engine\Impl\JobExecutor\{
     AcquiredJobs,
     JobExecutor
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\AcquirableJobEntity;
-use BpmPlatform\Engine\Impl\Util\ClockUtil;
+use Jabe\Engine\Impl\Persistence\Entity\AcquirableJobEntity;
+use Jabe\Engine\Impl\Util\ClockUtil;
 
 class AcquireJobsCmd implements CommandInterface, OptimisticLockingListenerInterface
 {

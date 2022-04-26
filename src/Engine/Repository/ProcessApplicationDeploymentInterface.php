@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Repository;
+namespace Jabe\Engine\Repository;
 
-use BpmPlatform\Engine\Application\ProcessApplicationRegistrationInterface;
+use Jabe\Engine\Application\ProcessApplicationRegistrationInterface;
 
 interface ProcessApplicationDeploymentInterface
 {

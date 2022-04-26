@@ -1,20 +1,20 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History\Handler;
+namespace Jabe\Engine\Impl\History\Handler;
 
-use BpmPlatform\Engine\Delegate\DelegateTaskInterface;
-use BpmPlatform\Engine\Impl\Batch\BatchEntity;
-use BpmPlatform\Engine\Impl\Batch\History\HistoricBatchEntity;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\History\Event\{
+use Jabe\Engine\Delegate\DelegateTaskInterface;
+use Jabe\Engine\Impl\Batch\BatchEntity;
+use Jabe\Engine\Impl\Batch\History\HistoricBatchEntity;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\History\Event\{
     HistoricActivityInstanceEventEntity,
     HistoricProcessInstanceEventEntity,
     HistoricTaskInstanceEventEntity
 };
-use BpmPlatform\Engine\Impl\Db\EntityManager\DbEntityManager;
-use BpmPlatform\Engine\Impl\History\Handler\DbHistoryEventHandler;
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use BpmPlatform\Engine\Runtime\IncidentInterface;
+use Jabe\Engine\Impl\Db\EntityManager\DbEntityManager;
+use Jabe\Engine\Impl\History\Handler\DbHistoryEventHandler;
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Runtime\IncidentInterface;
 
 class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer
 {

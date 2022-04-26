@@ -4,7 +4,7 @@ namespace Tests\Bpmn;
 
 use PHPUnit\Framework\TestCase;
 use Tests\Bpmn\BpmnTestConstants;
-use BpmPlatform\Model\Bpmn\Bpmn;
+use Jabe\Model\Bpmn\Bpmn;
 
 class ConditionalSequenceFlowTest extends TestCase
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Behavior;
+namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use BpmPlatform\Engine\RuntimeServiceInterface;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
+use Jabe\Engine\RuntimeServiceInterface;
+use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
 
 class ReceiveTaskActivityBehavior extends TaskActivityBehavior
 {

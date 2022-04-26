@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
-use BpmPlatform\Engine\Impl\JobExecutor\TimerSuspendProcessDefinitionHandler;
-use BpmPlatform\Engine\Impl\Management\UpdateJobDefinitionSuspensionStateBuilderImpl;
-use BpmPlatform\Engine\Impl\Persistence\Entity\SuspensionState;
-use BpmPlatform\Engine\Impl\Repository\UpdateProcessDefinitionSuspensionStateBuilderImpl;
-use BpmPlatform\Engine\Impl\Runtime\UpdateProcessInstanceSuspensionStateBuilderImpl;
+use Jabe\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\Impl\JobExecutor\TimerSuspendProcessDefinitionHandler;
+use Jabe\Engine\Impl\Management\UpdateJobDefinitionSuspensionStateBuilderImpl;
+use Jabe\Engine\Impl\Persistence\Entity\SuspensionState;
+use Jabe\Engine\Impl\Repository\UpdateProcessDefinitionSuspensionStateBuilderImpl;
+use Jabe\Engine\Impl\Runtime\UpdateProcessInstanceSuspensionStateBuilderImpl;
 
 class SuspendProcessDefinitionCmd extends AbstractSetProcessDefinitionStateCmd
 {

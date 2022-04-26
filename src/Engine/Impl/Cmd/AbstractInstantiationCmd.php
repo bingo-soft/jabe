@@ -1,38 +1,38 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Exception\NotValidException;
-use BpmPlatform\Engine\Impl\ActivityExecutionTreeMapping;
-use BpmPlatform\Engine\Impl\Bpmn\Behavior\SequentialMultiInstanceActivityBehavior;
-use BpmPlatform\Engine\Impl\Bpmn\Helper\BpmnProperties;
-use BpmPlatform\Engine\Impl\Core\Delegate\CoreActivityBehaviorInterface;
-use BpmPlatform\Engine\Impl\Core\Model\CoreModelElement;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use BpmPlatform\Engine\Impl\Pvm\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Exception\NotValidException;
+use Jabe\Engine\Impl\ActivityExecutionTreeMapping;
+use Jabe\Engine\Impl\Bpmn\Behavior\SequentialMultiInstanceActivityBehavior;
+use Jabe\Engine\Impl\Bpmn\Helper\BpmnProperties;
+use Jabe\Engine\Impl\Core\Delegate\CoreActivityBehaviorInterface;
+use Jabe\Engine\Impl\Core\Model\CoreModelElement;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Impl\Pvm\{
     PvmActivityInterface,
     PvmScopeInterface,
     PvmTransitionInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ActivityStartBehavior,
     ProcessDefinitionImpl,
     ScopeImpl,
     TransitionImpl
 };
-use BpmPlatform\Engine\Impl\Tree\{
+use Jabe\Engine\Impl\Tree\{
     ActivityStackCollector,
     FlowScopeWalker,
     ReferenceWalker,
     WalkConditionInterface
 };
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
-use BpmPlatform\Engine\Runtime\ActivityInstanceInterface;
-use BpmPlatform\Engine\Variable\VariableMapInterface;
-use BpmPlatform\Engine\Variable\Impl\VariableMapImpl;
+use Jabe\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Runtime\ActivityInstanceInterface;
+use Jabe\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Variable\Impl\VariableMapImpl;
 
 abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificationCommand
 {

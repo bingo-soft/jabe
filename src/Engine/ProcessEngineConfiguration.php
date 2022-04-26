@@ -1,20 +1,20 @@
 <?php
 
-namespace BpmPlatform\Engine;
+namespace Jabe\Engine;
 
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Impl\{
     BootstrapEngineCommand,
     HistoryLevelSetupCommand,
     SchemaOperationsProcessEngineBuild
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\JobEntity;
-use BpmPlatform\Engine\Impl\Cfg\StandaloneProcessEngineConfiguration;
-use BpmPlatform\Engine\Variable\Type\ValueTypeResolverInterface;
-use BpmPlatform\Engine\Identity\PasswordPolicyInterface;
-use BpmPlatform\Engine\Runtime\DeserializationTypeValidatorInterface;
-use BpmPlatform\Engine\Impl\Telemetry\TelemetryRegistry;
+use Jabe\Engine\Impl\Persistence\Entity\JobEntity;
+use Jabe\Engine\Impl\Cfg\StandaloneProcessEngineConfiguration;
+use Jabe\Engine\Variable\Type\ValueTypeResolverInterface;
+use Jabe\Engine\Identity\PasswordPolicyInterface;
+use Jabe\Engine\Runtime\DeserializationTypeValidatorInterface;
+use Jabe\Engine\Impl\Telemetry\TelemetryRegistry;
 
 abstract class ProcessEngineConfiguration
 {

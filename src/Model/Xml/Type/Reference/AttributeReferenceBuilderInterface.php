@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Type\Reference;
+namespace Jabe\Model\Xml\Type\Reference;
 
 interface AttributeReferenceBuilderInterface extends ReferenceBuilderInterface
 {

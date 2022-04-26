@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Batch\History;
+namespace Jabe\Engine\Batch\History;
 
-use BpmPlatform\Engine\Query\QueryInterface;
+use Jabe\Engine\Query\QueryInterface;
 
 interface HistoricBatchQueryInterface extends QueryInterface
 {

@@ -3,11 +3,11 @@
 namespace Tests\Bpmn\Instance;
 
 use Tests\Xml\Test\AttributeAssumption;
-use BpmPlatform\Model\Bpmn\Impl\Instance\{
+use Jabe\Model\Bpmn\Impl\Instance\{
     Source,
     Target
 };
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Bpmn\Instance\{
     LinkEventDefinitionInterface
 };
 

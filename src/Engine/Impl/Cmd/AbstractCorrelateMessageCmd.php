@@ -1,25 +1,25 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Impl\MessageCorrelationBuilderImpl;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\MessageCorrelationBuilderImpl;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     ExecutionVariableSnapshotObserver,
     ProcessDefinitionEntity
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\ActivityImpl;
-use BpmPlatform\Engine\Impl\Runtime\{
+use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
+use Jabe\Engine\Impl\Runtime\{
     CorrelationHandlerResult,
     MessageCorrelationResultImpl
 };
-use BpmPlatform\Engine\Runtime\{
+use Jabe\Engine\Runtime\{
     MessageCorrelationResultType,
     ProcessInstanceInterface
 };
-use BpmPlatform\Engine\Variable\{
+use Jabe\Engine\Variable\{
     VariableMapInterface,
     Variables
 };

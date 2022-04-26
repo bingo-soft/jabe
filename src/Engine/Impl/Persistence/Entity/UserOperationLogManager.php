@@ -1,41 +1,41 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\EntityTypes;
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\EntityTypes;
+use Jabe\Engine\Authorization\{
     PermissionInterface,
     Permissions
 };
-use BpmPlatform\Engine\History\{
+use Jabe\Engine\History\{
     HistoricTaskInstanceInterface,
     UserOperationLogEntryInterface
 };
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Impl\{
     Page,
     UserOperationLogQueryImpl
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\ListQueryParameterObject;
-use BpmPlatform\Engine\Impl\Db\EntityManager\Operation\DbOperation;
-use BpmPlatform\Engine\Impl\History\HistoryLevel;
-use BpmPlatform\Engine\Impl\History\Event\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\ListQueryParameterObject;
+use Jabe\Engine\Impl\Db\EntityManager\Operation\DbOperation;
+use Jabe\Engine\Impl\History\HistoryLevel;
+use Jabe\Engine\Impl\History\Event\{
     HistoryEvent,
     HistoryEventCreator,
     HistoryEventProcessor,
     HistoryEventTypes,
     UserOperationLogEntryEventEntity
 };
-use BpmPlatform\Engine\Impl\History\Producer\HistoryEventProducerInterface;
-use BpmPlatform\Engine\Impl\Identity\IdentityOperationResult;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\OpLog\{
+use Jabe\Engine\Impl\History\Producer\HistoryEventProducerInterface;
+use Jabe\Engine\Impl\Identity\IdentityOperationResult;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\OpLog\{
     UserOperationLogContext,
     UserOperationLogContextEntryBuilder
 };
-use BpmPlatform\Engine\Impl\Persistence\AbstractHistoricManager;
-use BpmPlatform\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Persistence\AbstractHistoricManager;
+use Jabe\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
+use Jabe\Engine\Impl\Util\{
     PermissionConverter,
     StringUtil
 };

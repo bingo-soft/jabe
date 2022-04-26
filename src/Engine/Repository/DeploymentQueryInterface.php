@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Repository;
+namespace Jabe\Engine\Repository;
 
-use BpmPlatform\Engine\Query\QueryInterface;
+use Jabe\Engine\Query\QueryInterface;
 
 interface DeploymentQueryInterface extends QueryInterface
 {

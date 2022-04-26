@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\AuthorizationException;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\AuthorizationException;
+use Jabe\Engine\Impl\{
     Page,
     SchemaLogQueryImpl
 };
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
-use BpmPlatform\Engine\Management\{
+use Jabe\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Management\{
     SchemaLogEntryInterface,
     SchemaLogQueryInterface
 };

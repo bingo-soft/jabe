@@ -6,8 +6,8 @@ use Tests\Xml\Test\{
     AbstractModelElementInstanceTest,
     AbstractTypeAssumption
 };
-use BpmPlatform\Model\Bpmn\Bpmn;
-use BpmPlatform\Model\Xml\Impl\Util\QName;
+use Jabe\Model\Bpmn\Bpmn;
+use Jabe\Model\Xml\Impl\Util\QName;
 
 abstract class BpmnModelElementInstanceTest extends AbstractModelElementInstanceTest
 {
@@ -26,7 +26,7 @@ abstract class BpmnModelElementInstanceTest extends AbstractModelElementInstance
         } else {
             $className = str_replace('Test', '', $shortName);
         }
-        $instanceClass = sprintf("%s\%s", str_replace('Tests', 'BpmPlatform\Model', $this->namespace), $className);
+        $instanceClass = sprintf("%s\%s", str_replace('Tests', 'Jabe\Model', $this->namespace), $className);
         $this->modelInstance = Bpmn::getInstance()->createEmptyModel();
         $this->model = $this->modelInstance->getModel();
         $this->modelElementType = $this->model->getType($instanceClass);
@@ -69,7 +69,7 @@ abstract class BpmnModelElementInstanceTest extends AbstractModelElementInstance
             try {
                 $this->modelInstance->newInstance($this->modelElementType);
             } catch (\Exception $e) {
-                $this->assertEquals('BpmPlatform\Model\Xml\Exception\ModelTypeException', get_class($e));
+                $this->assertEquals('Jabe\Model\Xml\Exception\ModelTypeException', get_class($e));
             }
         } else {
             $modelElementInstance = $this->modelInstance->newInstance($this->modelElementType);

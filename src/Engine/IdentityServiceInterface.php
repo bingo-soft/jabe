@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine;
+namespace Jabe\Engine;
 
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\Authorization\{
     Permissions,
     Resources
 };
-use BpmPlatform\Engine\Identity\{
+use Jabe\Engine\Identity\{
     GroupInterface,
     GroupQueryInterface,
     NativeUserQueryInterface,
@@ -17,7 +17,7 @@ use BpmPlatform\Engine\Identity\{
     UserInterface,
     UserQueryInterface
 };
-use BpmPlatform\Engine\Impl\Identity\Authentication;
+use Jabe\Engine\Impl\Identity\Authentication;
 
 interface IdentityServiceInterface
 {

@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\El;
+namespace Jabe\Engine\Impl\El;
 
-use BpmPlatform\Engine\Application\{
+use Jabe\Engine\Application\{
     ProcessApplicationInterface,
     ProcessApplicationReferenceInterface,
     ProcessApplicationUnavailableException
 };
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Util\El\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Util\El\{
     BeanELResolver,
     ELResolver
 };

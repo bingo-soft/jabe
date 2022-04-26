@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable\Impl\Value;
+namespace Jabe\Engine\Variable\Impl\Value;
 
-use BpmPlatform\Engine\Variable\Type\ValueType;
-use BpmPlatform\Engine\Variable\Value\DoubleValueInterface;
+use Jabe\Engine\Variable\Type\ValueType;
+use Jabe\Engine\Variable\Value\DoubleValueInterface;
 
 class DoubleValueImpl extends PrimitiveTypeValueImpl implements DoubleValueInterface
 {

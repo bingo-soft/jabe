@@ -1,19 +1,19 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type\Reference;
+namespace Jabe\Model\Xml\Impl\Type\Reference;
 
-use BpmPlatform\Model\Xml\Exception\{
+use Jabe\Model\Xml\Exception\{
     ModelException,
     ModelReferenceException,
     UnsupportedModelOperationException
 };
-use BpmPlatform\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
-use BpmPlatform\Model\Xml\Impl\Type\ModelElementTypeImpl;
-use BpmPlatform\Model\Xml\Impl\Util\ModelUtil;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
-use BpmPlatform\Model\Xml\Type\Child\ChildElementCollectionInterface;
-use BpmPlatform\Model\Xml\Type\Reference\ElementReferenceCollectionInterface;
+use Jabe\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
+use Jabe\Model\Xml\Impl\Type\ModelElementTypeImpl;
+use Jabe\Model\Xml\Impl\Util\ModelUtil;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Type\ModelElementTypeInterface;
+use Jabe\Model\Xml\Type\Child\ChildElementCollectionInterface;
+use Jabe\Model\Xml\Type\Reference\ElementReferenceCollectionInterface;
 
 class ElementReferenceCollectionImpl extends ReferenceImpl implements ElementReferenceCollectionInterface
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Validator;
+namespace Jabe\Engine\Impl\Form\Validator;
 
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Delegate\{
     DelegateExecutionInterface,
     VariableScopeInterface
 };
-use BpmPlatform\Engine\Impl\Form\Handler\FormFieldHandler;
+use Jabe\Engine\Impl\Form\Handler\FormFieldHandler;
 
 interface FormFieldValidatorContextInterface
 {

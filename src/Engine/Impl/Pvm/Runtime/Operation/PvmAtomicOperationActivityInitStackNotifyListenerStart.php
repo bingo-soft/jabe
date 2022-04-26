@@ -1,25 +1,25 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Runtime\Operation;
+namespace Jabe\Engine\Impl\Pvm\Runtime\Operation;
 
-use BpmPlatform\Engine\Delegate\ExecutionListenerInterface;
-use BpmPlatform\Engine\Impl\Pvm\PvmTransitionInterface;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\{
+use Jabe\Engine\Delegate\ExecutionListenerInterface;
+use Jabe\Engine\Impl\Pvm\PvmTransitionInterface;
+use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
     ModificationObserverBehaviorInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ScopeImpl,
     TransitionImpl
 };
-use BpmPlatform\Engine\Impl\Pvm\Runtime\{
+use Jabe\Engine\Impl\Pvm\Runtime\{
     ScopeInstantiationContext,
     InstantiationStack,
     PvmExecutionImpl
 };
-use BpmPlatform\Engine\Impl\Core\Model\CoreModelElement;
-use BpmPlatform\Engine\Impl\Core\Instance\CoreExecution;
+use Jabe\Engine\Impl\Core\Model\CoreModelElement;
+use Jabe\Engine\Impl\Core\Instance\CoreExecution;
 
 class PvmAtomicOperationActivityInitStackNotifyListenerStart extends PvmAtomicOperationActivityInstanceStart
 {

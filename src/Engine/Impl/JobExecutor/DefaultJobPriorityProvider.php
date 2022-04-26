@@ -1,20 +1,20 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\{
     DefaultPriorityProvider,
     ProcessEngineLogger
 };
-use BpmPlatform\Engine\Impl\Bpmn\Parser\BpmnParse;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     JobDefinitionEntity
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\ProcessDefinitionImpl;
+use Jabe\Engine\Impl\Pvm\Process\ProcessDefinitionImpl;
 
 class DefaultJobPriorityProvider extends DefaultPriorityProvider
 {

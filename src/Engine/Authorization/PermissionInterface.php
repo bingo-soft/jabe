@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Authorization;
+namespace Jabe\Engine\Authorization;
 
 /**
  * A permission represents an authorization to interact with a given

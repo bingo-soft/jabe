@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance;
+namespace Jabe\Model\Bpmn\Instance;
 
-use BpmPlatform\Model\Bpmn\Builder\IntermediateCatchEventBuilder;
+use Jabe\Model\Bpmn\Builder\IntermediateCatchEventBuilder;
 
 interface IntermediateCatchEventInterface extends CatchEventInterface
 {

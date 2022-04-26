@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Identity\TenantQueryInterface;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Identity\TenantQueryInterface;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };

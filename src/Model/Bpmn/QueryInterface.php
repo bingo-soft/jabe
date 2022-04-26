@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn;
+namespace Jabe\Model\Bpmn;
 
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
 
 interface QueryInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity\Util;
+namespace Jabe\Engine\Impl\Persistence\Entity\Util;
 
 class AuthManagerUtil
 {

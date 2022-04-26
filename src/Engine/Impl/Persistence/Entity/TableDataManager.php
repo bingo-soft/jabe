@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Filter\FilterInterface;
-use BpmPlatform\Engine\History\{
+use Jabe\Engine\Filter\FilterInterface;
+use Jabe\Engine\History\{
     HistoricActivityInstanceInterface,
     HistoricDetailInterface,
     HistoricFormPropertyInterface,
@@ -12,40 +12,40 @@ use BpmPlatform\Engine\History\{
     HistoricVariableInstanceInterface,
     HistoricVariableUpdateInterface
 };
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Impl\{
     ProcessEngineLogger,
     TablePageQueryImpl
 };
-use BpmPlatform\Engine\Impl\Batch\BatchEntity;
-use BpmPlatform\Engine\Impl\Batch\History\HistoricBatchEntity;
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Batch\BatchEntity;
+use Jabe\Engine\Impl\Batch\History\HistoricBatchEntity;
+use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     EnginePersistenceLogger
 };
-use BpmPlatform\Engine\Impl\Db\Sql\DbSqlSessionFactory;
-use BpmPlatform\Engine\Impl\History\Event\{
+use Jabe\Engine\Impl\Db\Sql\DbSqlSessionFactory;
+use Jabe\Engine\Impl\History\Event\{
     HistoricDetailEventEntity,
     HistoricExternalTaskLogEntity,
     HistoricIncidentEventEntity,
     UserOperationLogEntryEventEntity
 };
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
-use BpmPlatform\Engine\Impl\Util\DatabaseUtil;
-use BpmPlatform\Engine\Management\{
+use Jabe\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Impl\Util\DatabaseUtil;
+use Jabe\Engine\Management\{
     TableMetaData,
     TablePage
 };
-use BpmPlatform\Engine\Repository\{
+use Jabe\Engine\Repository\{
     DeploymentInterface,
     ProcessDefinitionInterface
 };
-use BpmPlatform\Engine\Runtime\{
+use Jabe\Engine\Runtime\{
     ExecutionInterface,
     IncidentInterface,
     JobInterface,
     ProcessInstanceInterface
 };
-use BpmPlatform\Engine\Task\TaskInterface;
+use Jabe\Engine\Task\TaskInterface;
 
 class TableDataManager extends AbstractManager
 {

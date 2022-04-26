@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form;
+namespace Jabe\Engine\Impl\Form;
 
-use BpmPlatform\Engine\Form\FormRefInterface;
+use Jabe\Engine\Form\FormRefInterface;
 
 class FormRefImpl implements FormRefInterface
 {

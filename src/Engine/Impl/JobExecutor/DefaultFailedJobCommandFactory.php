@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\Impl\Cmd\DefaultJobRetryCmd;
-use BpmPlatform\Engine\Impl\Interceptor\CommandInterface;
+use Jabe\Engine\Impl\Cmd\DefaultJobRetryCmd;
+use Jabe\Engine\Impl\Interceptor\CommandInterface;
 
 class DefaultFailedJobCommandFactory implements FailedJobCommandFactoryInterface
 {

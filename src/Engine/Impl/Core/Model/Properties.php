@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Model;
+namespace Jabe\Engine\Impl\Core\Model;
 
-use BpmPlatform\Engine\ProcessEngineException;
+use Jabe\Engine\ProcessEngineException;
 
 class Properties implements \Serializable
 {

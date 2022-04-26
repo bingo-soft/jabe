@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Variable\Serializer;
+namespace Jabe\Engine\Impl\Variable\Serializer;
 
-use BpmPlatform\Engine\Variable\Type\{
+use Jabe\Engine\Variable\Type\{
     ValueTypeInterface,
     ValueType
 };
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 abstract class AbstractTypedValueSerializer implements TypedValueSerializerInterface
 {

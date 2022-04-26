@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Impl\ManagementServiceImpl;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\ManagementServiceImpl;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     PropertyEntity,
     PropertyManager,
     ResourceEntity,

@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Impl\Instance;
+namespace Jabe\Model\Bpmn\Impl\Instance;
 
-use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
-use BpmPlatform\Model\Bpmn\GatewayDirection;
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Xml\ModelBuilder;
+use Jabe\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
+use Jabe\Model\Bpmn\GatewayDirection;
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Instance\{
     GatewayInterface,
     FlowNodeInterface
 };
-use BpmPlatform\Model\Bpmn\Exception\BpmnModelException;
-use BpmPlatform\Model\Bpmn\Builder\AbstractGatewayBuilder;
-use BpmPlatform\Model\Bpmn\Instance\Bpmndi\BpmnShapeInterface;
+use Jabe\Model\Bpmn\Exception\BpmnModelException;
+use Jabe\Model\Bpmn\Builder\AbstractGatewayBuilder;
+use Jabe\Model\Bpmn\Instance\Bpmndi\BpmnShapeInterface;
 
 abstract class GatewayImpl extends FlowNodeImpl implements GatewayInterface
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Behavior;
+namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\{
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
     SignallableActivityBehaviorInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Runtime\AtomicOperation;
+use Jabe\Engine\Impl\Pvm\Runtime\AtomicOperation;
 
 abstract class FlowNodeActivityBehavior implements SignallableActivityBehaviorInterface
 {

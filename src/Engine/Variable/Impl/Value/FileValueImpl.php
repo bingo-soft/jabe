@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable\Impl\Value;
+namespace Jabe\Engine\Variable\Impl\Value;
 
-use BpmPlatform\Engine\Variable\Type\{
+use Jabe\Engine\Variable\Type\{
     FileValueTypeInterface,
     ValueTypeInterface
 };
-use BpmPlatform\Engine\Variable\Value\FileValueInterface;
+use Jabe\Engine\Variable\Value\FileValueInterface;
 
 class FileValueImpl implements FileValueInterface
 {

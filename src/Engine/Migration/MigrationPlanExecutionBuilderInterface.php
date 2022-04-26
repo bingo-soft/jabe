@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Engine\Migration;
+namespace Jabe\Engine\Migration;
 
-use BpmPlatform\Engine\{
+use Jabe\Engine\{
     BatchPermissions,
     AuthorizationException,
     BadUserRequestException
 };
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\Authorization\{
     Permissions,
     Resources
 };
-use BpmPlatform\Engine\Batch\BatchInterface;
-use BpmPlatform\Engine\Runtime\ProcessInstanceQueryInterface;
+use Jabe\Engine\Batch\BatchInterface;
+use Jabe\Engine\Runtime\ProcessInstanceQueryInterface;
 
 interface MigrationPlanExecutionBuilderInterface
 {

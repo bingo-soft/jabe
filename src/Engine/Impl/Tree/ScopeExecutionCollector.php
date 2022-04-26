@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Tree;
+namespace Jabe\Engine\Impl\Tree;
 
-use BpmPlatform\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
+use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
 
 class ScopeExecutionCollector implements TreeVisitorInterface
 {

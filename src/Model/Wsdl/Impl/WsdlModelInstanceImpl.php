@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Model\Wsdl\Impl;
+namespace Jabe\Model\Wsdl\Impl;
 
-use BpmPlatform\Model\Xml\{
+use Jabe\Model\Xml\{
     ModelBuilder,
     ModelInterface
 };
-use BpmPlatform\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
-use BpmPlatform\Model\Wsdl\Impl\Instance\{
+use Jabe\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
+use Jabe\Model\Wsdl\Impl\Instance\{
     AddressImpl,
     BaseElementImpl,
     BindingImpl,

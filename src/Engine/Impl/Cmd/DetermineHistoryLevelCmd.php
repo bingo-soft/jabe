@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\HistoryLevelSetupCommand;
-use BpmPlatform\Engine\Impl\History\HistoryLevel;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\HistoryLevelSetupCommand;
+use Jabe\Engine\Impl\History\HistoryLevel;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };

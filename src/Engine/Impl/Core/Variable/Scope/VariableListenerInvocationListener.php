@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Variable\Scope;
+namespace Jabe\Engine\Impl\Core\Variable\Scope;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\VariableListenerInterface;
-use BpmPlatform\Engine\Impl\Core\Variable\Event\VariableEvent;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\VariableListenerInterface;
+use Jabe\Engine\Impl\Core\Variable\Event\VariableEvent;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     TaskEntity,
     VariableInstanceEntity

@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type\Reference;
+namespace Jabe\Model\Xml\Impl\Type\Reference;
 
-use BpmPlatform\Model\Xml\Type\Reference\ReferenceInterface;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Xml\Exception\ModelReferenceException;
-use BpmPlatform\Model\Xml\Type\Attribute\AttributeInterface;
-use BpmPlatform\Model\Xml\Impl\Type\Attribute\AttributeImpl;
-use BpmPlatform\Model\Xml\Impl\Type\ModelElementTypeImpl;
+use Jabe\Model\Xml\Type\Reference\ReferenceInterface;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Exception\ModelReferenceException;
+use Jabe\Model\Xml\Type\Attribute\AttributeInterface;
+use Jabe\Model\Xml\Impl\Type\Attribute\AttributeImpl;
+use Jabe\Model\Xml\Impl\Type\ModelElementTypeImpl;
 
 abstract class ReferenceImpl implements ReferenceInterface
 {

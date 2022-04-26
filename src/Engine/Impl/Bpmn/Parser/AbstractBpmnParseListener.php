@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Parser;
+namespace Jabe\Engine\Impl\Bpmn\Parser;
 
-use BpmPlatform\Engine\Impl\Persistence\Entity\ProcessDefinitionEntity;
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\Impl\Persistence\Entity\ProcessDefinitionEntity;
+use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ScopeImpl,
     TransitionImpl
 };
-use BpmPlatform\Engine\Impl\Util\Xml\Element;
-use BpmPlatform\Engine\Impl\Variable\VariableDeclaration;
+use Jabe\Engine\Impl\Util\Xml\Element;
+use Jabe\Engine\Impl\Variable\VariableDeclaration;
 
 class AbstractBpmnParseListener implements BpmnParseListener
 {

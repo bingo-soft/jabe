@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     HasDbRevisionInterface
 };
-use BpmPlatform\Engine\Repository\ResourceTypeInterface;
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Repository\ResourceTypeInterface;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class ByteArrayEntity implements \Serializable, DbEntityInterface, HasDbRevisionInterface
 {

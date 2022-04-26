@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Type\Child;
+namespace Jabe\Model\Xml\Type\Child;
 
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Xml\Type\Reference\ElementReferenceBuilderInterface;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Type\Reference\ElementReferenceBuilderInterface;
 
 interface ChildElementBuilderInterface extends ChildElementCollectionBuilderInterface
 {

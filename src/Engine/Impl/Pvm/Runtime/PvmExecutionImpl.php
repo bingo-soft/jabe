@@ -1,33 +1,33 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Runtime;
+namespace Jabe\Engine\Impl\Pvm\Runtime;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Bpmn\Helper\BpmnProperties;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Core\Instance\CoreExecution;
-use BpmPlatform\Engine\Impl\Core\Variable\Event\VariableEvent;
-use BpmPlatform\Engine\Impl\Core\Variable\Scope\AbstractVariableScope;
-use BpmPlatform\Engine\Impl\Form\FormPropertyHelper;
-use BpmPlatform\Engine\Impl\History\HistoryLevelInterface;
-use BpmPlatform\Engine\Impl\History\Event\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Bpmn\Helper\BpmnProperties;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Core\Instance\CoreExecution;
+use Jabe\Engine\Impl\Core\Variable\Event\VariableEvent;
+use Jabe\Engine\Impl\Core\Variable\Scope\AbstractVariableScope;
+use Jabe\Engine\Impl\Form\FormPropertyHelper;
+use Jabe\Engine\Impl\History\HistoryLevelInterface;
+use Jabe\Engine\Impl\History\Event\{
     HistoryEvent,
     HistoryEventProcessor,
     HistoryEventCreator,
     HistoryEventTypes
 };
-use BpmPlatform\Engine\Impl\History\Producer\HistoryEventProducerInterface;
-use BpmPlatform\Engine\Impl\Incident\{
+use Jabe\Engine\Impl\History\Producer\HistoryEventProducerInterface;
+use Jabe\Engine\Impl\Incident\{
     IncidentContext,
     IncidentHandlerInterface,
     IncidentHandling
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     DelayedVariableEvent,
     IncidentEntity
 };
-use BpmPlatform\Engine\Impl\Pvm\{
+use Jabe\Engine\Impl\Pvm\{
     PvmActivityInterface,
     PvmException,
     PvmExecutionInterface,
@@ -37,21 +37,21 @@ use BpmPlatform\Engine\Impl\Pvm\{
     PvmScopeInterface,
     PvmTransitionInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Delegate\{
+use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
     CompositeActivityBehaviorInterface,
     ModificationObserverBehaviorInterface,
     SignallableActivityBehaviorInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ActivityStartBehavior,
     ProcessDefinitionImpl,
     ScopeImpl,
     TransitionImpl
 };
-use BpmPlatform\Engine\Impl\Pvm\Runtime\Operation\PvmAtomicOperationInterface;
-use BpmPlatform\Engine\Impl\Tree\{
+use Jabe\Engine\Impl\Pvm\Runtime\Operation\PvmAtomicOperationInterface;
+use Jabe\Engine\Impl\Tree\{
     ExecutionWalker,
     FlowScopeWalker,
     LeafActivityInstanceExecutionCollector,
@@ -61,9 +61,9 @@ use BpmPlatform\Engine\Impl\Tree\{
     TreeVisitorInterface,
     WalkConditionInterface
 };
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
-use BpmPlatform\Engine\Runtime\IncidentInterface;
-use BpmPlatform\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Runtime\IncidentInterface;
+use Jabe\Engine\Variable\VariableMapInterface;
 
 abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecutionInterface, PvmProcessInstanceInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable\Value;
+namespace Jabe\Engine\Variable\Value;
 
-use BpmPlatform\Engine\Variable\Type\PrimitiveValueTypeInterface;
+use Jabe\Engine\Variable\Type\PrimitiveValueTypeInterface;
 
 interface PrimitiveValueInterface extends TypedValueInterface
 {

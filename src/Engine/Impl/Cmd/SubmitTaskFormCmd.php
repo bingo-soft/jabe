@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionVariableSnapshotObserver;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
-use BpmPlatform\Engine\Task\DelegationState;
-use BpmPlatform\Engine\Variable\Variables;
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionVariableSnapshotObserver;
+use Jabe\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Task\DelegationState;
+use Jabe\Engine\Variable\Variables;
 
 class SubmitTaskFormCmd implements CommandInterface, \Serializable
 {

@@ -1,19 +1,19 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\JobExecutor\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\JobExecutor\{
     JobHandlerInterface,
     JobHandlerConfigurationInterface,
     JobDefinitionSuspensionStateConfiguration
 };
-use BpmPlatform\Engine\Impl\Management\{
+use Jabe\Engine\Impl\Management\{
     UpdateJobDefinitionSuspensionStateBuilderImpl,
     UpdateJobSuspensionStateBuilderImpl
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     JobDefinitionEntity,
     JobDefinitionManager,
     JobManager,

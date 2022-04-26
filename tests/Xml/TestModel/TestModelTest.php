@@ -3,8 +3,8 @@
 namespace Tests\Xml\TestModel;
 
 use PHPUnit\Framework\TestCase;
-use BpmPlatform\Model\Xml\ModelInstanceInterface;
-use BpmPlatform\Model\Xml\Impl\Parser\AbstractModelParser;
+use Jabe\Model\Xml\ModelInstanceInterface;
+use Jabe\Model\Xml\Impl\Parser\AbstractModelParser;
 use Tests\Xml\TestModel\TestModelParser;
 use Tests\Xml\TestModel\Instance\{
     Animal,

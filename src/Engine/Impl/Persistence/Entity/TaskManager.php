@@ -1,19 +1,19 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Authorization\Resources;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Authorization\Resources;
+use Jabe\Engine\Impl\{
     Page,
     TaskQueryImpl
 };
-use BpmPlatform\Engine\Impl\Cfg\Auth\ResourceAuthorizationProviderInterface;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\ListQueryParameterObject;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
-use BpmPlatform\Engine\Task\TaskInterface;
+use Jabe\Engine\Impl\Cfg\Auth\ResourceAuthorizationProviderInterface;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\ListQueryParameterObject;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Task\TaskInterface;
 
 class TaskManager extends AbstractManager
 {

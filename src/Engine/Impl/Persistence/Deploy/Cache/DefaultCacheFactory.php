@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Deploy\Cache;
+namespace Jabe\Engine\Impl\Persistence\Deploy\Cache;
 
-use BpmPlatform\Commons\Utils\Cache\{
+use Jabe\Commons\Utils\Cache\{
     CacheInterface,
     ConcurrentLruCache
 };

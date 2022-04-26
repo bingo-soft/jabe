@@ -1,27 +1,27 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\{
+use Jabe\Engine\{
     ProcessEngineInterface,
     ProcessEngineServicesInterface
 };
-use BpmPlatform\Engine\Delegate\ExecutionListenerInterface;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Bpmn\Parser\{
+use Jabe\Engine\Delegate\ExecutionListenerInterface;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Bpmn\Parser\{
     BpmnParse,
     EventSubscriptionDeclaration
 };
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Cfg\Multitenancy\{
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Cfg\Multitenancy\{
     TenantIdProviderInterface,
     TenantIdProviderProcessInstanceContext
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Core\Instance\CoreExecution;
-use BpmPlatform\Engine\Impl\Core\Variable\CoreVariableInstanceInterface;
-use BpmPlatform\Engine\Impl\Core\Variable\Event\VariableEvent;
-use BpmPlatform\Engine\Impl\Core\Variable\Scope\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Core\Instance\CoreExecution;
+use Jabe\Engine\Impl\Core\Variable\CoreVariableInstanceInterface;
+use Jabe\Engine\Impl\Core\Variable\Event\VariableEvent;
+use Jabe\Engine\Impl\Core\Variable\Scope\{
     VariableCollectionProvider,
     VariableInstanceFactoryInterface,
     VariableInstanceLifecycleListenerInterface,
@@ -29,69 +29,69 @@ use BpmPlatform\Engine\Impl\Core\Variable\Scope\{
     VariableStore,
     VariablesProviderInterface
 };
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     EnginePersistenceLogger,
     HasDbReferencesInterface,
     HasDbRevisionInterface,
 };
-use BpmPlatform\Engine\Impl\Event\EventType;
-use BpmPlatform\Engine\Impl\History\AbstractHistoryLevel;
-use BpmPlatform\Engine\Impl\History\Event\{
+use Jabe\Engine\Impl\Event\EventType;
+use Jabe\Engine\Impl\History\AbstractHistoryLevel;
+use Jabe\Engine\Impl\History\Event\{
     HistoricVariableUpdateEventEntity,
     HistoryEvent,
     HistoryEventProcessor,
     HistoryEventCreator,
     HistoryEventTypes
 };
-use BpmPlatform\Engine\Impl\History\Producer\HistoryEventProducerInterface;
-use BpmPlatform\Engine\Impl\Incident\{
+use Jabe\Engine\Impl\History\Producer\HistoryEventProducerInterface;
+use Jabe\Engine\Impl\Incident\{
     IncidentContext,
     IncidentHandling
 };
-use BpmPlatform\Engine\Impl\Interceptor\AtomicOperationInvocation;
-use BpmPlatform\Engine\Impl\JobExecutor\{
+use Jabe\Engine\Impl\Interceptor\AtomicOperationInvocation;
+use Jabe\Engine\Impl\JobExecutor\{
     MessageJobDeclaration,
     TimerDeclarationImpl
 };
-use BpmPlatform\Engine\Impl\Pvm\{
+use Jabe\Engine\Impl\Pvm\{
     PvmActivityInterface,
     PvmProcessDefinitionInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Delegate\CompositeActivityBehaviorInterface;
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\Impl\Pvm\Delegate\CompositeActivityBehaviorInterface;
+use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ProcessDefinitionImpl,
     ScopeImpl
 };
-use BpmPlatform\Engine\Impl\Pvm\Runtime\{
+use Jabe\Engine\Impl\Pvm\Runtime\{
     ActivityInstanceState,
     AtomicOperation,
     PvmExecutionImpl
 };
-use BpmPlatform\Engine\Impl\Tree\{
+use Jabe\Engine\Impl\Tree\{
     ExecutionTopDownWalker,
     TreeVisitorInterface
 };
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Util\{
     BitMaskUtil,
     CollectionUtil
 };
-use BpmPlatform\Engine\Impl\Variable\VariableDeclaration;
-use BpmPlatform\Engine\Repository\ProcessDefinitionInterface;
-use BpmPlatform\Engine\Runtime\{
+use Jabe\Engine\Impl\Variable\VariableDeclaration;
+use Jabe\Engine\Repository\ProcessDefinitionInterface;
+use Jabe\Engine\Runtime\{
     ExecutionInterface,
     JobInterface,
     ProcessInstanceInterface
 };
-use BpmPlatform\Engine\Variable\{
+use Jabe\Engine\Variable\{
     VariableMapInterface,
     Variables
 };
-use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
-use BpmPlatform\Model\Bpmn\Instance\FlowElementInterface;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
+use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
+use Jabe\Model\Bpmn\Instance\FlowElementInterface;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Type\ModelElementTypeInterface;
 
 class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, ProcessInstanceInterface, DbEntityInterface, HasDbRevisionInterface, HasDbReferencesInterface, VariablesProviderInterface
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\El;
+namespace Jabe\Engine\Impl\El;
 
-use BpmPlatform\Engine\Impl\Util\El\{
+use Jabe\Engine\Impl\Util\El\{
     ELContext,
     ELResolver
 };
-use BpmPlatform\Engine\Variable\Context\VariableContextInterface;
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Variable\Context\VariableContextInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 class VariableContextElResolver extends ELResolver
 {

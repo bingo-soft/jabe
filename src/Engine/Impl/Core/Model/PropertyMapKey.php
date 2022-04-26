@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Model;
+namespace Jabe\Engine\Impl\Core\Model;
 
 class PropertyMapKey
 {

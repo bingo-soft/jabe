@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance;
+namespace Jabe\Model\Bpmn\Instance;
 
-use BpmPlatform\Model\Bpmn\Impl\Instance\MessagePath;
+use Jabe\Model\Bpmn\Impl\Instance\MessagePath;
 
 interface CorrelationPropertyRetrievalExpressionInterface extends BaseElementInterface
 {

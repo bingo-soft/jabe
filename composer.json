@@ -1,13 +1,13 @@
 {  
-    "name": "bingo-soft/bpmplatform",
+    "name": "bingo-soft/jabe",
     "license": "MIT",
     "authors": [{
         "name": "Bingo-Soft",
         "email": "bingosoft@bk.ru"
     }],
-    "description": "PHP framework for workflow and process automation",
+    "description": "Just another BPMN engine for workflow and process automation",
     "keywords": ["php", "bpmn", "workflow", "process", "automation"],
-    "homepage": "https://github.com/bingo-soft/bpmplatform",
+    "homepage": "https://github.com/bingo-soft/jabe",
     "type": "project",
     "config": {
         "vendor-dir": "./vendor",
@@ -34,7 +34,7 @@
     },
     "autoload": {
         "psr-4": {
-            "BpmPlatform\\": "./src"
+            "Jabe\\": "./src"
         }
     },
     "autoload-dev": {

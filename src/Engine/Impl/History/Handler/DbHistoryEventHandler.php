@@ -1,22 +1,22 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History\Handler;
+namespace Jabe\Engine\Impl\History\Handler;
 
-use BpmPlatform\Engine\History\HistoricVariableInstanceInterface;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\EntityManager\DbEntityManager;
-use BpmPlatform\Engine\Impl\History\Event\{
+use Jabe\Engine\History\HistoricVariableInstanceInterface;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\EntityManager\DbEntityManager;
+use Jabe\Engine\Impl\History\Event\{
     //HistoricDecisionEvaluationEvent
     HistoricScopeInstanceEvent,
     HistoricVariableUpdateEventEntity,
     HistoryEvent,
     HistoryEventTypes
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     ByteArrayEntity,
     HistoricVariableInstanceEntity
 };
-use BpmPlatform\Engine\Repository\ResourceTypes;
+use Jabe\Engine\Repository\ResourceTypes;
 
 class DbHistoryEventHandler implements HistoryEventHandlerInterface
 {

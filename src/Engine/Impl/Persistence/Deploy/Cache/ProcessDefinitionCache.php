@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Deploy\Cache;
+namespace Jabe\Engine\Impl\Persistence\Deploy\Cache;
 
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Persistence\AbstractResourceDefinitionManagerInterface;
-use BpmPlatform\Engine\Impl\Persistence\Entity\ProcessDefinitionEntity;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Persistence\AbstractResourceDefinitionManagerInterface;
+use Jabe\Engine\Impl\Persistence\Entity\ProcessDefinitionEntity;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class ProcessDefinitionCache extends ResourceDefinitionCache
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Runtime;
+namespace Jabe\Engine\Impl\Pvm\Runtime;
 
 class ActivityInstanceState
 {

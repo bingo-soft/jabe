@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type\Reference;
+namespace Jabe\Model\Xml\Impl\Type\Reference;
 
-use BpmPlatform\Model\Xml\Impl\Type\Attribute\AttributeImpl;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
-use BpmPlatform\Model\Xml\Type\Attribute\AttributeInterface;
-use BpmPlatform\Model\Xml\Type\Reference\AttributeReferenceInterface;
+use Jabe\Model\Xml\Impl\Type\Attribute\AttributeImpl;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Type\ModelElementTypeInterface;
+use Jabe\Model\Xml\Type\Attribute\AttributeInterface;
+use Jabe\Model\Xml\Type\Reference\AttributeReferenceInterface;
 
 class AttributeReferenceImpl extends ReferenceImpl implements AttributeReferenceInterface
 {

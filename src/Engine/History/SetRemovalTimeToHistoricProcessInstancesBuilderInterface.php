@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\History;
+namespace Jabe\Engine\History;
 
-use BpmPlatform\Engine\Batch\BatchInterface;
+use Jabe\Engine\Batch\BatchInterface;
 
 interface SetRemovalTimeToHistoricProcessInstancesBuilderInterface extends SetRemovalTimeToHistoricBatchesBuilderInterface
 {

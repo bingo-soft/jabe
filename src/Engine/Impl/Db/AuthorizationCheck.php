@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Db;
+namespace Jabe\Engine\Impl\Db;
 
-use BpmPlatform\Engine\Authorization\Permissions;
+use Jabe\Engine\Authorization\Permissions;
 
 class AuthorizationCheck implements \Serializable
 {

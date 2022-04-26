@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\ExternalTask;
+namespace Jabe\Engine\Impl\ExternalTask;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\ProcessEngineLogger;
 
 class ExternalTaskLogger extends ProcessEngineLogger
 {

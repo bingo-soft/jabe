@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance\Extension;
+namespace Jabe\Model\Bpmn\Instance\Extension;
 
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Bpmn\Instance\{
     BpmnModelElementInstanceInterface,
     ResourceAssignmentExpressionInterface
 };

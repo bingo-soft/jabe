@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Type\Reference;
+namespace Jabe\Model\Xml\Type\Reference;
 
-use BpmPlatform\Model\Xml\Type\Attribute\AttributeInterface;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Type\Attribute\AttributeInterface;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
 
 interface AttributeReferenceInterface extends ReferenceInterface
 {

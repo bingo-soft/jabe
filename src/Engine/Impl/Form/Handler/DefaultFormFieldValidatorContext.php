@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Handler;
+namespace Jabe\Engine\Impl\Form\Handler;
 
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Delegate\{
     DelegateExecutionInterface,
     VariableScopeInterface
 };
-use BpmPlatform\Engine\Impl\Form\Validator\FormFieldValidatorContextInterface;
-use BpmPlatform\Engine\Impl\Persistence\Entity\TaskEntity;
-use BpmPlatform\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Impl\Form\Validator\FormFieldValidatorContextInterface;
+use Jabe\Engine\Impl\Persistence\Entity\TaskEntity;
+use Jabe\Engine\Variable\VariableMapInterface;
 
 class DefaultFormFieldValidatorContext implements FormFieldValidatorContextInterface
 {

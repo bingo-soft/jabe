@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\ExternalTask;
+namespace Jabe\Engine\ExternalTask;
 
-use BpmPlatform\Engine\Batch\BatchInterface;
+use Jabe\Engine\Batch\BatchInterface;
 
 interface UpdateExternalTaskRetriesBuilderInterface extends UpdateExternalTaskRetriesSelectBuilderInterface
 {

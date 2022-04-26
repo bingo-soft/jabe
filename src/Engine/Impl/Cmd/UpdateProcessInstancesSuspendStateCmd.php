@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\BadUserRequestException;
-use BpmPlatform\Engine\Impl\UpdateProcessInstancesSuspensionStateBuilderImpl;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\BadUserRequestException;
+use Jabe\Engine\Impl\UpdateProcessInstancesSuspensionStateBuilderImpl;
+use Jabe\Engine\Impl\Interceptor\{
     CommandExecutorInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Runtime\UpdateProcessInstanceSuspensionStateBuilderImpl;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Runtime\UpdateProcessInstanceSuspensionStateBuilderImpl;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class UpdateProcessInstancesSuspendStateCmd extends AbstractUpdateProcessInstancesSuspendStateCmd
 {

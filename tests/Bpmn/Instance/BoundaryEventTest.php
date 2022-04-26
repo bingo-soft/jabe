@@ -6,7 +6,7 @@ use Tests\Xml\Test\{
     AbstractTypeAssumption,
     AttributeAssumption
 };
-use BpmPlatform\Model\Bpmn\Instance\CatchEventInterface;
+use Jabe\Model\Bpmn\Instance\CatchEventInterface;
 
 class BoundaryEventTest extends BpmnModelElementInstanceTest
 {

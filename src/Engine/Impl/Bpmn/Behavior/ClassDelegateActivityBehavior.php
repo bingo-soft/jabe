@@ -1,21 +1,21 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Behavior;
+namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use BpmPlatform\Engine\Impl\Util\ClassDelegateUtil;
-use BpmPlatform\Engine\Application\{
+use Jabe\Engine\Impl\Util\ClassDelegateUtil;
+use Jabe\Engine\Application\{
     InvocationContext,
     ProcessApplicationReferenceInterface
 };
-use BpmPlatform\Engine\Delegate\PhpDelegateInterface;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Bpmn\Parser\FieldDeclaration;
-use BpmPlatform\Engine\Impl\Context\{
+use Jabe\Engine\Delegate\PhpDelegateInterface;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Bpmn\Parser\FieldDeclaration;
+use Jabe\Engine\Impl\Context\{
     Context,
     ProcessApplicationContextUtil
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\{
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityBehaviorInterface,
     ActivityExecutionInterface,
     SignallableActivityBehaviorInterface

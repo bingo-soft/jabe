@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Process;
+namespace Jabe\Engine\Impl\Pvm\Process;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\ExecutionListenerInterface;
-use BpmPlatform\Engine\Impl\Core\Model\CoreActivity;
-use BpmPlatform\Engine\Impl\Pvm\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\ExecutionListenerInterface;
+use Jabe\Engine\Impl\Core\Model\CoreActivity;
+use Jabe\Engine\Impl\Pvm\{
     PvmActivityInterface,
     PvmException,
     PvmScopeInterface,

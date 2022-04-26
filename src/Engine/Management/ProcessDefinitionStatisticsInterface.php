@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Management;
+namespace Jabe\Engine\Management;
 
-use BpmPlatform\Engine\Repository\ProcessDefinitionInterface;
+use Jabe\Engine\Repository\ProcessDefinitionInterface;
 
 interface ProcessDefinitionStatisticsInterface extends ProcessDefinitionInterface
 {

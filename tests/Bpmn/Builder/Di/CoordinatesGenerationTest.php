@@ -4,10 +4,10 @@ namespace Tests\Bpmn\Builder;
 
 use PHPUnit\Framework\TestCase;
 use Tests\Bpmn\BpmnTestConstants;
-use BpmPlatform\Model\Bpmn\Bpmn;
-use BpmPlatform\Model\Bpmn\Instance\Dc\BoundsInterface;
-use BpmPlatform\Model\Bpmn\Instance\Di\WaypointInterface;
-use BpmPlatform\Model\Bpmn\Instance\Bpmndi\{
+use Jabe\Model\Bpmn\Bpmn;
+use Jabe\Model\Bpmn\Instance\Dc\BoundsInterface;
+use Jabe\Model\Bpmn\Instance\Di\WaypointInterface;
+use Jabe\Model\Bpmn\Instance\Bpmndi\{
     BpmnEdgeInterface,
     BpmnShapeInterface
 };

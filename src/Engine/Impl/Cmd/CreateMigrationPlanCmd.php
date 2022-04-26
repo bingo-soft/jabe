@@ -1,22 +1,22 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\BadUserRequestException;
-use BpmPlatform\Engine\Exception\NullValueException;
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Core\Variable\VariableUtil;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\BadUserRequestException;
+use Jabe\Engine\Exception\NullValueException;
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Core\Variable\VariableUtil;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Migration\{
+use Jabe\Engine\Impl\Migration\{
     MigrationInstructionGeneratorInterface,
     MigrationLogger,
     MigrationPlanBuilderImpl,
     MigrationPlanImpl
 };
-use BpmPlatform\Engine\Impl\Migration\Validation\Instruction\{
+use Jabe\Engine\Impl\Migration\Validation\Instruction\{
     MigrationInstructionValidationReportImpl,
     MigrationInstructionValidatorInterface,
     MigrationPlanValidationReportImpl,
@@ -25,21 +25,21 @@ use BpmPlatform\Engine\Impl\Migration\Validation\Instruction\{
     ValidatingMigrationInstructionImpl,
     ValidatingMigrationInstructions
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\ProcessDefinitionEntity;
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\Impl\Persistence\Entity\ProcessDefinitionEntity;
+use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ProcessDefinitionImpl
 };
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Util\{
     EngineUtilLogger,
     EnsureUtil
 };
-use BpmPlatform\Engine\Migration\{
+use Jabe\Engine\Migration\{
     MigrationInstructionInterface,
     MigrationPlanInterface
 };
-use BpmPlatform\Engine\Variable\VariableMapInterface;
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 class CreateMigrationPlanCmd implements CommandInterface
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Tree;
+namespace Jabe\Engine\Impl\Tree;
 
-use BpmPlatform\Engine\Impl\Pvm\PvmScopeInterface;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
+use Jabe\Engine\Impl\Pvm\PvmScopeInterface;
+use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
 
 class ActivityExecutionTuple
 {

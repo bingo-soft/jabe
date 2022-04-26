@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Util\Xml;
+namespace Jabe\Engine\Impl\Util\Xml;
 
-use BpmPlatform\Engine\ProblemInterface;
+use Jabe\Engine\ProblemInterface;
 
 class ProblemImpl implements ProblemInterface
 {

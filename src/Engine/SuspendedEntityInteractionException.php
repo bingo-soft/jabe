@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine;
+namespace Jabe\Engine;
 
-use BpmPlatform\Engine\Exception\NotAllowedException;
+use Jabe\Engine\Exception\NotAllowedException;
 
 class SuspendedEntityInteractionException extends NotAllowedException
 {

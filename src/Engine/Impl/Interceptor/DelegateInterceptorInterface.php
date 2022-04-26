@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Interceptor;
+namespace Jabe\Engine\Impl\Interceptor;
 
-use BpmPlatform\Engine\Impl\Delegate\DelegateInvocation;
+use Jabe\Engine\Impl\Delegate\DelegateInvocation;
 
 interface DelegateInterceptorInterface
 {

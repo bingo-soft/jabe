@@ -1,19 +1,19 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\Authorization\{
     AuthorizationInterface,
     ResourceInterface
 };
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
-use BpmPlatform\Engine\Impl\History\Event\HistoryEvent;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\Impl\History\Event\HistoryEvent;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\AuthorizationEntity;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Persistence\Entity\AuthorizationEntity;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class SaveAuthorizationCmd implements CommandInterface
 {

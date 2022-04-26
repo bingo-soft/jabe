@@ -6,9 +6,9 @@ use Tests\Xml\Test\{
     AbstractTypeAssumption,
     AttributeAssumption
 };
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
-use BpmPlatform\Model\Bpmn\Instance\Bpmndi\BpmnDiagramInterface;
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Instance\Bpmndi\BpmnDiagramInterface;
+use Jabe\Model\Bpmn\Instance\{
     ExtensionInterface,
     ImportInterface,
     RootElementInterface,

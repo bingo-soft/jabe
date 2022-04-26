@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance\Bpmndi;
+namespace Jabe\Model\Bpmn\Instance\Bpmndi;
 
-use BpmPlatform\Model\Bpmn\Instance\Di\LabelInterface;
+use Jabe\Model\Bpmn\Instance\Di\LabelInterface;
 
 interface BpmnLabelInterface extends LabelInterface
 {

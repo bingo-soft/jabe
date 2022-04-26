@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Management;
+namespace Jabe\Engine\Impl\Management;
 
 interface PurgeReportingInterface
 {

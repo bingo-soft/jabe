@@ -3,7 +3,7 @@
 namespace Tests\Bpmn;
 
 use PHPUnit\Framework\TestCase;
-use BpmPlatform\Model\Bpmn\{
+use Jabe\Model\Bpmn\{
     Bpmn,
     BpmnModelInstanceInterface
 };

@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Filter\FilterInterface;
-use BpmPlatform\Engine\Impl\AbstractQuery;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\Entity\FilterEntity;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
-use BpmPlatform\Engine\Query\QueryInterface;
-use BpmPlatform\Engine\Task\TaskQueryInterface;
+use Jabe\Engine\Filter\FilterInterface;
+use Jabe\Engine\Impl\AbstractQuery;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\Entity\FilterEntity;
+use Jabe\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Query\QueryInterface;
+use Jabe\Engine\Task\TaskQueryInterface;
 
 abstract class AbstractExecuteFilterCmd implements \Serializable
 {

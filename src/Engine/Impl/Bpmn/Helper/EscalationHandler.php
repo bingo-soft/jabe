@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Helper;
+namespace Jabe\Engine\Impl\Bpmn\Helper;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Bpmn\Behavior\BpmnBehaviorLogger;
-use BpmPlatform\Engine\Impl\Bpmn\Parser\EscalationEventDefinition;
-use BpmPlatform\Engine\Impl\Pvm\{
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Bpmn\Behavior\BpmnBehaviorLogger;
+use Jabe\Engine\Impl\Bpmn\Parser\EscalationEventDefinition;
+use Jabe\Engine\Impl\Pvm\{
     PvmActivityInterface,
     PvmScopeInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
-use BpmPlatform\Engine\Impl\Tree\{
+use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
+use Jabe\Engine\Impl\Tree\{
     ActivityExecutionHierarchyWalker,
     ActivityExecutionMappingCollector,
     ActivityExecutionTuple,

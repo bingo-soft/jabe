@@ -9,7 +9,7 @@ use Tests\Bpmn\Instance\{
     BpmnModelElementInstanceTest,
     BpmnTypeAssumption
 };
-use BpmPlatform\Model\Bpmn\Instance\BaseElementInterface;
+use Jabe\Model\Bpmn\Instance\BaseElementInterface;
 
 class PartitionElementTest extends BpmnModelElementInstanceTest
 {

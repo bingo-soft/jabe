@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\History\HistoricActivityInstanceInterface;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\History\HistoricActivityInstanceInterface;
+use Jabe\Engine\Impl\{
     HistoricActivityInstanceQueryImpl,
     Page
 };
-use BpmPlatform\Engine\Impl\Db\ListQueryParameterObject;
-use BpmPlatform\Engine\Impl\Db\EntityManager\Operation\DbOperation;
-use BpmPlatform\Engine\Impl\History\Event\HistoricActivityInstanceEventEntity;
-use BpmPlatform\Engine\Impl\Persistence\AbstractHistoricManager;
+use Jabe\Engine\Impl\Db\ListQueryParameterObject;
+use Jabe\Engine\Impl\Db\EntityManager\Operation\DbOperation;
+use Jabe\Engine\Impl\History\Event\HistoricActivityInstanceEventEntity;
+use Jabe\Engine\Impl\Persistence\AbstractHistoricManager;
 
 class HistoricActivityInstanceManager extends AbstractHistoricManager
 {

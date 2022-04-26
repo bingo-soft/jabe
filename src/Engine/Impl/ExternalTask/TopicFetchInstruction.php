@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\ExternalTask;
+namespace Jabe\Engine\Impl\ExternalTask;
 
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Impl\{
     QueryOperator,
     QueryVariableValue
 };
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Variable\Serializer\VariableSerializersInterface;
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Variable\Serializer\VariableSerializersInterface;
 
 class TopicFetchInstruction implements \Serializable
 {

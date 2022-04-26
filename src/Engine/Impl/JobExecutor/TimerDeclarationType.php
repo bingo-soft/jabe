@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\Impl\Calendar\{
+use Jabe\Engine\Impl\Calendar\{
     CycleBusinessCalendar,
     DueDateBusinessCalendar,
     DurationBusinessCalendar

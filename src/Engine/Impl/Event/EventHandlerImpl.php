@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Event;
+namespace Jabe\Engine\Impl\Event;
 
-use BpmPlatform\Engine\Impl\Bpmn\Behavior\EventSubProcessStartEventActivityBehavior;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\Entity\EventSubscriptionEntity;
-use BpmPlatform\Engine\Impl\Pvm\Process\ActivityImpl;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Bpmn\Behavior\EventSubProcessStartEventActivityBehavior;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\Entity\EventSubscriptionEntity;
+use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
+use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class EventHandlerImpl implements EventHandlerInterface
 {

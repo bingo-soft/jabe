@@ -1,32 +1,32 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     ActivityInstanceImpl,
     ExecutionEntity,
     IncidentEntity,
     TransitionInstanceImpl
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ScopeImpl
 };
-use BpmPlatform\Engine\Impl\Pvm\Runtime\{
+use Jabe\Engine\Impl\Pvm\Runtime\{
     CompensationBehavior,
     LegacyBehavior,
     PvmExecutionImpl
 };
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Util\{
     CollectionUtil,
     EnsureUtil
 };
-use BpmPlatform\Engine\Runtime\{
+use Jabe\Engine\Runtime\{
     ActivityInstanceInterface,
     IncidentInterface
 };

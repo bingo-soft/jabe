@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type\Attribute;
+namespace Jabe\Model\Xml\Impl\Type\Attribute;
 
-use BpmPlatform\Model\Xml\Impl\Type\ModelElementTypeImpl;
+use Jabe\Model\Xml\Impl\Type\ModelElementTypeImpl;
 
 class EnumAttributeBuilder extends AttributeBuilderImpl
 {

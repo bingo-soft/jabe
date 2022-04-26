@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Juel;
+namespace Jabe\Engine\Impl\Juel;
 
-use BpmPlatform\Engine\Impl\Util\El\ValueExpression;
+use Jabe\Engine\Impl\Util\El\ValueExpression;
 
 class Bindings extends TypeConverter implements \Serializable
 {

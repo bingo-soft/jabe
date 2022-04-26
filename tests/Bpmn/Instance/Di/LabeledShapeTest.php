@@ -5,8 +5,8 @@ namespace Tests\Bpmn\Instance\Di;
 use Tests\Xml\Test\{
     AbstractTypeAssumption
 };
-use BpmPlatform\Model\Bpmn\Instance\Di\ShapeInterface;
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Instance\Di\ShapeInterface;
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
 use Tests\Bpmn\Instance\{
     BpmnModelElementInstanceTest,
     BpmnTypeAssumption

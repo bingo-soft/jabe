@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\Impl\Interceptor\CommandInterface;
+use Jabe\Engine\Impl\Interceptor\CommandInterface;
 
 interface AcquireJobsCommandFactoryInterface
 {

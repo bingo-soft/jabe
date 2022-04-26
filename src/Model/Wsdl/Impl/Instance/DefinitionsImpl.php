@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Model\Wsdl\Impl\Instance;
+namespace Jabe\Model\Wsdl\Impl\Instance;
 
-use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Xml\Impl\Instance\{
+use Jabe\Model\Xml\ModelBuilder;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Impl\Instance\{
     ModelTypeInstanceContext,
     ModelElementInstanceImpl
 };
-use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
-use BpmPlatform\Model\Wsdl\Impl\WsdlModelConstants;
-use BpmPlatform\Model\Wsdl\Instance\{
+use Jabe\Model\Xml\Type\ModelTypeInstanceProviderInterface;
+use Jabe\Model\Wsdl\Impl\WsdlModelConstants;
+use Jabe\Model\Wsdl\Instance\{
     BindingInterface,
     DefinitionsInterface,
     RootElementInterface,

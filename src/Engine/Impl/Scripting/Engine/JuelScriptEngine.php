@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Scripting\Engine;
+namespace Jabe\Engine\Impl\Scripting\Engine;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\El\ExpressionFactoryResolver;
-use BpmPlatform\Engine\Impl\Util\El\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\El\ExpressionFactoryResolver;
+use Jabe\Engine\Impl\Util\El\{
     ArrayELResolver,
     BeanELResolver,
     CompositeELResolver,
@@ -18,9 +18,9 @@ use BpmPlatform\Engine\Impl\Util\El\{
     ValueExpression,
     VariableMapper
 };
-use BpmPlatform\Engine\Impl\Juel\SimpleResolver;
-use BpmPlatform\Engine\Impl\Util\ReflectUtil;
-use BpmPlatform\Engine\Impl\Util\Scripting\{
+use Jabe\Engine\Impl\Juel\SimpleResolver;
+use Jabe\Engine\Impl\Util\ReflectUtil;
+use Jabe\Engine\Impl\Util\Scripting\{
     AbstractScriptEngine,
     BindingsInterface,
     CompiledScript,

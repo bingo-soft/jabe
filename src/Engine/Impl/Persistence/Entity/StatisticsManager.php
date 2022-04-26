@@ -1,24 +1,24 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\Authorization\{
     Permissions,
     Resources
 };
-use BpmPlatform\Engine\Batch\BatchStatisticsInterface;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Batch\BatchStatisticsInterface;
+use Jabe\Engine\Impl\{
     ActivityStatisticsQueryImpl,
     //HistoricDecisionInstanceStatisticsQueryImp,
     DeploymentStatisticsQueryImpl,
     Page,
     ProcessDefinitionStatisticsQueryImpl
 };
-use BpmPlatform\Engine\Impl\Batch\BatchStatisticsQueryImpl;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
-use BpmPlatform\Engine\Management\{
+use Jabe\Engine\Impl\Batch\BatchStatisticsQueryImpl;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Management\{
     DeploymentStatisticsInterface,
     ProcessDefinitionStatisticsInterface
 };

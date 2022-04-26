@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\BadUserRequestException;
-use BpmPlatform\Engine\Form\FormRefInterface;
-use BpmPlatform\Engine\Impl\Form\Handler\DefaultFormHandler;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\BadUserRequestException;
+use Jabe\Engine\Form\FormRefInterface;
+use Jabe\Engine\Impl\Form\Handler\DefaultFormHandler;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\FormDefinitionEntity;
+use Jabe\Engine\Impl\Persistence\Entity\FormDefinitionEntity;
 
 class GetFormDefinitionCmd implements CommandInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable\Value\Builder;
+namespace Jabe\Engine\Variable\Value\Builder;
 
 interface SerializedObjectValueBuilderInterface extends ObjectValueBuilderInterface
 {

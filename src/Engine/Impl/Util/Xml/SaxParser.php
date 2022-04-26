@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Util\Xml;
+namespace Jabe\Engine\Impl\Util\Xml;
 
 class SaxParser
 {

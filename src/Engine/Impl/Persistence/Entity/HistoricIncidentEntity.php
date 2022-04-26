@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\History\HistoricIncidentInterface;
-use BpmPlatform\Engine\Impl\History\Event\HistoricIncidentEventEntity;
+use Jabe\Engine\History\HistoricIncidentInterface;
+use Jabe\Engine\Impl\History\Event\HistoricIncidentEventEntity;
 
 class HistoricIncidentEntity extends HistoricIncidentEventEntity implements HistoricIncidentInterface
 {

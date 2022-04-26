@@ -1,19 +1,19 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Deployer;
+namespace Jabe\Engine\Impl\Form\Deployer;
 
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Impl\{
     AbstractDefinitionDeployer,
     ProcessEngineLogger
 };
-use BpmPlatform\Engine\Impl\Core\Model\Properties;
-use BpmPlatform\Engine\Impl\Persistence\Deploy\Cache\DeploymentCache;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Core\Model\Properties;
+use Jabe\Engine\Impl\Persistence\Deploy\Cache\DeploymentCache;
+use Jabe\Engine\Impl\Persistence\Entity\{
     FormDefinitionEntity,
     DeploymentEntity,
     ResourceEntity
 };
-use BpmPlatform\Engine\Impl\Util\EngineUtilLogger;
+use Jabe\Engine\Impl\Util\EngineUtilLogger;
 
 class CamundaFormDefinitionDeployer extends AbstractDefinitionDeployer
 {

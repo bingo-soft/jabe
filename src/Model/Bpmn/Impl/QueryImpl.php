@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Impl;
+namespace Jabe\Model\Bpmn\Impl;
 
-use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Bpmn\Exception\BpmnModelException;
-use BpmPlatform\Model\Bpmn\QueryInterface;
+use Jabe\Model\Xml\Type\ModelElementTypeInterface;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Bpmn\Exception\BpmnModelException;
+use Jabe\Model\Bpmn\QueryInterface;
 
 class QueryImpl implements QueryInterface
 {

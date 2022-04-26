@@ -3,9 +3,9 @@
 namespace Tests\Bpmn;
 
 use PHPUnit\Framework\TestCase;
-use BpmPlatform\Model\Xml\Impl\Util\ModelUtil;
-use BpmPlatform\Model\Bpmn\Bpmn;
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Xml\Impl\Util\ModelUtil;
+use Jabe\Model\Bpmn\Bpmn;
+use Jabe\Model\Bpmn\Instance\{
     BaseElementInterface,
     CatchEventInterface,
     DefinitionsInterface,

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Repository;
+namespace Jabe\Engine\Repository;
 
-use BpmPlatform\Engine\Authorization\ResourceInterface;
+use Jabe\Engine\Authorization\ResourceInterface;
 
 interface DeploymentHandlerInterface
 {

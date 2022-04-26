@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Builder;
+namespace Jabe\Model\Bpmn\Builder;
 
-use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
+use Jabe\Model\Bpmn\Instance\{
     ServiceTaskInterface
 };
-use BpmPlatform\Model\Bpmn\Instance\Extension\ErrorEventDefinitionInterface;
+use Jabe\Model\Bpmn\Instance\Extension\ErrorEventDefinitionInterface;
 
 abstract class AbstractServiceTaskBuilder extends AbstractTaskBuilder
 {

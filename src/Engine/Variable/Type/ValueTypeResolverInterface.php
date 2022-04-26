@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable\Type;
+namespace Jabe\Engine\Variable\Type;
 
 interface ValueTypeResolverInterface
 {

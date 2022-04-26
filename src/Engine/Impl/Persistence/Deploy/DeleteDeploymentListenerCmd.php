@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Deploy;
+namespace Jabe\Engine\Impl\Persistence\Deploy;
 
-use BpmPlatform\Engine\Impl\Cmd\UnregisterDeploymentCmd;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Cmd\UnregisterDeploymentCmd;
+use Jabe\Engine\Impl\Interceptor\{
     AbstractCommand,
     CommandContext
 };

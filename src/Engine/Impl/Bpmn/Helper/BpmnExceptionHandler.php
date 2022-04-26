@@ -1,17 +1,17 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Helper;
+namespace Jabe\Engine\Impl\Bpmn\Helper;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\BpmnError;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Bpmn\Behavior\BpmnBehaviorLogger;
-use BpmPlatform\Engine\Impl\Bpmn\Parser\ErrorEventDefinition;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Pvm\PvmActivityInterface;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
-use BpmPlatform\Engine\Impl\Tree\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\BpmnError;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Bpmn\Behavior\BpmnBehaviorLogger;
+use Jabe\Engine\Impl\Bpmn\Parser\ErrorEventDefinition;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
+use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
+use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
+use Jabe\Engine\Impl\Tree\{
     ActivityExecutionHierarchyWalker,
     ActivityExecutionMappingCollector,
     ActivityExecutionTuple,

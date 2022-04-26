@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Impl\Core\Variable\Scope\{
+use Jabe\Engine\Impl\Core\Variable\Scope\{
     AbstractVariableScope,
     VariableInstanceLifecycleListenerInterface
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     PropertyChange,
     TaskEntity,
     VariableInstanceEntity
 };
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class SetTaskVariablesCmd extends AbstractSetVariableCmd implements VariableInstanceLifecycleListenerInterface
 {

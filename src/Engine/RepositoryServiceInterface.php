@@ -1,21 +1,21 @@
 <?php
 
-namespace BpmPlatform\Engine;
+namespace Jabe\Engine;
 
-use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
-use BpmPlatform\Engine\Application\ProcessApplicationReferenceInterface;
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
+use Jabe\Engine\Application\ProcessApplicationReferenceInterface;
+use Jabe\Engine\Authorization\{
     Permissions,
     ProcessDefinitionPermissions,
     ProcessInstancePermissions,
     Resources
 };
-use BpmPlatform\Engine\Delegate\ExecutionListenerInterface;
-use BpmPlatform\Engine\Exception\{
+use Jabe\Engine\Delegate\ExecutionListenerInterface;
+use Jabe\Engine\Exception\{
     NotFoundException,
     NotValidException
 };
-use BpmPlatform\Engine\Repository\{
+use Jabe\Engine\Repository\{
     DeleteProcessDefinitionsSelectBuilderInterface,
     DeploymentBuilderInterface,
     DeploymentQueryInterface,
@@ -28,7 +28,7 @@ use BpmPlatform\Engine\Repository\{
     UpdateProcessDefinitionSuspensionStateBuilderInterface,
     UpdateProcessDefinitionSuspensionStateSelectBuilderInterface
 };
-use BpmPlatform\Engine\Task\IdentityLinkInterface;
+use Jabe\Engine\Task\IdentityLinkInterface;
 
 interface RepositoryServiceInterface
 {

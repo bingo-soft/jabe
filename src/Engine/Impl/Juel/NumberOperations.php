@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Juel;
+namespace Jabe\Engine\Impl\Juel;
 
-use BpmPlatform\Engine\Impl\Util\El\ELException;
+use Jabe\Engine\Impl\Util\El\ELException;
 
 class NumberOperations
 {

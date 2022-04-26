@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Filter;
+namespace Jabe\Engine\Filter;
 
-use BpmPlatform\Engine\Query\QueryInterface;
+use Jabe\Engine\Query\QueryInterface;
 
 interface FilterQueryInterface extends QueryInterface
 {

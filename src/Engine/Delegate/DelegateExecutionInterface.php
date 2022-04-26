@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Delegate;
+namespace Jabe\Engine\Delegate;
 
-use BpmPlatform\Engine\Runtime\IncidentInterface;
+use Jabe\Engine\Runtime\IncidentInterface;
 
 interface DelegateExecutionInterface extends BaseDelegateExecutionInterface, BpmnModelExecutionContextInterface, ProcessEngineServicesAwareInterface
 {

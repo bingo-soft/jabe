@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance;
+namespace Jabe\Model\Bpmn\Instance;
 
 interface ConversationNodeInterface extends BaseElementInterface, InteractionNodeInterface
 {

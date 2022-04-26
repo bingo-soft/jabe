@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\DbEntityInterface;
-use BpmPlatform\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
-use BpmPlatform\Engine\Repository\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\DbEntityInterface;
+use Jabe\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
+use Jabe\Engine\Repository\{
     DeploymentWithDefinitionsInterface
 };
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class DeploymentEntity implements \Serializable, DeploymentWithDefinitionsInterface, DbEntityInterface
 {

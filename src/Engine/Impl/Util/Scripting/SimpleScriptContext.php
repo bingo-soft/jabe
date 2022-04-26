@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Util\Scripting;
+namespace Jabe\Engine\Impl\Util\Scripting;
 
 class SimpleScriptContext implements ScriptContextInterface
 {

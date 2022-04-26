@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Incident;
+namespace Jabe\Engine\Impl\Incident;
 
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Runtime\IncidentInterface;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Runtime\IncidentInterface;
 
 class IncidentHandling
 {

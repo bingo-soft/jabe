@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Db\EntityManager\Operation;
+namespace Jabe\Engine\Impl\Db\EntityManager\Operation;
 
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
-use BpmPlatform\Engine\Impl\Db\DbEntityInterface;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Impl\Db\DbEntityInterface;
 
 class DbEntityOperation extends DbOperation
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Type\Reference;
+namespace Jabe\Model\Xml\Type\Reference;
 
-use BpmPlatform\Model\Xml\Impl\ModelBuildOperationInterface;
+use Jabe\Model\Xml\Impl\ModelBuildOperationInterface;
 
 interface ElementReferenceCollectionBuilderInterface extends ModelBuildOperationInterface
 {

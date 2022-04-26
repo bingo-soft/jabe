@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\Db\DbEntityInterface;
-use BpmPlatform\Engine\Management\SchemaLogEntryInterface;
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Impl\Db\DbEntityInterface;
+use Jabe\Engine\Management\SchemaLogEntryInterface;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class SchemaLogEntryEntity implements SchemaLogEntryInterface, DbEntityInterface, \Serializable
 {

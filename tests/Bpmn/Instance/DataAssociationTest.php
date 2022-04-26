@@ -6,12 +6,12 @@ use Tests\Xml\Test\{
     AbstractTypeAssumption,
     AttributeAssumption
 };
-use BpmPlatform\Model\Bpmn\Impl\Instance\{
+use Jabe\Model\Bpmn\Impl\Instance\{
     SourceRef,
     TargetRef,
     Transformation
 };
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Bpmn\Instance\{
     AssignmentInterface,
     BaseElementInterface
 };

@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Behavior;
+namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Impl\{
     ConditionInterface,
     ProcessEngineLogger
 };
-use BpmPlatform\Engine\Impl\Bpmn\Parser\BpmnParse;
-use BpmPlatform\Engine\Impl\Pvm\PvmTransitionInterface;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
+use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
+use Jabe\Engine\Impl\Pvm\PvmTransitionInterface;
+use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
 
 class ExclusiveGatewayActivityBehavior extends GatewayActivityBehavior
 {

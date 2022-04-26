@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Juel;
+namespace Jabe\Engine\Impl\Juel;
 
 class Symbol
 {

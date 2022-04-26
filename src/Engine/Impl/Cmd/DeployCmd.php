@@ -1,32 +1,32 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Application\{
+use Jabe\Engine\Application\{
     ProcessApplicationReferenceInterface,
     ProcessApplicationRegistrationInterface
 };
-use BpmPlatform\Engine\{
+use Jabe\Engine\{
     ProcessEngineInterface,
     RepositoryServiceInterface
 };
-use BpmPlatform\Engine\Exception\{
+use Jabe\Engine\Exception\{
     NotFoundException,
     NotValidException
 };
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Bpmn\Deployer\BpmnDeployer;
-use BpmPlatform\Engine\Impl\Cfg\{
+use Jabe\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Bpmn\Deployer\BpmnDeployer;
+use Jabe\Engine\Impl\Cfg\{
     TransactionLogger,
     TransactionState
 };
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Deploy\DeploymentFailListener;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Deploy\DeploymentFailListener;
+use Jabe\Engine\Impl\Persistence\Entity\{
     DeploymentEntity,
     DeploymentManager,
     ProcessApplicationDeploymentImpl,
@@ -36,16 +36,16 @@ use BpmPlatform\Engine\Impl\Persistence\Entity\{
     ResourceManager,
     UserOperationLogManager
 };
-use BpmPlatform\Engine\Impl\Repository\{
+use Jabe\Engine\Impl\Repository\{
     CandidateDeploymentImpl,
     DeploymentBuilderImpl,
     ProcessApplicationDeploymentBuilderImpl
 };
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Util\{
     ClockUtil,
     StringUtil
 };
-use BpmPlatform\Engine\Repository\{
+use Jabe\Engine\Repository\{
     CandidateDeploymentInterface,
     DeploymentInterface,
     DeploymentHandlerInterface,
@@ -56,11 +56,11 @@ use BpmPlatform\Engine\Repository\{
     ResourceInterface,
     ResumePreviousBy
 };
-use BpmPlatform\Model\Bpmn\{
+use Jabe\Model\Bpmn\{
     Bpmn,
     BpmnModelInstanceInterface
 };
-use BpmPlatform\Model\Bpmn\Instance\ProcessInterface;
+use Jabe\Model\Bpmn\Instance\ProcessInterface;
 
 class DeployCmd implements CommandInterface
 {

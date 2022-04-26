@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type\Attribute;
+namespace Jabe\Model\Xml\Impl\Type\Attribute;
 
-use BpmPlatform\Model\Xml\Impl\Util\ModelUtil;
-use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
+use Jabe\Model\Xml\Impl\Util\ModelUtil;
+use Jabe\Model\Xml\Type\ModelElementTypeInterface;
 
 class DoubleAttribute extends AttributeImpl
 {

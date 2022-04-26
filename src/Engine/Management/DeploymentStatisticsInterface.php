@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Management;
+namespace Jabe\Engine\Management;
 
-use BpmPlatform\Engine\Repository\DeploymentInterface;
+use Jabe\Engine\Repository\DeploymentInterface;
 
 interface DeploymentStatisticsInterface extends DeploymentInterface
 {

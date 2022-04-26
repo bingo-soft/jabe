@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Migration;
+namespace Jabe\Engine\Migration;
 
 interface MigrationPlanInterface
 {

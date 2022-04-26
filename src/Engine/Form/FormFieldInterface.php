@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Form;
+namespace Jabe\Engine\Form;
 
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 interface FormFieldInterface
 {

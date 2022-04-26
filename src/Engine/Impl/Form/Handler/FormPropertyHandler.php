@@ -1,21 +1,21 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Handler;
+namespace Jabe\Engine\Impl\Form\Handler;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\{
     ExpressionInterface,
     VariableScopeInterface
 };
-use BpmPlatform\Engine\Form\{
+use Jabe\Engine\Form\{
     FormPropertyInterface,
     FormTypeInterface
 };
-use BpmPlatform\Engine\Impl\El\StartProcessVariableScope;
-use BpmPlatform\Engine\Impl\Form\FormPropertyImpl;
-use BpmPlatform\Engine\Impl\Form\Type\AbstractFormFieldType;
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use BpmPlatform\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Impl\El\StartProcessVariableScope;
+use Jabe\Engine\Impl\Form\FormPropertyImpl;
+use Jabe\Engine\Impl\Form\Type\AbstractFormFieldType;
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Variable\VariableMapInterface;
 
 class FormPropertyHandler
 {

@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Batch\BatchInterface;
-use BpmPlatform\Engine\ExternalTask\{
+use Jabe\Engine\Batch\BatchInterface;
+use Jabe\Engine\ExternalTask\{
     ExternalTaskQueryInterface,
     UpdateExternalTaskRetriesBuilderInterface
 };
-use BpmPlatform\Engine\History\HistoricProcessInstanceQueryInterface;
-use BpmPlatform\Engine\Impl\Interceptor\CommandExecutorInterface;
-use BpmPlatform\Engine\Runtime\ProcessInstanceQueryInterface;
+use Jabe\Engine\History\HistoricProcessInstanceQueryInterface;
+use Jabe\Engine\Impl\Interceptor\CommandExecutorInterface;
+use Jabe\Engine\Runtime\ProcessInstanceQueryInterface;
 
 class UpdateExternalTaskRetriesBuilderImpl implements UpdateExternalTaskRetriesBuilderInterface
 {

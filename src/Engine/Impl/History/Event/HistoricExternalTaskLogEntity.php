@@ -1,22 +1,22 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History\Event;
+namespace Jabe\Engine\Impl\History\Event;
 
-use BpmPlatform\Engine\History\{
+use Jabe\Engine\History\{
     ExternalTaskStateImpl,
     HistoricExternalTaskLogInterface
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ByteArrayEntity,
     ExternalTaskEntity
 };
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Util\{
     EnsureUtil,
     ExceptionUtil,
     StringUtil
 };
-use BpmPlatform\Engine\Repository\ResourceTypes;
+use Jabe\Engine\Repository\ResourceTypes;
 
 class HistoricExternalTaskLogEntity extends HistoryEvent implements HistoricExternalTaskLogInterface
 {

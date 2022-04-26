@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Json;
+namespace Jabe\Engine\Impl\Json;
 
 abstract class JsonObjectConverter
 {

@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\ActivityExecutionTreeMapping;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Interceptor\CommandInterface;
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\ActivityExecutionTreeMapping;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Interceptor\CommandInterface;
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Impl\Pvm\Process\{
     ProcessDefinitionImpl,
     ScopeImpl
 };
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
-use BpmPlatform\Engine\Runtime\{
+use Jabe\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Runtime\{
     ActivityInstanceInterface,
     TransitionInstanceInterface
 };

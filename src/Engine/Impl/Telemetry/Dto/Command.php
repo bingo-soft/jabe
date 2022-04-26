@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Telemetry\Dto;
+namespace Jabe\Engine\Impl\Telemetry\Dto;
 
 class Command
 {

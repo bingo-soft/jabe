@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
-use BpmPlatform\Engine\Impl\Management\UpdateJobSuspensionStateBuilderImpl;
-use BpmPlatform\Engine\Impl\Persistence\Entity\SuspensionState;
+use Jabe\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\Impl\Management\UpdateJobSuspensionStateBuilderImpl;
+use Jabe\Engine\Impl\Persistence\Entity\SuspensionState;
 
 class ActivateJobCmd extends AbstractSetJobStateCmd
 {

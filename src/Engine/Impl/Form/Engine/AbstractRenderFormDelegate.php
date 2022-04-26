@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Engine;
+namespace Jabe\Engine\Impl\Form\Engine;
 
-use BpmPlatform\Engine\Form\{
+use Jabe\Engine\Form\{
     FormDataInterface,
     FormFieldInterface,
     FormFieldValidationConstraintInterface,
     FormPropertyInterface
 };
-use BpmPlatform\Engine\Impl\Form\Type\{
+use Jabe\Engine\Impl\Form\Type\{
     BooleanFormType,
     DateFormType,
     EnumFormType,

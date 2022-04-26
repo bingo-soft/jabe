@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Application\ProcessApplicationRegistrationInterface;
-use BpmPlatform\Engine\Repository\{
+use Jabe\Engine\Application\ProcessApplicationRegistrationInterface;
+use Jabe\Engine\Repository\{
     DeploymentWithDefinitionsInterface,
     ProcessApplicationDeploymentInterface
 };

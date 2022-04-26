@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Model\Xml;
+namespace Jabe\Model\Xml;
 
-use BpmPlatform\Model\Xml\Impl\ModelBuilderImpl;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Xml\Type\{
+use Jabe\Model\Xml\Impl\ModelBuilderImpl;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Type\{
     ModelElementTypeInterface,
     ModelElementTypeBuilderInterface
 };

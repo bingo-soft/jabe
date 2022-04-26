@@ -4,16 +4,16 @@ namespace Tests\Bpmn;
 
 use PHPUnit\Framework\TestCase;
 use Tests\Bpmn\BpmnTestConstants;
-use BpmPlatform\Model\Bpmn\Bpmn;
-use BpmPlatform\Model\Bpmn\Instance\Bpmndi\{
+use Jabe\Model\Bpmn\Bpmn;
+use Jabe\Model\Bpmn\Instance\Bpmndi\{
     BpmnDiagramInterface,
     BpmnLabelStyleInterface,
     BpmnEdgeInterface,
     BpmnPlaneInterface,
     BpmnShapeInterface
 };
-use BpmPlatform\Model\Bpmn\Instance\Dc\BoundsInterface;
-use BpmPlatform\Model\Bpmn\Instance\Di\{
+use Jabe\Model\Bpmn\Instance\Dc\BoundsInterface;
+use Jabe\Model\Bpmn\Instance\Di\{
     DiagramElementInterface,
     WaypointInterface
 };

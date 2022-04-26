@@ -3,7 +3,7 @@
 namespace Tests\Bpmn\Instance;
 
 use Tests\Xml\Test\AttributeAssumption;
-use BpmPlatform\Model\Bpmn\Instance\ActivationConditionInterface;
+use Jabe\Model\Bpmn\Instance\ActivationConditionInterface;
 
 class ComplexGatewayTest extends AbstractGatewayTest
 {

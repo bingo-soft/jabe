@@ -8,9 +8,9 @@ use Tests\Bpmn\Instance\{
     BpmnModelElementInstanceTest,
     BpmnTypeAssumption
 };
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
-use BpmPlatform\Model\Bpmn\Instance\Di\DiagramInterface;
-use BpmPlatform\Model\Bpmn\Instance\Bpmndi\{
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Instance\Di\DiagramInterface;
+use Jabe\Model\Bpmn\Instance\Bpmndi\{
     BpmnPlaneInterface,
     BpmnLabelStyleInterface
 };

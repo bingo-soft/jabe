@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\Cmd\LicenseCmd;
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Impl\Cmd\LicenseCmd;
+use Jabe\Engine\Impl\Persistence\AbstractManager;
 
 class ResourceManager extends AbstractManager
 {

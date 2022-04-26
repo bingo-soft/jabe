@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Exception\DeploymentResourceNotFoundException;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Exception\DeploymentResourceNotFoundException;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class GetDeploymentResourceCmd implements CommandInterface, \Serializable
 {

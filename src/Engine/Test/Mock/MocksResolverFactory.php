@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Test\Mock;
+namespace Jabe\Engine\Test\Mock;
 
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Impl\Scripting\Engine\{
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Impl\Scripting\Engine\{
     ResolverInterface,
     ResolverFactoryInterface
 };

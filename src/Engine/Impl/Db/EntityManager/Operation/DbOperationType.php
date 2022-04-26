@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Db\EntityManager\Operation;
+namespace Jabe\Engine\Impl\Db\EntityManager\Operation;
 
 class DbOperationType
 {

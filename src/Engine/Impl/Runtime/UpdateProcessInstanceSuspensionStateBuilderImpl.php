@@ -1,19 +1,19 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Runtime;
+namespace Jabe\Engine\Impl\Runtime;
 
-use BpmPlatform\Engine\History\HistoricProcessInstanceQueryInterface;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\History\HistoricProcessInstanceQueryInterface;
+use Jabe\Engine\Impl\{
     ProcessEngineLogger,
     UpdateProcessInstancesSuspensionStateBuilderImpl
 };
-use BpmPlatform\Engine\Impl\Cmd\{
+use Jabe\Engine\Impl\Cmd\{
     ActivateProcessInstanceCmd,
     CommandLogger,
     SuspendProcessInstanceCmd
 };
-use BpmPlatform\Engine\Impl\Interceptor\CommandExecutorInterface;
-use BpmPlatform\Engine\Runtime\{
+use Jabe\Engine\Impl\Interceptor\CommandExecutorInterface;
+use Jabe\Engine\Runtime\{
     ProcessInstanceQueryInterface,
     UpdateProcessInstanceSuspensionStateBuilderInterface,
     UpdateProcessInstanceSuspensionStateSelectBuilderInterface,

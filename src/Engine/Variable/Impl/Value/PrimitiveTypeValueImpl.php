@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable\Impl\Value;
+namespace Jabe\Engine\Variable\Impl\Value;
 
-use BpmPlatform\Engine\Variable\Type\PrimitiveValueTypeInterface;
-use BpmPlatform\Engine\Variable\Value\PrimitiveValueInterface;
+use Jabe\Engine\Variable\Type\PrimitiveValueTypeInterface;
+use Jabe\Engine\Variable\Value\PrimitiveValueInterface;
 
 class PrimitiveTypeValueImpl extends AbstractTypedValue implements PrimitiveValueInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Runtime;
+namespace Jabe\Engine\Runtime;
 
 interface TransitionInstanceInterface extends ProcessElementInstanceInterface
 {

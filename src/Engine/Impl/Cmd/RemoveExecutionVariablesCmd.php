@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Impl\Core\Variable\Scope\AbstractVariableScope;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Core\Variable\Scope\AbstractVariableScope;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     PropertyChange
 };
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class RemoveExecutionVariablesCmd extends AbstractRemoveVariableCmd
 {

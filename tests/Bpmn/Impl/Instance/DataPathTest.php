@@ -9,7 +9,7 @@ use Tests\Bpmn\Instance\{
     BpmnModelElementInstanceTest,
     BpmnTypeAssumption
 };
-use BpmPlatform\Model\Bpmn\Instance\FormalExpressionInterface;
+use Jabe\Model\Bpmn\Instance\FormalExpressionInterface;
 
 class DataPathTest extends BpmnModelElementInstanceTest
 {

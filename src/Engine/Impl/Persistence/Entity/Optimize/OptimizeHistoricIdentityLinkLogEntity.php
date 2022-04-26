@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity\Optimize;
+namespace Jabe\Engine\Impl\Persistence\Entity\Optimize;
 
-use BpmPlatform\Engine\Impl\Persistence\Entity\HistoricIdentityLinkLogEntity;
+use Jabe\Engine\Impl\Persistence\Entity\HistoricIdentityLinkLogEntity;
 
 class OptimizeHistoricIdentityLinkLogEntity extends HistoricIdentityLinkLogEntity
 {

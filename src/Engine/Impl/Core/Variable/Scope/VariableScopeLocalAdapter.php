@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Variable\Scope;
+namespace Jabe\Engine\Impl\Core\Variable\Scope;
 
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Variable\VariableMapInterface;
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 class VariableScopeLocalAdapter implements VariableScopeInterface
 {

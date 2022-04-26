@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Event;
+namespace Jabe\Engine\Impl\Event;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\Bpmn\Helper\CompensationUtil;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\Bpmn\Helper\CompensationUtil;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\Entity\{
     EventSubscriptionEntity,
     ExecutionEntity
 };
-use BpmPlatform\Engine\Impl\Pvm\Delegate\CompositeActivityBehaviorInterface;
-use BpmPlatform\Engine\Impl\Pvm\Process\ActivityImpl;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\AtomicOperation;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Pvm\Delegate\CompositeActivityBehaviorInterface;
+use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
+use Jabe\Engine\Impl\Pvm\Runtime\AtomicOperation;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class CompensationEventHandler implements EventHandlerInterface
 {

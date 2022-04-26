@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Delegate;
+namespace Jabe\Engine\Impl\Bpmn\Delegate;
 
-use BpmPlatform\Engine\Impl\Delegate\DelegateInvocation;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\{
+use Jabe\Engine\Impl\Delegate\DelegateInvocation;
+use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
     SignallableActivityBehaviorInterface
 };

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine;
+namespace Jabe\Engine;
 
-use BpmPlatform\Engine\Impl\Interceptor\CommandInterface;
+use Jabe\Engine\Impl\Interceptor\CommandInterface;
 
 interface SchemaOperationsCommandInterface extends CommandInterface
 {

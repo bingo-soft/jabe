@@ -3,7 +3,7 @@
 namespace Tests\Xml;
 
 use PHPUnit\Framework\TestCase;
-use BpmPlatform\Model\Xml\ModelBuilder;
+use Jabe\Model\Xml\ModelBuilder;
 use Tests\Xml\TestModel\{
     TestModel,
     TestModelConstants

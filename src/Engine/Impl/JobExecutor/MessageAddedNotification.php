@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Cfg\TransactionListenerInterface;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Cfg\TransactionListenerInterface;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
 
 class MessageAddedNotification implements TransactionListenerInterface
 {

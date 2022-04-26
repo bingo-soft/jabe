@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Util;
+namespace Jabe\Model\Xml\Impl\Util;
 
-use BpmPlatform\Model\Xml\Impl\Instance\{
+use Jabe\Model\Xml\Impl\Instance\{
     DomDocumentExt,
     DomDocumentImpl
 };
-use BpmPlatform\Model\Xml\Instance\DomDocumentInterface;
-use BpmPlatform\Model\Xml\Impl\ModelInstanceImpl;
-use BpmPlatform\Model\Xml\Impl\Instance\DomElementImpl;
-use BpmPlatform\Model\Xml\Impl\Util\DomUtil\{
+use Jabe\Model\Xml\Instance\DomDocumentInterface;
+use Jabe\Model\Xml\Impl\ModelInstanceImpl;
+use Jabe\Model\Xml\Impl\Instance\DomElementImpl;
+use Jabe\Model\Xml\Impl\Util\DomUtil\{
     ElementNodeListFilter,
     NodeListFilterInterface,
     ElementByNameListFilter,

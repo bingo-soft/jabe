@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\Db\DbEntityInterface;
-use BpmPlatform\Engine\Impl\Metrics\Util\MetricsUtil;
-use BpmPlatform\Engine\Management\MetricIntervalValueInterface;
+use Jabe\Engine\Impl\Db\DbEntityInterface;
+use Jabe\Engine\Impl\Metrics\Util\MetricsUtil;
+use Jabe\Engine\Management\MetricIntervalValueInterface;
 
 class MetricIntervalEntity implements MetricIntervalValueInterface, DbEntityInterface, \Serializable
 {

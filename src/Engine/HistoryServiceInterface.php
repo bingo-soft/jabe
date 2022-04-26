@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine;
+namespace Jabe\Engine;
 
-use BpmPlatform\Engine\History\{
+use Jabe\Engine\History\{
     HistoricBatchQueryInterface,
     CleanableHistoricBatchReportInterface,
     CleanableHistoricProcessInstanceReportInterface,
@@ -24,8 +24,8 @@ use BpmPlatform\Engine\History\{
     SetRemovalTimeSelectModeForHistoricBatchesBuilderInterface,
     SetRemovalTimeSelectModeForHistoricProcessInstancesBuilderInterface
 };
-use BpmPlatform\Engine\Runtime\JobInterface;
-use BpmPlatform\Engine\Batch\BatchInterface;
+use Jabe\Engine\Runtime\JobInterface;
+use Jabe\Engine\Batch\BatchInterface;
 
 interface HistoryServiceInterface
 {

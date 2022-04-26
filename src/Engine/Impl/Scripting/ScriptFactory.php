@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Scripting;
+namespace Jabe\Engine\Impl\Scripting;
 
-use BpmPlatform\Engine\Delegate\ExpressionInterface;
+use Jabe\Engine\Delegate\ExpressionInterface;
 
 class ScriptFactory
 {

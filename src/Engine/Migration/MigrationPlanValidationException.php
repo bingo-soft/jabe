@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Migration;
+namespace Jabe\Engine\Migration;
 
-use BpmPlatform\Engine\BadUserRequestException;
+use Jabe\Engine\BadUserRequestException;
 
 class MigrationPlanValidationException extends BadUserRequestException
 {

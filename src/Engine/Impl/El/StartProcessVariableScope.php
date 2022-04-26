@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\El;
+namespace Jabe\Engine\Impl\El;
 
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Impl\Core\Variable\CoreVariableInstanceInterface;
-use BpmPlatform\Engine\Variable\{
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Impl\Core\Variable\CoreVariableInstanceInterface;
+use Jabe\Engine\Variable\{
     VariableMapInterface,
     Variables
 };
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 class StartProcessVariableScope implements VariableScopeInterface
 {

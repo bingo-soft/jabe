@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\Db\ListQueryParameterObject;
-use BpmPlatform\Engine\Impl\Db\EntityManager\Operation\DbOperation;
-use BpmPlatform\Engine\Impl\Persistence\AbstractHistoricManager;
-use BpmPlatform\Engine\Task\AttachmentInterface;
+use Jabe\Engine\Impl\Db\ListQueryParameterObject;
+use Jabe\Engine\Impl\Db\EntityManager\Operation\DbOperation;
+use Jabe\Engine\Impl\Persistence\AbstractHistoricManager;
+use Jabe\Engine\Task\AttachmentInterface;
 
 class AttachmentManager extends AbstractHistoricManager
 {

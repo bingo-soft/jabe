@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Model\Xml;
+namespace Jabe\Model\Xml;
 
 class StringWriter
 {

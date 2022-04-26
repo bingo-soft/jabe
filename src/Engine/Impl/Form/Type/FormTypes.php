@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Type;
+namespace Jabe\Engine\Impl\Form\Type;
 
-use BpmPlatform\Engine\Impl\Bpmn\Parser\BpmnParse;
-use BpmPlatform\Engine\Impl\Form\Handler\DefaultFormHandler;
-use BpmPlatform\Engine\Impl\Util\Xml\Element;
+use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
+use Jabe\Engine\Impl\Form\Handler\DefaultFormHandler;
+use Jabe\Engine\Impl\Util\Xml\Element;
 
 class FormTypes
 {

@@ -6,13 +6,13 @@ use Tests\Xml\Test\{
     AbstractTypeAssumption,
     AttributeAssumption
 };
-use BpmPlatform\Model\Bpmn\Impl\Instance\{
+use Jabe\Model\Bpmn\Impl\Instance\{
     DataOutputRefs,
     OptionalOutputRefs,
     WhileExecutingOutputRefs,
     InputSetRefs
 };
-use BpmPlatform\Model\Bpmn\Instance\BaseElementInterface;
+use Jabe\Model\Bpmn\Instance\BaseElementInterface;
 
 class OutputSetTest extends BpmnModelElementInstanceTest
 {

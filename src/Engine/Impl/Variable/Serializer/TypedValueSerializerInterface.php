@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Variable\Serializer;
+namespace Jabe\Engine\Impl\Variable\Serializer;
 
-use BpmPlatform\Engine\Variable\Impl\Value\UntypedValueImpl;
-use BpmPlatform\Engine\Variable\Type\ValueTypeInterface;
-use BpmPlatform\Engine\Variable\Value\{
+use Jabe\Engine\Variable\Impl\Value\UntypedValueImpl;
+use Jabe\Engine\Variable\Type\ValueTypeInterface;
+use Jabe\Engine\Variable\Value\{
     SerializableValueInterface,
     TypedValueInterface
 };

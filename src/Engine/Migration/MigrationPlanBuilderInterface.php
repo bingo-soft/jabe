@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Migration;
+namespace Jabe\Engine\Migration;
 
-use BpmPlatform\Engine\AuthorizationException;
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\AuthorizationException;
+use Jabe\Engine\Authorization\{
     Permissions,
     Resources
 };

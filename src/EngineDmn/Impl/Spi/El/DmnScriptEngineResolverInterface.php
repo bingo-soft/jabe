@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\EngineDmn\Impl\Spi\El;
+namespace Jabe\EngineDmn\Impl\Spi\El;
 
-use BpmPlatform\Engine\Impl\Util\Scripting\ScriptEngineInterface;
+use Jabe\Engine\Impl\Util\Scripting\ScriptEngineInterface;
 
 interface DmnScriptEngineResolverInterface
 {

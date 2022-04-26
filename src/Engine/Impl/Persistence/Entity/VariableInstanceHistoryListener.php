@@ -1,19 +1,19 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Core\Variable\Scope\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Core\Variable\Scope\{
     AbstractVariableScope,
     VariableInstanceLifecycleListenerInterface
 };
-use BpmPlatform\Engine\Impl\History\AbstractHistoryLevel;
-use BpmPlatform\Engine\Impl\History\Event\{
+use Jabe\Engine\Impl\History\AbstractHistoryLevel;
+use Jabe\Engine\Impl\History\Event\{
     HistoryEvent,
     HistoryEventCreator,
     HistoryEventTypes
 };
-use BpmPlatform\Engine\Impl\History\Producer\HistoryEventProducerInterface;
+use Jabe\Engine\Impl\History\Producer\HistoryEventProducerInterface;
 
 class VariableInstanceHistoryListener implements VariableInstanceLifecycleListenerInterface
 {

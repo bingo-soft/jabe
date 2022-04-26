@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Instance;
+namespace Jabe\Engine\Impl\Core\Instance;
 
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Delegate\{
     BaseDelegateExecutionInterface,
     DelegateListenerInterface
 };
-use BpmPlatform\Engine\Core\Model\CoreModelElement;
-use BpmPlatform\Engine\Core\Operation\CoreAtomicOperation;
-use BpmPlatform\Engine\Core\Variable\Scope\AbstractVariableScope;
+use Jabe\Engine\Core\Model\CoreModelElement;
+use Jabe\Engine\Core\Operation\CoreAtomicOperation;
+use Jabe\Engine\Core\Variable\Scope\AbstractVariableScope;
 
 abstract class CoreExecution extends AbstractVariableScope implements BaseDelegateExecutionInterface
 {

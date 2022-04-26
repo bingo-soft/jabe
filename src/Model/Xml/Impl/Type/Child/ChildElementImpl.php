@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type\Child;
+namespace Jabe\Model\Xml\Impl\Type\Child;
 
-use BpmPlatform\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
-use BpmPlatform\Model\Xml\Impl\Type\ModelElementTypeImpl;
-use BpmPlatform\Model\Xml\Impl\Util\ModelUtil;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Xml\Type\Child\ChildElementInterface;
+use Jabe\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
+use Jabe\Model\Xml\Impl\Type\ModelElementTypeImpl;
+use Jabe\Model\Xml\Impl\Util\ModelUtil;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Type\Child\ChildElementInterface;
 
 class ChildElementImpl extends ChildElementCollectionImpl implements ChildElementInterface
 {

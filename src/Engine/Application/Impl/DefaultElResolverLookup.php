@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Application\Impl;
+namespace Jabe\Engine\Application\Impl;
 
-use BpmPlatform\Engine\Application\AbstractProcessApplication;
-use BpmPlatform\Engine\Impl\Util\El\ELResolver;
+use Jabe\Engine\Application\AbstractProcessApplication;
+use Jabe\Engine\Impl\Util\El\ELResolver;
 
 class DefaultElResolverLookup
 {

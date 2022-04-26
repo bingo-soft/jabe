@@ -1,19 +1,19 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Impl\Instance;
+namespace Jabe\Model\Bpmn\Impl\Instance;
 
-use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\Type\Reference\AttributeReferenceInterface;
-use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
-use BpmPlatform\Model\Bpmn\QueryInterface;
-use BpmPlatform\Model\Bpmn\Builder\{
+use Jabe\Model\Xml\ModelBuilder;
+use Jabe\Model\Xml\Type\Reference\AttributeReferenceInterface;
+use Jabe\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
+use Jabe\Model\Bpmn\QueryInterface;
+use Jabe\Model\Bpmn\Builder\{
     AbstractBaseElementBuilder,
     AbstractFlowNodeBuilder
 };
-use BpmPlatform\Model\Bpmn\Exception\BpmnModelException;
-use BpmPlatform\Model\Bpmn\Impl\QueryImpl;
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Bpmn\Exception\BpmnModelException;
+use Jabe\Model\Bpmn\Impl\QueryImpl;
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Instance\{
     FlowElementInterface,
     FlowNodeInterface,
     SequenceFlowInterface

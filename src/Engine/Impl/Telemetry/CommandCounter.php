@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Telemetry;
+namespace Jabe\Engine\Impl\Telemetry;
 
 class CommandCounter
 {

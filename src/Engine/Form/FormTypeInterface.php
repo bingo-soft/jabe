@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Form;
+namespace Jabe\Engine\Form;
 
 interface FormTypeInterface
 {

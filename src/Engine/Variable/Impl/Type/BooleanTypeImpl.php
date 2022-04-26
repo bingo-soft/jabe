@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable\Impl\Type;
+namespace Jabe\Engine\Variable\Impl\Type;
 
-use BpmPlatform\Engine\Variable\Variables;
-use BpmPlatform\Engine\Variable\Value\BooleanValueInterface;
+use Jabe\Engine\Variable\Variables;
+use Jabe\Engine\Variable\Value\BooleanValueInterface;
 
 class BooleanTypeImpl extends PrimitiveValueTypeImpl
 {

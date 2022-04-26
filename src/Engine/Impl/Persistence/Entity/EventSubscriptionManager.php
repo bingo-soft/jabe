@@ -1,21 +1,21 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Impl\{
     EventSubscriptionQueryImpl,
     Page,
     ProcessEngineLogger
 };
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Db\{
     EnginePersistenceLogger,
     ListQueryParameterObject
 };
-use BpmPlatform\Engine\Impl\Event\EventType;
-use BpmPlatform\Engine\Impl\JobExecutor\ProcessEventJobHandler;
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
-use BpmPlatform\Engine\Runtime\EventSubscriptionInterface;
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Event\EventType;
+use Jabe\Engine\Impl\JobExecutor\ProcessEventJobHandler;
+use Jabe\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Runtime\EventSubscriptionInterface;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class EventSubscriptionManager extends AbstractManager
 {

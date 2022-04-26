@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Model\Cmmn\Instance;
+namespace Jabe\Model\Cmmn\Instance;
 
 interface CmmnElementInterface extends CmmnModelElementInstanceInterface
 {

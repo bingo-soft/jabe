@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\Impl\ProcessEngineImpl;
+use Jabe\Engine\Impl\ProcessEngineImpl;
 
 class NotifyAcquisitionRejectedJobsHandler implements RejectedJobsHandler
 {

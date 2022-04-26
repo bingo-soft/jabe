@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Model\Wsdl\Impl\Instance;
+namespace Jabe\Model\Wsdl\Impl\Instance;
 
-use BpmPlatform\Model\Xml\Impl\Instance\{
+use Jabe\Model\Xml\Impl\Instance\{
     ModelElementInstanceImpl,
     ModelTypeInstanceContext
 };
-use BpmPlatform\Model\Wsdl\Instance\WsdlModelElementInstanceInterface;
+use Jabe\Model\Wsdl\Instance\WsdlModelElementInstanceInterface;
 
 abstract class WsdlModelElementInstanceImpl extends ModelElementInstanceImpl implements WsdlModelElementInstanceInterface
 {

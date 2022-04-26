@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Repository;
+namespace Jabe\Engine\Repository;
 
 interface UpdateProcessDefinitionSuspensionStateBuilderInterface
 {

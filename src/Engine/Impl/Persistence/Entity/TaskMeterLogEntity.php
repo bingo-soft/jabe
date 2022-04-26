@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     HasDbReferencesInterface
 };

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Variable\Mapping\Value;
+namespace Jabe\Engine\Impl\Core\Variable\Mapping\Value;
 
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Delegate\VariableScopeInterface;
 
 class NullValueProvider implements ParameterValueProviderInterface
 {

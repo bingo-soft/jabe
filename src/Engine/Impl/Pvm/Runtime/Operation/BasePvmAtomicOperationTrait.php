@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Runtime\Operation;
+namespace Jabe\Engine\Impl\Pvm\Runtime\Operation;
 
-use BpmPlatform\Engine\Impl\Core\Operation\CoreAtomicOperationInterface;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\{
+use Jabe\Engine\Impl\Core\Operation\CoreAtomicOperationInterface;
+use Jabe\Engine\Impl\Pvm\Runtime\{
     AtomicOperationInterface,
     PvmExecutionImpl
 };

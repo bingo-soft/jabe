@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Model;
+namespace Jabe\Engine\Impl\Core\Model;
 
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Delegate\{
     BaseDelegateExecutionInterface,
     DelegateListenerInterface,
     VariableListenerInterface

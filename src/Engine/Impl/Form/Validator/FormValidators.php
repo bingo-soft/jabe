@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Validator;
+namespace Jabe\Engine\Impl\Form\Validator;
 
-use BpmPlatform\Engine\{
+use Jabe\Engine\{
     ProcessEngineConfiguration,
     ProcessEngineException
 };
-use BpmPlatform\Engine\Delegate\ExpressionInterface;
-use BpmPlatform\Engine\Impl\Bpmn\Parser\BpmnParse;
-use BpmPlatform\Engine\Impl\El\ExpressionManager;
-use BpmPlatform\Engine\Impl\Util\StringUtil;
-use BpmPlatform\Engine\Impl\Util\Xml\Element;
+use Jabe\Engine\Delegate\ExpressionInterface;
+use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
+use Jabe\Engine\Impl\El\ExpressionManager;
+use Jabe\Engine\Impl\Util\StringUtil;
+use Jabe\Engine\Impl\Util\Xml\Element;
 
 class FormValidators
 {

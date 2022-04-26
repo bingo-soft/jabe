@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Event;
+namespace Jabe\Engine\Impl\Event;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\Entity\EventSubscriptionEntity;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityBehaviorInterface;
-use BpmPlatform\Engine\Impl\Pvm\Process\ActivityImpl;
-use BpmPlatform\Engine\Impl\Bpmn\Behavior\ConditionalEventBehaviorInterface;
-use BpmPlatform\Engine\Impl\Core\Variable\Event\VariableEvent;
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\Entity\EventSubscriptionEntity;
+use Jabe\Engine\Impl\Pvm\Delegate\ActivityBehaviorInterface;
+use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
+use Jabe\Engine\Impl\Bpmn\Behavior\ConditionalEventBehaviorInterface;
+use Jabe\Engine\Impl\Core\Variable\Event\VariableEvent;
 
 class ConditionalEventHandler implements EventHandlerInterface
 {

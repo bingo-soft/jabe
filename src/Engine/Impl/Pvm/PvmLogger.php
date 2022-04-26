@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm;
+namespace Jabe\Engine\Impl\Pvm;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\ProcessEngineLogger;
 
 class PvmLogger extends ProcessEngineLogger
 {

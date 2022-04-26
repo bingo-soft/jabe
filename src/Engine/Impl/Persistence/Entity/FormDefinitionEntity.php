@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     HasDbRevisionInterface
 };
-use BpmPlatform\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
-use BpmPlatform\Engine\Repository\FormDefinitionInterface;
+use Jabe\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
+use Jabe\Engine\Repository\FormDefinitionInterface;
 
 class FormDefinitionEntity implements FormDefinitionInterface, ResourceDefinitionEntityInterface, DbEntity, HasDbRevision, \Serializable
 {

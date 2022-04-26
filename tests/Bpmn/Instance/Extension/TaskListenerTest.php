@@ -6,9 +6,9 @@ use Tests\Xml\Test\{
     AbstractTypeAssumption,
     AttributeAssumption
 };
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
-use BpmPlatform\Model\Bpmn\Instance\TimerEventDefinitionInterface;
-use BpmPlatform\Model\Bpmn\Instance\Extension\{
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Instance\TimerEventDefinitionInterface;
+use Jabe\Model\Bpmn\Instance\Extension\{
     FieldInterface,
     ScriptInterface
 };

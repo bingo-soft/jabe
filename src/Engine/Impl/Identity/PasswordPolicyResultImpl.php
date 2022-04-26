@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Identity;
+namespace Jabe\Engine\Impl\Identity;
 
-use BpmPlatform\Engine\Identity\{
+use Jabe\Engine\Identity\{
     PasswordPolicyResultInterface,
     PasswordPolicyRuleInterface
 };

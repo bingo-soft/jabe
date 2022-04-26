@@ -1,17 +1,17 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Util;
+namespace Jabe\Model\Xml\Impl\Util;
 
-use BpmPlatform\Model\Xml\ModelInterface;
-use BpmPlatform\Model\Xml\Exception\ModelException;
-use BpmPlatform\Model\Xml\Impl\ModelInstanceImpl;
-use BpmPlatform\Model\Xml\Impl\Type\ModelElementTypeImpl;
-use BpmPlatform\Model\Xml\Impl\Type\Attribute\StringAttribute;
-use BpmPlatform\Model\Xml\Instance\{
+use Jabe\Model\Xml\ModelInterface;
+use Jabe\Model\Xml\Exception\ModelException;
+use Jabe\Model\Xml\Impl\ModelInstanceImpl;
+use Jabe\Model\Xml\Impl\Type\ModelElementTypeImpl;
+use Jabe\Model\Xml\Impl\Type\Attribute\StringAttribute;
+use Jabe\Model\Xml\Instance\{
     DomElementInterface,
     ModelElementInstanceInterface
 };
-use BpmPlatform\Model\Xml\Type\ModelElementTypeInterface;
+use Jabe\Model\Xml\Type\ModelElementTypeInterface;
 
 class ModelUtil
 {

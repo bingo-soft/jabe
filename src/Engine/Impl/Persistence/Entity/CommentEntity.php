@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     HistoricEntityInterface
 };
-use BpmPlatform\Engine\Task\{
+use Jabe\Engine\Task\{
     CommentInterface,
     EventInterface
 };
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class CommentEntity implements CommentInterface, EventInterface, DbEntityInterface, HistoricEntityInterface, \Serializable
 {

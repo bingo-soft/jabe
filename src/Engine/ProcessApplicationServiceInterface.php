@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine;
+namespace Jabe\Engine;
 
-use BpmPlatform\Engine\Application\ProcessApplicationInfoInterface;
+use Jabe\Engine\Application\ProcessApplicationInfoInterface;
 
 interface ProcessApplicationServiceInterface
 {

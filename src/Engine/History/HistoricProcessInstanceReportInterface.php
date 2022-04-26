@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\History;
+namespace Jabe\Engine\History;
 
-use BpmPlatform\Engine\Query\ReportInterface;
+use Jabe\Engine\Query\ReportInterface;
 
 interface HistoricProcessInstanceReportInterface extends ReportInterface
 {

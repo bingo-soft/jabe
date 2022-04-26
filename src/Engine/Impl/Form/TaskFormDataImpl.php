@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form;
+namespace Jabe\Engine\Impl\Form;
 
-use BpmPlatform\Engine\Form\TaskFormDataInterface;
-use BpmPlatform\Engine\Task\TaskInterface;
+use Jabe\Engine\Form\TaskFormDataInterface;
+use Jabe\Engine\Task\TaskInterface;
 
 class TaskFormDataImpl extends FormDataImpl implements TaskFormDataInterface
 {

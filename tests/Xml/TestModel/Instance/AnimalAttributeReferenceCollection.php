@@ -2,9 +2,9 @@
 
 namespace Tests\Xml\TestModel\Instance;
 
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Xml\Impl\Type\Attribute\AttributeImpl;
-use BpmPlatform\Model\Xml\Type\Reference\AttributeReferenceCollection;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Impl\Type\Attribute\AttributeImpl;
+use Jabe\Model\Xml\Type\Reference\AttributeReferenceCollection;
 
 class AnimalAttributeReferenceCollection extends AttributeReferenceCollection
 {

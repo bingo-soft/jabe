@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\{
     ListQueryParameterObject,
     TenantCheck
 };
-use BpmPlatform\Engine\Impl\Identity\Authentication;
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Impl\Identity\Authentication;
+use Jabe\Engine\Impl\Persistence\AbstractManager;
 
 class TenantManager extends AbstractManager
 {

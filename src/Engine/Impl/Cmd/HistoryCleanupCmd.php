@@ -1,27 +1,27 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\BadUserRequestException;
-use BpmPlatform\Engine\History\UserOperationLogEntryInterface;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\BadUserRequestException;
+use Jabe\Engine\History\UserOperationLogEntryInterface;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\JobExecutor\HistoryCleanup\{
+use Jabe\Engine\Impl\JobExecutor\HistoryCleanup\{
     HistoryCleanupContext,
     HistoryCleanupHelper,
     HistoryCleanupJobDeclaration,
     HistoryCleanupJobHandler
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     JobEntity,
     PropertyChange,
     SuspensionState
 };
-use BpmPlatform\Engine\Impl\Util\DatabaseUtil;
+use Jabe\Engine\Impl\Util\DatabaseUtil;
 
 class HistoryCleanupCmd implements CommandInterface
 {

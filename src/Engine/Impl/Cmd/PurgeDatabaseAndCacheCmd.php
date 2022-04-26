@@ -1,22 +1,22 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\Db\DbEntityInterface;
-use BpmPlatform\Engine\Impl\Db\EntityManager\Operation\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\Db\DbEntityInterface;
+use Jabe\Engine\Impl\Db\EntityManager\Operation\{
     DbBulkOperation,
     DbOperationType
 };
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Management\{
+use Jabe\Engine\Impl\Management\{
     DatabasePurgeReport,
     PurgeReport
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\ByteArrayEntity;
+use Jabe\Engine\Impl\Persistence\Entity\ByteArrayEntity;
 
 class PurgeDatabaseAndCacheCmd implements CommandInterface
 {

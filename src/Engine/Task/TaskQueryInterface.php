@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Task;
+namespace Jabe\Engine\Task;
 
-use BpmPlatform\Engine\Query\QueryInterface;
-use BpmPlatform\Engine\Variable\Type\ValueTypeInterface;
+use Jabe\Engine\Query\QueryInterface;
+use Jabe\Engine\Variable\Type\ValueTypeInterface;
 
 interface TaskQueryInterface extends QueryInterface
 {

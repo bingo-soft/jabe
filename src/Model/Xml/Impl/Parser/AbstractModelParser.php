@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Parser;
+namespace Jabe\Model\Xml\Impl\Parser;
 
-use BpmPlatform\Model\Xml\ModelInstanceInterface;
-use BpmPlatform\Model\Xml\Exception\ModelValidationException;
-use BpmPlatform\Model\Xml\Impl\Util\{
+use Jabe\Model\Xml\ModelInstanceInterface;
+use Jabe\Model\Xml\Exception\ModelValidationException;
+use Jabe\Model\Xml\Impl\Util\{
     DomUtil,
     ReflectUtil
 };
-use BpmPlatform\Model\Xml\Instance\DomDocumentInterface;
+use Jabe\Model\Xml\Instance\DomDocumentInterface;
 
 abstract class AbstractModelParser
 {

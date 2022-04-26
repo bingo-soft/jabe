@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Impl;
+namespace Jabe\Model\Bpmn\Impl;
 
-use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
-use BpmPlatform\Model\Bpmn\Instance\DefinitionsInterface;
-use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\Impl\{
+use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
+use Jabe\Model\Bpmn\Instance\DefinitionsInterface;
+use Jabe\Model\Xml\ModelBuilder;
+use Jabe\Model\Xml\Impl\{
     ModelImpl,
     ModelInstanceImpl
 };
-use BpmPlatform\Model\Xml\Instance\DomDocumentInterface;
+use Jabe\Model\Xml\Instance\DomDocumentInterface;
 
 class BpmnModelInstanceImpl extends ModelInstanceImpl implements BpmnModelInstanceInterface
 {

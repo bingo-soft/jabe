@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Impl\Identity\WritableIdentityProviderInterface;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Identity\WritableIdentityProviderInterface;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };

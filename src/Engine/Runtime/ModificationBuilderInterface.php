@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Runtime;
+namespace Jabe\Engine\Runtime;
 
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\Authorization\{
     BatchPermissions,
     Permissions,
     Resources
 };
-use BpmPlatform\Engine\Batch\BatchInterface;
+use Jabe\Engine\Batch\BatchInterface;
 
 interface ModificationBuilderInterface
 {

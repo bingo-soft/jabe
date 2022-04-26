@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Runtime\Operation;
+namespace Jabe\Engine\Impl\Pvm\Runtime\Operation;
 
-use BpmPlatform\Engine\Impl\Bpmn\Helper\{
+use Jabe\Engine\Impl\Bpmn\Helper\{
     BpmnExceptionHandler,
     ErrorPropagationException
 };
-use BpmPlatform\Engine\Impl\Core\Model\CoreModelElement;
-use BpmPlatform\Engine\Impl\Core\Instance\CoreExecution;
-use BpmPlatform\Engine\Impl\Core\Operation\AbstractEventAtomicOperation;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
+use Jabe\Engine\Impl\Core\Model\CoreModelElement;
+use Jabe\Engine\Impl\Core\Instance\CoreExecution;
+use Jabe\Engine\Impl\Core\Operation\AbstractEventAtomicOperation;
+use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
+use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
 
 abstract class AbstractPvmEventAtomicOperation extends AbstractEventAtomicOperation implements PvmAtomicOperationInterface
 {

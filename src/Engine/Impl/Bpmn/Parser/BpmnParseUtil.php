@@ -1,33 +1,33 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Parser;
+namespace Jabe\Engine\Impl\Bpmn\Parser;
 
-use BpmPlatform\Engine\{
+use Jabe\Engine\{
     BpmnParseException,
     ProcessEngineException
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Core\Variable\Mapping\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Core\Variable\Mapping\{
     InputParameter,
     IoMapping,
     OutputParameter
 };
-use BpmPlatform\Engine\Impl\Core\Variable\Mapping\Value\{
+use Jabe\Engine\Impl\Core\Variable\Mapping\Value\{
     ListValueProvider,
     MapValueProvider,
     NullValueProvider,
     ParameterValueProviderInterface
 };
-use BpmPlatform\Engine\Impl\El\{
+use Jabe\Engine\Impl\El\{
     ElValueProvider,
     ExpressionManager
 };
-use BpmPlatform\Engine\Impl\Scripting\{
+use Jabe\Engine\Impl\Scripting\{
     ExecutableScript,
     ScriptValueProvider
 };
-use BpmPlatform\Engine\Impl\Util\ScriptUtil;
-use BpmPlatform\Engine\Impl\Util\Xml\Element;
+use Jabe\Engine\Impl\Util\ScriptUtil;
+use Jabe\Engine\Impl\Util\Xml\Element;
 
 class BpmnParseUtil
 {

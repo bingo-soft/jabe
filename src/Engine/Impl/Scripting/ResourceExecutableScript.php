@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Scripting;
+namespace Jabe\Engine\Impl\Scripting;
 
-use BpmPlatform\Engine\Impl\Util\Scripting\{
+use Jabe\Engine\Impl\Util\Scripting\{
     BindingsInterface,
     ScriptEngineInterface
 };
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Persistence\Entity\DeploymentEntity;
-use BpmPlatform\Engine\Impl\Util\ResourceUtil;
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Persistence\Entity\DeploymentEntity;
+use Jabe\Engine\Impl\Util\ResourceUtil;
 
 class ResourceExecutableScript extends SourceExecutableScript
 {

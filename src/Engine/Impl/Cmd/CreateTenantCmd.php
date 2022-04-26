@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Identity\TenantInterface;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Identity\TenantInterface;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class CreateTenantCmd extends AbstractWritableIdentityServiceCmd implements CommandInterface, \Serializable
 {

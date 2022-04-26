@@ -1,30 +1,30 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Delegate\ExpressionInterface;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Bpmn\Parser\BpmnParse;
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Delegate\ExpressionInterface;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     EnginePersistenceLogger,
     HasDbRevisionInterface
 };
-use BpmPlatform\Engine\Impl\Form\FormDefinition;
-use BpmPlatform\Engine\Impl\Form\Handler\StartFormHandlerInterface;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\Deploy\Cache\DeploymentCache;
-use BpmPlatform\Engine\Impl\Pvm\Process\{
+use Jabe\Engine\Impl\Form\FormDefinition;
+use Jabe\Engine\Impl\Form\Handler\StartFormHandlerInterface;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\Deploy\Cache\DeploymentCache;
+use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ProcessDefinitionImpl
 };
-use BpmPlatform\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
-use BpmPlatform\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
-use BpmPlatform\Engine\Impl\Task\TaskDefinition;
-use BpmPlatform\Engine\Respository\ProcessDefinitionInterface;
-use BpmPlatform\Engine\Task\IdentityLinkType;
+use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
+use Jabe\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
+use Jabe\Engine\Impl\Task\TaskDefinition;
+use Jabe\Engine\Respository\ProcessDefinitionInterface;
+use Jabe\Engine\Task\IdentityLinkType;
 
 class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDefinitionInterface, ResourceDefinitionEntityInterface, DbEntityInterface, HasDbRevisionInterface
 {

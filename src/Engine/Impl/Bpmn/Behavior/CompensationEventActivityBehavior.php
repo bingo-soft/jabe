@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Behavior;
+namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use BpmPlatform\Engine\Impl\Bpmn\Helper\CompensationUtil;
-use BpmPlatform\Engine\Impl\Bpmn\Parser\CompensateEventDefinition;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Bpmn\Helper\CompensationUtil;
+use Jabe\Engine\Impl\Bpmn\Parser\CompensateEventDefinition;
+use Jabe\Engine\Impl\Persistence\Entity\{
     EventSubscriptionEntity,
     ExecutionEntity
 };
-use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
+use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
+use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
 
 class CompensationEventActivityBehavior extends FlowNodeActivityBehavior
 {

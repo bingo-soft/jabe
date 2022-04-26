@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Handler;
+namespace Jabe\Engine\Impl\Core\Handler;
 
-use BpmPlatform\Engine\Impl\Core\Model\CoreActivity;
+use Jabe\Engine\Impl\Core\Model\CoreActivity;
 
 interface HandlerContextInterface
 {

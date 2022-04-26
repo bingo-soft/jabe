@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Variable\Scope;
+namespace Jabe\Engine\Impl\Core\Variable\Scope;
 
 interface VariableStoreObserverInterface
 {

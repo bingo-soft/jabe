@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Variable\Serializer;
+namespace Jabe\Engine\Impl\Variable\Serializer;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 class DefaultVariableSerializers implements VariableSerializersInterface
 {

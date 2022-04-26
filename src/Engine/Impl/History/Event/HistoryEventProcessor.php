@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History\Event;
+namespace Jabe\Engine\Impl\History\Event;
 
-use BpmPlatform\Engine\ProcessEngineConfiguration;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\History\Handler\HistoryEventHandlerInterface;
-use BpmPlatform\Engine\Impl\History\Producer\HistoryEventProducerInterface;
+use Jabe\Engine\ProcessEngineConfiguration;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\History\Handler\HistoryEventHandlerInterface;
+use Jabe\Engine\Impl\History\Producer\HistoryEventProducerInterface;
 
 class HistoryEventProcessor
 {

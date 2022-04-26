@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Engine;
+namespace Jabe\Engine\Impl\Form\Engine;
 
-use BpmPlatform\Engine\Form\{
+use Jabe\Engine\Form\{
     StartFormDataInterface,
     TaskFormDataInterface
 };

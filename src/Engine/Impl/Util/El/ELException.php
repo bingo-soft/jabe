@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Util\El;
+namespace Jabe\Engine\Impl\Util\El;
 
-use BpmPlatform\Engine\ProcessEngineException;
+use Jabe\Engine\ProcessEngineException;
 
 class ELException extends ProcessEngineException
 {

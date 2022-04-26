@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\Impl\Repository\UpdateProcessDefinitionSuspensionStateBuilderImpl;
+use Jabe\Engine\Impl\Repository\UpdateProcessDefinitionSuspensionStateBuilderImpl;
 
 class ProcessDefinitionSuspensionStateConfiguration implements JobHandlerConfigurationInterface
 {

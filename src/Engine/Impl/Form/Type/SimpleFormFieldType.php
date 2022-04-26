@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Type;
+namespace Jabe\Engine\Impl\Form\Type;
 
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 abstract class SimpleFormFieldType extends AbstractFormFieldType
 {

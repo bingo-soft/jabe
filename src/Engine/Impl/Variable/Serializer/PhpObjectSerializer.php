@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Variable\Serializer;
+namespace Jabe\Engine\Impl\Variable\Serializer;
 
-use BpmPlatform\Engine\Variable\SerializationDataFormats;
+use Jabe\Engine\Variable\SerializationDataFormats;
 
 class PhpObjectSerializer extends AbstractObjectValueSerializer
 {

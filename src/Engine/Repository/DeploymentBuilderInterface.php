@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Repository;
+namespace Jabe\Engine\Repository;
 
-use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
+use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
 
 interface DeploymentBuilderInterface
 {

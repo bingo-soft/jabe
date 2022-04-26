@@ -1,25 +1,25 @@
 <?php
 
-namespace BpmPlatform\Engine;
+namespace Jabe\Engine;
 
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\Authorization\{
     Permissions,
     Resources
 };
-use BpmPlatform\Engine\Form\{
+use Jabe\Engine\Form\{
     StartFormDataInterface,
     TaskFormDataInterface
 };
-use BpmPlatform\Engine\Runtime\{
+use Jabe\Engine\Runtime\{
     ProcessInstanceInterface,
     ProcessInstanceQueryInterface
 };
-use BpmPlatform\Engine\Task\{
+use Jabe\Engine\Task\{
     TaskInterface,
     TaskQueryInterface
 };
-use BpmPlatform\Engine\Variable\VariableMapInterface;
-use BpmPlatform\Engine\Variable\Value\SerializableValueInterface;
+use Jabe\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Variable\Value\SerializableValueInterface;
 
 interface FormServiceInterface
 {

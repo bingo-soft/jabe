@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Model\Wsdl\Impl;
+namespace Jabe\Model\Wsdl\Impl;
 
 class WsdlModelConstants
 {

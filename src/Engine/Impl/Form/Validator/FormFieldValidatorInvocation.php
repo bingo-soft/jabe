@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Validator;
+namespace Jabe\Engine\Impl\Form\Validator;
 
-use BpmPlatform\Engine\Impl\Delegate\DelegateInvocation;
+use Jabe\Engine\Impl\Delegate\DelegateInvocation;
 
 class FormFieldValidatorInvocation extends DelegateInvocation
 {

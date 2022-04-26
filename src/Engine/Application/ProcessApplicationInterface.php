@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Application;
+namespace Jabe\Engine\Application;
 
-use BpmPlatform\Engine\Impl\Util\El\{
+use Jabe\Engine\Impl\Util\El\{
     ELResolver,
     BeanELResolver
 };
-use BpmPlatform\Engine\Repository\DeploymentBuilderInterface;
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Repository\DeploymentBuilderInterface;
+use Jabe\Engine\Delegate\{
     ExecutionListenerInterface,
     TaskListenerInterface
 };

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Delegate;
+namespace Jabe\Engine\Delegate;
 
-use BpmPlatform\Model\Bpmn\Instance\UserTaskInterface;
+use Jabe\Model\Bpmn\Instance\UserTaskInterface;
 
 interface DelegateTaskInterface extends VariableScopeInterface, BpmnModelExecutionContextInterface, ProcessEngineServicesAwareInterface
 {

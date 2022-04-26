@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Variable\Serializer;
+namespace Jabe\Engine\Impl\Variable\Serializer;
 
-use BpmPlatform\Engine\Impl\Persistence\Entity\NameableInterface;
+use Jabe\Engine\Impl\Persistence\Entity\NameableInterface;
 
 interface ValueFieldsInterface extends NameableInterface
 {

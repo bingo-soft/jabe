@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl;
+namespace Jabe\Engine\Impl;
 
-use BpmPlatform\Engine\Impl\Variable\Serializer\VariableSerializersInterface;
+use Jabe\Engine\Impl\Variable\Serializer\VariableSerializersInterface;
 
 abstract class AbstractQueryVariableValueCondition
 {

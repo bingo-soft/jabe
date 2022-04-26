@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\ExternalTask;
+namespace Jabe\Engine\Impl\ExternalTask;
 
-use BpmPlatform\Engine\ExternalTask\LockedExternalTaskInterface;
-use BpmPlatform\Engine\Impl\Bpmn\Helper\BpmnProperties;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\ExternalTask\LockedExternalTaskInterface;
+use Jabe\Engine\Impl\Bpmn\Helper\BpmnProperties;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     ExternalTaskEntity
 };
-use BpmPlatform\Engine\Variable\VariableMapInterface;
-use BpmPlatform\Engine\Variable\Impl\VariableMapImpl;
+use Jabe\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Variable\Impl\VariableMapImpl;
 
 class LockedExternalTaskImpl implements LockedExternalTaskInterface
 {

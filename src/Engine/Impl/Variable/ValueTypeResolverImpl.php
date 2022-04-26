@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Variable;
+namespace Jabe\Engine\Impl\Variable;
 
-use BpmPlatform\Engine\Variable\Type\{
+use Jabe\Engine\Variable\Type\{
     ValueTypeInterface,
     ValueTypeResolverInterface,
     ValueType

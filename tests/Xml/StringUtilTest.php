@@ -3,7 +3,7 @@
 namespace Tests\Xml;
 
 use PHPUnit\Framework\TestCase;
-use BpmPlatform\Model\Xml\Impl\Util\StringUtil;
+use Jabe\Model\Xml\Impl\Util\StringUtil;
 
 class StringUtilTest extends TestCase
 {

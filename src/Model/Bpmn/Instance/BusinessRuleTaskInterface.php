@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance;
+namespace Jabe\Model\Bpmn\Instance;
 
-use BpmPlatform\Model\Bpmn\Builder\BusinessRuleTaskBuilder;
+use Jabe\Model\Bpmn\Builder\BusinessRuleTaskBuilder;
 
 interface BusinessRuleTaskInterface extends TaskInterface
 {

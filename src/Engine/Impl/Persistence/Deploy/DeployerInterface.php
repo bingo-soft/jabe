@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Deploy;
+namespace Jabe\Engine\Impl\Persistence\Deploy;
 
-use BpmPlatform\Engine\Impl\Persistence\Entity\DeploymentEntity;
+use Jabe\Engine\Impl\Persistence\Entity\DeploymentEntity;
 
 interface DeployerInterface
 {

@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type\Attribute;
+namespace Jabe\Model\Xml\Impl\Type\Attribute;
 
-use BpmPlatform\Model\Xml\ModelInterface;
-use BpmPlatform\Model\Xml\Exception\ModelException;
-use BpmPlatform\Model\Xml\Impl\Type\ModelElementTypeImpl;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Xml\Type\Attribute\StringAttributeBuilderInterface;
-use BpmPlatform\Model\Xml\Type\Reference\{
+use Jabe\Model\Xml\ModelInterface;
+use Jabe\Model\Xml\Exception\ModelException;
+use Jabe\Model\Xml\Impl\Type\ModelElementTypeImpl;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Type\Attribute\StringAttributeBuilderInterface;
+use Jabe\Model\Xml\Type\Reference\{
     AttributeReferenceBuilderInterface,
     AttributeReferenceCollectionInterface,
     AttributeReferenceCollectionBuilderInterface
 };
-use BpmPlatform\Model\Xml\Impl\Type\Reference\{
+use Jabe\Model\Xml\Impl\Type\Reference\{
     AttributeReferenceBuilderImpl,
     AttributeReferenceCollectionBuilderImpl,
     QNameAttributeReferenceBuilderImpl

@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History;
+namespace Jabe\Engine\Impl\History;
 
-use BpmPlatform\Engine\ProcessEngineConfiguration;
-use BpmPlatform\Engine\Impl\History\Event\HistoryEventTypeInterface;
+use Jabe\Engine\ProcessEngineConfiguration;
+use Jabe\Engine\Impl\History\Event\HistoryEventTypeInterface;
 
 class HistoryLevelNone extends AbstractHistoryLevel
 {

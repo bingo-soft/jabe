@@ -1,22 +1,22 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Validator;
+namespace Jabe\Engine\Impl\Form\Validator;
 
-use BpmPlatform\Engine\Application\{
+use Jabe\Engine\Application\{
     InvocationContext,
     ProcessApplicationReferenceInterface
 };
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\{
     DelegateExecutionInterface,
     ExpressionInterface
 };
-use BpmPlatform\Engine\Impl\Context\{
+use Jabe\Engine\Impl\Context\{
     Context,
     ProcessApplicationContextUtil
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use BpmPlatform\Engine\Impl\Util\ReflectUtil;
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Impl\Util\ReflectUtil;
 
 class DelegateFormFieldValidator implements FormFieldValidatorInterface
 {

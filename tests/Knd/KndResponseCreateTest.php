@@ -3,15 +3,15 @@
 namespace Tests\Knd;
 
 use PHPUnit\Framework\TestCase;
-use BpmPlatform\Model\Xml\ModelInstanceInterface;
-use BpmPlatform\Model\Xml\Impl\Parser\AbstractModelParser;
-use BpmPlatform\Model\Knd\Complaints\Instance\Response\{
+use Jabe\Model\Xml\ModelInstanceInterface;
+use Jabe\Model\Xml\Impl\Parser\AbstractModelParser;
+use Jabe\Model\Knd\Complaints\Instance\Response\{
     CodeInterface,
     InspectionResultInterface,
     KndResponseInterface,
     StatusInterface
 };
-use BpmPlatform\Model\Knd\Complaints\Impl\{
+use Jabe\Model\Knd\Complaints\Impl\{
     KndResponseParser,
     KndResponseModelConstants
 };

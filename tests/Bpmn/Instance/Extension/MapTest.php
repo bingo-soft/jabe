@@ -5,13 +5,13 @@ namespace Tests\Bpmn\Instance\Extension;
 use Tests\Xml\Test\{
     AbstractTypeAssumption
 };
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
 use Tests\Bpmn\Instance\{
     BpmnChildElementAssumption,
     BpmnModelElementInstanceTest,
     BpmnTypeAssumption
 };
-use BpmPlatform\Model\Bpmn\Instance\Extension\{
+use Jabe\Model\Bpmn\Instance\Extension\{
     EntryInterface
 };
 

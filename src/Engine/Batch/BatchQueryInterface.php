@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Batch;
+namespace Jabe\Engine\Batch;
 
-use BpmPlatform\Engine\Query\QueryInterface;
+use Jabe\Engine\Query\QueryInterface;
 
 interface BatchQueryInterface extends QueryInterface
 {

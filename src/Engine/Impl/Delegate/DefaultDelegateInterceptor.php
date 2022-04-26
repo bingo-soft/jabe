@@ -1,25 +1,25 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Delegate;
+namespace Jabe\Engine\Impl\Delegate;
 
-use BpmPlatform\Engine\Application\{
+use Jabe\Engine\Application\{
     InvocationContext,
     ProcessApplicationReferenceInterface
 };
-use BpmPlatform\Engine\Delegate\BaseDelegateExecutionInterface;
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Context\{
+use Jabe\Engine\Delegate\BaseDelegateExecutionInterface;
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Context\{
     Context,
     CoreExecutionContext,
     ProcessApplicationContextUtil
 };
-use BpmPlatform\Engine\Impl\Core\Instance\CoreExecution;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Core\Instance\CoreExecution;
+use Jabe\Engine\Impl\Interceptor\{
     CommandContext,
     DelegateInterceptorInterface
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use BpmPlatform\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
 
 class DefaultDelegateInterceptor implements DelegateInterceptorInterface
 {

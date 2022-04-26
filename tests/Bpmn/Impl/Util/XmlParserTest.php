@@ -3,8 +3,8 @@
 namespace Tests\Bpmn\Engine\Util;
 
 use PHPUnit\Framework\TestCase;
-use BpmPlatform\Model\Xml\Impl\Util\ReflectUtil;
-use BpmPlatform\Engine\Impl\Util\Xml\{
+use Jabe\Model\Xml\Impl\Util\ReflectUtil;
+use Jabe\Engine\Impl\Util\Xml\{
     Parse,
     Parser
 };

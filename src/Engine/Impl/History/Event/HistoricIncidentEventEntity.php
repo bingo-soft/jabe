@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History\Event;
+namespace Jabe\Engine\Impl\History\Event;
 
-use BpmPlatform\Engine\History\IncidentStateImpl;
+use Jabe\Engine\History\IncidentStateImpl;
 
 class HistoricIncidentEventEntity extends HistoryEvent
 {

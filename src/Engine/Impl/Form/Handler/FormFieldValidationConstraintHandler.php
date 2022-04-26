@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Handler;
+namespace Jabe\Engine\Impl\Form\Handler;
 
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Form\FormFieldValidationConstraintInterface;
-use BpmPlatform\Engine\Impl\Form\FormFieldValidationConstraintImpl;
-use BpmPlatform\Engine\Impl\Form\Validator\{
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Form\FormFieldValidationConstraintInterface;
+use Jabe\Engine\Impl\Form\FormFieldValidationConstraintImpl;
+use Jabe\Engine\Impl\Form\Validator\{
     FormFieldValidationException,
     FormFieldValidatorInterface,
     FormFieldValidatorContextInterface,
     FormFieldValidatorInvocation
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use BpmPlatform\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Variable\VariableMapInterface;
 
 class FormFieldValidationConstraintHandler
 {

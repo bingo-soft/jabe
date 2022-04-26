@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Form;
+namespace Jabe\Engine\Form;
 
-use BpmPlatform\Engine\Repository\ProcessDefinitionInterface;
+use Jabe\Engine\Repository\ProcessDefinitionInterface;
 
 interface StartFormDataInterface
 {

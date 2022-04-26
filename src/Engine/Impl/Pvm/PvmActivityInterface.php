@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm;
+namespace Jabe\Engine\Impl\Pvm;
 
-use BpmPlatform\Engine\Delegate\ExecutionListenerInterface;
-use BpmPlatform\Engine\Impl\Core\Variable\Mapping\IoMapping;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityBehaviorInterface;
+use Jabe\Engine\Delegate\ExecutionListenerInterface;
+use Jabe\Engine\Impl\Core\Variable\Mapping\IoMapping;
+use Jabe\Engine\Impl\Pvm\Delegate\ActivityBehaviorInterface;
 
 interface PvmActivityInterface extends PvmScopeInterface
 {

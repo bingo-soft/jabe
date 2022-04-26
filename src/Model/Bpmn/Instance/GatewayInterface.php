@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance;
+namespace Jabe\Model\Bpmn\Instance;
 
-use BpmPlatform\Model\Bpmn\Builder\AbstractGatewayBuilder;
-use BpmPlatform\Model\Bpmn\Instance\Bpmndi\BpmnShapeInterface;
+use Jabe\Model\Bpmn\Builder\AbstractGatewayBuilder;
+use Jabe\Model\Bpmn\Instance\Bpmndi\BpmnShapeInterface;
 
 interface GatewayInterface extends FlowNodeInterface
 {

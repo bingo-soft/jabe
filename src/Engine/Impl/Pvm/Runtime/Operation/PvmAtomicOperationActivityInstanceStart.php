@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Runtime\Operation;
+namespace Jabe\Engine\Impl\Pvm\Runtime\Operation;
 
-use BpmPlatform\Engine\Impl\Pvm\PvmActivityInterface;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\CompositeActivityBehaviorInterface;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\{
+use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
+use Jabe\Engine\Impl\Pvm\Delegate\CompositeActivityBehaviorInterface;
+use Jabe\Engine\Impl\Pvm\Runtime\{
     CompensationBehavior,
     PvmExecutionImpl
 };
-use BpmPlatform\Engine\Impl\Core\Instance\CoreExecution;
+use Jabe\Engine\Impl\Core\Instance\CoreExecution;
 
 abstract class PvmAtomicOperationActivityInstanceStart extends AbstractPvmEventAtomicOperation
 {

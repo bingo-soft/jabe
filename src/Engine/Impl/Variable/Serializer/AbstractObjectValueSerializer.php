@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Variable\Serializer;
+namespace Jabe\Engine\Impl\Variable\Serializer;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Variable\Variables;
-use BpmPlatform\Engine\Variable\Impl\Value\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Variable\Variables;
+use Jabe\Engine\Variable\Impl\Value\{
     ObjectValueImpl,
     UntypedValueImpl
 };
-use BpmPlatform\Engine\Variable\Type\{
+use Jabe\Engine\Variable\Type\{
     ValueTypeInterface,
     ValueType
 };
-use BpmPlatform\Engine\Variable\Value\ObjectValueInterface;
+use Jabe\Engine\Variable\Value\ObjectValueInterface;
 
 abstract class AbstractObjectValueSerializer extends AbstractSerializableValueSerializer
 {

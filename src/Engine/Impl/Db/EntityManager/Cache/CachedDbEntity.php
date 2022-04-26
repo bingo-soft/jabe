@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Db\EntityManager\Cache;
+namespace Jabe\Engine\Impl\Db\EntityManager\Cache;
 
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Db\{
     HasDbReferencesInterface,
     DbEntityInterface
 };
-use BpmPlatform\Engine\Impl\Db\EntityManager\RecyclableInterface;
+use Jabe\Engine\Impl\Db\EntityManager\RecyclableInterface;
 
 class CachedDbEntity implements RecyclableInterface
 {

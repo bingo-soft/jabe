@@ -1,20 +1,20 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Runtime\Operation;
+namespace Jabe\Engine\Impl\Pvm\Runtime\Operation;
 
-use BpmPlatform\Engine\Impl\Pvm\{
+use Jabe\Engine\Impl\Pvm\{
     PvmException,
     PvmLogger
 };
-use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityBehaviorInterface;
-use BpmPlatform\Engine\Impl\Pvm\Process\ActivityImpl;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\{
+use Jabe\Engine\Impl\Pvm\Delegate\ActivityBehaviorInterface;
+use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
+use Jabe\Engine\Impl\Pvm\Runtime\{
     CallbackInterface,
     PvmExecutionImpl
 };
-use BpmPlatform\Engine\Impl\Util\ActivityBehaviorUtil;
-use BpmPlatform\Engine\Impl\Core\Delegate\CoreActivityBehaviorInterface;
-use BpmPlatform\Engine\Impl\Core\Instance\CoreExecution;
+use Jabe\Engine\Impl\Util\ActivityBehaviorUtil;
+use Jabe\Engine\Impl\Core\Delegate\CoreActivityBehaviorInterface;
+use Jabe\Engine\Impl\Core\Instance\CoreExecution;
 
 class PvmAtomicOperationActivityExecute implements PvmAtomicOperationInterface
 {

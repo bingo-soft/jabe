@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History\Handler;
+namespace Jabe\Engine\Impl\History\Handler;
 
-use BpmPlatform\Engine\Impl\History\Event\HistoryEvent;
+use Jabe\Engine\Impl\History\Event\HistoryEvent;
 
 interface HistoryEventHandlerInterface
 {

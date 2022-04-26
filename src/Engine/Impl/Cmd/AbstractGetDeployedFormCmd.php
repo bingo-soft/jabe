@@ -1,21 +1,21 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\BadUserRequestException;
-use BpmPlatform\Engine\Exception\{
+use Jabe\Engine\BadUserRequestException;
+use Jabe\Engine\Exception\{
     DeploymentResourceNotFoundException,
     NotFoundException
 };
-use BpmPlatform\Engine\Form\{
+use Jabe\Engine\Form\{
     FormRefInterface,
     FormDataInterface
 };
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Repository\FormDefinitionInterface;
+use Jabe\Engine\Repository\FormDefinitionInterface;
 
 abstract class AbstractGetDeployedFormCmd implements CommandInterface
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\El;
+namespace Jabe\Engine\Impl\El;
 
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Delegate\{
     BaseDelegateExecutionInterface,
     VariableScopeInterface
 };
-use BpmPlatform\Engine\Delegate\ExpressionInterface as DelegateExpressionInterface;
+use Jabe\Engine\Delegate\ExpressionInterface as DelegateExpressionInterface;
 
 interface ExpressionInterface extends DelegateExpressionInterface
 {

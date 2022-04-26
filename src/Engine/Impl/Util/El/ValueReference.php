@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Util\El;
+namespace Jabe\Engine\Impl\Util\El;
 
 class ValueReference implements \Serializable
 {

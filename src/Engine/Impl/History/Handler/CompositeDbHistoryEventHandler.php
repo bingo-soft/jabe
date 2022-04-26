@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History\Handler;
+namespace Jabe\Engine\Impl\History\Handler;
 
 class CompositeDbHistoryEventHandler extends CompositeHistoryEventHandler
 {

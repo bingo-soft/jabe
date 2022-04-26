@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Deploy\Cache;
+namespace Jabe\Engine\Impl\Persistence\Deploy\Cache;
 
-use BpmPlatform\Engine\Impl\ProcessDefinitionQueryImpl;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\Entity\ProcessDefinitionEntity;
-use BpmPlatform\Engine\Repository\ProcessDefinitionInterface;
-use BpmPlatform\Model\Bpmn\{
+use Jabe\Engine\Impl\ProcessDefinitionQueryImpl;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\Entity\ProcessDefinitionEntity;
+use Jabe\Engine\Repository\ProcessDefinitionInterface;
+use Jabe\Model\Bpmn\{
     Bpmn,
     BpmnModelInstanceInterface
 };

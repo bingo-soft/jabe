@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Task\Listener;
+namespace Jabe\Engine\Impl\Task\Listener;
 
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Delegate\{
     DelegateTaskInterface,
     ExpressionInterface,
     TaskListenerInterface

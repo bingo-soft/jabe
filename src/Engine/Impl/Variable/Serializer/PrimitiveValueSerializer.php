@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Variable\Serializer;
+namespace Jabe\Engine\Impl\Variable\Serializer;
 
-use BpmPlatform\Engine\Variable\Type\PrimitiveValueTypeInterface;
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Variable\Type\PrimitiveValueTypeInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 abstract class PrimitiveValueSerializer extends AbstractTypedValueSerializer
 {

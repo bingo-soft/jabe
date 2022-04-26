@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable\Impl\Value;
+namespace Jabe\Engine\Variable\Impl\Value;
 
-use BpmPlatform\Engine\Variable\Type\ValueType;
-use BpmPlatform\Engine\Variable\Value\DateValueInterface;
+use Jabe\Engine\Variable\Type\ValueType;
+use Jabe\Engine\Variable\Value\DateValueInterface;
 
 class DateValueImpl extends PrimitiveTypeValueImpl implements DateValueInterface
 {

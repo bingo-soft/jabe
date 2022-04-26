@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Runtime;
+namespace Jabe\Engine\Runtime;
 
-use BpmPlatform\Engine\Batch\BatchInterface;
+use Jabe\Engine\Batch\BatchInterface;
 
 interface UpdateProcessInstancesSuspensionStateBuilderInterface extends UpdateProcessInstanceSuspensionStateBuilderInterface, UpdateProcessInstancesRequestInterface
 {

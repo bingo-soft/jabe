@@ -1,19 +1,19 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\Authorization\{
     AuthorizationInterface,
     Permissions,
     Resources
 };
-use BpmPlatform\Engine\History\{
+use Jabe\Engine\History\{
     DurationReportResultInterface,
     HistoricTaskInstanceReportInterface
 };
-use BpmPlatform\Engine\Impl\TaskReportImpl;
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
-use BpmPlatform\Engine\Task\TaskCountByCandidateGroupResultInterface;
+use Jabe\Engine\Impl\TaskReportImpl;
+use Jabe\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Task\TaskCountByCandidateGroupResultInterface;
 
 class TaskReportManager extends AbstractManager
 {

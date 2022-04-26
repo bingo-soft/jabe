@@ -1,24 +1,24 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Runtime;
+namespace Jabe\Engine\Impl\Runtime;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Bpmn\Helper\BpmnProperties;
-use BpmPlatform\Engine\Impl\Bpmn\Parser\{
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Bpmn\Helper\BpmnProperties;
+use Jabe\Engine\Impl\Bpmn\Parser\{
     ConditionalEventDefinition,
     EventSubscriptionDeclaration
 };
-use BpmPlatform\Engine\Impl\Cmd\CommandLogger;
-use BpmPlatform\Engine\Impl\Event\EventType;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\Deploy\Cache\DeploymentCache;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Cmd\CommandLogger;
+use Jabe\Engine\Impl\Event\EventType;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\Deploy\Cache\DeploymentCache;
+use Jabe\Engine\Impl\Persistence\Entity\{
     EventSubscriptionEntity,
     EventSubscriptionManager,
     ExecutionEntity,
     ProcessDefinitionEntity
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\ActivityImpl;
+use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
 
 class DefaultConditionHandler implements ConditionHandlerInterface
 {

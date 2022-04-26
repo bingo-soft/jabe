@@ -6,16 +6,16 @@ use Tests\Xml\Test\{
     AbstractTypeAssumption,
     AttributeAssumption
 };
-use BpmPlatform\Model\Bpmn\{
+use Jabe\Model\Bpmn\{
     Bpmn,
     GatewayDirection
 };
-use BpmPlatform\Model\Bpmn\Impl\{
+use Jabe\Model\Bpmn\Impl\{
     BpmnModelConstants,
     QueryImpl
 };
-use BpmPlatform\Model\Bpmn\Instance\GatewayInterface;
-use BpmPlatform\Model\Xml\Impl\Util\ReflectUtil;
+use Jabe\Model\Bpmn\Instance\GatewayInterface;
+use Jabe\Model\Xml\Impl\Util\ReflectUtil;
 
 abstract class AbstractGatewayTest extends BpmnModelElementInstanceTest
 {

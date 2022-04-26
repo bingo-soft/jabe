@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm;
+namespace Jabe\Engine\Impl\Pvm;
 
-use BpmPlatform\Engine\Impl\Core\Model\Properties;
+use Jabe\Engine\Impl\Core\Model\Properties;
 
 interface PvmProcessElementInterface extends \Serializable
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Authorization;
+namespace Jabe\Engine\Authorization;
 
-use BpmPlatform\Engine\Authorization\Exception\PermissionNotFound;
+use Jabe\Engine\Authorization\Exception\PermissionNotFound;
 
 abstract class AbstractPermissions implements PermissionInterface
 {

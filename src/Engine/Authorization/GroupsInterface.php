@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Authorization;
+namespace Jabe\Engine\Authorization;
 
 /**
  * Holds the set of built-in user identities.

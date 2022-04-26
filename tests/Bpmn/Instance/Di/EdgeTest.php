@@ -5,11 +5,11 @@ namespace Tests\Bpmn\Instance\Di;
 use Tests\Xml\Test\{
     AbstractTypeAssumption
 };
-use BpmPlatform\Model\Bpmn\Instance\Di\{
+use Jabe\Model\Bpmn\Instance\Di\{
     DiagramElementInterface,
     WaypointInterface
 };
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
 use Tests\Bpmn\Instance\{
     BpmnChildElementAssumption,
     BpmnModelElementInstanceTest,

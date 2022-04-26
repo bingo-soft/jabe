@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\AttachmentEntity;
-use BpmPlatform\Engine\Task\AttachmentInterface;
+use Jabe\Engine\Impl\Persistence\Entity\AttachmentEntity;
+use Jabe\Engine\Task\AttachmentInterface;
 
 class SaveAttachmentCmd implements CommandInterface
 {

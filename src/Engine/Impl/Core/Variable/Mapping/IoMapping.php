@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Variable\Mapping;
+namespace Jabe\Engine\Impl\Core\Variable\Mapping;
 
-use BpmPlatform\Engine\Impl\Core\Variable\Scope\AbstractVariableScope;
+use Jabe\Engine\Impl\Core\Variable\Scope\AbstractVariableScope;
 
 class IoMapping
 {

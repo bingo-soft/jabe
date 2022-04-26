@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Management\Metrics;
+use Jabe\Engine\Management\Metrics;
 
 class SuccessfulJobListener implements CommandInterface
 {

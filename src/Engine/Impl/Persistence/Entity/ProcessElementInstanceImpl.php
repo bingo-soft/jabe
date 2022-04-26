@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Runtime\ProcessElementInstanceInterface;
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Runtime\ProcessElementInstanceInterface;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class ProcessElementInstanceImpl implements ProcessElementInstanceInterface
 {

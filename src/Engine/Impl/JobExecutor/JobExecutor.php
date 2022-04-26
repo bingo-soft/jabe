@@ -1,21 +1,21 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
 use Composer\Autoload\ClassLoader;
 use parallel\Runtime;
 use Ramsey\Uuid\Uuid;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Impl\{
     ProcessEngineImpl,
     ProcessEngineLogger
 };
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandExecutorInterface
 };
-use BpmPlatform\Engine\Management\Metrics;
-use BpmPlatform\Engine\Runtime\JobInterface;
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Management\Metrics;
+use Jabe\Engine\Runtime\JobInterface;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 abstract class JobExecutor
 {

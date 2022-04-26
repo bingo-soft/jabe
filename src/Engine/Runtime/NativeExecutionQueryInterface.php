@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Runtime;
+namespace Jabe\Engine\Runtime;
 
-use BpmPlatform\Engine\Query\NativeQueryInterface;
+use Jabe\Engine\Query\NativeQueryInterface;
 
 interface NativeExecutionQueryInterface extends NativeQueryInterface
 {

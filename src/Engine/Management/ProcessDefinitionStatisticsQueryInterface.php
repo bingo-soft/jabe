@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Management;
+namespace Jabe\Engine\Management;
 
-use BpmPlatform\Engine\Query\QueryInterface;
+use Jabe\Engine\Query\QueryInterface;
 
 interface ProcessDefinitionStatisticsQueryInterface extends QueryInterface
 {

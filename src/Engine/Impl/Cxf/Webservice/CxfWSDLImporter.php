@@ -1,17 +1,17 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cxf\Webservice;
+namespace Jabe\Engine\Impl\Cxf\Webservice;
 
-use BpmPlatform\Engine\Impl\Bpmn\Data\SimpleStructureDefinition;
-use BpmPlatform\Engine\Impl\Bpmn\Parser\XMLImporterInterface;
-use BpmPlatform\Engine\Impl\Util\Xml\Element;
-use BpmPlatform\Engine\Impl\Webservice\{
+use Jabe\Engine\Impl\Bpmn\Data\SimpleStructureDefinition;
+use Jabe\Engine\Impl\Bpmn\Parser\XMLImporterInterface;
+use Jabe\Engine\Impl\Util\Xml\Element;
+use Jabe\Engine\Impl\Webservice\{
     WSDLManager,
     WSOperation,
     WSService,
     WSDLServiceBuilder
 };
-use BpmPlatform\Model\Wsdl\Instance\{
+use Jabe\Model\Wsdl\Instance\{
     ComplexTypeInterface,
     DefinitionsInterface,
     OperationInterface,

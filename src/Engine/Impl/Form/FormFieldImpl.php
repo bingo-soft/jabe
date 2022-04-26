@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form;
+namespace Jabe\Engine\Impl\Form;
 
-use BpmPlatform\Engine\Form\{
+use Jabe\Engine\Form\{
     FormFieldInterface,
     FormFieldValidationConstraintInterface,
     FormTypeInterface
 };
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 class FormFieldImpl implements FormFieldInterface, \Serializable
 {

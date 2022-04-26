@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Runtime;
+namespace Jabe\Engine\Impl\Runtime;
 
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     ProcessDefinitionEntity
 };
-use BpmPlatform\Engine\Repository\ProcessDefinitionInterface;
-use BpmPlatform\Engine\Runtime\{
+use Jabe\Engine\Repository\ProcessDefinitionInterface;
+use Jabe\Engine\Runtime\{
     ExecutionInterface,
     MessageCorrelationResultType
 };

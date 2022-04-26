@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance\Bpmndi;
+namespace Jabe\Model\Bpmn\Instance\Bpmndi;
 
-use BpmPlatform\Model\Bpmn\Instance\BaseElementInterface;
-use BpmPlatform\Model\Bpmn\Instance\Di\LabeledShapeInterface;
+use Jabe\Model\Bpmn\Instance\BaseElementInterface;
+use Jabe\Model\Bpmn\Instance\Di\LabeledShapeInterface;
 
 interface BpmnShapeInterface extends LabeledShapeInterface
 {

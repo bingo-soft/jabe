@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Calendar;
+namespace Jabe\Engine\Impl\Calendar;
 
-use BpmPlatform\Engine\Task\TaskInterface;
+use Jabe\Engine\Task\TaskInterface;
 
 class DurationBusinessCalendar implements BusinessCalendarInterface
 {

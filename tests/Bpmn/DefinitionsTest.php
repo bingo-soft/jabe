@@ -2,11 +2,11 @@
 
 namespace Tests\Bpmn;
 
-use BpmPlatform\Model\Xml\Exception\ModelValidationException;
-use BpmPlatform\Model\Xml\Impl\Util\IoUtil;
-use BpmPlatform\Model\Bpmn\Bpmn;
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
-use BpmPlatform\Model\Bpmn\Instance\{
+use Jabe\Model\Xml\Exception\ModelValidationException;
+use Jabe\Model\Xml\Impl\Util\IoUtil;
+use Jabe\Model\Bpmn\Bpmn;
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Instance\{
     DefinitionsInterface,
     ExtensionElementsInterface,
     ImportInterface,
@@ -187,7 +187,8 @@ class DefinitionsTest extends BpmnModelTest
         $this->assertTrue(true);
     }
 
-    public function testShouldAddParentChildElementInCorrectOrder() {
+    public function testShouldAddParentChildElementInCorrectOrder(): void
+    {
         // create empty model
         $bpmnModelInstance = Bpmn::getInstance()->createEmptyModel();
 

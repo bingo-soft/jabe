@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\El;
+namespace Jabe\Engine\Impl\El;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Impl\Bpmn\Behavior\ExternalTaskActivityBehavior;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Util\El\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Impl\Bpmn\Behavior\ExternalTaskActivityBehavior;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Util\El\{
     ELContext,
     ELResolver
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     ExternalTaskEntity,
     TaskEntity

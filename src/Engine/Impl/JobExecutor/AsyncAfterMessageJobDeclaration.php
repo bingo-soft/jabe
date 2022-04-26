@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\Impl\Pvm\Runtime\AtomicOperation;
+use Jabe\Engine\Impl\Pvm\Runtime\AtomicOperation;
 
 class AsyncAfterMessageJobDeclaration extends MessageJobDeclaration
 {

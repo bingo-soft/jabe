@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History\Event;
+namespace Jabe\Engine\Impl\History\Event;
 
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class HistoricDetailEventEntity extends HistoryEvent
 {

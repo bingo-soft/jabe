@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance;
+namespace Jabe\Model\Bpmn\Instance;
 
-use BpmPlatform\Model\Bpmn\Builder\ManualTaskBuilder;
+use Jabe\Model\Bpmn\Builder\ManualTaskBuilder;
 
 interface ManualTaskInterface extends TaskInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Authorization\Exception;
+namespace Jabe\Engine\Authorization\Exception;
 
 class ResourceNotFound extends \Exception
 {

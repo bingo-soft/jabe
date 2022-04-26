@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\History\CleanableHistoricProcessInstanceReportResultInterface;
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\History\CleanableHistoricProcessInstanceReportResultInterface;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class CleanableHistoricProcessInstanceReportResultEntity implements CleanableHistoricProcessInstanceReportResultInterface
 {

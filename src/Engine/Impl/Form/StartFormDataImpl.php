@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form;
+namespace Jabe\Engine\Impl\Form;
 
-use BpmPlatform\Engine\Form\StartFormDataInterface;
-use BpmPlatform\Engine\Repository\ProcessDefinitionInterface;
+use Jabe\Engine\Form\StartFormDataInterface;
+use Jabe\Engine\Repository\ProcessDefinitionInterface;
 
 class StartFormDataImpl extends FormDataImpl implements StartFormDataInterface
 {

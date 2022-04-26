@@ -3,12 +3,12 @@
 namespace Tests\Bpmn\Engine\Variable;
 
 use PHPUnit\Framework\TestCase;
-use BpmPlatform\Engine\Variable\Variables;
-use BpmPlatform\Engine\Variable\Type\{
+use Jabe\Engine\Variable\Variables;
+use Jabe\Engine\Variable\Type\{
     ValueTypeInterface,
     ValueType
 };
-use BpmPlatform\Engine\Variable\Impl\Value\NullValueImpl;
+use Jabe\Engine\Variable\Impl\Value\NullValueImpl;
 
 class PrimitiveValueTest extends TestCase
 {

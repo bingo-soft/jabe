@@ -1,27 +1,27 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\ExternalTask\ExternalTaskInterface;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\ExternalTask\ExternalTaskInterface;
+use Jabe\Engine\Impl\{
     Direction,
     ExternalTaskQueryImpl,
     ExternalTaskQueryProperty,
     ProcessEngineImpl,
     QueryOrderingProperty
 };
-use BpmPlatform\Engine\Impl\Cfg\{
+use Jabe\Engine\Impl\Cfg\{
     TransactionListenerInterface,
     TransactionState
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\ListQueryParameterObject;
-use BpmPlatform\Engine\Impl\Db\EntityManager\DbEntityManager;
-use BpmPlatform\Engine\Impl\Db\Sql\DbSqlSessionFactory;
-use BpmPlatform\Engine\Impl\ExternalTask\TopicFetchInstruction;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\ListQueryParameterObject;
+use Jabe\Engine\Impl\Db\EntityManager\DbEntityManager;
+use Jabe\Engine\Impl\Db\Sql\DbSqlSessionFactory;
+use Jabe\Engine\Impl\ExternalTask\TopicFetchInstruction;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Impl\Util\{
     ClockUtil,
     DatabaseUtil,
     ImmutablePair

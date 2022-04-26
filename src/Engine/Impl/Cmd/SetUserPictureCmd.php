@@ -1,18 +1,18 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Identity\Picture;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Identity\Picture;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     ByteArrayEntity,
     IdentityInfoEntity
 };
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
-use BpmPlatform\Engine\Repository\ResourceTypes;
+use Jabe\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Repository\ResourceTypes;
 
 class SetUserPictureCmd implements CommandInterface, \Serializable
 {

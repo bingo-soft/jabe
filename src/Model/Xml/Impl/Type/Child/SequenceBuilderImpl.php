@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type\Child;
+namespace Jabe\Model\Xml\Impl\Type\Child;
 
-use BpmPlatform\Model\Xml\ModelInterface;
-use BpmPlatform\Model\Xml\Impl\ModelBuildOperationInterface;
-use BpmPlatform\Model\Xml\Impl\Type\ModelElementTypeImpl;
-use BpmPlatform\Model\Xml\Impl\Type\Child\ChildElementBuilderImpl;
-use BpmPlatform\Model\Xml\Type\Child\{
+use Jabe\Model\Xml\ModelInterface;
+use Jabe\Model\Xml\Impl\ModelBuildOperationInterface;
+use Jabe\Model\Xml\Impl\Type\ModelElementTypeImpl;
+use Jabe\Model\Xml\Impl\Type\Child\ChildElementBuilderImpl;
+use Jabe\Model\Xml\Type\Child\{
     ChildElementBuilderInterface,
     ChildElementCollectionBuilderInterface,
     SequenceBuilderInterface

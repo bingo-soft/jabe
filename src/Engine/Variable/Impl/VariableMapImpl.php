@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable\Impl;
+namespace Jabe\Engine\Variable\Impl;
 
-use BpmPlatform\Engine\Variable\Variables;
-use BpmPlatform\Engine\Variable\VariableMapInterface;
-use BpmPlatform\Engine\Variable\Context\VariableContextInterface;
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Variable\Variables;
+use Jabe\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Variable\Context\VariableContextInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 class VariableMapImpl implements VariableMapInterface, \Serializable, VariableContextInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Cmmn\Instance;
+namespace Jabe\Model\Cmmn\Instance;
 
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
 
 interface CmmnModelElementInstanceInterface extends ModelElementInstanceInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Variable;
+namespace Jabe\Engine\Impl\Core\Variable;
 
 interface SetVariableFunctionInterface
 {

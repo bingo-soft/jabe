@@ -1,30 +1,30 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Behavior;
+namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use BpmPlatform\Engine\Application\{
+use Jabe\Engine\Application\{
     InvocationContext,
     ProcessApplicationReferenceInterface
 };
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\{
     DelegateVariableMappingInterface,
     ExpressionInterface,
     VariableScopeInterface
 };
-use BpmPlatform\Engine\Impl\Context\{
+use Jabe\Engine\Impl\Context\{
     Context,
     ProcessApplicationContextUtil
 };
-use BpmPlatform\Engine\Impl\Core\Model\CallableElement;
-use BpmPlatform\Engine\Impl\Delegate\DelegateInvocation;
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\{
+use Jabe\Engine\Impl\Core\Model\CallableElement;
+use Jabe\Engine\Impl\Delegate\DelegateInvocation;
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
     SubProcessActivityBehaviorInterface
 };
-use BpmPlatform\Engine\Impl\Util\ClassDelegateUtil;
-use BpmPlatform\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Impl\Util\ClassDelegateUtil;
+use Jabe\Engine\Variable\VariableMapInterface;
 
 abstract class CallableElementActivityBehavior extends AbstractBpmnActivityBehavior implements SubProcessActivityBehavior
 {

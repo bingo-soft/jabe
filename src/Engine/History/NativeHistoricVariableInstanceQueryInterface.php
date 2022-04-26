@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\History;
+namespace Jabe\Engine\History;
 
-use BpmPlatform\Engine\Query\NativeQueryInterface;
+use Jabe\Engine\Query\NativeQueryInterface;
 
 interface NativeHistoricVariableInstanceQueryInterface extends NativeQueryInterface
 {

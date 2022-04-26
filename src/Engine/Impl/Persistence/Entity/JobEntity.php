@@ -1,40 +1,40 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Util\{
     EnsureUtil,
     ExceptionUtil,
     StringUtil
 };
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     DbEntityLifecycleAwareInterface,
     EnginePersistenceLogger,
     HasDbReferencesInterface,
     HasDbRevisionInterface
 };
-use BpmPlatform\Engine\Impl\Incident\{
+use Jabe\Engine\Impl\Incident\{
     IncidentContext,
     IncidentHandling
 };
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\JobExecutor\{
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\JobExecutor\{
     DefaultJobPriorityProvider,
     JobHandlerInterface,
     JobHandlerConfigurationInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\ProcessDefinitionImpl;
-use BpmPlatform\Engine\Management\JobDefinitionInterface;
-use BpmPlatform\Engine\Repository\ResourceTypes;
-use BpmPlatform\Engine\Runtime\{
+use Jabe\Engine\Impl\Pvm\Process\ProcessDefinitionImpl;
+use Jabe\Engine\Management\JobDefinitionInterface;
+use Jabe\Engine\Repository\ResourceTypes;
+use Jabe\Engine\Runtime\{
     IncidentInterface,
     JobInterface
 };
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 abstract class JobEntity extends AcquirableJobEntity implements \Serializable, HasDbReferencesInterface, JobInterface, DbEntityInterface, HasDbRevisionInterface, DbEntityLifecycleAwareInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Exception;
+namespace Jabe\Engine\Exception;
 
-use BpmPlatform\Engine\BadUserRequestException;
+use Jabe\Engine\BadUserRequestException;
 
 class NotFoundException extends BadUserRequestException
 {

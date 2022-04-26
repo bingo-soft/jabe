@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Pvm\Delegate;
+namespace Jabe\Engine\Impl\Pvm\Delegate;
 
-use BpmPlatform\Engine\Impl\Core\Delegate\CoreActivityBehaviorInterface;
+use Jabe\Engine\Impl\Core\Delegate\CoreActivityBehaviorInterface;
 
 interface ActivityBehaviorInterface extends CoreActivityBehaviorInterface
 {

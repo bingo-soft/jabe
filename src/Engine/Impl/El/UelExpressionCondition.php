@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\El;
+namespace Jabe\Engine\Impl\El;
 
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\{
     DelegateExecutionInterface,
     VariableScopeInterface
 };
-use BpmPlatform\Engine\Impl\ConditionInterface;
-use BpmPlatform\Engine\Impl\Util\El\PropertyNotFoundException;
+use Jabe\Engine\Impl\ConditionInterface;
+use Jabe\Engine\Impl\Util\El\PropertyNotFoundException;
 
 class UelExpressionCondition implements ConditionInterface
 {

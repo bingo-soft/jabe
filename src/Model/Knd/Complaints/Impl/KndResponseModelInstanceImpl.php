@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Model\Knd\Complaints\Impl;
+namespace Jabe\Model\Knd\Complaints\Impl;
 
-use BpmPlatform\Model\Xml\{
+use Jabe\Model\Xml\{
     ModelBuilder,
     ModelInterface
 };
-use BpmPlatform\Model\Knd\Complaints\Impl\Instance\Response\{
+use Jabe\Model\Knd\Complaints\Impl\Instance\Response\{
     CodeImpl,
     IdImpl,
     InspectionImpl,

@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Form\FormFieldInterface;
-use BpmPlatform\Engine\Impl\Interceptor\CommandInterface;
-use BpmPlatform\Engine\Variable\VariableMapInterface;
-use BpmPlatform\Engine\Variable\Value\TypedValueInterface;
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Form\FormFieldInterface;
+use Jabe\Engine\Impl\Interceptor\CommandInterface;
+use Jabe\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 abstract class AbstractGetFormVariablesCmd implements CommandInterface, \Serializable
 {

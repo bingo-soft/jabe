@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Impl\Instance\Di;
+namespace Jabe\Model\Bpmn\Impl\Instance\Di;
 
-use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
-use BpmPlatform\Model\Bpmn\Instance\Di\{
+use Jabe\Model\Xml\ModelBuilder;
+use Jabe\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Instance\Di\{
     LabeledShapeInterface,
     ShapeInterface
 };

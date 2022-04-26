@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Impl\{
     IncidentQueryImpl,
     Page
 };
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
-use BpmPlatform\Engine\Runtime\IncidentInterface;
+use Jabe\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Runtime\IncidentInterface;
 
 class IncidentManager extends AbstractManager
 {

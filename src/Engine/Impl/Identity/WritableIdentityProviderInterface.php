@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Identity;
+namespace Jabe\Engine\Impl\Identity;
 
-use BpmPlatform\Engine\Identity\{
+use Jabe\Engine\Identity\{
     GroupInterface,
     TenantInterface,
     UserInterface
 };
-use BpmPlatform\Engine\Impl\Interceptor\SessionInterface;
+use Jabe\Engine\Impl\Interceptor\SessionInterface;
 
 interface WritableIdentityProviderInterface extends SessionInterface
 {

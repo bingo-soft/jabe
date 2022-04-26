@@ -3,8 +3,8 @@
 namespace Tests\Knd;
 
 use PHPUnit\Framework\TestCase;
-use BpmPlatform\Model\Xml\ModelInstanceInterface;
-use BpmPlatform\Model\Knd\Complaints\Impl\KndResponseParser;
+use Jabe\Model\Xml\ModelInstanceInterface;
+use Jabe\Model\Knd\Complaints\Impl\KndResponseParser;
 
 class KndResponseParseTest extends TestCase
 {

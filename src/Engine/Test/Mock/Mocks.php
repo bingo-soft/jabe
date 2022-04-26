@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Test\Mock;
+namespace Jabe\Engine\Test\Mock;
 
 class Mocks
 {

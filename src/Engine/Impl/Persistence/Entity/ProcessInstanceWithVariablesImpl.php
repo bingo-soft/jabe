@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Runtime\ProcessInstanceWithVariablesInterface;
-use BpmPlatform\Engine\Variable\VariableMapInterface;
+use Jabe\Engine\Runtime\ProcessInstanceWithVariablesInterface;
+use Jabe\Engine\Variable\VariableMapInterface;
 
 class ProcessInstanceWithVariablesImpl implements ProcessInstanceWithVariablesInterface
 {

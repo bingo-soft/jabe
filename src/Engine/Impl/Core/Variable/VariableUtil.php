@@ -1,24 +1,24 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Variable;
+namespace Jabe\Engine\Impl\Core\Variable;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Cmd\CommandLogger;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Core\CoreLogger;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\Entity\VariableInstanceEntity;
-use BpmPlatform\Engine\Impl\Persistence\Entity\Util\TypedValueField;
-use BpmPlatform\Engine\Impl\Variable\Serializer\{
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Cmd\CommandLogger;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Core\CoreLogger;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\Entity\VariableInstanceEntity;
+use Jabe\Engine\Impl\Persistence\Entity\Util\TypedValueField;
+use Jabe\Engine\Impl\Variable\Serializer\{
     TypedValueSerializerInterface,
     VariableSerializerFactoryInterface
 };
-use BpmPlatform\Engine\Variable\{
+use Jabe\Engine\Variable\{
     SerializationDataFormats,
     VariableMapInterface,
     Variables
 };
-use BpmPlatform\Engine\Variable\Value\{
+use Jabe\Engine\Variable\Value\{
     SerializableValueInterface,
     TypedValueInterface
 };

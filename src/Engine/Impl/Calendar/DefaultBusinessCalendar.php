@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Calendar;
+namespace Jabe\Engine\Impl\Calendar;
 
-use BpmPlatform\Engine\Impl\Util\ClockUtil;
-use BpmPlatform\Engine\Task\TaskInterface;
+use Jabe\Engine\Impl\Util\ClockUtil;
+use Jabe\Engine\Task\TaskInterface;
 
 class DefaultBusinessCalendar implements BusinessCalendarInterface
 {

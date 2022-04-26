@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Test\Mock;
+namespace Jabe\Engine\Test\Mock;
 
-use BpmPlatform\Engine\Delegate\VariableScopeInterface;
-use BpmPlatform\Engine\Impl\El\{
+use Jabe\Engine\Delegate\VariableScopeInterface;
+use Jabe\Engine\Impl\El\{
     ExpressionManager,
     VariableContextElResolver
 };
-use BpmPlatform\Engine\Impl\Util\El\{
+use Jabe\Engine\Impl\Util\El\{
     ArrayELResolver,
     BeanELResolver,
     CompositeELResolver,

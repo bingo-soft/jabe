@@ -1,17 +1,17 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Bpmn\Parser\{
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Bpmn\Parser\{
     DefaultFailedJobParseListener,
     FailedJobRetryConfiguration
 };
-use BpmPlatform\Engine\Impl\Calendar\DurationHelper;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\El\ExpressionInterface;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\JobExecutor\{
+use Jabe\Engine\Impl\Calendar\DurationHelper;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\El\ExpressionInterface;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\JobExecutor\{
     AsyncContinuationJobHandler,
     JobExecutorLogger,
     TimerCatchIntermediateEventJobHandler,
@@ -19,14 +19,14 @@ use BpmPlatform\Engine\Impl\JobExecutor\{
     TimerStartEventJobHandler,
     TimerStartEventSubprocessJobHandler
 };
-use BpmPlatform\Engine\Impl\Persistence\Deploy\Cache\DeploymentCache;
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Deploy\Cache\DeploymentCache;
+use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     JobEntity,
     ProcessDefinitionEntity
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\ActivityImpl;
-use BpmPlatform\Engine\Impl\Util\ParseUtil;
+use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
+use Jabe\Engine\Impl\Util\ParseUtil;
 
 class DefaultJobRetryCmd extends JobRetryCmd
 {

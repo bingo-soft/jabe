@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Validation;
+namespace Jabe\Model\Xml\Validation;
 
 interface ModelElementValidatorInterface
 {

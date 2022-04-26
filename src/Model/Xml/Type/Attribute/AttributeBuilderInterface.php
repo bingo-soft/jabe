@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Type\Attribute;
+namespace Jabe\Model\Xml\Type\Attribute;
 
 interface AttributeBuilderInterface
 {

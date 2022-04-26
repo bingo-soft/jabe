@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Telemetry\Dto;
+namespace Jabe\Engine\Impl\Telemetry\Dto;
 
-use BpmPlatform\Engine\Impl\Util\ParseUtil;
+use Jabe\Engine\Impl\Util\ParseUtil;
 
 class ApplicationServer
 {

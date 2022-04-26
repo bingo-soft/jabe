@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Variable;
+namespace Jabe\Engine\Variable;
 
-use BpmPlatform\Engine\Variable\Context\VariableContextInterface;
-use BpmPlatform\Engine\Variable\Type\{
+use Jabe\Engine\Variable\Context\VariableContextInterface;
+use Jabe\Engine\Variable\Type\{
     ValueTypeInterface
 };
-use BpmPlatform\Engine\Variable\Value\{
+use Jabe\Engine\Variable\Value\{
     BooleanValueInterface,
     DateValueInterface,
     DoubleValueInterface,
@@ -18,15 +18,15 @@ use BpmPlatform\Engine\Variable\Value\{
     StringValueInterface,
     TypedValueInterface
 };
-use BpmPlatform\Engine\Variable\Value\Builder\{
+use Jabe\Engine\Variable\Value\Builder\{
     FileValueBuilderInterface,
     ObjectValueBuilderInterface,
     SerializedObjectValueBuilderInterface,
     TypedValueBuilderInterface
 };
-use BpmPlatform\Engine\Variable\Impl\Context\EmptyVariableContext;
-use BpmPlatform\Engine\Variable\Impl\VariableMapImpl;
-use BpmPlatform\Engine\Variable\Impl\Value\{
+use Jabe\Engine\Variable\Impl\Context\EmptyVariableContext;
+use Jabe\Engine\Variable\Impl\VariableMapImpl;
+use Jabe\Engine\Variable\Impl\Value\{
     AbstractTypedValue,
     BooleanValueImpl,
     DateValueImpl,
@@ -39,7 +39,7 @@ use BpmPlatform\Engine\Variable\Impl\Value\{
     StringValueImpl,
     UntypedValueImpl
 };
-use BpmPlatform\Engine\Variable\Impl\Value\Builder\{
+use Jabe\Engine\Variable\Impl\Value\Builder\{
     FileValueBuilderImpl,
     ObjectVariableBuilderImpl,
     SerializedObjectValueBuilderImpl

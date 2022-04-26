@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Form;
+namespace Jabe\Engine\Form;
 
-use BpmPlatform\Engine\Task\TaskInterface;
+use Jabe\Engine\Task\TaskInterface;
 
 interface TaskFormDataInterface
 {

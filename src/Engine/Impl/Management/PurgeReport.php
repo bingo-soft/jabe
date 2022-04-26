@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Management;
+namespace Jabe\Engine\Impl\Management;
 
-use BpmPlatform\Engine\Impl\Persistence\Deploy\Cache\CachePurgeReport;
+use Jabe\Engine\Impl\Persistence\Deploy\Cache\CachePurgeReport;
 
 class PurgeReport
 {

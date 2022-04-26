@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\El;
+namespace Jabe\Engine\Impl\El;
 
-use BpmPlatform\Engine\Impl\Util\El\ExpressionFactory;
-use BpmPlatform\Engine\Impl\Juel\ExpressionFactoryImpl;
+use Jabe\Engine\Impl\Util\El\ExpressionFactory;
+use Jabe\Engine\Impl\Juel\ExpressionFactoryImpl;
 
 abstract class ExpressionFactoryResolver
 {

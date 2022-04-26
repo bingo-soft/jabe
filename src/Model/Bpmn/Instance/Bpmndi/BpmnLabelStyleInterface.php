@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance\Bpmndi;
+namespace Jabe\Model\Bpmn\Instance\Bpmndi;
 
-use BpmPlatform\Model\Bpmn\Instance\Dc\FontInterface;
-use BpmPlatform\Model\Bpmn\Instance\Di\StyleInterface;
+use Jabe\Model\Bpmn\Instance\Dc\FontInterface;
+use Jabe\Model\Bpmn\Instance\Di\StyleInterface;
 
 interface BpmnLabelStyleInterface extends StyleInterface
 {

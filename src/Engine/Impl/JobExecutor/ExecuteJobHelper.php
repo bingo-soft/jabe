@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\OptimisticLockingException;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Cmd\ExecuteJobsCmd;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\OptimisticLockingException;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Cmd\ExecuteJobsCmd;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandExecutorInterface,
     ProcessDataContext

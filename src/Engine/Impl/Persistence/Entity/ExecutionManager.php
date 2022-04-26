@@ -1,23 +1,23 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Authorization\Resources;
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Authorization\Resources;
+use Jabe\Engine\Impl\{
     AbstractQuery,
     ExecutionQueryImpl,
     Page,
     ProcessEngineLogger,
     ProcessInstanceQueryImpl
 };
-use BpmPlatform\Engine\Impl\Cfg\Auth\ResourceAuthorizationProviderInterface;
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Cfg\Auth\ResourceAuthorizationProviderInterface;
+use Jabe\Engine\Impl\Db\{
     EnginePersistenceLogger,
     ListQueryParameterObject
 };
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
-use BpmPlatform\Engine\Impl\Util\ImmutablePair;
-use BpmPlatform\Engine\Runtime\{
+use Jabe\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Impl\Util\ImmutablePair;
+use Jabe\Engine\Runtime\{
     ExecutionInterface,
     ProcessInstanceInterface
 };

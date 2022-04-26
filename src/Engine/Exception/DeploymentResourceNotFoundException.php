@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Exception;
+namespace Jabe\Engine\Exception;
 
-use BpmPlatform\Engine\ProcessEngineException;
+use Jabe\Engine\ProcessEngineException;
 
 class DeploymentResourceNotFoundException extends ProcessEngineException
 {

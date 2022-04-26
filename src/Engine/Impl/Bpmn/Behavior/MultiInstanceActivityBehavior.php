@@ -1,21 +1,21 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Behavior;
+namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Delegate\ExpressionInterface;
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Bpmn\Helper\CompensationUtil;
-use BpmPlatform\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use BpmPlatform\Engine\Impl\Pvm\PvmActivityInterface;
-use BpmPlatform\Engine\Impl\Pvm\Delegate\{
+use Jabe\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Delegate\ExpressionInterface;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Bpmn\Helper\CompensationUtil;
+use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
+use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
+use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
     CompositeActivityBehaviorInterface,
     ModificationObserverBehaviorInterface
 };
-use BpmPlatform\Engine\Impl\Pvm\Process\ActivityImpl;
-use BpmPlatform\Engine\Variable\Value\IntegerValueInterface;
+use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
+use Jabe\Engine\Variable\Value\IntegerValueInterface;
 
 abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivityBehavior implements CompositeActivityBehaviorInterface, ModificationObserverBehaviorInterface
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Task\TaskCountByCandidateGroupResultInterface;
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Task\TaskCountByCandidateGroupResultInterface;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class TaskCountByCandidateGroupResultEntity implements TaskCountByCandidateGroupResultInterface
 {

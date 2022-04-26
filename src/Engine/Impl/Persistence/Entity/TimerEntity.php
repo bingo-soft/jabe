@@ -1,27 +1,27 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Impl\Calendar\{
+use Jabe\Engine\Impl\Calendar\{
     BusinessCalendarInterface,
     CycleBusinessCalendar
 };
-use BpmPlatform\Engine\Impl\Cfg\{
+use Jabe\Engine\Impl\Cfg\{
     ProcessEngineConfigurationImpl,
     TransactionState
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Interceptor\{
     CommandContext,
     CommandExecutorInterface
 };
-use BpmPlatform\Engine\Impl\JobExecutor\{
+use Jabe\Engine\Impl\JobExecutor\{
     RepeatingFailedJobListener,
     TimerDeclarationImpl,
     TimerEventJobHandler,
     TimerJobConfiguration
 };
-use BpmPlatform\Engine\Impl\Util\ClassNameUtil;
+use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class TimerEntity extends JobEntity
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Core\Operation;
+namespace Jabe\Engine\Impl\Core\Operation;
 
-use BpmPlatform\Engine\Impl\Core\Instance\CoreExecution;
+use Jabe\Engine\Impl\Core\Instance\CoreExecution;
 
 interface CoreAtomicOperationInterface
 {

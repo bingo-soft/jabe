@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Authorization\{
+use Jabe\Engine\Authorization\{
     AuthorizationInterface,
     GroupsInterface,
     HistoricProcessInstancePermissions,
@@ -15,11 +15,11 @@ use BpmPlatform\Engine\Authorization\{
     Resources,
     TaskPermissions
 };
-use BpmPlatform\Engine\{
+use Jabe\Engine\{
     AuthorizationException,
     ProcessEngineConfiguration
 };
-use BpmPlatform\Engine\Impl\{
+use Jabe\Engine\Impl\{
     AbstractQuery,
     ActivityStatisticsQueryImpl,
     AuthorizationQueryImpl,
@@ -47,13 +47,13 @@ use BpmPlatform\Engine\Impl\{
     UserOperationLogQueryImpl,
     VariableInstanceQueryImpl
 };
-use BpmPlatform\Engine\Impl\Batch\{
+use Jabe\Engine\Impl\Batch\{
     BatchQueryImpl,
     BatchStatisticsQueryImpl
 };
-use BpmPlatform\Engine\Impl\Batch\History\HistoricBatchQueryImpl;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\{
+use Jabe\Engine\Impl\Batch\History\HistoricBatchQueryImpl;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\{
     AuthorizationCheck,
     CompositePermissionCheck,
     DbEntityInterface,
@@ -62,16 +62,16 @@ use BpmPlatform\Engine\Impl\Db\{
     PermissionCheck,
     PermissionCheckBuilder
 };
-use BpmPlatform\Engine\Impl\Db\EntityManager\Operation\DbOperation;
-use BpmPlatform\Engine\Impl\Identity\Authentication;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
-use BpmPlatform\Engine\Impl\Persistence\Entity\Util\{
+use Jabe\Engine\Impl\Db\EntityManager\Operation\DbOperation;
+use Jabe\Engine\Impl\Identity\Authentication;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Impl\Persistence\Entity\Util\{
     AuthManagerUtil,
     VariablePermissions
 };
-use BpmPlatform\Engine\Impl\Util\ResourceTypeUtil;
-use BpmPlatform\Engine\Query\QueryInterface;
+use Jabe\Engine\Impl\Util\ResourceTypeUtil;
+use Jabe\Engine\Query\QueryInterface;
 
 class AuthorizationManager extends AbstractManager
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Form\Validator;
+namespace Jabe\Engine\Impl\Form\Validator;
 
-use BpmPlatform\Engine\Impl\Form\FormException;
+use Jabe\Engine\Impl\Form\FormException;
 
 class FormFieldConfigurationException extends FormException
 {

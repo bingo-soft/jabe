@@ -1,13 +1,13 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Helper;
+namespace Jabe\Engine\Impl\Bpmn\Helper;
 
-use BpmPlatform\Engine\Impl\Bpmn\Parser\EscalationEventDefinition;
-use BpmPlatform\Engine\Impl\Pvm\{
+use Jabe\Engine\Impl\Bpmn\Parser\EscalationEventDefinition;
+use Jabe\Engine\Impl\Pvm\{
     PvmActivityInterface,
     PvmScopeInterface
 };
-use BpmPlatform\Engine\Impl\Tree\TreeVisitorInterface;
+use Jabe\Engine\Impl\Tree\TreeVisitorInterface;
 
 class EscalationEventDefinitionFinder implements TreeVisitorInterface
 {

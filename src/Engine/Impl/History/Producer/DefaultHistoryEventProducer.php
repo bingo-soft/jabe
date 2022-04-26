@@ -1,35 +1,35 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\History\Handler;
+namespace Jabe\Engine\Impl\History\Handler;
 
-use BpmPlatform\Engine\{
+use Jabe\Engine\{
     ProcessEngineException,
     ProcessEngineConfiguration
 };
-use BpmPlatform\Engine\Batch\BatchInterface;
-use BpmPlatform\Engine\Delegate\{
+use Jabe\Engine\Batch\BatchInterface;
+use Jabe\Engine\Delegate\{
     DelegateExecutionInterface,
     DelegateTaskInterface,
     VariableScopeInterface
 };
-use BpmPlatform\Engine\ExternalTask\ExternalTaskInterface;
-use BpmPlatform\Engine\History\{
+use Jabe\Engine\ExternalTask\ExternalTaskInterface;
+use Jabe\Engine\History\{
     ExternalTaskStateImpl,
     ExternalTaskStateInterface,
     HistoricProcessInstanceInterface,
     IncidentStateImpl,
     JobStateImpl
 };
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Batch\BatchEntity;
-use BpmPlatform\Engine\Impl\Batch\History\HistoricBatchEntity;
-use BpmPlatform\Engine\Impl\Cfg\{
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Batch\BatchEntity;
+use Jabe\Engine\Impl\Batch\History\HistoricBatchEntity;
+use Jabe\Engine\Impl\Cfg\{
     ConfigurationLogger,
     IdGenerator
 };
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\History\DefaultHistoryRemovalTimeProvider;
-use BpmPlatform\Engine\Impl\History\Event\{
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\History\DefaultHistoryRemovalTimeProvider;
+use Jabe\Engine\Impl\History\Event\{
     HistoricActivityInstanceEventEntity,
     HistoricExternalTaskLogEntity,
     HistoricFormPropertyEventEntity,
@@ -43,13 +43,13 @@ use BpmPlatform\Engine\Impl\History\Event\{
     HistoryEventTypes,
     UserOperationLogEntryEventEntity
 };
-use BpmPlatform\Engine\Impl\JobExecutor\HistoryCleanup\HistoryCleanupJobHandler;
-use BpmPlatform\Engine\Impl\Migration\Instance\MigratingActivityInstance;
-use BpmPlatform\Engine\Impl\OpLog\{
+use Jabe\Engine\Impl\JobExecutor\HistoryCleanup\HistoryCleanupJobHandler;
+use Jabe\Engine\Impl\Migration\Instance\MigratingActivityInstance;
+use Jabe\Engine\Impl\OpLog\{
     UserOperationLogContext,
     UserOperationLogContextEntry
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\{
+use Jabe\Engine\Impl\Persistence\Entity\{
     ByteArrayEntity,
     ExecutionEntity,
     ExternalTaskEntity,
@@ -61,24 +61,24 @@ use BpmPlatform\Engine\Impl\Persistence\Entity\{
     TaskEntity,
     VariableInstanceEntity
 };
-use BpmPlatform\Engine\Impl\Pvm\PvmScopeInterface;
-use BpmPlatform\Engine\Impl\Pvm\Runtime\CompensationBehavior;
-use BpmPlatform\Engine\Impl\Util\{
+use Jabe\Engine\Impl\Pvm\PvmScopeInterface;
+use Jabe\Engine\Impl\Pvm\Runtime\CompensationBehavior;
+use Jabe\Engine\Impl\Util\{
     ClockUtil,
     ExceptionUtil,
     ParseUtil,
     StringUtil
 };
-use BpmPlatform\Engine\Management\JobDefinitionInterface;
-use BpmPlatform\Engine\Repository\{
+use Jabe\Engine\Management\JobDefinitionInterface;
+use Jabe\Engine\Repository\{
     ProcessDefinitionInterface,
     ResourceTypes
 };
-use BpmPlatform\Engine\Runtime\{
+use Jabe\Engine\Runtime\{
     IncidentInterface,
     JobInterface
 };
-use BpmPlatform\Engine\Task\IdentityLinkInterface;
+use Jabe\Engine\Task\IdentityLinkInterface;
 
 class DefaultHistoryEventProducer implements HistoryEventProducerInterface
 {

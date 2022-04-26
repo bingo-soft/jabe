@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance;
+namespace Jabe\Model\Bpmn\Instance;
 
-use BpmPlatform\Model\Bpmn\Builder\ProcessBuilder;
+use Jabe\Model\Bpmn\Builder\ProcessBuilder;
 
 interface ProcessInterface extends CallableElementInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Instance;
+namespace Jabe\Model\Xml\Instance;
 
-use BpmPlatform\Model\Xml\Impl\ModelInstanceImpl;
+use Jabe\Model\Xml\Impl\ModelInstanceImpl;
 
 interface DomElementInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Engine\Task;
+namespace Jabe\Engine\Task;
 
-use BpmPlatform\Engine\Query\NativeQueryInterface;
+use Jabe\Engine\Query\NativeQueryInterface;
 
 interface NativeTaskQueryInterface extends NativeQueryInterface
 {

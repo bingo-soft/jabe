@@ -1,12 +1,12 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\Interceptor\{
     CommandContext,
     CommandContextListenerInterface
 };
-use BpmPlatform\Engine\Impl\Persistence\Entity\JobEntity;
+use Jabe\Engine\Impl\Persistence\Entity\JobEntity;
 
 class JobFailureCollector implements CommandContextListenerInterface
 {

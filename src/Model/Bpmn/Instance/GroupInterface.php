@@ -1,8 +1,8 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Instance;
+namespace Jabe\Model\Bpmn\Instance;
 
-use BpmPlatform\Model\Bpmn\Instance\Bpmndi\BpmnEdgeInterface;
+use Jabe\Model\Bpmn\Instance\Bpmndi\BpmnEdgeInterface;
 
 interface GroupInterface extends ArtifactInterface
 {

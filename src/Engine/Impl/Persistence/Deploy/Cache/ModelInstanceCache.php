@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Deploy\Cache;
+namespace Jabe\Engine\Impl\Persistence\Deploy\Cache;
 
-use BpmPlatform\Engine\Impl\ProcessEngineLogger;
-use BpmPlatform\Engine\Impl\Cmd\GetDeploymentResourceCmd;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Db\EnginePersistenceLogger;
-use BpmPlatform\Engine\Impl\Interceptor\CommandContext;
-use BpmPlatform\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
-use BpmPlatform\Engine\Repository\ProcessDefinitionInterface;
-use BpmPlatform\Model\Xml\ModelInstanceInterface;
-use BpmPlatform\Commons\Utils\Cache\CacheInterface;
+use Jabe\Engine\Impl\ProcessEngineLogger;
+use Jabe\Engine\Impl\Cmd\GetDeploymentResourceCmd;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Db\EnginePersistenceLogger;
+use Jabe\Engine\Impl\Interceptor\CommandContext;
+use Jabe\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
+use Jabe\Engine\Repository\ProcessDefinitionInterface;
+use Jabe\Model\Xml\ModelInstanceInterface;
+use Jabe\Commons\Utils\Cache\CacheInterface;
 
 abstract class ModelInstanceCache
 {

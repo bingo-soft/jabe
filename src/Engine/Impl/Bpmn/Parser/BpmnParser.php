@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Bpmn\Parser;
+namespace Jabe\Engine\Impl\Bpmn\Parser;
 
-use BpmPlatform\Engine\Impl\Cfg\BpmnParseFactoryInterface;
-use BpmPlatform\Engine\Impl\El\ExpressionManager;
-use BpmPlatform\Engine\Impl\Util\Xml\Parser;
+use Jabe\Engine\Impl\Cfg\BpmnParseFactoryInterface;
+use Jabe\Engine\Impl\El\ExpressionManager;
+use Jabe\Engine\Impl\Util\Xml\Parser;
 
 class BpmnParser extends Parser
 {

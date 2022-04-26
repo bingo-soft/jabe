@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Builder;
+namespace Jabe\Model\Bpmn\Builder;
 
-use BpmPlatform\Model\Bpmn\BpmnModelInstanceInterface;
-use BpmPlatform\Model\Bpmn\Instance\Extension\FormFieldInterface;
-use BpmPlatform\Model\Bpmn\Instance\BaseElementInterface;
+use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
+use Jabe\Model\Bpmn\Instance\Extension\FormFieldInterface;
+use Jabe\Model\Bpmn\Instance\BaseElementInterface;
 
 class StartEventFormFieldBuilder extends AbstractFormFieldBuilder
 {

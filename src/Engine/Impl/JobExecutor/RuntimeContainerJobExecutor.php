@@ -1,14 +1,14 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\JobExecutor;
+namespace Jabe\Engine\Impl\JobExecutor;
 
-use BpmPlatform\Engine\Container\{
+use Jabe\Engine\Container\{
     BaseRuntimeContainerDelegate,
     ExecutorServiceInterface,
     RuntimeContainerDelegateInterface
 };
-use BpmPlatform\Engine\ProcessEngineException;
-use BpmPlatform\Engine\Impl\ProcessEngineImpl;
+use Jabe\Engine\ProcessEngineException;
+use Jabe\Engine\Impl\ProcessEngineImpl;
 
 class RuntimeContainerJobExecutor extends JobExecutor
 {

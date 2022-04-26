@@ -1,29 +1,29 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type;
+namespace Jabe\Model\Xml\Impl\Type;
 
-use BpmPlatform\Model\Xml\{
+use Jabe\Model\Xml\{
     ModelInterface,
     ModelInstanceInterface
 };
-use BpmPlatform\Model\Xml\Exception\{
+use Jabe\Model\Xml\Exception\{
     ModelException,
     ModelTypeException
 };
-use BpmPlatform\Model\Xml\Type\Child\ChildElementCollectionInterface;
-use BpmPlatform\Model\Xml\Impl\ModelImpl;
-use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
-use BpmPlatform\Model\Xml\Impl\Util\ModelUtil;
-use BpmPlatform\Model\Xml\Instance\{
+use Jabe\Model\Xml\Type\Child\ChildElementCollectionInterface;
+use Jabe\Model\Xml\Impl\ModelImpl;
+use Jabe\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
+use Jabe\Model\Xml\Impl\Util\ModelUtil;
+use Jabe\Model\Xml\Instance\{
     DomDocumentInterface,
     DomElementInterface,
     ModelElementInstanceInterface
 };
-use BpmPlatform\Model\Xml\Type\{
+use Jabe\Model\Xml\Type\{
     ModelElementTypeInterface,
     ModelTypeInstanceProviderInterface
 };
-use BpmPlatform\Model\Xml\Type\Attribute\AttributeInterface;
+use Jabe\Model\Xml\Type\Attribute\AttributeInterface;
 
 class ModelElementTypeImpl implements ModelElementTypeInterface
 {

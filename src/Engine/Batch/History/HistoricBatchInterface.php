@@ -1,6 +1,6 @@
 <?php
 
-namespace BpmPlatform\Engine\Batch\History;
+namespace Jabe\Engine\Batch\History;
 
 interface HistoricBatchInterface
 {

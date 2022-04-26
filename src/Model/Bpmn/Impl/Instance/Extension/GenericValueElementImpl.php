@@ -1,16 +1,16 @@
 <?php
 
-namespace BpmPlatform\Model\Bpmn\Impl\Instance\Extension;
+namespace Jabe\Model\Bpmn\Impl\Instance\Extension;
 
-use BpmPlatform\Model\Xml\ModelBuilder;
-use BpmPlatform\Model\Xml\Instance\ModelElementInstanceInterface;
-use BpmPlatform\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
-use BpmPlatform\Model\Xml\Impl\Util\ModelUtil;
-use BpmPlatform\Model\Xml\Type\ModelTypeInstanceProviderInterface;
-use BpmPlatform\Model\Bpmn\Impl\BpmnModelConstants;
-use BpmPlatform\Model\Bpmn\Impl\Instance\BpmnModelElementInstanceImpl;
-use BpmPlatform\Model\Bpmn\Instance\Extension\GenericValueElementInterface;
-use BpmPlatform\Model\Bpmn\Instance\BpmnModelElementInstanceInterface;
+use Jabe\Model\Xml\ModelBuilder;
+use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
+use Jabe\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
+use Jabe\Model\Xml\Impl\Util\ModelUtil;
+use Jabe\Model\Xml\Type\ModelTypeInstanceProviderInterface;
+use Jabe\Model\Bpmn\Impl\BpmnModelConstants;
+use Jabe\Model\Bpmn\Impl\Instance\BpmnModelElementInstanceImpl;
+use Jabe\Model\Bpmn\Instance\Extension\GenericValueElementInterface;
+use Jabe\Model\Bpmn\Instance\BpmnModelElementInstanceInterface;
 
 class GenericValueElementImpl extends BpmnModelElementInstanceImpl implements GenericValueElementInterface
 {

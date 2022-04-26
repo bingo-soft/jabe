@@ -3,8 +3,8 @@
 namespace Tests\WSDL;
 
 use PHPUnit\Framework\TestCase;
-use BpmPlatform\Model\Wsdl\Impl\WsdlParser;
-use BpmPlatform\Model\Wsdl\Instance\{
+use Jabe\Model\Wsdl\Impl\WsdlParser;
+use Jabe\Model\Wsdl\Instance\{
     BindingInterface,
     ServiceInterface
 };
@@ -30,9 +30,6 @@ class WsdlModelTest extends TestCase
         $this->assertFalse($types == null);
         $schema = $defs->getTypes()->getSchema();
         $this->assertFalse($schema == null);
-
-        echo count($defs->getTypes()->getSchema()->getElements());
-
         $services = $this->modelInstance->getModelElementsByType(ServiceInterface::class);
         $bindings = $this->modelInstance->getModelElementsByType(BindingInterface::class);
         $this->assertCount(1, $bindings);

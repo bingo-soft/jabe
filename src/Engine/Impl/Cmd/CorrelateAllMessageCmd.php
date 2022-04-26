@@ -1,20 +1,20 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Cmd;
+namespace Jabe\Engine\Impl\Cmd;
 
-use BpmPlatform\Engine\Impl\MessageCorrelationBuilderImpl;
-use BpmPlatform\Engine\Impl\Context\Context;
-use BpmPlatform\Engine\Impl\Interceptor\{
+use Jabe\Engine\Impl\MessageCorrelationBuilderImpl;
+use Jabe\Engine\Impl\Context\Context;
+use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use BpmPlatform\Engine\Impl\Runtime\{
+use Jabe\Engine\Impl\Runtime\{
     CorrelationHandlerInterface,
     CorrelationSet,
     MessageCorrelationResultImpl,
     CorrelationHandlerResult
 };
-use BpmPlatform\Engine\Impl\Util\EnsureUtil;
+use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class CorrelateAllMessageCmd extends AbstractCorrelateMessageCmd implements CommandInterface
 {

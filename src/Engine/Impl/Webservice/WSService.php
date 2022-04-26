@@ -1,10 +1,10 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Webservice;
+namespace Jabe\Engine\Impl\Webservice;
 
-use BpmPlatform\Engine\Impl\Bpmn\Webservice\BpmnInterfaceImplementationInterface;
-use BpmPlatform\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use BpmPlatform\Engine\Impl\Util\ReflectUtil;
+use Jabe\Engine\Impl\Bpmn\Webservice\BpmnInterfaceImplementationInterface;
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Util\ReflectUtil;
 
 class WSService implements BpmnInterfaceImplementationInterface
 {

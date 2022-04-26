@@ -1,15 +1,15 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Persistence\Entity;
+namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use BpmPlatform\Engine\Batch\BatchInterface;
-use BpmPlatform\Engine\Impl\Page;
-use BpmPlatform\Engine\Impl\Batch\{
+use Jabe\Engine\Batch\BatchInterface;
+use Jabe\Engine\Impl\Page;
+use Jabe\Engine\Impl\Batch\{
     BatchEntity,
     BatchQueryImpl
 };
-use BpmPlatform\Engine\Impl\Db\ListQueryParameterObject;
-use BpmPlatform\Engine\Impl\Persistence\AbstractManager;
+use Jabe\Engine\Impl\Db\ListQueryParameterObject;
+use Jabe\Engine\Impl\Persistence\AbstractManager;
 
 class BatchManager extends AbstractManager
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Model\Xml\Impl\Type\Reference;
+namespace Jabe\Model\Xml\Impl\Type\Reference;
 
-use BpmPlatform\Model\Xml\ModelInterface;
-use BpmPlatform\Model\Xml\Exception\ModelException;
-use BpmPlatform\Model\Xml\Impl\Type\Child\ChildElementCollectionImpl;
-use BpmPlatform\Model\Xml\Type\Reference\{
+use Jabe\Model\Xml\ModelInterface;
+use Jabe\Model\Xml\Exception\ModelException;
+use Jabe\Model\Xml\Impl\Type\Child\ChildElementCollectionImpl;
+use Jabe\Model\Xml\Type\Reference\{
     ElementReferenceCollectionBuilderInterface,
     ElementReferenceCollectionInterface
 };

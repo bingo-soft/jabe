@@ -1,11 +1,11 @@
 <?php
 
-namespace BpmPlatform\Engine\Impl\Variable\Serializer;
+namespace Jabe\Engine\Impl\Variable\Serializer;
 
-use BpmPlatform\Engine\Variable\Variables;
-use BpmPlatform\Engine\Variable\Impl\Value\UntypedValueImpl;
-use BpmPlatform\Engine\Variable\Type\ValueType;
-use BpmPlatform\Engine\Variable\Value\BooleanValueInterface;
+use Jabe\Engine\Variable\Variables;
+use Jabe\Engine\Variable\Impl\Value\UntypedValueImpl;
+use Jabe\Engine\Variable\Type\ValueType;
+use Jabe\Engine\Variable\Value\BooleanValueInterface;
 
 class BooleanValueSerializer extends PrimitiveValueSerializer
 {
