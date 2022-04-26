@@ -16,7 +16,7 @@
         }  
     },
     "require": {
-        "php": ">=7.4.0",
+        "php": ">=8.0",
         "doctrine/orm": "2.8.5",
         "doctrine/dbal": "2.12.1",   
         "symfony/expression-language": "^5.3",

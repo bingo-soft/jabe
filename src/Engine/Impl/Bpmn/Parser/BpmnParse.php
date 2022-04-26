@@ -4071,7 +4071,7 @@ class BpmnParse extends Parse
     * @param scope
     *          The current scope on which the call activity is defined.
     */
-    public function parseCallActivity(Element $callActivityElement, ScopeImpl $scope, boolean $isMultiInstance): ?ActivityImpl
+    public function parseCallActivity(Element $callActivityElement, ScopeImpl $scope, bool $isMultiInstance): ?ActivityImpl
     {
         $activity = $this->createActivityOnScope($callActivityElement, $scope);
 
