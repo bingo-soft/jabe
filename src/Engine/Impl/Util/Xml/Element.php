@@ -104,6 +104,29 @@ class Element
         return $defaultValue;
     }
 
+    public function attributeNS($namespace, string $name, string $defaultValue = null): string
+    {
+        $attribute = $this->attribute($this->composeMapKey($namespace, $name));
+        if ($attribute == null && ($namespace instanceof XmlNamespace && $namespace->hasAlternativeUri())) {
+            $attribute = $this->attribute($this->composeMapKey($namespace->getAlternativeUri(), $name));
+        }
+        if ($attribute == null) {
+            return $defaultValue;
+        }
+        return $attribute;
+    }
+
+    protected function composeMapKey(?string $attributeUri, string $attributeName): string
+    {
+        $strb = "";
+        if (!empty($attributeUri)) {
+            $strb .= $attributeUri;
+            $strb .= ":";
+        }
+        $strb .= $attributeName;
+        return $strb;
+    }
+
     public function attributes(): array
     {
         return array_keys($this->attributeMap);

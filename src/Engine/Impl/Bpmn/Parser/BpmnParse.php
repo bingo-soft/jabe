@@ -67,6 +67,7 @@ use BpmPlatform\Engine\Impl\Bpmn\Listener\{
 use BpmPlatform\Engine\Impl\Context\Context;
 use BpmPlatform\Engine\Impl\Core\Model\{
     BaseCallableElement,
+    CallableElement,
     CallableElementBinding,
     CallableElementParameter,
     Properties
@@ -77,6 +78,7 @@ use BpmPlatform\Engine\Impl\Core\Variable\Value\{
     NullValueProvider,
     ParameterValueProvider
 };
+use BpmPlatform\Engine\Impl\Cxf\Webservice\CxfWSDLImporter;
 use BpmPlatform\Engine\Impl\El\{
     ElValueProvider,
     ExpressionInterface,
@@ -119,6 +121,9 @@ use BpmPlatform\Engine\Impl\Pvm\Delegate\ActivityBehaviorInterface;
 use BpmPlatform\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ActivityStartBehavior,
+    AsyncAfterUpdateInterface,
+    AsyncBeforeUpdateInterface,
+    BacklogErrorCallbackInterface,
     HasDIBoundsInterface,
     Lane,
     LaneSet,
@@ -395,19 +400,18 @@ class BpmnParse extends Parse
         }
     }
 
-    protected XMLImporter getImporter(String importType, Element theImport) {
-        if ($this->importers.containsKey(importType)) {
-            return $this->importers->get(importType);
+    protected function getImporter(string $importType, Element $theImport): ?XMLImporterInterface
+    {
+        if (array_key_exists($importType, $this->importers)) {
+            return $this->importers[$importType];
         } else {
-            if (importType.equals("http://schemas.xmlsoap.org/wsdl/")) {
-                Class wsdlImporterClass;
+            if ($importType == "http://schemas.xmlsoap.org/wsdl/") {
                 try {
-                    wsdlImporterClass = Class.forName("org.camunda.bpm.engine.impl.webservice.CxfWSDLImporter", true, Thread.currentThread()->getContextClassLoader());
-                    XMLImporter newInstance = (XMLImporter) wsdlImporterClass.newInstance();
-                    $this->importers.put(importType, newInstance);
-                    return newInstance;
-                } catch (Exception e) {
-                    $this->addError("Could not find importer for type " + importType, theImport);
+                    $newInstance = new CxfWSDLImporter();
+                    $this->importers[$importType] = $newInstance;
+                    return $newInstance;
+                } catch (\Exception $e) {
+                    $this->addError("Could not find importer for type " . $importType, $theImport);
                 }
             }
             return null;
@@ -419,19 +423,20 @@ class BpmnParse extends Parse
     * contained within a process element, but they can be referenced from inner
     * process elements.
     */
-    public void parseMessages() {
-    for (Element messageElement : $this->rootElement->elements("message")) {
-        String id = messageElement.attribute("id");
-        String messageName = messageElement.attribute("name");
+    public function parseMessages(): void
+    {
+        foreach ($this->rootElement->elements("message") as $messageElement) {
+            $id = $messageElement->attribute("id");
+            $messageName = $messageElement->attribute("name");
 
-        Expression messageExpression = null;
-        if (messageName != null) {
-        messageExpression = expressionManager.createExpression(messageName);
+            $messageExpression = null;
+            if ($messageName != null) {
+                $messageExpression = $expressionManager->createExpression($messageName);
+            }
+
+            $messageDefinition = new MessageDefinition($this->targetNamespace . ":" . $id, $messageExpression);
+            $this->messages[$messageDefinition->getId()] = $messageDefinition;
         }
-
-        MessageDefinition messageDefinition = new MessageDefinition($this->targetNamespace + ":" + id, messageExpression);
-        $this->messages.put(messageDefinition->getId(), messageDefinition);
-    }
     }
 
     /**
@@ -439,108 +444,110 @@ class BpmnParse extends Parse
     * within a process element, but they can be referenced from inner process
     * elements.
     */
-    protected void parseSignals() {
-    for (Element signalElement : $this->rootElement->elements("signal")) {
-        String id = signalElement.attribute("id");
-        String signalName = signalElement.attribute("name");
+    protected function parseSignals(): void
+    {
+        foreach ($this->rootElement->elements("signal") as $signalElement) {
+            $id = $signalElement->attribute("id");
+            $signalName = $signalElement->attribute("name");
 
-        for (SignalDefinition signalDefinition : signals.values()) {
-        if (signalDefinition->getName().equals(signalName)) {
-            $this->addError("duplicate signal name '" + signalName + "'.", signalElement);
-        }
-        }
+            foreach ($this->signals as $signalDefinition) {
+                if ($signalDefinition->getName() == $signalName) {
+                    $this->addError("duplicate signal name '" . $signalName . "'.", $signalElement);
+                }
+            }
 
-        if (id == null) {
-        $this->addError("signal must have an id", signalElement);
-        } else if (signalName == null) {
-        $this->addError("signal with id '" + id + "' has no name", signalElement);
-        } else {
-        Expression signalExpression = expressionManager.createExpression(signalName);
-        SignalDefinition signal = new SignalDefinition();
-        signal->setId($this->targetNamespace + ":" + id);
-        signal->setExpression(signalExpression);
+            if ($id == null) {
+                $this->addError("signal must have an id", $signalElement);
+            } elseif ($signalName == null) {
+                $this->addError("signal with id '" . $id . "' has no name", $signalElement);
+            } else {
+                $signalExpression = $expressionManager->createExpression($signalName);
+                $signal = new SignalDefinition();
+                $signal->setId($this->targetNamespace . ":" . $id);
+                $signal->setExpression($signalExpression);
 
-        $this->signals.put(signal->getId(), signal);
-        }
-    }
-    }
-
-    public void parseErrors() {
-    for (Element errorElement : $this->rootElement->elements("error")) {
-        Error error = new Error();
-
-        String id = errorElement.attribute("id");
-        if (id == null) {
-        $this->addError("'id' is mandatory on error definition", errorElement);
-        }
-        error->setId(id);
-
-        String errorCode = errorElement.attribute("errorCode");
-        if (errorCode != null) {
-        error->setErrorCode(errorCode);
-        }
-
-        String errorMessage = errorElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "errorMessage");
-        if(errorMessage != null) {
-        error->setErrorMessageExpression(createParameterValueProvider(errorMessage, expressionManager));
-        }
-
-        errors.put(id, error);
-    }
-    }
-
-    protected void parseEscalations() {
-    for (Element element : $this->rootElement->elements("escalation")) {
-
-        String id = element.attribute("id");
-        if (id == null) {
-        $this->addError("escalation must have an id", element);
-        } else {
-
-        Escalation escalation = createEscalation(id, element);
-        escalations.put(id, escalation);
+                $this->signals[$signal->getId()] = $signal;
+            }
         }
     }
+
+    public function parseErrors(): void
+    {
+        foreach ($this->rootElement->elements("error") as $errorElement) {
+            $error = new Error();
+
+            $id = $errorElement->attribute("id");
+            if ($id == null) {
+                $this->addError("'id' is mandatory on error definition", $errorElement);
+            }
+            $error->setId($id);
+
+            $errorCode = $errorElement->attribute("errorCode");
+            if ($errorCode != null) {
+                $error->setErrorCode($errorCode);
+            }
+
+            $errorMessage = $errorElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "errorMessage");
+            if ($errorMessage != null) {
+                $error->setErrorMessageExpression($this->createParameterValueProvider($errorMessage, $expressionManager));
+            }
+
+            $this->errors[$id] = $error;
+        }
     }
 
-    protected Escalation createEscalation(String id, Element element) {
-
-    Escalation escalation = new Escalation(id);
-
-    String name = element.attribute("name");
-    if (name != null) {
-        escalation->setName(name);
+    protected function parseEscalations(): void
+    {
+        foreach ($this->rootElement->elements("escalation") as $element) {
+            $id = $element->attribute("id");
+            if ($id == null) {
+                $this->addError("escalation must have an id", $element);
+            } else {
+                $escalation = $this->createEscalation($id, $element);
+                $this->escalations[$id] = $escalation;
+            }
+        }
     }
 
-    String escalationCode = element.attribute("escalationCode");
-    if (escalationCode != null && !escalationCode.isEmpty()) {
-        escalation->setEscalationCode(escalationCode);
-    }
-    return escalation;
+    protected function createEscalation(string $id, Element $element): Escalation
+    {
+        $escalation = new Escalation($id);
+
+        $name = $element->attribute("name");
+        if ($name != null) {
+            $escalation->setName($name);
+        }
+
+        $escalationCode = $element->attribute("escalationCode");
+        if ($escalationCode != null && !empty($escalationCode)) {
+            $escalation->setEscalationCode($escalationCode);
+        }
+        return $escalation;
     }
 
     /**
     * Parses all the process definitions defined within the 'definitions' root
     * element.
     */
-    public void parseProcessDefinitions() {
-    for (Element processElement : $this->rootElement->elements("process")) {
-        boolean isExecutable = !deployment.isNew();
-        String isExecutableStr = processElement.attribute("isExecutable");
-        if (isExecutableStr != null) {
-        isExecutable = Boolean.parseBoolean(isExecutableStr);
-        if (!isExecutable) {
-            LOG.ignoringNonExecutableProcess(processElement.attribute("id"));
-        }
-        } else {
-        LOG.missingIsExecutableAttribute(processElement.attribute("id"));
-        }
+    public function parseProcessDefinitions(): void
+    {
+        foreach ($this->rootElement->elements("process") as $processElement) {
+            $isExecutable = !$deployment->isNew();
+            $isExecutableStr = $processElement->attribute("isExecutable");
+            if ($isExecutableStr != null) {
+                $isExecutable = $isExecutableStr === "true";
+                if (!$isExecutable) {
+                    //LOG.ignoringNonExecutableProcess(processElement->attribute("id"));
+                }
+            } else {
+                //LOG.missingIsExecutableAttribute(processElement->attribute("id"));
+            }
 
-        // Only process executable processes
-        if (isExecutable) {
-        processDefinitions.add(parseProcess(processElement));
+            // Only process executable processes
+            if ($isExecutable) {
+                $this->processDefinitions[] = $this->parseProcess($processElement);
+            }
         }
-    }
     }
 
     /**
@@ -548,26 +555,27 @@ class BpmnParse extends Parse
     * element and get all participants to lookup their process references during
     * DI parsing.
     */
-    public void parseCollaboration() {
-    Element collaboration = $this->rootElement->element("collaboration");
-    if (collaboration != null) {
-        for (Element participant : collaboration.elements("participant")) {
-        String processRef = participant.attribute("processRef");
-        if (processRef != null) {
-            ProcessDefinitionImpl procDef = getProcessDefinition(processRef);
-            if (procDef != null) {
-            // Set participant process on the procDef, so it can get rendered
-            // later on if needed
-            ParticipantProcess participantProcess = new ParticipantProcess();
-            participantProcess->setId(participant.attribute("id"));
-            participantProcess->setName(participant.attribute("name"));
-            procDef->setParticipantProcess(participantProcess);
+    public function parseCollaboration(): void
+    {
+        $collaboration = $this->rootElement->element("collaboration");
+        if ($collaboration != null) {
+            foreach ($collaboration->elements("participant") as $participant) {
+                $processRef = $participant->attribute("processRef");
+                if ($processRef != null) {
+                    $procDef = $this->getProcessDefinition($processRef);
+                    if ($procDef != null) {
+                        // Set participant process on the procDef, so it can get rendered
+                        // later on if needed
+                        $participantProcess = new ParticipantProcess();
+                        $participantProcess->setId($participant->attribute("id"));
+                        $participantProcess->setName($participant->attribute("name"));
+                        $procDef->setParticipantProcess($participantProcess);
 
-            participantProcesses.put(participantProcess->getId(), processRef);
+                        $this->participantProcesses[$participantProcess->getId()] = $processRef;
+                    }
+                }
             }
         }
-        }
-    }
     }
 
     /**
@@ -578,99 +586,100 @@ class BpmnParse extends Parse
     * @return The parsed version of the XML: a {@link ProcessDefinitionImpl}
     *         object.
     */
-    public ProcessDefinitionEntity parseProcess(Element processElement) {
-    // reset all mappings that are related to one process definition
-    sequenceFlows = new HashMap<>();
+    public function parseProcess(Element $processElement): ProcessDefinitionEntity
+    {
+        // reset all mappings that are related to one process definition
+        $this->sequenceFlows = [];
 
-    ProcessDefinitionEntity processDefinition = new ProcessDefinitionEntity();
+        $processDefinition = new ProcessDefinitionEntity();
 
-    /*
-        * Mapping object model - bpmn xml: processDefinition.id -> generated by
-        * processDefinition.key -> bpmn id (required) processDefinition.name ->
-        * bpmn name (optional)
-        */
-    processDefinition->setKey(processElement.attribute("id"));
-    processDefinition->setName(processElement.attribute("name"));
-    processDefinition->setCategory($this->rootElement.attribute("targetNamespace"));
-    processDefinition->setProperty(PROPERTYNAME_DOCUMENTATION, parseDocumentation(processElement));
-    processDefinition->setTaskDefinitions(new HashMap<String, TaskDefinition>());
-    processDefinition->setDeploymentId(deployment->getId());
-    processDefinition->setTenantId(deployment->getTenantId());
-    processDefinition->setProperty(PROPERTYNAME_JOB_PRIORITY, parsePriority(processElement, PROPERTYNAME_JOB_PRIORITY));
-    processDefinition->setProperty(PROPERTYNAME_TASK_PRIORITY, parsePriority(processElement, PROPERTYNAME_TASK_PRIORITY));
-    processDefinition->setVersionTag(processElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "versionTag"));
+        /*
+            * Mapping object model - bpmn xml: processDefinition.id -> generated by
+            * processDefinition.key -> bpmn id (required) processDefinition.name ->
+            * bpmn name (optional)
+            */
+        $processDefinition->setKey($processElement->attribute("id"));
+        $processDefinition->setName($processElement->attribute("name"));
+        $processDefinition->setCategory($this->rootElement->attribute("targetNamespace"));
+        $processDefinition->setProperty(self::PROPERTYNAME_DOCUMENTATION, $this->parseDocumentation($processElement));
+        $processDefinition->setTaskDefinitions([]);
+        $processDefinition->setDeploymentId($deployment->getId());
+        $processDefinition->setTenantId($deployment->getTenantId());
+        $processDefinition->setProperty(self::PROPERTYNAME_JOB_PRIORITY, $this->parsePriority($processElement, self::PROPERTYNAME_JOB_PRIORITY));
+        $processDefinition->setProperty(self::PROPERTYNAME_TASK_PRIORITY, $this->parsePriority($processElement, self::PROPERTYNAME_TASK_PRIORITY));
+        $processDefinition->setVersionTag($processElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "versionTag"));
 
-    try {
-        String historyTimeToLive = processElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "historyTimeToLive",
-            Context->getProcessEngineConfiguration()->getHistoryTimeToLive());
-        processDefinition->setHistoryTimeToLive(ParseUtil.parseHistoryTimeToLive(historyTimeToLive));
-    }
-    catch (Exception e) {
-        $this->addError(new BpmnParseException(e->getMessage(), processElement, e));
-    }
-
-    boolean isStartableInTasklist = isStartable(processElement);
-    processDefinition->setStartableInTasklist(isStartableInTasklist);
-
-    LOG.parsingElement("process", processDefinition->getKey());
-
-    parseScope(processElement, processDefinition);
-
-    // Parse any laneSets defined for this process
-    parseLaneSets(processElement, processDefinition);
-
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseProcess(processElement, processDefinition);
-    }
-
-    // now we have parsed anything we can validate some stuff
-    validateActivities(processDefinition->getActivities());
-
-    //unregister delegates
-    for (ActivityImpl activity : processDefinition->getActivities()) {
-        activity->setDelegateAsyncAfterUpdate(null);
-        activity->setDelegateAsyncBeforeUpdate(null);
-    }
-    return processDefinition;
-    }
-
-    protected void parseLaneSets(Element parentElement, ProcessDefinitionEntity processDefinition) {
-    List<Element> laneSets = parentElement.elements("laneSet");
-
-    if (laneSets != null && laneSets.size() > 0) {
-        for (Element laneSetElement : laneSets) {
-        LaneSet newLaneSet = new LaneSet();
-
-        newLaneSet->setId(laneSetElement.attribute("id"));
-        newLaneSet->setName(laneSetElement.attribute("name"));
-        parseLanes(laneSetElement, newLaneSet);
-
-        // Finally, add the set
-        processDefinition.addLaneSet(newLaneSet);
+        try {
+            $historyTimeToLive = $processElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "historyTimeToLive", Context::getProcessEngineConfiguration()->getHistoryTimeToLive());
+            $processDefinition->setHistoryTimeToLive(ParseUtil::parseHistoryTimeToLive($historyTimeToLive));
+        } catch (\Exception $e) {
+            $this->addError(new BpmnParseException($e->getMessage(), $processElement, $e));
         }
-    }
+
+        $isStartableInTasklist = $this->isStartable($processElement);
+        $processDefinition->setStartableInTasklist($isStartableInTasklist);
+
+        //LOG.parsingElement("process", processDefinition->getKey());
+
+        $this->parseScope($processElement, $processDefinition);
+
+        // Parse any laneSets defined for this process
+        $this->parseLaneSets($processElement, $processDefinition);
+
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseProcess($processElement, $processDefinition);
+        }
+
+        // now we have parsed anything we can validate some stuff
+        $this->validateActivities($processDefinition->getActivities());
+
+        //unregister delegates
+        foreach ($processDefinition->getActivities() as $activity) {
+            $activity->setDelegateAsyncAfterUpdate(null);
+            $activity->setDelegateAsyncBeforeUpdate(null);
+        }
+        return $processDefinition;
     }
 
-    protected void parseLanes(Element laneSetElement, LaneSet laneSet) {
-    List<Element> lanes = laneSetElement.elements("lane");
-    if (lanes != null && lanes.size() > 0) {
-        for (Element laneElement : lanes) {
-        // Parse basic attributes
-        Lane lane = new Lane();
-        lane->setId(laneElement.attribute("id"));
-        lane->setName(laneElement.attribute("name"));
+    protected function parseLaneSets(Element $parentElement, ProcessDefinitionEntity $processDefinition): void
+    {
+        $laneSets = $parentElement->elements("laneSet");
 
-        // Parse ID's of flow-nodes that live inside this lane
-        List<Element> flowNodeElements = laneElement.elements("flowNodeRef");
-        if (flowNodeElements != null && flowNodeElements.size() > 0) {
-            for (Element flowNodeElement : flowNodeElements) {
-            lane->getFlowNodeIds().add(flowNodeElement->getText());
+        if (!empty($laneSets)) {
+            foreach ($laneSets as $laneSetElement) {
+                $newLaneSet = new LaneSet();
+
+                $newLaneSet->setId($laneSetElement->attribute("id"));
+                $newLaneSet->setName($laneSetElement->attribute("name"));
+                $this->parseLanes($laneSetElement, $newLaneSet);
+
+                // Finally, add the set
+                $processDefinition->addLaneSet($newLaneSet);
             }
         }
-
-        laneSet.addLane(lane);
-        }
     }
+
+    protected function parseLanes(Element $laneSetElement, LaneSet $laneSet): void
+    {
+        $lanes = $laneSetElement->elements("lane");
+        if (!empty($lanes)) {
+            foreach ($lanes as $laneElement) {
+                // Parse basic attributes
+                $lane = new Lane();
+                $lane->setId($laneElement->attribute("id"));
+                $lane->setName($laneElement->attribute("name"));
+
+                // Parse ID's of flow-nodes that live inside this lane
+                $flowNodeElements = $laneElement->elements("flowNodeRef");
+                if (!empty($flowNodeElements)) {
+                    foreach ($flowNodeElements as $flowNodeElement) {
+                        $lane->addFlowNodeId($flowNodeElement->getText());
+                    }
+                }
+
+                $laneSet->addLane($lane);
+            }
+        }
     }
 
     /**
@@ -683,217 +692,238 @@ class BpmnParse extends Parse
     * @param parentScope
     *          The scope that contains the nested scope.
     */
-    public void parseScope(Element scopeElement, ScopeImpl parentScope) {
+    public function parseScope(Element $scopeElement, ScopeImpl $parentScope): void
+    {
 
-    // Not yet supported on process level (PVM additions needed):
-    // parseProperties(processElement);
+        // Not yet supported on process level (PVM additions needed):
+        // parseProperties(processElement);
 
-    // filter activities that must be parsed separately
-    List<Element> activityElements = new ArrayList<>(scopeElement.elements());
-    Map<String, Element> intermediateCatchEvents = filterIntermediateCatchEvents(activityElements);
-    activityElements.removeAll(intermediateCatchEvents.values());
-    Map<String, Element> compensationHandlers = filterCompensationHandlers(activityElements);
-    activityElements.removeAll(compensationHandlers.values());
-
-    parseStartEvents(scopeElement, parentScope);
-    parseActivities(activityElements, scopeElement, parentScope);
-    parseIntermediateCatchEvents(scopeElement, parentScope, intermediateCatchEvents);
-    parseEndEvents(scopeElement, parentScope);
-    parseBoundaryEvents(scopeElement, parentScope);
-    parseSequenceFlow(scopeElement, parentScope, compensationHandlers);
-    parseExecutionListenersOnScope(scopeElement, parentScope);
-    parseAssociations(scopeElement, parentScope, compensationHandlers);
-    parseCompensationHandlers(parentScope, compensationHandlers);
-
-    for (ScopeImpl.BacklogErrorCallback callback : parentScope->getBacklogErrorCallbacks()) {
-        callback.callback();
-    }
-
-    if (parentScope instanceof ProcessDefinition) {
-        parseProcessDefinitionCustomExtensions(scopeElement, (ProcessDefinition) parentScope);
-    }
-    }
-
-    protected HashMap<String, Element> filterIntermediateCatchEvents(List<Element> activityElements) {
-    HashMap<String, Element> intermediateCatchEvents = new HashMap<>();
-    for(Element activityElement : activityElements) {
-        if (activityElement->getTagName().equals(ActivityTypes.INTERMEDIATE_EVENT_CATCH)) {
-        intermediateCatchEvents.put(activityElement.attribute("id"), activityElement);
-        }
-    }
-    return intermediateCatchEvents;
-    }
-
-    protected HashMap<String, Element> filterCompensationHandlers(List<Element> activityElements) {
-    HashMap<String, Element> compensationHandlers = new HashMap<>();
-    for(Element activityElement : activityElements) {
-        if (isCompensationHandler(activityElement)) {
-        compensationHandlers.put(activityElement.attribute("id"), activityElement);
-        }
-    }
-    return compensationHandlers;
-    }
-
-    protected void parseIntermediateCatchEvents(Element scopeElement, ScopeImpl parentScope, Map<String, Element> intermediateCatchEventElements) {
-    for (Element intermediateCatchEventElement : intermediateCatchEventElements.values()) {
-
-        if (parentScope.findActivity(intermediateCatchEventElement.attribute("id")) == null) {
-        // check whether activity is already parsed
-        ActivityImpl activity = parseIntermediateCatchEvent(intermediateCatchEventElement, parentScope, null);
-
-        if (activity != null) {
-            parseActivityInputOutput(intermediateCatchEventElement, activity);
-        }
-        }
-    }
-    intermediateCatchEventElements.clear();
-    }
-
-    protected void parseProcessDefinitionCustomExtensions(Element scopeElement, ProcessDefinition definition) {
-    parseStartAuthorization(scopeElement, definition);
-    }
-
-    protected void parseStartAuthorization(Element scopeElement, ProcessDefinition definition) {
-    ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity) definition;
-
-    // parse activiti:potentialStarters
-    Element extentionsElement = scopeElement.element("extensionElements");
-    if (extentionsElement != null) {
-        List<Element> potentialStarterElements = extentionsElement.elementsNS(CAMUNDA_BPMN_EXTENSIONS_NS, POTENTIAL_STARTER);
-
-        for (Element potentialStarterElement : potentialStarterElements) {
-        parsePotentialStarterResourceAssignment(potentialStarterElement, processDefinition);
-        }
-    }
-
-    // parse activiti:candidateStarterUsers
-    String candidateUsersString = scopeElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, CANDIDATE_STARTER_USERS_EXTENSION);
-    if (candidateUsersString != null) {
-        List<String> candidateUsers = parseCommaSeparatedList(candidateUsersString);
-        for (String candidateUser : candidateUsers) {
-        processDefinition.addCandidateStarterUserIdExpression(expressionManager.createExpression(candidateUser.trim()));
-        }
-    }
-
-    // Candidate activiti:candidateStarterGroups
-    String candidateGroupsString = scopeElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, CANDIDATE_STARTER_GROUPS_EXTENSION);
-    if (candidateGroupsString != null) {
-        List<String> candidateGroups = parseCommaSeparatedList(candidateGroupsString);
-        for (String candidateGroup : candidateGroups) {
-        processDefinition.addCandidateStarterGroupIdExpression(expressionManager.createExpression(candidateGroup.trim()));
-        }
-    }
-
-    }
-
-    protected void parsePotentialStarterResourceAssignment(Element performerElement, ProcessDefinitionEntity processDefinition) {
-    Element raeElement = performerElement.element(RESOURCE_ASSIGNMENT_EXPR);
-    if (raeElement != null) {
-        Element feElement = raeElement.element(FORMAL_EXPRESSION);
-        if (feElement != null) {
-        List<String> assignmentExpressions = parseCommaSeparatedList(feElement->getText());
-        for (String assignmentExpression : assignmentExpressions) {
-            assignmentExpression = assignmentExpression.trim();
-            if (assignmentExpression.startsWith(USER_PREFIX)) {
-            String userAssignementId = getAssignmentId(assignmentExpression, USER_PREFIX);
-            processDefinition.addCandidateStarterUserIdExpression(expressionManager.createExpression(userAssignementId));
-            } else if (assignmentExpression.startsWith(GROUP_PREFIX)) {
-            String groupAssignementId = getAssignmentId(assignmentExpression, GROUP_PREFIX);
-            processDefinition.addCandidateStarterGroupIdExpression(expressionManager.createExpression(groupAssignementId));
-            } else { // default: given string is a goupId, as-is.
-            processDefinition.addCandidateStarterGroupIdExpression(expressionManager.createExpression(assignmentExpression));
+        // filter activities that must be parsed separately
+        $activityElements = $scopeElement->elements();
+        $intermediateCatchEvents = $this->filterIntermediateCatchEvents($activityElements);
+        foreach ($activityElements as $key => $activityElement) {
+            foreach ($intermediateCatchEvents as $intermediateCatchEvent) {
+                if ($activityElement == $intermediateCatchEvent) {
+                    unset($activityElements[$key]);
+                }
             }
         }
+        $compensationHandlers = $this->filterCompensationHandlers($activityElements);
+        foreach ($activityElements as $key => $activityElement) {
+            foreach ($compensationHandlers as $compensationHandler) {
+                if ($activityElement == $compensationHandler) {
+                    unset($activityElements[$key]);
+                }
+            }
+        }
+
+        $this->parseStartEvents($scopeElement, $parentScope);
+        $this->parseActivities($activityElements, $scopeElement, $parentScope);
+        $this->parseIntermediateCatchEvents($scopeElement, $parentScope, $intermediateCatchEvents);
+        $this->parseEndEvents($scopeElement, $parentScope);
+        $this->parseBoundaryEvents($scopeElement, $parentScope);
+        $this->parseSequenceFlow($scopeElement, $parentScope, $compensationHandlers);
+        $this->parseExecutionListenersOnScope($scopeElement, $parentScope);
+        $this->parseAssociations($scopeElement, $parentScope, $compensationHandlers);
+        $this->parseCompensationHandlers($parentScope, $compensationHandlers);
+
+        foreach ($parentScope->getBacklogErrorCallbacks() as $callback) {
+            $callback->callback();
+        }
+
+        if ($parentScope instanceof ProcessDefinitionInterface) {
+            $this->parseProcessDefinitionCustomExtensions($scopeElement, $parentScope);
         }
     }
+
+    protected function filterIntermediateCatchEvents(array $activityElements): array
+    {
+        $intermediateCatchEvents = [];
+        foreach ($activityElements as $activityElement) {
+            if ($activityElement->getTagName() == ActivityTypes::INTERMEDIATE_EVENT_CATCH) {
+                $intermediateCatchEvents[$activityElement->attribute("id")] = $activityElement;
+            }
+        }
+        return $intermediateCatchEvents;
     }
 
-    protected void parseAssociations(Element scopeElement, ScopeImpl parentScope, Map<String, Element> compensationHandlers) {
-    for (Element associationElement : scopeElement.elements("association")) {
-        String sourceRef = associationElement.attribute("sourceRef");
-        if (sourceRef == null) {
-        $this->addError("association element missing attribute 'sourceRef'", associationElement);
+    protected function filterCompensationHandlers(array $activityElements): array
+    {
+        $compensationHandlers = [];
+        foreach ($activityElements as $activityElement) {
+            if ($this->isCompensationHandler($activityElement)) {
+                $compensationHandlers[$activityElement->attribute("id")] = $activityElement;
+            }
         }
-        String targetRef = associationElement.attribute("targetRef");
-        if (targetRef == null) {
-        $this->addError("association element missing attribute 'targetRef'", associationElement);
-        }
-        ActivityImpl sourceActivity = parentScope.findActivity(sourceRef);
-        ActivityImpl targetActivity = parentScope.findActivity(targetRef);
+        return $compensationHandlers;
+    }
 
-        // an association may reference elements that are not parsed as activities
-        // (like for instance text annotations so do not throw an exception if sourceActivity or targetActivity are null)
-        // However, we make sure they reference 'something':
-        if (sourceActivity == null && !elementIds.contains(sourceRef)) {
-        $this->addError("Invalid reference sourceRef '" + sourceRef + "' of association element ", associationElement);
-        } else if (targetActivity == null && !elementIds.contains(targetRef)) {
-        $this->addError("Invalid reference targetRef '" + targetRef + "' of association element ", associationElement);
+    protected function parseIntermediateCatchEvents(Element $scopeElement, ScopeImpl $parentScope, array &$intermediateCatchEventElements): void
+    {
+        foreach ($intermediateCatchEventElements as $intermediateCatchEventElement) {
+            if ($parentScope->findActivity($intermediateCatchEventElement->attribute("id")) == null) {
+                // check whether activity is already parsed
+                $activity = $this->parseIntermediateCatchEvent($intermediateCatchEventElement, $parentScope, null);
+
+                if ($activity != null) {
+                    $this->parseActivityInputOutput($intermediateCatchEventElement, $activity);
+                }
+            }
+        }
+        $intermediateCatchEventElements = [];
+    }
+
+    protected function parseProcessDefinitionCustomExtensions(Element $scopeElement, ProcessDefinitionInterface $definition): void
+    {
+        $this->parseStartAuthorization($scopeElement, $definition);
+    }
+
+    protected function parseStartAuthorization(Element $scopeElement, ProcessDefinitionInterface $definition): void
+    {
+        $processDefinition = $definition;
+
+        // parse activiti:potentialStarters
+        $extentionsElement = $scopeElement->element("extensionElements");
+        if ($extentionsElement != null) {
+            $potentialStarterElements = $extentionsElement->elementsNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::POTENTIAL_STARTER);
+
+            foreach ($potentialStarterElements as $potentialStarterElement) {
+                $this->parsePotentialStarterResourceAssignment($potentialStarterElement, $processDefinition);
+            }
+        }
+
+        // parse activiti:candidateStarterUsers
+        $candidateUsersString = $scopeElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::CANDIDATE_STARTER_USERS_EXTENSION);
+        if ($candidateUsersString != null) {
+            $candidateUsers = $this->parseCommaSeparatedList($candidateUsersString);
+            foreach ($candidateUsers as $candidateUser) {
+                $processDefinition->addCandidateStarterUserIdExpression($expressionManager->createExpression(trim($candidateUser)));
+            }
+        }
+
+        // Candidate activiti:candidateStarterGroups
+        $candidateGroupsString = $scopeElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::CANDIDATE_STARTER_GROUPS_EXTENSION);
+        if ($candidateGroupsString != null) {
+            $candidateGroups = $this->parseCommaSeparatedList($candidateGroupsString);
+            foreach ($candidateGroups as $candidateGroup) {
+                $processDefinition->addCandidateStarterGroupIdExpression($expressionManager->createExpression(trim($candidateGroup)));
+            }
+        }
+    }
+
+    protected function parsePotentialStarterResourceAssignment(Element $performerElement, ProcessDefinitionEntity $processDefinition): void
+    {
+        $raeElement = $performerElement->element(self::RESOURCE_ASSIGNMENT_EXPR);
+        if ($raeElement != null) {
+            $feElement = $raeElement->element(self::FORMAL_EXPRESSION);
+            if ($feElement != null) {
+                $assignmentExpressions = $this->parseCommaSeparatedList($feElement->getText());
+                foreach ($assignmentExpressions as $assignmentExpression) {
+                    $assignmentExpression = trim($assignmentExpression);
+                    if (str_starts_with($assignmentExpression, self::USER_PREFIX)) {
+                        $userAssignementId = $this->getAssignmentId($assignmentExpression, self::USER_PREFIX);
+                        $processDefinition->addCandidateStarterUserIdExpression($expressionManager->createExpression($userAssignementId));
+                    } elseif (str_starts_with($assignmentExpression, self::GROUP_PREFIX)) {
+                        $groupAssignementId = $this->getAssignmentId($assignmentExpression, self::GROUP_PREFIX);
+                        $processDefinition->addCandidateStarterGroupIdExpression($expressionManager->createExpression($groupAssignementId));
+                    } else { // default: given string is a goupId, as-is.
+                        $processDefinition->addCandidateStarterGroupIdExpression($expressionManager->createExpression($assignmentExpression));
+                    }
+                }
+            }
+        }
+    }
+
+    protected function parseAssociations(Element $scopeElement, ScopeImpl $parentScope, array &$compensationHandlers): void
+    {
+        foreach ($scopeElement->elements("association") as $associationElement) {
+            $sourceRef = $associationElement->attribute("sourceRef");
+            if ($sourceRef == null) {
+                $this->addError("association element missing attribute 'sourceRef'", $associationElement);
+            }
+            $targetRef = $associationElement->attribute("targetRef");
+            if ($targetRef == null) {
+                $this->addError("association element missing attribute 'targetRef'", $associationElement);
+            }
+            $sourceActivity = $parentScope->findActivity($sourceRef);
+            $targetActivity = $parentScope->findActivity($targetRef);
+
+            // an association may reference elements that are not parsed as activities
+            // (like for instance text annotations so do not throw an exception if sourceActivity or targetActivity are null)
+            // However, we make sure they reference 'something':
+            if ($sourceActivity == null && !in_array($sourceRef, $this->elementIds)) {
+                $this->addError("Invalid reference sourceRef '" . $sourceRef . "' of association element ", $associationElement);
+            } elseif ($targetActivity == null && !in_array($targetRef, $this->elementIds)) {
+                $this->addError("Invalid reference targetRef '" . $targetRef . "' of association element ", $associationElement);
+            } else {
+                if ($sourceActivity != null && ActivityTypes::BOUNDARY_COMPENSATION == $sourceActivity->getProperty(BpmnProperties::type()->getName())) {
+                    if ($targetActivity == null && array_key_exists($targetRef, $compensationHandlers)) {
+                        $targetActivity = $this->parseCompensationHandlerForCompensationBoundaryEvent($parentScope, $sourceActivity, $targetRef, $compensationHandlers);
+                        foreach ($compensationHandlers as $key => $value) {
+                            if ($value == $targetActivity->getId()) {
+                                unset($compensationHandlers[$key]);
+                            }
+                        }
+                    }
+
+                    if ($targetActivity != null) {
+                        $this->parseAssociationOfCompensationBoundaryEvent($associationElement, $sourceActivity, $targetActivity);
+                    }
+                }
+            }
+        }
+    }
+
+    protected function parseCompensationHandlerForCompensationBoundaryEvent(ScopeImpl $parentScope, ActivityImpl $sourceActivity, string $targetRef, array $compensationHandlers): ActivityImpl
+    {
+        $compensationHandler = $compensationHandlers[$targetRef];
+
+        $eventScope = $sourceActivity->getEventScope();
+        $compensationHandlerActivity = null;
+        if ($eventScope->isMultiInstance()) {
+            $miBody = $eventScope->getFlowScope();
+            $compensationHandlerActivity = $this->parseActivity($compensationHandler, null, $miBody);
         } else {
-
-        if (sourceActivity != null && ActivityTypes.BOUNDARY_COMPENSATION.equals(sourceActivity->getProperty(BpmnProperties.TYPE->getName()))) {
-
-            if (targetActivity == null && compensationHandlers.containsKey(targetRef)) {
-            targetActivity = parseCompensationHandlerForCompensationBoundaryEvent(parentScope, sourceActivity, targetRef, compensationHandlers);
-
-            compensationHandlers.remove(targetActivity->getId());
-            }
-
-            if (targetActivity != null) {
-            parseAssociationOfCompensationBoundaryEvent(associationElement, sourceActivity, targetActivity);
-            }
+            $compensationHandlerActivity = $this->parseActivity($compensationHandler, null, $parentScope);
         }
-        }
-    }
-    }
 
-    protected ActivityImpl parseCompensationHandlerForCompensationBoundaryEvent(ScopeImpl parentScope, ActivityImpl sourceActivity, String targetRef,
-        Map<String, Element> compensationHandlers) {
-
-    Element compensationHandler = compensationHandlers->get(targetRef);
-
-    ActivityImpl eventScope = (ActivityImpl) sourceActivity->getEventScope();
-    ActivityImpl compensationHandlerActivity = null;
-    if (eventScope.isMultiInstance()) {
-        ScopeImpl miBody = eventScope->getFlowScope();
-        compensationHandlerActivity = parseActivity(compensationHandler, null, miBody);
-    } else {
-        compensationHandlerActivity = parseActivity(compensationHandler, null, parentScope);
+        $compensationHandlerActivity->getProperties()->set(BpmnProperties::compensationBoundaryEvent(), $sourceActivity);
+        return $compensationHandlerActivity;
     }
 
-    compensationHandlerActivity->getProperties()->set(BpmnProperties.COMPENSATION_BOUNDARY_EVENT, sourceActivity);
-    return compensationHandlerActivity;
-    }
-
-    protected void parseAssociationOfCompensationBoundaryEvent(Element associationElement, ActivityImpl sourceActivity, ActivityImpl targetActivity) {
-    if (!targetActivity.isCompensationHandler()) {
-        $this->addError("compensation boundary catch must be connected to element with isForCompensation=true",
-            associationElement,
-            sourceActivity->getId(),
-            targetActivity->getId());
-
-    } else {
-        ActivityImpl compensatedActivity = (ActivityImpl) sourceActivity->getEventScope();
-
-        ActivityImpl compensationHandler = compensatedActivity.findCompensationHandler();
-        if (compensationHandler != null && compensationHandler.isSubProcessScope()) {
-        $this->addError("compensation boundary event and event subprocess with compensation start event are not supported on the same scope",
-            associationElement,
-            compensatedActivity->getId(),
-            sourceActivity->getId()
+    protected function parseAssociationOfCompensationBoundaryEvent(Element $associationElement, ActivityImpl $sourceActivity, ActivityImpl $targetActivity): void
+    {
+        if (!$targetActivity->isCompensationHandler()) {
+            $this->addError(
+                "compensation boundary catch must be connected to element with isForCompensation=true",
+                $associationElement,
+                $sourceActivity->getId(),
+                $targetActivity->getId()
             );
         } else {
+            $compensatedActivity = $sourceActivity->getEventScope();
 
-        compensatedActivity->setProperty(PROPERTYNAME_COMPENSATION_HANDLER_ID, targetActivity->getId());
+            $compensationHandler = $compensatedActivity->findCompensationHandler();
+            if ($compensationHandler != null && $compensationHandler->isSubProcessScope()) {
+                $this->addError(
+                    "compensation boundary event and event subprocess with compensation start event are not supported on the same scope",
+                    $associationElement,
+                    $compensatedActivity->getId(),
+                    $sourceActivity->getId()
+                );
+            } else {
+                $compensatedActivity->setProperty(self::PROPERTYNAME_COMPENSATION_HANDLER_ID, $targetActivity->getId());
+            }
         }
     }
-    }
 
-    protected void parseCompensationHandlers(ScopeImpl parentScope, Map<String, Element> compensationHandlers) {
-    // compensation handlers attached to compensation boundary events should be already parsed
-    for (Element compensationHandler : new HashSet<>(compensationHandlers.values())) {
-        parseActivity(compensationHandler, null, parentScope);
-    }
-    compensationHandlers.clear();
+    protected function parseCompensationHandlers(ScopeImpl $parentScope, array &$compensationHandlers): void
+    {
+        // compensation handlers attached to compensation boundary events should be already parsed
+        foreach ($compensationHandlers as $compensationHandler) {
+            $this->parseActivity($compensationHandler, null, $parentScope);
+        }
+        $compensationHandlers = [];
     }
 
     /**
@@ -906,285 +936,282 @@ class BpmnParse extends Parse
     * @param scope
     *          The {@link ScopeImpl} to which the start events must be added.
     */
-    public void parseStartEvents(Element parentElement, ScopeImpl scope) {
-    List<Element> startEventElements = parentElement.elements("startEvent");
-    List<ActivityImpl> startEventActivities = new ArrayList<>();
-    if (startEventElements.size() > 0) {
-        for (Element startEventElement : startEventElements) {
+    public function parseStartEvents(Element $parentElement, ScopeImpl $scope): void
+    {
+        $startEventElements = $parentElement->elements("startEvent");
+        $startEventActivities = [];
+        if (count($startEventElements) > 0) {
+            foreach ($startEventElements as $startEventElement) {
+                $startEventActivity = $this->createActivityOnScope($startEventElement, $scope);
+                $this->parseAsynchronousContinuationForActivity($startEventElement, $startEventActivity);
 
-        ActivityImpl startEventActivity = createActivityOnScope(startEventElement, scope);
-        parseAsynchronousContinuationForActivity(startEventElement, startEventActivity);
+                if ($scope instanceof ProcessDefinitionEntity) {
+                    $this->parseProcessDefinitionStartEvent($startEventActivity, $startEventElement, $parentElement, $scope);
+                    $startEventActivities[] = $startEventActivity;
+                } else {
+                    $this->parseScopeStartEvent($startEventActivity, $startEventElement, $parentElement, $scope);
+                }
 
-        if (scope instanceof ProcessDefinitionEntity) {
-            parseProcessDefinitionStartEvent(startEventActivity, startEventElement, parentElement, scope);
-            startEventActivities.add(startEventActivity);
+                $this->ensureNoIoMappingDefined($startEventElement);
+
+                $this->parseExecutionListenersOnScope($startEventElement, $startEventActivity);
+            }
         } else {
-            parseScopeStartEvent(startEventActivity, startEventElement, parentElement, (ActivityImpl) scope);
+            if (in_array($parentElement->getTagName(), ["process", "subProcess"])) {
+                $this->addError($parentElement->getTagName() . " must define a startEvent element", $parentElement);
+            }
+        }
+        if ($scope instanceof ProcessDefinitionEntity) {
+            $this->selectInitial($startEventActivities, $scope, $parentElement);
+            $this->parseStartFormHandlers($startEventElements, $scope);
         }
 
-        ensureNoIoMappingDefined(startEventElement);
-
-        parseExecutionListenersOnScope(startEventElement, startEventActivity);
-        }
-    } else {
-        if (Arrays.asList("process", "subProcess").contains(parentElement->getTagName())) {
-        $this->addError(parentElement->getTagName() + " must define a startEvent element", parentElement);
-        }
-    }
-    if (scope instanceof ProcessDefinitionEntity) {
-        selectInitial(startEventActivities, (ProcessDefinitionEntity) scope, parentElement);
-        parseStartFormHandlers(startEventElements, (ProcessDefinitionEntity) scope);
-    }
-
-    // invoke parse listeners
-    for (Element startEventElement : startEventElements) {
-        ActivityImpl startEventActivity = scope->getChildActivity(startEventElement.attribute("id"));
-        for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseStartEvent(startEventElement, scope, startEventActivity);
+        // invoke parse listeners
+        foreach ($startEventElements as $startEventElement) {
+            $startEventActivity = $scope->getChildActivity($startEventElement->attribute("id"));
+            foreach ($parseListeners as $parseListener) {
+                $parseListener->parseStartEvent($startEventElement, $scope, $startEventActivity);
+            }
         }
     }
+
+    protected function selectInitial(array $startEventActivities, ProcessDefinitionEntity $processDefinition, Element $parentElement): void
+    {
+        $initial = null;
+        // validate that there is s single none start event / timer start event:
+        $exclusiveStartEventTypes = ["startEvent", "startTimerEvent"];
+
+        foreach ($startEventActivities as $activityImpl) {
+            if (in_array($activityImpl->getProperty(BpmnProperties::type()->getName()), $exclusiveStartEventTypes)) {
+                if ($initial == null) {
+                    $initial = $activityImpl;
+                } else {
+                    $this->addError("multiple none start events or timer start events not supported on process definition", $parentElement, $activityImpl->getId());
+                }
+            }
+        }
+        // if there is a single start event, select it as initial, regardless of its type:
+        if ($initial == null && count($startEventActivities) == 1) {
+            $initial = $startEventActivities[0];
+        }
+        $processDefinition->setInitial($initial);
     }
 
-    protected void selectInitial(List<ActivityImpl> startEventActivities, ProcessDefinitionEntity processDefinition, Element parentElement) {
-    ActivityImpl initial = null;
-    // validate that there is s single none start event / timer start event:
-    List<String> exclusiveStartEventTypes = Arrays.asList("startEvent", "startTimerEvent");
+    protected function parseProcessDefinitionStartEvent(ActivityImpl $startEventActivity, Element $startEventElement, Element $parentElement, ScopeImpl $scope): void
+    {
+        $processDefinition = $scope;
 
-    for (ActivityImpl activityImpl : startEventActivities) {
-        if (exclusiveStartEventTypes.contains(activityImpl->getProperty(BpmnProperties.TYPE->getName()))) {
-        if (initial == null) {
-            initial = activityImpl;
+        $initiatorVariableName = $startEventElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "initiator");
+        if ($initiatorVariableName != null) {
+            $processDefinition->setProperty(self::PROPERTYNAME_INITIATOR_VARIABLE_NAME, $initiatorVariableName);
+        }
+
+        // all start events share the same behavior:
+        $startEventActivity->setActivityBehavior(new NoneStartEventActivityBehavior());
+
+        $timerEventDefinition = $startEventElement->element(self::TIMER_EVENT_DEFINITION);
+        $messageEventDefinition = $startEventElement->element(self::MESSAGE_EVENT_DEFINITION);
+        $signalEventDefinition = $startEventElement->element(self::SIGNAL_EVENT_DEFINITION);
+        $conditionEventDefinition = $startEventElement->element(self::CONDITIONAL_EVENT_DEFINITION);
+        if ($timerEventDefinition != null) {
+            $this->parseTimerStartEventDefinition($timerEventDefinition, $startEventActivity, $processDefinition);
+        } elseif ($messageEventDefinition != null) {
+            $startEventActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::START_EVENT_MESSAGE);
+
+            $messageStartEventSubscriptionDeclaration =
+                $this->parseMessageEventDefinition($messageEventDefinition, $startEventElement->attribute("id"));
+            $messageStartEventSubscriptionDeclaration->setActivityId($startEventActivity->getId());
+            $messageStartEventSubscriptionDeclaration->setStartEvent(true);
+
+            $this->ensureNoExpressionInMessageStartEvent($messageEventDefinition, $messageStartEventSubscriptionDeclaration, $startEventElement->attribute("id"));
+            $this->addEventSubscriptionDeclaration($messageStartEventSubscriptionDeclaration, $processDefinition, $startEventElement);
+        } elseif ($signalEventDefinition != null) {
+            $startEventActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::START_EVENT_SIGNAL);
+            $startEventActivity->setEventScope($scope);
+
+            $this->parseSignalCatchEventDefinition($signalEventDefinition, $startEventActivity, true);
+        } elseif ($conditionEventDefinition != null) {
+            $startEventActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::START_EVENT_CONDITIONAL);
+
+            $conditionalEventDefinition = $this->parseConditionalEventDefinition($conditionEventDefinition, $startEventActivity);
+            $conditionalEventDefinition->setStartEvent(true);
+            $conditionalEventDefinition->setActivityId($startEventActivity->getId());
+            $startEventActivity->getProperties()->set(BpmnProperties::conditionalEventDefinition(), $conditionalEventDefinition);
+
+            $this->addEventSubscriptionDeclaration($conditionalEventDefinition, $processDefinition, $startEventElement);
+        }
+    }
+
+    protected function parseStartFormHandlers(array $startEventElements, ProcessDefinitionEntity $processDefinition): void
+    {
+        if ($processDefinition->getInitial() != null) {
+            foreach ($startEventElements as $startEventElement) {
+                if ($startEventElement->attribute("id") == $processDefinition->getInitial()->getId()) {
+                    $startFormHandler = null;
+                    $startFormHandlerClassName = $startEventElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "formHandlerClass");
+                    if ($startFormHandlerClassName != null) {
+                        $startFormHandler = ReflectUtil::instantiate($startFormHandlerClassName);
+                    } else {
+                        $startFormHandler = new DefaultStartFormHandler();
+                    }
+
+                    $startFormHandler->parseConfiguration($startEventElement, $this->deployment, $processDefinition, $this);
+
+                    $processDefinition->setStartFormHandler(new DelegateStartFormHandler($startFormHandler, $this->deployment));
+
+                    $formDefinition = $this->parseFormDefinition($startEventElement);
+                    $processDefinition->setStartFormDefinition($formDefinition);
+
+                    $processDefinition->setHasStartFormKey($formDefinition->getFormKey() != null);
+                }
+            }
+        }
+    }
+
+    protected function parseScopeStartEvent(ActivityImpl $startEventActivity, Element $startEventElement, Element $parentElement, ActivityImpl $scopeActivity): void
+    {
+        $scopeProperties = $scopeActivity->getProperties();
+
+        // set this as the scope's initial
+        if (!$scopeProperties->contains(BpmnProperties::initialActivity())) {
+            $scopeActivity->set(BpmnProperties::initialActivity(), $startEventActivity);
         } else {
-            $this->addError("multiple none start events or timer start events not supported on process definition", parentElement, activityImpl->getId());
+            $this->addError("multiple start events not supported for subprocess", $parentElement, $startEventActivity->getId());
         }
-        }
-    }
-    // if there is a single start event, select it as initial, regardless of its type:
-    if (initial == null && startEventActivities.size() == 1) {
-        initial = startEventActivities->get(0);
-    }
-    processDefinition->setInitial(initial);
-    }
 
-    protected void parseProcessDefinitionStartEvent(ActivityImpl startEventActivity, Element startEventElement, Element parentElement, ScopeImpl scope) {
-    ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity) scope;
+        $errorEventDefinition = $startEventElement->element(self::ERROR_EVENT_DEFINITION);
+        $messageEventDefinition = $startEventElement->element(self::MESSAGE_EVENT_DEFINITION);
+        $signalEventDefinition = $startEventElement->element(self::SIGNAL_EVENT_DEFINITION);
+        $timerEventDefinition = $startEventElement->element(self::TIMER_EVENT_DEFINITION);
+        $compensateEventDefinition = $startEventElement->element(self::COMPENSATE_EVENT_DEFINITION);
+        $escalationEventDefinitionElement = $startEventElement->element(self::ESCALATION_EVENT_DEFINITION);
+        $conditionalEventDefinitionElement = $startEventElement->element(self::CONDITIONAL_EVENT_DEFINITION);
 
-    String initiatorVariableName = startEventElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "initiator");
-    if (initiatorVariableName != null) {
-        processDefinition->setProperty(PROPERTYNAME_INITIATOR_VARIABLE_NAME, initiatorVariableName);
-    }
+        if ($scopeActivity->isTriggeredByEvent()) {
+            // event subprocess
+            $behavior = new EventSubProcessStartEventActivityBehavior();
 
-    // all start events share the same behavior:
-    startEventActivity->setActivityBehavior(new NoneStartEventActivityBehavior());
+            // parse isInterrupting
+            $isInterruptingAttr = $startEventElement->attribute(self::INTERRUPTING);
+            $isInterrupting = $isInterruptingAttr !== null && strtolower($isInterruptingAttr) === "true";
 
-    Element timerEventDefinition = startEventElement.element(TIMER_EVENT_DEFINITION);
-    Element messageEventDefinition = startEventElement.element(MESSAGE_EVENT_DEFINITION);
-    Element signalEventDefinition = startEventElement.element(SIGNAL_EVENT_DEFINITION);
-    Element conditionEventDefinition = startEventElement.element(CONDITIONAL_EVENT_DEFINITION);
-    if (timerEventDefinition != null) {
-        parseTimerStartEventDefinition(timerEventDefinition, startEventActivity, processDefinition);
-    } else if (messageEventDefinition != null) {
-        startEventActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.START_EVENT_MESSAGE);
-
-        EventSubscriptionDeclaration messageStartEventSubscriptionDeclaration =
-            parseMessageEventDefinition(messageEventDefinition, startEventElement.attribute("id"));
-        messageStartEventSubscriptionDeclaration->setActivityId(startEventActivity->getId());
-        messageStartEventSubscriptionDeclaration->setStartEvent(true);
-
-        ensureNoExpressionInMessageStartEvent(messageEventDefinition, messageStartEventSubscriptionDeclaration, startEventElement.attribute("id"));
-        addEventSubscriptionDeclaration(messageStartEventSubscriptionDeclaration, processDefinition, startEventElement);
-    } else if (signalEventDefinition != null) {
-        startEventActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.START_EVENT_SIGNAL);
-        startEventActivity->setEventScope(scope);
-
-        parseSignalCatchEventDefinition(signalEventDefinition, startEventActivity, true);
-    } else if (conditionEventDefinition != null) {
-        startEventActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.START_EVENT_CONDITIONAL);
-
-        ConditionalEventDefinition conditionalEventDefinition = parseConditionalEventDefinition(conditionEventDefinition, startEventActivity);
-        conditionalEventDefinition->setStartEvent(true);
-        conditionalEventDefinition->setActivityId(startEventActivity->getId());
-        startEventActivity->getProperties()->set(BpmnProperties.CONDITIONAL_EVENT_DEFINITION, conditionalEventDefinition);
-
-        addEventSubscriptionDeclaration(conditionalEventDefinition, processDefinition, startEventElement);
-    }
-    }
-
-    protected void parseStartFormHandlers(List<Element> startEventElements, ProcessDefinitionEntity processDefinition) {
-    if (processDefinition->getInitial() != null) {
-        for (Element startEventElement : startEventElements) {
-
-        if (startEventElement.attribute("id").equals(processDefinition->getInitial()->getId())) {
-
-            StartFormHandler startFormHandler;
-            String startFormHandlerClassName = startEventElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "formHandlerClass");
-            if (startFormHandlerClassName != null) {
-            startFormHandler = (StartFormHandler) ReflectUtil.instantiate(startFormHandlerClassName);
+            if ($isInterrupting) {
+                $scopeActivity->setActivityStartBehavior(ActivityStartBehavior::INTERRUPT_EVENT_SCOPE);
             } else {
-            startFormHandler = new DefaultStartFormHandler();
+                $scopeActivity->setActivityStartBehavior(ActivityStartBehavior::CONCURRENT_IN_FLOW_SCOPE);
             }
 
-            startFormHandler.parseConfiguration(startEventElement, deployment, processDefinition, this);
+            // the event scope of the start event is the flow scope of the event subprocess
+            $startEventActivity->setEventScope($scopeActivity->getFlowScope());
 
-            processDefinition->setStartFormHandler(new DelegateStartFormHandler(startFormHandler, deployment));
+            if ($errorEventDefinition != null) {
+                if (!$isInterrupting) {
+                    $this->addError("error start event of event subprocess must be interrupting", $startEventElement);
+                }
+                $this->parseErrorStartEventDefinition($errorEventDefinition, $startEventActivity);
+            } elseif ($messageEventDefinition != null) {
+                $startEventActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::START_EVENT_MESSAGE);
 
-            FormDefinition formDefinition = parseFormDefinition(startEventElement);
-            processDefinition->setStartFormDefinition(formDefinition);
+                $messageStartEventSubscriptionDeclaration =
+                    $this->parseMessageEventDefinition($messageEventDefinition, $startEventActivity->getId());
+                $this->parseEventDefinitionForSubprocess($messageStartEventSubscriptionDeclaration, $startEventActivity, $messageEventDefinition);
+            } elseif ($signalEventDefinition != null) {
+                $startEventActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::START_EVENT_SIGNAL);
 
-            processDefinition->setHasStartFormKey(formDefinition->getFormKey() != null);
+                $eventSubscriptionDeclaration = $this->parseSignalEventDefinition($signalEventDefinition, false, $startEventActivity->getId());
+                $this->parseEventDefinitionForSubprocess($eventSubscriptionDeclaration, $startEventActivity, $signalEventDefinition);
+            } elseif ($timerEventDefinition != null) {
+                $this->parseTimerStartEventDefinitionForEventSubprocess($timerEventDefinition, $startEventActivity, $isInterrupting);
+            } elseif ($compensateEventDefinition != null) {
+                $this->parseCompensationEventSubprocess($startEventActivity, $startEventElement, $scopeActivity, $compensateEventDefinition);
+            } elseif ($escalationEventDefinitionElement != null) {
+                $startEventActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::START_EVENT_ESCALATION);
+
+                $escalationEventDefinition = $this->createEscalationEventDefinitionForEscalationHandler($escalationEventDefinitionElement, $scopeActivity, $isInterrupting, $startEventActivity->getId());
+                $this->addEscalationEventDefinition($startEventActivity->getEventScope(), $escalationEventDefinition, $escalationEventDefinitionElement, $startEventActivity->getId());
+            } elseif ($conditionalEventDefinitionElement != null) {
+                $conditionalEventDef = $this->parseConditionalStartEventForEventSubprocess($conditionalEventDefinitionElement, $startEventActivity, $isInterrupting);
+                $behavior = new EventSubProcessStartConditionalEventActivityBehavior($conditionalEventDef);
+            } else {
+                $this->addError("start event of event subprocess must be of type 'error', 'message', 'timer', 'signal', 'compensation' or 'escalation'", $startEventElement);
+            }
+
+            $startEventActivity->setActivityBehavior($behavior);
+        } else { // "regular" subprocess
+            $conditionalEventDefinition = $startEventElement->element(self::CONDITIONAL_EVENT_DEFINITION);
+
+            if ($conditionalEventDefinition != null) {
+                $this->addError("conditionalEventDefinition is not allowed on start event within a subprocess", $conditionalEventDefinition, $startEventActivity->getId());
+            }
+            if ($timerEventDefinition != null) {
+                $this->addError("timerEventDefinition is not allowed on start event within a subprocess", $timerEventDefinition, $startEventActivity->getId());
+            }
+            if ($escalationEventDefinitionElement != null) {
+                $this->addError("escalationEventDefinition is not allowed on start event within a subprocess", $escalationEventDefinitionElement, $startEventActivity->getId());
+            }
+            if ($compensateEventDefinition != null) {
+                $this->addError("compensateEventDefinition is not allowed on start event within a subprocess", $compensateEventDefinition, $startEventActivity->getId());
+            }
+            if ($errorEventDefinition != null) {
+                $this->addError("errorEventDefinition only allowed on start event if subprocess is an event subprocess", $errorEventDefinition, $startEventActivity->getId());
+            }
+            if ($messageEventDefinition != null) {
+                $this->addError("messageEventDefinition only allowed on start event if subprocess is an event subprocess", $messageEventDefinition, $startEventActivity->getId());
+            }
+            if ($signalEventDefinition != null) {
+                $this->addError("signalEventDefintion only allowed on start event if subprocess is an event subprocess", $signalEventDefinition, $startEventActivity->getId());
+            }
+
+            $startEventActivity->setActivityBehavior(new NoneStartEventActivityBehavior());
+        }
+    }
+
+    protected function parseCompensationEventSubprocess(ActivityImpl $startEventActivity, Element $startEventElement, ActivityImpl $scopeActivity, Element $compensateEventDefinition): void
+    {
+        $startEventActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::START_EVENT_COMPENSATION);
+        $scopeActivity->setProperty(self::PROPERTYNAME_IS_FOR_COMPENSATION, true);
+
+        if ($scopeActivity->getFlowScope() instanceof ProcessDefinitionEntity) {
+            $this->addError("event subprocess with compensation start event is only supported for embedded subprocess "
+                . "(since throwing compensation through a call activity-induced process hierarchy is not supported)", $startEventElement);
         }
 
-        }
-    }
-    }
-
-    protected void parseScopeStartEvent(ActivityImpl startEventActivity, Element startEventElement, Element parentElement, ActivityImpl scopeActivity) {
-
-    Properties scopeProperties = scopeActivity->getProperties();
-
-    // set this as the scope's initial
-    if (!scopeProperties.contains(BpmnProperties.INITIAL_ACTIVITY)) {
-        scopeProperties->set(BpmnProperties.INITIAL_ACTIVITY, startEventActivity);
-    } else {
-        $this->addError("multiple start events not supported for subprocess", parentElement, startEventActivity->getId());
-    }
-
-    Element errorEventDefinition = startEventElement.element(ERROR_EVENT_DEFINITION);
-    Element messageEventDefinition = startEventElement.element(MESSAGE_EVENT_DEFINITION);
-    Element signalEventDefinition = startEventElement.element(SIGNAL_EVENT_DEFINITION);
-    Element timerEventDefinition = startEventElement.element(TIMER_EVENT_DEFINITION);
-    Element compensateEventDefinition = startEventElement.element(COMPENSATE_EVENT_DEFINITION);
-    Element escalationEventDefinitionElement = startEventElement.element(ESCALATION_EVENT_DEFINITION);
-    Element conditionalEventDefinitionElement = startEventElement.element(CONDITIONAL_EVENT_DEFINITION);
-
-    if (scopeActivity.isTriggeredByEvent()) {
-        // event subprocess
-        EventSubProcessStartEventActivityBehavior behavior = new EventSubProcessStartEventActivityBehavior();
-
-        // parse isInterrupting
-        String isInterruptingAttr = startEventElement.attribute(INTERRUPTING);
-        boolean isInterrupting = isInterruptingAttr.equalsIgnoreCase(TRUE);
-
-        if (isInterrupting) {
-        scopeActivity->setActivityStartBehavior(ActivityStartBehavior.INTERRUPT_EVENT_SCOPE);
+        $subprocess = $scopeActivity->getFlowScope();
+        $compensationHandler = $subprocess->findCompensationHandler();
+        if ($compensationHandler == null) {
+            // add property to subprocess
+            $subprocess->setProperty(self::PROPERTYNAME_COMPENSATION_HANDLER_ID, $scopeActivity->getActivityId());
         } else {
-        scopeActivity->setActivityStartBehavior(ActivityStartBehavior.CONCURRENT_IN_FLOW_SCOPE);
+            if ($compensationHandler->isSubProcessScope()) {
+                $this->addError("multiple event subprocesses with compensation start event are not supported on the same scope", $startEventElement);
+            } else {
+                $this->addError("compensation boundary event and event subprocess with compensation start event are not supported on the same scope", $startEventElement);
+            }
         }
 
-        // the event scope of the start event is the flow scope of the event subprocess
-        startEventActivity->setEventScope(scopeActivity->getFlowScope());
-
-        if (errorEventDefinition != null) {
-        if (!isInterrupting) {
-            $this->addError("error start event of event subprocess must be interrupting", startEventElement);
-        }
-        parseErrorStartEventDefinition(errorEventDefinition, startEventActivity);
-
-        } else if (messageEventDefinition != null) {
-        startEventActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.START_EVENT_MESSAGE);
-
-        EventSubscriptionDeclaration messageStartEventSubscriptionDeclaration =
-            parseMessageEventDefinition(messageEventDefinition, startEventActivity->getId());
-        parseEventDefinitionForSubprocess(messageStartEventSubscriptionDeclaration, startEventActivity, messageEventDefinition);
-
-        } else if (signalEventDefinition != null) {
-        startEventActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.START_EVENT_SIGNAL);
-
-        EventSubscriptionDeclaration eventSubscriptionDeclaration = parseSignalEventDefinition(signalEventDefinition, false, startEventActivity->getId());
-        parseEventDefinitionForSubprocess(eventSubscriptionDeclaration, startEventActivity, signalEventDefinition);
-
-        } else if (timerEventDefinition != null) {
-        parseTimerStartEventDefinitionForEventSubprocess(timerEventDefinition, startEventActivity, isInterrupting);
-
-        } else if (compensateEventDefinition != null) {
-        parseCompensationEventSubprocess(startEventActivity, startEventElement, scopeActivity, compensateEventDefinition);
-
-        } else if (escalationEventDefinitionElement != null) {
-        startEventActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.START_EVENT_ESCALATION);
-
-        EscalationEventDefinition escalationEventDefinition = createEscalationEventDefinitionForEscalationHandler(escalationEventDefinitionElement, scopeActivity, isInterrupting, startEventActivity->getId());
-        addEscalationEventDefinition(startEventActivity->getEventScope(), escalationEventDefinition, escalationEventDefinitionElement, startEventActivity->getId());
-        } else if (conditionalEventDefinitionElement != null) {
-
-        final ConditionalEventDefinition conditionalEventDef = parseConditionalStartEventForEventSubprocess(conditionalEventDefinitionElement, startEventActivity, isInterrupting);
-        behavior = new EventSubProcessStartConditionalEventActivityBehavior(conditionalEventDef);
-        } else {
-        $this->addError("start event of event subprocess must be of type 'error', 'message', 'timer', 'signal', 'compensation' or 'escalation'", startEventElement);
-        }
-
-        startEventActivity->setActivityBehavior(behavior);
-    } else { // "regular" subprocess
-        Element conditionalEventDefinition = startEventElement.element(CONDITIONAL_EVENT_DEFINITION);
-
-        if (conditionalEventDefinition != null) {
-        $this->addError("conditionalEventDefinition is not allowed on start event within a subprocess", conditionalEventDefinition, startEventActivity->getId());
-        }
-        if (timerEventDefinition != null) {
-        $this->addError("timerEventDefinition is not allowed on start event within a subprocess", timerEventDefinition, startEventActivity->getId());
-        }
-        if (escalationEventDefinitionElement != null) {
-        $this->addError("escalationEventDefinition is not allowed on start event within a subprocess", escalationEventDefinitionElement, startEventActivity->getId());
-        }
-        if (compensateEventDefinition != null) {
-        $this->addError("compensateEventDefinition is not allowed on start event within a subprocess", compensateEventDefinition, startEventActivity->getId());
-        }
-        if (errorEventDefinition != null) {
-        $this->addError("errorEventDefinition only allowed on start event if subprocess is an event subprocess", errorEventDefinition, startEventActivity->getId());
-        }
-        if (messageEventDefinition != null) {
-        $this->addError("messageEventDefinition only allowed on start event if subprocess is an event subprocess", messageEventDefinition, startEventActivity->getId());
-        }
-        if (signalEventDefinition != null) {
-        $this->addError("signalEventDefintion only allowed on start event if subprocess is an event subprocess", signalEventDefinition, startEventActivity->getId());
-        }
-
-        startEventActivity->setActivityBehavior(new NoneStartEventActivityBehavior());
-    }
+        $this->validateCatchCompensateEventDefinition($compensateEventDefinition, $startEventActivity->getId());
     }
 
-    protected void parseCompensationEventSubprocess(ActivityImpl startEventActivity, Element startEventElement, ActivityImpl scopeActivity, Element compensateEventDefinition) {
-    startEventActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.START_EVENT_COMPENSATION);
-    scopeActivity->setProperty(PROPERTYNAME_IS_FOR_COMPENSATION, Boolean.TRUE);
-
-    if (scopeActivity->getFlowScope() instanceof ProcessDefinitionEntity) {
-        $this->addError("event subprocess with compensation start event is only supported for embedded subprocess "
-            + "(since throwing compensation through a call activity-induced process hierarchy is not supported)", startEventElement);
-    }
-
-    ScopeImpl subprocess = scopeActivity->getFlowScope();
-    ActivityImpl compensationHandler = ((ActivityImpl) subprocess).findCompensationHandler();
-    if (compensationHandler == null) {
-        // add property to subprocess
-        subprocess->setProperty(PROPERTYNAME_COMPENSATION_HANDLER_ID, scopeActivity->getActivityId());
-    } else {
-
-        if (compensationHandler.isSubProcessScope()) {
-        $this->addError("multiple event subprocesses with compensation start event are not supported on the same scope", startEventElement);
-        } else {
-        $this->addError("compensation boundary event and event subprocess with compensation start event are not supported on the same scope", startEventElement);
+    protected function parseErrorStartEventDefinition(Element $errorEventDefinition, ActivityImpl $startEventActivity): void
+    {
+        $startEventActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::START_EVENT_ERROR);
+        $errorRef = $errorEventDefinition->attribute("errorRef");
+        $error = null;
+        // the error event definition executes the event subprocess activity which
+        // hosts the start event
+        $eventSubProcessActivity = $startEventActivity->getFlowScope()->getId();
+        $definition = new ErrorEventDefinition($eventSubProcessActivity);
+        if ($errorRef != null) {
+            if (array_key_exists($errorRef, $errors)) {
+                $error = $errors[$errorRef];
+            }
+            $errorCode = $error == null ? $errorRef : $error->getErrorCode();
+            $definition->setErrorCode($errorCode);
         }
-    }
-
-    validateCatchCompensateEventDefinition(compensateEventDefinition, startEventActivity->getId());
-    }
-
-    protected void parseErrorStartEventDefinition(Element errorEventDefinition, ActivityImpl startEventActivity) {
-    startEventActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.START_EVENT_ERROR);
-    String errorRef = errorEventDefinition.attribute("errorRef");
-    Error error = null;
-    // the error event definition executes the event subprocess activity which
-    // hosts the start event
-    String eventSubProcessActivity = startEventActivity->getFlowScope()->getId();
-    ErrorEventDefinition definition = new ErrorEventDefinition(eventSubProcessActivity);
-    if (errorRef != null) {
-        error = errors->get(errorRef);
-        String errorCode = error == null ? errorRef : error->getErrorCode();
-        definition->setErrorCode(errorCode);
-    }
-    definition->setPrecedence(10);
-    setErrorCodeVariableOnErrorEventDefinition(errorEventDefinition, definition);
-    setErrorMessageVariableOnErrorEventDefinition(errorEventDefinition, definition);
-    $this->addErrorEventDefinition(definition, startEventActivity->getEventScope());
+        $definition->setPrecedence(10);
+        $this->setErrorCodeVariableOnErrorEventDefinition($errorEventDefinition, $definition);
+        $this->setErrorMessageVariableOnErrorEventDefinition($errorEventDefinition, $definition);
+        $this->addErrorEventDefinition($definition, $startEventActivity->getEventScope());
     }
 
     /**
@@ -1196,11 +1223,12 @@ class BpmnParse extends Parse
     * @param definition
     *          the errorEventDefintion that can get the errorCodeVariable value
     */
-    protected void setErrorCodeVariableOnErrorEventDefinition(Element errorEventDefinition, ErrorEventDefinition definition) {
-    String errorCodeVar = errorEventDefinition.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "errorCodeVariable");
-    if (errorCodeVar != null) {
-        definition->setErrorCodeVariable(errorCodeVar);
-    }
+    protected function setErrorCodeVariableOnErrorEventDefinition(Element $errorEventDefinition, ErrorEventDefinition $definition): void
+    {
+        $errorCodeVar = $errorEventDefinition->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "errorCodeVariable");
+        if ($errorCodeVar != null) {
+            $definition->setErrorCodeVariable($errorCodeVar);
+        }
     }
 
     /**
@@ -1212,109 +1240,120 @@ class BpmnParse extends Parse
     * @param definition
     *          the errorEventDefintion that can get the errorMessageVariable value
     */
-    protected void setErrorMessageVariableOnErrorEventDefinition(Element errorEventDefinition, ErrorEventDefinition definition) {
-    String errorMessageVariable = errorEventDefinition.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "errorMessageVariable");
-    if (errorMessageVariable != null) {
-        definition->setErrorMessageVariable(errorMessageVariable);
-    }
-    }
-
-    protected EventSubscriptionDeclaration parseMessageEventDefinition(Element messageEventDefinition, String messageElementId) {
-    String messageRef = messageEventDefinition.attribute("messageRef");
-    if (messageRef == null) {
-        $this->addError("attribute 'messageRef' is required", messageEventDefinition, messageElementId);
-    }
-    MessageDefinition messageDefinition = messages->get(resolveName(messageRef));
-    if (messageDefinition == null) {
-        $this->addError("Invalid 'messageRef': no message with id '" + messageRef + "' found.", messageEventDefinition, messageElementId);
-    }
-    return new EventSubscriptionDeclaration(messageDefinition->getExpression(), EventType.MESSAGE);
-    }
-
-    protected void addEventSubscriptionDeclaration(EventSubscriptionDeclaration subscription, ScopeImpl scope, Element element) {
-    if (subscription->getEventType().equals(EventType.MESSAGE.name()) && (!subscription.hasEventName())) {
-        $this->addError("Cannot have a message event subscription with an empty or missing name", element, subscription->getActivityId());
-    }
-
-    Map<String, EventSubscriptionDeclaration> eventDefinitions = scope->getProperties()->get(BpmnProperties.EVENT_SUBSCRIPTION_DECLARATIONS);
-
-    // if this is a message event, validate that it is the only one with the provided name for this scope
-    if (hasMultipleMessageEventDefinitionsWithSameName(subscription, eventDefinitions.values())){
-        $this->addError("Cannot have more than one message event subscription with name '" + subscription->getUnresolvedEventName() + "' for scope '" + scope->getId() + "'",
-            element, subscription->getActivityId());
-    }
-
-    // if this is a signal event, validate that it is the only one with the provided name for this scope
-    if (hasMultipleSignalEventDefinitionsWithSameName(subscription, eventDefinitions.values())){
-        $this->addError("Cannot have more than one signal event subscription with name '" + subscription->getUnresolvedEventName() + "' for scope '" + scope->getId() + "'",
-            element, subscription->getActivityId());
-    }
-    // if this is a conditional event, validate that it is the only one with the provided condition
-    if (subscription.isStartEvent() && hasMultipleConditionalEventDefinitionsWithSameCondition(subscription, eventDefinitions.values())) {
-        $this->addError("Cannot have more than one conditional event subscription with the same condition '" + ((ConditionalEventDefinition) subscription)->getConditionAsString() + "'", element, subscription->getActivityId());
-    }
-
-    scope->getProperties().putMapEntry(BpmnProperties.EVENT_SUBSCRIPTION_DECLARATIONS, subscription->getActivityId(), subscription);
-    }
-
-    protected boolean hasMultipleMessageEventDefinitionsWithSameName(EventSubscriptionDeclaration subscription, Collection<EventSubscriptionDeclaration> eventDefinitions) {
-    return hasMultipleEventDefinitionsWithSameName(subscription, eventDefinitions, EventType.MESSAGE.name());
-    }
-
-    protected boolean hasMultipleSignalEventDefinitionsWithSameName(EventSubscriptionDeclaration subscription, Collection<EventSubscriptionDeclaration> eventDefinitions) {
-    return hasMultipleEventDefinitionsWithSameName(subscription, eventDefinitions, EventType.SIGNAL.name());
-    }
-
-    protected boolean hasMultipleConditionalEventDefinitionsWithSameCondition(EventSubscriptionDeclaration subscription, Collection<EventSubscriptionDeclaration> eventDefinitions) {
-    if (subscription->getEventType().equals(EventType.CONDITONAL.name())) {
-        for (EventSubscriptionDeclaration eventDefinition : eventDefinitions) {
-        if (eventDefinition->getEventType().equals(EventType.CONDITONAL.name()) && eventDefinition.isStartEvent() == subscription.isStartEvent()
-            && ((ConditionalEventDefinition) eventDefinition)->getConditionAsString().equals(((ConditionalEventDefinition) subscription)->getConditionAsString())) {
-            return true;
-        }
+    protected function setErrorMessageVariableOnErrorEventDefinition(Element $errorEventDefinition, ErrorEventDefinition $definition): void
+    {
+        $errorMessageVariable = $errorEventDefinition->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "errorMessageVariable");
+        if ($errorMessageVariable != null) {
+            $definition->setErrorMessageVariable($errorMessageVariable);
         }
     }
-    return false;
-    }
 
-    protected boolean hasMultipleEventDefinitionsWithSameName(EventSubscriptionDeclaration subscription, Collection<EventSubscriptionDeclaration> eventDefinitions, String eventType) {
-    if (subscription->getEventType().equals(eventType)) {
-        for (EventSubscriptionDeclaration eventDefinition : eventDefinitions) {
-        if (eventDefinition->getEventType().equals(eventType) && eventDefinition->getUnresolvedEventName().equals(subscription->getUnresolvedEventName())
-            && eventDefinition.isStartEvent() == subscription.isStartEvent()) {
-            return true;
+    protected function parseMessageEventDefinition(Element $messageEventDefinition, string $messageElementId): ?EventSubscriptionDeclaration
+    {
+        $messageRef = $messageEventDefinition->attribute("messageRef");
+        if ($messageRef == null) {
+            $this->addError("attribute 'messageRef' is required", $messageEventDefinition, $messageElementId);
         }
+        $name = $this->resolveName($messageRef);
+        $messageDefinition = null;
+        if (array_key_exists($name, $this->messages)) {
+            $messageDefinition = $this->messages[$name];
         }
-    }
-    return false;
-    }
-
-    protected void addEventSubscriptionJobDeclaration(EventSubscriptionJobDeclaration jobDeclaration, ActivityImpl activity, Element element) {
-    List<EventSubscriptionJobDeclaration> jobDeclarationsForActivity = (List<EventSubscriptionJobDeclaration>) activity->getProperty(PROPERTYNAME_EVENT_SUBSCRIPTION_JOB_DECLARATION);
-
-    if (jobDeclarationsForActivity == null) {
-        jobDeclarationsForActivity = new ArrayList<>();
-        activity->setProperty(PROPERTYNAME_EVENT_SUBSCRIPTION_JOB_DECLARATION, jobDeclarationsForActivity);
+        if ($messageDefinition == null) {
+            $this->addError("Invalid 'messageRef': no message with id '" . $messageRef . "' found.", $messageEventDefinition, $messageElementId);
+        }
+        return new EventSubscriptionDeclaration($messageDefinition->getExpression(), EventType::message());
     }
 
-    if(activityAlreadyContainsJobDeclarationEventType(jobDeclarationsForActivity, jobDeclaration)){
-        $this->addError("Activity contains already job declaration with type " + jobDeclaration->getEventType(), element, activity->getId());
+    protected function addEventSubscriptionDeclaration(EventSubscriptionDeclaration $subscription, ScopeImpl $scope, Element $element): void
+    {
+        if ($subscription->getEventType() == EventType::message()->name() && (!$subscription->hasEventName())) {
+            $this->addError("Cannot have a message event subscription with an empty or missing name", $element, $subscription->getActivityId());
+        }
+
+        $eventDefinitions = $scope->getProperties()->get(BpmnProperties::eventSubscriptionDeclarations());
+
+        // if this is a message event, validate that it is the only one with the provided name for this scope
+        if ($this->hasMultipleMessageEventDefinitionsWithSameName($subscription, array_values($eventDefinitions))) {
+            $this->addError("Cannot have more than one message event subscription with name '" . $subscription->getUnresolvedEventName() . "' for scope '" . $scope->getId() . "'", $element, $subscription->getActivityId());
+        }
+
+        // if this is a signal event, validate that it is the only one with the provided name for this scope
+        if ($this->hasMultipleSignalEventDefinitionsWithSameName($subscription, array_values($eventDefinitions))) {
+            $this->addError("Cannot have more than one signal event subscription with name '" . $subscription->getUnresolvedEventName() . "' for scope '" . $scope->getId() . "'", $element, $subscription->getActivityId());
+        }
+        // if this is a conditional event, validate that it is the only one with the provided condition
+        if ($subscription->isStartEvent() && $this->hasMultipleConditionalEventDefinitionsWithSameCondition($subscription, array_values($eventDefinitions))) {
+            $this->addError("Cannot have more than one conditional event subscription with the same condition '" . $subscription->getConditionAsString() . "'", $element, $subscription->getActivityId());
+        }
+
+        $scope->getProperties()->putMapEntry(BpmnProperties::eventSubscriptionDeclarations(), $subscription->getActivityId(), $subscription);
     }
 
-    jobDeclarationsForActivity.add(jobDeclaration);
+    protected function hasMultipleMessageEventDefinitionsWithSameName(EventSubscriptionDeclaration $subscription, array $eventDefinitions): bool
+    {
+        return $this->hasMultipleEventDefinitionsWithSameName($subscription, $eventDefinitions, EventType::message()->name());
+    }
+
+    protected function hasMultipleSignalEventDefinitionsWithSameName(EventSubscriptionDeclaration $subscription, array $eventDefinitions): bool
+    {
+        return $this->hasMultipleEventDefinitionsWithSameName($subscription, $eventDefinitions, EventType::signal()->name());
+    }
+
+    protected function hasMultipleConditionalEventDefinitionsWithSameCondition(EventSubscriptionDeclaration $subscription, array $eventDefinitions): bool
+    {
+        if ($subscription->getEventType() == EventType::conditional()->name()) {
+            foreach ($eventDefinitions as $eventDefinition) {
+                if (
+                    $eventDefinition->getEventType() == EventType::conditional()->name() && $eventDefinition->isStartEvent() == $subscription->isStartEvent()
+                    && ($eventDefinition->getConditionAsString() == $subscription->getConditionAsString())
+                ) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    protected function hasMultipleEventDefinitionsWithSameName(EventSubscriptionDeclaration $subscription, array $eventDefinitions, string $eventType): bool
+    {
+        if ($subscription->getEventType() == $eventType) {
+            foreach ($eventDefinitions as $eventDefinition) {
+                if ($eventDefinition->getEventType() == $eventType && $eventDefinition->getUnresolvedEventName() == $subscription->getUnresolvedEventName() && $eventDefinition->isStartEvent() == $subscription->isStartEvent()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    protected function addEventSubscriptionJobDeclaration(EventSubscriptionJobDeclaration $jobDeclaration, ActivityImpl $activity, Element $element): void
+    {
+        $jobDeclarationsForActivity = $activity->getProperty(self::PROPERTYNAME_EVENT_SUBSCRIPTION_JOB_DECLARATION);
+
+        if ($jobDeclarationsForActivity == null) {
+            $activity->clearProperty(self::PROPERTYNAME_EVENT_SUBSCRIPTION_JOB_DECLARATION);
+        }
+
+        if ($this->activityAlreadyContainsJobDeclarationEventType($jobDeclarationsForActivity, $jobDeclaration)) {
+            $this->addError("Activity contains already job declaration with type " . $jobDeclaration->getEventType(), $element, $activity->getId());
+        }
+        $activity->addProperty(self::PROPERTYNAME_EVENT_SUBSCRIPTION_JOB_DECLARATION, $jobDeclaration);
     }
 
     /**
     * Assumes that an activity has at most one declaration of a certain eventType.
     */
-    protected boolean activityAlreadyContainsJobDeclarationEventType(List<EventSubscriptionJobDeclaration> jobDeclarationsForActivity,
-                                                                    EventSubscriptionJobDeclaration jobDeclaration){
-    for(EventSubscriptionJobDeclaration declaration: jobDeclarationsForActivity){
-        if(declaration->getEventType().equals(jobDeclaration->getEventType())){
-        return true;
+    protected function activityAlreadyContainsJobDeclarationEventType(
+        array $jobDeclarationsForActivity,
+        EventSubscriptionJobDeclaration $jobDeclaration
+    ): bool {
+        foreach ($jobDeclarationsForActivity as $declaration) {
+            if ($declaration->getEventType() == $jobDeclaration->getEventType()) {
+                return true;
+            }
         }
-    }
-    return false;
+        return false;
     }
 
     /**
@@ -1328,560 +1367,596 @@ class BpmnParse extends Parse
     * @param scopeElement
     *          The {@link ScopeImpl} to which the activities must be added.
     */
-    public void parseActivities(List<Element> activityElements, Element parentElement, ScopeImpl scopeElement) {
-    for (Element activityElement : activityElements) {
-        parseActivity(activityElement, parentElement, scopeElement);
-    }
-    }
-
-    protected ActivityImpl parseActivity(Element activityElement, Element parentElement, ScopeImpl scopeElement) {
-    ActivityImpl activity = null;
-
-    boolean isMultiInstance = false;
-    ScopeImpl miBody = parseMultiInstanceLoopCharacteristics(activityElement, scopeElement);
-    if (miBody != null) {
-        scopeElement = miBody;
-        isMultiInstance = true;
-    }
-
-    if (activityElement->getTagName().equals(ActivityTypes.GATEWAY_EXCLUSIVE)) {
-        activity = parseExclusiveGateway(activityElement, scopeElement);
-    } else if (activityElement->getTagName().equals(ActivityTypes.GATEWAY_INCLUSIVE)) {
-        activity = parseInclusiveGateway(activityElement, scopeElement);
-    } else if (activityElement->getTagName().equals(ActivityTypes.GATEWAY_PARALLEL)) {
-        activity = parseParallelGateway(activityElement, scopeElement);
-    } else if (activityElement->getTagName().equals(ActivityTypes.TASK_SCRIPT)) {
-        activity = parseScriptTask(activityElement, scopeElement);
-    } else if (activityElement->getTagName().equals(ActivityTypes.TASK_SERVICE)) {
-        activity = parseServiceTask(activityElement, scopeElement);
-    } else if (activityElement->getTagName().equals(ActivityTypes.TASK_BUSINESS_RULE)) {
-        activity = parseBusinessRuleTask(activityElement, scopeElement);
-    } else if (activityElement->getTagName().equals(ActivityTypes.TASK)) {
-        activity = parseTask(activityElement, scopeElement);
-    } else if (activityElement->getTagName().equals(ActivityTypes.TASK_MANUAL_TASK)) {
-        activity = parseManualTask(activityElement, scopeElement);
-    } else if (activityElement->getTagName().equals(ActivityTypes.TASK_USER_TASK)) {
-        activity = parseUserTask(activityElement, scopeElement);
-    } else if (activityElement->getTagName().equals(ActivityTypes.TASK_SEND_TASK)) {
-        activity = parseSendTask(activityElement, scopeElement);
-    } else if (activityElement->getTagName().equals(ActivityTypes.TASK_RECEIVE_TASK)) {
-        activity = parseReceiveTask(activityElement, scopeElement);
-    } else if (activityElement->getTagName().equals(ActivityTypes.SUB_PROCESS)) {
-        activity = parseSubProcess(activityElement, scopeElement);
-    } else if (activityElement->getTagName().equals(ActivityTypes.CALL_ACTIVITY)) {
-        activity = parseCallActivity(activityElement, scopeElement, isMultiInstance);
-    } else if (activityElement->getTagName().equals(ActivityTypes.INTERMEDIATE_EVENT_THROW)) {
-        activity = parseIntermediateThrowEvent(activityElement, scopeElement);
-    } else if (activityElement->getTagName().equals(ActivityTypes.GATEWAY_EVENT_BASED)) {
-        activity = parseEventBasedGateway(activityElement, parentElement, scopeElement);
-    } else if (activityElement->getTagName().equals(ActivityTypes.TRANSACTION)) {
-        activity = parseTransaction(activityElement, scopeElement);
-    } else if (activityElement->getTagName().equals(ActivityTypes.SUB_PROCESS_AD_HOC) || activityElement->getTagName().equals(ActivityTypes.GATEWAY_COMPLEX)) {
-        addWarning("Ignoring unsupported activity type", activityElement);
-    }
-
-    if (isMultiInstance) {
-        activity->setProperty(PROPERTYNAME_IS_MULTI_INSTANCE, true);
-    }
-
-    if (activity != null) {
-        activity->setName(activityElement.attribute("name"));
-        parseActivityInputOutput(activityElement, activity);
-    }
-
-    return activity;
-    }
-
-    public void validateActivities(List<ActivityImpl> activities) {
-    for (ActivityImpl activity : activities) {
-        validateActivity(activity);
-        // check children if it is an own scope / subprocess / ...
-        if (activity->getActivities().size() > 0) {
-        validateActivities(activity->getActivities());
+    public function parseActivities(array $activityElements, Element $parentElement, ScopeImpl $scopeElement): void
+    {
+        foreach ($activityElements as $activityElement) {
+            $this->parseActivity($activityElement, $parentElement, $scopeElement);
         }
     }
-    }
 
-    protected void validateActivity(ActivityImpl activity) {
-    if (activity->getActivityBehavior() instanceof ExclusiveGatewayActivityBehavior) {
-        validateExclusiveGateway(activity);
-    }
-    validateOutgoingFlows(activity);
-    }
+    protected function parseActivity(Element $activityElement, Element $parentElement, ScopeImpl $scopeElement): ?ActivityImpl
+    {
+        $activity = null;
 
-    protected void validateOutgoingFlows(ActivityImpl activity) {
-    if (activity.isAsyncAfter()) {
-        for (PvmTransition transition : activity->getOutgoingTransitions()) {
-        if (transition->getId() == null) {
-            $this->addError("Sequence flow with sourceRef='" + activity->getId() + "' must have an id, activity with id '" + activity->getId() + "' uses 'asyncAfter'.",
-                null, activity->getId());
-        }
-        }
-    }
-    }
-
-    public void validateExclusiveGateway(ActivityImpl activity) {
-    if (activity->getOutgoingTransitions().size() == 0) {
-        // TODO: double check if this is valid (I think in Activiti yes, since we
-        // need start events we will need an end event as well)
-        $this->addError("Exclusive Gateway '" + activity->getId() + "' has no outgoing sequence flows.", null, activity->getId());
-    } else if (activity->getOutgoingTransitions().size() == 1) {
-        PvmTransition flow = activity->getOutgoingTransitions()->get(0);
-        Condition condition = (Condition) flow->getProperty(BpmnParse.PROPERTYNAME_CONDITION);
-        if (condition != null) {
-        $this->addError("Exclusive Gateway '" + activity->getId() + "' has only one outgoing sequence flow ('" + flow->getId()
-            + "'). This is not allowed to have a condition.", null, activity->getId(), flow->getId());
-        }
-    } else {
-        String defaultSequenceFlow = (String) activity->getProperty("default");
-        boolean hasDefaultFlow = defaultSequenceFlow != null && defaultSequenceFlow.length() > 0;
-
-        ArrayList<PvmTransition> flowsWithoutCondition = new ArrayList<>();
-        for (PvmTransition flow : activity->getOutgoingTransitions()) {
-        Condition condition = (Condition) flow->getProperty(BpmnParse.PROPERTYNAME_CONDITION);
-        boolean isDefaultFlow = flow->getId() != null && flow->getId().equals(defaultSequenceFlow);
-        boolean hasConditon = condition != null;
-
-        if (!hasConditon && !isDefaultFlow) {
-            flowsWithoutCondition.add(flow);
-        }
-        if (hasConditon && isDefaultFlow) {
-            $this->addError("Exclusive Gateway '" + activity->getId() + "' has outgoing sequence flow '" + flow->getId()
-                + "' which is the default flow but has a condition too.", null, activity->getId(), flow->getId());
-        }
-        }
-        if (hasDefaultFlow || flowsWithoutCondition.size() > 1) {
-        // if we either have a default flow (then no flows without conditions
-        // are valid at all) or if we have more than one flow without condition
-        // this is an error
-        for (PvmTransition flow : flowsWithoutCondition) {
-            $this->addError(
-                "Exclusive Gateway '" + activity->getId() + "' has outgoing sequence flow '" + flow->getId() + "' without condition which is not the default flow.",
-                null, activity->getId(), flow->getId());
-        }
-        } else if (flowsWithoutCondition.size() == 1) {
-        // Havinf no default and exactly one flow without condition this is
-        // considered the default one now (to not break backward compatibility)
-        PvmTransition flow = flowsWithoutCondition->get(0);
-        addWarning(
-            "Exclusive Gateway '" + activity->getId() + "' has outgoing sequence flow '" + flow->getId()
-                + "' without condition which is not the default flow. We assume it to be the default flow, but it is bad modeling practice, better set the default flow in your gateway.",
-                null, activity->getId(), flow->getId());
-        }
-    }
-    }
-
-    public ActivityImpl parseIntermediateCatchEvent(Element intermediateEventElement, ScopeImpl scopeElement, ActivityImpl eventBasedGateway) {
-    ActivityImpl nestedActivity = createActivityOnScope(intermediateEventElement, scopeElement);
-
-    Element timerEventDefinition = intermediateEventElement.element(TIMER_EVENT_DEFINITION);
-    Element signalEventDefinition = intermediateEventElement.element(SIGNAL_EVENT_DEFINITION);
-    Element messageEventDefinition = intermediateEventElement.element(MESSAGE_EVENT_DEFINITION);
-    Element linkEventDefinitionElement = intermediateEventElement.element(LINK_EVENT_DEFINITION);
-    Element conditionalEventDefinitionElement = intermediateEventElement.element(CONDITIONAL_EVENT_DEFINITION);
-
-    // shared by all events except for link event
-    IntermediateCatchEventActivityBehavior defaultCatchBehaviour = new IntermediateCatchEventActivityBehavior(eventBasedGateway != null);
-
-    parseAsynchronousContinuationForActivity(intermediateEventElement, nestedActivity);
-    boolean isEventBaseGatewayPresent = eventBasedGateway != null;
-
-    if (isEventBaseGatewayPresent) {
-        nestedActivity->setEventScope(eventBasedGateway);
-        nestedActivity->setActivityStartBehavior(ActivityStartBehavior.CANCEL_EVENT_SCOPE);
-    } else {
-        nestedActivity->setEventScope(nestedActivity);
-        nestedActivity->setScope(true);
-    }
-
-    nestedActivity->setActivityBehavior(defaultCatchBehaviour);
-    if (timerEventDefinition != null) {
-        parseIntermediateTimerEventDefinition(timerEventDefinition, nestedActivity);
-
-    } else if (signalEventDefinition != null) {
-        parseIntermediateSignalEventDefinition(signalEventDefinition, nestedActivity);
-
-    } else if (messageEventDefinition != null) {
-        parseIntermediateMessageEventDefinition(messageEventDefinition, nestedActivity);
-
-    } else if (linkEventDefinitionElement != null) {
-        if (isEventBaseGatewayPresent) {
-        $this->addError("IntermediateCatchLinkEvent is not allowed after an EventBasedGateway.", intermediateEventElement);
-        }
-        nestedActivity->setActivityBehavior(new IntermediateCatchLinkEventActivityBehavior());
-        parseIntermediateLinkEventCatchBehavior(intermediateEventElement, nestedActivity, linkEventDefinitionElement);
-
-    } else if (conditionalEventDefinitionElement != null) {
-        ConditionalEventDefinition conditionalEvent = parseIntermediateConditionalEventDefinition(conditionalEventDefinitionElement, nestedActivity);
-        nestedActivity->setActivityBehavior(new IntermediateConditionalEventBehavior(conditionalEvent, isEventBaseGatewayPresent));
-    } else {
-        $this->addError("Unsupported intermediate catch event type", intermediateEventElement);
-    }
-
-    parseExecutionListenersOnScope(intermediateEventElement, nestedActivity);
-
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseIntermediateCatchEvent(intermediateEventElement, scopeElement, nestedActivity);
-    }
-
-    return nestedActivity;
-    }
-
-    protected void parseIntermediateLinkEventCatchBehavior(Element intermediateEventElement, ActivityImpl activity, Element linkEventDefinitionElement) {
-
-    activity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.INTERMEDIATE_EVENT_LINK);
-
-    String linkName = linkEventDefinitionElement.attribute("name");
-    String elementName = intermediateEventElement.attribute("name");
-    String elementId = intermediateEventElement.attribute("id");
-
-    if (eventLinkTargets.containsKey(linkName)) {
-        $this->addError("Multiple Intermediate Catch Events with the same link event name ('" + linkName + "') are not allowed.", intermediateEventElement);
-    } else {
-        if (!linkName.equals(elementName)) {
-        // this is valid - but not a good practice (as it is really confusing
-        // for the reader of the process model) - hence we log a warning
-        addWarning("Link Event named '" + elementName + "' contains link event definition with name '" + linkName
-            + "' - it is recommended to use the same name for both.", intermediateEventElement);
+        $isMultiInstance = false;
+        $miBody = $this->parseMultiInstanceLoopCharacteristics($activityElement, $scopeElement);
+        if ($miBody != null) {
+            $scopeElement = $miBody;
+            $isMultiInstance = true;
         }
 
-        // now we remember the link in order to replace the sequence flow later on
-        eventLinkTargets.put(linkName, elementId);
-    }
-    }
-
-    protected void parseIntermediateMessageEventDefinition(Element messageEventDefinition, ActivityImpl nestedActivity) {
-
-    nestedActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.INTERMEDIATE_EVENT_MESSAGE);
-
-    EventSubscriptionDeclaration messageDefinition = parseMessageEventDefinition(messageEventDefinition, nestedActivity->getId());
-    messageDefinition->setActivityId(nestedActivity->getId());
-    addEventSubscriptionDeclaration(messageDefinition, nestedActivity->getEventScope(), messageEventDefinition);
-
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseIntermediateMessageCatchEventDefinition(messageEventDefinition, nestedActivity);
-    }
-    }
-
-    public ActivityImpl parseIntermediateThrowEvent(Element intermediateEventElement, ScopeImpl scopeElement) {
-    Element signalEventDefinitionElement = intermediateEventElement.element(SIGNAL_EVENT_DEFINITION);
-    Element compensateEventDefinitionElement = intermediateEventElement.element(COMPENSATE_EVENT_DEFINITION);
-    Element linkEventDefinitionElement = intermediateEventElement.element(LINK_EVENT_DEFINITION);
-    Element messageEventDefinitionElement = intermediateEventElement.element(MESSAGE_EVENT_DEFINITION);
-    Element escalationEventDefinition = intermediateEventElement.element(ESCALATION_EVENT_DEFINITION);
-    String elementId = intermediateEventElement.attribute("id");
-
-    // the link event gets a special treatment as a throwing link event (event
-    // source)
-    // will not create any activity instance but serves as a "redirection" to
-    // the catching link
-    // event (event target)
-    if (linkEventDefinitionElement != null) {
-        String linkName = linkEventDefinitionElement.attribute("name");
-
-        // now we remember the link in order to replace the sequence flow later on
-        eventLinkSources.put(elementId, linkName);
-        // and done - no activity created
-        return null;
-    }
-
-    ActivityImpl nestedActivityImpl = createActivityOnScope(intermediateEventElement, scopeElement);
-    ActivityBehavior activityBehavior = null;
-
-    parseAsynchronousContinuationForActivity(intermediateEventElement, nestedActivityImpl);
-
-    boolean isServiceTaskLike = isServiceTaskLike(messageEventDefinitionElement);
-
-    if (signalEventDefinitionElement != null) {
-        nestedActivityImpl->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.INTERMEDIATE_EVENT_SIGNAL_THROW);
-
-        EventSubscriptionDeclaration signalDefinition = parseSignalEventDefinition(signalEventDefinitionElement, true, nestedActivityImpl->getId());
-        activityBehavior = new ThrowSignalEventActivityBehavior(signalDefinition);
-    } else if (compensateEventDefinitionElement != null) {
-        nestedActivityImpl->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.INTERMEDIATE_EVENT_COMPENSATION_THROW);
-        CompensateEventDefinition compensateEventDefinition = parseThrowCompensateEventDefinition(compensateEventDefinitionElement, scopeElement, elementId);
-        activityBehavior = new CompensationEventActivityBehavior(compensateEventDefinition);
-        nestedActivityImpl->setProperty(PROPERTYNAME_THROWS_COMPENSATION, true);
-        nestedActivityImpl->setScope(true);
-    } else if (messageEventDefinitionElement != null) {
-        if (isServiceTaskLike) {
-
-        // CAM-436 same behavior as service task
-        nestedActivityImpl->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.INTERMEDIATE_EVENT_MESSAGE_THROW);
-        parseServiceTaskLike(
-            nestedActivityImpl,
-            ActivityTypes.INTERMEDIATE_EVENT_MESSAGE_THROW,
-            messageEventDefinitionElement,
-            intermediateEventElement,
-            scopeElement);
-        } else {
-        // default to non behavior if no service task
-        // properties have been specified
-        nestedActivityImpl->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.INTERMEDIATE_EVENT_NONE_THROW);
-        activityBehavior = new IntermediateThrowNoneEventActivityBehavior();
-        }
-    } else if (escalationEventDefinition != null) {
-        nestedActivityImpl->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.INTERMEDIATE_EVENT_ESCALATION_THROW);
-
-        Escalation escalation = findEscalationForEscalationEventDefinition(escalationEventDefinition, nestedActivityImpl->getId());
-        if (escalation != null && escalation->getEscalationCode() == null) {
-        $this->addError("throwing escalation event must have an 'escalationCode'", escalationEventDefinition, nestedActivityImpl->getId());
+        if ($activityElement->getTagName() == ActivityTypes::GATEWAY_EXCLUSIVE) {
+            $activity = $this->parseExclusiveGateway($activityElement, $scopeElement);
+        } elseif ($activityElement->getTagName() == ActivityTypes::GATEWAY_INCLUSIVE) {
+            $activity = $this->parseInclusiveGateway($activityElement, $scopeElement);
+        } elseif ($activityElement->getTagName() == ActivityTypes::GATEWAY_PARALLEL) {
+            $activity = $this->parseParallelGateway($activityElement, $scopeElement);
+        } elseif ($activityElement->getTagName() == ActivityTypes::TASK_SCRIPT) {
+            $activity = $this->parseScriptTask($activityElement, $scopeElement);
+        } elseif ($activityElement->getTagName() == ActivityTypes::TASK_SERVICE) {
+            $activity = $this->parseServiceTask($activityElement, $scopeElement);
+        } elseif ($activityElement->getTagName() == ActivityTypes::TASK_BUSINESS_RULE) {
+            $activity = $this->parseBusinessRuleTask($activityElement, $scopeElement);
+        } elseif ($activityElement->getTagName() == ActivityTypes::TASK) {
+            $activity = $this->parseTask($activityElement, $scopeElement);
+        } elseif ($activityElement->getTagName() == ActivityTypes::TASK_MANUAL_TASK) {
+            $activity = $this->parseManualTask(activityElement, scopeElement);
+        } elseif ($activityElement->getTagName() == ActivityTypes::TASK_USER_TASK) {
+            $activity = $this->parseUserTask($activityElement, $scopeElement);
+        } elseif ($activityElement->getTagName() == ActivityTypes::TASK_SEND_TASK) {
+            $activity = $this->parseSendTask($activityElement, $scopeElement);
+        } elseif ($activityElement->getTagName() == ActivityTypes::TASK_RECEIVE_TASK) {
+            $activity = $this->parseReceiveTask($activityElement, $scopeElement);
+        } elseif ($activityElement->getTagName() == ActivityTypes::SUB_PROCESS) {
+            $activity = $this->parseSubProcess($activityElement, $scopeElement);
+        } elseif ($activityElement->getTagName() == ActivityTypes::CALL_ACTIVITY) {
+            $activity = $this->parseCallActivity($activityElement, $scopeElement, $isMultiInstance);
+        } elseif ($activityElement->getTagName() == ActivityTypes::INTERMEDIATE_EVENT_THROW) {
+            $activity = $this->parseIntermediateThrowEvent($activityElement, $scopeElement);
+        } elseif ($activityElement->getTagName() == ActivityTypes::GATEWAY_EVENT_BASED) {
+            $activity = $this->parseEventBasedGateway($activityElement, $parentElement, $scopeElement);
+        } elseif ($activityElement->getTagName() == ActivityTypes::TRANSACTION) {
+            $activity = $this->parseTransaction($activityElement, $scopeElement);
+        } elseif ($activityElement->getTagName() == ActivityTypes::SUB_PROCESS_AD_HOC || $activityElement->getTagName() == ActivityTypes::GATEWAY_COMPLEX) {
+            $this->addWarning("Ignoring unsupported activity type", $activityElement);
         }
 
-        activityBehavior = new ThrowEscalationEventActivityBehavior(escalation);
-
-    } else { // None intermediate event
-        nestedActivityImpl->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.INTERMEDIATE_EVENT_NONE_THROW);
-        activityBehavior = new IntermediateThrowNoneEventActivityBehavior();
-    }
-
-    if (activityBehavior != null) {
-        nestedActivityImpl->setActivityBehavior(activityBehavior);
-    }
-
-    parseExecutionListenersOnScope(intermediateEventElement, nestedActivityImpl);
-
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseIntermediateThrowEvent(intermediateEventElement, scopeElement, nestedActivityImpl);
-    }
-
-    if (isServiceTaskLike) {
-        // activity behavior could be set by a listener (e.g. connector); thus,
-        // check is after listener invocation
-        validateServiceTaskLike(nestedActivityImpl,
-            ActivityTypes.INTERMEDIATE_EVENT_MESSAGE_THROW,
-            messageEventDefinitionElement);
-    }
-
-    return nestedActivityImpl;
-    }
-
-    protected CompensateEventDefinition parseThrowCompensateEventDefinition(final Element compensateEventDefinitionElement, ScopeImpl scopeElement, final String parentElementId) {
-    final String activityRef = compensateEventDefinitionElement.attribute("activityRef");
-    boolean waitForCompletion = TRUE.equals(compensateEventDefinitionElement.attribute("waitForCompletion", TRUE));
-
-    if (activityRef != null) {
-        if (scopeElement.findActivityAtLevelOfSubprocess(activityRef) == null) {
-        Boolean isTriggeredByEvent = scopeElement->getProperties()->get(BpmnProperties.TRIGGERED_BY_EVENT);
-        String type = (String) scopeElement->getProperty(PROPERTYNAME_TYPE);
-        if (Boolean.TRUE == isTriggeredByEvent && "subProcess".equals(type)) {
-            scopeElement = scopeElement->getFlowScope();
+        if ($isMultiInstance) {
+            $activity->setProperty(self::PROPERTYNAME_IS_MULTI_INSTANCE, true);
         }
-        if (scopeElement.findActivityAtLevelOfSubprocess(activityRef) == null) {
-            final String scopeId = scopeElement->getId();
-            scopeElement.addToBacklog(activityRef, new ScopeImpl.BacklogErrorCallback() {
 
-            @Override
-            public void callback() {
-                $this->addError("Invalid attribute value for 'activityRef': no activity with id '" + activityRef + "' in scope '" + scopeId + "'",
-                compensateEventDefinitionElement,
-                parentElementId);
+        if ($activity != null) {
+            $activity->setName($activityElement->attribute("name"));
+            $this->parseActivityInputOutput($activityElement, $activity);
+        }
+
+        return $activity;
+    }
+
+    public function validateActivities(array $activities): void
+    {
+        foreach ($activities as $activity) {
+            $this->validateActivity($activity);
+            // check children if it is an own scope / subprocess / ...
+            if (count($activity->getActivities()) > 0) {
+                $this->validateActivities($activity->getActivities());
             }
-            });
-        }
         }
     }
 
-    CompensateEventDefinition compensateEventDefinition = new CompensateEventDefinition();
-    compensateEventDefinition->setActivityRef(activityRef);
-
-    compensateEventDefinition->setWaitForCompletion(waitForCompletion);
-    if (!waitForCompletion) {
-        addWarning(
-            "Unsupported attribute value for 'waitForCompletion': 'waitForCompletion=false' is not supported. Compensation event will wait for compensation to join.",
-            compensateEventDefinitionElement, parentElementId);
+    protected function validateActivity(ActivityImpl $activity): void
+    {
+        if ($activity->getActivityBehavior() instanceof ExclusiveGatewayActivityBehavior) {
+            $this->validateExclusiveGateway($activity);
+        }
+        $this->validateOutgoingFlows($activity);
     }
 
-    return compensateEventDefinition;
-    }
-
-    protected void validateCatchCompensateEventDefinition(Element compensateEventDefinitionElement, String parentElementId) {
-    String activityRef = compensateEventDefinitionElement.attribute("activityRef");
-    if (activityRef != null) {
-        addWarning("attribute 'activityRef' is not supported on catching compensation event. attribute will be ignored",
-            compensateEventDefinitionElement, parentElementId);
-    }
-
-    String waitForCompletion = compensateEventDefinitionElement.attribute("waitForCompletion");
-    if (waitForCompletion != null) {
-        addWarning("attribute 'waitForCompletion' is not supported on catching compensation event. attribute will be ignored", compensateEventDefinitionElement, parentElementId);
-    }
-    }
-
-    protected void parseBoundaryCompensateEventDefinition(Element compensateEventDefinition, ActivityImpl activity) {
-    activity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.BOUNDARY_COMPENSATION);
-
-    ScopeImpl hostActivity = activity->getEventScope();
-    for (ActivityImpl sibling : activity->getFlowScope()->getActivities()) {
-        if (sibling->getProperty(BpmnProperties.TYPE->getName()).equals("compensationBoundaryCatch") && sibling->getEventScope().equals(hostActivity) && sibling != activity) {
-        $this->addError("multiple boundary events with compensateEventDefinition not supported on same activity", compensateEventDefinition, activity->getId());
+    protected function validateOutgoingFlows(ActivityImpl $activity): void
+    {
+        if ($activity->isAsyncAfter()) {
+            foreach ($activity->getOutgoingTransitions() as $transition) {
+                if ($transition->getId() == null) {
+                    $this->addError(
+                        "Sequence flow with sourceRef='" . $activity->getId() . "' must have an id, $activity with id '" . $activity->getId() . "' uses 'asyncAfter'.",
+                        null,
+                        $activity->getId()
+                    );
+                }
+            }
         }
     }
 
-    validateCatchCompensateEventDefinition(compensateEventDefinition, activity->getId());
-    }
+    public function validateExclusiveGateway(ActivityImpl $activity): void
+    {
+        if (count($activity->getOutgoingTransitions()) == 0) {
+            // TODO: double check if this is valid (I think in Activiti yes, since we
+            // need start events we will need an end event as well)
+            $this->addError("Exclusive Gateway '" . $activity->getId() . "' has no outgoing sequence flows.", null, $activity->getId());
+        } elseif (count($activity->getOutgoingTransitions()) == 1) {
+            $flow = $activity->getOutgoingTransitions()[0];
+            $condition = $flow->getProperty(BpmnParse::PROPERTYNAME_CONDITION);
+            if ($condition != null) {
+                $this->addError("Exclusive Gateway '" . $activity->getId() . "' has only one outgoing sequence flow ('" . $flow->getId() . "'). This is not allowed to have a condition.", null, $activity->getId(), $flow->getId());
+            }
+        } else {
+            $defaultSequenceFlow = $activity->getProperty("default");
+            $hasDefaultFlow = !empty($defaultSequenceFlow);
 
-    protected ActivityBehavior parseBoundaryCancelEventDefinition(Element cancelEventDefinition, ActivityImpl activity) {
-    activity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.BOUNDARY_CANCEL);
+            $flowsWithoutCondition = [];
+            foreach ($activity->getOutgoingTransitions() as $flow) {
+                $condition = $flow->getProperty(BpmnParse::PROPERTYNAME_CONDITION);
+                $isDefaultFlow = !empty($flow->getId()) && $flow->getId() == $defaultSequenceFlow;
+                $hasConditon = $condition != null;
 
-    LegacyBehavior.parseCancelBoundaryEvent(activity);
-
-    ActivityImpl transaction = (ActivityImpl) activity->getEventScope();
-    if (transaction->getActivityBehavior() != null && transaction->getActivityBehavior() instanceof MultiInstanceActivityBehavior) {
-        transaction = transaction->getActivities()->get(0);
-    }
-
-    if (!"transaction".equals(transaction->getProperty(BpmnProperties.TYPE->getName()))) {
-        $this->addError("boundary event with cancelEventDefinition only supported on transaction subprocesses", cancelEventDefinition, activity->getId());
-    }
-
-    // ensure there is only one cancel boundary event
-    for (ActivityImpl sibling : activity->getFlowScope()->getActivities()) {
-        if ("cancelBoundaryCatch".equals(sibling->getProperty(BpmnProperties.TYPE->getName())) && sibling != activity && sibling->getEventScope() == transaction) {
-        $this->addError("multiple boundary events with cancelEventDefinition not supported on same transaction subprocess", cancelEventDefinition, activity->getId());
+                if (!$hasConditon && !$isDefaultFlow) {
+                    $flowsWithoutCondition[] = $flow;
+                }
+                if ($hasConditon && $isDefaultFlow) {
+                    $this->addError("Exclusive Gateway '" . $activity->getId() . "' has outgoing sequence flow '" . $flow->getId() . "' which is the default flow but has a condition too.", null, $activity->getId(), $flow->getId());
+                }
+            }
+            if ($hasDefaultFlow || couynt($flowsWithoutCondition) > 1) {
+                // if we either have a default flow (then no flows without conditions
+                // are valid at all) or if we have more than one flow without condition
+                // this is an error
+                foreach ($flowsWithoutCondition as $flow) {
+                    $this->addError("Exclusive Gateway '" . $activity->getId() . "' has outgoing sequence flow '" . $flow->getId() . "' without condition which is not the default flow.", null, $activity->getId(), $flow->getId());
+                }
+            } elseif (count($flowsWithoutCondition) == 1) {
+                // Havinf no default and exactly one flow without condition this is
+                // considered the default one now (to not break backward compatibility)
+                $flow = $flowsWithoutCondition[0];
+                $this->addWarning(
+                    "Exclusive Gateway '" . $activity->getId() . "' has outgoing sequence flow '" . $flow->getId() . "' without condition which is not the default flow. We assume it to be the default flow, but it is bad modeling practice, better set the default flow in your gateway.",
+                    null,
+                    $activity->getId(),
+                    $flow->getId()
+                );
+            }
         }
     }
 
-    // find all cancel end events
-    for (ActivityImpl childActivity : transaction->getActivities()) {
-        ActivityBehavior activityBehavior = childActivity->getActivityBehavior();
-        if (activityBehavior != null && activityBehavior instanceof CancelEndEventActivityBehavior) {
-        ((CancelEndEventActivityBehavior) activityBehavior)->setCancelBoundaryEvent(activity);
+    public function parseIntermediateCatchEvent(Element $intermediateEventElement, ScopeImpl $scopeElement, ActivityImpl $eventBasedGateway): ?ActivityImpl
+    {
+        $nestedActivity = $this->createActivityOnScope($intermediateEventElement, $scopeElement);
+
+        $timerEventDefinition = $intermediateEventElement->element(self::TIMER_EVENT_DEFINITION);
+        $signalEventDefinition = $intermediateEventElement->element(self::SIGNAL_EVENT_DEFINITION);
+        $messageEventDefinition = $intermediateEventElement->element(self::MESSAGE_EVENT_DEFINITION);
+        $linkEventDefinitionElement = $intermediateEventElement->element(self::LINK_EVENT_DEFINITION);
+        $conditionalEventDefinitionElement = $intermediateEventElement->element(self::CONDITIONAL_EVENT_DEFINITION);
+
+        // shared by all events except for link event
+        $defaultCatchBehaviour = new IntermediateCatchEventActivityBehavior($eventBasedGateway != null);
+
+        $this->parseAsynchronousContinuationForActivity($intermediateEventElement, $nestedActivity);
+        $isEventBaseGatewayPresent = $eventBasedGateway != null;
+
+        if ($isEventBaseGatewayPresent) {
+            $nestedActivity->setEventScope($eventBasedGateway);
+            $nestedActivity->setActivityStartBehavior(ActivityStartBehavior::CANCEL_EVENT_SCOPE);
+        } else {
+            $nestedActivity->setEventScope($nestedActivity);
+            $nestedActivity->setScope(true);
+        }
+
+        $nestedActivity->setActivityBehavior($defaultCatchBehaviour);
+        if ($timerEventDefinition != null) {
+            $this->parseIntermediateTimerEventDefinition($timerEventDefinition, $nestedActivity);
+        } elseif ($signalEventDefinition != null) {
+            $this->parseIntermediateSignalEventDefinition($signalEventDefinition, $nestedActivity);
+        } elseif ($messageEventDefinition != null) {
+            $this->parseIntermediateMessageEventDefinition($messageEventDefinition, $nestedActivity);
+        } elseif ($linkEventDefinitionElement != null) {
+            if ($isEventBaseGatewayPresent) {
+                $this->addError("IntermediateCatchLinkEvent is not allowed after an EventBasedGateway.", $intermediateEventElement);
+            }
+            $nestedActivity->setActivityBehavior(new IntermediateCatchLinkEventActivityBehavior());
+            $this->parseIntermediateLinkEventCatchBehavior($intermediateEventElement, $nestedActivity, $linkEventDefinitionElement);
+        } elseif ($conditionalEventDefinitionElement != null) {
+            $conditionalEvent = $this->parseIntermediateConditionalEventDefinition($conditionalEventDefinitionElement, $nestedActivity);
+            $nestedActivity->setActivityBehavior(new IntermediateConditionalEventBehavior($conditionalEvent, $isEventBaseGatewayPresent));
+        } else {
+            $this->addError("Unsupported intermediate catch event type", $intermediateEventElement);
+        }
+
+        $this->parseExecutionListenersOnScope($intermediateEventElement, $nestedActivity);
+
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseIntermediateCatchEvent($intermediateEventElement, $scopeElement, $nestedActivity);
+        }
+
+        return $nestedActivity;
+    }
+
+    protected function parseIntermediateLinkEventCatchBehavior(Element $intermediateEventElement, ActivityImpl $activity, Element $linkEventDefinitionElement): void
+    {
+        $activity->getProperties()->set(BpmnProperties::type(), ActivityTypes::INTERMEDIATE_EVENT_LINK);
+
+        $linkName = $linkEventDefinitionElement->attribute("name");
+        $elementName = $intermediateEventElement->attribute("name");
+        $elementId = $intermediateEventElement->attribute("id");
+
+        if (array_key_exists($linkName, $this->eventLinkTargets)) {
+            $this->addError("Multiple Intermediate Catch Events with the same link event name ('" . $linkName . "') are not allowed.", $intermediateEventElement);
+        } else {
+            if ($linkName != $elementName) {
+                // this is valid - but not a good practice (as it is really confusing
+                // for the reader of the process model) - hence we log a warning
+                $this->addWarning("Link Event named '" . $elementName . "' contains link event definition with name '" . $linkName . "' - it is recommended to use the same name for both.", $intermediateEventElement);
+            }
+
+            // now we remember the link in order to replace the sequence flow later on
+            $this->eventLinkTargets[$linkName] = $elementId;
         }
     }
 
-    return new CancelBoundaryEventActivityBehavior();
+    protected function parseIntermediateMessageEventDefinition(Element $messageEventDefinition, ActivityImpl $nestedActivity): void
+    {
+        $nestedActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::INTERMEDIATE_EVENT_MESSAGE);
+
+        $messageDefinition = $this->parseMessageEventDefinition($messageEventDefinition, $nestedActivity->getId());
+        $messageDefinition->setActivityId($nestedActivity->getId());
+        $this->addEventSubscriptionDeclaration($messageDefinition, $nestedActivity->getEventScope(), $messageEventDefinition);
+
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseIntermediateMessageCatchEventDefinition($messageEventDefinition, $nestedActivity);
+        }
+    }
+
+    public function parseIntermediateThrowEvent(Element $intermediateEventElement, ScopeImpl $scopeElement): ?ActivityImpl
+    {
+        $signalEventDefinitionElement = $intermediateEventElement->element(self::SIGNAL_EVENT_DEFINITION);
+        $compensateEventDefinitionElement = $intermediateEventElement->element(self::COMPENSATE_EVENT_DEFINITION);
+        $linkEventDefinitionElement = $intermediateEventElement->element(self::LINK_EVENT_DEFINITION);
+        $messageEventDefinitionElement = $intermediateEventElement->element(self::MESSAGE_EVENT_DEFINITION);
+        $escalationEventDefinition = $intermediateEventElement->element(self::ESCALATION_EVENT_DEFINITION);
+        $elementId = $intermediateEventElement->attribute("id");
+
+        // the link event gets a special treatment as a throwing link event (event
+        // source)
+        // will not create any activity instance but serves as a "redirection" to
+        // the catching link
+        // event (event target)
+        if ($linkEventDefinitionElement != null) {
+            $linkName = $linkEventDefinitionElement->attribute("name");
+
+            // now we remember the link in order to replace the sequence flow later on
+            $this->eventLinkSources[$elementId] = $linkName;
+            // and done - no activity created
+            return null;
+        }
+
+        $nestedActivityImpl = $this->createActivityOnScope($intermediateEventElement, $scopeElement);
+        $activityBehavior = null;
+
+        $this->parseAsynchronousContinuationForActivity($intermediateEventElement, $nestedActivityImpl);
+
+        $isServiceTaskLike = $this->isServiceTaskLike($messageEventDefinitionElement);
+
+        if ($signalEventDefinitionElement != null) {
+            $nestedActivityImpl->getProperties()->set(BpmnProperties::type(), ActivityTypes::INTERMEDIATE_EVENT_SIGNAL_THROW);
+
+            $signalDefinition = $this->parseSignalEventDefinition($signalEventDefinitionElement, true, $nestedActivityImpl->getId());
+            $activityBehavior = new ThrowSignalEventActivityBehavior($signalDefinition);
+        } elseif ($compensateEventDefinitionElement != null) {
+            $nestedActivityImpl->getProperties()->set(BpmnProperties::type(), ActivityTypes::INTERMEDIATE_EVENT_COMPENSATION_THROW);
+            $compensateEventDefinition = $this->parseThrowCompensateEventDefinition($compensateEventDefinitionElement, $scopeElement, $elementId);
+            $activityBehavior = new CompensationEventActivityBehavior($compensateEventDefinition);
+            $nestedActivityImpl->setProperty(self::PROPERTYNAME_THROWS_COMPENSATION, true);
+            $nestedActivityImpl->setScope(true);
+        } elseif ($messageEventDefinitionElement != null) {
+            if ($isServiceTaskLike) {
+                // CAM-436 same behavior as service task
+                $nestedActivityImpl->getProperties()->set(BpmnProperties::type(), ActivityTypes::INTERMEDIATE_EVENT_MESSAGE_THROW);
+                $this->parseServiceTaskLike(
+                    $nestedActivityImpl,
+                    ActivityTypes::INTERMEDIATE_EVENT_MESSAGE_THROW,
+                    $messageEventDefinitionElement,
+                    $intermediateEventElement,
+                    $scopeElement
+                );
+            } else {
+                // default to non behavior if no service task
+                // properties have been specified
+                $nestedActivityImpl->getProperties()->set(BpmnProperties::type(), ActivityTypes::INTERMEDIATE_EVENT_NONE_THROW);
+                $activityBehavior = new IntermediateThrowNoneEventActivityBehavior();
+            }
+        } elseif ($escalationEventDefinition != null) {
+            $nestedActivityImpl->getProperties()->set(BpmnProperties::type(), ActivityTypes::INTERMEDIATE_EVENT_ESCALATION_THROW);
+
+            $escalation = $this->findEscalationForEscalationEventDefinition($escalationEventDefinition, $nestedActivityImpl->getId());
+            if ($escalation != null && $escalation->getEscalationCode() == null) {
+                $this->addError("throwing escalation event must have an 'escalationCode'", $escalationEventDefinition, $nestedActivityImpl->getId());
+            }
+            $activityBehavior = new ThrowEscalationEventActivityBehavior(escalation);
+        } else { // None intermediate event
+            $nestedActivityImpl->getProperties()->set(BpmnProperties::type(), ActivityTypes::INTERMEDIATE_EVENT_NONE_THROW);
+            $activityBehavior = new IntermediateThrowNoneEventActivityBehavior();
+        }
+
+        if ($activityBehavior != null) {
+            $nestedActivityImpl->setActivityBehavior($activityBehavior);
+        }
+
+        $this->parseExecutionListenersOnScope($intermediateEventElement, $nestedActivityImpl);
+
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseIntermediateThrowEvent($intermediateEventElement, $scopeElement, $nestedActivityImpl);
+        }
+
+        if ($isServiceTaskLike) {
+            // activity behavior could be set by a listener (e.g. connector); thus,
+            // check is after listener invocation
+            $this->validateServiceTaskLike(
+                $nestedActivityImpl,
+                ActivityTypes::INTERMEDIATE_EVENT_MESSAGE_THROW,
+                $messageEventDefinitionElement
+            );
+        }
+
+        return $nestedActivityImpl;
+    }
+
+    protected function parseThrowCompensateEventDefinition(Element $compensateEventDefinitionElement, ScopeImpl $scopeElement, string $parentElementId): ?CompensateEventDefinition
+    {
+        $activityRef = $compensateEventDefinitionElement->attribute("activityRef");
+        $waitForCompletion = strtolower($compensateEventDefinitionElement->attribute("waitForCompletion", "TRUE")) == "true";
+
+        if ($activityRef != null) {
+            if ($scopeElement->findActivityAtLevelOfSubprocess($activityRef) == null) {
+                $isTriggeredByEvent = $scopeElement->getProperties()->get(BpmnProperties::triggeredByEvent());
+                $type = $scopeElement->getProperty(self::PROPERTYNAME_TYPE);
+                if (($isTriggeredByEvent !== null && strtolower($isTriggeredByEvent) === "true") && "subProcess" == $type) {
+                    $scopeElement = $scopeElement->getFlowScope();
+                }
+                if ($scopeElement->findActivityAtLevelOfSubprocess($activityRef) == null) {
+                    $scopeId = $scopeElement->getId();
+                    $scope = $this;
+                    $scopeElement->addToBacklog($activityRef, new class ($scope, $activityRef, $scopeId, $compensateEventDefinitionElement, $parentElementId) implements BacklogErrorCallbackInterface {
+                        private $scope;
+                        private $activityRef;
+                        private $scopeId;
+                        private $compensateEventDefinitionElement;
+                        private $parentElementId;
+
+                        public function __construct($scope, $activityRef, $scopeId, $compensateEventDefinitionElement, $parentElementId)
+                        {
+                            $this->scope = $scope;
+                            $this->activityRef = $activityRef;
+                            $this->scopeId = $scopeId;
+                            $this->compensateEventDefinitionElement = $compensateEventDefinitionElement;
+                            $this->parentElementId = $parentElementId;
+                        }
+
+                        public function callback(): void
+                        {
+                            $this->scope->addError(
+                                "Invalid attribute value for 'activityRef': no activity with id '" . $this->activityRef . "' in scope '" . $this->scopeId . "'",
+                                $this->compensateEventDefinitionElement,
+                                $this->parentElementId
+                            );
+                        }
+                    });
+                }
+            }
+        }
+
+        $compensateEventDefinition = new CompensateEventDefinition();
+        $compensateEventDefinition->setActivityRef($activityRef);
+
+        $compensateEventDefinition->setWaitForCompletion($waitForCompletion);
+        if (!$waitForCompletion) {
+            $this->addWarning(
+                "Unsupported attribute value for 'waitForCompletion': 'waitForCompletion=false' is not supported. Compensation event will wait for compensation to join.",
+                $compensateEventDefinitionElement,
+                $parentElementId
+            );
+        }
+
+        return $compensateEventDefinition;
+    }
+
+    protected function validateCatchCompensateEventDefinition(Element $compensateEventDefinitionElement, string $parentElementId): void
+    {
+        $activityRef = $compensateEventDefinitionElement->attribute("activityRef");
+        if ($activityRef != null) {
+            $this->addWarning(
+                "attribute 'activityRef' is not supported on catching compensation event. attribute will be ignored",
+                $compensateEventDefinitionElement,
+                $parentElementId
+            );
+        }
+
+        $waitForCompletion = $compensateEventDefinitionElement->attribute("waitForCompletion");
+        if ($waitForCompletion != null) {
+            $this->addWarning(
+                "attribute 'waitForCompletion' is not supported on catching compensation event. attribute will be ignored",
+                $compensateEventDefinitionElement,
+                $parentElementId
+            );
+        }
+    }
+
+    protected function parseBoundaryCompensateEventDefinition(Element $compensateEventDefinition, ActivityImpl $activity): void
+    {
+        $activity->getProperties()->set(BpmnProperties::type(), ActivityTypes::BOUNDARY_COMPENSATION);
+
+        $hostActivity = $activity->getEventScope();
+        foreach ($activity->getFlowScope()->getActivities() as $sibling) {
+            if ($sibling->getProperty(BpmnProperties::type()->getName()) == "compensationBoundaryCatch" && $sibling->getEventScope() == $hostActivity && $sibling != $activity) {
+                $this->addError("multiple boundary events with compensateEventDefinition not supported on same activity", $compensateEventDefinition, $activity->getId());
+            }
+        }
+
+        $this->validateCatchCompensateEventDefinition($compensateEventDefinition, $activity->getId());
+    }
+
+    protected function parseBoundaryCancelEventDefinition(Element $cancelEventDefinition, ActivityImpl $activity): ?ActivityBehavior
+    {
+        $activity->getProperties()->set(BpmnProperties::type(), ActivityTypes::BOUNDARY_CANCEL);
+
+        LegacyBehavior::parseCancelBoundaryEvent($activity);
+
+        $transaction = $activity->getEventScope();
+        if ($transaction->getActivityBehavior() != null && $transaction->getActivityBehavior() instanceof MultiInstanceActivityBehavior) {
+            $transaction = $transaction->getActivities()->get(0);
+        }
+
+        if ("transaction" != $transaction->getProperty(BpmnProperties::type()->getName())) {
+            $this->addError("boundary event with cancelEventDefinition only supported on transaction subprocesses", $cancelEventDefinition, $activity->getId());
+        }
+
+        // ensure there is only one cancel boundary event
+        foreach ($activity->getFlowScope()->getActivities() as $sibling) {
+            if ("cancelBoundaryCatch" == $sibling->getProperty(BpmnProperties::type()->getName()) && $sibling != $activity && $sibling->getEventScope() == $transaction) {
+                $this->addError("multiple boundary events with cancelEventDefinition not supported on same transaction subprocess", $cancelEventDefinition, $activity->getId());
+            }
+        }
+
+        // find all cancel end events
+        foreach ($transaction->getActivities() as $childActivity) {
+            $activityBehavior = $childActivity->getActivityBehavior();
+            if ($activityBehavior != null && $activityBehavior instanceof CancelEndEventActivityBehavior) {
+                $activityBehavior->setCancelBoundaryEvent($activity);
+            }
+        }
+
+        return new CancelBoundaryEventActivityBehavior();
     }
 
     /**
     * Parses loopCharacteristics (standardLoop/Multi-instance) of an activity, if
     * any is defined.
     */
-    public ScopeImpl parseMultiInstanceLoopCharacteristics(Element activityElement, ScopeImpl scope) {
-
-    Element miLoopCharacteristics = activityElement.element("multiInstanceLoopCharacteristics");
-    if (miLoopCharacteristics == null) {
-        return null;
-    } else {
-        String id = activityElement.attribute("id");
-
-        LOG.parsingElement("mi body for activity", id);
-
-        id = getIdForMiBody(id);
-        ActivityImpl miBodyScope = scope.createActivity(id);
-        setActivityAsyncDelegates(miBodyScope);
-        miBodyScope->setProperty(PROPERTYNAME_TYPE, ActivityTypes.MULTI_INSTANCE_BODY);
-        miBodyScope->setScope(true);
-
-        boolean isSequential = parseBooleanAttribute(miLoopCharacteristics.attribute("isSequential"), false);
-
-        MultiInstanceActivityBehavior behavior = null;
-        if (isSequential) {
-        behavior = new SequentialMultiInstanceActivityBehavior();
+    public function parseMultiInstanceLoopCharacteristics(Element $activityElement, ScopeImpl $scope): ?ScopeImpl
+    {
+        $miLoopCharacteristics = $activityElement->element("multiInstanceLoopCharacteristics");
+        if ($miLoopCharacteristics == null) {
+            return null;
         } else {
-        behavior = new ParallelMultiInstanceActivityBehavior();
-        }
-        miBodyScope->setActivityBehavior(behavior);
+            $id = $activityElement->attribute("id");
 
-        // loopCardinality
-        Element loopCardinality = miLoopCharacteristics.element("loopCardinality");
-        if (loopCardinality != null) {
-        String loopCardinalityText = loopCardinality->getText();
-        if (loopCardinalityText == null || "".equals(loopCardinalityText)) {
-            $this->addError("loopCardinality must be defined for a multiInstanceLoopCharacteristics definition ", miLoopCharacteristics, id);
-        }
-        behavior->setLoopCardinalityExpression(expressionManager.createExpression(loopCardinalityText));
-        }
+            //LOG.parsingElement("mi body for activity", id);
 
-        // completionCondition
-        Element completionCondition = miLoopCharacteristics.element("completionCondition");
-        if (completionCondition != null) {
-        String completionConditionText = completionCondition->getText();
-        behavior->setCompletionConditionExpression(expressionManager.createExpression(completionConditionText));
-        }
+            $id = self::getIdForMiBody($id);
+            $miBodyScope = $scope->createActivity($id);
+            $this->setActivityAsyncDelegates($miBodyScope);
+            $miBodyScope->setProperty(self::PROPERTYNAME_TYPE, ActivityTypes::MULTI_INSTANCE_BODY);
+            $miBodyScope->setScope(true);
 
-        // activiti:collection
-        String collection = miLoopCharacteristics.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "collection");
-        if (collection != null) {
-        if (collection.contains("{")) {
-            behavior->setCollectionExpression(expressionManager.createExpression(collection));
-        } else {
-            behavior->setCollectionVariable(collection);
-        }
-        }
+            $isSequential = $this->parseBooleanAttribute($miLoopCharacteristics->attribute("isSequential"), false);
 
-        // loopDataInputRef
-        Element loopDataInputRef = miLoopCharacteristics.element("loopDataInputRef");
-        if (loopDataInputRef != null) {
-        String loopDataInputRefText = loopDataInputRef->getText();
-        if (loopDataInputRefText != null) {
-            if (loopDataInputRefText.contains("{")) {
-            behavior->setCollectionExpression(expressionManager.createExpression(loopDataInputRefText));
+            $behavior = null;
+            if ($isSequential) {
+                $behavior = new SequentialMultiInstanceActivityBehavior();
             } else {
-            behavior->setCollectionVariable(loopDataInputRefText);
+                $behavior = new ParallelMultiInstanceActivityBehavior();
             }
-        }
-        }
+            $miBodyScope->setActivityBehavior($behavior);
 
-        // activiti:elementVariable
-        String elementVariable = miLoopCharacteristics.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "elementVariable");
-        if (elementVariable != null) {
-        behavior->setCollectionElementVariable(elementVariable);
-        }
+            // loopCardinality
+            $loopCardinality = $miLoopCharacteristics->element("loopCardinality");
+            if ($loopCardinality != null) {
+                $loopCardinalityText = $loopCardinality->getText();
+                if ($loopCardinalityText == null || "" == $loopCardinalityText) {
+                    $this->addError("loopCardinality must be defined for a multiInstanceLoopCharacteristics definition ", $miLoopCharacteristics, $id);
+                }
+                $behavior->setLoopCardinalityExpression($this->expressionManager->createExpression($loopCardinalityText));
+            }
 
-        // dataInputItem
-        Element inputDataItem = miLoopCharacteristics.element("inputDataItem");
-        if (inputDataItem != null) {
-        String inputDataItemName = inputDataItem.attribute("name");
-        behavior->setCollectionElementVariable(inputDataItemName);
-        }
+            // completionCondition
+            $completionCondition = $miLoopCharacteristics->element("completionCondition");
+            if ($completionCondition != null) {
+                $completionConditionText = $completionCondition->getText();
+                $behavior->setCompletionConditionExpression($this->expressionManager->createExpression($completionConditionText));
+            }
 
-        // Validation
-        if (behavior->getLoopCardinalityExpression() == null && behavior->getCollectionExpression() == null && behavior->getCollectionVariable() == null) {
-        $this->addError("Either loopCardinality or loopDataInputRef/activiti:collection must been set", miLoopCharacteristics, id);
-        }
+            // activiti:collection
+            $collection = $miLoopCharacteristics->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "collection");
+            if (!empty($collection)) {
+                if (strpos($collection, "{") !== -1) {
+                    $behavior->setCollectionExpression($this->expressionManager->createExpression($collection));
+                } else {
+                    $behavior->setCollectionVariable($collection);
+                }
+            }
 
-        // Validation
-        if (behavior->getCollectionExpression() == null && behavior->getCollectionVariable() == null && behavior->getCollectionElementVariable() != null) {
-        $this->addError("LoopDataInputRef/activiti:collection must be set when using inputDataItem or activiti:elementVariable", miLoopCharacteristics, id);
-        }
+            // loopDataInputRef
+            $loopDataInputRef = $miLoopCharacteristics->element("loopDataInputRef");
+            if ($loopDataInputRef != null) {
+                $loopDataInputRefText = $loopDataInputRef->getText();
+                if ($loopDataInputRefText != null) {
+                    if (strpos($loopDataInputRefText, "{") !== -1) {
+                        $behavior->setCollectionExpression($this->expressionManager->createExpression($loopDataInputRefText));
+                    } else {
+                        $behavior->setCollectionVariable($loopDataInputRefText);
+                    }
+                }
+            }
 
-        for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseMultiInstanceLoopCharacteristics(activityElement, miLoopCharacteristics, miBodyScope);
-        }
+            // activiti:elementVariable
+            $elementVariable = $miLoopCharacteristics->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "elementVariable");
+            if ($elementVariable != null) {
+                $behavior->setCollectionElementVariable($elementVariable);
+            }
 
-        return miBodyScope;
+            // dataInputItem
+            $inputDataItem = $miLoopCharacteristics->element("inputDataItem");
+            if ($inputDataItem != null) {
+                $inputDataItemName = $inputDataItem->attribute("name");
+                $behavior->setCollectionElementVariable($inputDataItemName);
+            }
+
+            // Validation
+            if ($behavior->getLoopCardinalityExpression() == null && $behavior->getCollectionExpression() == null && $behavior->getCollectionVariable() == null) {
+                $this->addError("Either loopCardinality or loopDataInputRef/activiti:collection must been set", $miLoopCharacteristics, $id);
+            }
+
+            // Validation
+            if ($behavior->getCollectionExpression() == null && $behavior->getCollectionVariable() == null && $behavior->getCollectionElementVariable() != null) {
+                $this->addError("LoopDataInputRef/activiti:collection must be set when using inputDataItem or activiti:elementVariable", $miLoopCharacteristics, $id);
+            }
+
+            foreach ($this->parseListeners as $parseListener) {
+                $parseListener->parseMultiInstanceLoopCharacteristics($activityElement, $miLoopCharacteristics, $miBodyScope);
+            }
+
+            return $miBodyScope;
+        }
     }
-    }
 
-    public static String getIdForMiBody(String id) {
-    return id + MULTI_INSTANCE_BODY_ID_SUFFIX;
+    public static function getIdForMiBody($id): string
+    {
+        return $id . self::MULTI_INSTANCE_BODY_ID_SUFFIX;
     }
 
     /**
-    * Parses the generic information of an activity element (id, name,
+    * Parses the generic information of an activity element ($id, name,
     * documentation, etc.), and creates a new {@link ActivityImpl} on the given
     * scope element.
     */
-    public ActivityImpl createActivityOnScope(Element activityElement, ScopeImpl scopeElement) {
-    String id = activityElement.attribute("id");
+    public function createActivityOnScope(Element $activityElement, ScopeImpl $scopeElement): ActivityImpl
+    {
+        $id = $activityElement->attribute("id");
 
-    LOG.parsingElement("activity", id);
-    ActivityImpl activity = scopeElement.createActivity(id);
+        //LOG.parsingElement("activity", id);
+        $activity = $scopeElement->createActivity($id);
 
-    activity->setProperty("name", activityElement.attribute("name"));
-    activity->setProperty("documentation", parseDocumentation(activityElement));
-    activity->setProperty("default", activityElement.attribute("default"));
-    activity->getProperties()->set(BpmnProperties.TYPE, activityElement->getTagName());
-    activity->setProperty("line", activityElement->getLine());
-    setActivityAsyncDelegates(activity);
-    activity->setProperty(PROPERTYNAME_JOB_PRIORITY, parsePriority(activityElement, PROPERTYNAME_JOB_PRIORITY));
+        $activity->setProperty("name", $activityElement->attribute("name"));
+        $activity->setProperty("documentation", parseDocumentation(activityElement));
+        $activity->setProperty("default", $activityElement->attribute("default"));
+        $activity->getProperties()->set(BpmnProperties::type(), $activityElement->getTagName());
+        $activity->setProperty("line", $activityElement->getLine());
+        $this->setActivityAsyncDelegates($activity);
+        $activity->setProperty(self::PROPERTYNAME_JOB_PRIORITY, $this->parsePriority($activityElement, self::PROPERTYNAME_JOB_PRIORITY));
 
-    if (isCompensationHandler(activityElement)) {
-        activity->setProperty(PROPERTYNAME_IS_FOR_COMPENSATION, true);
-    }
+        if ($this->isCompensationHandler($activityElement)) {
+            $activity->setProperty(self::PROPERTYNAME_IS_FOR_COMPENSATION, true);
+        }
 
-    return activity;
+        return $activity;
     }
 
     /**
@@ -1890,28 +1965,48 @@ class BpmnParse extends Parse
     *
     * @param activity the activity which gets the delegates
     */
-    protected void setActivityAsyncDelegates(final ActivityImpl activity) {
-    activity->setDelegateAsyncAfterUpdate(new ActivityImpl.AsyncAfterUpdate() {
-        @Override
-        public void updateAsyncAfter(boolean asyncAfter, boolean exclusive) {
-        if (asyncAfter) {
-            addMessageJobDeclaration(new AsyncAfterMessageJobDeclaration(), activity, exclusive);
-        } else {
-            removeMessageJobDeclarationWithJobConfiguration(activity, MessageJobDeclaration.ASYNC_AFTER);
-        }
-        }
-    });
+    protected function setActivityAsyncDelegates(ActivityImpl $activity): void
+    {
+        $scope = $this;
+        $activity->setDelegateAsyncAfterUpdate(new class ($scope, $activity) implements AsyncAfterUpdateInterface {
+            private $scope;
+            private $activity;
 
-    activity->setDelegateAsyncBeforeUpdate(new ActivityImpl.AsyncBeforeUpdate() {
-        @Override
-        public void updateAsyncBefore(boolean asyncBefore, boolean exclusive) {
-        if (asyncBefore) {
-            addMessageJobDeclaration(new AsyncBeforeMessageJobDeclaration(), activity, exclusive);
-        } else {
-            removeMessageJobDeclarationWithJobConfiguration(activity, MessageJobDeclaration.ASYNC_BEFORE);
-        }
-        }
-    });
+            public function __construct($scope, $activity)
+            {
+                $this->scope = $scope;
+                $this->activity = $activity;
+            }
+
+            public function updateAsyncAfter(bool $asyncAfter, bool $exclusive): void
+            {
+                if ($asyncAfter) {
+                    $this->scope->addMessageJobDeclaration(new AsyncAfterMessageJobDeclaration(), $this->activity, $exclusive);
+                } else {
+                    $this->scope->removeMessageJobDeclarationWithJobConfiguration($this->activity, MessageJobDeclaration::ASYNC_AFTER);
+                }
+            }
+        });
+
+        $activity->setDelegateAsyncBeforeUpdate(new class ($scope, $activity) implements AsyncBeforeUpdateInterface {
+            private $scope;
+            private $activity;
+
+            public function __construct($scope, $activity)
+            {
+                $this->scope = $scope;
+                $this->activity = $activity;
+            }
+
+            public function updateAsyncBefore(bool $asyncBefore, bool $exclusive): void
+            {
+                if ($asyncBefore) {
+                    $this->scope->addMessageJobDeclaration(new AsyncBeforeMessageJobDeclaration(), $this->activity, $exclusive);
+                } else {
+                    $this->scope->removeMessageJobDeclarationWithJobConfiguration($this->activity, MessageJobDeclaration::ASYNC_BEFORE);
+                }
+            }
+        });
     }
 
     /**
@@ -1922,16 +2017,17 @@ class BpmnParse extends Parse
     * @param activity the corresponding activity
     * @param exclusive the flag which indicates if the async should be exclusive
     */
-    protected void addMessageJobDeclaration(MessageJobDeclaration messageJobDeclaration, ActivityImpl activity, boolean exclusive) {
-    ProcessDefinition procDef = (ProcessDefinition) activity->getProcessDefinition();
-    if (!exists(messageJobDeclaration, procDef->getKey(), activity->getActivityId())) {
-        messageJobDeclaration->setExclusive(exclusive);
-        messageJobDeclaration->setActivity(activity);
-        messageJobDeclaration->setJobPriorityProvider((ParameterValueProvider) activity->getProperty(PROPERTYNAME_JOB_PRIORITY));
+    public function addMessageJobDeclaration(MessageJobDeclaration $messageJobDeclaration, ActivityImpl $activity, bool $exclusive): void
+    {
+        $procDef = $activity->getProcessDefinition();
+        if (!$this->exists($messageJobDeclaration, $procDef->getKey(), $activity->getActivityId())) {
+            $messageJobDeclaration->setExclusive($exclusive);
+            $messageJobDeclaration->setActivity($activity);
+            $messageJobDeclaration->setJobPriorityProvider($activity->getProperty(self::PROPERTYNAME_JOB_PRIORITY));
 
-        addMessageJobDeclarationToActivity(messageJobDeclaration, activity);
-        addJobDeclarationToProcessDefinition(messageJobDeclaration, procDef);
-    }
+            $this->addMessageJobDeclarationToActivity($messageJobDeclaration, $activity);
+            $this->addJobDeclarationToProcessDefinition($messageJobDeclaration, $procDef);
+        }
     }
 
     /**
@@ -1942,19 +2038,22 @@ class BpmnParse extends Parse
     * @param activityId the corresponding activity id
     * @return true if the message job declaration exists, false otherwise
     */
-    protected boolean exists(MessageJobDeclaration msgJobdecl, String procDefKey, String activityId) {
-    boolean exist = false;
-    List<JobDeclaration<?, ?>> declarations = jobDeclarations->get(procDefKey);
-    if (declarations != null) {
-        for (int i = 0; i < declarations.size() && !exist; i++) {
-        JobDeclaration<?, ?> decl = declarations->get(i);
-        if (decl->getActivityId().equals(activityId) &&
-            decl->getJobConfiguration().equalsIgnoreCase(msgJobdecl->getJobConfiguration())) {
-            exist = true;
+    protected function exists(MessageJobDeclaration $msgJobdecl, string $procDefKey, string $activityId): bool
+    {
+        $exist = false;
+        if (array_key_exists($procDefKey, $this->jobDeclarations)) {
+            $declarations = $this->jobDeclarations[$procDefKey];
+            for ($i = 0; $i < count($declarations) && !$exist; $i += 1) {
+                $decl = $declarations[$i];
+                if (
+                    $decl->getActivityId() == $activityId &&
+                    strtolower($decl->getJobConfiguration()) == strtolower($msgJobdecl->getJobConfiguration())
+                ) {
+                    $exist = true;
+                }
+            }
         }
-        }
-    }
-    return exist;
+        return $exist;
     }
 
     /**
@@ -1963,189 +2062,193 @@ class BpmnParse extends Parse
     * @param activity the activity of the job declaration
     * @param jobConfiguration  the job configuration of the declaration
     */
-    protected void removeMessageJobDeclarationWithJobConfiguration(ActivityImpl activity, String jobConfiguration) {
-    List<MessageJobDeclaration> messageJobDeclarations = (List<MessageJobDeclaration>) activity->getProperty(PROPERTYNAME_MESSAGE_JOB_DECLARATION);
-    if (messageJobDeclarations != null) {
-        Iterator<MessageJobDeclaration> iter = messageJobDeclarations.iterator();
-        while (iter.hasNext()) {
-        MessageJobDeclaration msgDecl = iter.next();
-        if (msgDecl->getJobConfiguration().equalsIgnoreCase(jobConfiguration)
-            && msgDecl->getActivityId().equalsIgnoreCase(activity->getActivityId())) {
-            iter.remove();
-        }
-        }
-    }
-
-    ProcessDefinition procDef = (ProcessDefinition) activity->getProcessDefinition();
-    List<JobDeclaration<?, ?>> declarations = jobDeclarations->get(procDef->getKey());
-    if (declarations != null) {
-        Iterator<JobDeclaration<?, ?>> iter = declarations.iterator();
-        while (iter.hasNext()) {
-        JobDeclaration<?, ?> jobDcl = iter.next();
-        if (jobDcl->getJobConfiguration().equalsIgnoreCase(jobConfiguration)
-            && jobDcl->getActivityId().equalsIgnoreCase(activity->getActivityId())) {
-            iter.remove();
-        }
-        }
-    }
-    }
-
-    public String parseDocumentation(Element element) {
-    List<Element> docElements = element.elements("documentation");
-    List<String> docStrings = new ArrayList<>();
-    for (Element e : docElements) {
-        docStrings.add(e->getText());
-    }
-
-    return parseDocumentation(docStrings);
-    }
-
-    public static String parseDocumentation(List<String> docStrings) {
-    if (docStrings.isEmpty()) {
-        return null;
-    }
-
-    StringBuilder builder = new StringBuilder();
-    for (String e : docStrings) {
-        if (builder.length() != 0) {
-        builder.append("\n\n");
+    public function removeMessageJobDeclarationWithJobConfiguration(ActivityImpl $activity, string $jobConfiguration): void
+    {
+        $messageJobDeclarations = $activity->getProperty(self::PROPERTYNAME_MESSAGE_JOB_DECLARATION);
+        if (!empty($messageJobDeclarations)) {
+            foreach ($messageJobDeclarations as $key => $msgDecl) {
+                if (
+                    strtolower($msgDecl->getJobConfiguration()) == strtolower($jobConfiguration)
+                    && strtolower($msgDecl->getActivityId()) == strtolower($activity->getActivityId())
+                ) {
+                    $activity->clearPropertyItem(self::PROPERTYNAME_MESSAGE_JOB_DECLARATION, $key);
+                }
+            }
         }
 
-        builder.append(e.trim());
+        $procDef = $activity->getProcessDefinition();
+        if (array_key_exists($procDef->getKey(), $this->jobDeclarations)) {
+            $declarations = $this->jobDeclarations[$procDef->getKey()];
+            foreach ($declarations as $key => $jobDcl) {
+                if (
+                    strtolower($jobDcl->getJobConfiguration()) == strtolower($jobConfiguration)
+                    && strtolower($jobDcl->getActivityId()) == strtolower($activity->getActivityId())
+                ) {
+                    unset($this->jobDeclarations[$procDef->getKey()][$key]);
+                }
+            }
+        }
     }
 
-    return builder.toString();
+    public static function parseDocumentation($data): ?string
+    {
+        if (is_array($data)) {
+            if (empty($data)) {
+                return null;
+            }
+
+            $builder = "";
+            foreach ($data as $e) {
+                if (strlen($builder) != 0) {
+                    $builder .= "\n\n";
+                }
+
+                $builder .= trim($e);
+            }
+            return $builder;
+        } elseif ($data instanceof Element) {
+            $docElements = $data->elements("documentation");
+            $docStrings = [];
+            foreach ($docElements as $e) {
+                $docStrings[] = $e->getText();
+            }
+            return self::parseDocumentation($docStrings);
+        }
     }
 
-    protected boolean isCompensationHandler(Element activityElement) {
-    String isForCompensation = activityElement.attribute("isForCompensation");
-    return isForCompensation != null && isForCompensation.equalsIgnoreCase(TRUE);
+    protected function isCompensationHandler(Element $activityElement): bool
+    {
+        $isForCompensation = $activityElement->attribute("isForCompensation");
+        return $isForCompensation !== null && strtolower($isForCompensation) === "true";
     }
 
     /**
     * Parses an exclusive gateway declaration.
     */
-    public ActivityImpl parseExclusiveGateway(Element exclusiveGwElement, ScopeImpl scope) {
-    ActivityImpl activity = createActivityOnScope(exclusiveGwElement, scope);
-    activity->setActivityBehavior(new ExclusiveGatewayActivityBehavior());
+    public function parseExclusiveGateway(Element $exclusiveGwElement, ScopeImpl $scope): ?ActivityImpl
+    {
+        $activity = $this->createActivityOnScope($exclusiveGwElement, $scope);
+        $activity->setActivityBehavior(new ExclusiveGatewayActivityBehavior());
 
-    parseAsynchronousContinuationForActivity(exclusiveGwElement, activity);
+        $this->parseAsynchronousContinuationForActivity($exclusiveGwElement, $activity);
 
-    parseExecutionListenersOnScope(exclusiveGwElement, activity);
+        $this->parseExecutionListenersOnScope($exclusiveGwElement, $activity);
 
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseExclusiveGateway(exclusiveGwElement, scope, activity);
-    }
-    return activity;
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseExclusiveGateway($exclusiveGwElement, $scope, $activity);
+        }
+        return $activity;
     }
 
     /**
     * Parses an inclusive gateway declaration.
     */
-    public ActivityImpl parseInclusiveGateway(Element inclusiveGwElement, ScopeImpl scope) {
-    ActivityImpl activity = createActivityOnScope(inclusiveGwElement, scope);
-    activity->setActivityBehavior(new InclusiveGatewayActivityBehavior());
+    public function parseInclusiveGateway(Element $inclusiveGwElement, ScopeImpl $scope): ?ActivityImpl
+    {
+        $activity = $this->createActivityOnScope($inclusiveGwElement, $scope);
+        $activity->setActivityBehavior(new InclusiveGatewayActivityBehavior());
 
-    parseAsynchronousContinuationForActivity(inclusiveGwElement, activity);
+        $this->parseAsynchronousContinuationForActivity($inclusiveGwElement, $activity);
 
-    parseExecutionListenersOnScope(inclusiveGwElement, activity);
+        $this->parseExecutionListenersOnScope($inclusiveGwElement, $activity);
 
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseInclusiveGateway(inclusiveGwElement, scope, activity);
-    }
-    return activity;
-    }
-
-    public ActivityImpl parseEventBasedGateway(Element eventBasedGwElement, Element parentElement, ScopeImpl scope) {
-    ActivityImpl activity = createActivityOnScope(eventBasedGwElement, scope);
-    activity->setActivityBehavior(new EventBasedGatewayActivityBehavior());
-    activity->setScope(true);
-
-    parseAsynchronousContinuationForActivity(eventBasedGwElement, activity);
-
-    if (activity.isAsyncAfter()) {
-        $this->addError("'asyncAfter' not supported for " + eventBasedGwElement->getTagName() + " elements.", eventBasedGwElement);
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseInclusiveGateway($inclusiveGwElement, $scope, $activity);
+        }
+        return $activity;
     }
 
-    parseExecutionListenersOnScope(eventBasedGwElement, activity);
+    public function parseEventBasedGateway(Element $eventBasedGwElement, Element $parentElement, ScopeImpl $scope): ?ActivityImpl
+    {
+        $activity = $this->createActivityOnScope($eventBasedGwElement, $scope);
+        $activity->setActivityBehavior(new EventBasedGatewayActivityBehavior());
+        $activity->setScope(true);
 
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseEventBasedGateway(eventBasedGwElement, scope, activity);
-    }
+        $this->parseAsynchronousContinuationForActivity($eventBasedGwElement, $activity);
 
-    // find all outgoing sequence flows:
-    List<Element> sequenceFlows = parentElement.elements("sequenceFlow");
+        if ($activity->isAsyncAfter()) {
+            $this->addError("'asyncAfter' not supported for " . $eventBasedGwElement->getTagName() . " elements.", $eventBasedGwElement);
+        }
 
-    // collect all siblings in a map
-    Map<String, Element> siblingsMap = new HashMap<>();
-    List<Element> siblings = parentElement.elements();
-    for (Element sibling : siblings) {
-        siblingsMap.put(sibling.attribute("id"), sibling);
-    }
+        $this->parseExecutionListenersOnScope($eventBasedGwElement, $activity);
 
-    for (Element sequenceFlow : sequenceFlows) {
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseEventBasedGateway($eventBasedGwElement, $scope, $activity);
+        }
 
-        String sourceRef = sequenceFlow.attribute("sourceRef");
-        String targetRef = sequenceFlow.attribute("targetRef");
+        // find all outgoing sequence flows:
+        $sequenceFlows = $parentElement->elements("sequenceFlow");
 
-        if (activity->getId().equals(sourceRef)) {
-        Element sibling = siblingsMap->get(targetRef);
-        if (sibling != null) {
-            if (sibling->getTagName().equals(ActivityTypes.INTERMEDIATE_EVENT_CATCH)) {
-            ActivityImpl catchEventActivity = parseIntermediateCatchEvent(sibling, scope, activity);
+        // collect all siblings in a map
+        $siblingsMap = [];
+        $siblings = $parentElement->elements();
+        foreach ($siblings as $sibling) {
+            $siblingsMap[$sibling->attribute("id")] = $sibling;
+        }
 
-            if (catchEventActivity != null) {
-                parseActivityInputOutput(sibling, catchEventActivity);
-            }
+        foreach ($sequenceFlows as $sequenceFlow) {
+            $sourceRef = $sequenceFlow->attribute("sourceRef");
+            $targetRef = $sequenceFlow->attribute("targetRef");
 
-            } else {
-            $this->addError("Event based gateway can only be connected to elements of type intermediateCatchEvent", eventBasedGwElement);
+            if ($activity->getId() == $sourceRef) {
+                if (array_key_exists($targetRef, $siblingsMap)) {
+                    $sibling = $siblingsMap[$targetRef];
+                    if ($sibling->getTagName() == ActivityTypes::INTERMEDIATE_EVENT_CATCH) {
+                        $catchEventActivity = $this->parseIntermediateCatchEvent($sibling, $scope, $activity);
+
+                        if ($catchEventActivity != null) {
+                            $this->parseActivityInputOutput($sibling, $catchEventActivity);
+                        }
+                    } else {
+                        $this->addError("Event based gateway can only be connected to elements of type intermediateCatchEvent", $eventBasedGwElement);
+                    }
+                }
             }
         }
-        }
-    }
 
-    return activity;
+        return $activity;
     }
 
     /**
     * Parses a parallel gateway declaration.
     */
-    public ActivityImpl parseParallelGateway(Element parallelGwElement, ScopeImpl scope) {
-    ActivityImpl activity = createActivityOnScope(parallelGwElement, scope);
-    activity->setActivityBehavior(new ParallelGatewayActivityBehavior());
+    public function parseParallelGateway(Element $parallelGwElement, ScopeImpl $scope): ?ActivityImpl
+    {
+        $activity = $this->createActivityOnScope($parallelGwElement, $scope);
+        $activity->setActivityBehavior(new ParallelGatewayActivityBehavior());
 
-    parseAsynchronousContinuationForActivity(parallelGwElement, activity);
+        $this->parseAsynchronousContinuationForActivity($parallelGwElement, $activity);
 
-    parseExecutionListenersOnScope(parallelGwElement, activity);
+        $this->parseExecutionListenersOnScope($parallelGwElement, $activity);
 
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseParallelGateway(parallelGwElement, scope, activity);
-    }
-    return activity;
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseParallelGateway($parallelGwElement, $scope, $activity);
+        }
+        return $activity;
     }
 
     /**
     * Parses a scriptTask declaration.
     */
-    public ActivityImpl parseScriptTask(Element scriptTaskElement, ScopeImpl scope) {
-    ActivityImpl activity = createActivityOnScope(scriptTaskElement, scope);
+    public function parseScriptTask(Element $scriptTaskElement, ScopeImpl $scope): ?ActivityImpl
+    {
+        $activity = $this->createActivityOnScope($scriptTaskElement, $scope);
 
-    ScriptTaskActivityBehavior activityBehavior = parseScriptTaskElement(scriptTaskElement);
+        $activityBehavior = $this->parseScriptTaskElement($scriptTaskElement);
 
-    if (activityBehavior != null) {
-        parseAsynchronousContinuationForActivity(scriptTaskElement, activity);
+        if ($activityBehavior != null) {
+            $this->parseAsynchronousContinuationForActivity($scriptTaskElement, $activity);
 
-        activity->setActivityBehavior(activityBehavior);
+            $activity->setActivityBehavior($activityBehavior);
 
-        parseExecutionListenersOnScope(scriptTaskElement, activity);
+            $this->parseExecutionListenersOnScope($scriptTaskElement, $activity);
 
-        for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseScriptTask(scriptTaskElement, scope, activity);
+            foreach ($this->parseListeners as $parseListener) {
+                $parseListener->parseScriptTask($scriptTaskElement, $scope, $activity);
+            }
         }
-    }
 
-    return activity;
+        return $activity;
     }
 
     /**
@@ -2156,63 +2259,66 @@ class BpmnParse extends Parse
     *          the script task element
     * @return the corresponding {@link ScriptTaskActivityBehavior}
     */
-    protected ScriptTaskActivityBehavior parseScriptTaskElement(Element scriptTaskElement) {
-    // determine script language
-    String language = scriptTaskElement.attribute("scriptFormat");
-    if (language == null) {
-        language = ScriptingEngines.DEFAULT_SCRIPTING_LANGUAGE;
-    }
-    String resultVariableName = parseResultVariable(scriptTaskElement);
+    protected function parseScriptTaskElement(Element $scriptTaskElement): ?ScriptTaskActivityBehavior
+    {
+        // determine script language
+        $language = $scriptTaskElement->attribute("scriptFormat");
+        if ($language == null) {
+            $language = ScriptingEngines::DEFAULT_SCRIPTING_LANGUAGE;
+        }
+        $resultVariableName = $this->parseResultVariable($scriptTaskElement);
 
-    // determine script source
-    String scriptSource = null;
-    Element scriptElement = scriptTaskElement.element("script");
-    if (scriptElement != null) {
-        scriptSource = scriptElement->getText();
-    }
-    String scriptResource = scriptTaskElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, PROPERTYNAME_RESOURCE);
+        // determine script source
+        $scriptSource = null;
+        $scriptElement = $scriptTaskElement->element("script");
+        if ($scriptElement != null) {
+            $scriptSource = $scriptElement->getText();
+        }
+        $scriptResource = $scriptTaskElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::PROPERTYNAME_RESOURCE);
 
-    try {
-        ExecutableScript script = ScriptUtil->getScript(language, scriptSource, scriptResource, expressionManager);
-        return new ScriptTaskActivityBehavior(script, resultVariableName);
-    } catch (ProcessEngineException e) {
-        $this->addError("Unable to process ScriptTask: " + e->getMessage(), scriptElement);
-        return null;
-    }
+        try {
+            $script = ScriptUtil::getScript($language, $scriptSource, $scriptResource, $this->expressionManager);
+            return new ScriptTaskActivityBehavior($script, $resultVariableName);
+        } catch (ProcessEngineException $e) {
+            $this->addError("Unable to process ScriptTask: " . $e->getMessage(), $scriptElement);
+            return null;
+        }
     }
 
-    protected String parseResultVariable(Element element) {
-    // determine if result variable exists
-    String resultVariableName = element.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "resultVariable");
-    if (resultVariableName == null) {
-        // for backwards compatible reasons
-        resultVariableName = element.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "resultVariableName");
-    }
-    return resultVariableName;
+    protected function parseResultVariable(Element $element): ?string
+    {
+        // determine if result variable exists
+        $resultVariableName = $element->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "resultVariable");
+        if ($resultVariableName == null) {
+            // for backwards compatible reasons
+            $resultVariableName = $element->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "resultVariableName");
+        }
+        return $resultVariableName;
     }
 
     /**
     * Parses a serviceTask declaration.
     */
-    public ActivityImpl parseServiceTask(Element serviceTaskElement, ScopeImpl scope) {
-    ActivityImpl activity = createActivityOnScope(serviceTaskElement, scope);
+    public function parseServiceTask(Element $serviceTaskElement, ScopeImpl $scope): ?ActivityImpl
+    {
+        $activity = $this->createActivityOnScope($serviceTaskElement, $scope);
 
-    parseAsynchronousContinuationForActivity(serviceTaskElement, activity);
+        $this->parseAsynchronousContinuationForActivity($serviceTaskElement, $activity);
 
-    String elementName = "serviceTask";
-    parseServiceTaskLike(activity, elementName, serviceTaskElement, serviceTaskElement, scope);
+        $elementName = "serviceTask";
+        $this->parseServiceTaskLike($activity, $elementName, $serviceTaskElement, $serviceTaskElement, $scope);
 
-    parseExecutionListenersOnScope(serviceTaskElement, activity);
+        $this->parseExecutionListenersOnScope($serviceTaskElement, $activity);
 
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseServiceTask(serviceTaskElement, scope, activity);
-    }
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseServiceTask($serviceTaskElement, $scope, $activity);
+        }
 
-    // activity behavior could be set by a listener (e.g. connector); thus,
-    // check is after listener invocation
-    validateServiceTaskLike(activity, elementName, serviceTaskElement);
+        // activity behavior could be set by a listener (e.g. connector); thus,
+        // check is after listener invocation
+        $this->validateServiceTaskLike($activity, $elementName, $serviceTaskElement);
 
-    return activity;
+        return $activity;
     }
 
     /**
@@ -2224,146 +2330,153 @@ class BpmnParse extends Parse
     * @param scope
     * @return
     */
-    public void parseServiceTaskLike(
-        ActivityImpl activity,
-        String elementName,
-        Element serviceTaskElement,
-        Element camundaPropertiesElement,
-        ScopeImpl scope) {
+    public function parseServiceTaskLike(
+        ActivityImpl $activity,
+        string $elementName,
+        Element $serviceTaskElement,
+        Element $propertiesElement,
+        ScopeImpl $scope
+    ): void {
+        $type = $serviceTaskElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::TYPE);
+        $className = $serviceTaskElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::PROPERTYNAME_CLASS);
+        $expression = $serviceTaskElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::PROPERTYNAME_EXPRESSION);
+        $delegateExpression = $serviceTaskElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::PROPERTYNAME_DELEGATE_EXPRESSION);
+        $resultVariableName = $this->parseResultVariable($serviceTaskElement);
 
-    String type = serviceTaskElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, TYPE);
-    String className = serviceTaskElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, PROPERTYNAME_CLASS);
-    String expression = serviceTaskElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, PROPERTYNAME_EXPRESSION);
-    String delegateExpression = serviceTaskElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, PROPERTYNAME_DELEGATE_EXPRESSION);
-    String resultVariableName = parseResultVariable(serviceTaskElement);
-
-    if (type != null) {
-        if (type.equalsIgnoreCase("mail")) {
-        parseEmailServiceTask(activity, serviceTaskElement, parseFieldDeclarations(serviceTaskElement));
-        } else if (type.equalsIgnoreCase("shell")) {
-        parseShellServiceTask(activity, serviceTaskElement, parseFieldDeclarations(serviceTaskElement));
-        } else if (type.equalsIgnoreCase("external")) {
-        parseExternalServiceTask(activity, serviceTaskElement, camundaPropertiesElement);
-        } else {
-        $this->addError("Invalid usage of type attribute on " + elementName + ": '" + type + "'", serviceTaskElement);
+        if ($type != null) {
+            if (strtolower($type) == "mail") {
+                $this->parseEmailServiceTask($activity, $serviceTaskElement, $this->parseFieldDeclarations($serviceTaskElement));
+            } elseif (strtolower($type) == "shell") {
+                $this->parseShellServiceTask($activity, $serviceTaskElement, $this->parseFieldDeclarations($serviceTaskElement));
+            } elseif (strtolower($type) == "external") {
+                $this->parseExternalServiceTask($activity, $serviceTaskElement, $propertiesElement);
+            } else {
+                $this->addError("Invalid usage of type attribute on " . $elementName . ": '" . $type . "'", $serviceTaskElement);
+            }
+        } elseif (!empty($className)) {
+            if ($resultVariableName != null) {
+                $this->addError("'resultVariableName' not supported for " . $elementName . " elements using 'class'", $serviceTaskElement);
+            }
+            $activity->setActivityBehavior(new ClassDelegateActivityBehavior($className, $this->parseFieldDeclarations($serviceTaskElement)));
+        } elseif ($delegateExpression != null) {
+            if ($resultVariableName != null) {
+                $this->addError("'resultVariableName' not supported for " . $elementName . " elements using 'delegateExpression'", $serviceTaskElement);
+            }
+            $activity->setActivityBehavior(
+                new ServiceTaskDelegateExpressionActivityBehavior(
+                    $this->expressionManager->createExpression($delegateExpression),
+                    $this->parseFieldDeclarations($serviceTaskElement)
+                )
+            );
+        } elseif (!empty($expression)) {
+            $activity->setActivityBehavior(new ServiceTaskExpressionActivityBehavior($this->expressionManager->createExpression($expression), $resultVariableName));
         }
-    } else if (className != null && className.trim().length() > 0) {
-        if (resultVariableName != null) {
-        $this->addError("'resultVariableName' not supported for " + elementName + " elements using 'class'", serviceTaskElement);
+    }
+
+    protected function validateServiceTaskLike(
+        ActivityImpl $activity,
+        string $elementName,
+        Element $serviceTaskElement
+    ): void {
+        if ($activity->getActivityBehavior() == null) {
+            $this->addError(
+                "One of the attributes 'class', 'delegateExpression', 'type', "
+                . "or 'expression' is mandatory on " . $elementName . ". If you are using a connector, make sure the"
+                . "connect process engine plugin is registered with the process engine.",
+                $serviceTaskElement
+            );
         }
-        activity->setActivityBehavior(new ClassDelegateActivityBehavior(className, parseFieldDeclarations(serviceTaskElement)));
-
-    } else if (delegateExpression != null) {
-        if (resultVariableName != null) {
-        $this->addError("'resultVariableName' not supported for " + elementName + " elements using 'delegateExpression'", serviceTaskElement);
-        }
-        activity->setActivityBehavior(new ServiceTaskDelegateExpressionActivityBehavior(expressionManager.createExpression(delegateExpression),
-            parseFieldDeclarations(serviceTaskElement)));
-
-    } else if (expression != null && expression.trim().length() > 0) {
-        activity->setActivityBehavior(new ServiceTaskExpressionActivityBehavior(expressionManager.createExpression(expression), resultVariableName));
-
-    }
-    }
-
-    protected void validateServiceTaskLike(
-        ActivityImpl activity,
-        String elementName,
-        Element serviceTaskElement
-        ) {
-    if (activity->getActivityBehavior() == null) {
-        $this->addError("One of the attributes 'class', 'delegateExpression', 'type', "
-            + "or 'expression' is mandatory on " + elementName + ". If you are using a connector, make sure the"
-            + "connect process engine plugin is registered with the process engine.", serviceTaskElement);
-    }
     }
 
     /**
     * Parses a businessRuleTask declaration.
     */
-    public ActivityImpl parseBusinessRuleTask(Element businessRuleTaskElement, ScopeImpl scope) {
-    String decisionRef = businessRuleTaskElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "decisionRef");
-    if (decisionRef != null) {
-        return parseDmnBusinessRuleTask(businessRuleTaskElement, scope);
-    }
-    else {
-        ActivityImpl activity = createActivityOnScope(businessRuleTaskElement, scope);
-        parseAsynchronousContinuationForActivity(businessRuleTaskElement, activity);
+    public function parseBusinessRuleTask(Element $businessRuleTaskElement, ScopeImpl $scope): ?ActivityImpl
+    {
+        $decisionRef = $businessRuleTaskElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "decisionRef");
+        if ($decisionRef != null) {
+            return null;
+            //return parseDmnBusinessRuleTask(businessRuleTaskElement, $scope);
+        } else {
+            $activity = $this->createActivityOnScope($businessRuleTaskElement, $scope);
+            $this->parseAsynchronousContinuationForActivity($businessRuleTaskElement, $activity);
 
-        String elementName = "businessRuleTask";
-        parseServiceTaskLike(
-            activity,
-            elementName,
-            businessRuleTaskElement,
-            businessRuleTaskElement,
-            scope);
+            $elementName = "businessRuleTask";
+            $this->parseServiceTaskLike(
+                $activity,
+                $elementName,
+                $businessRuleTaskElement,
+                $businessRuleTaskElement,
+                $scope
+            );
 
-        parseExecutionListenersOnScope(businessRuleTaskElement, activity);
+            $this->parseExecutionListenersOnScope($businessRuleTaskElement, $activity);
 
-        for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseBusinessRuleTask(businessRuleTaskElement, scope, activity);
+            foreach ($this->parseListeners as $parseListener) {
+                $parseListener->parseBusinessRuleTask($businessRuleTaskElement, $scope, $activity);
+            }
+
+            // activity behavior could be set by a listener (e.g. connector); thus,
+            // check is after listener invocation
+            $this->validateServiceTaskLike(
+                $activity,
+                $elementName,
+                $businessRuleTaskElement
+            );
+            return $activity;
         }
-
-        // activity behavior could be set by a listener (e.g. connector); thus,
-        // check is after listener invocation
-        validateServiceTaskLike(activity,
-            elementName,
-            businessRuleTaskElement);
-
-        return activity;
-    }
     }
 
     /**
     * Parse a Business Rule Task which references a decision.
     */
-    protected ActivityImpl parseDmnBusinessRuleTask(Element businessRuleTaskElement, ScopeImpl scope) {
-    ActivityImpl activity = createActivityOnScope(businessRuleTaskElement, scope);
-    // the activity is a scope since the result variable is stored as local variable
-    activity->setScope(true);
+    /*protected ActivityImpl parseDmnBusinessRuleTask(Element businessRuleTaskElement, ScopeImpl $scope) {
+        ActivityImpl activity = $this->createActivityOnScope(businessRuleTaskElement, $scope);
+        // the activity is a scope since the result variable is stored as local variable
+        $activity->setScope(true);
 
-    parseAsynchronousContinuationForActivity(businessRuleTaskElement, activity);
+        $this->parseAsynchronousContinuationForActivity(businessRuleTaskElement, $activity);
 
-    String decisionRef = businessRuleTaskElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "decisionRef");
+        String decisionRef = businessRuleTaskElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "decisionRef");
 
-    BaseCallableElement callableElement = new BaseCallableElement();
-    callableElement->setDeploymentId(deployment->getId());
+        BaseCallableElement callableElement = new BaseCallableElement();
+        callableElement->setDeploymentId(deployment->getId());
 
-    ParameterValueProvider definitionKeyProvider = createParameterValueProvider(decisionRef, expressionManager);
-    callableElement->setDefinitionKeyValueProvider(definitionKeyProvider);
+        ParameterValueProvider definitionKeyProvider = $this->createParameterValueProvider(decisionRef, expressionManager);
+        callableElement->setDefinitionKeyValueProvider(definitionKeyProvider);
 
-    parseBinding(businessRuleTaskElement, activity, callableElement, "decisionRefBinding");
-    parseVersion(businessRuleTaskElement, activity, callableElement, "decisionRefBinding", "decisionRefVersion");
-    parseVersionTag(businessRuleTaskElement, activity, callableElement, "decisionRefBinding", "decisionRefVersionTag");
-    parseTenantId(businessRuleTaskElement, activity, callableElement, "decisionRefTenantId");
+        $this->parseBinding(businessRuleTaskElement, $activity, callableElement, "decisionRefBinding");
+        $this->parseVersion(businessRuleTaskElement, $activity, callableElement, "decisionRefBinding", "decisionRefVersion");
+        $this->parseVersionTag(businessRuleTaskElement, $activity, callableElement, "decisionRefBinding", "decisionRefVersionTag");
+        $this->parseTenantId(businessRuleTaskElement, $activity, callableElement, "decisionRefTenantId");
 
-    String resultVariable = parseResultVariable(businessRuleTaskElement);
-    DecisionResultMapper decisionResultMapper = parseDecisionResultMapper(businessRuleTaskElement);
+        String resultVariable = $this->parseResultVariable(businessRuleTaskElement);
+        DecisionResultMapper decisionResultMapper = $this->parseDecisionResultMapper(businessRuleTaskElement);
 
-    DmnBusinessRuleTaskActivityBehavior behavior = new DmnBusinessRuleTaskActivityBehavior(callableElement, resultVariable, decisionResultMapper);
-    activity->setActivityBehavior(behavior);
+        DmnBusinessRuleTaskActivityBehavior behavior = new DmnBusinessRuleTaskActivityBehavior(callableElement, resultVariable, decisionResultMapper);
+        $activity->setActivityBehavior(behavior);
 
-    parseExecutionListenersOnScope(businessRuleTaskElement, activity);
+        $this->parseExecutionListenersOnScope(businessRuleTaskElement, $activity);
 
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseBusinessRuleTask(businessRuleTaskElement, scope, activity);
-    }
+        for (BpmnParseListener parseListener : parseListeners) {
+            $parseListener->parseBusinessRuleTask(businessRuleTaskElement, $scope, $activity);
+        }
 
-    return activity;
-    }
+        return $activity;
+    }*/
 
-    protected DecisionResultMapper parseDecisionResultMapper(Element businessRuleTaskElement) {
-    // default mapper is 'resultList'
-    String decisionResultMapper = businessRuleTaskElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "mapDecisionResult");
-    DecisionResultMapper mapper = DecisionEvaluationUtil->getDecisionResultMapperForName(decisionResultMapper);
+    /*protected DecisionResultMapper parseDecisionResultMapper(Element businessRuleTaskElement) {
+        // default mapper is 'resultList'
+        String decisionResultMapper = businessRuleTaskElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "mapDecisionResult");
+        DecisionResultMapper mapper = DecisionEvaluationUtil->getDecisionResultMapperForName(decisionResultMapper);
 
-    if (mapper == null) {
-        $this->addError("No decision result mapper found for name '" + decisionResultMapper
-            + "'. Supported mappers are 'singleEntry', 'singleResult', 'collectEntries' and 'resultList'.", businessRuleTaskElement);
-    }
+        if (mapper == null) {
+            $this->addError("No decision result mapper found for name '" .decisionResultMapper
+                . "'. Supported mappers are 'singleEntry', 'singleResult', 'collectEntries' and 'resultList'.", businessRuleTaskElement);
+        }
 
-    return mapper;
-    }
+        return mapper;
+    }*/
 
     /**
     * Parse async continuation of an activity and create async jobs for the activity.
@@ -2372,21 +2485,23 @@ class BpmnParse extends Parse
     * When the wrapped activity has async characteristics in 'multiInstanceLoopCharacteristics' element,
     * then async jobs create additionally for the wrapped activity.
     */
-    protected void parseAsynchronousContinuationForActivity(Element activityElement, ActivityImpl activity) {
-    // can't use #getMultiInstanceScope here to determine whether the task is multi-instance,
-    // since the property hasn't been set yet (cf parseActivity)
-    ActivityImpl parentFlowScopeActivity = activity->getParentFlowScopeActivity();
-    if (parentFlowScopeActivity != null && parentFlowScopeActivity->getActivityBehavior() instanceof MultiInstanceActivityBehavior
-        && !activity.isCompensationHandler()) {
+    protected function parseAsynchronousContinuationForActivity(Element $activityElement, ActivityImpl $activity): void
+    {
+        // can't use #getMultiInstanceScope here to determine whether the task is multi-instance,
+        // since the property hasn't been set yet (cf parseActivity)
+        $parentFlowScopeActivity = $activity->getParentFlowScopeActivity();
+        if (
+            $parentFlowScopeActivity != null
+            && $parentFlowScopeActivity->getActivityBehavior() instanceof MultiInstanceActivityBehavior
+            && !$activity->isCompensationHandler()
+        ) {
+            $this->parseAsynchronousContinuation($activityElement, $parentFlowScopeActivity);
 
-        parseAsynchronousContinuation(activityElement, parentFlowScopeActivity);
-
-        Element miLoopCharacteristics = activityElement.element("multiInstanceLoopCharacteristics");
-        parseAsynchronousContinuation(miLoopCharacteristics, activity);
-
-    } else {
-        parseAsynchronousContinuation(activityElement, activity);
-    }
+            $miLoopCharacteristics = $activityElement->element("multiInstanceLoopCharacteristics");
+            $this->parseAsynchronousContinuation($miLoopCharacteristics, $activity);
+        } else {
+            $this->parseAsynchronousContinuation($activityElement, $activity);
+        }
     }
 
     /**
@@ -2395,567 +2510,578 @@ class BpmnParse extends Parse
     * @param element with async characteristics
     * @param activity
     */
-    protected void parseAsynchronousContinuation(Element element, ActivityImpl activity) {
+    protected function parseAsynchronousContinuation(Element $element, ActivityImpl $activity): void
+    {
+        $isAsyncBefore = $this->isAsyncBefore($element);
+        $isAsyncAfter = $this->isAsyncAfter($element);
+        $exclusive = $this->isExclusive($element);
 
-    boolean isAsyncBefore = isAsyncBefore(element);
-    boolean isAsyncAfter = isAsyncAfter(element);
-    boolean exclusive = isExclusive(element);
-
-    // set properties on activity
-    activity->setAsyncBefore(isAsyncBefore, exclusive);
-    activity->setAsyncAfter(isAsyncAfter, exclusive);
+        // set properties on activity
+        $activity->setAsyncBefore($isAsyncBefore, $exclusive);
+        $activity->setAsyncAfter($isAsyncAfter, $exclusive);
     }
 
-    protected ParameterValueProvider parsePriority(Element element, String priorityAttribute) {
-    String priorityAttributeValue = element.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, priorityAttribute);
+    protected function parsePriority(Element $element, string $priorityAttribute): ?ParameterValueProvider
+    {
+        $priorityAttributeValue = $element->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, $priorityAttribute);
 
-    if (priorityAttributeValue == null) {
-        return null;
-
-    } else {
-        Object value = priorityAttributeValue;
-        if (!StringUtil.isExpression(priorityAttributeValue)) {
-        // constant values must be valid integers
-        try {
-            value = Integer.parseInt(priorityAttributeValue);
-
-        } catch (NumberFormatException e) {
-            $this->addError("Value '" + priorityAttributeValue + "' for attribute '" + priorityAttribute + "' is not a valid number", element);
+        if ($priorityAttributeValue == null) {
+            return null;
+        } else {
+            $value = $priorityAttributeValue;
+            if (!StringUtil::isExpression($priorityAttributeValue)) {
+                // constant values must be valid integers
+                try {
+                    $value = intval($priorityAttributeValue);
+                } catch (\Exception $e) {
+                    $this->addError("Value '" . $priorityAttributeValue . "' for attribute '" . $priorityAttribute . "' is not a valid number", $element);
+                }
+            }
+            return $this->createParameterValueProvider($value, $this->expressionManager);
         }
+    }
+
+    protected function parseTopic(Element $element, string $topicAttribute): ?ParameterValueProvider
+    {
+        $topicAttributeValue = $element->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, $topicAttribute);
+
+        if ($topicAttributeValue == null) {
+            $this->addError("External tasks must specify a 'topic' attribute in the camunda namespace", $element);
+            return null;
+        } else {
+            return $this->createParameterValueProvider($topicAttributeValue, $expressionManager);
         }
-
-        return createParameterValueProvider(value, expressionManager);
-    }
     }
 
-    protected ParameterValueProvider parseTopic(Element element, String topicAttribute) {
-    String topicAttributeValue = element.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, topicAttribute);
-
-    if (topicAttributeValue == null) {
-        $this->addError("External tasks must specify a 'topic' attribute in the camunda namespace", element);
-        return null;
-
-    } else {
-        return createParameterValueProvider(topicAttributeValue, expressionManager);
-    }
+    protected function addMessageJobDeclarationToActivity(MessageJobDeclaration $messageJobDeclaration, ActivityImpl $activity): void
+    {
+        $messageJobDeclarations = $activity->getProperty(self::PROPERTYNAME_MESSAGE_JOB_DECLARATION);
+        if (empty($messageJobDeclarations)) {
+            $activity->clearProperty(self::PROPERTYNAME_MESSAGE_JOB_DECLARATION);
+        }
+        $activity->addProperty(self::PROPERTYNAME_MESSAGE_JOB_DECLARATION, $messageJobDeclaration);
     }
 
-    @SuppressWarnings("unchecked")
-    protected void addMessageJobDeclarationToActivity(MessageJobDeclaration messageJobDeclaration, ActivityImpl activity) {
-    List<MessageJobDeclaration> messageJobDeclarations = (List<MessageJobDeclaration>) activity->getProperty(PROPERTYNAME_MESSAGE_JOB_DECLARATION);
-    if (messageJobDeclarations == null) {
-        messageJobDeclarations = new ArrayList<>();
-        activity->setProperty(PROPERTYNAME_MESSAGE_JOB_DECLARATION, messageJobDeclarations);
-    }
-    messageJobDeclarations.add(messageJobDeclaration);
-    }
+    protected function addJobDeclarationToProcessDefinition(JobDeclaration $jobDeclaration, ProcessDefinitionInterface $processDefinition): void
+    {
+        $key = $processDefinition->getKey();
 
-    protected void addJobDeclarationToProcessDefinition(JobDeclaration<?, ?> jobDeclaration, ProcessDefinition processDefinition) {
-    String key = processDefinition->getKey();
-
-    List<JobDeclaration<?, ?>> containingJobDeclarations = jobDeclarations->get(key);
-    if (containingJobDeclarations == null) {
-        containingJobDeclarations = new ArrayList<>();
-        jobDeclarations.put(key, containingJobDeclarations);
-    }
-
-    containingJobDeclarations.add(jobDeclaration);
+        if (!array_key_exists($key, $this->jobDeclarations)) {
+            $containingJobDeclarations = $this->jobDeclarations[$key];
+            $this->jobDeclarations[$key] = [$jobDeclaration];
+        } else {
+            $this->jobDeclarations[$key][] = $jobDeclaration;
+        }
     }
 
     /**
     * Parses a sendTask declaration.
     */
-    public ActivityImpl parseSendTask(Element sendTaskElement, ScopeImpl scope) {
-    ActivityImpl activity = createActivityOnScope(sendTaskElement, scope);
+    public function parseSendTask(Element $sendTaskElement, ScopeImpl $scope): ?ActivityImpl
+    {
+        $activity = $this->createActivityOnScope($sendTaskElement, $scope);
 
-    if (isServiceTaskLike(sendTaskElement)) {
-        // CAM-942: If expression or class is set on a SendTask it behaves like a service task
-        // to allow implementing the send handling yourself
-        String elementName = "sendTask";
-        parseAsynchronousContinuationForActivity(sendTaskElement, activity);
+        if ($this->isServiceTaskLike($sendTaskElement)) {
+            // CAM-942: If expression or class is set on a SendTask it behaves like a service task
+            // to allow implementing the send handling yourself
+            $elementName = "sendTask";
+            $this->parseAsynchronousContinuationForActivity($sendTaskElement, $activity);
 
-        parseServiceTaskLike(activity, elementName, sendTaskElement, sendTaskElement, scope);
+            $this->parseServiceTaskLike($activity, $elementName, $sendTaskElement, $sendTaskElement, $scope);
 
-        parseExecutionListenersOnScope(sendTaskElement, activity);
+            $this->parseExecutionListenersOnScope($sendTaskElement, $activity);
 
-        for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseSendTask(sendTaskElement, scope, activity);
-        }
+            foreach ($this->parseListeners as $parseListener) {
+                $parseListener->parseSendTask($sendTaskElement, $scope, $activity);
+            }
 
-        // activity behavior could be set by a listener (e.g. connector); thus,
-        // check is after listener invocation
-        validateServiceTaskLike(activity, elementName, sendTaskElement);
-
-    } else {
-        parseAsynchronousContinuationForActivity(sendTaskElement, activity);
-        parseExecutionListenersOnScope(sendTaskElement, activity);
-
-        for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseSendTask(sendTaskElement, scope, activity);
-        }
-
-        // activity behavior could be set by a listener; thus, check is after listener invocation
-        if (activity->getActivityBehavior() == null) {
-        $this->addError("One of the attributes 'class', 'delegateExpression', 'type', or 'expression' is mandatory on sendTask.", sendTaskElement);
-        }
-    }
-
-    return activity;
-    }
-
-    protected void parseEmailServiceTask(ActivityImpl activity, Element serviceTaskElement, List<FieldDeclaration> fieldDeclarations) {
-    validateFieldDeclarationsForEmail(serviceTaskElement, fieldDeclarations);
-    activity->setActivityBehavior((MailActivityBehavior) instantiateDelegate(MailActivityBehavior.class, fieldDeclarations));
-    }
-
-    protected void parseShellServiceTask(ActivityImpl activity, Element serviceTaskElement, List<FieldDeclaration> fieldDeclarations) {
-    validateFieldDeclarationsForShell(serviceTaskElement, fieldDeclarations);
-    activity->setActivityBehavior((ActivityBehavior) instantiateDelegate(ShellActivityBehavior.class, fieldDeclarations));
-    }
-
-    protected void parseExternalServiceTask(ActivityImpl activity,
-        Element serviceTaskElement,
-        Element camundaPropertiesElement) {
-    activity->setScope(true);
-
-    ParameterValueProvider topicNameProvider = parseTopic(serviceTaskElement, PROPERTYNAME_EXTERNAL_TASK_TOPIC);
-    ParameterValueProvider priorityProvider = parsePriority(serviceTaskElement, PROPERTYNAME_TASK_PRIORITY);
-    Map<String, String> properties = parseCamundaExtensionProperties(camundaPropertiesElement);
-    activity->getProperties()->set(BpmnProperties.EXTENSION_PROPERTIES, properties);
-    List<CamundaErrorEventDefinition> camundaErrorEventDefinitions = parseCamundaErrorEventDefinitions(activity, serviceTaskElement);
-    activity->getProperties()->set(BpmnProperties.CAMUNDA_ERROR_EVENT_DEFINITION, camundaErrorEventDefinitions);
-    activity->setActivityBehavior(new ExternalTaskActivityBehavior(topicNameProvider, priorityProvider));
-    }
-
-    protected void validateFieldDeclarationsForEmail(Element serviceTaskElement, List<FieldDeclaration> fieldDeclarations) {
-    boolean toDefined = false;
-    boolean textOrHtmlDefined = false;
-    for (FieldDeclaration fieldDeclaration : fieldDeclarations) {
-        if (fieldDeclaration->getName().equals("to")) {
-        toDefined = true;
-        }
-        if (fieldDeclaration->getName().equals("html")) {
-        textOrHtmlDefined = true;
-        }
-        if (fieldDeclaration->getName().equals("text")) {
-        textOrHtmlDefined = true;
-        }
-    }
-
-    if (!toDefined) {
-        $this->addError("No recipient is defined on the mail activity", serviceTaskElement);
-    }
-    if (!textOrHtmlDefined) {
-        $this->addError("Text or html field should be provided", serviceTaskElement);
-    }
-    }
-
-    protected void validateFieldDeclarationsForShell(Element serviceTaskElement, List<FieldDeclaration> fieldDeclarations) {
-    boolean shellCommandDefined = false;
-
-    for (FieldDeclaration fieldDeclaration : fieldDeclarations) {
-        String fieldName = fieldDeclaration->getName();
-        FixedValue fieldFixedValue = (FixedValue) fieldDeclaration->getValue();
-        String fieldValue = fieldFixedValue->getExpressionText();
-
-        shellCommandDefined |= fieldName.equals("command");
-
-        if ((fieldName.equals("wait") || fieldName.equals("redirectError") || fieldName.equals("cleanEnv")) && !fieldValue.toLowerCase().equals(TRUE)
-            && !fieldValue.toLowerCase().equals("false")) {
-        $this->addError("undefined value for shell " + fieldName + " parameter :" + fieldValue.toString(), serviceTaskElement);
-        }
-
-    }
-
-    if (!shellCommandDefined) {
-        $this->addError("No shell command is defined on the shell activity", serviceTaskElement);
-    }
-    }
-
-    public List<FieldDeclaration> parseFieldDeclarations(Element element) {
-    List<FieldDeclaration> fieldDeclarations = new ArrayList<>();
-
-    Element elementWithFieldInjections = element.element("extensionElements");
-    if (elementWithFieldInjections == null) { // Custom extensions will just
-                                                // have the <field.. as a
-                                                // subelement
-        elementWithFieldInjections = element;
-    }
-    List<Element> fieldDeclarationElements = elementWithFieldInjections.elementsNS(CAMUNDA_BPMN_EXTENSIONS_NS, "field");
-    if (fieldDeclarationElements != null && !fieldDeclarationElements.isEmpty()) {
-
-        for (Element fieldDeclarationElement : fieldDeclarationElements) {
-        FieldDeclaration fieldDeclaration = parseFieldDeclaration(element, fieldDeclarationElement);
-        if (fieldDeclaration != null) {
-            fieldDeclarations.add(fieldDeclaration);
-        }
-        }
-    }
-
-    return fieldDeclarations;
-    }
-
-    protected FieldDeclaration parseFieldDeclaration(Element serviceTaskElement, Element fieldDeclarationElement) {
-    String fieldName = fieldDeclarationElement.attribute("name");
-
-    FieldDeclaration fieldDeclaration = parseStringFieldDeclaration(fieldDeclarationElement, serviceTaskElement, fieldName);
-    if (fieldDeclaration == null) {
-        fieldDeclaration = parseExpressionFieldDeclaration(fieldDeclarationElement, serviceTaskElement, fieldName);
-    }
-
-    if (fieldDeclaration == null) {
-        $this->addError(
-            "One of the following is mandatory on a field declaration: one of attributes stringValue|expression " + "or one of child elements string|expression",
-            serviceTaskElement);
-    }
-    return fieldDeclaration;
-    }
-
-    protected FieldDeclaration parseStringFieldDeclaration(Element fieldDeclarationElement, Element serviceTaskElement, String fieldName) {
-    try {
-        String fieldValue = getStringValueFromAttributeOrElement("stringValue", "string", fieldDeclarationElement, serviceTaskElement.attribute("id"));
-        if (fieldValue != null) {
-        return new FieldDeclaration(fieldName, Expression.class->getName(), new FixedValue(fieldValue));
-        }
-    } catch (ProcessEngineException ae) {
-        if (ae->getMessage().contains("multiple elements with tag name")) {
-        $this->addError("Multiple string field declarations found", serviceTaskElement);
+            // activity behavior could be set by a listener (e.g. connector); thus,
+            // check is after listener invocation
+            $this->validateServiceTaskLike($activity, $elementName, $sendTaskElement);
         } else {
-        $this->addError("Error when paring field declarations: " + ae->getMessage(), serviceTaskElement);
+            $this->parseAsynchronousContinuationForActivity($sendTaskElement, $activity);
+            $this->parseExecutionListenersOnScope($sendTaskElement, $activity);
+
+            foreach ($this->parseListeners as $parseListener) {
+                $parseListener->parseSendTask($sendTaskElement, $scope, $activity);
+            }
+
+            // activity behavior could be set by a listener; thus, check is after listener invocation
+            if ($activity->getActivityBehavior() == null) {
+                $this->addError("One of the attributes 'class', 'delegateExpression', 'type', or 'expression' is mandatory on sendTask.", $sendTaskElement);
+            }
+        }
+
+        return $activity;
+    }
+
+    protected function parseEmailServiceTask(ActivityImpl $activity, Element $serviceTaskElement, array $fieldDeclarations): void
+    {
+        $this->validateFieldDeclarationsForEmail($serviceTaskElement, $fieldDeclarations);
+        $activity->setActivityBehavior($this->instantiateDelegate(MailActivityBehavior::class, $fieldDeclarations));
+    }
+
+    protected function parseShellServiceTask(ActivityImpl $activity, Element $serviceTaskElement, array $fieldDeclarations): void
+    {
+        $this->validateFieldDeclarationsForShell($serviceTaskElement, $fieldDeclarations);
+        $activity->setActivityBehavior($this->instantiateDelegate(ShellActivityBehavior::class, $fieldDeclarations));
+    }
+
+    protected function parseExternalServiceTask(
+        ActivityImpl $activity,
+        Element $serviceTaskElement,
+        Element $propertiesElement
+    ): void {
+        $activity->setScope(true);
+        $topicNameProvider = $this->parseTopic($serviceTaskElement, self::PROPERTYNAME_EXTERNAL_TASK_TOPIC);
+        $priorityProvider = $this->parsePriority($serviceTaskElement, self::PROPERTYNAME_TASK_PRIORITY);
+        $properties = $this->parseExtensionProperties($propertiesElement);
+        $activity->getProperties()->set(BpmnProperties::extensionProperties(), $properties);
+        $errorEventDefinitions = $this->parseErrorEventDefinitions($activity, $serviceTaskElement);
+        $activity->getProperties()->set(BpmnProperties::extensionErrorEventDefinition(), $errorEventDefinitions);
+        $activity->setActivityBehavior(new ExternalTaskActivityBehavior($topicNameProvider, $priorityProvider));
+    }
+
+    protected function validateFieldDeclarationsForEmail(Element $serviceTaskElement, array $fieldDeclarations): void
+    {
+        $toDefined = false;
+        $textOrHtmlDefined = false;
+        foreach ($fieldDeclarations as $fieldDeclaration) {
+            if ($fieldDeclaration->getName() == "to") {
+                $toDefined = true;
+            }
+            if ($fieldDeclaration->getName() == "html") {
+                $textOrHtmlDefined = true;
+            }
+            if ($fieldDeclaration->getName() == "text") {
+                $textOrHtmlDefined = true;
+            }
+        }
+
+        if (!$toDefined) {
+            $this->addError("No recipient is defined on the mail activity", $serviceTaskElement);
+        }
+        if (!$textOrHtmlDefined) {
+            $this->addError("Text or html field should be provided", $serviceTaskElement);
         }
     }
-    return null;
-    }
 
-    protected FieldDeclaration parseExpressionFieldDeclaration(Element fieldDeclarationElement, Element serviceTaskElement, String fieldName) {
-    try {
-        String expression = getStringValueFromAttributeOrElement(PROPERTYNAME_EXPRESSION, PROPERTYNAME_EXPRESSION, fieldDeclarationElement, serviceTaskElement.attribute("id"));
-        if (expression != null && expression.trim().length() > 0) {
-        return new FieldDeclaration(fieldName, Expression.class->getName(), expressionManager.createExpression(expression));
+    protected function validateFieldDeclarationsForShell(Element $serviceTaskElement, array $fieldDeclarations): void
+    {
+        $shellCommandDefined = false;
+
+        foreach ($fieldDeclarations as $fieldDeclaration) {
+            $fieldName = $fieldDeclaration->getName();
+            $fieldFixedValue = $fieldDeclaration->getValue();
+            $fieldValue = $fieldFixedValue->getExpressionText();
+
+            $shellCommandDefined |= $fieldName == "command";
+
+            if (($fieldName == "wait" || $fieldName == "redirectError" || $fieldName == "cleanEnv") && strtolower($fieldValue) != "true" && strtolower($fieldValue) != "false") {
+                $this->addError("undefined value for shell " . $fieldName . " parameter :" . $fieldValue, $serviceTaskElement);
+            }
         }
-    } catch (ProcessEngineException ae) {
-        if (ae->getMessage().contains("multiple elements with tag name")) {
-        $this->addError("Multiple expression field declarations found", serviceTaskElement);
-        } else {
-        $this->addError("Error when paring field declarations: " + ae->getMessage(), serviceTaskElement);
+
+        if (!$shellCommandDefined) {
+            $this->addError("No shell command is defined on the shell activity", $serviceTaskElement);
         }
     }
-    return null;
-    }
 
-    protected String getStringValueFromAttributeOrElement(String attributeName, String elementName, Element element, String ancestorElementId) {
-    String value = null;
+    public function parseFieldDeclarations(Element $element): array
+    {
+        $fieldDeclarations = [];
 
-    String attributeValue = element.attribute(attributeName);
-    Element childElement = element.elementNS(CAMUNDA_BPMN_EXTENSIONS_NS, elementName);
-    String stringElementText = null;
-
-    if (attributeValue != null && childElement != null) {
-        $this->addError("Can't use attribute '" + attributeName + "' and element '" + elementName + "' together, only use one", element, ancestorElementId);
-    } else if (childElement != null) {
-        stringElementText = childElement->getText();
-        if (stringElementText == null || stringElementText.length() == 0) {
-        $this->addError("No valid value found in attribute '" + attributeName + "' nor element '" + elementName + "'", element, ancestorElementId);
-        } else {
-        // Use text of element
-        value = stringElementText;
+        $elementWithFieldInjections = $element->element("extensionElements");
+        if ($elementWithFieldInjections == null) { // Custom extensions will just
+                                                    // have the <field.. as a
+                                                    // subelement
+            $elementWithFieldInjections = $element;
         }
-    } else if (attributeValue != null && attributeValue.length() > 0) {
-        // Using attribute
-        value = attributeValue;
+        $fieldDeclarationElements = $elementWithFieldInjections->elementsNS(self::BPMN_EXTENSIONS_NS_PREFIX, "field");
+        if (!empty($fieldDeclarationElements)) {
+            foreach ($fieldDeclarationElements as $fieldDeclarationElement) {
+                $fieldDeclaration = $this->parseFieldDeclaration($element, $fieldDeclarationElement);
+                if ($fieldDeclaration != null) {
+                    $fieldDeclarations[] = $fieldDeclaration;
+                }
+            }
+        }
+
+        return $fieldDeclarations;
     }
 
-    return value;
+    protected function parseFieldDeclaration(Element $serviceTaskElement, Element $fieldDeclarationElement): ?FieldDeclaration
+    {
+        $fieldName = $fieldDeclarationElement->attribute("name");
+        $fieldDeclaration = $this->parseStringFieldDeclaration($fieldDeclarationElement, $serviceTaskElement, $fieldName);
+        if ($fieldDeclaration == null) {
+            $fieldDeclaration = $this->parseExpressionFieldDeclaration($fieldDeclarationElement, $serviceTaskElement, $fieldName);
+        }
+
+        if ($fieldDeclaration == null) {
+            $this->addError(
+                "One of the following is mandatory on a field declaration: one of attributes stringValue|expression " .
+                "or one of child elements string|expression",
+                $serviceTaskElement
+            );
+        }
+        return $fieldDeclaration;
+    }
+
+    protected function parseStringFieldDeclaration(Element $fieldDeclarationElement, Element $serviceTaskElement, string $fieldName): ?FieldDeclaration
+    {
+        try {
+            $fieldValue = $this->getStringValueFromAttributeOrElement("stringValue", "string", $fieldDeclarationElement, $serviceTaskElement->attribute("id"));
+            if ($fieldValue != null) {
+                return new FieldDeclaration($fieldName, Expression::class, new FixedValue($fieldValue));
+            }
+        } catch (ProcessEngineException $ae) {
+            $this->addError("Error when paring field declarations: " . $ae->getMessage(), $serviceTaskElement);
+        }
+        return null;
+    }
+
+    protected function parseExpressionFieldDeclaration(Element $fieldDeclarationElement, Element $serviceTaskElement, string $fieldName): ?FieldDeclaration
+    {
+        try {
+            $expression = $this->getStringValueFromAttributeOrElement(self::PROPERTYNAME_EXPRESSION, self::PROPERTYNAME_EXPRESSION, $fieldDeclarationElement, $serviceTaskElement->attribute("id"));
+            if (!empty(trim($expression))) {
+                return new FieldDeclaration($fieldName, ExpressionInterface::class, $this->expressionManager->createExpression($expression));
+            }
+        } catch (ProcessEngineException $ae) {
+            $this->addError("Error when paring field declarations: " . $ae->getMessage(), $serviceTaskElement);
+        }
+        return null;
+    }
+
+    protected function getStringValueFromAttributeOrElement(string $attributeName, string $elementName, Element $element, string $ancestorElementId): ?string
+    {
+        $value = null;
+
+        $attributeValue = $element->attribute($attributeName);
+        $childElement = $element->elementNS(self::BPMN_EXTENSIONS_NS_PREFIX, $elementName);
+        $stringElementText = null;
+
+        if ($attributeValue != null && $childElement != null) {
+            $this->addError("Can't use attribute '" . $attributeName . "' and element '" . $elementName . "' together, only use one", $element, $ancestorElementId);
+        } elseif ($childElement != null) {
+            $stringElementText = $childElement->getText();
+            if (empty($stringElementText)) {
+                $this->addError("No valid value found in attribute '" . $attributeName . "' nor element '" . $elementName . "'", $element, $ancestorElementId);
+            } else {
+                // Use text of element
+                $value = $stringElementText;
+            }
+        } elseif (!empty($attributeValue)) {
+            // Using attribute
+            $value = $attributeValue;
+        }
+
+        return $value;
     }
 
     /**
     * Parses a task with no specific type (behaves as passthrough).
     */
-    public ActivityImpl parseTask(Element taskElement, ScopeImpl scope) {
-    ActivityImpl activity = createActivityOnScope(taskElement, scope);
-    activity->setActivityBehavior(new TaskActivityBehavior());
+    public function parseTask(Element $taskElement, ScopeImpl $scope): ?ActivityImpl
+    {
+        $activity = $this->createActivityOnScope($taskElement, $scope);
+        $activity->setActivityBehavior(new TaskActivityBehavior());
 
-    parseAsynchronousContinuationForActivity(taskElement, activity);
+        $this->parseAsynchronousContinuationForActivity($taskElement, $activity);
 
-    parseExecutionListenersOnScope(taskElement, activity);
+        $this->parseExecutionListenersOnScope($taskElement, $activity);
 
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseTask(taskElement, scope, activity);
-    }
-    return activity;
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseTask($taskElement, $scope, $activity);
+        }
+        return $activity;
     }
 
     /**
     * Parses a manual task.
     */
-    public ActivityImpl parseManualTask(Element manualTaskElement, ScopeImpl scope) {
-    ActivityImpl activity = createActivityOnScope(manualTaskElement, scope);
-    activity->setActivityBehavior(new ManualTaskActivityBehavior());
+    public function parseManualTask(Element $manualTaskElement, ScopeImpl $scope): ?ActivityImpl
+    {
+        $activity = $this->createActivityOnScope($manualTaskElement, $scope);
+        $activity->setActivityBehavior(new ManualTaskActivityBehavior());
 
-    parseAsynchronousContinuationForActivity(manualTaskElement, activity);
+        $this->parseAsynchronousContinuationForActivity($manualTaskElement, $activity);
 
-    parseExecutionListenersOnScope(manualTaskElement, activity);
+        $this->parseExecutionListenersOnScope($manualTaskElement, $activity);
 
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseManualTask(manualTaskElement, scope, activity);
-    }
-    return activity;
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseManualTask($manualTaskElement, $scope, $activity);
+        }
+        return $activity;
     }
 
     /**
     * Parses a receive task.
     */
-    public ActivityImpl parseReceiveTask(Element receiveTaskElement, ScopeImpl scope) {
-    ActivityImpl activity = createActivityOnScope(receiveTaskElement, scope);
-    activity->setActivityBehavior(new ReceiveTaskActivityBehavior());
+    public function parseReceiveTask(Element $receiveTaskElement, ScopeImpl $scope): ?ActivityImpl
+    {
+        $activity = $this->createActivityOnScope($receiveTaskElement, $scope);
+        $activity->setActivityBehavior(new ReceiveTaskActivityBehavior());
 
-    parseAsynchronousContinuationForActivity(receiveTaskElement, activity);
+        $this->parseAsynchronousContinuationForActivity($receiveTaskElement, $activity);
 
-    parseExecutionListenersOnScope(receiveTaskElement, activity);
+        $this->parseExecutionListenersOnScope($receiveTaskElement, $activity);
 
-    // please check https://app.camunda.com/jira/browse/CAM-10989
-    if (receiveTaskElement.attribute("messageRef") != null) {
-        activity->setScope(true);
-        activity->setEventScope(activity);
-        EventSubscriptionDeclaration declaration = parseMessageEventDefinition(receiveTaskElement, activity->getId());
-        declaration->setActivityId(activity->getActivityId());
-        declaration->setEventScopeActivityId(activity->getActivityId());
-        addEventSubscriptionDeclaration(declaration, activity, receiveTaskElement);
-    }
+        // please check https://app.camunda.com/jira/browse/CAM-10989
+        if ($receiveTaskElement->attribute("messageRef") != null) {
+            $activity->setScope(true);
+            $activity->setEventScope($activity);
+            $declaration = $this->parseMessageEventDefinition($receiveTaskElement, $activity->getId());
+            $declaration->setActivityId($activity->getActivityId());
+            $declaration->setEventScopeActivityId($activity->getActivityId());
+            $this->addEventSubscriptionDeclaration($declaration, $activity, $receiveTaskElement);
+        }
 
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseReceiveTask(receiveTaskElement, scope, activity);
-    }
-    return activity;
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseReceiveTask($receiveTaskElement, $scope, $activity);
+        }
+        return $activity;
     }
 
     /* userTask specific finals */
 
-    protected static final String HUMAN_PERFORMER = "humanPerformer";
-    protected static final String POTENTIAL_OWNER = "potentialOwner";
+    protected const HUMAN_PERFORMER = "humanPerformer";
+    protected const POTENTIAL_OWNER = "potentialOwner";
 
-    protected static final String RESOURCE_ASSIGNMENT_EXPR = "resourceAssignmentExpression";
-    protected static final String FORMAL_EXPRESSION = "formalExpression";
+    protected const RESOURCE_ASSIGNMENT_EXPR = "resourceAssignmentExpression";
+    protected const FORMAL_EXPRESSION = "formalExpression";
 
-    protected static final String USER_PREFIX = "user(";
-    protected static final String GROUP_PREFIX = "group(";
+    protected const USER_PREFIX = "user(";
+    protected const GROUP_PREFIX = "group(";
 
-    protected static final String ASSIGNEE_EXTENSION = "assignee";
-    protected static final String CANDIDATE_USERS_EXTENSION = "candidateUsers";
-    protected static final String CANDIDATE_GROUPS_EXTENSION = "candidateGroups";
-    protected static final String DUE_DATE_EXTENSION = "dueDate";
-    protected static final String FOLLOW_UP_DATE_EXTENSION = "followUpDate";
-    protected static final String PRIORITY_EXTENSION = "priority";
+    protected const ASSIGNEE_EXTENSION = "assignee";
+    protected const CANDIDATE_USERS_EXTENSION = "candidateUsers";
+    protected const CANDIDATE_GROUPS_EXTENSION = "candidateGroups";
+    protected const DUE_DATE_EXTENSION = "dueDate";
+    protected const FOLLOW_UP_DATE_EXTENSION = "followUpDate";
+    protected const PRIORITY_EXTENSION = "priority";
 
     /**
     * Parses a userTask declaration.
     */
-    public ActivityImpl parseUserTask(Element userTaskElement, ScopeImpl scope) {
-    ActivityImpl activity = createActivityOnScope(userTaskElement, scope);
+    public function parseUserTask(Element $userTaskElement, ScopeImpl $scope): ?ActivityImpl
+    {
+        $activity = $this->createActivityOnScope($userTaskElement, $scope);
 
-    parseAsynchronousContinuationForActivity(userTaskElement, activity);
+        $this->parseAsynchronousContinuationForActivity($userTaskElement, $activity);
 
-    TaskDefinition taskDefinition = parseTaskDefinition(userTaskElement, activity->getId(), activity, (ProcessDefinitionEntity) scope->getProcessDefinition());
-    TaskDecorator taskDecorator = new TaskDecorator(taskDefinition, expressionManager);
+        $taskDefinition = $this->parseTaskDefinition($userTaskElement, $activity->getId(), $activity, $scope->getProcessDefinition());
+        $taskDecorator = new TaskDecorator($taskDefinition, $this->expressionManager);
 
-    UserTaskActivityBehavior userTaskActivity = new UserTaskActivityBehavior(taskDecorator);
-    activity->setActivityBehavior(userTaskActivity);
+        $userTaskActivity = new UserTaskActivityBehavior($taskDecorator);
+        $activity->setActivityBehavior($userTaskActivity);
 
-    parseProperties(userTaskElement, activity);
-    parseExecutionListenersOnScope(userTaskElement, activity);
+        $this->parseProperties($userTaskElement, $activity);
+        $this->parseExecutionListenersOnScope($userTaskElement, $activity);
 
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseUserTask(userTaskElement, scope, activity);
-    }
-    return activity;
-    }
-
-    public TaskDefinition parseTaskDefinition(Element taskElement, String taskDefinitionKey, ActivityImpl activity, ProcessDefinitionEntity processDefinition) {
-    TaskFormHandler taskFormHandler;
-    String taskFormHandlerClassName = taskElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "formHandlerClass");
-    if (taskFormHandlerClassName != null) {
-        taskFormHandler = (TaskFormHandler) ReflectUtil.instantiate(taskFormHandlerClassName);
-    } else {
-        taskFormHandler = new DefaultTaskFormHandler();
-    }
-    taskFormHandler.parseConfiguration(taskElement, deployment, processDefinition, this);
-
-    TaskDefinition taskDefinition = new TaskDefinition(new DelegateTaskFormHandler(taskFormHandler, deployment));
-
-    taskDefinition->setKey(taskDefinitionKey);
-    processDefinition->getTaskDefinitions().put(taskDefinitionKey, taskDefinition);
-
-    FormDefinition formDefinition = parseFormDefinition(taskElement);
-    taskDefinition->setFormDefinition(formDefinition);
-
-    String name = taskElement.attribute("name");
-    if (name != null) {
-        taskDefinition->setNameExpression(expressionManager.createExpression(name));
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseUserTask($userTaskElement, $scope, $activity);
+        }
+        return $activity;
     }
 
-    String descriptionStr = parseDocumentation(taskElement);
-    if (descriptionStr != null) {
-        taskDefinition->setDescriptionExpression(expressionManager.createExpression(descriptionStr));
-    }
+    public function parseTaskDefinition(Element $taskElement, string $taskDefinitionKey, ActivityImpl $activity, ProcessDefinitionEntity $processDefinition): ?TaskDefinition
+    {
+        $taskFormHandler = null;
+        $taskFormHandlerClassName = $taskElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "formHandlerClass");
+        if ($taskFormHandlerClassName != null) {
+            $taskFormHandler = ReflectUtil::instantiate($taskFormHandlerClassName);
+        } else {
+            $taskFormHandler = new DefaultTaskFormHandler();
+        }
+        $taskFormHandler->parseConfiguration($taskElement, $deployment, $processDefinition, $this);
 
-    parseHumanPerformer(taskElement, taskDefinition);
-    parsePotentialOwner(taskElement, taskDefinition);
+        $taskDefinition = new TaskDefinition(new DelegateTaskFormHandler($taskFormHandler, $deployment));
 
-    // Activiti custom extension
-    parseUserTaskCustomExtensions(taskElement, activity, taskDefinition);
+        $taskDefinition->setKey($taskDefinitionKey);
+        $processDefinition->addTaskDefinition($taskDefinitionKey, $taskDefinition);
 
-    return taskDefinition;
-    }
+        $formDefinition = $this->parseFormDefinition($taskElement);
+        $taskDefinition->setFormDefinition($formDefinition);
 
-    protected FormDefinition parseFormDefinition(Element flowNodeElement) {
-    FormDefinition formDefinition = new FormDefinition();
-
-    String formKeyAttribute = flowNodeElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "formKey");
-    String formRefAttribute = flowNodeElement.attributeNS(BpmnParse.CAMUNDA_BPMN_EXTENSIONS_NS, "formRef");
-
-    if(formKeyAttribute != null && formRefAttribute != null) {
-        $this->addError("Invalid element definition: only one of the attributes formKey and formRef is allowed.", flowNodeElement);
-    }
-
-    if (formKeyAttribute != null) {
-        formDefinition->setFormKey(expressionManager.createExpression(formKeyAttribute));
-    }
-
-    if(formRefAttribute != null) {
-        formDefinition->setCamundaFormDefinitionKey(expressionManager.createExpression(formRefAttribute));
-
-        String formRefBindingAttribute = flowNodeElement.attributeNS(BpmnParse.CAMUNDA_BPMN_EXTENSIONS_NS, "formRefBinding");
-
-        if (formRefBindingAttribute == null || !DefaultTaskFormHandler.ALLOWED_FORM_REF_BINDINGS.contains(formRefBindingAttribute)) {
-        $this->addError("Invalid element definition: value for formRefBinding attribute has to be one of "
-            + DefaultTaskFormHandler.ALLOWED_FORM_REF_BINDINGS + " but was " + formRefBindingAttribute, flowNodeElement);
+        $name = $taskElement->attribute("name");
+        if (!empty($name)) {
+            $taskDefinition->setNameExpression($this->expressionManager->createExpression($name));
         }
 
-
-        if(formRefBindingAttribute != null) {
-        formDefinition->setCamundaFormDefinitionBinding(formRefBindingAttribute);
+        $descriptionStr = $this->parseDocumentation($taskElement);
+        if ($descriptionStr != null) {
+            $taskDefinition->setDescriptionExpression($this->expressionManager->createExpression($descriptionStr));
         }
 
-        if(DefaultTaskFormHandler.FORM_REF_BINDING_VERSION.equals(formRefBindingAttribute)) {
-        String formRefVersionAttribute = flowNodeElement.attributeNS(BpmnParse.CAMUNDA_BPMN_EXTENSIONS_NS, "formRefVersion");
+        $this->parseHumanPerformer($taskElement, $taskDefinition);
+        $this->parsePotentialOwner($taskElement, $taskDefinition);
 
-        Expression camundaFormDefinitionVersion = expressionManager.createExpression(formRefVersionAttribute);
+        // Activiti custom extension
+        $this->parseUserTaskCustomExtensions($taskElement, $activity, $taskDefinition);
 
-        if(formRefVersionAttribute != null) {
-            formDefinition->setCamundaFormDefinitionVersion(camundaFormDefinitionVersion);
+        return $taskDefinition;
+    }
+
+    protected function parseFormDefinition(Element $flowNodeElement): ?FormDefinition
+    {
+        $formDefinition = new FormDefinition();
+
+        $formKeyAttribute = $flowNodeElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "formKey");
+        $formRefAttribute = $flowNodeElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "formRef");
+
+        if ($formKeyAttribute != null && $formRefAttribute != null) {
+            $this->addError("Invalid element definition: only one of the attributes formKey and formRef is allowed.", $flowNodeElement);
         }
+
+        if ($formKeyAttribute != null) {
+            $formDefinition->setFormKey($this->expressionManager->createExpression($formKeyAttribute));
         }
-    }
 
-    return formDefinition;
-    }
+        if ($formRefAttribute != null) {
+            $formDefinition->setFormDefinitionKey($this->expressionManager->createExpression($formRefAttribute));
 
-    protected void parseHumanPerformer(Element taskElement, TaskDefinition taskDefinition) {
-    List<Element> humanPerformerElements = taskElement.elements(HUMAN_PERFORMER);
+            $formRefBindingAttribute = $flowNodeElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "formRefBinding");
 
-    if (humanPerformerElements.size() > 1) {
-        $this->addError("Invalid task definition: multiple " + HUMAN_PERFORMER + " sub elements defined for " + taskDefinition->getNameExpression(), taskElement);
-    } else if (humanPerformerElements.size() == 1) {
-        Element humanPerformerElement = humanPerformerElements->get(0);
-        if (humanPerformerElement != null) {
-        parseHumanPerformerResourceAssignment(humanPerformerElement, taskDefinition);
-        }
-    }
-    }
+            if ($formRefBindingAttribute == null || !in_array($formRefBindingAttribute, DefaultTaskFormHandler::ALLOWED_FORM_REF_BINDINGS)) {
+                $this->addError(
+                    "Invalid element definition: value for formRefBinding attribute has to be one of "
+                    . json_encode(DefaultTaskFormHandler::ALLOWED_FORM_REF_BINDINGS) . " but was " . $formRefBindingAttribute,
+                    $flowNodeElement
+                );
+            }
 
-    protected void parsePotentialOwner(Element taskElement, TaskDefinition taskDefinition) {
-    List<Element> potentialOwnerElements = taskElement.elements(POTENTIAL_OWNER);
-    for (Element potentialOwnerElement : potentialOwnerElements) {
-        parsePotentialOwnerResourceAssignment(potentialOwnerElement, taskDefinition);
-    }
-    }
 
-    protected void parseHumanPerformerResourceAssignment(Element performerElement, TaskDefinition taskDefinition) {
-    Element raeElement = performerElement.element(RESOURCE_ASSIGNMENT_EXPR);
-    if (raeElement != null) {
-        Element feElement = raeElement.element(FORMAL_EXPRESSION);
-        if (feElement != null) {
-        taskDefinition->setAssigneeExpression(expressionManager.createExpression(feElement->getText()));
-        }
-    }
-    }
+            if ($formRefBindingAttribute != null) {
+                $formDefinition->setFormDefinitionBinding($formRefBindingAttribute);
+            }
 
-    protected void parsePotentialOwnerResourceAssignment(Element performerElement, TaskDefinition taskDefinition) {
-    Element raeElement = performerElement.element(RESOURCE_ASSIGNMENT_EXPR);
-    if (raeElement != null) {
-        Element feElement = raeElement.element(FORMAL_EXPRESSION);
-        if (feElement != null) {
-        List<String> assignmentExpressions = parseCommaSeparatedList(feElement->getText());
-        for (String assignmentExpression : assignmentExpressions) {
-            assignmentExpression = assignmentExpression.trim();
-            if (assignmentExpression.startsWith(USER_PREFIX)) {
-            String userAssignementId = getAssignmentId(assignmentExpression, USER_PREFIX);
-            taskDefinition.addCandidateUserIdExpression(expressionManager.createExpression(userAssignementId));
-            } else if (assignmentExpression.startsWith(GROUP_PREFIX)) {
-            String groupAssignementId = getAssignmentId(assignmentExpression, GROUP_PREFIX);
-            taskDefinition.addCandidateGroupIdExpression(expressionManager.createExpression(groupAssignementId));
-            } else { // default: given string is a goupId, as-is.
-            taskDefinition.addCandidateGroupIdExpression(expressionManager.createExpression(assignmentExpression));
+            if (DefaultTaskFormHandler::FORM_REF_BINDING_VERSION == $formRefBindingAttribute) {
+                $formRefVersionAttribute = $flowNodeElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "formRefVersion");
+
+                $formDefinitionVersion = $this->expressionManager->createExpression($formRefVersionAttribute);
+
+                if ($formRefVersionAttribute != null) {
+                    $formDefinition->setCamundaFormDefinitionVersion($formDefinitionVersion);
+                }
             }
         }
-        }
-    }
-    }
 
-    protected String getAssignmentId(String expression, String prefix) {
-    return expression.substring(prefix.length(), expression.length() - 1).trim();
+        return $formDefinition;
     }
 
-    protected void parseUserTaskCustomExtensions(Element taskElement, ActivityImpl activity, TaskDefinition taskDefinition) {
+    protected function parseHumanPerformer(Element $taskElement, TaskDefinition $taskDefinition): void
+    {
+        $humanPerformerElements = $taskElement->elements(self::HUMAN_PERFORMER);
 
-    // assignee
-    String assignee = taskElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, ASSIGNEE_EXTENSION);
-    if (assignee != null) {
-        if (taskDefinition->getAssigneeExpression() == null) {
-        taskDefinition->setAssigneeExpression(expressionManager.createExpression(assignee));
-        } else {
-        $this->addError("Invalid usage: duplicate assignee declaration for task " + taskDefinition->getNameExpression(), taskElement);
-        }
-    }
-
-    // Candidate users
-    String candidateUsersString = taskElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, CANDIDATE_USERS_EXTENSION);
-    if (candidateUsersString != null) {
-        List<String> candidateUsers = parseCommaSeparatedList(candidateUsersString);
-        for (String candidateUser : candidateUsers) {
-        taskDefinition.addCandidateUserIdExpression(expressionManager.createExpression(candidateUser.trim()));
+        if (count($humanPerformerElements) > 1) {
+            $this->addError("Invalid task definition: multiple " . self::HUMAN_PERFORMER . " sub elements defined for " . $taskDefinition->getNameExpression(), $taskElement);
+        } elseif (count($humanPerformerElements) == 1) {
+            $humanPerformerElement = $humanPerformerElements[0];
+            if ($humanPerformerElement != null) {
+                $this->parseHumanPerformerResourceAssignment($humanPerformerElement, $taskDefinition);
+            }
         }
     }
 
-    // Candidate groups
-    String candidateGroupsString = taskElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, CANDIDATE_GROUPS_EXTENSION);
-    if (candidateGroupsString != null) {
-        List<String> candidateGroups = parseCommaSeparatedList(candidateGroupsString);
-        for (String candidateGroup : candidateGroups) {
-        taskDefinition.addCandidateGroupIdExpression(expressionManager.createExpression(candidateGroup.trim()));
+    protected function parsePotentialOwner(Element $taskElement, TaskDefinition $taskDefinition): void
+    {
+        $potentialOwnerElements = $taskElement->elements(self::POTENTIAL_OWNER);
+        foreach ($potentialOwnerElements as $potentialOwnerElement) {
+            $this->parsePotentialOwnerResourceAssignment($potentialOwnerElement, $taskDefinition);
         }
     }
 
-    // Task listeners
-    parseTaskListeners(taskElement, activity, taskDefinition);
-
-    // Due date
-    String dueDateExpression = taskElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, DUE_DATE_EXTENSION);
-    if (dueDateExpression != null) {
-        taskDefinition->setDueDateExpression(expressionManager.createExpression(dueDateExpression));
+    protected function parseHumanPerformerResourceAssignment(Element $performerElement, TaskDefinition $taskDefinition): void
+    {
+        $raeElement = $performerElement->element(self::RESOURCE_ASSIGNMENT_EXPR);
+        if ($raeElement != null) {
+            $feElement = $raeElement->element(self::FORMAL_EXPRESSION);
+            if ($feElement != null) {
+                $taskDefinition->setAssigneeExpression($this->expressionManager->createExpression($feElement->getText()));
+            }
+        }
     }
 
-    // follow up date
-    String followUpDateExpression = taskElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, FOLLOW_UP_DATE_EXTENSION);
-    if (followUpDateExpression != null) {
-        taskDefinition->setFollowUpDateExpression(expressionManager.createExpression(followUpDateExpression));
+    protected function parsePotentialOwnerResourceAssignment(Element $performerElement, TaskDefinition $taskDefinition): void
+    {
+        $raeElement = $performerElement->element(self::RESOURCE_ASSIGNMENT_EXPR);
+        if ($raeElement != null) {
+            $feElement = $raeElement->element(self::FORMAL_EXPRESSION);
+            if ($feElement != null) {
+                $assignmentExpressions = $this->parseCommaSeparatedList($feElement->getText());
+                foreach ($assignmentExpressions as $assignmentExpression) {
+                    $assignmentExpression = trim($assignmentExpression);
+                    if (str_starts_with($assignmentExpression, self::USER_PREFIX)) {
+                        $userAssignementId = $this->getAssignmentId($assignmentExpression, self::USER_PREFIX);
+                        $taskDefinition->addCandidateUserIdExpression($this->expressionManager->createExpression($userAssignementId));
+                    } elseif (str_starts_with($assignmentExpression, self::GROUP_PREFIX)) {
+                        $groupAssignementId = $this->getAssignmentId($assignmentExpression, self::GROUP_PREFIX);
+                        $taskDefinition->addCandidateGroupIdExpression($this->expressionManager->createExpression($groupAssignementId));
+                    } else { // default: given string is a goupId, as-is.
+                        $taskDefinition->addCandidateGroupIdExpression($this->expressionManager->createExpression($assignmentExpression));
+                    }
+                }
+            }
+        }
     }
 
-    // Priority
-    final String priorityExpression = taskElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, PRIORITY_EXTENSION);
-    if (priorityExpression != null) {
-        taskDefinition->setPriorityExpression(expressionManager.createExpression(priorityExpression));
+    protected function getAssignmentId(string $expression, string $prefix): string
+    {
+        return trim(substr($expression, strlen($prefix), strlen($expression) - 1));
     }
+
+    protected function parseUserTaskCustomExtensions(Element $taskElement, ActivityImpl $activity, TaskDefinition $taskDefinition): void
+    {
+        // assignee
+        $assignee = $taskElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::ASSIGNEE_EXTENSION);
+        if (!empty($assignee)) {
+            if ($taskDefinition->getAssigneeExpression() == null) {
+                $taskDefinition->setAssigneeExpression($this->expressionManager->createExpression($assignee));
+            } else {
+                $this->addError("Invalid usage: duplicate assignee declaration for task " . $taskDefinition->getNameExpression(), $taskElement);
+            }
+        }
+
+        // Candidate users
+        $candidateUsersString = $taskElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::CANDIDATE_USERS_EXTENSION);
+        if (!empty($candidateUsersString)) {
+            $candidateUsers = $this->parseCommaSeparatedList($candidateUsersString);
+            foreach ($candidateUsers as $candidateUser) {
+                $taskDefinition->addCandidateUserIdExpression($this->expressionManager->createExpression(trim($candidateUser)));
+            }
+        }
+
+        // Candidate groups
+        $candidateGroupsString = $taskElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::CANDIDATE_GROUPS_EXTENSION);
+        if (!empty($candidateGroupsString)) {
+            $candidateGroups = $this->parseCommaSeparatedList($candidateGroupsString);
+            foreach ($candidateGroups as $candidateGroup) {
+                $taskDefinition->addCandidateGroupIdExpression($this->expressionManager->createExpression(trim($candidateGroup)));
+            }
+        }
+
+        // Task listeners
+        $this->parseTaskListeners($taskElement, $activity, $taskDefinition);
+
+        // Due date
+        $dueDateExpression = $taskElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::DUE_DATE_EXTENSION);
+        if ($dueDateExpression != null) {
+            $taskDefinition->setDueDateExpression($this->expressionManager->createExpression($dueDateExpression));
+        }
+
+        // follow up date
+        $followUpDateExpression = $taskElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::FOLLOW_UP_DATE_EXTENSION);
+        if ($followUpDateExpression != null) {
+            $taskDefinition->setFollowUpDateExpression($this->expressionManager->createExpression($followUpDateExpression));
+        }
+
+        // Priority
+        $priorityExpression = $taskElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::PRIORITY_EXTENSION);
+        if ($priorityExpression != null) {
+            $taskDefinition->setPriorityExpression($this->expressionManager->createExpression($priorityExpression));
+        }
     }
 
     /**
@@ -2966,113 +3092,118 @@ class BpmnParse extends Parse
     *
     * @return the entries of the comma separated list, trimmed.
     */
-    protected List<String> parseCommaSeparatedList(String s) {
-    List<String> result = new ArrayList<>();
-    if (s != null && !"".equals(s)) {
+    protected function parseCommaSeparatedList(string $s): array
+    {
+        $result = [];
+        if (!empty($s)) {
+            $c = $s[0];
 
-        StringCharacterIterator iterator = new StringCharacterIterator(s);
-        char c = iterator.first();
+            $strb = "";
+            $insideExpression = false;
 
-        StringBuilder strb = new StringBuilder();
-        boolean insideExpression = false;
+            for ($i = 1; $i < strlen($s); $i += 1) {
+                if ($c == '{' || $c == '$') {
+                    $insideExpression = true;
+                } elseif ($c == '}') {
+                    $insideExpression = false;
+                } elseif ($c == ',' && !$insideExpression) {
+                    $result[] = trim($strb);
+                    $strb = "";
+                }
 
-        while (c != StringCharacterIterator.DONE) {
-        if (c == '{' || c == '$') {
-            insideExpression = true;
-        } else if (c == '}') {
-            insideExpression = false;
-        } else if (c == ',' && !insideExpression) {
-            result.add(strb.toString().trim());
-            strb.delete(0, strb.length());
+                if ($c != ',' || $insideExpression) {
+                    $strb .= $c;
+                }
+
+                $c = $s[$i];
+            }
+
+            if (strlen($strb) > 0) {
+                $result[] = trim($strb);
+            }
         }
-
-        if (c != ',' || (insideExpression)) {
-            strb.append(c);
-        }
-
-        c = iterator.next();
-        }
-
-        if (strb.length() > 0) {
-        result.add(strb.toString().trim());
-        }
-
-    }
-    return result;
+        return $result;
     }
 
-    protected void parseTaskListeners(Element userTaskElement, ActivityImpl activity, TaskDefinition taskDefinition) {
-    Element extentionsElement = userTaskElement.element("extensionElements");
-    if (extentionsElement != null) {
-        List<Element> taskListenerElements = extentionsElement.elementsNS(CAMUNDA_BPMN_EXTENSIONS_NS, "taskListener");
-        for (Element taskListenerElement : taskListenerElements) {
-        String eventName = taskListenerElement.attribute("event");
-        if (eventName != null) {
-            if (TaskListener.EVENTNAME_CREATE.equals(eventName) || TaskListener.EVENTNAME_ASSIGNMENT.equals(eventName)
-                || TaskListener.EVENTNAME_COMPLETE.equals(eventName) || TaskListener.EVENTNAME_UPDATE.equals(eventName)
-                || TaskListener.EVENTNAME_DELETE.equals(eventName)) {
-            TaskListener taskListener = parseTaskListener(taskListenerElement, activity->getId());
-            taskDefinition.addTaskListener(eventName, taskListener);
-            } else if (TaskListener.EVENTNAME_TIMEOUT.equals(eventName)) {
-            TaskListener taskListener = parseTimeoutTaskListener(taskListenerElement, activity, taskDefinition);
-            taskDefinition.addTimeoutTaskListener(taskListenerElement.attribute("id"), taskListener);
-            } else {
-            $this->addError("Attribute 'event' must be one of {create|assignment|complete|update|delete|timeout}", userTaskElement);
+    protected function parseTaskListeners(Element $userTaskElement, ActivityImpl $activity, TaskDefinition $taskDefinition): void
+    {
+        $extentionsElement = $userTaskElement->element("extensionElements");
+        if ($extentionsElement != null) {
+            $taskListenerElements = $extentionsElement->elementsNS(self::BPMN_EXTENSIONS_NS_PREFIX, "taskListener");
+            foreach ($taskListenerElements as $taskListenerElement) {
+                $eventName = $taskListenerElement->attribute("event");
+                if (!empty($eventName)) {
+                    if (
+                        TaskListenerInterface::EVENTNAME_CREATE == $eventName || TaskListenerInterface::EVENTNAME_ASSIGNMENT == $eventName
+                        || TaskListenerInterface::EVENTNAME_COMPLETE == $eventName || TaskListenerInterface::EVENTNAME_UPDATE == $eventName
+                        || TaskListenerInterface::EVENTNAME_DELETE == $eventName
+                    ) {
+                        $taskListener = $this->parseTaskListener($taskListenerElement, $activity->getId());
+                        $taskDefinition->addTaskListener($eventName, $taskListener);
+                    } elseif (TaskListenerInterface::EVENTNAME_TIMEOUT == $eventName) {
+                        $taskListener = $this->parseTimeoutTaskListener($taskListenerElement, $activity, $taskDefinition);
+                        $taskDefinition->addTimeoutTaskListener($taskListenerElement->attribute("id"), $taskListener);
+                    } else {
+                        $this->addError("Attribute 'event' must be one of {create|assignment|complete|update|delete|timeout}", $userTaskElement);
+                    }
+                } else {
+                    $this->addError("Attribute 'event' is mandatory on taskListener", $userTaskElement);
+                }
+            }
+        }
+    }
+
+    protected function parseTaskListener(Element $taskListenerElement, string $taskElementId): ?TaskListenerInterface
+    {
+        $taskListener = null;
+
+        $className = $taskListenerElement->attribute(self::PROPERTYNAME_CLASS);
+        $expression = $taskListenerElement->attribute(self::PROPERTYNAME_EXPRESSION);
+        $delegateExpression = $taskListenerElement->attribute(self::PROPERTYNAME_DELEGATE_EXPRESSION);
+        $scriptElement = $taskListenerElement->elementNS(self::BPMN_EXTENSIONS_NS_PREFIX, "script");
+
+        if ($className != null) {
+            $taskListener = new ClassDelegateTaskListener($className, $this->parseFieldDeclarations($taskListenerElement));
+        } elseif ($expression != null) {
+            $taskListener = new ExpressionTaskListener($this->expressionManager->createExpression($expression));
+        } elseif ($delegateExpression != null) {
+            $taskListener = new DelegateExpressionTaskListener($this->expressionManager->createExpression($delegateExpression), $this->parseFieldDeclarations($taskListenerElement));
+        } elseif ($scriptElement != null) {
+            try {
+                $executableScript = $this->parseScript($scriptElement);
+                if ($executableScript != null) {
+                    $taskListener = new ScriptTaskListener($executableScript);
+                }
+            } catch (BpmnParseException $e) {
+                $this->addError($e, $taskElementId);
             }
         } else {
-            $this->addError("Attribute 'event' is mandatory on taskListener", userTaskElement);
+            $this->addError("Element 'class', 'expression', 'delegateExpression' or 'script' is mandatory on taskListener", $taskListenerElement, $taskElementId);
         }
+        return $taskListener;
+    }
+
+    protected function parseTimeoutTaskListener(Element $taskListenerElement, ActivityImpl $timerActivity, TaskDefinition $taskDefinition): ?TaskListenerInterface
+    {
+        $listenerId = $taskListenerElement->attribute("id");
+        $timerActivityId = $timerActivity->getId();
+        if ($listenerId == null) {
+            $this->addError("Element 'id' is mandatory on taskListener of type 'timeout'", $taskListenerElement, $timerActivityId);
         }
-    }
-    }
-
-    protected TaskListener parseTaskListener(Element taskListenerElement, String taskElementId) {
-    TaskListener taskListener = null;
-
-    String className = taskListenerElement.attribute(PROPERTYNAME_CLASS);
-    String expression = taskListenerElement.attribute(PROPERTYNAME_EXPRESSION);
-    String delegateExpression = taskListenerElement.attribute(PROPERTYNAME_DELEGATE_EXPRESSION);
-    Element scriptElement = taskListenerElement.elementNS(CAMUNDA_BPMN_EXTENSIONS_NS, "script");
-
-    if (className != null) {
-        taskListener = new ClassDelegateTaskListener(className, parseFieldDeclarations(taskListenerElement));
-    } else if (expression != null) {
-        taskListener = new ExpressionTaskListener(expressionManager.createExpression(expression));
-    } else if (delegateExpression != null) {
-        taskListener = new DelegateExpressionTaskListener(expressionManager.createExpression(delegateExpression), parseFieldDeclarations(taskListenerElement));
-    } else if (scriptElement != null) {
-        try {
-        ExecutableScript executableScript = parseCamundaScript(scriptElement);
-        if (executableScript != null) {
-            taskListener = new ScriptTaskListener(executableScript);
+        $timerEventDefinition = $taskListenerElement->element(self::TIMER_EVENT_DEFINITION);
+        if ($timerEventDefinition == null) {
+            $this->addError("Element 'timerEventDefinition' is mandatory on taskListener of type 'timeout'", $taskListenerElement, $timerActivityId);
         }
-        } catch (BpmnParseException e) {
-        $this->addError(e, taskElementId);
-        }
-    } else {
-        $this->addError("Element 'class', 'expression', 'delegateExpression' or 'script' is mandatory on taskListener", taskListenerElement, taskElementId);
-    }
-    return taskListener;
-    }
+        $timerActivity->setScope(true);
+        $timerActivity->setEventScope($timerActivity);
+        $timerDeclaration = $this->parseTimer($timerEventDefinition, $timerActivity, TimerTaskListenerJobHandler::TYPE);
+        $timerDeclaration->setRawJobHandlerConfiguration(
+            $timerActivityId . TimerEventJobHandler::JOB_HANDLER_CONFIG_PROPERTY_DELIMITER .
+            TimerEventJobHandler::JOB_HANDLER_CONFIG_TASK_LISTENER_PREFIX . $listenerId
+        );
+        $this->addTimerListenerDeclaration($listenerId, $timerActivity, $timerDeclaration);
 
-    protected TaskListener parseTimeoutTaskListener(Element taskListenerElement, ActivityImpl timerActivity, TaskDefinition taskDefinition) {
-    String listenerId = taskListenerElement.attribute("id");
-    String timerActivityId = timerActivity->getId();
-    if (listenerId == null) {
-        $this->addError("Element 'id' is mandatory on taskListener of type 'timeout'", taskListenerElement, timerActivityId);
-    }
-    Element timerEventDefinition = taskListenerElement.element(TIMER_EVENT_DEFINITION);
-    if (timerEventDefinition == null) {
-        $this->addError("Element 'timerEventDefinition' is mandatory on taskListener of type 'timeout'", taskListenerElement, timerActivityId);
-    }
-    timerActivity->setScope(true);
-    timerActivity->setEventScope(timerActivity);
-    TimerDeclarationImpl timerDeclaration = parseTimer(timerEventDefinition, timerActivity, TimerTaskListenerJobHandler.TYPE);
-    timerDeclaration->setRawJobHandlerConfiguration(timerActivityId + TimerEventJobHandler.JOB_HANDLER_CONFIG_PROPERTY_DELIMITER +
-        TimerEventJobHandler.JOB_HANDLER_CONFIG_TASK_LISTENER_PREFIX + listenerId);
-    addTimerListenerDeclaration(listenerId, timerActivity, timerDeclaration);
-
-    return parseTaskListener(taskListenerElement, timerActivityId);
+        return $this->parseTaskListener($taskListenerElement, $timerActivityId);
     }
 
     /**
@@ -3085,117 +3216,121 @@ class BpmnParse extends Parse
     * @param scope
     *          The {@link ScopeImpl} to which the end events must be added.
     */
-    public void parseEndEvents(Element parentElement, ScopeImpl scope) {
-    for (Element endEventElement : parentElement.elements("endEvent")) {
-        ActivityImpl activity = createActivityOnScope(endEventElement, scope);
+    public function parseEndEvents(Element $parentElement, ScopeImpl $scope): void
+    {
+        foreach ($parentElement->elements("endEvent") as $endEventElement) {
+            $activity = $this->createActivityOnScope($endEventElement, $scope);
 
-        Element errorEventDefinition = endEventElement.element(ERROR_EVENT_DEFINITION);
-        Element cancelEventDefinition = endEventElement.element(CANCEL_EVENT_DEFINITION);
-        Element terminateEventDefinition = endEventElement.element("terminateEventDefinition");
-        Element messageEventDefinitionElement = endEventElement.element(MESSAGE_EVENT_DEFINITION);
-        Element signalEventDefinition = endEventElement.element(SIGNAL_EVENT_DEFINITION);
-        Element compensateEventDefinitionElement = endEventElement.element(COMPENSATE_EVENT_DEFINITION);
-        Element escalationEventDefinition = endEventElement.element(ESCALATION_EVENT_DEFINITION);
+            $errorEventDefinition = $endEventElement->element(self::ERROR_EVENT_DEFINITION);
+            $cancelEventDefinition = $endEventElement->element(self::CANCEL_EVENT_DEFINITION);
+            $terminateEventDefinition = $endEventElement->element("terminateEventDefinition");
+            $messageEventDefinitionElement = $endEventElement->element(self::MESSAGE_EVENT_DEFINITION);
+            $signalEventDefinition = $endEventElement->element(self::SIGNAL_EVENT_DEFINITION);
+            $compensateEventDefinitionElement = $endEventElement->element(self::COMPENSATE_EVENT_DEFINITION);
+            $escalationEventDefinition = $endEventElement->element(self::ESCALATION_EVENT_DEFINITION);
 
-        boolean isServiceTaskLike = isServiceTaskLike(messageEventDefinitionElement);
+            $isServiceTaskLike = $this->isServiceTaskLike($messageEventDefinitionElement);
 
-        String activityId = activity->getId();
-        if (errorEventDefinition != null) { // error end event
-        String errorRef = errorEventDefinition.attribute("errorRef");
+            $activityId = $activity->getId();
+            if ($errorEventDefinition != null) { // error end event
+                $errorRef = $errorEventDefinition->attribute("errorRef");
 
-        if (errorRef == null || "".equals(errorRef)) {
-            $this->addError("'errorRef' attribute is mandatory on error end event", errorEventDefinition, activityId);
-        } else {
-            Error error = errors->get(errorRef);
-            if (error != null && (error->getErrorCode() == null || "".equals(error->getErrorCode()))) {
-            $this->addError(
-                "'errorCode' is mandatory on errors referenced by throwing error event definitions, but the error '" + error->getId() + "' does not define one.",
-                errorEventDefinition,
-                activityId);
+                if (empty($errorRef)) {
+                    $this->addError("'errorRef' attribute is mandatory on error end event", $errorEventDefinition, $activityId);
+                } else {
+                    $error = null;
+                    if (array_key_exists($errorRef, $this->errors)) {
+                        $error = $this->errors[$errorRef];
+                    }
+                    if ($error != null && (empty($error->getErrorCode()))) {
+                        $this->addError(
+                            "'errorCode' is mandatory on errors referenced by throwing error event definitions, but the error '" . $error->getId() . "' does not define one.",
+                            $errorEventDefinition,
+                            $activityId
+                        );
+                    }
+                    $activity->getProperties()->set(BpmnProperties::type(), ActivityTypes::END_EVENT_ERROR);
+                    if ($error != null) {
+                        $activity->setActivityBehavior(new ErrorEndEventActivityBehavior($error->getErrorCode(), $error->getErrorMessageExpression()));
+                    } else {
+                        $activity->setActivityBehavior(new ErrorEndEventActivityBehavior($errorRef, null));
+                    }
+                }
+            } elseif ($cancelEventDefinition != null) {
+                if ($scope->getProperty(BpmnProperties::type()->getName()) == null || $scope->getProperty(BpmnProperties::type()->getName()) != "transaction") {
+                    $this->addError("end event with cancelEventDefinition only supported inside transaction subprocess", $cancelEventDefinition, $activityId);
+                } else {
+                    $activity->getProperties()->set(BpmnProperties::type(), ActivityTypes::END_EVENT_CANCEL);
+                    $activity->setActivityBehavior(new CancelEndEventActivityBehavior());
+                    $activity->setActivityStartBehavior(ActivityStartBehavior::INTERRUPT_FLOW_SCOPE);
+                    $activity->setProperty(self::PROPERTYNAME_THROWS_COMPENSATION, true);
+                    $activity->setScope(true);
+                }
+            } elseif ($terminateEventDefinition != null) {
+                $activity->getProperties()->set(BpmnProperties::type(), ActivityTypes::END_EVENT_TERMINATE);
+                $activity->setActivityBehavior(new TerminateEndEventActivityBehavior());
+                $activity->setActivityStartBehavior(ActivityStartBehavior::INTERRUPT_FLOW_SCOPE);
+            } elseif ($messageEventDefinitionElement != null) {
+                if ($isServiceTaskLike) {
+                    // CAM-436 same behaviour as service task
+                    $this->parseServiceTaskLike(
+                        $activity,
+                        ActivityTypes::END_EVENT_MESSAGE,
+                        $messageEventDefinitionElement,
+                        $endEventElement,
+                        $scope
+                    );
+                    $activity->getProperties()->set(BpmnProperties::type(), ActivityTypes::END_EVENT_MESSAGE);
+                } else {
+                    // default to non behavior if no service task
+                    // properties have been specified
+                    $activity->setActivityBehavior(new IntermediateThrowNoneEventActivityBehavior());
+                }
+            } elseif ($signalEventDefinition != null) {
+                $activity->getProperties()->set(BpmnProperties::type(), ActivityTypes::END_EVENT_SIGNAL);
+                $signalDefinition = $this->parseSignalEventDefinition($signalEventDefinition, true, $activityId);
+                $activity->setActivityBehavior(new ThrowSignalEventActivityBehavior($signalDefinition));
+            } elseif ($compensateEventDefinitionElement != null) {
+                $activity->getProperties()->set(BpmnProperties::type(), ActivityTypes::END_EVENT_COMPENSATION);
+                $compensateEventDefinition = $this->parseThrowCompensateEventDefinition($compensateEventDefinitionElement, $scope, $endEventElement->attribute("id"));
+                $activity->setActivityBehavior(new CompensationEventActivityBehavior($compensateEventDefinition));
+                $activity->setProperty(self::PROPERTYNAME_THROWS_COMPENSATION, true);
+                $activity->setScope(true);
+            } elseif ($escalationEventDefinition != null) {
+                $activity->getProperties()->set(BpmnProperties::type(), ActivityTypes::END_EVENT_ESCALATION);
+
+                $escalation = findEscalationForEscalationEventDefinition($escalationEventDefinition, $activityId);
+                if ($escalation != null && $escalation->getEscalationCode() == null) {
+                    $this->addError("escalation end event must have an 'escalationCode'", $escalationEventDefinition, $activityId);
+                }
+                $activity->setActivityBehavior(new ThrowEscalationEventActivityBehavior($escalation));
+            } else { // default: none end event
+                $activity->getProperties()->set(BpmnProperties::type(), ActivityTypes::END_EVENT_NONE);
+                $activity->setActivityBehavior(new NoneEndEventActivityBehavior());
             }
-            activity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.END_EVENT_ERROR);
-            if(error != null) {
-            activity->setActivityBehavior(new ErrorEndEventActivityBehavior(error->getErrorCode(), error->getErrorMessageExpression()));
-            } else {
-            activity->setActivityBehavior(new ErrorEndEventActivityBehavior(errorRef, null));
+
+            if ($activity != null) {
+                $this->parseActivityInputOutput($endEventElement, $activity);
+            }
+
+            $this->parseAsynchronousContinuationForActivity($endEventElement, $activity);
+
+            $this->parseExecutionListenersOnScope($endEventElement, $activity);
+
+            foreach ($this->parseListeners as $parseListener) {
+                $parseListener->parseEndEvent($endEventElement, $scope, $activity);
+            }
+
+            if ($isServiceTaskLike) {
+                // activity behavior could be set by a listener (e.g. connector); thus,
+                // check is after listener invocation
+                $this->validateServiceTaskLike(
+                    $activity,
+                    ActivityTypes::END_EVENT_MESSAGE,
+                    $messageEventDefinitionElement
+                );
             }
         }
-        } else if (cancelEventDefinition != null) {
-        if (scope->getProperty(BpmnProperties.TYPE->getName()) == null || !scope->getProperty(BpmnProperties.TYPE->getName()).equals("transaction")) {
-            $this->addError("end event with cancelEventDefinition only supported inside transaction subprocess", cancelEventDefinition, activityId);
-        } else {
-            activity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.END_EVENT_CANCEL);
-            activity->setActivityBehavior(new CancelEndEventActivityBehavior());
-            activity->setActivityStartBehavior(ActivityStartBehavior.INTERRUPT_FLOW_SCOPE);
-            activity->setProperty(PROPERTYNAME_THROWS_COMPENSATION, true);
-            activity->setScope(true);
-        }
-        } else if (terminateEventDefinition != null) {
-        activity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.END_EVENT_TERMINATE);
-        activity->setActivityBehavior(new TerminateEndEventActivityBehavior());
-        activity->setActivityStartBehavior(ActivityStartBehavior.INTERRUPT_FLOW_SCOPE);
-        } else if (messageEventDefinitionElement != null) {
-        if (isServiceTaskLike) {
-
-            // CAM-436 same behaviour as service task
-            parseServiceTaskLike(
-                activity,
-                ActivityTypes.END_EVENT_MESSAGE,
-                messageEventDefinitionElement,
-                endEventElement,
-                scope);
-            activity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.END_EVENT_MESSAGE);
-        } else {
-            // default to non behavior if no service task
-            // properties have been specified
-            activity->setActivityBehavior(new IntermediateThrowNoneEventActivityBehavior());
-        }
-        } else if (signalEventDefinition != null) {
-        activity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.END_EVENT_SIGNAL);
-        EventSubscriptionDeclaration signalDefinition = parseSignalEventDefinition(signalEventDefinition, true, activityId);
-        activity->setActivityBehavior(new ThrowSignalEventActivityBehavior(signalDefinition));
-
-        } else if (compensateEventDefinitionElement != null) {
-        activity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.END_EVENT_COMPENSATION);
-        CompensateEventDefinition compensateEventDefinition = parseThrowCompensateEventDefinition(compensateEventDefinitionElement, scope, endEventElement.attribute("id"));
-        activity->setActivityBehavior(new CompensationEventActivityBehavior(compensateEventDefinition));
-        activity->setProperty(PROPERTYNAME_THROWS_COMPENSATION, true);
-        activity->setScope(true);
-
-        } else if(escalationEventDefinition != null) {
-        activity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.END_EVENT_ESCALATION);
-
-        Escalation escalation = findEscalationForEscalationEventDefinition(escalationEventDefinition, activityId);
-        if (escalation != null && escalation->getEscalationCode() == null) {
-            $this->addError("escalation end event must have an 'escalationCode'", escalationEventDefinition, activityId);
-        }
-        activity->setActivityBehavior(new ThrowEscalationEventActivityBehavior(escalation));
-
-        } else { // default: none end event
-        activity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.END_EVENT_NONE);
-        activity->setActivityBehavior(new NoneEndEventActivityBehavior());
-        }
-
-        if (activity != null) {
-        parseActivityInputOutput(endEventElement, activity);
-        }
-
-        parseAsynchronousContinuationForActivity(endEventElement, activity);
-
-        parseExecutionListenersOnScope(endEventElement, activity);
-
-        for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseEndEvent(endEventElement, scope, activity);
-        }
-
-        if (isServiceTaskLike) {
-        // activity behavior could be set by a listener (e.g. connector); thus,
-        // check is after listener invocation
-        validateServiceTaskLike(activity,
-            ActivityTypes.END_EVENT_MESSAGE,
-            messageEventDefinitionElement);
-        }
-    }
     }
 
     /**
@@ -3212,148 +3347,143 @@ class BpmnParse extends Parse
     * @param flowScope
     *          The {@link ScopeImpl} to which the activities must be added.
     */
-    public void parseBoundaryEvents(Element parentElement, ScopeImpl flowScope) {
-    for (Element boundaryEventElement : parentElement.elements("boundaryEvent")) {
+    public function parseBoundaryEvents(Element $parentElement, ScopeImpl $flowScope): void
+    {
+        foreach ($parentElement->elements("boundaryEvent") as $boundaryEventElement) {
+            // The boundary event is attached to an activity, reference by the
+            // 'attachedToRef' attribute
+            $attachedToRef = $boundaryEventElement->attribute("attachedToRef");
+            if (aempty($ttachedToRef)) {
+                $this->addError("AttachedToRef is required when using a timerEventDefinition", $boundaryEventElement);
+            }
 
-        // The boundary event is attached to an activity, reference by the
-        // 'attachedToRef' attribute
-        String attachedToRef = boundaryEventElement.attribute("attachedToRef");
-        if (attachedToRef == null || attachedToRef.equals("")) {
-        $this->addError("AttachedToRef is required when using a timerEventDefinition", boundaryEventElement);
-        }
+            // Representation structure-wise is a nested activity in the activity to
+            // which its attached
+            $id = $boundaryEventElement->attribute("id");
 
-        // Representation structure-wise is a nested activity in the activity to
-        // which its attached
-        String id = boundaryEventElement.attribute("id");
+            //LOG.parsingElement("boundary event", id);
 
-        LOG.parsingElement("boundary event", id);
+            // Depending on the sub-element definition, the correct activityBehavior
+            // parsing is selected
+            $timerEventDefinition = $boundaryEventElement->element(self::TIMER_EVENT_DEFINITION);
+            $errorEventDefinition = $boundaryEventElement->element(self::ERROR_EVENT_DEFINITION);
+            $signalEventDefinition = $boundaryEventElement->element(self::SIGNAL_EVENT_DEFINITION);
+            $cancelEventDefinition = $boundaryEventElement->element(self::CANCEL_EVENT_DEFINITION);
+            $compensateEventDefinition = $boundaryEventElement->element(self::COMPENSATE_EVENT_DEFINITION);
+            $messageEventDefinition = $boundaryEventElement->element(self::MESSAGE_EVENT_DEFINITION);
+            $escalationEventDefinition = $boundaryEventElement->element(self::ESCALATION_EVENT_DEFINITION);
+            $conditionalEventDefinition = $boundaryEventElement->element(self::CONDITIONAL_EVENT_DEFINITION);
 
-        // Depending on the sub-element definition, the correct activityBehavior
-        // parsing is selected
-        Element timerEventDefinition = boundaryEventElement.element(TIMER_EVENT_DEFINITION);
-        Element errorEventDefinition = boundaryEventElement.element(ERROR_EVENT_DEFINITION);
-        Element signalEventDefinition = boundaryEventElement.element(SIGNAL_EVENT_DEFINITION);
-        Element cancelEventDefinition = boundaryEventElement.element(CANCEL_EVENT_DEFINITION);
-        Element compensateEventDefinition = boundaryEventElement.element(COMPENSATE_EVENT_DEFINITION);
-        Element messageEventDefinition = boundaryEventElement.element(MESSAGE_EVENT_DEFINITION);
-        Element escalationEventDefinition = boundaryEventElement.element(ESCALATION_EVENT_DEFINITION);
-        Element conditionalEventDefinition = boundaryEventElement.element(CONDITIONAL_EVENT_DEFINITION);
+            // create the boundary event activity
+            $boundaryEventActivity = $this->createActivityOnScope($boundaryEventElement, $flowScope);
+            $this->parseAsynchronousContinuation($boundaryEventElement, $boundaryEventActivity);
 
-        // create the boundary event activity
-        ActivityImpl boundaryEventActivity = createActivityOnScope(boundaryEventElement, flowScope);
-        parseAsynchronousContinuation(boundaryEventElement, boundaryEventActivity);
+            $attachedActivity = $flowScope->findActivityAtLevelOfSubprocess($attachedToRef);
+            if ($attachedActivity == null) {
+                $this->addError(
+                    "Invalid reference in boundary event. Make sure that the referenced activity is defined in the same scope as the boundary event",
+                    $boundaryEventElement
+                );
+            }
 
-        ActivityImpl attachedActivity = flowScope.findActivityAtLevelOfSubprocess(attachedToRef);
-        if (attachedActivity == null) {
-        $this->addError("Invalid reference in boundary event. Make sure that the referenced activity is defined in the same scope as the boundary event",
-            boundaryEventElement);
-        }
+            // determine the correct event scope (the scope in which the boundary event catches events)
+            if ($compensateEventDefinition == null) {
+                $multiInstanceScope = $this->getMultiInstanceScope($attachedActivity);
+                if ($multiInstanceScope != null) {
+                    // if the boundary event is attached to a multi instance activity,
+                    // then the scope of the boundary event is the multi instance body.
+                    $boundaryEventActivity->setEventScope($multiInstanceScope);
+                } else {
+                    $attachedActivity->setScope(true);
+                    $boundaryEventActivity->setEventScope($attachedActivity);
+                }
+            } else {
+                $boundaryEventActivity->setEventScope($attachedActivity);
+            }
 
-        // determine the correct event scope (the scope in which the boundary event catches events)
-        if (compensateEventDefinition == null) {
-        ActivityImpl multiInstanceScope = getMultiInstanceScope(attachedActivity);
-        if (multiInstanceScope != null) {
-            // if the boundary event is attached to a multi instance activity,
-            // then the scope of the boundary event is the multi instance body.
-            boundaryEventActivity->setEventScope(multiInstanceScope);
-        } else {
-            attachedActivity->setScope(true);
-            boundaryEventActivity->setEventScope(attachedActivity);
-        }
-        } else {
-        boundaryEventActivity->setEventScope(attachedActivity);
-        }
+            // except escalation, by default is assumed to abort the activity
+            $cancelActivityAttr = $boundaryEventElement->attribute("cancelActivity", "true");
+            $isCancelActivity = $cancelActivityAttr === "true";
 
-        // except escalation, by default is assumed to abort the activity
-        String cancelActivityAttr = boundaryEventElement.attribute("cancelActivity", TRUE);
-        boolean isCancelActivity = Boolean.valueOf(cancelActivityAttr);
+            // determine start behavior
+            if ($isCancelActivity) {
+                $boundaryEventActivity->setActivityStartBehavior(ActivityStartBehavior::CANCEL_EVENT_SCOPE);
+            } else {
+                $boundaryEventActivity->setActivityStartBehavior(ActivityStartBehavior::CONCURRENT_IN_FLOW_SCOPE);
+            }
 
-        // determine start behavior
-        if (isCancelActivity) {
-        boundaryEventActivity->setActivityStartBehavior(ActivityStartBehavior.CANCEL_EVENT_SCOPE);
-        } else {
-        boundaryEventActivity->setActivityStartBehavior(ActivityStartBehavior.CONCURRENT_IN_FLOW_SCOPE);
-        }
+            // Catch event behavior is the same for most types
+            $behavior = new BoundaryEventActivityBehavior();
+            if ($timerEventDefinition != null) {
+                $this->parseBoundaryTimerEventDefinition($timerEventDefinition, $isCancelActivity, $boundaryEventActivity);
+            } elseif ($errorEventDefinition != null) {
+                $this->parseBoundaryErrorEventDefinition($errorEventDefinition, $boundaryEventActivity);
+            } elseif ($signalEventDefinition != null) {
+                $this->parseBoundarySignalEventDefinition($signalEventDefinition, $isCancelActivity, $boundaryEventActivity);
+            } elseif ($cancelEventDefinition != null) {
+                $behavior = $this->parseBoundaryCancelEventDefinition($cancelEventDefinition, $boundaryEventActivity);
+            } elseif ($compensateEventDefinition != null) {
+                $this->parseBoundaryCompensateEventDefinition($compensateEventDefinition, $boundaryEventActivity);
+            } elseif ($messageEventDefinition != null) {
+                $this->parseBoundaryMessageEventDefinition($messageEventDefinition, $isCancelActivity, $boundaryEventActivity);
+            } elseif ($escalationEventDefinition != null) {
+                if (
+                    $attachedActivity->isSubProcessScope() || $attachedActivity->getActivityBehavior() instanceof CallActivityBehavior ||
+                    $attachedActivity->getActivityBehavior() instanceof UserTaskActivityBehavior
+                ) {
+                    $this->parseBoundaryEscalationEventDefinition($escalationEventDefinition, $isCancelActivity, $boundaryEventActivity);
+                } else {
+                    $this->addError("An escalation boundary event should only be attached to a subprocess, a call activity or an user task", $boundaryEventElement);
+                }
+            } elseif ($conditionalEventDefinition != null) {
+                $behavior = $this->parseBoundaryConditionalEventDefinition($conditionalEventDefinition, $isCancelActivity, $boundaryEventActivity);
+            } else {
+                $this->addError("Unsupported boundary event type", $boundaryEventElement);
+            }
 
-        // Catch event behavior is the same for most types
-        ActivityBehavior behavior = new BoundaryEventActivityBehavior();
-        if (timerEventDefinition != null) {
-        parseBoundaryTimerEventDefinition(timerEventDefinition, isCancelActivity, boundaryEventActivity);
+            $this->ensureNoIoMappingDefined($boundaryEventElement);
 
-        } else if (errorEventDefinition != null) {
-        parseBoundaryErrorEventDefinition(errorEventDefinition, boundaryEventActivity);
+            $boundaryEventActivity->setActivityBehavior($behavior);
 
-        } else if (signalEventDefinition != null) {
-        parseBoundarySignalEventDefinition(signalEventDefinition, isCancelActivity, boundaryEventActivity);
+            $this->parseExecutionListenersOnScope($boundaryEventElement, $boundaryEventActivity);
 
-        } else if (cancelEventDefinition != null) {
-        behavior = parseBoundaryCancelEventDefinition(cancelEventDefinition, boundaryEventActivity);
-
-        } else if (compensateEventDefinition != null) {
-        parseBoundaryCompensateEventDefinition(compensateEventDefinition, boundaryEventActivity);
-
-        } else if (messageEventDefinition != null) {
-        parseBoundaryMessageEventDefinition(messageEventDefinition, isCancelActivity, boundaryEventActivity);
-
-        } else if (escalationEventDefinition != null) {
-
-        if (attachedActivity.isSubProcessScope() || attachedActivity->getActivityBehavior() instanceof CallActivityBehavior ||
-            attachedActivity->getActivityBehavior() instanceof UserTaskActivityBehavior) {
-            parseBoundaryEscalationEventDefinition(escalationEventDefinition, isCancelActivity, boundaryEventActivity);
-        } else {
-            $this->addError("An escalation boundary event should only be attached to a subprocess, a call activity or an user task", boundaryEventElement);
-        }
-
-        } else if (conditionalEventDefinition != null) {
-        behavior = parseBoundaryConditionalEventDefinition(conditionalEventDefinition, isCancelActivity, boundaryEventActivity);
-        } else {
-        $this->addError("Unsupported boundary event type", boundaryEventElement);
-
-        }
-
-        ensureNoIoMappingDefined(boundaryEventElement);
-
-        boundaryEventActivity->setActivityBehavior(behavior);
-
-        parseExecutionListenersOnScope(boundaryEventElement, boundaryEventActivity);
-
-        for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseBoundaryEvent(boundaryEventElement, flowScope, boundaryEventActivity);
-        }
-
-    }
-
-    }
-
-    public List<CamundaErrorEventDefinition> parseCamundaErrorEventDefinitions(ActivityImpl activity, Element scopeElement) {
-    List<CamundaErrorEventDefinition> errorEventDefinitions = new ArrayList<>();
-    Element extensionElements = scopeElement.element("extensionElements");
-    if (extensionElements != null) {
-        List<Element> errorEventDefinitionElements = extensionElements.elements("errorEventDefinition");
-        for (Element errorEventDefinitionElement : errorEventDefinitionElements) {
-        String errorRef = errorEventDefinitionElement.attribute("errorRef");
-        Error error = null;
-        if (errorRef != null) {
-            String camundaExpression = errorEventDefinitionElement.attribute("expression");
-            error = errors->get(errorRef);
-            CamundaErrorEventDefinition definition = new CamundaErrorEventDefinition(activity->getId(), expressionManager.createExpression(camundaExpression));
-            definition->setErrorCode(error == null ? errorRef : error->getErrorCode());
-            setErrorCodeVariableOnErrorEventDefinition(errorEventDefinitionElement, definition);
-            setErrorMessageVariableOnErrorEventDefinition(errorEventDefinitionElement, definition);
-
-            errorEventDefinitions.add(definition);
-        }
+            foreach ($this->parseListeners as $parseListener) {
+                $parseListener->parseBoundaryEvent($boundaryEventElement, $flowScope, $boundaryEventActivity);
+            }
         }
     }
-    return errorEventDefinitions;
+
+    public function parseCamundaErrorEventDefinitions(ActivityImpl $activity, Element $scopeElement): array
+    {
+        $errorEventDefinitions = [];
+        $extensionElements = $scopeElement->element("extensionElements");
+        if (!empty($extensionElements)) {
+            $errorEventDefinitionElements = $extensionElements->elements("errorEventDefinition");
+            foreach ($errorEventDefinitionElements as $errorEventDefinitionElement) {
+                $errorRef = $errorEventDefinitionElement->attribute("errorRef");
+                $error = null;
+                if ($errorRef != null) {
+                    $expression = $errorEventDefinitionElement->attribute("expression");
+                    $error = array_key_exists($errorRef, $this->errors) ? $this->errors[$errorRef] : null;
+                    $definition = new ErrorEventDefinition($activity->getId(), $this->expressionManager->createExpression($expression));
+                    $definition->setErrorCode($error == null ? $errorRef : $error->getErrorCode());
+                    $this->setErrorCodeVariableOnErrorEventDefinition($errorEventDefinitionElement, $definition);
+                    $this->setErrorMessageVariableOnErrorEventDefinition($errorEventDefinitionElement, $definition);
+
+                    $errorEventDefinitions[] = $definition;
+                }
+            }
+        }
+        return $errorEventDefinitions;
     }
 
-    protected ActivityImpl getMultiInstanceScope(ActivityImpl activity) {
-    if (activity.isMultiInstance()) {
-        return activity->getParentFlowScopeActivity();
-    } else {
-        return null;
-    }
+    protected function getMultiInstanceScope(ActivityImpl $activity): ?ActivityImpl
+    {
+        if ($activity->isMultiInstance()) {
+            return $activity->getParentFlowScopeActivity();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -3370,123 +3500,126 @@ class BpmnParse extends Parse
     *          onto which the boundary event is attached, but a nested activity
     *          inside this activity, specifically created for this event.
     */
-    public void parseBoundaryTimerEventDefinition(Element timerEventDefinition, boolean interrupting, ActivityImpl boundaryActivity) {
-    boundaryActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.BOUNDARY_TIMER);
-    TimerDeclarationImpl timerDeclaration = parseTimer(timerEventDefinition, boundaryActivity, TimerExecuteNestedActivityJobHandler.TYPE);
+    public function parseBoundaryTimerEventDefinition(Element $timerEventDefinition, bool $interrupting, ActivityImpl $boundaryActivity): void
+    {
+        $boundaryActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::BOUNDARY_TIMER);
+        $timerDeclaration = $this->parseTimer($timerEventDefinition, $boundaryActivity, TimerExecuteNestedActivityJobHandler::TYPE);
 
-    // ACT-1427
-    if (interrupting) {
-        timerDeclaration->setInterruptingTimer(true);
+        // ACT-1427
+        if ($interrupting) {
+            $timerDeclaration->setInterruptingTimer(true);
 
-        Element timeCycleElement = timerEventDefinition.element("timeCycle");
-        if (timeCycleElement != null) {
-        addTimeCycleWarning(timeCycleElement, "cancelling boundary", boundaryActivity->getId());
+            $timeCycleElement = $timerEventDefinition->element("timeCycle");
+            if ($timeCycleElement != null) {
+                $this->addTimeCycleWarning($timeCycleElement, "cancelling boundary", $boundaryActivity->getId());
+            }
+        }
+
+        $this->addTimerDeclaration($boundaryActivity->getEventScope(), $timerDeclaration);
+
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseBoundaryTimerEventDefinition($timerEventDefinition, $interrupting, $boundaryActivity);
         }
     }
 
-    addTimerDeclaration(boundaryActivity->getEventScope(), timerDeclaration);
+    public function parseBoundarySignalEventDefinition(Element $element, bool $interrupting, ActivityImpl $signalActivity): void
+    {
+        $signalActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::BOUNDARY_SIGNAL);
 
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseBoundaryTimerEventDefinition(timerEventDefinition, interrupting, boundaryActivity);
-    }
-    }
+        $signalDefinition = $this->parseSignalEventDefinition($element, false, $signalActivity->getId());
+        if ($signalActivity->getId() == null) {
+            $this->addError("boundary event has no id", $element);
+        }
+        $signalDefinition->setActivityId($signalActivity->getId());
+        $this->addEventSubscriptionDeclaration($signalDefinition, $signalActivity->getEventScope(), $element);
 
-    public void parseBoundarySignalEventDefinition(Element element, boolean interrupting, ActivityImpl signalActivity) {
-    signalActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.BOUNDARY_SIGNAL);
-
-    EventSubscriptionDeclaration signalDefinition = parseSignalEventDefinition(element, false, signalActivity->getId());
-    if (signalActivity->getId() == null) {
-        $this->addError("boundary event has no id", element);
-    }
-    signalDefinition->setActivityId(signalActivity->getId());
-    addEventSubscriptionDeclaration(signalDefinition, signalActivity->getEventScope(), element);
-
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseBoundarySignalEventDefinition(element, interrupting, signalActivity);
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseBoundarySignalEventDefinition($element, $interrupting, $signalActivity);
+        }
     }
 
+    public function parseBoundaryMessageEventDefinition(Element $element, bool $interrupting, ActivityImpl $messageActivity): void
+    {
+        $messageActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::BOUNDARY_MESSAGE);
+
+        $messageEventDefinition = $this->parseMessageEventDefinition($element, $messageActivity->getId());
+        if ($messageActivity->getId() == null) {
+            $this->addError("boundary event has no id", $element);
+        }
+        $messageEventDefinition->setActivityId($messageActivity->getId());
+        $this->addEventSubscriptionDeclaration($messageEventDefinition, $messageActivity->getEventScope(), $element);
+
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseBoundaryMessageEventDefinition($element, $interrupting, $messageActivity);
+        }
     }
 
-    public void parseBoundaryMessageEventDefinition(Element element, boolean interrupting, ActivityImpl messageActivity) {
-    messageActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.BOUNDARY_MESSAGE);
+    protected function parseTimerStartEventDefinition(Element $timerEventDefinition, ActivityImpl $timerActivity, ProcessDefinitionEntity $processDefinition): void
+    {
+        $timerActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::START_EVENT_TIMER);
+        $timerDeclaration = $this->parseTimer($timerEventDefinition, $timerActivity, TimerStartEventJobHandler::TYPE);
+        $timerDeclaration->setRawJobHandlerConfiguration($processDefinition->getKey());
 
-    EventSubscriptionDeclaration messageEventDefinition = parseMessageEventDefinition(element, messageActivity->getId());
-    if (messageActivity->getId() == null) {
-        $this->addError("boundary event has no id", element);
-    }
-    messageEventDefinition->setActivityId(messageActivity->getId());
-    addEventSubscriptionDeclaration(messageEventDefinition, messageActivity->getEventScope(), element);
-
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseBoundaryMessageEventDefinition(element, interrupting, messageActivity);
-    }
-
+        $timerDeclarations = $processDefinition->getProperty(self::PROPERTYNAME_START_TIMER);
+        if ($timerDeclarations == null) {
+            $timerDeclarations = [];
+            $processDefinition->setProperty(self::PROPERTYNAME_START_TIMER, $timerDeclarations);
+        }
+        $processDefinition->addProperty(self::PROPERTYNAME_START_TIMER, $timerDeclaration);
     }
 
-    @SuppressWarnings("unchecked")
-    protected void parseTimerStartEventDefinition(Element timerEventDefinition, ActivityImpl timerActivity, ProcessDefinitionEntity processDefinition) {
-    timerActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.START_EVENT_TIMER);
-    TimerDeclarationImpl timerDeclaration = parseTimer(timerEventDefinition, timerActivity, TimerStartEventJobHandler.TYPE);
-    timerDeclaration->setRawJobHandlerConfiguration(processDefinition->getKey());
+    protected function parseTimerStartEventDefinitionForEventSubprocess(Element $timerEventDefinition, ActivityImpl $timerActivity, bool $interrupting): void
+    {
+        $timerActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::START_EVENT_TIMER);
 
-    List<TimerDeclarationImpl> timerDeclarations = (List<TimerDeclarationImpl>) processDefinition->getProperty(PROPERTYNAME_START_TIMER);
-    if (timerDeclarations == null) {
-        timerDeclarations = new ArrayList<>();
-        processDefinition->setProperty(PROPERTYNAME_START_TIMER, timerDeclarations);
-    }
-    timerDeclarations.add(timerDeclaration);
+        $timerDeclaration = $this->parseTimer($timerEventDefinition, $timerActivity, TimerStartEventSubprocessJobHandler::TYPE);
 
-    }
+        $timerDeclaration->setActivity($timerActivity);
+        $timerDeclaration->setEventScopeActivityId($timerActivity->getEventScope()->getId());
+        $timerDeclaration->setRawJobHandlerConfiguration($timerActivity->getFlowScope()->getId());
+        $timerDeclaration->setInterruptingTimer($interrupting);
 
-    protected void parseTimerStartEventDefinitionForEventSubprocess(Element timerEventDefinition, ActivityImpl timerActivity, boolean interrupting) {
-    timerActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.START_EVENT_TIMER);
-
-    TimerDeclarationImpl timerDeclaration = parseTimer(timerEventDefinition, timerActivity, TimerStartEventSubprocessJobHandler.TYPE);
-
-    timerDeclaration->setActivity(timerActivity);
-    timerDeclaration->setEventScopeActivityId(timerActivity->getEventScope()->getId());
-    timerDeclaration->setRawJobHandlerConfiguration(timerActivity->getFlowScope()->getId());
-    timerDeclaration->setInterruptingTimer(interrupting);
-
-    if (interrupting) {
-        Element timeCycleElement = timerEventDefinition.element("timeCycle");
-        if (timeCycleElement != null) {
-        addTimeCycleWarning(timeCycleElement, "interrupting start", timerActivity->getId());
+        if ($interrupting) {
+            $timeCycleElement = $timerEventDefinition->element("timeCycle");
+            if ($timeCycleElement != null) {
+                $this->addTimeCycleWarning($timeCycleElement, "interrupting start", $timerActivity->getId());
+            }
         }
 
+        $this->addTimerDeclaration($timerActivity->getEventScope(), $timerDeclaration);
     }
 
-    addTimerDeclaration(timerActivity->getEventScope(), timerDeclaration);
+    protected function parseEventDefinitionForSubprocess(EventSubscriptionDeclaration $subscriptionDeclaration, ActivityImpl $activity, Element $element): void
+    {
+        $subscriptionDeclaration->setActivityId($activity->getId());
+        $subscriptionDeclaration->setEventScopeActivityId($activity->getEventScope()->getId());
+        $subscriptionDeclaration->setStartEvent(false);
+        $this->addEventSubscriptionDeclaration($subscriptionDeclaration, $activity->getEventScope(), $element);
     }
 
-    protected void parseEventDefinitionForSubprocess(EventSubscriptionDeclaration subscriptionDeclaration, ActivityImpl activity, Element element) {
-    subscriptionDeclaration->setActivityId(activity->getId());
-    subscriptionDeclaration->setEventScopeActivityId(activity->getEventScope()->getId());
-    subscriptionDeclaration->setStartEvent(false);
-    addEventSubscriptionDeclaration(subscriptionDeclaration, activity->getEventScope(), element);
+    protected function parseIntermediateSignalEventDefinition(Element $element, ActivityImpl $signalActivity): void
+    {
+        $signalActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::INTERMEDIATE_EVENT_SIGNAL);
+
+        $this->parseSignalCatchEventDefinition($element, $signalActivity, false);
+
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseIntermediateSignalCatchEventDefinition($element, $signalActivity);
+        }
     }
 
-    protected void parseIntermediateSignalEventDefinition(Element element, ActivityImpl signalActivity) {
-    signalActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.INTERMEDIATE_EVENT_SIGNAL);
+    protected function parseSignalCatchEventDefinition(Element $element, ActivityImpl $signalActivity, bool $isStartEvent): void
+    {
+        $signalDefinition = $this->parseSignalEventDefinition($element, false, $signalActivity->getId());
+        $signalDefinition->setActivityId($signalActivity->getId());
+        $signalDefinition->setStartEvent($isStartEvent);
+        $this->addEventSubscriptionDeclaration($signalDefinition, $signalActivity->getEventScope(), $element);
 
-    parseSignalCatchEventDefinition(element, signalActivity, false);
-
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseIntermediateSignalCatchEventDefinition(element, signalActivity);
-    }
-    }
-
-    protected void parseSignalCatchEventDefinition(Element element, ActivityImpl signalActivity, boolean isStartEvent) {
-    EventSubscriptionDeclaration signalDefinition = parseSignalEventDefinition(element, false, signalActivity->getId());
-    signalDefinition->setActivityId(signalActivity->getId());
-    signalDefinition->setStartEvent(isStartEvent);
-    addEventSubscriptionDeclaration(signalDefinition, signalActivity->getEventScope(), element);
-
-    EventSubscriptionJobDeclaration catchingAsyncDeclaration = new EventSubscriptionJobDeclaration(signalDefinition);
-    catchingAsyncDeclaration->setJobPriorityProvider((ParameterValueProvider) signalActivity->getProperty(PROPERTYNAME_JOB_PRIORITY));
-    catchingAsyncDeclaration->setActivity(signalActivity);
-    signalDefinition->setJobDeclaration(catchingAsyncDeclaration);
-    addEventSubscriptionJobDeclaration(catchingAsyncDeclaration, signalActivity, element);
+        $catchingAsyncDeclaration = new EventSubscriptionJobDeclaration($signalDefinition);
+        $catchingAsyncDeclaration->setJobPriorityProvider($signalActivity->getProperty(self::PROPERTYNAME_JOB_PRIORITY));
+        $catchingAsyncDeclaration->setActivity($signalActivity);
+        $signalDefinition->setJobDeclaration($catchingAsyncDeclaration);
+        $this->addEventSubscriptionJobDeclaration($catchingAsyncDeclaration, $signalActivity, $element);
     }
 
     /**
@@ -3496,131 +3629,142 @@ class BpmnParse extends Parse
     * @param isThrowing true if a Throwing signal event is being parsed
     * @return
     */
-    protected EventSubscriptionDeclaration parseSignalEventDefinition(Element signalEventDefinitionElement, boolean isThrowing, String signalElementId) {
-    String signalRef = signalEventDefinitionElement.attribute("signalRef");
-    if (signalRef == null) {
-        $this->addError("signalEventDefinition does not have required property 'signalRef'", signalEventDefinitionElement, signalElementId);
-        return null;
-    } else {
-        SignalDefinition signalDefinition = signals->get(resolveName(signalRef));
-        if (signalDefinition == null) {
-        $this->addError("Could not find signal with id '" + signalRef + "'", signalEventDefinitionElement, signalElementId);
-        }
-
-        EventSubscriptionDeclaration signalEventDefinition;
-        if (isThrowing) {
-        CallableElement payload = new CallableElement();
-        parseInputParameter(signalEventDefinitionElement, payload);
-        signalEventDefinition = new EventSubscriptionDeclaration(signalDefinition->getExpression(), EventType.SIGNAL, payload);
+    protected function parseSignalEventDefinition(Element $signalEventDefinitionElement, bool $isThrowing, string $signalElementId): ?EventSubscriptionDeclaration
+    {
+        $signalRef = $signalEventDefinitionElement->attribute("signalRef");
+        if ($signalRef == null) {
+            $this->addError("signalEventDefinition does not have required property 'signalRef'", $signalEventDefinitionElement, $signalElementId);
+            return null;
         } else {
-        signalEventDefinition = new EventSubscriptionDeclaration(signalDefinition->getExpression(), EventType.SIGNAL);
+            $resolvedRef = $this->resolveName($signalRef);
+            if (!array_key_exists($resolvedRef, $this->signals)) {
+                $this->addError("Could not find signal with id '" . $signalRef . "'", $signalEventDefinitionElement, $signalElementId);
+            } else {
+                $signalDefinition = $this->signals[$resolvedRef];
+            }
+
+            $signalEventDefinition = null;
+            if ($isThrowing) {
+                $payload = new CallableElement();
+                $this->parseInputParameter($signalEventDefinitionElement, $payload);
+                $signalEventDefinition = new EventSubscriptionDeclaration($signalDefinition->getExpression(), EventType::signal(), $payload);
+            } else {
+                $signalEventDefinition = new EventSubscriptionDeclaration($signalDefinition->getExpression(), EventType::signal());
+            }
+
+            $throwingAsync = strtolower($signalEventDefinitionElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "async", "false")) == true;
+            $signalEventDefinition->setAsync($throwingAsync);
+
+            return $signalEventDefinition;
+        }
+    }
+
+    protected function parseIntermediateTimerEventDefinition(Element $timerEventDefinition, ActivityImpl $timerActivity): void
+    {
+        $timerActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::INTERMEDIATE_EVENT_TIMER);
+        $timerDeclaration = $this->parseTimer($timerEventDefinition, $timerActivity, TimerCatchIntermediateEventJobHandler::TYPE);
+
+        $timeCycleElement = $timerEventDefinition->element("timeCycle");
+        if ($timeCycleElement != null) {
+            $this->addTimeCycleWarning($timeCycleElement, "intermediate catch", $timerActivity->getId());
         }
 
-        boolean throwingAsync = TRUE.equals(signalEventDefinitionElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "async", "false"));
-        signalEventDefinition->setAsync(throwingAsync);
+        $this->addTimerDeclaration($timerActivity->getEventScope(), $timerDeclaration);
 
-        return signalEventDefinition;
-    }
-    }
-
-    protected void parseIntermediateTimerEventDefinition(Element timerEventDefinition, ActivityImpl timerActivity) {
-    timerActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.INTERMEDIATE_EVENT_TIMER);
-    TimerDeclarationImpl timerDeclaration = parseTimer(timerEventDefinition, timerActivity, TimerCatchIntermediateEventJobHandler.TYPE);
-
-    Element timeCycleElement = timerEventDefinition.element("timeCycle");
-    if (timeCycleElement != null) {
-        addTimeCycleWarning(timeCycleElement, "intermediate catch", timerActivity->getId());
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseIntermediateTimerEventDefinition($timerEventDefinition, $timerActivity);
+        }
     }
 
-    addTimerDeclaration(timerActivity->getEventScope(), timerDeclaration);
+    protected function parseTimer(Element $timerEventDefinition, ActivityImpl $timerActivity, string $jobHandlerType): ?TimerDeclarationImpl
+    {
+        // TimeDate
+        $type = TimerDeclarationType::DATE;
+        $expression = $this->parseExpression($timerEventDefinition, "timeDate");
+        // TimeCycle
+        if ($expression == null) {
+            $type = TimerDeclarationType::CYCLE;
+            $expression = $this->parseExpression($timerEventDefinition, "timeCycle");
+        }
+        // TimeDuration
+        if ($expression == null) {
+            $type = TimerDeclarationType::DURATION;
+            $expression = $this->parseExpression($timerEventDefinition, "timeDuration");
+        }
+        // neither date, cycle or duration configured!
+        if ($expression == null) {
+            $this->addError("Timer needs configuration (either timeDate, timeCycle or timeDuration is needed).", $timerEventDefinition, $timerActivity->getId());
+        }
 
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseIntermediateTimerEventDefinition(timerEventDefinition, timerActivity);
-    }
-    }
+        // Parse the timer declaration
+        // TODO move the timer declaration into the bpmn activity or next to the TimerSession
+        $timerDeclaration = new TimerDeclarationImpl($expression, $type, $jobHandlerType);
+        $timerDeclaration->setRawJobHandlerConfiguration($timerActivity->getId());
+        $timerDeclaration->setExclusive(strtolower($timerEventDefinition->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "exclusive", JobEntity::DEFAULT_EXCLUSIVE)) == "true");
+        if ($timerActivity->getId() == null) {
+            $this->addError("Attribute \"id\" is required!", $timerEventDefinition);
+        }
+        $timerDeclaration->setActivity($timerActivity);
+        $timerDeclaration->setJobConfiguration($type . ": " . $expression->getExpressionText());
+        $this->addJobDeclarationToProcessDefinition($timerDeclaration, $timerActivity->getProcessDefinition());
 
-    protected TimerDeclarationImpl parseTimer(Element timerEventDefinition, ActivityImpl timerActivity, String jobHandlerType) {
-    // TimeDate
-    TimerDeclarationType type = TimerDeclarationType.DATE;
-    Expression expression = parseExpression(timerEventDefinition, "timeDate");
-    // TimeCycle
-    if (expression == null) {
-        type = TimerDeclarationType.CYCLE;
-        expression = parseExpression(timerEventDefinition, "timeCycle");
-    }
-    // TimeDuration
-    if (expression == null) {
-        type = TimerDeclarationType.DURATION;
-        expression = parseExpression(timerEventDefinition, "timeDuration");
-    }
-    // neither date, cycle or duration configured!
-    if (expression == null) {
-        $this->addError("Timer needs configuration (either timeDate, timeCycle or timeDuration is needed).", timerEventDefinition, timerActivity->getId());
-    }
+        $timerDeclaration->setJobPriorityProvider($timerActivity->getProperty(self::PROPERTYNAME_JOB_PRIORITY));
 
-    // Parse the timer declaration
-    // TODO move the timer declaration into the bpmn activity or next to the TimerSession
-    TimerDeclarationImpl timerDeclaration = new TimerDeclarationImpl(expression, type, jobHandlerType);
-    timerDeclaration->setRawJobHandlerConfiguration(timerActivity->getId());
-    timerDeclaration->setExclusive(TRUE.equals(timerEventDefinition.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "exclusive", String.valueOf(JobEntity.DEFAULT_EXCLUSIVE))));
-    if (timerActivity->getId() == null) {
-        $this->addError("Attribute \"id\" is required!", timerEventDefinition);
-    }
-    timerDeclaration->setActivity(timerActivity);
-    timerDeclaration->setJobConfiguration(type.toString() + ": " + expression->getExpressionText());
-    addJobDeclarationToProcessDefinition(timerDeclaration, (ProcessDefinition) timerActivity->getProcessDefinition());
-
-    timerDeclaration->setJobPriorityProvider((ParameterValueProvider) timerActivity->getProperty(PROPERTYNAME_JOB_PRIORITY));
-
-    return timerDeclaration;
+        return $timerDeclaration;
     }
 
-    protected Expression parseExpression(Element parent, String name) {
-    Element value = parent.element(name);
-    if (value != null) {
-        String expressionText = value->getText().trim();
-        return expressionManager.createExpression(expressionText);
-    }
-    return null;
-    }
-
-    public void parseBoundaryErrorEventDefinition(Element errorEventDefinition, ActivityImpl boundaryEventActivity) {
-
-    boundaryEventActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.BOUNDARY_ERROR);
-
-    String errorRef = errorEventDefinition.attribute("errorRef");
-    Error error = null;
-    ErrorEventDefinition definition = new ErrorEventDefinition(boundaryEventActivity->getId());
-    if (errorRef != null) {
-        error = errors->get(errorRef);
-        definition->setErrorCode(error == null ? errorRef : error->getErrorCode());
-    }
-    setErrorCodeVariableOnErrorEventDefinition(errorEventDefinition, definition);
-    setErrorMessageVariableOnErrorEventDefinition(errorEventDefinition, definition);
-
-    $this->addErrorEventDefinition(definition, boundaryEventActivity->getEventScope());
-
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseBoundaryErrorEventDefinition(errorEventDefinition, true, (ActivityImpl) boundaryEventActivity->getEventScope(), boundaryEventActivity);
-    }
+    protected function parseExpression(Element $parent, string $name): ?ExpressionInterface
+    {
+        $value = $parent->element($name);
+        if (!empty($value)) {
+            $expressionText = trim($value->getText());
+            return $this->expressionManager->createExpression($expressionText);
+        }
+        return null;
     }
 
-    protected void addErrorEventDefinition(ErrorEventDefinition errorEventDefinition, ScopeImpl catchingScope) {
-    catchingScope->getProperties().addListItem(BpmnProperties.ERROR_EVENT_DEFINITIONS, errorEventDefinition);
+    public function parseBoundaryErrorEventDefinition(Element $errorEventDefinition, ActivityImpl $boundaryEventActivity): void
+    {
+        $boundaryEventActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::BOUNDARY_ERROR);
 
-    List<ErrorEventDefinition> errorEventDefinitions = catchingScope->getProperties()->get(BpmnProperties.ERROR_EVENT_DEFINITIONS);
-    Collections.sort(errorEventDefinitions, ErrorEventDefinition.comparator);
+        $errorRef = $errorEventDefinition->attribute("errorRef");
+        $error = null;
+        $definition = new ErrorEventDefinition($boundaryEventActivity->getId());
+        if ($errorRef != null) {
+            if (array_key_exists($errorRef, $this->errors)) {
+                $error = $this->errors[$errorRef];
+            }
+            $definition->setErrorCode($error == null ? $errorRef : $error->getErrorCode());
+        }
+        $this->setErrorCodeVariableOnErrorEventDefinition($errorEventDefinition, $definition);
+        $this->setErrorMessageVariableOnErrorEventDefinition($errorEventDefinition, $definition);
+
+        $this->addErrorEventDefinition($definition, $boundaryEventActivity->getEventScope());
+
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseBoundaryErrorEventDefinition($errorEventDefinition, true, $boundaryEventActivity->getEventScope(), $boundaryEventActivity);
+        }
     }
 
-    protected void parseBoundaryEscalationEventDefinition(Element escalationEventDefinitionElement, boolean cancelActivity, ActivityImpl boundaryEventActivity) {
-    boundaryEventActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.BOUNDARY_ESCALATION);
+    protected function addErrorEventDefinition(ErrorEventDefinition $errorEventDefinition, ScopeImpl $catchingScope): void
+    {
+        $catchingScope->getProperties()->addListItem(BpmnProperties::errorEventDefinitions(), $errorEventDefinition);
 
-    EscalationEventDefinition escalationEventDefinition = createEscalationEventDefinitionForEscalationHandler(escalationEventDefinitionElement, boundaryEventActivity, cancelActivity, boundaryEventActivity->getId());
-    addEscalationEventDefinition(boundaryEventActivity->getEventScope(), escalationEventDefinition, escalationEventDefinitionElement, boundaryEventActivity->getId());
-
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseBoundaryEscalationEventDefinition(escalationEventDefinitionElement, cancelActivity, boundaryEventActivity);
+        $catchingScope->sortProperties(BpmnProperties::errorEventDefinitions(), function ($prop1, $prop2) {
+            return ($prop1->getPrecedence() >= $prop2->getPrecedence()) ? 1 : -1;
+        });
     }
+
+    protected function parseBoundaryEscalationEventDefinition(Element $escalationEventDefinitionElement, bool $cancelActivity, ActivityImpl $boundaryEventActivity): void
+    {
+        $boundaryEventActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::BOUNDARY_ESCALATION);
+
+        $escalationEventDefinition = $this->createEscalationEventDefinitionForEscalationHandler($escalationEventDefinitionElement, $boundaryEventActivity, $cancelActivity, $boundaryEventActivity->getId());
+        $this->addEscalationEventDefinition($boundaryEventActivity->getEventScope(), $escalationEventDefinition, $escalationEventDefinitionElement, $boundaryEventActivity->getId());
+
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseBoundaryEscalationEventDefinition($escalationEventDefinitionElement, $cancelActivity, $boundaryEventActivity);
+        }
     }
 
     /**
@@ -3629,97 +3773,129 @@ class BpmnParse extends Parse
     *
     * @return referenced escalation or <code>null</code>, if referenced escalation not found
     */
-    protected Escalation findEscalationForEscalationEventDefinition(Element escalationEventDefinition, String escalationElementId) {
-    String escalationRef = escalationEventDefinition.attribute("escalationRef");
-    if (escalationRef == null) {
-        $this->addError("escalationEventDefinition does not have required attribute 'escalationRef'", escalationEventDefinition, escalationElementId);
-    } else if (!escalations.containsKey(escalationRef)) {
-        $this->addError("could not find escalation with id '" + escalationRef + "'", escalationEventDefinition, escalationElementId);
-    } else {
-        return escalations->get(escalationRef);
-    }
-    return null;
-    }
-
-    protected EscalationEventDefinition createEscalationEventDefinitionForEscalationHandler(Element escalationEventDefinitionElement, ActivityImpl escalationHandler, boolean cancelActivity, String parentElementId) {
-    EscalationEventDefinition escalationEventDefinition = new EscalationEventDefinition(escalationHandler, cancelActivity);
-
-    String escalationRef = escalationEventDefinitionElement.attribute("escalationRef");
-    if (escalationRef != null) {
-        if (!escalations.containsKey(escalationRef)) {
-        $this->addError("could not find escalation with id '" + escalationRef + "'", escalationEventDefinitionElement, parentElementId);
+    protected function findEscalationForEscalationEventDefinition(Element $escalationEventDefinition, string $escalationElementId): ?Escalation
+    {
+        $escalationRef = $escalationEventDefinition->attribute("escalationRef");
+        if ($escalationRef == null) {
+            $this->addError("escalationEventDefinition does not have required attribute 'escalationRef'", $escalationEventDefinition, $escalationElementId);
+        } elseif (!array_key_exists($escalationRef, $this->escalations)) {
+            $this->addError("could not find escalation with id '" . $escalationRef . "'", $escalationEventDefinition, $escalationElementId);
         } else {
-        Escalation escalation = escalations->get(escalationRef);
-        escalationEventDefinition->setEscalationCode(escalation->getEscalationCode());
+            return $this->escalations[$escalationRef];
+        }
+        return null;
+    }
+
+    protected function createEscalationEventDefinitionForEscalationHandler(Element $escalationEventDefinitionElement, ActivityImpl $escalationHandler, bool $cancelActivity, string $parentElementId): EscalationEventDefinition
+    {
+        $escalationEventDefinition = new EscalationEventDefinition($escalationHandler, $cancelActivity);
+
+        $escalationRef = $escalationEventDefinitionElement->attribute("escalationRef");
+        if ($escalationRef != null) {
+            if (!array_key_exists($escalationRef, $this->escalations)) {
+                $this->addError("could not find escalation with id '" . $escalationRef . "'", $escalationEventDefinitionElement, $parentElementId);
+            } else {
+                $escalation = $this->escalations[$escalationRef];
+                $escalationEventDefinition->setEscalationCode($escalation->getEscalationCode());
+            }
+        }
+
+        $escalationCodeVariable = $escalationEventDefinitionElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "escalationCodeVariable");
+        if ($escalationCodeVariable != null) {
+            $escalationEventDefinition->setEscalationCodeVariable($escalationCodeVariable);
+        }
+
+        return $escalationEventDefinition;
+    }
+
+    protected function addEscalationEventDefinition(ScopeImpl $catchingScope, EscalationEventDefinition $escalationEventDefinition, Element $element, string $escalationElementId): void
+    {
+        // ensure there is only one escalation handler (e.g. escalation boundary event, escalation event subprocess) what can catch the escalation event
+        foreach ($catchingScope->getProperties()->get(BpmnProperties::escalationEventDefinitions()) as $existingEscalationEventDefinition) {
+            if (
+                $existingEscalationEventDefinition->getEscalationHandler()->isSubProcessScope()
+                && $escalationEventDefinition->getEscalationHandler()->isSubProcessScope()
+            ) {
+                if ($existingEscalationEventDefinition->getEscalationCode() == null && $escalationEventDefinition->getEscalationCode() == null) {
+                    $this->addError(
+                        "The same scope can not contains more than one escalation event subprocess without escalation code. "
+                        . "An escalation event subprocess without escalation code catch all escalation events.",
+                        $element,
+                        $escalationElementId
+                    );
+                } elseif ($existingEscalationEventDefinition->getEscalationCode() == null || $escalationEventDefinition->getEscalationCode() == null) {
+                    $this->addError(
+                        "The same scope can not contains an escalation event subprocess without escalation code and another one with escalation code. "
+                        . "The escalation event subprocess without escalation code catch all escalation events.",
+                        $element,
+                        $escalationElementId
+                    );
+                } elseif ($existingEscalationEventDefinition->getEscalationCode() == $escalationEventDefinition->getEscalationCode()) {
+                    $this->addError(
+                        "multiple escalation event subprocesses with the same escalationCode '" . $escalationEventDefinition->getEscalationCode()
+                        . "' are not supported on same scope",
+                        $element,
+                        $escalationElementId
+                    );
+                }
+            } elseif (
+                !$existingEscalationEventDefinition->getEscalationHandler()->isSubProcessScope()
+                && !$escalationEventDefinition->getEscalationHandler()->isSubProcessScope()
+            ) {
+                if ($existingEscalationEventDefinition->getEscalationCode() == null && $escalationEventDefinition->getEscalationCode() == null) {
+                    $this->addError(
+                        "The same scope can not contains more than one escalation boundary event without escalation code. "
+                        . "An escalation boundary event without escalation code catch all escalation events.",
+                        $element,
+                        $escalationElementId
+                    );
+                } elseif ($existingEscalationEventDefinition->getEscalationCode() == null || $escalationEventDefinition->getEscalationCode() == null) {
+                    $this->addError(
+                        "The same scope can not contains an escalation boundary event without escalation code and another one with escalation code. "
+                        . "The escalation boundary event without escalation code catch all escalation events.",
+                        $element,
+                        $escalationElementId
+                    );
+                } elseif ($existingEscalationEventDefinition->getEscalationCode() == $escalationEventDefinition->getEscalationCode()) {
+                    $this->addError(
+                        "multiple escalation boundary events with the same escalationCode '" . $escalationEventDefinition->getEscalationCode()
+                        . "' are not supported on same scope",
+                        $element,
+                        $escalationElementId
+                    );
+                }
+            }
+        }
+
+        $catchingScope->getProperties()->addListItem(BpmnProperties::escalationEventDefinitions(), $escalationEventDefinition);
+    }
+
+    protected function addTimerDeclaration(ScopeImpl $scope, TimerDeclarationImpl $timerDeclaration): void
+    {
+        $scope->getProperties()->putMapEntry(BpmnProperties::timerDeclarations(), $timerDeclaration->getActivityId(), $timerDeclaration);
+    }
+
+    protected function addTimerListenerDeclaration(string $listenerId, ScopeImpl $scope, TimerDeclarationImpl $timerDeclaration): void
+    {
+        $timeoutListenerDeclarations = $scope->getProperties()->get(BpmnProperties::timeoutListenerDeclarations());
+        if (
+            !empty($timeoutListenerDeclarations) && array_key_exists($timerDeclaration->getActivityId(), $timeoutListenerDeclarations)
+        ) {
+            $timeoutListenerDeclarations->addProperty($listenerId, $timerDeclaration);
+        } else {
+            $activityDeclarations = [];
+            $activityDeclarations[$listenerId] = $timerDeclaration;
+            $scope->getProperties()->putMapEntry(BpmnProperties::timeoutListenerDeclarations(), $timerDeclaration->getActivityId(), $activityDeclarations);
         }
     }
 
-    String escalationCodeVariable = escalationEventDefinitionElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "escalationCodeVariable");
-    if(escalationCodeVariable != null) {
-        escalationEventDefinition->setEscalationCodeVariable(escalationCodeVariable);
-    }
-
-    return escalationEventDefinition;
-    }
-
-    protected void addEscalationEventDefinition(ScopeImpl catchingScope, EscalationEventDefinition escalationEventDefinition, Element element, String escalationElementId) {
-    // ensure there is only one escalation handler (e.g. escalation boundary event, escalation event subprocess) what can catch the escalation event
-    for (EscalationEventDefinition existingEscalationEventDefinition : catchingScope->getProperties()->get(BpmnProperties.ESCALATION_EVENT_DEFINITIONS)) {
-
-        if (existingEscalationEventDefinition->getEscalationHandler().isSubProcessScope()
-            && escalationEventDefinition->getEscalationHandler().isSubProcessScope()) {
-
-        if (existingEscalationEventDefinition->getEscalationCode() == null && escalationEventDefinition->getEscalationCode() == null) {
-            $this->addError("The same scope can not contains more than one escalation event subprocess without escalation code. "
-                + "An escalation event subprocess without escalation code catch all escalation events.", element, escalationElementId);
-        } else if (existingEscalationEventDefinition->getEscalationCode() == null || escalationEventDefinition->getEscalationCode() == null) {
-            $this->addError("The same scope can not contains an escalation event subprocess without escalation code and another one with escalation code. "
-                + "The escalation event subprocess without escalation code catch all escalation events.", element, escalationElementId);
-        } else if (existingEscalationEventDefinition->getEscalationCode().equals(escalationEventDefinition->getEscalationCode())) {
-            $this->addError("multiple escalation event subprocesses with the same escalationCode '" + escalationEventDefinition->getEscalationCode()
-                + "' are not supported on same scope", element, escalationElementId);
+    protected function addVariableDeclaration(ScopeImpl $scope, VariableDeclaration $variableDeclaration): void
+    {
+        $variableDeclarations = $scope->getProperty(self::PROPERTYNAME_VARIABLE_DECLARATIONS);
+        if (empty($variableDeclarations)) {
+            $scope->clearProperty(self::PROPERTYNAME_VARIABLE_DECLARATIONS);
         }
-        } else if (!existingEscalationEventDefinition->getEscalationHandler().isSubProcessScope()
-            && !escalationEventDefinition->getEscalationHandler().isSubProcessScope()) {
-
-        if (existingEscalationEventDefinition->getEscalationCode() == null && escalationEventDefinition->getEscalationCode() == null) {
-            $this->addError("The same scope can not contains more than one escalation boundary event without escalation code. "
-                + "An escalation boundary event without escalation code catch all escalation events.", element, escalationElementId);
-        } else if (existingEscalationEventDefinition->getEscalationCode() == null || escalationEventDefinition->getEscalationCode() == null) {
-            $this->addError("The same scope can not contains an escalation boundary event without escalation code and another one with escalation code. "
-                + "The escalation boundary event without escalation code catch all escalation events.", element, escalationElementId);
-        } else if (existingEscalationEventDefinition->getEscalationCode().equals(escalationEventDefinition->getEscalationCode())) {
-            $this->addError("multiple escalation boundary events with the same escalationCode '" + escalationEventDefinition->getEscalationCode()
-                + "' are not supported on same scope", element, escalationElementId);
-        }
-        }
-    }
-
-    catchingScope->getProperties().addListItem(BpmnProperties.ESCALATION_EVENT_DEFINITIONS, escalationEventDefinition);
-    }
-
-    protected void addTimerDeclaration(ScopeImpl scope, TimerDeclarationImpl timerDeclaration) {
-    scope->getProperties().putMapEntry(BpmnProperties.TIMER_DECLARATIONS, timerDeclaration->getActivityId(), timerDeclaration);
-    }
-
-    protected void addTimerListenerDeclaration(String listenerId, ScopeImpl scope, TimerDeclarationImpl timerDeclaration) {
-    if (scope->getProperties()->get(BpmnProperties.TIMEOUT_LISTENER_DECLARATIONS) != null && scope->getProperties()->get(BpmnProperties.TIMEOUT_LISTENER_DECLARATIONS)->get(timerDeclaration->getActivityId()) != null) {
-        scope->getProperties()->get(BpmnProperties.TIMEOUT_LISTENER_DECLARATIONS)->get(timerDeclaration->getActivityId()).put(listenerId, timerDeclaration);
-    } else {
-        Map<String, TimerDeclarationImpl> activityDeclarations = new HashMap<>();
-        activityDeclarations.put(listenerId, timerDeclaration);
-        scope->getProperties().putMapEntry(BpmnProperties.TIMEOUT_LISTENER_DECLARATIONS, timerDeclaration->getActivityId(), activityDeclarations);
-    }
-    }
-
-    @SuppressWarnings("unchecked")
-    protected void addVariableDeclaration(ScopeImpl scope, VariableDeclaration variableDeclaration) {
-    List<VariableDeclaration> variableDeclarations = (List<VariableDeclaration>) scope->getProperty(PROPERTYNAME_VARIABLE_DECLARATIONS);
-    if (variableDeclarations == null) {
-        variableDeclarations = new ArrayList<>();
-        scope->setProperty(PROPERTYNAME_VARIABLE_DECLARATIONS, variableDeclarations);
-    }
-    variableDeclarations.add(variableDeclaration);
+        $scope->addProperty(self::PROPERTYNAME_VARIABLE_DECLARATIONS, $variableDeclaration);
     }
 
     /**
@@ -3730,18 +3906,19 @@ class BpmnParse extends Parse
     * @param conditionalActivity the conditional event activity
     * @return the boundary conditional event behavior which contains the condition
     */
-    public BoundaryConditionalEventActivityBehavior parseBoundaryConditionalEventDefinition(Element element, boolean interrupting, ActivityImpl conditionalActivity) {
-    conditionalActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.BOUNDARY_CONDITIONAL);
+    public function parseBoundaryConditionalEventDefinition(Element $element, bool $interrupting, ActivityImpl $conditionalActivity): ?BoundaryConditionalEventActivityBehavior
+    {
+        $conditionalActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::BOUNDARY_CONDITIONAL);
 
-    ConditionalEventDefinition conditionalEventDefinition = parseConditionalEventDefinition(element, conditionalActivity);
-    conditionalEventDefinition->setInterrupting(interrupting);
-    addEventSubscriptionDeclaration(conditionalEventDefinition, conditionalActivity->getEventScope(), element);
+        $conditionalEventDefinition = $this->parseConditionalEventDefinition($element, $conditionalActivity);
+        $conditionalEventDefinition->setInterrupting($interrupting);
+        $this->addEventSubscriptionDeclaration($conditionalEventDefinition, $conditionalActivity->getEventScope(), $element);
 
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseBoundaryConditionalEventDefinition(element, interrupting, conditionalActivity);
-    }
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseBoundaryConditionalEventDefinition($element, $interrupting, $conditionalActivity);
+        }
 
-    return new BoundaryConditionalEventActivityBehavior(conditionalEventDefinition);
+        return new BoundaryConditionalEventActivityBehavior($conditionalEventDefinition);
     }
 
     /**
@@ -3751,17 +3928,18 @@ class BpmnParse extends Parse
     * @param conditionalActivity the conditional event activity
     * @return returns the conditional activity with the parsed information
     */
-    public ConditionalEventDefinition parseIntermediateConditionalEventDefinition(Element element, ActivityImpl conditionalActivity) {
-    conditionalActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.INTERMEDIATE_EVENT_CONDITIONAL);
+    public function parseIntermediateConditionalEventDefinition(Element $element, ActivityImpl $conditionalActivity): ?ConditionalEventDefinition
+    {
+        $conditionalActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::INTERMEDIATE_EVENT_CONDITIONAL);
 
-    ConditionalEventDefinition conditionalEventDefinition = parseConditionalEventDefinition(element, conditionalActivity);
-    addEventSubscriptionDeclaration(conditionalEventDefinition, conditionalActivity->getEventScope(), element);
+        $conditionalEventDefinition = $this->parseConditionalEventDefinition($element, $conditionalActivity);
+        $this->addEventSubscriptionDeclaration($conditionalEventDefinition, $conditionalActivity->getEventScope(), $element);
 
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseIntermediateConditionalEventDefinition(element, conditionalActivity);
-    }
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseIntermediateConditionalEventDefinition($element, $conditionalActivity);
+        }
 
-    return conditionalEventDefinition;
+        return $conditionalEventDefinition;
     }
 
     /**
@@ -3772,18 +3950,19 @@ class BpmnParse extends Parse
     * @param conditionalActivity the conditional event activity
     * @return
     */
-    public ConditionalEventDefinition parseConditionalStartEventForEventSubprocess(Element element, ActivityImpl conditionalActivity, boolean interrupting) {
-    conditionalActivity->getProperties()->set(BpmnProperties.TYPE, ActivityTypes.START_EVENT_CONDITIONAL);
+    public function parseConditionalStartEventForEventSubprocess(Element $element, ActivityImpl $conditionalActivity, bool $interrupting): ?ConditionalEventDefinition
+    {
+        $conditionalActivity->getProperties()->set(BpmnProperties::type(), ActivityTypes::START_EVENT_CONDITIONAL);
 
-    ConditionalEventDefinition conditionalEventDefinition = parseConditionalEventDefinition(element, conditionalActivity);
-    conditionalEventDefinition->setInterrupting(interrupting);
-    addEventSubscriptionDeclaration(conditionalEventDefinition, conditionalActivity->getEventScope(), element);
+        $conditionalEventDefinition = $this->parseConditionalEventDefinition($element, $conditionalActivity);
+        $conditionalEventDefinition->setInterrupting($interrupting);
+        $this->addEventSubscriptionDeclaration($conditionalEventDefinition, $conditionalActivity->getEventScope(), $element);
 
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseConditionalStartEventForEventSubprocess(element, conditionalActivity, interrupting);
-    }
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseConditionalStartEventForEventSubprocess($element, $conditionalActivity, $interrupting);
+        }
 
-    return conditionalEventDefinition;
+        return $conditionalEventDefinition;
     }
 
     /**
@@ -3793,39 +3972,42 @@ class BpmnParse extends Parse
     * @param conditionalActivity the conditional event activity
     * @return the conditional event definition which was parsed
     */
-    protected ConditionalEventDefinition parseConditionalEventDefinition(Element element, ActivityImpl conditionalActivity) {
-    ConditionalEventDefinition conditionalEventDefinition = null;
+    protected function parseConditionalEventDefinition(Element $element, ActivityImpl $conditionalActivity): ?ConditionalEventDefinition
+    {
+        $conditionalEventDefinition = null;
 
-    Element conditionExprElement = element.element(CONDITION);
-    String conditionalActivityId = conditionalActivity->getId();
-    if (conditionExprElement != null) {
-        Condition condition = parseConditionExpression(conditionExprElement, conditionalActivityId);
-        conditionalEventDefinition = new ConditionalEventDefinition(condition, conditionalActivity);
+        $conditionExprElement = $element->element(self::CONDITION);
+        $conditionalActivityId = $conditionalActivity->getId();
+        if ($conditionExprElement != null) {
+            $condition = $this->parseConditionExpression($conditionExprElement, $conditionalActivityId);
+            $conditionalEventDefinition = new ConditionalEventDefinition($condition, $conditionalActivity);
 
-        String expression = conditionExprElement->getText().trim();
-        conditionalEventDefinition->setConditionAsString(expression);
+            $expression = trim($conditionExprElement->getText());
+            $conditionalEventDefinition->setConditionAsString($expression);
 
-        conditionalActivity->getProcessDefinition()->getProperties()->set(BpmnProperties.HAS_CONDITIONAL_EVENTS, true);
+            $conditionalActivity->getProcessDefinition()->getProperties()->set(BpmnProperties::hasConditionalEvents(), true);
 
-        final String variableName = element.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "variableName");
-        conditionalEventDefinition->setVariableName(variableName);
+            $variableName = $element->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "variableName");
+            $conditionalEventDefinition->setVariableName($variableName);
 
-        final String variableEvents = element.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "variableEvents");
-        final List<String> variableEventsList = parseCommaSeparatedList(variableEvents);
-        conditionalEventDefinition->setVariableEvents(new HashSet<>(variableEventsList));
+            $variableEvents = $element->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "variableEvents");
+            $variableEventsList = $this->parseCommaSeparatedList($variableEvents);
+            $conditionalEventDefinition->setVariableEvents($variableEventsList);
 
-        for (String variableEvent : variableEventsList) {
-        if (!VARIABLE_EVENTS.contains(variableEvent)) {
-            addWarning("Variable event: " + variableEvent + " is not valid. Possible variable change events are: " + Arrays.toString(VARIABLE_EVENTS.toArray()),
-                element, conditionalActivityId);
+            foreach ($variableEventsList as $variableEvent) {
+                if (!in_array($variableEvent, self::VARIABLE_EVENTS)) {
+                    $this->addWarning(
+                        "Variable event: " . $variableEvent . " is not valid. Possible variable change events are: " . json_encode(self::VARIABLE_EVENTS),
+                        $element,
+                        $conditionalActivityId
+                    );
+                }
+            }
+        } else {
+            $this->addError("Conditional event must contain an expression for evaluation.", $element, $conditionalActivityId);
         }
-        }
 
-    } else {
-        $this->addError("Conditional event must contain an expression for evaluation.", element, conditionalActivityId);
-    }
-
-    return conditionalEventDefinition;
+        return $conditionalEventDefinition;
     }
 
     /**
@@ -3837,46 +4019,48 @@ class BpmnParse extends Parse
     * @param scope
     *          The current scope on which the subprocess is defined.
     */
-    public ActivityImpl parseSubProcess(Element subProcessElement, ScopeImpl scope) {
-    ActivityImpl subProcessActivity = createActivityOnScope(subProcessElement, scope);
-    subProcessActivity->setSubProcessScope(true);
+    public function parseSubProcess(Element $subProcessElement, ScopeImpl $scope): ?ActivityImpl
+    {
+        $subProcessActivity = $this->createActivityOnScope($subProcessElement, $scope);
+        $subProcessActivity->setSubProcessScope(true);
 
-    parseAsynchronousContinuationForActivity(subProcessElement, subProcessActivity);
+        $this->parseAsynchronousContinuationForActivity($subProcessElement, $subProcessActivity);
 
-    Boolean isTriggeredByEvent = parseBooleanAttribute(subProcessElement.attribute("triggeredByEvent"), false);
-    subProcessActivity->getProperties()->set(BpmnProperties.TRIGGERED_BY_EVENT, isTriggeredByEvent);
-    subProcessActivity->setProperty(PROPERTYNAME_CONSUMES_COMPENSATION, !isTriggeredByEvent);
+        $isTriggeredByEvent = $this->parseBooleanAttribute($subProcessElement->attribute("triggeredByEvent"), false);
+        $subProcessActivity->getProperties()->set(BpmnProperties::triggeredByEvent(), $isTriggeredByEvent);
+        $subProcessActivity->setProperty(self::PROPERTYNAME_CONSUMES_COMPENSATION, !$isTriggeredByEvent);
 
-    subProcessActivity->setScope(true);
-    if (isTriggeredByEvent) {
-        subProcessActivity->setActivityBehavior(new EventSubProcessActivityBehavior());
-        subProcessActivity->setEventScope(scope);
-    } else {
-        subProcessActivity->setActivityBehavior(new SubProcessActivityBehavior());
+        $subProcessActivity->setScope(true);
+        if ($isTriggeredByEvent) {
+            $subProcessActivity->setActivityBehavior(new EventSubProcessActivityBehavior());
+            $subProcessActivity->setEventScope($scope);
+        } else {
+            $subProcessActivity->setActivityBehavior(new SubProcessActivityBehavior());
+        }
+        $this->parseScope($subProcessElement, $subProcessActivity);
+
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseSubProcess($subProcessElement, $scope, $subProcessActivity);
+        }
+        return $subProcessActivity;
     }
-    parseScope(subProcessElement, subProcessActivity);
 
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseSubProcess(subProcessElement, scope, subProcessActivity);
-    }
-    return subProcessActivity;
-    }
+    protected function parseTransaction(Element $transactionElement, ScopeImpl $scope): ?ActivityImpl
+    {
+        $activity = $this->createActivityOnScope($transactionElement, $scope);
 
-    protected ActivityImpl parseTransaction(Element transactionElement, ScopeImpl scope) {
-    ActivityImpl activity = createActivityOnScope(transactionElement, scope);
+        $this->parseAsynchronousContinuationForActivity($transactionElement, $activity);
 
-    parseAsynchronousContinuationForActivity(transactionElement, activity);
+        $activity->setScope(true);
+        $activity->setSubProcessScope(true);
+        $activity->setActivityBehavior(new SubProcessActivityBehavior());
+        $activity->getProperties()->set(BpmnProperties::triggeredByEvent(), false);
+        $this->parseScope($transactionElement, $activity);
 
-    activity->setScope(true);
-    activity->setSubProcessScope(true);
-    activity->setActivityBehavior(new SubProcessActivityBehavior());
-    activity->getProperties()->set(BpmnProperties.TRIGGERED_BY_EVENT, false);
-    parseScope(transactionElement, activity);
-
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseTransaction(transactionElement, scope, activity);
-    }
-    return activity;
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseTransaction($transactionElement, $scope, $activity);
+        }
+        return $activity;
     }
 
     /**
@@ -3887,261 +4071,258 @@ class BpmnParse extends Parse
     * @param scope
     *          The current scope on which the call activity is defined.
     */
-    public ActivityImpl parseCallActivity(Element callActivityElement, ScopeImpl scope, boolean isMultiInstance) {
-    ActivityImpl activity = createActivityOnScope(callActivityElement, scope);
+    public function parseCallActivity(Element $callActivityElement, ScopeImpl $scope, boolean $isMultiInstance): ?ActivityImpl
+    {
+        $activity = $this->createActivityOnScope($callActivityElement, $scope);
 
-    // parse async
-    parseAsynchronousContinuationForActivity(callActivityElement, activity);
+        // parse async
+        $this->parseAsynchronousContinuationForActivity($callActivityElement, $activity);
 
-    // parse definition key (and behavior)
-    String calledElement = callActivityElement.attribute("calledElement");
-    String caseRef = callActivityElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "caseRef");
-    String className = callActivityElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, PROPERTYNAME_VARIABLE_MAPPING_CLASS);
-    String delegateExpression = callActivityElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, PROPERTYNAME_VARIABLE_MAPPING_DELEGATE_EXPRESSION);
+        // parse definition key (and behavior)
+        $calledElement = $callActivityElement->attribute("calledElement");
+        //$caseRef = $callActivityElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "caseRef");
+        $className = $callActivityElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::PROPERTYNAME_VARIABLE_MAPPING_CLASS);
+        $delegateExpression = $callActivityElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::PROPERTYNAME_VARIABLE_MAPPING_DELEGATE_EXPRESSION);
 
-    if (calledElement == null && caseRef == null) {
-        $this->addError("Missing attribute 'calledElement' or 'caseRef'", callActivityElement);
-    } else if (calledElement != null && caseRef != null) {
-        $this->addError("The attributes 'calledElement' or 'caseRef' cannot be used together: Use either 'calledElement' or 'caseRef'", callActivityElement);
-    }
+        if ($calledElement == null) { // && caseRef == null
+            $this->addError("Missing attribute 'calledElement' or 'caseRef'", callActivityElement);
+        } elseif ($calledElement != null) { // && caseRef != null
+            $this->addError("The attributes 'calledElement' or 'caseRef' cannot be used together: Use either 'calledElement' or 'caseRef'", $callActivityElement);
+        }
 
-    String bindingAttributeName = "calledElementBinding";
-    String versionAttributeName = "calledElementVersion";
-    String versionTagAttributeName = "calledElementVersionTag";
-    String tenantIdAttributeName = "calledElementTenantId";
+        $bindingAttributeName = "calledElementBinding";
+        $versionAttributeName = "calledElementVersion";
+        $versionTagAttributeName = "calledElementVersionTag";
+        $tenantIdAttributeName = "calledElementTenantId";
 
-    String deploymentId = deployment->getId();
+        $deploymentId = $deployment->getId();
 
-    CallableElement callableElement = new CallableElement();
-    callableElement->setDeploymentId(deploymentId);
+        $callableElement = new CallableElement();
+        $callableElement->setDeploymentId($deploymentId);
 
-    CallableElementActivityBehavior behavior = null;
+        $behavior = null;
 
-    if (calledElement != null) {
-        if (className != null) {
-            behavior = new CallActivityBehavior(className);
-        } else if (delegateExpression != null) {
-            Expression exp = expressionManager.createExpression(delegateExpression);
-            behavior = new CallActivityBehavior(exp);
+        if ($calledElement != null) {
+            if ($className != null) {
+                $behavior = new CallActivityBehavior($className);
+            } elseif ($delegateExpression != null) {
+                $exp = $this->expressionManager->createExpression($delegateExpression);
+                $behavior = new CallActivityBehavior($exp);
+            } else {
+                $behavior = new CallActivityBehavior();
+            }
+            $definitionKeyProvider = $this->createParameterValueProvider($calledElement, $expressionManager);
+            $callableElement->setDefinitionKeyValueProvider($definitionKeyProvider);
         } else {
-        behavior = new CallActivityBehavior();
+            throw new \Exception("cmmn not yet implemented");
+            /*$behavior = new CaseCallActivityBehavior();
+            $definitionKeyProvider = $this->createParameterValueProvider($caseRef, $expressionManager);
+            $callableElement->setDefinitionKeyValueProvider($definitionKeyProvider);
+            $bindingAttributeName = "caseBinding";
+            $versionAttributeName = "caseVersion";
+            $tenantIdAttributeName = "caseTenantId";*/
         }
-        ParameterValueProvider definitionKeyProvider = createParameterValueProvider(calledElement, expressionManager);
-        callableElement->setDefinitionKeyValueProvider(definitionKeyProvider);
 
-    } else {
-        behavior = new CaseCallActivityBehavior();
-        ParameterValueProvider definitionKeyProvider = createParameterValueProvider(caseRef, expressionManager);
-        callableElement->setDefinitionKeyValueProvider(definitionKeyProvider);
-        bindingAttributeName = "caseBinding";
-        versionAttributeName = "caseVersion";
-        tenantIdAttributeName = "caseTenantId";
+        $behavior->setCallableElement($callableElement);
+
+        // parse binding
+        $this->parseBinding($callActivityElement, $activity, $callableElement, $bindingAttributeName);
+
+        // parse version
+        $this->parseVersion($callActivityElement, $activity, $callableElement, $bindingAttributeName, $versionAttributeName);
+
+        // parse versionTag
+        $this->parseVersionTag($callActivityElement, $activity, $callableElement, $bindingAttributeName, $versionTagAttributeName);
+
+        // parse tenant id
+        $this->parseTenantId($callActivityElement, $activity, $callableElement, $tenantIdAttributeName);
+
+        // parse input parameter
+        $this->parseInputParameter($callActivityElement, $callableElement);
+
+        // parse output parameter
+        $this->parseOutputParameter($callActivityElement, $activity, $callableElement);
+
+        if (!$isMultiInstance) {
+            // turn activity into a scope unless it is a multi instance activity, in
+            // that case this
+            // is not necessary because there is already the multi instance body scope
+            // and concurrent
+            // child executions are sufficient
+            $activity->setScope(true);
+        }
+        $activity->setActivityBehavior($behavior);
+
+        $this->parseExecutionListenersOnScope($callActivityElement, $activity);
+
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseCallActivity($callActivityElement, $scope, $activity);
+        }
+        return $activity;
     }
 
-    behavior->setCallableElement(callableElement);
+    protected function parseBinding(Element $callActivityElement, ActivityImpl $activity, BaseCallableElement $callableElement, string $bindingAttributeName): void
+    {
+        $binding = $callActivityElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, $bindingAttributeName);
 
-    // parse binding
-    parseBinding(callActivityElement, activity, callableElement, bindingAttributeName);
-
-    // parse version
-    parseVersion(callActivityElement, activity, callableElement, bindingAttributeName, versionAttributeName);
-
-    // parse versionTag
-    parseVersionTag(callActivityElement, activity, callableElement, bindingAttributeName, versionTagAttributeName);
-
-    // parse tenant id
-    parseTenantId(callActivityElement, activity, callableElement, tenantIdAttributeName);
-
-    // parse input parameter
-    parseInputParameter(callActivityElement, callableElement);
-
-    // parse output parameter
-    parseOutputParameter(callActivityElement, activity, callableElement);
-
-    if (!isMultiInstance) {
-        // turn activity into a scope unless it is a multi instance activity, in
-        // that case this
-        // is not necessary because there is already the multi instance body scope
-        // and concurrent
-        // child executions are sufficient
-        activity->setScope(true);
-    }
-    activity->setActivityBehavior(behavior);
-
-    parseExecutionListenersOnScope(callActivityElement, activity);
-
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseCallActivity(callActivityElement, scope, activity);
-    }
-    return activity;
+        if (CallableElementBinding::DEPLOYMENT == $binding) {
+            $callableElement->setBinding(CallableElementBinding::DEPLOYMENT);
+        } elseif (CallableElementBinding::LATEST == $binding) {
+            $callableElement->setBinding(CallableElementBinding::LATEST);
+        } elseif (CallableElementBinding::VERSION == $binding) {
+            $callableElement->setBinding(CallableElementBinding::VERSION);
+        } elseif (CallableElementBinding::VERSION_TAG == $binding) {
+            $callableElement->setBinding(CallableElementBinding::VERSION_TAG);
+        }
     }
 
-    protected void parseBinding(Element callActivityElement, ActivityImpl activity, BaseCallableElement callableElement, String bindingAttributeName) {
-    String binding = callActivityElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, bindingAttributeName);
+    protected function parseTenantId(Element $callingActivityElement, ActivityImpl $activity, BaseCallableElement $callableElement, string $attrName): void
+    {
+        $tenantIdValueProvider = null;
 
-    if (CallableElementBinding.DEPLOYMENT->getValue().equals(binding)) {
-        callableElement->setBinding(CallableElementBinding.DEPLOYMENT);
-    } else if (CallableElementBinding.LATEST->getValue().equals(binding)) {
-        callableElement->setBinding(CallableElementBinding.LATEST);
-    } else if (CallableElementBinding.VERSION->getValue().equals(binding)) {
-        callableElement->setBinding(CallableElementBinding.VERSION);
-    } else if (CallableElementBinding.VERSION_TAG->getValue().equals(binding)) {
-        callableElement->setBinding(CallableElementBinding.VERSION_TAG);
-    }
+        $tenantId = $callingActivityElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, $attrName);
+        if (!empty($tenantId)) {
+            $tenantIdValueProvider = $this->createParameterValueProvider($tenantId, $this->expressionManager);
+        }
+
+        $callableElement->setTenantIdProvider($tenantIdValueProvider);
     }
 
-    protected void parseTenantId(Element callingActivityElement, ActivityImpl activity, BaseCallableElement callableElement, String attrName) {
-    ParameterValueProvider tenantIdValueProvider = null;
+    protected function parseVersion(Element $callingActivityElement, ActivityImpl $activity, BaseCallableElement $callableElement, string $bindingAttributeName, string $versionAttributeName): void
+    {
+        $version = null;
 
-    String tenantId = callingActivityElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, attrName);
-    if (tenantId != null && tenantId.length() > 0) {
-        tenantIdValueProvider = createParameterValueProvider(tenantId, expressionManager);
+        $binding = $callableElement->getBinding();
+        $version = $callingActivityElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, $versionAttributeName);
+
+        if ($binding != null && $binding == CallableElementBinding::VERSION && $version == null) {
+            $this->addError("Missing attribute '" . $versionAttributeName . "' when '" . $bindingAttributeName . "' has value '" . CallableElementBinding::VERSION
+            . "'", $callingActivityElement);
+        }
+
+        $versionProvider = $this->createParameterValueProvider($version, $expressionManager);
+        $callableElement->setVersionValueProvider($versionProvider);
     }
 
-    callableElement->setTenantIdProvider(tenantIdValueProvider);
+    protected function parseVersionTag(Element $callingActivityElement, ActivityImpl $activity, BaseCallableElement $callableElement, string $bindingAttributeName, string $versionTagAttributeName): void
+    {
+        $versionTag = null;
+
+        $binding = $callableElement->getBinding();
+        $versionTag = $callingActivityElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, $versionTagAttributeName);
+
+        if ($binding != null && $binding == CallableElementBinding::VERSION_TAG && $versionTag == null) {
+            $this->addError("Missing attribute '" . $versionTagAttributeName . "' when '" . $bindingAttributeName . "' has value '" . CallableElementBinding::VERSION_TAG . "'", $callingActivityElement);
+        }
+
+        $versionTagProvider = $this->createParameterValueProvider($versionTag, $expressionManager);
+        $callableElement->setVersionTagValueProvider($versionTagProvider);
     }
 
-    protected void parseVersion(Element callingActivityElement, ActivityImpl activity, BaseCallableElement callableElement, String bindingAttributeName, String versionAttributeName) {
-    String version = null;
+    protected function parseInputParameter(Element $elementWithParameters, CallableElement $callableElement): void
+    {
+        $extensionsElement = $elementWithParameters->element("extensionElements");
 
-    CallableElementBinding binding = callableElement->getBinding();
-    version = callingActivityElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, versionAttributeName);
+        if (!empty($extensionsElement)) {
+            // input data elements
+            foreach ($extensionsElement->elementsNS(self::BPMN_EXTENSIONS_NS_PREFIX, "in") as $inElement) {
+                $businessKey = $inElement->attribute("businessKey");
 
-    if (binding != null && binding.equals(CallableElementBinding.VERSION) && version == null) {
-        $this->addError("Missing attribute '" + versionAttributeName + "' when '" + bindingAttributeName + "' has value '" + CallableElementBinding.VERSION->getValue()
-        + "'", callingActivityElement);
+                if ($businessKey != null && !empty($businessKey)) {
+                    $businessKeyValueProvider = $this->createParameterValueProvider($businessKey, $expressionManager);
+                    $callableElement->setBusinessKeyValueProvider($businessKeyValueProvider);
+                } else {
+                    $parameter = $this->parseCallableElementProvider($inElement, $elementWithParameters->attribute("id"));
+
+                    if ($this->attributeValueEquals($inElement, "local", "TRUE")) {
+                        $parameter->setReadLocal(true);
+                    }
+
+                    $callableElement->addInput($parameter);
+                }
+            }
+        }
     }
 
-    ParameterValueProvider versionProvider = createParameterValueProvider(version, expressionManager);
-    callableElement->setVersionValueProvider(versionProvider);
+    protected function parseOutputParameter(Element $callActivityElement, ActivityImpl $activity, CallableElement $callableElement): void
+    {
+        $extensionsElement = $callActivityElement->element("extensionElements");
+
+        if ($extensionsElement != null) {
+            // output data elements
+            foreach ($extensionsElement->elementsNS(self::BPMN_EXTENSIONS_NS_PREFIX, "out") as $outElement) {
+                $parameter = $this->parseCallableElementProvider($outElement, $callActivityElement->attribute("id"));
+
+                if ($this->attributeValueEquals($outElement, "local", "TRUE")) {
+                    $callableElement->addOutputLocal($parameter);
+                } else {
+                    $callableElement->addOutput($parameter);
+                }
+            }
+        }
     }
 
-    protected void parseVersionTag(Element callingActivityElement, ActivityImpl activity, BaseCallableElement callableElement, String bindingAttributeName, String versionTagAttributeName) {
-    String versionTag = null;
-
-    CallableElementBinding binding = callableElement->getBinding();
-    versionTag = callingActivityElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, versionTagAttributeName);
-
-    if (binding != null && binding.equals(CallableElementBinding.VERSION_TAG) && versionTag == null) {
-        $this->addError("Missing attribute '" + versionTagAttributeName + "' when '" + bindingAttributeName + "' has value '" + CallableElementBinding.VERSION_TAG->getValue()
-        + "'", callingActivityElement);
+    protected function attributeValueEquals(Element $element, string $attribute, string $comparisonValue): bool
+    {
+        $value = $element->attribute($attribute);
+        return $comparisonValue == $value;
     }
 
-    ParameterValueProvider versionTagProvider = createParameterValueProvider(versionTag, expressionManager);
-    callableElement->setVersionTagValueProvider(versionTagProvider);
-    }
+    protected function parseCallableElementProvider(Element $parameterElement, string $ancestorElementId): CallableElementParameter
+    {
+        $parameter = new CallableElementParameter();
 
-    protected void parseInputParameter(Element elementWithParameters, CallableElement callableElement) {
-    Element extensionsElement = elementWithParameters.element("extensionElements");
+        $variables = $parameterElement->attribute("variables");
 
-    if (extensionsElement != null) {
-        // input data elements
-        for (Element inElement : extensionsElement.elementsNS(CAMUNDA_BPMN_EXTENSIONS_NS, "in")) {
-
-        String businessKey = inElement.attribute("businessKey");
-
-        if (businessKey != null && !businessKey.isEmpty()) {
-            ParameterValueProvider businessKeyValueProvider = createParameterValueProvider(businessKey, expressionManager);
-            callableElement->setBusinessKeyValueProvider(businessKeyValueProvider);
-
+        if (self::ALL == $variables) {
+            $parameter->setAllVariables(true);
         } else {
+            $strictValidation = !Context::getProcessEngineConfiguration()->getDisableStrictCallActivityValidation();
 
-            CallableElementParameter parameter = parseCallableElementProvider(inElement, elementWithParameters.attribute("id"));
+            $sourceValueProvider = new NullValueProvider();
 
-            if (attributeValueEquals(inElement, "local", TRUE)) {
-            parameter->setReadLocal(true);
+            $source = $parameterElement->attribute("source");
+            if ($source != null) {
+                if (!empty($source)) {
+                    $sourceValueProvider = new ConstantValueProvider(source);
+                } else {
+                    if ($strictValidation) {
+                        $this->addError("Empty attribute 'source' when passing variables", $parameterElement, $ancestorElementId);
+                    } else {
+                        $source = null;
+                    }
+                }
             }
 
-            callableElement.addInput(parameter);
-        }
-        }
-    }
-    }
+            if ($source == null) {
+                $source = $parameterElement->attribute("sourceExpression");
 
-    protected void parseOutputParameter(Element callActivityElement, ActivityImpl activity, CallableElement callableElement) {
-    Element extensionsElement = callActivityElement.element("extensionElements");
-
-    if (extensionsElement != null) {
-        // output data elements
-        for (Element outElement : extensionsElement.elementsNS(CAMUNDA_BPMN_EXTENSIONS_NS, "out")) {
-
-        CallableElementParameter parameter = parseCallableElementProvider(outElement, callActivityElement.attribute("id"));
-
-        if (attributeValueEquals(outElement, "local", TRUE)) {
-            callableElement.addOutputLocal(parameter);
-        }
-        else {
-            callableElement.addOutput(parameter);
-        }
-
-        }
-    }
-    }
-
-    protected boolean attributeValueEquals(Element element, String attribute, String comparisonValue) {
-    String value = element.attribute(attribute);
-
-    return comparisonValue.equals(value);
-    }
-
-    protected CallableElementParameter parseCallableElementProvider(Element parameterElement, String ancestorElementId) {
-    CallableElementParameter parameter = new CallableElementParameter();
-
-    String variables = parameterElement.attribute("variables");
-
-    if (ALL.equals(variables)) {
-        parameter->setAllVariables(true);
-    } else {
-        boolean strictValidation = !Context->getProcessEngineConfiguration()->getDisableStrictCallActivityValidation();
-
-        ParameterValueProvider sourceValueProvider = new NullValueProvider();
-
-        String source = parameterElement.attribute("source");
-        if (source != null) {
-        if (!source.isEmpty()) {
-            sourceValueProvider = new ConstantValueProvider(source);
-        }
-        else {
-            if (strictValidation) {
-            $this->addError("Empty attribute 'source' when passing variables", parameterElement, ancestorElementId);
+                if ($source != null) {
+                    if (!empty($source)) {
+                        $expression = $expressionManager->createExpression($source);
+                        $sourceValueProvider = new ElValueProvider($expression);
+                    } elseif ($strictValidation) {
+                        $this->addError("Empty attribute 'sourceExpression' when passing variables", $parameterElement, $ancestorElementId);
+                    }
+                }
             }
-            else {
-            source = null;
+
+            if ($strictValidation && $source == null) {
+                $this->addError("Missing parameter 'source' or 'sourceExpression' when passing variables", $parameterElement, $ancestorElementId);
             }
-        }
-        }
 
-        if (source == null) {
-        source = parameterElement.attribute("sourceExpression");
+            $parameter->setSourceValueProvider($sourceValueProvider);
 
-        if (source != null) {
-            if (!source.isEmpty()) {
-            Expression expression = expressionManager.createExpression(source);
-            sourceValueProvider = new ElValueProvider(expression);
+            $target = $parameterElement->attribute("target");
+            if (($strictValidation || $source != null && !empty($source)) && $target == null) {
+                $this->addError("Missing attribute 'target' when attribute 'source' or 'sourceExpression' is set", $parameterElement, $ancestorElementId);
+            } elseif ($strictValidation && $target != null && empty($target)) {
+                $this->addError("Empty attribute 'target' when attribute 'source' or 'sourceExpression' is set", $parameterElement, $ancestorElementId);
             }
-            else if (strictValidation) {
-            $this->addError("Empty attribute 'sourceExpression' when passing variables", parameterElement, ancestorElementId);
-            }
-        }
+            $parameter->setTarget($target);
         }
 
-        if (strictValidation && source == null) {
-        $this->addError("Missing parameter 'source' or 'sourceExpression' when passing variables", parameterElement, ancestorElementId);
-        }
-
-        parameter->setSourceValueProvider(sourceValueProvider);
-
-        String target = parameterElement.attribute("target");
-        if ((strictValidation || source != null && !source.isEmpty()) && target == null) {
-        $this->addError("Missing attribute 'target' when attribute 'source' or 'sourceExpression' is set", parameterElement, ancestorElementId);
-        }
-        else if (strictValidation && target != null && target.isEmpty()) {
-        $this->addError("Empty attribute 'target' when attribute 'source' or 'sourceExpression' is set", parameterElement, ancestorElementId);
-        }
-        parameter->setTarget(target);
-    }
-
-    return parameter;
+        return $parameter;
     }
 
     /**
@@ -4155,11 +4336,12 @@ class BpmnParse extends Parse
     * @param activity
     *          The activity where the property declaration is done.
     */
-    public void parseProperties(Element element, ActivityImpl activity) {
-    List<Element> propertyElements = element.elements("property");
-    for (Element propertyElement : propertyElements) {
-        parseProperty(propertyElement, activity);
-    }
+    public function parseProperties(Element $element, ActivityImpl $activity): void
+    {
+        $propertyElements = $element->elements("property");
+        foreach ($propertyElements as $propertyElement) {
+            $this->parseProperty($propertyElement, $activity);
+        }
     }
 
     /**
@@ -4169,21 +4351,22 @@ class BpmnParse extends Parse
     *          The 'property' element that defines how a property looks like and
     *          is handled.
     */
-    public void parseProperty(Element propertyElement, ActivityImpl activity) {
-    String id = propertyElement.attribute("id");
-    String name = propertyElement.attribute("name");
+    public function parseProperty(Element $propertyElement, ActivityImpl $activity): void
+    {
+        $id = $propertyElement->attribute("id");
+        $name = $propertyElement->attribute("name");
 
-    // If name isn't given, use the id as name
-    if (name == null) {
-        if (id == null) {
-        $this->addError("Invalid property usage on line " + propertyElement->getLine() + ": no id or name specified.", propertyElement, activity->getId());
-        } else {
-        name = id;
+        // If name isn't given, use the id as name
+        if ($name == null) {
+            if ($id == null) {
+                $this->addError("Invalid property usage on line " . $propertyElement->getLine() . ": no id or name specified.", $propertyElement, $activity->getId());
+            } else {
+                $name = $id;
+            }
         }
-    }
 
-    String type = null;
-    parsePropertyCustomExtensions(activity, propertyElement, name, type);
+        $type = null;
+        $this->parsePropertyCustomExtensions($activity, $propertyElement, $name, $type);
     }
 
     /**
@@ -4198,53 +4381,54 @@ class BpmnParse extends Parse
     * @param propertyType
     *          The type of the property.
     */
-    public void parsePropertyCustomExtensions(ActivityImpl activity, Element propertyElement, String propertyName, String propertyType) {
+    public function parsePropertyCustomExtensions(ActivityImpl $activity, Element $propertyElement, string $propertyName, ?string $propertyType): void
+    {
 
-    if (propertyType == null) {
-        String type = propertyElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, TYPE);
-        propertyType = type != null ? type : "string"; // default is string
-    }
+        if ($propertyType == null) {
+            $type = $propertyElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::TYPE);
+            $propertyType = $type != null ? $type : "string"; // default is string
+        }
 
-    VariableDeclaration variableDeclaration = new VariableDeclaration(propertyName, propertyType);
-    addVariableDeclaration(activity, variableDeclaration);
-    activity->setScope(true);
+        $variableDeclaration = new VariableDeclaration($propertyName, $propertyType);
+        $this->addVariableDeclaration($activity, $variableDeclaration);
+        $activity->setScope(true);
 
-    String src = propertyElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "src");
-    if (src != null) {
-        variableDeclaration->setSourceVariableName(src);
-    }
+        $src = $propertyElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "src");
+        if ($src != null) {
+            $variableDeclaration->setSourceVariableName($src);
+        }
 
-    String srcExpr = propertyElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "srcExpr");
-    if (srcExpr != null) {
-        Expression sourceExpression = expressionManager.createExpression(srcExpr);
-        variableDeclaration->setSourceExpression(sourceExpression);
-    }
+        $srcExpr = $propertyElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "srcExpr");
+        if ($srcExpr != null) {
+            $sourceExpression = $expressionManager->createExpression(srcExpr);
+            $variableDeclaration->setSourceExpression($sourceExpression);
+        }
 
-    String dst = propertyElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "dst");
-    if (dst != null) {
-        variableDeclaration->setDestinationVariableName(dst);
-    }
+        $dst = $propertyElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "dst");
+        if ($dst != null) {
+            $variableDeclaration->setDestinationVariableName($dst);
+        }
 
-    String destExpr = propertyElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "dstExpr");
-    if (destExpr != null) {
-        Expression destinationExpression = expressionManager.createExpression(destExpr);
-        variableDeclaration->setDestinationExpression(destinationExpression);
-    }
+        $destExpr = $propertyElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "dstExpr");
+        if ($destExpr != null) {
+            $destinationExpression = $this->expressionManager->createExpression($destExpr);
+            $variableDeclaration->setDestinationExpression($destinationExpression);
+        }
 
-    String link = propertyElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "link");
-    if (link != null) {
-        variableDeclaration->setLink(link);
-    }
+        $link = $propertyElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "link");
+        if ($link != null) {
+            $variableDeclaration->setLink($link);
+        }
 
-    String linkExpr = propertyElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "linkExpr");
-    if (linkExpr != null) {
-        Expression linkExpression = expressionManager.createExpression(linkExpr);
-        variableDeclaration->setLinkExpression(linkExpression);
-    }
+        $linkExpr = $propertyElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "linkExpr");
+        if ($linkExpr != null) {
+            $linkExpression = $this->expressionManager->createExpression($linkExpr);
+            $variableDeclaration->setLinkExpression($linkExpression);
+        }
 
-    for (BpmnParseListener parseListener : parseListeners) {
-        parseListener.parseProperty(propertyElement, variableDeclaration, activity);
-    }
+        foreach ($this->parseListeners as $parseListener) {
+            $parseListener->parseProperty($propertyElement, $variableDeclaration, $activity);
+        }
     }
 
     /**
@@ -4256,89 +4440,105 @@ class BpmnParse extends Parse
     *          The scope to which the sequence flow must be added.
     * @param compensationHandlers
     */
-    public void parseSequenceFlow(Element processElement, ScopeImpl scope, Map<String, Element> compensationHandlers) {
-    for (Element sequenceFlowElement : processElement.elements("sequenceFlow")) {
+    public function parseSequenceFlow(Element $processElement, ScopeImpl $scope, array $compensationHandlers): void
+    {
+        foreach ($processElement->elements("sequenceFlow") as $sequenceFlowElement) {
+            $id = $sequenceFlowElement->attribute("id");
+            $sourceRef = $sequenceFlowElement->attribute("sourceRef");
+            $destinationRef = $sequenceFlowElement->attribute("targetRef");
 
-        String id = sequenceFlowElement.attribute("id");
-        String sourceRef = sequenceFlowElement.attribute("sourceRef");
-        String destinationRef = sequenceFlowElement.attribute("targetRef");
+            // check if destination is a throwing link event (event source) which mean
+            // we have
+            // to target the catching link event (event target) here:
+            if (array_key_exists($destinationRef, $this->eventLinkSources)) {
+                $linkName = $this->eventLinkSources[$destinationRef];
+                if (!array_key_exists($linkName, $this->eventLinkTargets)) {
+                    $this->addError(
+                        "sequence flow points to link event source with name '" . $linkName
+                        . "' but no event target with that name exists. Most probably your link events are not configured correctly.",
+                        $sequenceFlowElement
+                    );
+                    return;
+                }
+                $destinationRef = $this->eventLinkTargets[$linkName];
+                // Reminder: Maybe we should log a warning if we use intermediate link
+                // events which are not used?
+                // e.g. we have a catching event without the corresponding throwing one.
+                // not done for the moment as it does not break executability
+            }
 
-        // check if destination is a throwing link event (event source) which mean
-        // we have
-        // to target the catching link event (event target) here:
-        if (eventLinkSources.containsKey(destinationRef)) {
-        String linkName = eventLinkSources->get(destinationRef);
-        destinationRef = eventLinkTargets->get(linkName);
-        if (destinationRef == null) {
-            $this->addError("sequence flow points to link event source with name '" + linkName
-                + "' but no event target with that name exists. Most probably your link events are not configured correctly.", sequenceFlowElement);
-            // we cannot do anything useful now
-            return;
-        }
-        // Reminder: Maybe we should log a warning if we use intermediate link
-        // events which are not used?
-        // e.g. we have a catching event without the corresponding throwing one.
-        // not done for the moment as it does not break executability
-        }
+            // Implicit check: sequence flow cannot cross (sub) process boundaries: we
+            // don't do a processDefinition.findActivity here
+            $sourceActivity = $scope->findActivityAtLevelOfSubprocess($sourceRef);
+            $destinationActivity = $scope->findActivityAtLevelOfSubprocess($destinationRef);
 
-        // Implicit check: sequence flow cannot cross (sub) process boundaries: we
-        // don't do a processDefinition.findActivity here
-        ActivityImpl sourceActivity = scope.findActivityAtLevelOfSubprocess(sourceRef);
-        ActivityImpl destinationActivity = scope.findActivityAtLevelOfSubprocess(destinationRef);
+            if (
+                ($sourceActivity == null && array_key_exists($sourceRef, $compensationHandlers))
+                || ($sourceActivity != null && $sourceActivity->isCompensationHandler())
+            ) {
+                $this->addError(
+                    "Invalid outgoing sequence flow of compensation activity '" . $sourceRef
+                    . "'. A compensation activity should not have an incoming or outgoing sequence flow.",
+                    $sequenceFlowElement,
+                    $sourceRef,
+                    $id
+                );
+            } elseif (
+                ($destinationActivity == null && array_key_exists($destinationRef, $compensationHandlers))
+                || ($destinationActivity != null && $destinationActivity->isCompensationHandler())
+            ) {
+                $this->addError(
+                    "Invalid incoming sequence flow of compensation activity '" . $destinationRef
+                    . "'. A compensation activity should not have an incoming or outgoing sequence flow.",
+                    $sequenceFlowElement,
+                    $destinationRef,
+                    $id
+                );
+            } elseif ($sourceActivity == null) {
+                $this->addError("Invalid source '" . $sourceRef . "' of sequence flow '" . $id . "'", $sequenceFlowElement);
+            } elseif ($destinationActivity == null) {
+                $this->addError("Invalid destination '" . $destinationRef . "' of sequence flow '" . $id . "'", $sequenceFlowElement);
+            } elseif ($sourceActivity->getActivityBehavior() instanceof EventBasedGatewayActivityBehavior) {
+                // ignore
+            } elseif (
+                $destinationActivity->getActivityBehavior() instanceof IntermediateCatchEventActivityBehavior && ($destinationActivity->getEventScope() != null)
+                && ($destinationActivity->getEventScope()->getActivityBehavior() instanceof EventBasedGatewayActivityBehavior)
+            ) {
+                $this->addError(
+                    "Invalid incoming sequenceflow for intermediateCatchEvent with id '" . $destinationActivity->getId() . "' connected to an event-based gateway.",
+                    $sequenceFlowElement
+                );
+            } elseif (
+                $sourceActivity->getActivityBehavior() instanceof SubProcessActivityBehavior
+                && $sourceActivity->isTriggeredByEvent()
+            ) {
+                $this->addError("Invalid outgoing sequence flow of event subprocess", $sequenceFlowElement);
+            } elseif (
+                $destinationActivity->getActivityBehavior() instanceof SubProcessActivityBehavior
+                && $destinationActivity->isTriggeredByEvent()
+            ) {
+                $this->addError("Invalid incoming sequence flow of event subprocess", $sequenceFlowElement);
+            } else {
+                if ($this->getMultiInstanceScope($sourceActivity) != null) {
+                    $sourceActivity = $this->getMultiInstanceScope($sourceActivity);
+                }
+                if ($this->getMultiInstanceScope($destinationActivity) != null) {
+                    $destinationActivity = getMultiInstanceScope($destinationActivity);
+                }
 
-        if ((sourceActivity == null && compensationHandlers.containsKey(sourceRef))
-            || (sourceActivity != null && sourceActivity.isCompensationHandler())) {
-        $this->addError("Invalid outgoing sequence flow of compensation activity '" + sourceRef
-            + "'. A compensation activity should not have an incoming or outgoing sequence flow.",
-            sequenceFlowElement,
-            sourceRef,
-            id);
-        } else if ((destinationActivity == null && compensationHandlers.containsKey(destinationRef))
-            || (destinationActivity != null && destinationActivity.isCompensationHandler())) {
-        $this->addError("Invalid incoming sequence flow of compensation activity '" + destinationRef
-            + "'. A compensation activity should not have an incoming or outgoing sequence flow.",
-            sequenceFlowElement,
-            destinationRef,
-            id);
-        } else if (sourceActivity == null) {
-        $this->addError("Invalid source '" + sourceRef + "' of sequence flow '" + id + "'", sequenceFlowElement);
-        } else if (destinationActivity == null) {
-        $this->addError("Invalid destination '" + destinationRef + "' of sequence flow '" + id + "'", sequenceFlowElement);
-        } else if (sourceActivity->getActivityBehavior() instanceof EventBasedGatewayActivityBehavior) {
-        // ignore
-        } else if (destinationActivity->getActivityBehavior() instanceof IntermediateCatchEventActivityBehavior && (destinationActivity->getEventScope() != null)
-            && (destinationActivity->getEventScope()->getActivityBehavior() instanceof EventBasedGatewayActivityBehavior)) {
-        $this->addError("Invalid incoming sequenceflow for intermediateCatchEvent with id '" + destinationActivity->getId() + "' connected to an event-based gateway.",
-            sequenceFlowElement);
-        } else if (sourceActivity->getActivityBehavior() instanceof SubProcessActivityBehavior
-            && sourceActivity.isTriggeredByEvent()) {
-        $this->addError("Invalid outgoing sequence flow of event subprocess", sequenceFlowElement);
-        } else if (destinationActivity->getActivityBehavior() instanceof SubProcessActivityBehavior
-            && destinationActivity.isTriggeredByEvent()) {
-        $this->addError("Invalid incoming sequence flow of event subprocess", sequenceFlowElement);
-        }
-        else {
+                $transition = $sourceActivity->createOutgoingTransition($id);
+                $this->sequenceFlows[$id] = $transition;
+                $transition->setProperty("name", $sequenceFlowElement->attribute("name"));
+                $transition->setProperty("documentation", $this->parseDocumentation($sequenceFlowElement));
+                $transition->setDestination($destinationActivity);
+                $this->parseSequenceFlowConditionExpression($sequenceFlowElement, $transition);
+                $this->parseExecutionListenersOnTransition($sequenceFlowElement, $transition);
 
-        if(getMultiInstanceScope(sourceActivity) != null) {
-            sourceActivity = getMultiInstanceScope(sourceActivity);
+                foreach ($this->parseListeners as $parseListener) {
+                    $parseListener->parseSequenceFlow($sequenceFlowElement, $scope, $transition);
+                }
+            }
         }
-        if(getMultiInstanceScope(destinationActivity) != null) {
-            destinationActivity = getMultiInstanceScope(destinationActivity);
-        }
-
-        TransitionImpl transition = sourceActivity.createOutgoingTransition(id);
-        sequenceFlows.put(id, transition);
-        transition->setProperty("name", sequenceFlowElement.attribute("name"));
-        transition->setProperty("documentation", parseDocumentation(sequenceFlowElement));
-        transition->setDestination(destinationActivity);
-        parseSequenceFlowConditionExpression(sequenceFlowElement, transition);
-        parseExecutionListenersOnTransition(sequenceFlowElement, transition);
-
-        for (BpmnParseListener parseListener : parseListeners) {
-            parseListener.parseSequenceFlow(sequenceFlowElement, scope, transition);
-        }
-        }
-    }
     }
 
     /**
@@ -4350,38 +4550,40 @@ class BpmnParse extends Parse
     *          The sequenceFlow object representation to which the condition must
     *          be added.
     */
-    public void parseSequenceFlowConditionExpression(Element seqFlowElement, TransitionImpl seqFlow) {
-    Element conditionExprElement = seqFlowElement.element(CONDITION_EXPRESSION);
-    if (conditionExprElement != null) {
-        Condition condition = parseConditionExpression(conditionExprElement, seqFlow->getId());
-        seqFlow->setProperty(PROPERTYNAME_CONDITION_TEXT, conditionExprElement->getText().trim());
-        seqFlow->setProperty(PROPERTYNAME_CONDITION, condition);
-    }
+    public function parseSequenceFlowConditionExpression(Element $seqFlowElement, TransitionImpl $seqFlow): void
+    {
+        $conditionExprElement = $seqFlowElement->element(self::CONDITION_EXPRESSION);
+        if ($conditionExprElement != null) {
+            $condition = $this->parseConditionExpression($conditionExprElement, $seqFlow->getId());
+            $seqFlow->setProperty(self::PROPERTYNAME_CONDITION_TEXT, trim($conditionExprElement->getText()));
+            $seqFlow->setProperty(self::PROPERTYNAME_CONDITION, $condition);
+        }
     }
 
-    protected Condition parseConditionExpression(Element conditionExprElement, String ancestorElementId) {
-    String expression = conditionExprElement->getText().trim();
-    String type = conditionExprElement.attributeNS(XSI_NS, TYPE);
-    String language = conditionExprElement.attribute(PROPERTYNAME_LANGUAGE);
-    String resource = conditionExprElement.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, PROPERTYNAME_RESOURCE);
-    if (type != null) {
-        String value = type.contains(":") ? resolveName(type) : BpmnParser.BPMN20_NS + ":" + type;
-        if (!value.equals(ATTRIBUTEVALUE_T_FORMAL_EXPRESSION)) {
-        $this->addError("Invalid type, only tFormalExpression is currently supported", conditionExprElement, ancestorElementId);
+    protected function parseConditionExpression(Element $conditionExprElement, string $ancestorElementId): ?ConditionInterface
+    {
+        $expression = trim($conditionExprElement->getText());
+        $type = $conditionExprElement->attributeNS(self::XSI_NS, self::TYPE);
+        $language = $conditionExprElement->attribute(self::PROPERTYNAME_LANGUAGE);
+        $resource = $conditionExprElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::PROPERTYNAME_RESOURCE);
+        if (!empty($type)) {
+            $value = strpos($type, ":") !== -1 ? $this->resolveName($type) : BpmnParser::BPMN20_NS . ":" . $type;
+            if ($value != self::ATTRIBUTEVALUE_T_FORMAL_EXPRESSION) {
+                $this->addError("Invalid type, only tFormalExpression is currently supported", $conditionExprElement, $ancestorElementId);
+            }
         }
-    }
-    Condition condition = null;
-    if (language == null) {
-        condition = new UelExpressionCondition(expressionManager.createExpression(expression));
-    } else {
-        try {
-        ExecutableScript script = ScriptUtil->getScript(language, expression, resource, expressionManager);
-        condition = new ScriptCondition(script);
-        } catch (ProcessEngineException e) {
-        $this->addError("Unable to process condition expression:" + e->getMessage(), conditionExprElement, ancestorElementId);
+        $condition = null;
+        if ($language == null) {
+            $condition = new UelExpressionCondition($this->expressionManager->createExpression($expression));
+        } else {
+            try {
+                $script = ScriptUtil::getScript($language, $expression, $resource, $this->expressionManager);
+                $condition = new ScriptCondition($script);
+            } catch (ProcessEngineException $e) {
+                $this->addError("Unable to process condition expression:" . $e->getMessage(), $conditionExprElement, $ancestorElementId);
+            }
         }
-    }
-    return condition;
+        return $condition;
     }
 
     /**
@@ -4392,53 +4594,56 @@ class BpmnParse extends Parse
     * @param scope
     *          the scope to add the executionListeners to.
     */
-    public void parseExecutionListenersOnScope(Element scopeElement, ScopeImpl scope) {
-    Element extentionsElement = scopeElement.element("extensionElements");
-    String scopeElementId = scopeElement.attribute("id");
-    if (extentionsElement != null) {
-        List<Element> listenerElements = extentionsElement.elementsNS(CAMUNDA_BPMN_EXTENSIONS_NS, "executionListener");
-        for (Element listenerElement : listenerElements) {
-        String eventName = listenerElement.attribute("event");
-        if (isValidEventNameForScope(eventName, listenerElement, scopeElementId)) {
-            ExecutionListener listener = parseExecutionListener(listenerElement, scopeElementId);
-            if (listener != null) {
-            scope.addExecutionListener(eventName, listener);
+    public function parseExecutionListenersOnScope(Element $scopeElement, ScopeImpl $scope): void
+    {
+        $extentionsElement = $scopeElement->element("extensionElements");
+        $scopeElementId = $scopeElement->attribute("id");
+        if (empty($extentionsElement)) {
+            $listenerElements = $extentionsElement->elementsNS(self::BPMN_EXTENSIONS_NS_PREFIX, "executionListener");
+            foreach ($listenerElements as $listenerElement) {
+                $eventName = $listenerElement->attribute("event");
+                if ($this->isValidEventNameForScope($eventName, $listenerElement, $scopeElementId)) {
+                    $listener = $this->parseExecutionListener($this->listenerElement, $scopeElementId);
+                    if (empty($listener)) {
+                        $scope->addExecutionListener($eventName, $listener);
+                    }
+                }
             }
         }
-        }
-    }
     }
 
     /**
     * Check if the given event name is valid. If not, an appropriate error is
     * added.
     */
-    protected boolean isValidEventNameForScope(String eventName, Element listenerElement, String ancestorElementId) {
-    if (eventName != null && eventName.trim().length() > 0) {
-        if ("start".equals(eventName) || "end".equals(eventName)) {
-        return true;
+    protected function isValidEventNameForScope(string $eventName, Element $listenerElement, string $ancestorElementId): bool
+    {
+        if (!empty(trim($eventName))) {
+            if ("start" == $eventName || "end" == $eventName) {
+                return true;
+            } else {
+                $this->addError("Attribute 'event' must be one of {start|end}", $listenerElement, $ancestorElementId);
+            }
         } else {
-        $this->addError("Attribute 'event' must be one of {start|end}", listenerElement, ancestorElementId);
+            $this->addError("Attribute 'event' is mandatory on listener", $listenerElement, $ancestorElementId);
         }
-    } else {
-        $this->addError("Attribute 'event' is mandatory on listener", listenerElement, ancestorElementId);
-    }
-    return false;
+        return false;
     }
 
-    public void parseExecutionListenersOnTransition(Element activitiElement, TransitionImpl activity) {
-    Element extensionElements = activitiElement.element("extensionElements");
-    if (extensionElements != null) {
-        List<Element> listenerElements = extensionElements.elementsNS(CAMUNDA_BPMN_EXTENSIONS_NS, "executionListener");
-        for (Element listenerElement : listenerElements) {
-        ExecutionListener listener = parseExecutionListener(listenerElement, activity->getId());
-        if (listener != null) {
-            // Since a transition only fires event 'take', we don't parse the
-            // event attribute, it is ignored
-            activity.addExecutionListener(listener);
+    public function parseExecutionListenersOnTransition(Element $activitiElement, TransitionImpl $activity): void
+    {
+        $extensionElements = $activitiElement->element("extensionElements");
+        if (!empty($extensionElements)) {
+            $listenerElements = $extensionElements->elementsNS(self::BPMN_EXTENSIONS_NS_PREFIX, "executionListener");
+            foreach ($listenerElements as $listenerElement) {
+                $listener = $this->parseExecutionListener($listenerElement, $activity->getId());
+                if ($listener != null) {
+                    // Since a transition only fires event 'take', we don't parse the
+                    // event attribute, it is ignored
+                    $activity->addExecutionListener($listener);
+                }
+            }
         }
-        }
-    }
     }
 
     /**
@@ -4448,413 +4653,427 @@ class BpmnParse extends Parse
     * @param executionListenerElement
     *          the XML element containing the executionListener definition.
     */
-    public ExecutionListener parseExecutionListener(Element executionListenerElement, String ancestorElementId) {
-    ExecutionListener executionListener = null;
+    public function parseExecutionListener(Element $executionListenerElement, string $ancestorElementId): ?ExecutionListenerInterface
+    {
+        $executionListener = null;
 
-    String className = executionListenerElement.attribute(PROPERTYNAME_CLASS);
-    String expression = executionListenerElement.attribute(PROPERTYNAME_EXPRESSION);
-    String delegateExpression = executionListenerElement.attribute(PROPERTYNAME_DELEGATE_EXPRESSION);
-    Element scriptElement = executionListenerElement.elementNS(CAMUNDA_BPMN_EXTENSIONS_NS, "script");
+        $className = $executionListenerElement->attribute(self::PROPERTYNAME_CLASS);
+        $expression = $executionListenerElement->attribute(self::PROPERTYNAME_EXPRESSION);
+        $delegateExpression = $executionListenerElement->attribute(self::PROPERTYNAME_DELEGATE_EXPRESSION);
+        $scriptElement = $executionListenerElement->elementNS(self::BPMN_EXTENSIONS_NS_PREFIX, "script");
 
-    if (className != null) {
-        if (className.isEmpty()) {
-        $this->addError("Attribute 'class' cannot be empty", executionListenerElement, ancestorElementId);
+        if ($className != null) {
+            if (empty($className)) {
+                $this->addError("Attribute 'class' cannot be empty", $executionListenerElement, $ancestorElementId);
+            } else {
+                $executionListener = new ClassDelegateExecutionListener($className, $this->parseFieldDeclarations($executionListenerElement));
+            }
+        } elseif ($expression != null) {
+            $executionListener = new ExpressionExecutionListener($expressionManager->createExpression($expression));
+        } elseif ($delegateExpression != null) {
+            if (empty($delegateExpression)) {
+                $this->addError("Attribute 'delegateExpression' cannot be empty", $executionListenerElement, $ancestorElementId);
+            } else {
+                $executionListener = new DelegateExpressionExecutionListener($expressionManager->createExpression($delegateExpression), $this->parseFieldDeclarations($executionListenerElement));
+            }
+        } elseif ($scriptElement != null) {
+            try {
+                $executableScript = $this->parseScript($scriptElement);
+                if ($executableScript != null) {
+                    $executionListener = new ScriptExecutionListener($executableScript);
+                }
+            } catch (BpmnParseException $e) {
+                $this->addError($e, $ancestorElementId);
+            }
         } else {
-        executionListener = new ClassDelegateExecutionListener(className, parseFieldDeclarations(executionListenerElement));
+            $this->addError("Element 'class', 'expression', 'delegateExpression' or 'script' is mandatory on executionListener", $executionListenerElement, $ancestorElementId);
         }
-    } else if (expression != null) {
-        executionListener = new ExpressionExecutionListener(expressionManager.createExpression(expression));
-    } else if (delegateExpression != null) {
-        if (delegateExpression.isEmpty()) {
-        $this->addError("Attribute 'delegateExpression' cannot be empty", executionListenerElement, ancestorElementId);
-        } else {
-        executionListener = new DelegateExpressionExecutionListener(expressionManager.createExpression(delegateExpression), parseFieldDeclarations(executionListenerElement));
-        }
-    } else if (scriptElement != null) {
-        try {
-        ExecutableScript executableScript = parseCamundaScript(scriptElement);
-        if (executableScript != null) {
-            executionListener = new ScriptExecutionListener(executableScript);
-        }
-        } catch (BpmnParseException e) {
-        $this->addError(e, ancestorElementId);
-        }
-    } else {
-        $this->addError("Element 'class', 'expression', 'delegateExpression' or 'script' is mandatory on executionListener", executionListenerElement, ancestorElementId);
-    }
-    return executionListener;
+        return $executionListener;
     }
 
     // Diagram interchange
     // /////////////////////////////////////////////////////////////////
 
-    public void parseDiagramInterchangeElements() {
-    // Multiple BPMNDiagram possible
-    List<Element> diagrams = $this->rootElement->elementsNS(BPMN_DI_NS, "BPMNDiagram");
-    if (!diagrams.isEmpty()) {
-        for (Element diagramElement : diagrams) {
-        parseBPMNDiagram(diagramElement);
+    public function parseDiagramInterchangeElements(): void
+    {
+        // Multiple BPMNDiagram possible
+        $diagrams = $this->rootElement->elementsNS(self::BPMN_DI_NS, "BPMNDiagram");
+        if (!уьзен($diagrams)) {
+            foreach ($diagrams as $diagramElement) {
+                $this->parseBPMNDiagram($diagramElement);
+            }
         }
     }
-    }
 
-    public void parseBPMNDiagram(Element bpmndiagramElement) {
-    // Each BPMNdiagram needs to have exactly one BPMNPlane
-    Element bpmnPlane = bpmndiagramElement.elementNS(BPMN_DI_NS, "BPMNPlane");
-    if (bpmnPlane != null) {
-        parseBPMNPlane(bpmnPlane);
-    }
-    }
-
-    public void parseBPMNPlane(Element bpmnPlaneElement) {
-    String bpmnElement = bpmnPlaneElement.attribute("bpmnElement");
-    if (bpmnElement != null && !"".equals(bpmnElement)) {
-        // there seems to be only on process without collaboration
-        if (getProcessDefinition(bpmnElement) != null) {
-        getProcessDefinition(bpmnElement)->setGraphicalNotationDefined(true);
+    public function parseBPMNDiagram(Element $bpmndiagramElement): void
+    {
+        // Each BPMNdiagram needs to have exactly one BPMNPlane
+        $bpmnPlane = $bpmndiagramElement->elementNS(self::BPMN_DI_NS, "BPMNPlane");
+        if (!empty($bpmnPlane)) {
+            $this->parseBPMNPlane($bpmnPlane);
         }
-
-        List<Element> shapes = bpmnPlaneElement.elementsNS(BPMN_DI_NS, "BPMNShape");
-        for (Element shape : shapes) {
-        parseBPMNShape(shape);
-        }
-
-        List<Element> edges = bpmnPlaneElement.elementsNS(BPMN_DI_NS, "BPMNEdge");
-        for (Element edge : edges) {
-        parseBPMNEdge(edge);
-        }
-
-    } else {
-        $this->addError("'bpmnElement' attribute is required on BPMNPlane ", bpmnPlaneElement);
-    }
     }
 
-    public void parseBPMNShape(Element bpmnShapeElement) {
-    String bpmnElement = bpmnShapeElement.attribute("bpmnElement");
+    public function parseBPMNPlane(Element $bpmnPlaneElement): void
+    {
+        $bpmnElement = $bpmnPlaneElement->attribute("bpmnElement");
+        if (!empty($bpmnElement)) {
+            // there seems to be only on process without collaboration
+            if ($this->getProcessDefinition($bpmnElement) != null) {
+                $this->getProcessDefinition($bpmnElement)->setGraphicalNotationDefined(true);
+            }
 
-    if (bpmnElement != null && !"".equals(bpmnElement)) {
-        // For collaborations, their are also shape definitions for the
-        // participants / processes
-        if (participantProcesses->get(bpmnElement) != null) {
-        ProcessDefinitionEntity procDef = getProcessDefinition(participantProcesses->get(bpmnElement));
-        procDef->setGraphicalNotationDefined(true);
+            $shapes = $bpmnPlaneElement->elementsNS(self::BPMN_DI_NS, "BPMNShape");
+            foreach ($shapes as $shape) {
+                $this->parseBPMNShape($shape);
+            }
 
-        // The participation that references this process, has a bounds to be
-        // rendered + a name as wel
-        parseDIBounds(bpmnShapeElement, procDef->getParticipantProcess());
-        return;
-        }
-
-        for (ProcessDefinitionEntity processDefinition : getProcessDefinitions()) {
-        ActivityImpl activity = processDefinition.findActivity(bpmnElement);
-        if (activity != null) {
-            parseDIBounds(bpmnShapeElement, activity);
-
-            // collapsed or expanded
-            String isExpanded = bpmnShapeElement.attribute("isExpanded");
-            if (isExpanded != null) {
-            activity->setProperty(PROPERTYNAME_ISEXPANDED, parseBooleanAttribute(isExpanded));
+            $edges = $bpmnPlaneElement->elementsNS(self::BPMN_DI_NS, "BPMNEdge");
+            foreach ($edges as $edge) {
+                $this->parseBPMNEdge($edge);
             }
         } else {
-            Lane lane = processDefinition->getLaneForId(bpmnElement);
-
-            if (lane != null) {
-            // The shape represents a lane
-            parseDIBounds(bpmnShapeElement, lane);
-            } else if (!elementIds.contains(bpmnElement)) { // It might not be an
-                                                            // activity nor a
-                                                            // lane, but it might
-                                                            // still reference
-                                                            // 'something'
-            $this->addError("Invalid reference in 'bpmnElement' attribute, activity " + bpmnElement + " not found", bpmnShapeElement);
-            }
+            $this->addError("'bpmnElement' attribute is required on BPMNPlane ", $bpmnPlaneElement);
         }
-        }
-    } else {
-        $this->addError("'bpmnElement' attribute is required on BPMNShape", bpmnShapeElement);
-    }
     }
 
-    protected void parseDIBounds(Element bpmnShapeElement, HasDIBounds target) {
-    Element bounds = bpmnShapeElement.elementNS(BPMN_DC_NS, "Bounds");
-    if (bounds != null) {
-        target->setX(parseDoubleAttribute(bpmnShapeElement, "x", bounds.attribute("x"), true).intValue());
-        target->setY(parseDoubleAttribute(bpmnShapeElement, "y", bounds.attribute("y"), true).intValue());
-        target->setWidth(parseDoubleAttribute(bpmnShapeElement, "width", bounds.attribute("width"), true).intValue());
-        target->setHeight(parseDoubleAttribute(bpmnShapeElement, "height", bounds.attribute("height"), true).intValue());
-    } else {
-        $this->addError("'Bounds' element is required", bpmnShapeElement);
-    }
-    }
+    public function parseBPMNShape(Element $bpmnShapeElement): void
+    {
+        $bpmnElement = $bpmnShapeElement->attribute("bpmnElement");
 
-    public void parseBPMNEdge(Element bpmnEdgeElement) {
-    String sequenceFlowId = bpmnEdgeElement.attribute("bpmnElement");
-    if (sequenceFlowId != null && !"".equals(sequenceFlowId)) {
-        if (sequenceFlows != null && sequenceFlows.containsKey(sequenceFlowId)) {
+        if (!empty($bpmnElement)) {
+            // For collaborations, their are also shape definitions for the
+            // participants / processes
+            if (array_key_exists($bpmnElement, $this->participantProcesses)) {
+                $procDef = $this->getProcessDefinition($this->participantProcesses[]);
+                $procDef->setGraphicalNotationDefined(true);
 
-        TransitionImpl sequenceFlow = sequenceFlows->get(sequenceFlowId);
-        List<Element> waypointElements = bpmnEdgeElement.elementsNS(OMG_DI_NS, "waypoint");
-        if (waypointElements.size() >= 2) {
-            List<Integer> waypoints = new ArrayList<>();
-            for (Element waypointElement : waypointElements) {
-            waypoints.add(parseDoubleAttribute(waypointElement, "x", waypointElement.attribute("x"), true).intValue());
-            waypoints.add(parseDoubleAttribute(waypointElement, "y", waypointElement.attribute("y"), true).intValue());
+                // The participation that references this process, has a bounds to be
+                // rendered + a name as wel
+                $this->parseDIBounds($bpmnShapeElement, $procDef->getParticipantProcess());
+                return;
             }
-            sequenceFlow->setWaypoints(waypoints);
+
+            foreach ($this->getProcessDefinitions() as $processDefinition) {
+                $activity = $processDefinition->findActivity($bpmnElement);
+                if ($activity != null) {
+                    $this->parseDIBounds($bpmnShapeElement, $activity);
+
+                    // collapsed or expanded
+                    $isExpanded = $bpmnShapeElement->attribute("isExpanded");
+                    if ($isExpanded != null) {
+                        $activity->setProperty(self::PROPERTYNAME_ISEXPANDED, $this->parseBooleanAttribute($isExpanded));
+                    }
+                } else {
+                    $lane = $processDefinition->getLaneForId($bpmnElement);
+
+                    if ($lane != null) {
+                        // The shape represents a lane
+                        $this->parseDIBounds($bpmnShapeElement, $lane);
+                    } elseif (!in_array($bpmnElement, $this->elementIds)) { // It might not be an
+                                                                    // activity nor a
+                                                                    // lane, but it might
+                                                                    // still reference
+                                                                    // 'something'
+                        $this->addError("Invalid reference in 'bpmnElement' attribute, $activity " . $bpmnElement . " not found", $bpmnShapeElement);
+                    }
+                }
+            }
         } else {
-            $this->addError("Minimum 2 waypoint elements must be definted for a 'BPMNEdge'", bpmnEdgeElement);
+            $this->addError("'bpmnElement' attribute is required on BPMNShape", $bpmnShapeElement);
         }
-        } else if (!elementIds.contains(sequenceFlowId)) { // it might not be a
-                                                            // sequenceFlow but it
-                                                            // might still
-                                                            // reference
-                                                            // 'something'
-        $this->addError("Invalid reference in 'bpmnElement' attribute, sequenceFlow " + sequenceFlowId + "not found", bpmnEdgeElement);
-        }
-    } else {
-        $this->addError("'bpmnElement' attribute is required on BPMNEdge", bpmnEdgeElement);
     }
+
+    protected function parseDIBounds(Element $bpmnShapeElement, HasDIBoundsInterface $target): void
+    {
+        $bounds = $bpmnShapeElement->elementNS(self::BPMN_DC_NS, "Bounds");
+        if (!empty($bounds)) {
+            $target->setX(intval($this->parseDoubleAttribute($bpmnShapeElement, "x", $bounds->attribute("x"), true)));
+            $target->setY(intval($this->parseDoubleAttribute($bpmnShapeElement, "y", $bounds->attribute("y"), true)));
+            $target->setWidth(intval($this->parseDoubleAttribute($bpmnShapeElement, "width", $bounds->attribute("width"), true)));
+            $target->setHeight(intval($this->parseDoubleAttribute($bpmnShapeElement, "height", $bounds->attribute("height"), true)));
+        } else {
+            $this->addError("'Bounds' element is required", $bpmnShapeElement);
+        }
+    }
+
+    public function parseBPMNEdge(Element $bpmnEdgeElement): void
+    {
+        $sequenceFlowId = $bpmnEdgeElement->attribute("bpmnElement");
+        if (!empty($sequenceFlowId)) {
+            if (!empty($this->sequenceFlows) && array_key_exists($sequenceFlowId, $this->sequenceFlows)) {
+                $sequenceFlow = $this->sequenceFlows[$sequenceFlowId];
+                $waypointElements = $bpmnEdgeElement->elementsNS(self::OMG_DI_NS, "waypoint");
+                if (count($waypointElements) >= 2) {
+                    $waypoints = [];
+                    foreach ($waypointElements as $waypointElement) {
+                        $waypoints[] = intval($this->parseDoubleAttribute($waypointElement, "x", $waypointElement->attribute("x"), true));
+                        $waypoints[] = intval($this->parseDoubleAttribute($waypointElement, "y", $waypointElement->attribute("y"), true));
+                    }
+                    $sequenceFlow->setWaypoints(waypoints);
+                } else {
+                    $this->addError("Minimum 2 waypoint elements must be definted for a 'BPMNEdge'", bpmnEdgeElement);
+                }
+            } elseif (!in_array($sequenceFlowId, $this->elementIds)) { // it might not be a
+                                                                // sequenceFlow but it
+                                                                // might still
+                                                                // reference
+                                                                // 'something'
+                $this->addError("Invalid reference in 'bpmnElement' attribute, sequenceFlow " . $sequenceFlowId . "not found", $bpmnEdgeElement);
+            }
+        } else {
+            $this->addError("'bpmnElement' attribute is required on BPMNEdge", $bpmnEdgeElement);
+        }
     }
 
     // Getters, setters and Parser overridden operations
     // ////////////////////////////////////////
 
-    public List<ProcessDefinitionEntity> getProcessDefinitions() {
-    return processDefinitions;
+    public function getProcessDefinitions(): array
+    {
+        return $this->processDefinitions;
     }
 
-    public ProcessDefinitionEntity getProcessDefinition(String processDefinitionKey) {
-    for (ProcessDefinitionEntity processDefinition : processDefinitions) {
-        if (processDefinition->getKey().equals(processDefinitionKey)) {
-        return processDefinition;
+    public function getProcessDefinition(string $processDefinitionKey): ?ProcessDefinitionEntity
+    {
+        foreach ($processDefinitions as $processDefinition) {
+            if ($processDefinition->getKey() == $processDefinitionKey) {
+                return $processDefinition;
+            }
         }
-    }
-    return null;
-    }
-
-    @Override
-    public BpmnParse name(String name) {
-    super.name(name);
-    return this;
+        return null;
     }
 
-    @Override
-    public BpmnParse sourceInputStream(InputStream inputStream) {
-    super.sourceInputStream(inputStream);
-    return this;
+    public function name(string $name): BpmnParse
+    {
+        parent::name($name);
+        return $this;
     }
 
-    @Override
-    public BpmnParse sourceResource(String resource, ClassLoader classLoader) {
-    super.sourceResource(resource, classLoader);
-    return this;
+    public function sourceInputStream($inputStream): BpmnParse
+    {
+        parent::sourceInputStream($inputStream);
+        return $this;
     }
 
-    @Override
-    public BpmnParse sourceResource(String resource) {
-    super.sourceResource(resource);
-    return this;
+    public function sourceResource(string $resource): BpmnParse
+    {
+        parent::sourceResource($resource);
+        return $this;
     }
 
-    @Override
-    public BpmnParse sourceString(String string) {
-    super.sourceString(string);
-    return this;
+    public function sourceString(string $string): BpmnParse
+    {
+        parent::sourceString($string);
+        return $this;
     }
 
-    @Override
-    public BpmnParse sourceUrl(String url) {
-    super.sourceUrl(url);
-    return this;
+    public function sourceUrl(string $url): BpmnParse
+    {
+        parent::sourceUrl($url);
+        return $this;
     }
 
-    @Override
-    public BpmnParse sourceUrl(URL url) {
-    super.sourceUrl(url);
-    return this;
-    }
-
-    public Boolean parseBooleanAttribute(String booleanText, boolean defaultValue) {
-    if (booleanText == null) {
-        return defaultValue;
-    } else {
-        return parseBooleanAttribute(booleanText);
-    }
-    }
-
-    public Boolean parseBooleanAttribute(String booleanText) {
-    if (TRUE.equals(booleanText) || "enabled".equals(booleanText) || "on".equals(booleanText) || "active".equals(booleanText) || "yes".equals(booleanText)) {
-        return Boolean.TRUE;
-    }
-    if ("false".equals(booleanText) || "disabled".equals(booleanText) || "off".equals(booleanText) || "inactive".equals(booleanText)
-        || "no".equals(booleanText)) {
-        return Boolean.FALSE;
-    }
-    return null;
-    }
-
-    public Double parseDoubleAttribute(Element element, String attributeName, String doubleText, boolean required) {
-    if (required && (doubleText == null || "".equals(doubleText))) {
-        $this->addError(attributeName + " is required", element);
-    } else {
-        try {
-        return Double.parseDouble(doubleText);
-        } catch (NumberFormatException e) {
-        $this->addError("Cannot parse " + attributeName + ": " + e->getMessage(), element);
+    public function parseBooleanAttribute(?string $booleanText, bool $defaultValue = null): bool
+    {
+        if ($booleanText === null && $defaultValue !== null) {
+            return $defaultValue;
         }
-    }
-    return -1.0;
-    }
-
-    protected boolean isStartable(Element element) {
-    return TRUE.equalsIgnoreCase(element.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "isStartableInTasklist", TRUE));
-    }
-
-    protected boolean isExclusive(Element element) {
-    return TRUE.equals(element.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "exclusive", String.valueOf(JobEntity.DEFAULT_EXCLUSIVE)));
+        if (($booleanText === "TRUE" || $booleanText === true) || "enabled" == $booleanText || "on" == $booleanText || "active" == $booleanText || "yes" == $booleanText) {
+            return true;
+        }
+        if (($booleanText === "FALSE" || $booleanText === false) || "disabled" == $booleanText || "off" == $booleanText || "inactive" == $booleanText || "no" == $booleanText) {
+            return false;
+        }
+        return false;
     }
 
-    protected boolean isAsyncBefore(Element element) {
-    return TRUE.equals(element.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "async"))
-        || TRUE.equals(element.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "asyncBefore"));
+    public function parseDoubleAttribute(Element $element, string $attributeName, ?string $doubleText, bool $required): float
+    {
+        if ($required && empty($doubleText)) {
+            $this->addError($attributeName . " is required", $element);
+        } else {
+            try {
+                return floatval($doubleText);
+            } catch (\Exception $e) {
+                $this->addError("Cannot parse " . $attributeName . ": " . $e->getMessage(), $element);
+            }
+        }
+        return -1.0;
     }
 
-    protected boolean isAsyncAfter(Element element) {
-    return TRUE.equals(element.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, "asyncAfter"));
+    protected function isStartable(Element $element): bool
+    {
+        $isStartableInTasklist = $element->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "isStartableInTasklist", "true");
+        return $isStartableInTasklist !== null && strtolower($isStartableInTasklist) === "true";
     }
 
-    protected boolean isServiceTaskLike(Element element) {
-
-    return element != null && (
-            element.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, PROPERTYNAME_CLASS) != null
-        || element.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, PROPERTYNAME_EXPRESSION) != null
-        || element.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, PROPERTYNAME_DELEGATE_EXPRESSION) != null
-        || element.attributeNS(CAMUNDA_BPMN_EXTENSIONS_NS, TYPE) != null
-        || hasConnector(element));
+    protected function isExclusive(Element $element): bool
+    {
+        $exclusive = $element->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "exclusive", JobEntity::DEFAULT_EXCLUSIVE === true ? "true" : "false");
+        return $exclusive !== null && strolower($exclusive) === "true";
     }
 
-    protected boolean hasConnector(Element element) {
-    Element extensionElements = element.element("extensionElements");
-    return extensionElements != null && extensionElements.element("connector") != null;
+    protected function isAsyncBefore(Element $element): bool
+    {
+        $async = $element->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "async");
+        $asyncBefore = $element->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "asyncBefore");
+        return ($async !== null && strtolower($async) === "true")
+            || ($asyncBefore !== null && strtolower($asyncBefore) === "true");
     }
 
-    public Map<String, List<JobDeclaration<?, ?>>> getJobDeclarations() {
-    return jobDeclarations;
+    protected function isAsyncAfter(Element $element): bool
+    {
+        $asyncAfter = $element->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "asyncAfter");
+        return $asyncAfter !== null && strtolower($asyncAfter) === "true";
     }
 
-    public List<JobDeclaration<?, ?>> getJobDeclarationsByKey(String processDefinitionKey) {
-    return jobDeclarations->get(processDefinitionKey);
+    protected function isServiceTaskLike(?Element $element): bool
+    {
+        return $element != null && (
+            $element->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::PROPERTYNAME_CLASS) != null
+            || $element->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::PROPERTYNAME_EXPRESSION) != null
+            || $element->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::PROPERTYNAME_DELEGATE_EXPRESSION) != null
+            || $element->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::TYPE) != null
+            || $this->hasConnector($element)
+        );
+    }
+
+    protected function hasConnector(Element $element): bool
+    {
+        $extensionElements = $element->element("extensionElements");
+        return empty($extensionElements) && $extensionElements->element("connector") != null;
+    }
+
+    public function getJobDeclarations(): array
+    {
+        return $this->jobDeclarations;
+    }
+
+    public function getJobDeclarationsByKey(string $processDefinitionKey): array
+    {
+        if (array_key_exists($processDefinitionKey, $this->jobDeclarations)) {
+            return $this->jobDeclarations[$processDefinitionKey];
+        }
+        return [];
     }
 
     // IoMappings ////////////////////////////////////////////////////////
 
-    protected void parseActivityInputOutput(Element activityElement, ActivityImpl activity) {
-    Element extensionElements = activityElement.element("extensionElements");
-    if (extensionElements != null) {
-        IoMapping inputOutput = null;
-        try {
-        inputOutput = parseInputOutput(extensionElements);
-        } catch (BpmnParseException e) {
-        $this->addError(e, activity->getId());
-        }
+    protected function parseActivityInputOutput(Element $activityElement, ActivityImpl $activity): void
+    {
+        $extensionElements = $activityElement->element("extensionElements");
+        if ($extensionElements != null) {
+            $inputOutput = null;
+            try {
+                $inputOutput = $this->parseInputOutput($extensionElements);
+            } catch (BpmnParseException $e) {
+                $this->addError($e, $activity->getId());
+            }
 
-        if (inputOutput != null) {
-        if (checkActivityInputOutputSupported(activityElement, activity, inputOutput)) {
+            if ($inputOutput != null) {
+                if ($this->checkActivityInputOutputSupported($activityElement, $activity, $inputOutput)) {
+                    $activity->setIoMapping($inputOutput);
 
-            activity->setIoMapping(inputOutput);
-
-            if (getMultiInstanceScope(activity) == null) {
-            // turn activity into a scope (->local, isolated scope for
-            // variables) unless it is a multi instance activity, in that case
-            // this
-            // is not necessary because:
-            // A scope is already created for the multi instance body which
-            // isolates the local variables from other executions in the same
-            // scope, and
-            // * parallel: the individual concurrent executions are isolated
-            // even if they are not scope themselves
-            // * sequential: after each iteration local variables are purged
-            activity->setScope(true);
+                    if ($this->getMultiInstanceScope($activity) == null) {
+                        // turn activity into a scope (->local, isolated scope for
+                        // variables) unless it is a multi instance activity, in that case
+                        // this
+                        // is not necessary because:
+                        // A scope is already created for the multi instance body which
+                        // isolates the local variables from other executions in the same
+                        // scope, and
+                        // * parallel: the individual concurrent executions are isolated
+                        // even if they are not scope themselves
+                        // * sequential: after each iteration local variables are purged
+                        $activity->setScope(true);
+                    }
+                }
             }
         }
+    }
+
+    protected function checkActivityInputOutputSupported(Element $activityElement, ActivityImpl $activity, IoMapping $inputOutput): bool
+    {
+        $tagName = $activityElement->getTagName();
+
+        if (
+            !(strpos(strtolower($tagName), "task") !== -1
+            || strpos($tagName, "Event") !== -1
+            || $tagName == "transaction"
+            || $tagName == "subProcess"
+            || $tagName == "callActivity")
+        ) {
+            $this->addError("camunda:inputOutput mapping unsupported for element type '" . $tagName . "'.", $activityElement);
+            return false;
+        }
+        $triggeredByEvent = $activityElement->attribute("triggeredByEvent");
+        if ($tagName == "subProcess" && ($triggeredByEvent !== null && strtolower($triggeredByEvent) === "true")) {
+            $this->addError("camunda:inputOutput mapping unsupported for element type '" . $tagName . "' with attribute 'triggeredByEvent = true'.", $activityElement);
+            return false;
+        }
+
+        if (!empty($inputOutput->getOutputParameters())) {
+            return $this->checkActivityOutputParameterSupported($activityElement, $activity);
+        } else {
+            return true;
         }
     }
+
+    protected function checkActivityOutputParameterSupported(Element $activityElement, ActivityImpl $activity): bool
+    {
+        $tagName = $activityElement->getTagName();
+
+        if ($tagName == "endEvent") {
+            $this->addError("camunda:outputParameter not allowed for element type '" . $tagName . "'.", $activityElement);
+            return true;
+        } elseif ($this->getMultiInstanceScope($activity) != null) {
+            $this->addError("camunda:outputParameter not allowed for multi-instance constructs", $activityElement);
+            return false;
+        } else {
+            return true;
+        }
     }
 
-    protected boolean checkActivityInputOutputSupported(Element activityElement, ActivityImpl activity, IoMapping inputOutput) {
-    String tagName = activityElement->getTagName();
-
-    if (!(tagName.toLowerCase().contains("task")
-        || tagName.contains("Event")
-        || tagName.equals("transaction")
-        || tagName.equals("subProcess")
-        || tagName.equals("callActivity"))) {
-        $this->addError("camunda:inputOutput mapping unsupported for element type '" + tagName + "'.", activityElement);
-        return false;
+    protected function ensureNoIoMappingDefined(Element $element): void
+    {
+        $inputOutput = $this->findExtensionElement($element, "inputOutput");
+        if ($inputOutput != null) {
+            $this->addError("camunda:inputOutput mapping unsupported for element type '" . $element->getTagName() . "'.", $element);
+        }
     }
 
-    if (tagName.equals("subProcess") && TRUE.equals(activityElement.attribute("triggeredByEvent"))) {
-        $this->addError("camunda:inputOutput mapping unsupported for element type '" + tagName + "' with attribute 'triggeredByEvent = true'.", activityElement);
-        return false;
+    protected function createParameterValueProvider($value, ExpressionManager $expressionManager): ParameterValueProvider
+    {
+        if ($value == null) {
+            return new NullValueProvider();
+        } elseif (is_string($value)) {
+            $expression = $expressionManager->createExpression($value);
+            return new ElValueProvider($expression);
+        } else {
+            return new ConstantValueProvider($value);
+        }
     }
 
-    if (!inputOutput->getOutputParameters().isEmpty()) {
-        return checkActivityOutputParameterSupported(activityElement, activity);
-    } else {
-        return true;
-    }
-    }
-
-    protected boolean checkActivityOutputParameterSupported(Element activityElement, ActivityImpl activity) {
-    String tagName = activityElement->getTagName();
-
-    if (tagName.equals("endEvent")) {
-        $this->addError("camunda:outputParameter not allowed for element type '" + tagName + "'.", activityElement);
-        return true;
-    } else if (getMultiInstanceScope(activity) != null) {
-        $this->addError("camunda:outputParameter not allowed for multi-instance constructs", activityElement);
-        return false;
-    } else {
-        return true;
-    }
+    protected function addTimeCycleWarning(Element $timeCycleElement, string $type, string $timerElementId): void
+    {
+        $warning = "It is not recommended to use a " . $type . " timer event with a time cycle.";
+        $this->addWarning($warning, $timeCycleElement, $timerElementId);
     }
 
-    protected void ensureNoIoMappingDefined(Element element) {
-    Element inputOutput = findCamundaExtensionElement(element, "inputOutput");
-    if (inputOutput != null) {
-        $this->addError("camunda:inputOutput mapping unsupported for element type '" + element->getTagName() + "'.", element);
-    }
-    }
-
-    protected ParameterValueProvider createParameterValueProvider(Object value, ExpressionManager expressionManager) {
-    if (value == null) {
-        return new NullValueProvider();
-
-    } else if (value instanceof String) {
-        Expression expression = expressionManager.createExpression((String) value);
-        return new ElValueProvider(expression);
-
-    } else {
-        return new ConstantValueProvider(value);
-    }
-    }
-
-    protected void addTimeCycleWarning(Element timeCycleElement, String type, String timerElementId) {
-    String warning = "It is not recommended to use a " + type + " timer event with a time cycle.";
-    addWarning(warning, timeCycleElement, timerElementId);
-    }
-
-    protected void ensureNoExpressionInMessageStartEvent(Element element,
-                                                        EventSubscriptionDeclaration messageStartEventSubscriptionDeclaration,
-                                                        String parentElementId) {
-    boolean eventNameContainsExpression = false;
-    if(messageStartEventSubscriptionDeclaration.hasEventName()) {
-        eventNameContainsExpression = !messageStartEventSubscriptionDeclaration.isEventNameLiteralText();
-    }
-    if (eventNameContainsExpression) {
-        String messageStartName = messageStartEventSubscriptionDeclaration->getUnresolvedEventName();
-        $this->addError("Invalid message name '" + messageStartName + "' for element '" +
-            element->getTagName() + "': expressions in the message start event name are not allowed!", element, parentElementId);
-    }
+    protected function ensureNoExpressionInMessageStartEvent(
+        Element $element,
+        EventSubscriptionDeclaration $messageStartEventSubscriptionDeclaration,
+        string $parentElementId
+    ): void {
+        $eventNameContainsExpression = false;
+        if ($messageStartEventSubscriptionDeclaration->hasEventName()) {
+            $eventNameContainsExpression = !$messageStartEventSubscriptionDeclaration->isEventNameLiteralText();
+        }
+        if ($eventNameContainsExpression) {
+            $messageStartName = $messageStartEventSubscriptionDeclaration->getUnresolvedEventName();
+            $this->addError("Invalid message name '" . $messageStartName . "' for element '" .
+                $element->getTagName() . "': expressions in the message start event name are not allowed!", $element, $parentElementId);
+        }
     }
 }

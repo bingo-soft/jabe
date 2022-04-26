@@ -10,10 +10,16 @@ class Parse
     protected $name;
     protected $streamSource;
     protected $rootElement = null;
+    protected $errors = [];
 
     public function __construct(Parser $parser)
     {
         $this->parser = $parser;
+    }
+
+    public function addError(string $errorMessage, Element $element, $elementIds): void
+    {
+        $this->errors[] = new ProblemImpl($errorMessage, $element, $elementIds);
     }
 
     public function getParser(): Parser

@@ -346,6 +346,11 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         return $this->taskDefinitions;
     }
 
+    public function addTaskDefinition(string $taskDefinitionKey, TaskDefinition $def): array
+    {
+        $this->taskDefinitions[$taskDefinitionKey] = $def;
+    }
+
     public function setTaskDefinitions(array $taskDefinitions): void
     {
         $this->taskDefinitions = $taskDefinitions;

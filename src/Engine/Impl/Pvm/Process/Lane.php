@@ -77,4 +77,9 @@ class Lane implements HasDIBoundsInterface
     {
         return $this->flowNodeIds;
     }
+
+    public function addFlowNodeId(string $id): void
+    {
+        $this->flowNodeIds[] = $id;
+    }
 }

@@ -55,4 +55,6 @@ class SchemaImpl extends ModelElementInstanceImpl implements SchemaInterface
     {
         return self::$elementCollection->get($this);
     }
+
+    //@TODO - getImport dynamically
 }

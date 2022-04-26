@@ -27,6 +27,7 @@ abstract class CoreModelElement implements \Serializable
     public function __construct(string $id)
     {
         $this->id = $id;
+        $this->properties = new Properties();
     }
 
     public function getId(): string
@@ -55,6 +56,11 @@ abstract class CoreModelElement implements \Serializable
         return $this->properties->get(new PropertyKey($name));
     }
 
+    public function clearPropertyItem(string $name, string $itemKey): void
+    {
+        $this->properties->clearItem(new PropertyKey($name), $itemKey);
+    }
+
     /**
      * Returns the properties of the element.
      *
@@ -68,6 +74,21 @@ abstract class CoreModelElement implements \Serializable
     public function setProperties(Properties $properties): void
     {
         $this->properties = $properties;
+    }
+
+    public function clearProperty($name): void
+    {
+        $this->properties->clear(new PropertyKey($name));
+    }
+
+    public function sortProperties(PropertyListKey $key, $callback): void
+    {
+        $this->properties->sort($key, $callback);
+    }
+
+    public function addProperty($name, $value): void
+    {
+        $this->properties->add(new PropertyKey($name), $value);
     }
 
     public function setId(string $id): void

@@ -8,7 +8,7 @@ class Properties implements \Serializable
 {
     protected $properties = [];
 
-    public function __construct(?array $properties = [])
+    public function __construct(array $properties = [])
     {
         $this->properties = $properties;
     }
@@ -31,6 +31,29 @@ class Properties implements \Serializable
             return null;
         }
         return [];
+    }
+
+    public function sort(PropertyListKey $property, $callback): void
+    {
+        if ($this->contains($property)) {
+            usort($this->properties[$property->getName()], $callback);
+        }
+    }
+
+    public function clear($property): void
+    {
+        if ($this->contains($property)) {
+            $this->properties[$property->getName()] = [];
+        }
+    }
+
+    public function add($property, $value): void
+    {
+        if ($this->contains($property)) {
+            $this->properties[$property->getName()][] = $value;
+        } else {
+            $this->properties[$property->getName()] = [ $value ];
+        }
     }
 
     /**
@@ -69,6 +92,19 @@ class Properties implements \Serializable
 
         if (!$this->contains($property)) {
             $this->set($property, $list);
+        }
+    }
+
+    public function clearItem($property, $itemKey): void
+    {
+        if ($this->contains($property)) {
+            $propKey = $property->getName();
+            foreach ($this->properties[$propKey] as $key => $value) {
+                if ($key == $itemKey) {
+                    unset($this->properties[$propKey][$key]);
+                    break;
+                }
+            }
         }
     }
 
