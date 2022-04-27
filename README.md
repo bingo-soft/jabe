@@ -1,5 +1,4 @@
 [![Latest Stable Version](https://poser.pugx.org/bingo-soft/jabe/v/stable.png)](https://packagist.org/packages/bingo-soft/jabe)
-[![Build Status](https://app.travis-ci.com/bingo-soft/jabe.svg?branch=main)](https://app.travis-ci.com/bingo-soft/jabe.svg?branch=main)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.0-8892BF.svg)](https://php.net/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bingo-soft/jabe/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/bingo-soft/jabe/?branch=main)
