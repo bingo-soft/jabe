@@ -111,7 +111,7 @@ class ExecuteJobHelper
         try {
             $commandExecutor->execute($failedJobListener);
             return null;
-        } catch (OptimisticLockingException $ex) {
+        } catch (\Exception $ex) {
             $failedJobListener->incrementCountRetries();
             if ($failedJobListener->getRetriesLeft() > 0) {
                 return $this->callFailedJobListenerWithRetries($commandExecutor, $failedJobListener);

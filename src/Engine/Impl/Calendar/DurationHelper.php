@@ -38,7 +38,7 @@ class DurationHelper
 
         if (strpos($expression[0], "R") === 0) {
             $this->isRepeat = true;
-            $this->times = strlen($expression[0]) ==  1 ? INF : intval(substr($expression[0], 1));
+            $this->times = strlen($expression[0]) ==  1 ? PHP_INT_MAX : intval(substr($expression[0], 1));
             $expression = array_slice($expression, 1);
         }
 

@@ -2,13 +2,13 @@
 
 namespace Jabe\Engine\Impl\Telemetry;
 
-use Jabe\Engine\Impl\Telemetry\Dto\ApplicationServer;
+use Jabe\Engine\Impl\Telemetry\Dto\ApplicationServerImpl;
 
 class PlatformTelemetryRegistry
 {
     protected static $applicationServer;
 
-    public static function getApplicationServer(): ApplicationServer
+    public static function getApplicationServer(): ApplicationServerImpl
     {
         return $this->applicationServer;
     }
@@ -16,7 +16,7 @@ class PlatformTelemetryRegistry
     public static function setApplicationServer(string $applicationServerVersion): void
     {
         if ($this->applicationServer == null) {
-            $this->applicationServer = new ApplicationServer(null, $applicationServerVersion);
+            $this->applicationServer = new ApplicationServerImpl(null, $applicationServerVersion);
         }
     }
 

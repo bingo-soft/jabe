@@ -2,14 +2,10 @@
 
 namespace Jabe\Engine\Impl\JobExecutor;
 
-use Composer\Autoload\ClassLoader;
-use parallel\Runtime;
 use Jabe\Engine\Impl\ProcessEngineImpl;
 
 class ThreadPoolJobExecutor extends JobExecutor
 {
-    protected $threadPoolExecutor;
-
     protected function startExecutingJobs(): void
     {
         $this->startJobAcquisitionThread();
@@ -23,26 +19,21 @@ class ThreadPoolJobExecutor extends JobExecutor
     public function executeJobs(array $jobIds, ProcessEngineImpl $processEngine): void
     {
         try {
-            $scope = $this;
-            $this->threadPoolExecutor->run(function () use ($scope, $jobIds, $processEngine) {
-                $jobs = $scope->getExecuteJobsRunnable($jobIds, $processEngine);
-                $jobs->run();
-            });
+            $runnable = $this->getExecuteJobsRunnable($jobIds, $processEngine);
+            if (Coroutine::getCid() == -1) {
+                Coroutine\run(function () use ($runnable) {
+                    go(function () use ($runnable) {
+                        $runnable->run();
+                    });
+                });
+            } else {
+                go(function () use ($runnable) {
+                    $runnable->run();
+                });
+            }
         } catch (\Exception $e) {
             $this->logRejectedExecution($processEngine, count($jobIds));
             $this->rejectedJobsHandler->jobsRejected($jobIds, $processEngine, $this);
         }
-    }
-
-    // getters / setters
-
-    public function getThreadPoolExecutor(): Runtime
-    {
-        return $this->threadPoolExecutor;
-    }
-
-    public function setThreadPoolExecutor(Runtime $threadPoolExecutor): void
-    {
-        $this->threadPoolExecutor = $threadPoolExecutor;
     }
 }

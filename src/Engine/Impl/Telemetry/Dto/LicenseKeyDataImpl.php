@@ -2,7 +2,9 @@
 
 namespace Jabe\Engine\Impl\Telemetry\Dto;
 
-class LicenseKeyData
+use Jabe\Engine\Telemetry\LicenseKeyDataInterface;
+
+class LicenseKeyDataImpl implements LicenseKeyDataInterface
 {
     public const SERIALIZED_VALID_UNTIL = "valid-until";
     public const SERIALIZED_IS_UNLIMITED = "unlimited";
@@ -22,6 +24,12 @@ class LicenseKeyData
         $this->isUnlimited = $isUnlimited;
         $this->features = $features;
         $this->raw = $raw;
+    }
+
+    public static function fromRawString(string $rawLicense): LicenseKeyDataImpl
+    {
+        $licenseKeyRawString = strpos($rawLicense, ";") !== -1 ? substr($rawLicense, strpos($rawLicense, ";") + 1, strlen($rawLicense)) : $rawLicense;
+        return new LicenseKeyDataImpl(null, null, null, null, null, $licenseKeyRawString);
     }
 
     public function __toString()

@@ -12,7 +12,6 @@ use Jabe\Engine\Impl\Interceptor\{
     CommandContext
 };
 use Jabe\Engine\Impl\JobExecutor\{
-    RunnableInterface,
     TimerCatchIntermediateEventJobHandler,
     TimerDeclarationImpl,
     TimerExecuteNestedActivityJobHandler,
@@ -27,6 +26,7 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     TimerEntity
 };
 use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
+use Jabe\Engine\Impl\Util\Concurrent\RunnableInterface;
 use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class RecalculateJobDuedateCmd implements CommandInterface, \Serializable

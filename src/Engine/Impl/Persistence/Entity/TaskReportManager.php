@@ -20,25 +20,25 @@ class TaskReportManager extends AbstractManager
     public function createTaskCountByCandidateGroupReport(TaskReportImpl $query): array
     {
         $this->configureQuery($query);
-        return $this->getDbEntityManager()->selectListWithRawParameter("selectTaskCountByCandidateGroupReportQuery", $query, 0, INF);
+        return $this->getDbEntityManager()->selectListWithRawParameter("selectTaskCountByCandidateGroupReportQuery", $query, 0, PHP_INT_MAX);
     }
 
     public function selectHistoricTaskInstanceCountByTaskNameReport(HistoricTaskInstanceReportImpl $query): array
     {
         $this->configureQuery($query);
-        return $this->getDbEntityManager()->selectListWithRawParameter("selectHistoricTaskInstanceCountByTaskNameReport", $query, 0, INF);
+        return $this->getDbEntityManager()->selectListWithRawParameter("selectHistoricTaskInstanceCountByTaskNameReport", $query, 0, PHP_INT_MAX);
     }
 
     public function selectHistoricTaskInstanceCountByProcDefKeyReport(HistoricTaskInstanceReportImpl $query): array
     {
         $this->configureQuery($query);
-        return $this->getDbEntityManager()->selectListWithRawParameter("selectHistoricTaskInstanceCountByProcDefKeyReport", $query, 0, INF);
+        return $this->getDbEntityManager()->selectListWithRawParameter("selectHistoricTaskInstanceCountByProcDefKeyReport", $query, 0, PHP_INT_MAX);
     }
 
     public function createHistoricTaskDurationReport(HistoricTaskInstanceReportImpl $query): array
     {
         $this->configureQuery($query);
-        return $this->getDbEntityManager()->selectListWithRawParameter("selectHistoricTaskInstanceDurationReport", $query, 0, INF);
+        return $this->getDbEntityManager()->selectListWithRawParameter("selectHistoricTaskInstanceDurationReport", $query, 0, PHP_INT_MAX);
     }
 
     protected function configureQuery($parameter): void

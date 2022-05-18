@@ -9,7 +9,7 @@ class ListQueryParameterObject implements \Serializable
     protected $tenantCheck;
     protected $orderingProperties = [];
 
-    protected $maxResults = INF;
+    protected $maxResults = PHP_INT_MAX;
     protected $firstResult = 0;
     protected $parameter;
     protected $databaseType;
@@ -35,7 +35,7 @@ class ListQueryParameterObject implements \Serializable
 
     public function getLastRow(): int
     {
-        if ($this->maxResults == INF) {
+        if ($this->maxResults == PHP_INT_MAX) {
             return $this->maxResults;
         }
         return $this->firstResult + $this->maxResults + 1;

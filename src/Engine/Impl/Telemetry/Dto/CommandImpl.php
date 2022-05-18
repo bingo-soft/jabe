@@ -2,7 +2,9 @@
 
 namespace Jabe\Engine\Impl\Telemetry\Dto;
 
-class Command
+use Jabe\Engine\Telemetry\CommandInterface;
+
+class CommandImpl implements CommandInterface
 {
     protected $count;
 

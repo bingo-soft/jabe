@@ -2,19 +2,32 @@
 
 namespace Jabe\Engine\Impl\Telemetry\Dto;
 
-class Product
+use Jabe\Engine\Telemetry\{
+    InternalsInterface,
+    ProductInterface
+};
+
+class ProductImpl implements ProductInterface
 {
     protected $name;
     protected $version;
     protected $edition;
     protected $internals;
 
-    public function __construct(string $name, string $version, string $edition, Internals $internals)
+    public function __construct($nameOrProduct, string $version, string $edition, InternalsInterface $internals)
     {
-        $this->name = $name;
-        $this->version = $version;
-        $this->edition = $edition;
-        $this->internals = $internals;
+        if (is_string($nameOrProduct)) {
+            $this->name = $nameOrProduct;
+            $this->version = $version;
+            $this->edition = $edition;
+            $this->internals = $internals;
+        } elseif ($nameOrProduct instanceof ProductInterface) {
+            $other = $nameOrProduct;
+            $this->name = $other->name;
+            $this->version = $other->version;
+            $this->edition = $other->edition;
+            $this->internals = new InternalsImpl($other->internals);
+        }
     }
 
     public function __toString()
@@ -57,12 +70,12 @@ class Product
         $this->edition = $edition;
     }
 
-    public function getInternals(): Internals
+    public function getInternals(): InternalsInterface
     {
         return $this->internals;
     }
 
-    public function setInternals(Internals $internals): void
+    public function setInternals(InternalsInterface $internals): void
     {
         $this->internals = $internals;
     }

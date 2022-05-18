@@ -17,7 +17,7 @@ use Jabe\Engine\Impl\Interceptor\{
     CommandExecutorInterface,
     ProcessDataContext
 };
-use Jabe\Engine\Impl\Util\ClassLoaderUtil;
+use Jabe\Engine\Impl\Util\Concurrent\RunnableInterface;
 
 class ExecuteJobsRunnable implements RunnableInterface
 {
@@ -39,19 +39,17 @@ class ExecuteJobsRunnable implements RunnableInterface
         $jobExecutorContext = new JobExecutorContext();
 
         $currentProcessorJobQueue = $jobExecutorContext->getCurrentProcessorJobQueue();
-        $engineConfiguration = $processEngine->getProcessEngineConfiguration();
+        $engineConfiguration = $this->processEngine->getProcessEngineConfiguration();
         $commandExecutor = $engineConfiguration->getCommandExecutorTxRequired();
 
-        $currentProcessorJobQueue = array_merge($currentProcessorJobQueue, $jobIds);
+        $currentProcessorJobQueue = array_merge($currentProcessorJobQueue, $this->jobIds);
 
         Context::setJobExecutorContext($jobExecutorContext);
-
-        $classLoaderBeforeExecution = $this->switchClassLoader();
 
         try {
             while (!empty($currentProcessorJobQueue)) {
                 $nextJobId = array_shift($currentProcessorJobQueue);
-                if ($jobExecutor->isActive()) {
+                if ($this->jobExecutor->isActive()) {
                     $jobFailureCollector = new JobFailureCollector($nextJobId);
                     try {
                         $this->executeJob($nextJobId, $commandExecutor, $jobFailureCollector);
@@ -82,14 +80,9 @@ class ExecuteJobsRunnable implements RunnableInterface
             $jobExecutor->jobWasAdded();
         } finally {
             Context::removeJobExecutorContext();
-            ClassLoaderUtil::setContextClassloader($classLoaderBeforeExecution);
         }
     }
 
-    /**
-     * Note: this is a hook to be overridden by
-     * org.camunda.bpm.container.impl.threading.ra.inflow.JcaInflowExecuteJobsRunnable.executeJob(String, CommandExecutor)
-     */
     protected function executeJob(string $nextJobId, CommandExecutorInterface $commandExecutor, JobFailureCollector $jobFailureCollector): void
     {
         ExecuteJobHelper::executeJob($nextJobId, $commandExecutor, $jobFailureCollector, new ExecuteJobsCmd($nextJobId, $jobFailureCollector), $processEngine->getProcessEngineConfiguration());
@@ -98,16 +91,5 @@ class ExecuteJobsRunnable implements RunnableInterface
     protected function unlockJob(string $nextJobId, CommandExecutorInterface $commandExecutor): void
     {
         $commandExecutor->execute(new UnlockJobCmd($nextJobId));
-    }
-
-    /**
-     * Switch the context classloader to the ProcessEngine's
-     * to assure the loading of the engine classes during job execution<br>
-     *
-     * @return the classloader before the switch to return it back after the job execution
-     */
-    protected function switchClassLoader(): string
-    {
-        return ClassLoaderUtil::switchToProcessEngineClassloader();
     }
 }

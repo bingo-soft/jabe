@@ -6,13 +6,13 @@ use Jabe\Engine\Application\ProcessApplicationReferenceInterface;
 use Jabe\Engine\Application\ProcessApplicationLogger;
 use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Engine\Impl\Core\Instance\CoreExecution;
-use Jabe\Engine\Impl\JobExecutor\RunnableInterface;
 use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     ProcessDefinitionEntity,
     TaskEntity
 };
 use Jabe\Engine\Impl\Repository\ResourceDefinitionEntity;
+use Jabe\Engine\Impl\Util\Concurrent\RunnableInterface;
 
 class ProcessApplicationContextUtil
 {

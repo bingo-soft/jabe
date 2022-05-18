@@ -3,8 +3,8 @@
 namespace Jabe\Engine\Impl\Telemetry;
 
 use Jabe\Engine\Impl\Telemetry\Dto\{
-    ApplicationServer,
-    LicenseKeyData
+    ApplicationServerImpl,
+    LicenseKeyDataImpl
 };
 
 class TelemetryRegistry
@@ -16,7 +16,7 @@ class TelemetryRegistry
     protected $webapps = [];
     protected $isCollectingTelemetryDataEnabled = false;
 
-    public function getApplicationServer(): ApplicationServer
+    public function getApplicationServer(): ApplicationServerImpl
     {
         if ($this->applicationServer == null) {
             $this->applicationServer = PlatformTelemetryRegistry::getApplicationServer();
@@ -24,7 +24,7 @@ class TelemetryRegistry
         return $this->applicationServer;
     }
 
-    public function setApplicationServer(ApplicationServer $applicationServer): void
+    public function setApplicationServer(ApplicationServerImpl $applicationServer): void
     {
         $this->applicationServer = $applicationServer;
     }
@@ -41,15 +41,15 @@ class TelemetryRegistry
 
     public function setIntegration(string $integration): void
     {
-        $this->camundaIntegration = $integration;
+        $this->integration = $integration;
     }
 
-    public function getLicenseKey(): LicenseKeyData
+    public function getLicenseKey(): ?LicenseKeyDataImpl
     {
         return $this->licenseKey;
     }
 
-    public function setLicenseKey(LicenseKeyData $licenseKey): void
+    public function setLicenseKey(LicenseKeyDataImpl $licenseKey): void
     {
         $this->licenseKey = $licenseKey;
     }
@@ -76,10 +76,11 @@ class TelemetryRegistry
 
     public function markOccurrence(string $name, int $times = 1): void
     {
-        $counter = $commands[$name];
-        if ($counter == null) {
+        if (!array_key_exists($name, $this->commands)) {
             $counter = new CommandCounter($name);
             $this->commands[$name] = $counter;
+        } else {
+            $counter = $this->commands[$name];
         }
 
         $counter->mark($times);

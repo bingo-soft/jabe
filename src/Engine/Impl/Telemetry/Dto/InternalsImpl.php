@@ -2,7 +2,14 @@
 
 namespace Jabe\Engine\Impl\Telemetry\Dto;
 
-class Internals
+use Jabe\Engine\Telemetry\{
+    ApplicationServerInterface,
+    DatabaseInterface,
+    InternalsInterface,
+    LicenseKeyDataInterface
+};
+
+class InternalsImpl implements InternalsInterface
 {
     public const SERIALIZED_APPLICATION_SERVER = "application-server";
     public const SERIALIZED_INTEGRATION = "integration";
@@ -12,21 +19,29 @@ class Internals
     protected $database;
     protected $applicationServer;
     protected $licenseKey;
-    protected $commands;
-    protected $integration;
-
-    protected $metrics;
-    protected $webapps;
+    protected $commands = [];
+    protected $integration = [];
+    protected $metrics = [];
+    protected $webapps = [];
 
     protected $telemetryEnabled;
 
-    public function __construct(Database $database, ApplicationServer $server, LicenseKeyData $licenseKey)
+    public function __construct(/*DatabaseImpl|InternalsImpl*/$databaseOrOnternals, ApplicationServerInterface $server = null, LicenseKeyDataInterface $licenseKey = null)
     {
-        $this->database = $database;
-        $this->applicationServer = $server;
-        $this->licenseKey = $licenseKey;
-        $this->commands = [];
-        $this->integration = [];
+        if ($databaseOrInternals instanceof DatabaseInterface) {
+            $this->database = $databaseOrInternals;
+            $this->applicationServer = $server;
+            $this->licenseKey = $licenseKey;
+        } elseif ($databaseOrInternals instanceof InternalsInterface) {
+            $this->database = $databaseOrInternals->database;
+            $this->applicationServer = $databaseOrInternals->applicationServer;
+            $this->licenseKey = $databaseOrInternals->licenseKey;
+            $this->integration = $databaseOrInternals->getIntegration();
+            $this->commands = $databaseOrInternals->getCommands();
+            $this->metrics = $databaseOrInternals->getMetrics();
+            $this->telemetryEnabled = $databaseOrInternals->telemetryEnabled;
+            $this->webapps = $databaseOrInternals->webapps;
+        }
     }
 
     public function __toString()
@@ -48,22 +63,22 @@ class Internals
         ]);
     }
 
-    public function getDatabase(): Database
+    public function getDatabase(): DatabaseInterface
     {
         return $this->database;
     }
 
-    public function setDatabase(Database $database): void
+    public function setDatabase(DatabaseInterface $database): void
     {
         $this->database = $database;
     }
 
-    public function getApplicationServer(): ApplicationServer
+    public function getApplicationServer(): ApplicationServerInterface
     {
         return $this->applicationServer;
     }
 
-    public function setApplicationServer(ApplicationServer $applicationServer): void
+    public function setApplicationServer(ApplicationServerInterface $applicationServer): void
     {
         $this->applicationServer = $applicationServer;
     }
@@ -88,7 +103,7 @@ class Internals
         $this->metrics = $metrics;
     }
 
-    public function mergeDynamicData(Internals $other): void
+    public function mergeDynamicData(InternalsInterface $other): void
     {
         $this->commands = $other->commands;
         $this->metrics = $other->metrics;
@@ -104,12 +119,12 @@ class Internals
         $this->integration = $integration;
     }
 
-    public function getLicenseKey(): LicenseKeyData
+    public function getLicenseKey(): LicenseKeyDataInterface
     {
         return $this->licenseKey;
     }
 
-    public function setLicenseKey(LicenseKeyData $licenseKey): void
+    public function setLicenseKey(LicenseKeyDataInterface $licenseKey): void
     {
         $this->licenseKey = $licenseKey;
     }

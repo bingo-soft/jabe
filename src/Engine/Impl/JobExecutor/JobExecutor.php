@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\JobExecutor;
 
 use Composer\Autoload\ClassLoader;
-use parallel\Runtime;
 use Ramsey\Uuid\Uuid;
 use Jabe\Engine\Impl\{
     ProcessEngineImpl,
@@ -365,21 +364,23 @@ abstract class JobExecutor
     protected function startJobAcquisitionThread(): void
     {
         if ($this->jobAcquisitionThread == null) {
-            $scope = $this;
+            /*$scope = $this;
             $reflector = new \ReflectionClass(ClassLoader::class);
             $vendorPath = preg_replace('/^(.*)\/composer\/ClassLoader\.php$/', '$1', $reflector->getFileName());
+
             $this->jobAcquisitionThread = new Runtime($vendorPath . '/autoload.php');
             $this->jobAcquisitionThread->run(function () use ($scope) {
                 $jobs = $scope->acquireJobsRunnable;
                 $jobs->run();
             });
+            */
         }
     }
 
     protected function stopJobAcquisitionThread(): void
     {
         try {
-            $this->jobAcquisitionThread->close();
+            //$this->jobAcquisitionThread->close();
         } catch (\Exception $e) {
             //LOG.interruptedWhileShuttingDownjobExecutor(e);
         }

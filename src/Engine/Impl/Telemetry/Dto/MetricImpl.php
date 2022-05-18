@@ -2,7 +2,9 @@
 
 namespace Jabe\Engine\Impl\Telemetry\Dto;
 
-class Metric
+use Jabe\Engine\Telemetry\MetricInterface;
+
+class MetricImpl implements MetricInterface
 {
     protected $count;
 

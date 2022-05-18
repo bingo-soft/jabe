@@ -33,8 +33,6 @@ class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable
 
             $processEngines = $jobExecutor->engineIterator();
 
-            // See https://jira.camunda.com/browse/CAM-9913
-            $classLoaderBeforeExecution = ClassLoaderUtil::switchToProcessEngineClassloader();
             try {
                 foreach ($processEngines as $currentProcessEngine) {
                     if (!$jobExecutor->hasRegisteredEngine($currentProcessEngine)) {
@@ -49,7 +47,6 @@ class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable
                 //LOG.exceptionDuringJobAcquisition(e);
                 $this->acquisitionContext->setAcquisitionException($e);
             } finally {
-                ClassLoaderUtil::setContextClassloader($classLoaderBeforeExecution);
             }
 
             $this->acquisitionContext->setJobAdded($this->isJobAdded);
@@ -105,7 +102,7 @@ class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable
             $additionalJobs = $jobs[$currentProcessEngine->getName()];
         }
         //.get(currentProcessEngine.getName());
-        if ($additionalJobs != null) {
+        if (!empty($additionalJobs)) {
             foreach ($additionalJobs as $jobBatch) {
                 //LOG.executeJobs(currentProcessEngine.getName(), jobBatch);
                 $this->jobExecutor->executeJobs($jobBatch, $currentProcessEngine);
@@ -135,7 +132,7 @@ class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable
             $this->jobExecutor->logAcquisitionAttempt($currentProcessEngine);
             $acquiredJobs = $commandExecutor->execute($this->jobExecutor->getAcquireJobsCmd($numJobsToAcquire));
         } else {
-            $cquiredJobs = new AcquiredJobs($numJobsToAcquire);
+            $acquiredJobs = new AcquiredJobs($numJobsToAcquire);
         }
 
         $context->submitAcquiredJobs($currentProcessEngine->getName(), $acquiredJobs);

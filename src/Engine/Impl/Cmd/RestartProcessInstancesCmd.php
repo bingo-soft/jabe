@@ -24,7 +24,7 @@ use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use Jabe\Engine\Impl\JobExecutor\RunnableInterface;
+use Jabe\Engine\Impl\Util\Concurrent\RunnableInterface;
 use Jabe\Engine\Impl\Util\EnsureUtil;
 use Jabe\Engine\Repository\ProcessDefinitionInterface;
 use Jabe\Engine\Variable\VariableMapInterface;

@@ -9,7 +9,7 @@ use Jabe\Engine\Authorization\{
     ResourceInterface
 };
 
-interface AuthorizationService
+interface AuthorizationServiceInterface
 {
     public function createNewAuthorization(int $authorizationType): AuthorizationInterface;
 

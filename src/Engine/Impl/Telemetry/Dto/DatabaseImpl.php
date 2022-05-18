@@ -2,16 +2,16 @@
 
 namespace Jabe\Engine\Impl\Telemetry\Dto;
 
-use Jabe\Engine\Impl\Util\ParseUtil;
+use Jabe\Engine\Telemetry\DatabaseInterface;
 
-class ApplicationServer
+class DatabaseImpl implements DatabaseInterface
 {
     protected $vendor;
     protected $version;
 
-    public function __construct(?string $vendor = null, string $version)
+    public function __construct(string $vendor, string $version)
     {
-        $this->vendor = $vendor ?? $this->parseServerVendor($version);
+        $this->vendor = $vendor;
         $this->version = $version;
     }
 
