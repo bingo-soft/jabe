@@ -50,9 +50,9 @@ class JobManager extends AbstractManager
             self::$JOB_TYPE_ORDERING_PROPERTY = new QueryOrderingProperty(null, JobQueryProperty::type());
             self::$JOB_DUEDATE_ORDERING_PROPERTY = new QueryOrderingProperty(null, JobQueryProperty::duedate());
 
-            self::$JOB_PRIORITY_ORDERING_PROPERTY->setDirection(Direction::DESCENDING);
-            self::$JOB_TYPE_ORDERING_PROPERTY->setDirection(Direction::DESCENDING);
-            self::$JOB_DUEDATE_ORDERING_PROPERTY->setDirection(Direction::ASCENDING);
+            self::$JOB_PRIORITY_ORDERING_PROPERTY->setDirection(Direction::descending());
+            self::$JOB_TYPE_ORDERING_PROPERTY->setDirection(Direction::descending());
+            self::$JOB_DUEDATE_ORDERING_PROPERTY->setDirection(Direction::ascending());
         }
     }
 

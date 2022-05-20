@@ -44,7 +44,7 @@ class CommentManager extends AbstractHistoricManager
 
         $query = new ListQueryParameterObject();
         $query->setParameter($taskId);
-        $query->addOrderingProperty(new QueryOrderingProperty(new QueryPropertyImpl("TIME_"), Direction::DESCENDING));
+        $query->addOrderingProperty(new QueryOrderingProperty(new QueryPropertyImpl("TIME_"), Direction::descending()));
 
         return $this->getDbEntityManager()->selectList("selectEventsByTaskId", $query);
     }

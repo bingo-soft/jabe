@@ -66,7 +66,7 @@ class HistoricBatchManager extends AbstractManager
             $queryParameters["minuteTo"] = $minuteTo;
         }
         $parameterObject = new ListQueryParameterObject($queryParameters, 0, $batchSize);
-        $parameterObject->addOrderingProperty(new QueryOrderingProperty(new QueryPropertyImpl("END_TIME_"), Direction::ASCENDING));
+        $parameterObject->addOrderingProperty(new QueryOrderingProperty(new QueryPropertyImpl("END_TIME_"), Direction::ascending()));
 
         return $this->getDbEntityManager()->selectList("selectHistoricBatchIdsForCleanup", $parameterObject);
     }
@@ -140,7 +140,7 @@ class HistoricBatchManager extends AbstractManager
     {
         $query->setCurrentTimestamp(ClockUtil::getCurrentTime()->format('c'));
         $query->setParameter($batchOperationsForHistoryCleanup);
-        $query->addOrderingProperty(new QueryOrderingProperty(new QueryPropertyImpl("TYPE_"), Direction::ASCENDING));
+        $query->addOrderingProperty(new QueryOrderingProperty(new QueryPropertyImpl("TYPE_"), Direction::ascending()));
         if (empty($batchOperationsForHistoryCleanup)) {
             return $this->getDbEntityManager()->selectList("selectOnlyFinishedBatchesReportEntities", $query, $page);
         } else {

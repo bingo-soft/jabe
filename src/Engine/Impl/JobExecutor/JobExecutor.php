@@ -363,27 +363,22 @@ abstract class JobExecutor
 
     protected function startJobAcquisitionThread(): void
     {
-        if ($this->jobAcquisitionThread == null) {
-            /*$scope = $this;
-            $reflector = new \ReflectionClass(ClassLoader::class);
-            $vendorPath = preg_replace('/^(.*)\/composer\/ClassLoader\.php$/', '$1', $reflector->getFileName());
-
-            $this->jobAcquisitionThread = new Runtime($vendorPath . '/autoload.php');
-            $this->jobAcquisitionThread->run(function () use ($scope) {
-                $jobs = $scope->acquireJobsRunnable;
+        $jobs = $this->acquireJobsRunnable;
+        if (\Swoole\Coroutine::getCid() == -1) {
+            \Swoole\Coroutine\run(function () use ($jobs) {
+                go(function () use ($jobs) {
+                    $jobs->run();
+                });
+            });
+        } else {
+            go(function () use ($jobs) {
                 $jobs->run();
             });
-            */
         }
     }
 
     protected function stopJobAcquisitionThread(): void
     {
-        try {
-            //$this->jobAcquisitionThread->close();
-        } catch (\Exception $e) {
-            //LOG.interruptedWhileShuttingDownjobExecutor(e);
-        }
         $this->jobAcquisitionThread = null;
     }
 

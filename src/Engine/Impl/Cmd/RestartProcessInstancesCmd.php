@@ -21,7 +21,7 @@ use Jabe\Engine\Impl\Context\{
     ProcessApplicationContextUtil
 };
 use Jabe\Engine\Impl\Interceptor\{
-    CommandInterface,
+    CommandExecutorInterface,
     CommandContext
 };
 use Jabe\Engine\Impl\Util\Concurrent\RunnableInterface;
@@ -34,7 +34,7 @@ class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCmd
 {
     //private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
-    public function __construct(CommandExecutor $commandExecutor, RestartProcessInstanceBuilderImpl $builder)
+    public function __construct(CommandExecutorInterface $commandExecutor, RestartProcessInstanceBuilderImpl $builder)
     {
         parent::__construct($commandExecutor, $builder);
     }
@@ -143,7 +143,7 @@ class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCmd
         }
     }
 
-    public function getProcessInstantiationBuilder(CommandExecutor $commandExecutor, string $processDefinitionId): ProcessInstantiationBuilderImpl
+    public function getProcessInstantiationBuilder(CommandExecutorInterface $commandExecutor, string $processDefinitionId): ProcessInstantiationBuilderImpl
     {
         return ProcessInstantiationBuilderImpl::createProcessInstanceById($commandExecutor, $processDefinitionId);
     }

@@ -16,7 +16,7 @@ interface FilterServiceInterface
      * @return a new task filter with a name
      * @throws AuthorizationException if the user has no {@link Permissions#CREATE} permissions on {@link Resources#FILTER}.
      */
-    public function newTaskFilter(?string $filterName = null): FilterInterface;
+    public function newTaskFilter(string $filterName = null): FilterInterface;
 
     /**
      * Creates a new filter query
@@ -104,7 +104,7 @@ interface FilterServiceInterface
      *  be specified with the process engine configuration property <code>queryMaxResultsLimit</code>
      *  (default {@link Integer#MAX_VALUE}).
      */
-    public function listPage(string $filterId, int $firstResult, int $maxResults, ?QueryInterface $extendingQuery = null): array;
+    public function listPage(string $filterId, ?QueryInterface $extendingQuery, int $firstResult, int $maxResults): array;
 
     /**
      * Executes the extended query of the filter and returns the a single result.

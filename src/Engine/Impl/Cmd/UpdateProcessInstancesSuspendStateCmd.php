@@ -14,9 +14,9 @@ use Jabe\Engine\Impl\Util\EnsureUtil;
 class UpdateProcessInstancesSuspendStateCmd extends AbstractUpdateProcessInstancesSuspendStateCmd
 {
     public function __construct(
-        CommandExecutor $commandExecutor,
+        CommandExecutorInterface $commandExecutor,
         UpdateProcessInstancesSuspensionStateBuilderImpl $builder,
-        boolean $suspendstate
+        bool $suspendstate
     ) {
         parent::__construct($commandExecutor, $builder, $suspendstate);
     }

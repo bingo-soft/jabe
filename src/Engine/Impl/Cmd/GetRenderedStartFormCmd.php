@@ -16,7 +16,7 @@ class GetRenderedStartFormCmd implements CommandInterface, \Serializable
     protected $formEngineName;
     //private static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
-    public function __construct(string $processDefinitionId, string $formEngineName)
+    public function __construct(string $processDefinitionId, ?string $engineName = null)
     {
         $this->processDefinitionId = $processDefinitionId;
         $this->formEngineName = $formEngineName;

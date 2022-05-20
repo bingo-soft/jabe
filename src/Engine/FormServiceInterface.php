@@ -38,7 +38,7 @@ interface FormServiceInterface
      * @throws AuthorizationException
      *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.
      */
-    public function getRenderedStartForm(string $processDefinitionId, ?string $formEngineName = null);
+    public function getRenderedStartForm(string $processDefinitionId, ?string $engineName = null);
 
     /**
      * Start a new process instance with the user data that was entered as properties in a start form.
@@ -63,7 +63,7 @@ interface FormServiceInterface
      *          If the user has no {@link Permissions#CREATE} permission on {@link Resources#PROCESS_INSTANCE}
      *          and no {@link Permissions#CREATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
      */
-    public function submitStartForm(string $processDefinitionId, array $properties, ?string $businessKey = null): ProcessInstanceInterface;
+    public function submitStartForm(string $processDefinitionId, ?string $businessKey, array $properties): ProcessInstanceInterface;
 
     /**
      * Retrieves all data necessary for rendering a form to complete a task.
@@ -98,7 +98,7 @@ interface FormServiceInterface
      *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}
      *          when {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled</li></p>
      */
-    public function getRenderedTaskForm(string $taskId, ?string $formEngineName = null);
+    public function getRenderedTaskForm(string $taskId, ?string $engineName = null);
 
     /**
      * Completes a task with the user data that was entered as properties in a task form.
@@ -140,7 +140,7 @@ interface FormServiceInterface
      * @throws AuthorizationException
      *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.
      */
-    public function getStartFormVariables(string $processDefinitionId, ?array $formVariables = null, ?bool $deserializeObjectValues = null): VariableMapInterface;
+    public function getStartFormVariables(string $processDefinitionId, array $formVariables = [], bool $deserializeObjectValues = true): VariableMapInterface;
 
     /**
      * <p>Retrieves a list of requested variables for rendering a task form. In addition to the task variables and process variables,
@@ -171,7 +171,7 @@ interface FormServiceInterface
      *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}
      *          when {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled</li></p>
      */
-    public function getTaskFormVariables(string $taskId, ?array $formVariables = null, ?bool $deserializeObjectValues = null): VariableMapInterface;
+    public function getTaskFormVariables(string $processDefinitionId, array $formVariables = [], bool $deserializeObjectValues = true): VariableMapInterface;
 
     /**
      * Retrieves a user defined reference to a start form.

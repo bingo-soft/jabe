@@ -54,7 +54,7 @@ interface ExternalTaskServiceInterface
      * @param usePriority the flag to enable the priority fetching mechanism
      * @return a builder to define and execute an external task fetching operation
      */
-    public function fetchAndLock(int $maxTasks, string $workerId, ?bool $usePriority = null): ExternalTaskQueryBuilderInterface;
+    public function fetchAndLock(int $maxTasks, string $workerId, bool $usePriority = false): ExternalTaskQueryBuilderInterface;
 
     /**
      * <p>Lock an external task on behalf of a worker.
@@ -93,7 +93,7 @@ interface ExternalTaskServiceInterface
      *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
      *   </ul>
      */
-    public function complete(string $externalTaskId, string $workerId, ?array $variables = null, ?array $localVariables = null): void;
+    public function complete(string $externalTaskId, string $workerId, array $variables = [], array $localVariables = []): void;
 
     /**
      * <p>Extends a lock of an external task on behalf of a worker.
@@ -140,7 +140,7 @@ interface ExternalTaskServiceInterface
      *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
      *   </ul>
      */
-    public function handleFailure(string $externalTaskId, string $workerId, string $errorMessage, int $retries, int $retryTimeout): void;
+    public function handleFailure(string $externalTaskId, string $workerId, string $errorMessage, string $errorDetails, int $retries, int $retryDuration, array $variables = [], array $localVariables = []): void;
 
     /**
      * <p>Signals that an business error appears, which should be handled by the process engine.
@@ -160,7 +160,7 @@ interface ExternalTaskServiceInterface
      *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
      *   </ul>
      */
-    public function handleBpmnError(string $externalTaskId, string $workerId, string $errorCode, ?string $errorMessage = null): void;
+    public function handleBpmnError(string $externalTaskId, string $workerId, string $errorCode, string $errorMessage = null, array $variables = []): void;
 
     /**
      * Unlocks an external task instance.
@@ -189,7 +189,7 @@ interface ExternalTaskServiceInterface
      *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
      *   </ul>
      */
-    public function setRetries($externalTaskId, int $retries): void;
+    public function setRetries($externalTaskIdOrIds, int $retries, bool $writeUserOperationLog = true): void;
 
     /**
      * Sets the retries for external tasks asynchronously as batch. The returned batch
@@ -264,7 +264,7 @@ interface ExternalTaskServiceInterface
      * @param withUnlockedTasks return only topic names of locked tasks
      * @param withRetriesLeft return only topic names of tasks with retries remaining
      */
-    public function getTopicNames(?bool $withLockedTasks = null, ?bool $withUnlockedTasks = null, ?bool $withRetriesLeft = null): array;
+    public function getTopicNames(bool $withLockedTasks = false, bool $withUnlockedTasks = false, bool $withRetriesLeft = false): array;
 
     /**
      * Returns the full error details that occurred while running external task

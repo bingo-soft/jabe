@@ -14,7 +14,7 @@ class GetRenderedTaskFormCmd implements CommandInterface, \Serializable
     protected $taskId;
     protected $formEngineName;
 
-    public function __construct(string $taskId, string $formEngineName)
+    public function __construct(string $taskId, ?string $formEngineName = null)
     {
         $this->taskId = $taskId;
         $this->formEngineName = $formEngineName;
