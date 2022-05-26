@@ -1,6 +1,0 @@
-run un-queued task, cnt = 0
-increment completedTasks, cnt = 1
-run un-queued task, cnt = 1
-run un-queued task, cnt = 0
-increment completedTasks, cnt = 2
-increment completedTasks, cnt = 3
