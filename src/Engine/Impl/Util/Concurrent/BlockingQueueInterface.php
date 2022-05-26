@@ -2,7 +2,7 @@
 
 namespace Jabe\Engine\Impl\Util\Concurrent;
 
-interface ProcessQueueInterface
+interface BlockingQueueInterface
 {
     public function poll(int $timeout, string $unit, InterruptibleProcess $process);
 

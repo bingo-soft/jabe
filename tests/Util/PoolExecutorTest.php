@@ -4,15 +4,13 @@ namespace Tests\Util;
 
 use PHPUnit\Framework\TestCase;
 use Jabe\Engine\Impl\Util\Concurrent\{
-    ProcessQueue,
+    ArrayBlockingQueue,
     InterruptibleProcess,
-    LockSupport,
     ProcessPoolExecutor,
     RunnableInterface,
     TimeUnit,
     Worker
 };
-use Swoole\Coroutine as Co;
 
 class PoolExecutorTest extends TestCase
 {
@@ -22,7 +20,7 @@ class PoolExecutorTest extends TestCase
 
     public function testBlockingQueue(): void
     {
-        $queue = new ProcessQueue(3);
+        $queue = new ArrayBlockingQueue(3);
         $queue->add(1);
         $queue->add(2);
         $queue->add(3);
@@ -49,7 +47,32 @@ class PoolExecutorTest extends TestCase
         $queue->add(3);
         $ar = $queue->toArray();
         $this->assertCount(2, $ar);
+    }
 
-        echo \Swoole\Coroutine::getCid();
+    public function testTaskExecution(): void
+    {
+        $workQueue = new ArrayBlockingQueue(3);
+        $pool = new ProcessPoolExecutor(3, 0, TimeUnit::SECONDS, $workQueue);
+        $task1 = new TestTask("task 1");
+        $task2 = new TestTask("task 2");
+        $task3 = new TestTask("task 3");
+        $task4 = new TestTask("task 4");
+        $task5 = new TestTask("task 5");
+        $task6 = new TestTask("task 6");
+        $task7 = new TestTask("task 7");
+        $task8 = new TestTask("task 8");
+        $task9 = new TestTask("task 9");
+        $pool->execute($task1);
+        $pool->execute($task2);
+        $pool->execute($task3);
+        $pool->execute($task4);
+        $pool->execute($task5);
+        $pool->shutdown();
+        $pool->execute($task6);
+        $pool->execute($task7);
+        $pool->execute($task8);
+        $pool->execute($task9);
+        $pool->shutdown();
+        $this->assertTrue($pool->isShutdown());
     }
 }

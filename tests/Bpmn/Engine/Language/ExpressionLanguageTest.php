@@ -15,7 +15,7 @@ use Jabe\Engine\Impl\Juel\{
 };
 use Jabe\Engine\Impl\Util\El\BeanELResolver;
 
-class SimpleContextTest extends TestCase
+class ExpressionLanguageTest extends TestCase
 {
     public function testNumericVariables(): void
     {

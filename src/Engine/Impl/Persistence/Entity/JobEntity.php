@@ -86,7 +86,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
     protected $persistedDependentEntities;
 
-    public function execute(CommandContext $commandContext): void
+    public function execute(CommandContext $commandContext)
     {
         if ($this->executionId != null) {
             $execution = $this->getExecution();

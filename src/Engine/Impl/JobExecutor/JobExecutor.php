@@ -363,22 +363,19 @@ abstract class JobExecutor
 
     protected function startJobAcquisitionThread(): void
     {
-        $jobs = $this->acquireJobsRunnable;
-        if (\Swoole\Coroutine::getCid() == -1) {
-            \Swoole\Coroutine\run(function () use ($jobs) {
-                go(function () use ($jobs) {
-                    $jobs->run();
-                });
-            });
-        } else {
-            go(function () use ($jobs) {
+        if ($this->jobAcquisitionThread == null) {
+            $jobs = $this->acquireJobsRunnable;
+            $this->jobAcquisitionThread = new \Swoole\Process(function () use ($jobs) {
                 $jobs->run();
             });
+            $this->jobAcquisitionThread->start();
         }
     }
 
     protected function stopJobAcquisitionThread(): void
     {
+        while (\Swoole\Process::wait(0)) {
+        }
         $this->jobAcquisitionThread = null;
     }
 

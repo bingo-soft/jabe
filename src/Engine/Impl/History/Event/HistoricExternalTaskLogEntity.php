@@ -199,22 +199,22 @@ class HistoricExternalTaskLogEntity extends HistoryEvent implements HistoricExte
 
     public function isCreationLog(): bool
     {
-        return $this->state == ExternalTaskState::created()->getStateCode();
+        return $this->state == ExternalTaskStateImpl::created()->getStateCode();
     }
 
     public function isFailureLog(): bool
     {
-        return $this->state == ExternalTaskState::failed()->getStateCode();
+        return $this->state == ExternalTaskStateImpl::failed()->getStateCode();
     }
 
     public function isSuccessLog(): bool
     {
-        return $this->state == ExternalTaskState::successful()->getStateCode();
+        return $this->state == ExternalTaskStateImpl::successful()->getStateCode();
     }
 
     public function isDeletionLog(): bool
     {
-        return $this->state == ExternalTaskState::deleted()->getStateCode();
+        return $this->state == ExternalTaskStateImpl::deleted()->getStateCode();
     }
 
     public function getRootProcessInstanceId(): string

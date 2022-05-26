@@ -5,6 +5,7 @@ namespace Jabe\Engine\Variable\Type;
 use Jabe\Engine\Variable\Impl\Type\{
     NullTypeImpl,
     BooleanTypeImpl,
+    BytesTypeImpl,
     DoubleTypeImpl,
     IntegerTypeImpl,
     NumberTypeImpl,
@@ -25,6 +26,11 @@ class ValueType
     public static function getBoolean(): PrimitiveValueTypeInterface
     {
         return new BooleanTypeImpl();
+    }
+
+    public static function getBytes(): PrimitiveValueTypeInterface
+    {
+        return new BytesTypeImpl();
     }
 
     public static function getDouble(): PrimitiveValueTypeInterface

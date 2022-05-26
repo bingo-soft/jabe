@@ -189,7 +189,7 @@ class ExternalTaskManager extends AbstractManager
             ->addTransactionListener(
                 TransactionState::COMMITTED,
                 new class () implements TransactionListenerInterface {
-                    public function execute(CommandContext $commandContext): void
+                    public function execute(CommandContext $commandContext)
                     {
                         ProcessEngineImpl::extTaskConditions()->signalAll();
                     }

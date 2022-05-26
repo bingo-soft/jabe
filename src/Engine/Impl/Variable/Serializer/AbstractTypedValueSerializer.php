@@ -10,7 +10,7 @@ use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 abstract class AbstractTypedValueSerializer implements TypedValueSerializerInterface
 {
-    public static $BINARY_VALUE_TYPES;
+    public const BINARY_VALUE_TYPES = ["bytes", "file"];
 
     protected $valueType;
 

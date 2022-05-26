@@ -14,10 +14,10 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
     private const STOP       =  1 << self::COUNT_BITS;
     private const TIDYING    =  2 << self::COUNT_BITS;
     private const TERMINATED =  3 << self::COUNT_BITS;
-
     private const ONLY_ONE = true;
 
     private $workQueue;
+    private $queueSize;
 
     private $mainLock;
 
@@ -27,20 +27,10 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
     private $workers = [];
 
     /**
-     * Wait condition to support awaitTermination
-     */
-    //private final Condition termination = mainLock.newCondition();
-
-    /**
      * Tracks largest attained pool size. Accessed only under
      * mainLock.
      */
     private $largestPoolSize;
-
-    /**
-     * Counter for completed tasks
-     */
-    private $completedTaskCount = 0;
 
     /*
      * All user control parameters are declared as volatiles so that
@@ -145,6 +135,25 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
     }
 
     /**
+     * Attempt to CAS-increment the queue size.
+     */
+    private function compareAndIncrementQueueSize(int $expect): bool
+    {
+        return $this->queueSize->cmpset($expect, $expect + 1);
+    }
+
+    /**
+     * Attempt to CAS-decrement the queue size.
+     */
+    private function compareAndDecrementQueueSize(int $expect): bool
+    {
+        if ($expect > 0) {
+            return $this->queueSize->cmpset($expect, $expect - 1);
+        }
+        return false;
+    }
+
+    /**
      * Transitions to TERMINATED state if either (SHUTDOWN and pool
      * and queue empty) or (STOP and pool empty).  If otherwise
      * eligible to terminate but workerCount is nonzero, interrupts an
@@ -171,7 +180,7 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
             }
 
             $mainLock = $this->mainLock;
-            $mainLock->lock();
+            $mainLock->trylock();
             try {
                 if ($this->ctl->cmpset($c, self::ctlOf(self::TIDYING, 0))) {
                     try {
@@ -199,7 +208,7 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
     private function interruptWorkers(): void
     {
         $mainLock = $this->mainLock;
-        $mainLock->lock();
+        $mainLock->trylock();
         try {
             foreach ($this->workers as $w) {
                 try {
@@ -219,14 +228,13 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
     private function interruptIdleWorkers(bool $onlyOne = false): void
     {
         $mainLock = $this->mainLock;
-        $mainLock->lock();
+        $mainLock->trylock();
         try {
             foreach ($this->workers as $w) {
                 $t = $w->process;
-                if (!$t->isInterrupted()) {
+                if (!$t->isInterrupted() && $w->trylock()) {
                     try {
                         $t->interrupt();
-                    } catch (\Exception $ignore) {
                     } finally {
                         $w->unlock();
                     }
@@ -253,10 +261,11 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
         $q = $this->workQueue;
         $taskList = [];
         $q->drainTo($taskList);
-        if (!$q->isEmpty()) {
+        if ($this->queueSize->get() != 0) {
             $runnable = [];
             foreach ($q->toArray($runnable) as $r) {
                 if ($q->remove($r)) {
+                    $this->compareAndDecrementQueueSize($q->size() + 1);
                     $taskList[] = $r;
                 }
             }
@@ -276,7 +285,7 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
                 ! (
                     $rs == self::SHUTDOWN &&
                     $firstTask == null &&
-                   !$this->workQueue->isEmpty()
+                    $this->queueSize->get() != 0
                 )
             ) {
                 return false;
@@ -304,7 +313,7 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
         $w = new Worker($firstTask, $this);
         $t = $w->process;
 
-        $this->mainLock->lock();
+        $this->mainLock->trylock();
         try {
             // Recheck while holding lock.
             // Back out on ThreadFactory failure or if
@@ -341,9 +350,8 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
             $this->decrementWorkerCount();
         }
 
-        $this->mainLock->lock();
+        $this->mainLock->trylock();
         try {
-            $this->completedTaskCount += $w->completedTasks;
             foreach ($this->workers as $key => $val) {
                 if ($val == $w) {
                     unset($this->workers[$key]);
@@ -360,7 +368,7 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
         if (self::runStateLessThan($c, self::STOP)) {
             if (!$completedAbruptly) {
                 $min = $this->poolSize;
-                if ($min == 0 && !$this->workQueue->isEmpty()) {
+                if ($min == 0 && $this->queueSize->get() != 0) {
                     $min = 1;
                 }
                 if (self::workerCountOf($c) >= $min) {
@@ -375,11 +383,11 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
     {
         $timedOut = false;
         for (;;) {
-             $c = $this->ctl->get();
+            $c = $this->ctl->get();
             $rs = self::runStateOf($c);
 
             // Check if queue empty only if necessary.
-            if ($rs >= self::SHUTDOWN && ($rs >= self::STOP || $this->workQueue->isEmpty())) {
+            if ($rs >= self::SHUTDOWN && ($rs >= self::STOP || $this->queueSize->get() == 0)) { //$this->workQueue->isEmpty() - does not work, because workQueue is not shared
                 $this->decrementWorkerCount();
                 return null;
             }
@@ -413,32 +421,37 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
             } catch (\Exception $retry) {
                 $timedOut = false;
             }
-            return null;
         }
-        return null;
     }
 
     public function runWorker(Worker $w): void
     {
-        $task = $w->firstTask;
+        $firstTask = $w->firstTask;
+        $queuedTask = null;
         $w->firstTask = null;
         $completedAbruptly = true;
         try {
-            while ($task != null || ($task = $this->getTask($w->process)) != null) {
-                //$w->lock();
+            while ($firstTask != null || ($queuedTask = $this->getTask($w->process)) != null) {
+                $w->trylock();
                 try {
                     $thrown = null;
                     try {
-                        $task->run();
+                        if ($firstTask != null) {
+                            $firstTask->run();
+                        } elseif ($queuedTask != null) {
+                            //take care
+                            $this->compareAndDecrementQueueSize($this->queueSize->get());
+                            $queuedTask->run();
+                        }
                     } catch (\Exception $x) {
                         $thrown = $x;
                         throw $x;
                     }
                 } finally {
-                    $task = null;
+                    $firstTask = null;
+                    $queuedTask = null;
                     $w->firstTask = null;
-                    $w->completedTasks += 1;
-                    //$w->unlock();
+                    $w->unlock();
                 }
             }
             $completedAbruptly = false;
@@ -451,10 +464,12 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
         int $poolSize,
         int $keepAliveTime,
         string $unit,
-        ProcessQueueInterface $workQueue
+        BlockingQueueInterface $workQueue
     ) {
         $this->ctl = new \Swoole\Atomic\Long(self::ctlOf(self::RUNNING, 0));
         $this->mainLock = new \Swoole\Lock(SWOOLE_MUTEX);
+        $this->queueSize = new \Swoole\Atomic\Long(0);
+
         if (
             $poolSize <= 0 || $keepAliveTime < 0
         ) {
@@ -475,8 +490,9 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
             $c = $this->ctl->get();
         }
         if (self::isRunning($c)) {
-            $receiver = $this->workers[rand(0, count($this->workers) - 1)]->process;
-            if ($this->workQueue->offer($command, $receiver)) {
+            $process = $this->workers[rand(0, count($this->workers) - 1)]->process;
+            if ($this->workQueue->offer($command, $process)) {
+                $this->compareAndIncrementQueueSize($this->workQueue->size() - 1);
                 $recheck = $this->ctl->get();
                 if (!self::isRunning($recheck) && $this->remove($command)) {
                     $this->reject($command);
@@ -492,6 +508,9 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
     public function remove(RunnableInterface $task): bool
     {
         $removed = $this->workQueue->remove($task);
+        if ($removed) {
+            $this->compareAndDecrementQueueSize($this->workQueue->size() + 1);
+        }
         $this->tryTerminate(); // In case SHUTDOWN and now empty
         return $removed;
     }
@@ -519,7 +538,7 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
 
     public function shutdown(): void
     {
-        $this->mainLock->lock();
+        $this->mainLock->trylock();
         try {
             $this->checkShutdownAccess();
             $this->advanceRunState(self::SHUTDOWN);
@@ -534,7 +553,7 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
     public function shutdownNow(): array
     {
         $tasks = [];
-        $this->mainLock->lock();
+        $this->mainLock->trylock();
         try {
             $this->checkShutdownAccess();
             $this->advanceRunState(self::STOP);
@@ -566,7 +585,7 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
     public function awaitTermination(int $timeout, string $unit)
     {
         $nanos = TimeUnit::toNanos($timeout, $unit);
-        $this->mainLock->lock();
+        $this->mainLock->trylock();
         try {
             for (;;) {
                 if (self::runStateAtLeast($this->ctl->get(), self::TERMINATED)) {
@@ -576,6 +595,7 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
                     return false;
                 }
                 time_nanosleep(0, $nanos);
+                $nanos = -1;
             }
         } finally {
             $this->mainLock->unlock();
@@ -584,10 +604,5 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
 
     protected function terminated(): void
     {
-    }
-
-    public function completedTaskCount(): int
-    {
-        return $this->completedTaskCount;
     }
 }

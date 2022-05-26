@@ -8,6 +8,7 @@ use Jabe\Engine\Variable\Type\{
 };
 use Jabe\Engine\Variable\Value\{
     BooleanValueInterface,
+    BytesValueInterface,
     DateValueInterface,
     DoubleValueInterface,
     FileValueInterface,
@@ -29,6 +30,7 @@ use Jabe\Engine\Variable\Impl\VariableMapImpl;
 use Jabe\Engine\Variable\Impl\Value\{
     AbstractTypedValue,
     BooleanValueImpl,
+    BytesValueImpl,
     DateValueImpl,
     DoubleValueImpl,
     FileValueImpl,
@@ -134,6 +136,14 @@ class Variables
     public static function booleanValue(?bool $booleanValue, ?bool $isTransient = null): BooleanValueInterface
     {
         return new BooleanValueImpl($booleanValue, $isTransient ?? false);
+    }
+
+    /**
+     * Creates a new {@link BytesValue} that encapsulates the given <code>bytes</code>
+     */
+    public static function byteArrayValue(string $bytes, ?bool $isTransient = null): BytesValueInterface
+    {
+        return new BytesValueImpl($bytes, $isTransient ?? false);
     }
 
     /**

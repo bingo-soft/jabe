@@ -7,7 +7,7 @@ use Jabe\Engine\Impl\Interceptor\CommandContext;
 
 class SchemaOperationsProcessEngineBuild implements SchemaOperationsCommandInterface
 {
-    public function execute(CommandContext $commandContext): void
+    public function execute(CommandContext $commandContext)
     {
     }
 }

@@ -147,11 +147,10 @@ class FileValueTypeImplTest extends TestCase
         $fileValue = Variables::fileValue($fileName)->file($file)->mimeType($fileType)
                      ->encoding($encoding)->setTransient(true)->create();
         $info = $this->type->getValueInfo($fileValue);
-
-        $this->assertContains([FileValueTypeImpl::VALUE_INFO_FILE_NAME => $fileName], $info);
-        $this->assertContains([FileValueTypeImpl::VALUE_INFO_FILE_MIME_TYPE => $fileType], $info);
-        $this->assertContains([FileValueTypeImpl::VALUE_INFO_FILE_ENCODING => $encoding], $info);
-        $this->assertContains([FileValueTypeImpl::VALUE_INFO_TRANSIENT => true], $info);
+        $this->assertContains($fileName, $info);
+        $this->assertContains($fileType, $info);
+        $this->assertContains($encoding, $info);
+        $this->assertContains(true, $info);
     }
 
     public function testFileByteArrayIsEqualToFileValueContent(): void

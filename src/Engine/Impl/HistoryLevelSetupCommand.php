@@ -2,12 +2,14 @@
 
 namespace Jabe\Engine\Impl;
 
-use Jabe\Engine\Impl\Interceptor\CommandContext;
-use Jabe\Engine\Impl\Interceptor\CommandInterface;
+use Jabe\Engine\Impl\Interceptor\{
+    CommandContext,
+    CommandInterface
+};
 
 class HistoryLevelSetupCommand implements CommandInterface
 {
-    public function execute(CommandContext $commandContext): void
+    public function execute(CommandContext $commandContext)
     {
     }
 }

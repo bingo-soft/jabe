@@ -6,8 +6,6 @@ class Worker extends \Swoole\Lock implements RunnableInterface
 {
     /** Initial task to run.  Possibly null. */
     public $firstTask;
-    /** Task counter */
-    public $completedTasks = 0;
 
     /**
      * Creates with given first task.
@@ -20,10 +18,9 @@ class Worker extends \Swoole\Lock implements RunnableInterface
         $this->executor = $executor;
         $scope = $this;
         $this->process = new InterruptibleProcess(function ($process) use ($scope) {
-            //Создавать контекст, если еще не существует
             $scope->run();
         }, false);
-        $this->process->useQueue(800, 2);
+        $this->process->useQueue(9090, 2);
     }
 
     public function start(): void

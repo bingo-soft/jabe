@@ -2,7 +2,7 @@
 
 namespace Jabe\Engine\Impl\Util\Concurrent;
 
-class ProcessQueue extends AbstractQueue implements ProcessQueueInterface
+class ArrayBlockingQueue extends AbstractQueue implements BlockingQueueInterface
 {
     /** The queued items */
     public $items = [];
@@ -15,6 +15,8 @@ class ProcessQueue extends AbstractQueue implements ProcessQueueInterface
 
     /** Number of elements in the queue */
     public $count = 0;
+
+    public $lock;
 
     /**
      * Circularly increment i.
@@ -59,18 +61,19 @@ class ProcessQueue extends AbstractQueue implements ProcessQueueInterface
     /**
      * Inserts element at current put position, advances
      */
-    private function insert($x, InterruptibleProcess $receiver = null): void
+    private function insert($x, InterruptibleProcess $process = null): void
     {
         $this->items[$this->putIndex] = $x;
         $this->putIndex = $this->inc($this->putIndex);
         $this->count += 1;
-        if ($receiver !== null) {
-            $receiver->push(serialize($x));
+        if ($process !== null) {
+            $process->push(serialize($x));
         }
     }
 
     public function __construct(int $capacity, bool $fair = false, $c = null)
     {
+        $this->lock = new \Swoole\Lock(SWOOLE_MUTEX);
         if ($capacity < 0) {
             throw new \Exception("Illegal capacity");
         }
@@ -78,6 +81,7 @@ class ProcessQueue extends AbstractQueue implements ProcessQueueInterface
             $this->items[] = null;
         }
         $i = 0;
+        $this->lock->trylock();
         try {
             if (is_array($c)) {
                 foreach ($c as $e) {
@@ -88,37 +92,59 @@ class ProcessQueue extends AbstractQueue implements ProcessQueueInterface
             }
         } catch (\Exception $ex) {
             throw $ex;
+        } finally {
+            $this->lock->unlock();
         }
         $this->count = $i;
         $this->putIndex = ($i === $capacity) ? 0 : $i;
     }
 
-    public function offer($e, InterruptibleProcess $receiver = null): bool
+    public function offer($e, InterruptibleProcess $process = null): bool
     {
         self::checkNotNull($e);
-        if ($this->count === count($this->items)) {
-            return false;
-        } else {
-            $this->insert($e, $receiver);
-            return true;
+        $this->lock->trylock();
+        try {
+            if ($this->count === count($this->items)) {
+                return false;
+            } else {
+                $this->insert($e, $process);
+                return true;
+            }
+        } finally {
+            $this->lock->unlock();
         }
     }
 
     public function poll(int $timeout, string $unit, InterruptibleProcess $process)
     {
         $nanos = TimeUnit::toNanos($timeout, $unit);
-        time_nanosleep(0, $nanos);
-        return $process->pop();
+        $this->lock->trylock();
+        try {
+            time_nanosleep(0, $nanos);
+            return $process->pop();
+        } finally {
+            $this->lock->unlock();
+        }
     }
 
     public function take(InterruptibleProcess $process)
     {
-        return $process->pop();
+        $this->lock->trylock();
+        try {
+            return $process->pop();
+        } finally {
+            $this->lock->unlock();
+        }
     }
 
     public function peek()
     {
-        return ($this->count === 0) ? null : $this->itemAt($this->takeIndex);
+        $this->lock->trylock();
+        try {
+            return ($this->count === 0) ? null : $this->itemAt($this->takeIndex);
+        } finally {
+            $this->lock->unlock();
+        }
     }
 
     /**
@@ -128,7 +154,12 @@ class ProcessQueue extends AbstractQueue implements ProcessQueueInterface
      */
     public function size(): int
     {
-        return $this->count;
+        $this->lock->trylock();
+        try {
+            return $this->count;
+        } finally {
+            $this->lock->unlock();
+        }
     }
 
     /**
@@ -140,19 +171,26 @@ class ProcessQueue extends AbstractQueue implements ProcessQueueInterface
      */
     public function remove($o = null)
     {
-        if ($o === null) {
-            return false;
-        }
-        for ($i = $this->takeIndex, $k = $this->count; $k > 0; $i = $this->inc($i), $k -= 1) {
-            if ($o === $this->items[$i]) {
-                $this->removeAt($i);
-                return true;
+        $this->lock->trylock();
+        try {
+            if ($o === null) {
+                return false;
             }
+            for ($i = $this->takeIndex, $k = $this->count; $k > 0; $i = $this->inc($i), $k -= 1) {
+                if ($o === $this->items[$i]) {
+                    $this->removeAt($i);
+                    return true;
+                }
+            }
+            return false;
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            $this->lock->unlock();
         }
-        return false;
     }
 
-    public function removeAt(int $i): void
+    private function removeAt(int $i): void
     {
         if ($i == $this->takeIndex) {
             $this->items[$this->takeIndex] = null;
@@ -172,7 +210,6 @@ class ProcessQueue extends AbstractQueue implements ProcessQueueInterface
             }
         }
         $this->count -= 1;
-        //notFull.signal();
     }
 
     /**
@@ -183,15 +220,20 @@ class ProcessQueue extends AbstractQueue implements ProcessQueueInterface
      */
     public function contains($o): bool
     {
-        if ($o === null) {
-            return false;
-        }
-        for ($i = $this->takeIndex, $k = $this->count; $k > 0; $i = $this->inc($i), $k -= 1) {
-            if ($o === $this->items[$i]) {
-                return true;
+        $this->lock->trylock();
+        try {
+            if ($o === null) {
+                return false;
             }
+            for ($i = $this->takeIndex, $k = $this->count; $k > 0; $i = $this->inc($i), $k -= 1) {
+                if ($o === $this->items[$i]) {
+                    return true;
+                }
+            }
+            return false;
+        } finally {
+            $this->lock->unlock();
         }
-        return false;
     }
 
     /**
@@ -202,17 +244,22 @@ class ProcessQueue extends AbstractQueue implements ProcessQueueInterface
      */
     public function toArray(array &$c = null): array
     {
-        if ($c == null) {
-            $a = [];
-            for ($i = $this->takeIndex, $k = 0; $k < $this->count; $i = $this->inc($i), $k += 1) {
-                $a[$k] = $this->items[$i];
+        $this->lock->trylock();
+        try {
+            if ($c == null) {
+                $a = [];
+                for ($i = $this->takeIndex, $k = 0; $k < $this->count; $i = $this->inc($i), $k += 1) {
+                    $a[$k] = $this->items[$i];
+                }
+                return $a;
+            } elseif (is_array($c)) {
+                for ($i = $this->takeIndex, $k = 0; $k < $this->count; $i = $this->inc($i), $k += 1) {
+                    $c[$k] = $this->items[$i];
+                }
+                return $c;
             }
-            return $a;
-        } elseif (is_array($c)) {
-            for ($i = $this->takeIndex, $k = 0; $k < $this->count; $i = $this->inc($i), $k += 1) {
-                $c[$k] = $this->items[$i];
-            }
-            return $c;
+        } finally {
+            $this->lock->unlock();
         }
     }
 
@@ -222,12 +269,17 @@ class ProcessQueue extends AbstractQueue implements ProcessQueueInterface
      */
     public function clear(): void
     {
-        for ($i = $this->takeIndex, $k = $this->count; $k > 0; $i = $this->inc($i), $k -= 1) {
-            $this->items[$i] = null;
+        $this->lock->trylock();
+        try {
+            for ($i = $this->takeIndex, $k = $this->count; $k > 0; $i = $this->inc($i), $k -= 1) {
+                $this->items[$i] = null;
+            }
+            $this->count = 0;
+            $this->putIndex = 0;
+            $this->takeIndex = 0;
+        } finally {
+            $this->lock->unlock();
         }
-        $this->count = 0;
-        $this->putIndex = 0;
-        $this->takeIndex = 0;
     }
 
     public function drainTo(&$c, int $maxElements = null): int
@@ -236,28 +288,33 @@ class ProcessQueue extends AbstractQueue implements ProcessQueueInterface
         if ($c === $this) {
             throw new \Exception("Argument must be non-null");
         }
-        $i = $this->takeIndex;
-        $n = 0;
-        $max = $maxElements ?? $this->count;
-        while ($n < $max) {
-            $c[] = $this->items[$i];
-            $this->items[$i] = null;
-            $i = $this->inc($i);
-            $n += 1;
+        $this->lock->trylock();
+        try {
+            $i = $this->takeIndex;
+            $n = 0;
+            $max = $maxElements ?? $this->count;
+            while ($n < $max) {
+                $c[] = $this->items[$i];
+                $this->items[$i] = null;
+                $i = $this->inc($i);
+                $n += 1;
+            }
+            if ($n > 0 && $maxElements === null) {
+                $this->count = 0;
+                $this->putIndex = 0;
+                $this->takeIndex = 0;
+            } elseif ($n > 0) {
+                $this->count -= $n;
+                $this->takeIndex = $i;
+            }
+            return $n;
+        } finally {
+            $this->lock->unlock();
         }
-        if ($n > 0 && $maxElements === null) {
-            $this->count = 0;
-            $this->putIndex = 0;
-            $this->takeIndex = 0;
-        } elseif ($n > 0) {
-            $this->count -= $n;
-            $this->takeIndex = $i;
-        }
-        return $n;
     }
 
     public function iterator()
     {
-        return new ProcessIterator($this);
+        return new Itr($this);
     }
 }
