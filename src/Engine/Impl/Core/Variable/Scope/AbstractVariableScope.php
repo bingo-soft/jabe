@@ -258,7 +258,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
     {
         if (empty($variableNames)) {
             $variableNames = $this->getVariableNamesLocal();
-            foreach ($variableNames as $$variableName) {
+            foreach ($variableNames as $variableName) {
                 $this->removeVariableLocal($variableName);
             }
         } else {

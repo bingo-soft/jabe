@@ -246,7 +246,7 @@ interface HistoryServiceInterface
      *          If the user has no {@link Permissions#DELETE_HISTORY} permission on {@link Resources#PROCESS_DEFINITION}
      * @return history cleanup job. NB! As of v. 7.9.0, method does not guarantee to return a job. Use {@link #findHistoryCleanupJobs()} instead.
      */
-    public function cleanUpHistoryAsync(?bool $immediatelyDue = null): JobInterface;
+    public function cleanUpHistoryAsync(bool $immediatelyDue = false): JobInterface;
 
     /**
      * Finds history cleanup job if present.

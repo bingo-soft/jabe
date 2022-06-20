@@ -36,7 +36,7 @@ class FormDefinitionCache extends ResourceDefinitionCache
 
     protected function checkInvalidDefinitionByKeyAndTenantId(string $definitionKey, string $tenantId, FormDefinitionEntity $definition): void
     {
-        EnsureUtil::ensureNotNull("no deployed form definition found with key '" . $definitionKey . "' and tenant-id '" . $tenantId + "'", "formDefinition", $definition);
+        EnsureUtil::ensureNotNull("no deployed form definition found with key '" . $definitionKey . "' and tenant-id '" . $tenantId . "'", "formDefinition", $definition);
     }
 
     protected function checkInvalidDefinitionByKeyVersionAndTenantId(

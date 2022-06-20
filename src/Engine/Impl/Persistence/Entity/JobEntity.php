@@ -159,7 +159,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         $commandContext->getJobManager()->deleteJob($this, !$executingJob);
 
         // Also delete the job's exception byte array
-        if ($$this->exceptionByteArrayId != null) {
+        if ($this->exceptionByteArrayId != null) {
             $commandContext->getByteArrayManager()->deleteByteArrayById($this->exceptionByteArrayId);
         }
 

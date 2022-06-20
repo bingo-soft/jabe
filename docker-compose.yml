@@ -1,0 +1,7 @@
+version: '3.1'
+services:
+    migration:
+        image: flyway/flyway:latest
+        volumes:
+            - ./src/Engine/Impl/Db/Resources/Postgresql:/flyway/sql
+        command: "-url=jdbc:postgresql://172.24.64.93:5432/bpm_engine -schemas=bpm_engine -baselineOnMigrate=true -user=postgres -password=postgres -connectRetries=60 migrate" 

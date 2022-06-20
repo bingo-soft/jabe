@@ -195,7 +195,7 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
 
             if (!in_array($ancestorScopeExecution, $flowScopeExecutions)) {
                 throw new NotValidException(describeFailure("Scope execution for '" . $this->ancestorActivityInstanceId .
-                "' cannot be found in parent hierarchy of flow element '" . $elementToInstantiate->getId() + "'"));
+                "' cannot be found in parent hierarchy of flow element '" . $elementToInstantiate->getId() . "'"));
             }
 
             $scopeExecution = $ancestorScopeExecution;
@@ -270,7 +270,7 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
             case self::INTERRUPT_EVENT_SCOPE:
                  $scopeToCancel = $topMostActivity->getEventScope();
                 $executionToCancel = $this->getSingleExecutionForScope($mapping, $scopeToCancel);
-                $executionToCancel->interrupt("Interrupting activity " . $topMostActivity + " executed.", $this->skipCustomListeners, $this->skipIoMappings, false);
+                $executionToCancel->interrupt("Interrupting activity " . $topMostActivity . " executed.", $this->skipCustomListeners, $this->skipIoMappings, false);
                 $executionToCancel->setActivity(null);
                 $executionToCancel->leaveActivityInstance();
                 $this->instantiate($executionToCancel, $activitiesToInstantiate, $elementToInstantiate);

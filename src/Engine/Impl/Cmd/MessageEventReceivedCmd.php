@@ -67,7 +67,7 @@ class MessageEventReceivedCmd implements CommandInterface, \Serializable
             );
         }
 
-        EnsureUtil::ensureNotEmpty("Execution with id '" . $this->executionId + "' does not have a subscription to a message event with name '" . $this->messageName . "'", "eventSubscriptions", $eventSubscriptions);
+        EnsureUtil::ensureNotEmpty("Execution with id '" . $this->executionId . "' does not have a subscription to a message event with name '" . $this->messageName . "'", "eventSubscriptions", $eventSubscriptions);
         EnsureUtil::ensureNumberOfElements("More than one matching message subscription found for execution " . $this->executionId, "eventSubscriptions", $eventSubscriptions, 1);
 
         // there can be only one:

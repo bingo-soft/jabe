@@ -194,7 +194,7 @@ interface ManagementServiceInterface
     * @see #activateJobById(String)
     * @see #activateJobByJobDefinitionId(String)
     */
-    public function activateJobDefinitionById(string $jobDefinitionId, ?bool $activateJobs = false, ?string $activationDate = null): void;
+    public function activateJobDefinitionById(string $jobDefinitionId, bool $activateJobs = false, string $activationDate = null): void;
 
     /**
     * <p>Activates all {@link JobDefinition}s of the provided process definition id.</p>
@@ -223,7 +223,7 @@ interface ManagementServiceInterface
     *
     * @see #activateJobByProcessDefinitionId(String)
     */
-    public function activateJobDefinitionByProcessDefinitionId(string $processDefinitionId, ?bool $activateJobs = false, ?string $activationDate = null): void;
+    public function activateJobDefinitionByProcessDefinitionId(string $processDefinitionId, bool $activateJobs = false, string $activationDate = null): void;
 
     /**
     * <p>Activates all {@link JobDefinition}s of the provided process definition key.</p>
@@ -252,7 +252,7 @@ interface ManagementServiceInterface
     *
     * @see #activateJobByProcessDefinitionKey(String)
     */
-    public function activateJobDefinitionByProcessDefinitionKey(string $processDefinitionKey, ?bool $activateJobs = false, ?string $activationDate = null): void;
+    public function activateJobDefinitionByProcessDefinitionKey(string $processDefinitionKey, bool $activateJobs = false, string $activationDate = null): void;
 
     /**
     * Suspends the {@link JobDefinition} with the given id.
@@ -282,7 +282,7 @@ interface ManagementServiceInterface
     * @see #suspendJobById(String)
     * @see #suspendJobByJobDefinitionId(String)
     */
-    public function suspendJobDefinitionById(string $jobDefinitionId, ?bool $suspendJobs = false, ?string $suspensionDate = null): void;
+    public function suspendJobDefinitionById(string $jobDefinitionId, bool $suspendJobs = false, string $suspensionDate = null): void;
 
     /**
     * Suspends all {@link JobDefinition}s of the provided process definition id.
@@ -311,7 +311,7 @@ interface ManagementServiceInterface
     *
     * @see #suspendJobByProcessDefinitionId(String)
     */
-    public function suspendJobDefinitionByProcessDefinitionId(string $processDefinitionId, ?bool $suspendJobs = false, ?string $suspensionDate = null): void;
+    public function suspendJobDefinitionByProcessDefinitionId(string $processDefinitionId, bool $suspendJobs = false, string $suspensionDate = null): void;
 
     /**
     * Suspends all {@link JobDefinition}s of the provided process definition key.
@@ -340,7 +340,7 @@ interface ManagementServiceInterface
     *
     * @see #suspendJobByProcessDefinitionKey(String)
     */
-    public function suspendJobDefinitionByProcessDefinitionKey(string $processDefinitionKey, ?bool $suspendJobs = false, ?string $suspensionDate = null): void;
+    public function suspendJobDefinitionByProcessDefinitionKey(string $processDefinitionKey, bool $suspendJobs = false, string $suspensionDate = null): void;
 
     /**
     * <p>Activates the {@link Job} with the given id.</p>
@@ -530,7 +530,7 @@ interface ManagementServiceInterface
     *          If the user has no {@link Permissions#CREATE} or
     *          {@link BatchPermissions#CREATE_BATCH_SET_JOB_RETRIES} permission on {@link Resources#BATCH}.
     */
-    public function setJobRetriesAsync($ids, $query, ?HistoricProcessInstanceQuery $historicProcessInstanceQuery, int $retries): BatchInterface;
+    public function setJobRetriesAsync($ids, $queryOrRetries, $historicQueryOrRetries = null, $retries = null): BatchInterface;
 
     /**
     * <p>
@@ -577,7 +577,7 @@ interface ManagementServiceInterface
     *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
     *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
     */
-    public function setJobDuedate(string $jobId, string $newDuedate, ?bool $cascade = false): void;
+    public function setJobDuedate(string $jobId, string $newDuedate, bool $cascade = false): void;
 
     /**
     * Triggers the recalculation for the job with the provided id.
@@ -630,7 +630,7 @@ interface ManagementServiceInterface
     *
     * @since 7.4
     */
-    public function setOverridingJobPriorityForJobDefinition(string $jobDefinitionId, int $priority, ?bool $cascade = false): void;
+    public function setOverridingJobPriorityForJobDefinition(string $jobDefinitionId, int $priority, bool $cascade = false): void;
 
     /**
     * <p>Clears the job definition's overriding job priority if set. After invoking this method,
@@ -805,7 +805,7 @@ interface ManagementServiceInterface
     * @param reporter or null
     * @since 7.4
     */
-    public function deleteMetrics(?string $timestamp = null, ?string $reporter = null);
+    public function deleteMetrics(string $timestamp = null, string $reporter = null);
 
     /**
     * Forces this engine to commit its pending collected metrics to the database.

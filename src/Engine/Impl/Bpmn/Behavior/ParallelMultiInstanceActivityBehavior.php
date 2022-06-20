@@ -80,7 +80,7 @@ class ParallelMultiInstanceActivityBehavior extends MultiInstanceActivityBehavio
             $this->allExecutionsEnded($scopeExecution, $endedExecution)
         ) {
             $childExecutions = $scopeExecution->getNonEventScopeExecutions();
-            foreach ($childExecutions as $$childExecution) {
+            foreach ($childExecutions as $childExecution) {
                 // delete all not-ended instances; these are either active (for non-scope tasks) or inactive but have no activity id (for subprocesses, etc.)
                 if ($childExecution->isActive() || $childExecution->getActivity() == null) {
                     $childExecution->deleteCascade("Multi instance completion condition satisfied.");
@@ -158,7 +158,7 @@ class ParallelMultiInstanceActivityBehavior extends MultiInstanceActivityBehavio
     public function migrateScope(ActivityExecutionInterface $scopeExecution): void
     {
         // migrate already completed instances
-        foreach ($scopeExecution->getExecutions() as $$child) {
+        foreach ($scopeExecution->getExecutions() as $child) {
             if (!$child->isActive()) {
                 $child->setProcessDefinition($scopeExecution->getProcessDefinition());
             }

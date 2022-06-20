@@ -86,12 +86,12 @@ abstract class AbstractRenderFormDelegate
     protected const FORM_ELEMENT_SELECTOR = "this." . self::GENERATED_FORM_NAME . ".%s";
 
     /* expressions */
-    protected const INVALID_EXPRESSION = self::FORM_ELEMENT_SELECTOR + '.$invalid';
-    protected const DIRTY_EXPRESSION = self::FORM_ELEMENT_SELECTOR + '.$dirty';
-    protected const ERROR_EXPRESSION = self::FORM_ELEMENT_SELECTOR + '.$error';
-    protected const DATE_ERROR_EXPRESSION = self::ERROR_EXPRESSION + ".date";
-    protected const REQUIRED_ERROR_EXPRESSION = self::ERROR_EXPRESSION + ".required";
-    protected const TYPE_ERROR_EXPRESSION = self::ERROR_EXPRESSION + ".camVariableType";
+    protected const INVALID_EXPRESSION = self::FORM_ELEMENT_SELECTOR . '.$invalid';
+    protected const DIRTY_EXPRESSION = self::FORM_ELEMENT_SELECTOR . '.$dirty';
+    protected const ERROR_EXPRESSION = self::FORM_ELEMENT_SELECTOR . '.$error';
+    protected const DATE_ERROR_EXPRESSION = self::ERROR_EXPRESSION . ".date";
+    protected const REQUIRED_ERROR_EXPRESSION = self::ERROR_EXPRESSION . ".required";
+    protected const TYPE_ERROR_EXPRESSION = self::ERROR_EXPRESSION . ".camVariableType";
 
     /* JavaScript snippets */
     protected const DATE_FIELD_OPENED_ATTRIBUTE = "dateFieldOpened%s";

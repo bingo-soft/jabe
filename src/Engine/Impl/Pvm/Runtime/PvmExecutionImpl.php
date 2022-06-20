@@ -307,7 +307,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         $activity = $this->getActivity();
         if ($this->isActive && $activity != null) {
             // set activity instance state to cancel
-            if ($$this->activityInstanceState != ActivityInstanceState::ending()->getStateCode()) {
+            if ($this->activityInstanceState != ActivityInstanceState::ending()->getStateCode()) {
                 $this->setCanceled(true);
                 $this->performOperation(AtomicOperation::fireActivityEnd());
             }

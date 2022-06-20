@@ -69,7 +69,7 @@ class CorrelationSet
 
     public function __toString()
     {
-        return "CorrelationSet [businessKey=" . $this->businessKey . ", processInstanceId=" . $this->processInstanceId . ", processDefinitionId=" . $this->processDefinitionId . ", correlationKeys=" . json_encode($$this->correlationKeys) . ", localCorrelationKeys=" . json_encode($this->localCorrelationKeys) . ", tenantId=" . $this->tenantId .
+        return "CorrelationSet [businessKey=" . $this->businessKey . ", processInstanceId=" . $this->processInstanceId . ", processDefinitionId=" . $this->processDefinitionId . ", correlationKeys=" . json_encode($this->correlationKeys) . ", localCorrelationKeys=" . json_encode($this->localCorrelationKeys) . ", tenantId=" . $this->tenantId .
           ", isTenantIdSet=" . $this->isTenantIdSet . ", isExecutionsOnly=" . $this->isExecutionsOnly . "]";
     }
 }

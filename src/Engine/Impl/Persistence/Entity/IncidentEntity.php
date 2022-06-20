@@ -246,7 +246,7 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
     {
         $referenceIdAndClass = [];
 
-        if ($$this->causeIncidentId != null) {
+        if ($this->causeIncidentId != null) {
             $referenceIdAndClass[$this->causeIncidentId] = IncidentEntity::class;
         }
         if ($this->processDefinitionId != null) {

@@ -171,7 +171,7 @@ abstract class JobExecutor
 
     public function logRejectedExecution(ProcessEngineImpl $engine, int $numJobs): void
     {
-        if ($$engine != null && $engine->getProcessEngineConfiguration()->isMetricsEnabled()) {
+        if ($engine != null && $engine->getProcessEngineConfiguration()->isMetricsEnabled()) {
             $engine->getProcessEngineConfiguration()
             ->getMetricsRegistry()
             ->markOccurrence(Metrics::JOB_EXECUTION_REJECTED, $numJobs);

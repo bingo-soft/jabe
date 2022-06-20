@@ -72,7 +72,7 @@ class RecalculateJobDuedateCmd implements CommandInterface, \Serializable
         $timerDeclaration = $this->findTimerDeclaration($commandContext, $job);
         $timer = $job;
         $oldDuedate = $job->getDuedate();
-        $$creationDateBased = $this->creationDateBased;
+        $creationDateBased = $this->creationDateBased;
         $runnable = new class ($timerDeclaration, $timer, $creationDateBased) implements RunnableInterface {
             private $timerDeclaration;
             private $timer;

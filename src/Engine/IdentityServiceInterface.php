@@ -25,7 +25,7 @@ interface IdentityServiceInterface
 
     public function newUser(string $userId): UserInterface;
 
-    public function saveUser(UserInterface $user): void;
+    public function saveUser(UserInterface $user, bool $skipPasswordPolicy = false): void;
 
     public function createUserQuery(): UserQueryInterface;
 
@@ -75,7 +75,7 @@ interface IdentityServiceInterface
 
     public function setAuthentication(string $userId, array $groups, ?array $tenantIds = null): void;
 
-    public function getCurrentAuthentication(): Authentication;
+    public function getCurrentAuthentication(): ?Authentication;
 
     public function clearAuthentication(): void;
 
