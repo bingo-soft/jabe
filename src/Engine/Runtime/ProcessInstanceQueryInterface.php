@@ -13,7 +13,7 @@ interface ProcessInstanceQueryInterface extends QueryInterface
     public function processInstanceIds(array $processInstanceIds): ProcessInstanceQueryInterface;
 
     /** Select process instance with the given business key, unique for the given process definition */
-    public function processInstanceBusinessKey(string $processInstanceBusinessKey, ?string $processDefinitionKey = null): ProcessInstanceQueryInterface;
+    public function processInstanceBusinessKey(string $processInstanceBusinessKey, string $processDefinitionKey = null): ProcessInstanceQueryInterface;
 
     /**
      * Select process instances with a business key like the given value.
@@ -64,20 +64,20 @@ interface ProcessInstanceQueryInterface extends QueryInterface
     /**
      * Selects the process instances which are associated with the given case instance id.
      */
-    public function caseInstanceId(string $caseInstanceId): ProcessInstanceQueryInterface;
+    //public function caseInstanceId(string $caseInstanceId): ProcessInstanceQueryInterface;
 
     /**
      * Select the process instances which are a sub process instance of the given
      * super case instance.
      */
-    public function superCaseInstanceId(string $superCaseInstanceId): ProcessInstanceQueryInterface;
+    //public function superCaseInstanceId(string $superCaseInstanceId): ProcessInstanceQueryInterface;
 
     /**
      * Select the process instance that has as sub case instance the given
      * case instance. Note that there will always be at most <b>one</b>
      * such process instance that can be the result of this query.
      */
-    public function subCaseInstanceId(string $subCaseInstanceId): ProcessInstanceQueryInterface;
+    //public function subCaseInstanceId(string $subCaseInstanceId): ProcessInstanceQueryInterface;
 
     /**
      * The query will match the names of process-variables in a case-insensitive way.

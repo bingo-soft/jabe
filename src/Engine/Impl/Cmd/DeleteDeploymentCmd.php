@@ -91,7 +91,7 @@ class DeleteDeploymentCmd implements CommandInterface, \Serializable
             });
             $commandContext->runWithoutAuthorization(function () use ($commandContext, $deploymentId) {
                 $cmd = new UnregisterDeploymentCmd([$deploymentId]);
-                $cmd->execute($cmd);
+                $cmd->execute($commandContext);
             });
         } finally {
             try {

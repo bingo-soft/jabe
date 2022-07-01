@@ -196,7 +196,7 @@ abstract class AbstractPersistenceSession implements PersistenceSessionInterface
 
     public function dbSchemaUpdate(): void
     {
-        $processEngineConfiguration = Context::getProcessEngineConfiguration();
+        /*$processEngineConfiguration = Context::getProcessEngineConfiguration();
         if (!$this->isEngineTablePresent()) {
             $this->dbSchemaCreateEngine();
         }
@@ -207,7 +207,7 @@ abstract class AbstractPersistenceSession implements PersistenceSessionInterface
 
         if (!$this->isIdentityTablePresent() && $processEngineConfiguration->isDbIdentityUsed()) {
             $this->dbSchemaCreateIdentity();
-        }
+        }*/
 
         /*if (!isCmmnTablePresent() && processEngineConfiguration.isCmmnEnabled()) {
             dbSchemaCreateCmmn();

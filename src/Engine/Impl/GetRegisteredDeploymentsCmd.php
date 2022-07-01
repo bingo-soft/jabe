@@ -9,7 +9,6 @@ use Jabe\Engine\Impl\Interceptor\{
 
 class GetRegisteredDeploymentsCmd implements CommandInterface
 {
-
     public function execute(CommandContext $commandContext)
     {
         $commandContext->getAuthorizationManager()->checkAdminOrPermission("checkReadRegisteredDeployments");

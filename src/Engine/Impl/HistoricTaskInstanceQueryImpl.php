@@ -1130,7 +1130,6 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
 
         $orQuery = new HistoricTaskInstanceQueryImpl();
         $orQuery->isOrQueryActive = true;
-        //@CHECK IT OUT
         $orQuery->queries = $this->queries;
         $this->queries[] = $orQuery;
         return $orQuery;

@@ -150,7 +150,8 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
     protected $queries;
     protected $isOrQueryActive = false;
 
-    public function __construct(CommandExecutorInterface $commandExecutor = null) {
+    public function __construct(CommandExecutorInterface $commandExecutor = null)
+    {
         parent::__construct($commandExecutor);
         $this->queries = [$this];
     }
@@ -202,2215 +203,2228 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         $this->priority = $priority;
         return $this;
     }
-  
-    @Override
-    public TaskQuery taskMinPriority(int $minPriority) {
-      EnsureUtil::ensureNotNull("Min Priority", minPriority);
-      $this->minPriority = minPriority;
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskMaxPriority(int $maxPriority) {
-      EnsureUtil::ensureNotNull("Max Priority", maxPriority);
-      $this->maxPriority = maxPriority;
-      return $this;
-    }
-  
-    @Override
-    public TaskQueryImpl taskAssignee(string $assignee) {
-      EnsureUtil::ensureNotNull("Assignee", assignee);
-      $this->assignee = assignee;
-      expressions.remove("taskAssignee");
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskAssigneeExpression(string $assigneeExpression) {
-      EnsureUtil::ensureNotNull("Assignee expression", assigneeExpression);
-      expressions.put("taskAssignee", assigneeExpression);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskAssigneeLike(string $assignee) {
-      EnsureUtil::ensureNotNull("Assignee", assignee);
-      $this->assigneeLike = assignee;
-      expressions.remove("taskAssigneeLike");
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskAssigneeLikeExpression(string $assigneeLikeExpression) {
-      EnsureUtil::ensureNotNull("Assignee like expression", assigneeLikeExpression);
-      expressions.put("taskAssigneeLike", assigneeLikeExpression);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskAssigneeIn(String... assignees) {
-      EnsureUtil::ensureNotNull("Assignees", assignees);
-  
-      Set<String> assigneeIn = new HashSet<>(assignees.length);
-      assigneeIn.addAll(Arrays.asList(assignees));
-  
-      $this->assigneeIn = assigneeIn;
-      expressions.remove("taskAssigneeIn");
-  
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskAssigneeNotIn(String... assignees) {
-      EnsureUtil::ensureNotNull("Assignees", assignees);
-  
-      Set<String> assigneeNotIn = new HashSet<>(assignees.length);
-      assigneeNotIn.addAll(Arrays.asList(assignees));
-  
-      $this->assigneeNotIn = assigneeNotIn;
-      expressions.remove("taskAssigneeNotIn");
-  
-      return $this;
-    }
-  
-    @Override
-    public TaskQueryImpl taskOwner(string $owner) {
-      EnsureUtil::ensureNotNull("Owner", owner);
-      $this->owner = owner;
-      expressions.remove("taskOwner");
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskOwnerExpression(string $ownerExpression) {
-      EnsureUtil::ensureNotNull("Owner expression", ownerExpression);
-      expressions.put("taskOwner", ownerExpression);
-      return $this;
-    }
-  
-    /** @see {@link #taskUnassigned} */
-    @Override
-    @Deprecated
-    public TaskQuery taskUnnassigned() {
-      return taskUnassigned();
-    }
-  
-    @Override
-    public TaskQuery taskUnassigned() {
-      $this->unassigned = true;
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskAssigned() {
-      $this->assigned = true;
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskDelegationState(DelegationState delegationState) {
-      if (delegationState == null) {
-        $this->noDelegationState = true;
-      } else {
-        $this->delegationState = delegationState;
-      }
-      return $this;
-    }
-  
-    @Override
-    public TaskQueryImpl taskCandidateUser(string $candidateUser) {
-      EnsureUtil::ensureNotNull("Candidate user", candidateUser);
-      if (!isOrQueryActive) {
-        if (candidateGroup != null || expressions.containsKey("taskCandidateGroup")) {
-          throw new ProcessEngineException("Invalid query usage: cannot set both candidateUser and candidateGroup");
-        }
-        if (candidateGroups != null || expressions.containsKey("taskCandidateGroupIn")) {
-          throw new ProcessEngineException("Invalid query usage: cannot set both candidateUser and candidateGroupIn");
-        }
-      }
-  
-      $this->candidateUser = candidateUser;
-      expressions.remove("taskCandidateUser");
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskCandidateUserExpression(string $candidateUserExpression) {
-      EnsureUtil::ensureNotNull("Candidate user expression", candidateUserExpression);
-  
-      if (candidateGroup != null || expressions.containsKey("taskCandidateGroup")) {
-        throw new ProcessEngineException("Invalid query usage: cannot set both candidateUser and candidateGroup");
-      }
-      if (candidateGroups != null || expressions.containsKey("taskCandidateGroupIn")) {
-        throw new ProcessEngineException("Invalid query usage: cannot set both candidateUser and candidateGroupIn");
-      }
-  
-      expressions.put("taskCandidateUser", candidateUserExpression);
-      return $this;
-    }
-  
-    @Override
-    public TaskQueryImpl taskInvolvedUser(string $involvedUser) {
-      EnsureUtil::ensureNotNull("Involved user", involvedUser);
-      $this->involvedUser = involvedUser;
-      expressions.remove("taskInvolvedUser");
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskInvolvedUserExpression(string $involvedUserExpression) {
-      EnsureUtil::ensureNotNull("Involved user expression", involvedUserExpression);
-      expressions.put("taskInvolvedUser", involvedUserExpression);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery withCandidateGroups() {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set withCandidateGroups() within 'or' query");
-      }
-  
-      $this->withCandidateGroups = true;
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery withoutCandidateGroups() {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set withoutCandidateGroups() within 'or' query");
-      }
-  
-      $this->withoutCandidateGroups = true;
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery withCandidateUsers() {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set withCandidateUsers() within 'or' query");
-      }
-  
-      $this->withCandidateUsers = true;
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery withoutCandidateUsers() {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set withoutCandidateUsers() within 'or' query");
-      }
-  
-      $this->withoutCandidateUsers = true;
-      return $this;
-    }
-  
-    @Override
-    public TaskQueryImpl taskCandidateGroup(string $candidateGroup) {
-      EnsureUtil::ensureNotNull("Candidate group", candidateGroup);
-  
-      if (!isOrQueryActive) {
-        if (candidateUser != null || expressions.containsKey("taskCandidateUser")) {
-          throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroup and candidateUser");
-        }
-      }
-  
-      $this->candidateGroup = candidateGroup;
-      expressions.remove("taskCandidateGroup");
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskCandidateGroupExpression(string $candidateGroupExpression) {
-      EnsureUtil::ensureNotNull("Candidate group expression", candidateGroupExpression);
-  
-      if (!isOrQueryActive) {
-        if (candidateUser != null || expressions.containsKey("taskCandidateUser")) {
-          throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroup and candidateUser");
-        }
-      }
-  
-      expressions.put("taskCandidateGroup", candidateGroupExpression);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskCandidateGroupIn(List<String> candidateGroups) {
-      ensureNotEmpty("Candidate group list", candidateGroups);
-  
-      if (!isOrQueryActive) {
-        if (candidateUser != null || expressions.containsKey("taskCandidateUser")) {
-          throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroupIn and candidateUser");
-        }
-      }
-  
-      $this->candidateGroups = candidateGroups;
-      expressions.remove("taskCandidateGroupIn");
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskCandidateGroupInExpression(string $candidateGroupsExpression) {
-      ensureNotEmpty("Candidate group list expression", candidateGroupsExpression);
-  
-      if (!isOrQueryActive) {
-        if (candidateUser != null || expressions.containsKey("taskCandidateUser")) {
-          throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroupIn and candidateUser");
-        }
-      }
-  
-      expressions.put("taskCandidateGroupIn", candidateGroupsExpression);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery includeAssignedTasks() {
-      if (candidateUser == null && candidateGroup == null && candidateGroups == null && !isWithCandidateGroups() && !isWithoutCandidateGroups() && !isWithCandidateUsers() && !isWithoutCandidateUsers()
-          && !expressions.containsKey("taskCandidateUser") && !expressions.containsKey("taskCandidateGroup")
-          && !expressions.containsKey("taskCandidateGroupIn")) {
-        throw new ProcessEngineException("Invalid query usage: candidateUser, candidateGroup, candidateGroupIn, withCandidateGroups, withoutCandidateGroups, withCandidateUsers, withoutCandidateUsers has to be called before 'includeAssignedTasks'.");
-      }
-  
-      includeAssignedTasks = true;
-      return $this;
-    }
-  
-    public TaskQuery includeAssignedTasksInternal() {
-      includeAssignedTasks = true;
-      return $this;
-    }
-  
-    @Override
-    public TaskQueryImpl processInstanceId(string $processInstanceId) {
-      $this->processInstanceId = processInstanceId;
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery processInstanceIdIn(String... processInstanceIds) {
-      $this->processInstanceIdIn = processInstanceIds;
-      return $this;
-    }
-  
-    @Override
-    public TaskQueryImpl processInstanceBusinessKey(string $processInstanceBusinessKey) {
-      $this->processInstanceBusinessKey = processInstanceBusinessKey;
-      expressions.remove("processInstanceBusinessKey");
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery processInstanceBusinessKeyExpression(string $processInstanceBusinessKeyExpression) {
-      EnsureUtil::ensureNotNull("processInstanceBusinessKey expression", processInstanceBusinessKeyExpression);
-      expressions.put("processInstanceBusinessKey", processInstanceBusinessKeyExpression);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery processInstanceBusinessKeyIn(String... processInstanceBusinessKeys) {
-      $this->processInstanceBusinessKeys = processInstanceBusinessKeys;
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery processInstanceBusinessKeyLike(string $processInstanceBusinessKey) {
-      $this->processInstanceBusinessKeyLike = processInstanceBusinessKey;
-      expressions.remove("processInstanceBusinessKeyLike");
+
+    public function taskMinPriority(int $minPriority): TaskQueryInterface
+    {
+        EnsureUtil::ensureNotNull("Min Priority", $minPriority);
+        $this->minPriority = $minPriority;
         return $this;
     }
-  
-    @Override
-    public TaskQuery processInstanceBusinessKeyLikeExpression(string $processInstanceBusinessKeyLikeExpression) {
-      EnsureUtil::ensureNotNull("processInstanceBusinessKeyLike expression", processInstanceBusinessKeyLikeExpression);
-      expressions.put("processInstanceBusinessKeyLike", processInstanceBusinessKeyLikeExpression);
-      return $this;
-    }
-  
-    @Override
-    public TaskQueryImpl executionId(string $executionId) {
-      $this->executionId = executionId;
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery activityInstanceIdIn(String... activityInstanceIds) {
-      $this->activityInstanceIdIn = activityInstanceIds;
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery tenantIdIn(String... tenantIds) {
-      EnsureUtil::ensureNotNull("tenantIds", (Object[]) tenantIds);
-  
-      // The tenantIdIn filter can't be used in an AND query with
-      // the withoutTenantId filter. They can be combined in an OR query
-      if (!isOrQueryActive) {
-        if (TRUE.equals(isWithoutTenantId)) {
-          throw new ProcessEngineException("Invalid query usage: cannot set both tenantIdIn and withoutTenantId filters.");
-        }
-      }
-  
-      $this->tenantIds = tenantIds;
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery withoutTenantId() {
-  
-      // The tenantIdIn filter can't be used in an AND query with
-      // the withoutTenantId filter. They can be combined in an OR query
-      if (!isOrQueryActive) {
-        if (tenantIds != null && tenantIds.length > 0) {
-          throw new ProcessEngineException("Invalid query usage: cannot set both tenantIdIn and withoutTenantId filters.");
-        }
-      }
-  
-      $this->isWithoutTenantId = true;
-      return $this;
-    }
-  
-    @Override
-    public TaskQueryImpl taskCreatedOn(Date createTime) {
-      $this->createTime = createTime;
-      expressions.remove("taskCreatedOn");
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskCreatedOnExpression(string $createTimeExpression) {
-      expressions.put("taskCreatedOn", createTimeExpression);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskCreatedBefore(Date before) {
-      $this->createTimeBefore = before;
-      expressions.remove("taskCreatedBefore");
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskCreatedBeforeExpression(string $beforeExpression) {
-      expressions.put("taskCreatedBefore", beforeExpression);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskCreatedAfter(Date after) {
-      $this->createTimeAfter = after;
-      expressions.remove("taskCreatedAfter");
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskCreatedAfterExpression(string $afterExpression) {
-      expressions.put("taskCreatedAfter", afterExpression);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskDefinitionKey(string $key) {
-      $this->key = key;
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskDefinitionKeyLike(string $keyLike) {
-      $this->keyLike = keyLike;
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskDefinitionKeyIn(String... taskDefinitionKeys) {
-      $this->taskDefinitionKeys = taskDefinitionKeys;
+
+    public function taskMaxPriority(int $maxPriority): TaskQueryInterface
+    {
+        EnsureUtil::ensureNotNull("Max Priority", $maxPriority);
+        $this->maxPriority = $maxPriority;
         return $this;
     }
-  
-    @Override
-    public TaskQuery taskParentTaskId(string $taskParentTaskId) {
-      $this->parentTaskId = taskParentTaskId;
-      return $this;
+
+    public function taskAssignee(string $assignee): TaskQueryImpl
+    {
+        EnsureUtil::ensureNotNull("Assignee", $assignee);
+        $this->assignee = $assignee;
+        unset($this->expressions["taskAssignee"]);
+        return $this;
     }
-  
-    @Override
+
+    public function taskAssigneeExpression(string $assigneeExpression): TaskQueryInterface
+    {
+        EnsureUtil::ensureNotNull("Assignee expression", "assigneeExpression", $assigneeExpression);
+        $this->expressions["taskAssignee"] = $assigneeExpression;
+        return $this;
+    }
+
+    public function taskAssigneeLike(string $assignee): TaskQueryInterface
+    {
+        EnsureUtil::ensureNotNull("Assignee", "assignee", $assignee);
+        $this->assigneeLike = $assignee;
+        unset($this->expressions["taskAssigneeLike"]);
+        return $this;
+    }
+
+    public function taskAssigneeLikeExpression(string $assigneeLikeExpression): TaskQueryInterface
+    {
+        EnsureUtil::ensureNotNull("Assignee like expression", "assigneeLikeExpression", $assigneeLikeExpression);
+        $this->expressions["taskAssigneeLike"] = $assigneeLikeExpression;
+        return $this;
+    }
+
+    public function taskAssigneeIn(array $assignees): TaskQueryInterface
+    {
+        EnsureUtil::ensureNotNull("Assignees", "assignees", $assignees);
+        $assigneeIn = [];
+        $assigneeIn = $assignees;
+
+        $this->assigneeIn = $assigneeIn;
+        unset($this->expressions["taskAssigneeIn"]);
+
+        return $this;
+    }
+
+    public function taskAssigneeNotIn(array $assignees): TaskQueryInterface
+    {
+        EnsureUtil::ensureNotNull("Assignees", "assignees", $assignees);
+
+        $assigneeNotIn = [];
+        $this->assigneeNotIn = $assignees;
+
+        $this->assigneeNotIn = $assigneeNotIn;
+        unset($this->expressions["taskAssigneeNotIn"]);
+
+        return $this;
+    }
+
+    public function taskOwner(string $owner): TaskQueryImpl
+    {
+        EnsureUtil::ensureNotNull("Owner", "owner", $owner);
+        $this->owner = $owner;
+        unset($this->expressions["taskOwner"]);
+        return $this;
+    }
+
+    public function taskOwnerExpression(string $ownerExpression): TaskQueryInterface
+    {
+        EnsureUtil::ensureNotNull("Owner expression", "ownerExpression", $ownerExpression);
+        $this->expressions["taskOwner"] = $ownerExpression;
+        return $this;
+    }
+
+    public function taskUnassigned(): TaskQueryInterface
+    {
+        $this->unassigned = true;
+        return $this;
+    }
+
+    public function taskAssigned(): TaskQueryInterface
+    {
+        $this->assigned = true;
+        return $this;
+    }
+
+    public function taskDelegationState(string $delegationState): TaskQueryInterface
+    {
+        if ($delegationState == null) {
+            $this->noDelegationState = true;
+        } else {
+            $this->delegationState = $delegationState;
+        }
+        return $this;
+    }
+
+    public function taskCandidateUser(string $candidateUser): TaskQueryImpl
+    {
+        EnsureUtil::ensureNotNull("Candidate user", "candidateUser", $candidateUser);
+        if (!$this->isOrQueryActive) {
+            if ($this->candidateGroup != null || array_key_exists("taskCandidateGroup", $this->expressions)) {
+                throw new ProcessEngineException("Invalid query usage: cannot set both candidateUser and candidateGroup");
+            }
+            if (!empty($this->candidateGroups) || array_key_exists("taskCandidateGroupIn", $this->expressions)) {
+                throw new ProcessEngineException("Invalid query usage: cannot set both candidateUser and candidateGroupIn");
+            }
+        }
+        $this->candidateUser = $candidateUser;
+        unset($this->expressions["taskCandidateUser"]);
+        return $this;
+    }
+
+    public function taskCandidateUserExpression(string $candidateUserExpression): TaskQueryInterface
+    {
+        EnsureUtil::ensureNotNull("Candidate user expression", "candidateUserExpression", $candidateUserExpression);
+
+        if ($this->candidateGroup != null || array_key_exists("taskCandidateGroup", $this->expressions)) {
+            throw new ProcessEngineException("Invalid query usage: cannot set both candidateUser and candidateGroup");
+        }
+        if (!empty($this->candidateGroups) || array_key_exists("taskCandidateGroupIn", $this->expressions)) {
+            throw new ProcessEngineException("Invalid query usage: cannot set both candidateUser and candidateGroupIn");
+        }
+
+        $this->expressions["taskCandidateUser"] = $candidateUserExpression;
+        return $this;
+    }
+
+    public function taskInvolvedUser(string $involvedUser): TaskQueryImpl
+    {
+        EnsureUtil::ensureNotNull("Involved user", "involvedUser", $involvedUser);
+        $this->involvedUser = $involvedUser;
+        unset($this->expressions["taskInvolvedUser"]);
+        return $this;
+    }
+
+    public function taskInvolvedUserExpression(string $involvedUserExpression): TaskQueryInterface
+    {
+        EnsureUtil::ensureNotNull("Involved user expression", "involvedUserExpression", $involvedUserExpression);
+        $this->expressions["taskInvolvedUser"] = $involvedUserExpression;
+        return $this;
+    }
+
+    public function withCandidateGroups(): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set withCandidateGroups() within 'or' query");
+        }
+
+        $this->withCandidateGroups = true;
+        return $this;
+    }
+
+    public function withoutCandidateGroups(): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set withoutCandidateGroups() within 'or' query");
+        }
+
+        $this->withoutCandidateGroups = true;
+        return $this;
+    }
+
+    public function withCandidateUsers(): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set withCandidateUsers() within 'or' query");
+        }
+        $this->withCandidateUsers = true;
+        return $this;
+    }
+
+    public function withoutCandidateUsers(): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set withoutCandidateUsers() within 'or' query");
+        }
+        $this->withoutCandidateUsers = true;
+        return $this;
+    }
+
+    public function taskCandidateGroup(string $candidateGroup): TaskQueryImpl
+    {
+        EnsureUtil::ensureNotNull("Candidate group", "candidateGroup", $candidateGroup);
+
+        if (!$this->isOrQueryActive) {
+            if ($this->candidateUser != null || array_key_exists("taskCandidateUser", $this->expressions)) {
+                throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroup and candidateUser");
+            }
+        }
+
+        $this->candidateGroup = candidateGroup;
+        unset($this->expressions["taskCandidateGroup"]);
+        return $this;
+    }
+
+    public function taskCandidateGroupExpression(string $candidateGroupExpression): TaskQueryInterface
+    {
+        EnsureUtil::ensureNotNull("Candidate group expression", "candidateGroupExpression", $candidateGroupExpression);
+
+        if (!$this->isOrQueryActive) {
+            if ($this->candidateUser != null || array_key_exists("taskCandidateUser", $this->expressions)) {
+                throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroup and candidateUser");
+            }
+        }
+
+        $this->expressions["taskCandidateGroup"] = $candidateGroupExpression;
+        return $this;
+    }
+
+    public function taskCandidateGroupIn(array $candidateGroups): TaskQueryInterface
+    {
+        EnsureUtil::ensureNotEmpty("Candidate group list", "candidateGroups", $candidateGroups);
+
+        if (!$this->isOrQueryActive) {
+            if ($this->candidateUser != null || array_key_exists("taskCandidateUser", $this->expressions)) {
+                throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroupIn and candidateUser");
+            }
+        }
+
+        $this->candidateGroups = $candidateGroups;
+        unset($this->expressions["taskCandidateGroupIn"]);
+        return $this;
+    }
+
+    public function taskCandidateGroupInExpression(string $candidateGroupsExpression): TaskQueryInterface
+    {
+        EnsureUtil::ensureNotEmpty("Candidate group list expression", "candidateGroupsExpression", $candidateGroupsExpression);
+
+        if (!$this->isOrQueryActive) {
+            if ($this->candidateUser != null || array_key_exists("taskCandidateUser", $this->expressions)) {
+                throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroupIn and candidateUser");
+            }
+        }
+
+        $this->expressions["taskCandidateGroupIn"] = $candidateGroupsExpression;
+        return $this;
+    }
+
+    public function includeAssignedTasks(): TaskQueryInterface
+    {
+        if (
+            $this->candidateUser == null &&
+            $this->candidateGroup == null &&
+            $this->candidateGroups == null &&
+            !$this->isWithCandidateGroups() &&
+            !$this->isWithoutCandidateGroups() &&
+            !$this->isWithCandidateUsers() &&
+            !$this->isWithoutCandidateUsers() &&
+            !array_key_exists("taskCandidateUser", $this->expressions) &&
+            !array_key_exists("taskCandidateGroup", $this->expressions) &&
+            !array_key_exists("taskCandidateGroupIn", $this->expressions)
+        ) {
+            throw new ProcessEngineException("Invalid query usage: candidateUser, candidateGroup, candidateGroupIn, withCandidateGroups, withoutCandidateGroups, withCandidateUsers, withoutCandidateUsers has to be called before 'includeAssignedTasks'.");
+        }
+
+        $this->includeAssignedTasks = true;
+        return $this;
+    }
+
+    public function includeAssignedTasksInternal(): TaskQueryInterface
+    {
+        $this->includeAssignedTasks = true;
+        return $this;
+    }
+
+    public function processInstanceId(string $processInstanceId): TaskQueryImpl
+    {
+        $this->processInstanceId = $processInstanceId;
+        return $this;
+    }
+
+    public function processInstanceIdIn(array $processInstanceIds): TaskQueryInterface
+    {
+        $this->processInstanceIdIn = $processInstanceIds;
+        return $this;
+    }
+
+    public function processInstanceBusinessKey(string $processInstanceBusinessKey): TaskQueryImpl
+    {
+        $this->processInstanceBusinessKey = $processInstanceBusinessKey;
+        unset($this->expressions["processInstanceBusinessKey"]);
+        return $this;
+    }
+
+    public function processInstanceBusinessKeyExpression(string $processInstanceBusinessKeyExpression): TaskQueryInterface
+    {
+        EnsureUtil::ensureNotNull("processInstanceBusinessKey expression", "processInstanceBusinessKeyExpression", $processInstanceBusinessKeyExpression);
+        $this->expressions["processInstanceBusinessKey"] = $processInstanceBusinessKeyExpression;
+        return $this;
+    }
+
+    public function processInstanceBusinessKeyIn(array $processInstanceBusinessKeys): TaskQueryInterface
+    {
+        $this->processInstanceBusinessKeys = $processInstanceBusinessKeys;
+        return $this;
+    }
+
+    public function processInstanceBusinessKeyLike(string $processInstanceBusinessKey): TaskQueryInterface
+    {
+        $this->processInstanceBusinessKeyLike = $processInstanceBusinessKey;
+        unset($this->expressions["processInstanceBusinessKeyLike"]);
+        return $this;
+    }
+
+    public function processInstanceBusinessKeyLikeExpression(string $processInstanceBusinessKeyLikeExpression): TaskQueryInterface
+    {
+        EnsureUtil::ensureNotNull("processInstanceBusinessKeyLike expression", "processInstanceBusinessKeyLikeExpression", $processInstanceBusinessKeyLikeExpression);
+        $this->expressions["processInstanceBusinessKeyLike"] = $processInstanceBusinessKeyLikeExpression;
+        return $this;
+    }
+
+    public function executionId(string $executionId): TaskQueryImpl
+    {
+        $this->executionId = $executionId;
+        return $this;
+    }
+
+    public function activityInstanceIdIn(array $activityInstanceIds): TaskQueryInterface
+    {
+        $this->activityInstanceIdIn = $activityInstanceIds;
+        return $this;
+    }
+
+    public function tenantIdIn(array $tenantIds): TaskQueryInterface
+    {
+        EnsureUtil::ensureNotNull("tenantIds", "tenantIds", $tenantIds);
+
+        // The tenantIdIn filter can't be used in an AND query with
+        // the withoutTenantId filter. They can be combined in an OR query
+        if (!$this->isOrQueryActive) {
+            if ($this->isWithoutTenantId) {
+                throw new ProcessEngineException("Invalid query usage: cannot set both tenantIdIn and withoutTenantId filters.");
+            }
+        }
+
+        $this->tenantIds = $tenantIds;
+        return $this;
+    }
+
+    public function withoutTenantId(): TaskQueryInterface
+    {
+        // The tenantIdIn filter can't be used in an AND query with
+        // the withoutTenantId filter. They can be combined in an OR query
+        if (!$this->isOrQueryActive) {
+            if (!empty($this->tenantIds) && count($this->tenantIds) > 0) {
+                throw new ProcessEngineException("Invalid query usage: cannot set both tenantIdIn and withoutTenantId filters.");
+            }
+        }
+
+        $this->isWithoutTenantId = true;
+        return $this;
+    }
+
+    public function taskCreatedOn(string $createTime): TaskQueryImpl
+    {
+        $this->createTime = $createTime;
+        unset($this->expressions["taskCreatedOn"]);
+        return $this;
+    }
+
+    public function taskCreatedOnExpression(string $createTimeExpression): TaskQueryInterface
+    {
+        $this->expressions["taskCreatedOn"] = $createTimeExpression;
+        return $this;
+    }
+
+    public function taskCreatedBefore(string $before): TaskQueryInterface
+    {
+        $this->createTimeBefore = $before;
+        unset($this->expressions["taskCreatedBefore"]);
+        return $this;
+    }
+
+    public function taskCreatedBeforeExpression(string $beforeExpression): TaskQueryInterface
+    {
+        $this->expressions["taskCreatedBefore"] = $beforeExpression;
+        return $this;
+    }
+
+    public function taskCreatedAfter(string $after): TaskQueryInterface
+    {
+        $this->createTimeAfter = $after;
+        unset($this->expressions["taskCreatedAfter"]);
+        return $this;
+    }
+
+    public function taskCreatedAfterExpression(string $afterExpression): TaskQueryInterface
+    {
+        $this->expressions["taskCreatedAfter"] = $afterExpression;
+        return $this;
+    }
+
+    public function taskDefinitionKey(string $key): TaskQueryInterface
+    {
+        $this->key = $key;
+        return $this;
+    }
+
+    public function taskDefinitionKeyLike(string $keyLike): TaskQueryInterface
+    {
+        $this->keyLike = $keyLike;
+        return $this;
+    }
+
+    public function taskDefinitionKeyIn(array $taskDefinitionKeys): TaskQueryInterface
+    {
+        $this->taskDefinitionKeys = $taskDefinitionKeys;
+        return $this;
+    }
+
+    public function taskParentTaskId(string $taskParentTaskId): TaskQueryInterface
+    {
+        $this->parentTaskId = $taskParentTaskId;
+        return $this;
+    }
+
+    /*
     public TaskQuery caseInstanceId(string $caseInstanceId) {
       EnsureUtil::ensureNotNull("caseInstanceId", caseInstanceId);
       $this->caseInstanceId = caseInstanceId;
       return $this;
     }
-  
-    @Override
+
     public TaskQuery caseInstanceBusinessKey(string $caseInstanceBusinessKey) {
       EnsureUtil::ensureNotNull("caseInstanceBusinessKey", caseInstanceBusinessKey);
       $this->caseInstanceBusinessKey = caseInstanceBusinessKey;
       return $this;
     }
-  
-    @Override
+
     public TaskQuery caseInstanceBusinessKeyLike(string $caseInstanceBusinessKeyLike) {
       EnsureUtil::ensureNotNull("caseInstanceBusinessKeyLike", caseInstanceBusinessKeyLike);
       $this->caseInstanceBusinessKeyLike = caseInstanceBusinessKeyLike;
       return $this;
     }
-  
-    @Override
+
     public TaskQuery caseExecutionId(string $caseExecutionId) {
       EnsureUtil::ensureNotNull("caseExecutionId", caseExecutionId);
       $this->caseExecutionId = caseExecutionId;
       return $this;
     }
-  
-    @Override
+
     public TaskQuery caseDefinitionId(string $caseDefinitionId) {
       EnsureUtil::ensureNotNull("caseDefinitionId", caseDefinitionId);
       $this->caseDefinitionId = caseDefinitionId;
       return $this;
     }
-  
-    @Override
+
     public TaskQuery caseDefinitionKey(string $caseDefinitionKey) {
       EnsureUtil::ensureNotNull("caseDefinitionKey", caseDefinitionKey);
       $this->caseDefinitionKey = caseDefinitionKey;
       return $this;
     }
-  
-    @Override
+
     public TaskQuery caseDefinitionName(string $caseDefinitionName) {
       EnsureUtil::ensureNotNull("caseDefinitionName", caseDefinitionName);
       $this->caseDefinitionName = caseDefinitionName;
       return $this;
     }
-  
-    @Override
+
     public TaskQuery caseDefinitionNameLike(string $caseDefinitionNameLike) {
-      EnsureUtil::ensureNotNull("caseDefinitionNameLike", caseDefinitionNameLike);
-      $this->caseDefinitionNameLike = caseDefinitionNameLike;
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskVariableValueEquals(string $variableName, Object variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.EQUALS, true, false);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskVariableValueNotEquals(string $variableName, Object variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.NOT_EQUALS, true, false);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery taskVariableValueLike(string $variableName, String variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.LIKE, true, false);
+        EnsureUtil::ensureNotNull("caseDefinitionNameLike", caseDefinitionNameLike);
+        $this->caseDefinitionNameLike = caseDefinitionNameLike;
+        return $this;
+    }*/
+
+    public function taskVariableValueEquals(string $variableName, $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::EQUALS, true, false);
         return $this;
     }
-  
-    @Override
-    public TaskQuery taskVariableValueGreaterThan(string $variableName, Object variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.GREATER_THAN, true, false);
+
+    public function taskVariableValueNotEquals(string $variableName, $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::NOT_EQUALS, true, false);
         return $this;
     }
-  
-    @Override
-    public TaskQuery taskVariableValueGreaterThanOrEquals(string $variableName, Object variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.GREATER_THAN_OR_EQUAL, true, false);
+
+    public function taskVariableValueLike(string $variableName, string $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::LIKE, true, false);
         return $this;
     }
-  
-    @Override
-    public TaskQuery taskVariableValueLessThan(string $variableName, Object variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.LESS_THAN, true, false);
+
+    public function taskVariableValueGreaterThan(string $variableName, $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::GREATER_THAN, true, false);
         return $this;
     }
-  
-    @Override
-    public TaskQuery taskVariableValueLessThanOrEquals(string $variableName, Object variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.LESS_THAN_OR_EQUAL, true, false);
+
+    public function taskVariableValueGreaterThanOrEquals(string $variableName, $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::GREATER_THAN_OR_EQUAL, true, false);
         return $this;
     }
-  
-    @Override
-    public TaskQuery processVariableValueEquals(string $variableName, Object variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.EQUALS, false, true);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery processVariableValueNotEquals(string $variableName, Object variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.NOT_EQUALS, false, true);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery processVariableValueLike(string $variableName, String variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.LIKE, false, true);
+
+    public function taskVariableValueLessThan(string $variableName, $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::LESS_THAN, true, false);
         return $this;
     }
-  
-    @Override
-    public TaskQuery processVariableValueNotLike(string $variableName, String variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.NOT_LIKE, false, true);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery processVariableValueGreaterThan(string $variableName, Object variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.GREATER_THAN, false, true);
+
+    public function taskVariableValueLessThanOrEquals(string $variableName, $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::LESS_THAN_OR_EQUAL, true, false);
         return $this;
     }
-  
-    @Override
-    public TaskQuery processVariableValueGreaterThanOrEquals(string $variableName, Object variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.GREATER_THAN_OR_EQUAL, false, true);
+
+    public function processVariableValueEquals(string $variableName, $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::EQUALS, false, true);
         return $this;
     }
-  
-    @Override
-    public TaskQuery processVariableValueLessThan(string $variableName, Object variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.LESS_THAN, false, true);
+
+    public function processVariableValueNotEquals(string $variableName, $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::NOT_EQUALS, false, true);
         return $this;
     }
-  
-    @Override
-    public TaskQuery processVariableValueLessThanOrEquals(string $variableName, Object variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.LESS_THAN_OR_EQUAL, false, true);
+
+    public function processVariableValueLike(string $variableName, string $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::LIKE, false, true);
         return $this;
     }
-  
-    @Override
-    public TaskQuery caseInstanceVariableValueEquals(string $variableName, Object variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.EQUALS, false, false);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery caseInstanceVariableValueNotEquals(string $variableName, Object variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.NOT_EQUALS, false, false);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery caseInstanceVariableValueLike(string $variableName, String variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.LIKE, false, false);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery caseInstanceVariableValueNotLike(string $variableName, String variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.NOT_LIKE, false, false);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery caseInstanceVariableValueGreaterThan(string $variableName, Object variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.GREATER_THAN, false, false);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery caseInstanceVariableValueGreaterThanOrEquals(string $variableName, Object variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.GREATER_THAN_OR_EQUAL, false, false);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery caseInstanceVariableValueLessThan(string $variableName, Object variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.LESS_THAN, false, false);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery caseInstanceVariableValueLessThanOrEquals(string $variableName, Object variableValue) {
-      addVariable(variableName, variableValue, QueryOperator.LESS_THAN_OR_EQUAL, false, false);
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery processDefinitionKey(string $processDefinitionKey) {
-      $this->processDefinitionKey = processDefinitionKey;
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery processDefinitionKeyIn(String... processDefinitionKeys) {
-      $this->processDefinitionKeys = processDefinitionKeys;
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery processDefinitionId(string $processDefinitionId) {
-      $this->processDefinitionId = processDefinitionId;
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery processDefinitionName(string $processDefinitionName) {
-      $this->processDefinitionName = processDefinitionName;
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery processDefinitionNameLike(string $processDefinitionName) {
-      $this->processDefinitionNameLike = processDefinitionName;
+
+    public function processVariableValueNotLike(string $variableName, string $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::NOT_LIKE, false, true);
         return $this;
     }
-  
-    @Override
-    public TaskQuery dueDate(Date dueDate) {
-      // The dueDate filter can't be used in an AND query with
-      // the withoutDueDate filter. They can be combined in an OR query
-      if (!isOrQueryActive) {
-        if (TRUE.equals(isWithoutDueDate)) {
-          throw new ProcessEngineException("Invalid query usage: cannot set both dueDate and withoutDueDate filters.");
-        }
-      }
-  
-      $this->dueDate = dueDate;
-      expressions.remove("dueDate");
-      return $this;
+
+    public function processVariableValueGreaterThan(string $variableName, $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::GREATER_THAN, false, true);
+        return $this;
     }
-  
-    @Override
-    public TaskQuery dueDateExpression(string $dueDateExpression) {
-      // The dueDateExpression filter can't be used in an AND query with
-      // the withoutDueDate filter. They can be combined in an OR query
-      if (!isOrQueryActive) {
-        if (TRUE.equals(isWithoutDueDate)) {
-          throw new ProcessEngineException("Invalid query usage: cannot set both dueDateExpression and withoutDueDate filters.");
-        }
-      }
-  
-      expressions.put("dueDate", dueDateExpression);
-      return $this;
+
+    public function processVariableValueGreaterThanOrEquals(string $variableName, $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::GREATER_THAN_OR_EQUAL, false, true);
+        return $this;
     }
-  
-    @Override
-    public TaskQuery dueBefore(Date dueBefore) {
-      // The dueBefore filter can't be used in an AND query with
-      // the withoutDueDate filter. They can be combined in an OR query
-      if (!isOrQueryActive) {
-        if (TRUE.equals(isWithoutDueDate)) {
-          throw new ProcessEngineException("Invalid query usage: cannot set both dueBefore and withoutDueDate filters.");
-        }
-      }
-  
-      $this->dueBefore = dueBefore;
-      expressions.remove("dueBefore");
-      return $this;
+
+    public function processVariableValueLessThan(string $variableName, $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::LESS_THAN, false, true);
+        return $this;
     }
-  
-    @Override
-    public TaskQuery dueBeforeExpression(string $dueDate) {
-      // The dueBeforeExpression filter can't be used in an AND query with
-      // the withoutDueDate filter. They can be combined in an OR query
-      if (!isOrQueryActive) {
-        if (TRUE.equals(isWithoutDueDate)) {
-          throw new ProcessEngineException("Invalid query usage: cannot set both dueBeforeExpression and withoutDueDate filters.");
-        }
-      }
-  
-      expressions.put("dueBefore", dueDate);
-      return $this;
+
+    public function processVariableValueLessThanOrEquals(string $variableName, $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::LESS_THAN_OR_EQUAL, false, true);
+        return $this;
     }
-  
-    @Override
-    public TaskQuery dueAfter(Date dueAfter) {
-      // The dueAfter filter can't be used in an AND query with
-      // the withoutDueDate filter. They can be combined in an OR query
-      if (!isOrQueryActive) {
-        if (TRUE.equals(isWithoutDueDate)) {
-          throw new ProcessEngineException("Invalid query usage: cannot set both dueAfter and withoutDueDate filters.");
-        }
-      }
-  
-      $this->dueAfter = dueAfter;
-      expressions.remove("dueAfter");
-      return $this;
+
+    public function caseInstanceVariableValueEquals(string $variableName, $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::EQUALS, false, false);
+        return $this;
     }
-  
-    @Override
-    public TaskQuery dueAfterExpression(string $dueDateExpression) {
-      // The dueAfterExpression filter can't be used in an AND query with
-      // the withoutDueDate filter. They can be combined in an OR query
-      if (!isOrQueryActive) {
-        if (TRUE.equals(isWithoutDueDate)) {
-          throw new ProcessEngineException("Invalid query usage: cannot set both dueAfterExpression and withoutDueDate filters.");
-        }
-      }
-  
-      expressions.put("dueAfter", dueDateExpression);
-      return $this;
+
+    public function caseInstanceVariableValueNotEquals(string $variableName, $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::NOT_EQUALS, false, false);
+        return $this;
     }
-  
-    @Override
-    public TaskQuery withoutDueDate() {
-      // The due date filters can't be used in an AND query with
-      // the withoutDueDate filter. They can be combined in an OR query
-      if (!isOrQueryActive) {
-        if (dueAfter != null || dueBefore != null || dueDate != null || expressions.containsKey("dueDate")
-            || expressions.containsKey("dueBefore") || expressions.containsKey("dueAfter")) {
-          throw new ProcessEngineException("Invalid query usage: cannot set both due date (equal to, before, or after) and withoutDueDate filters.");
-        }
-      }
-  
-      $this->isWithoutDueDate = true;
-      return $this;
+
+    public function caseInstanceVariableValueLike(string $variableName, string $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::LIKE, false, false);
+        return $this;
     }
-  
-    @Override
-    public TaskQuery followUpDate(Date followUpDate) {
-      $this->followUpDate = followUpDate;
-      expressions.remove("followUpDate");
-      return $this;
+
+    public function caseInstanceVariableValueNotLike(string $variableName, string $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::NOT_LIKE, false, false);
+        return $this;
     }
-  
-    @Override
-    public TaskQuery followUpDateExpression(string $followUpDateExpression) {
-      expressions.put("followUpDate", followUpDateExpression);
-      return $this;
+
+    public function caseInstanceVariableValueGreaterThan(string $variableName, $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::GREATER_THAN, false, false);
+        return $this;
     }
-  
-    @Override
-    public TaskQuery followUpBefore(Date followUpBefore) {
-      $this->followUpBefore = followUpBefore;
-      $this->followUpNullAccepted = false;
-      expressions.remove("followUpBefore");
-      return $this;
+
+    public function caseInstanceVariableValueGreaterThanOrEquals(string $variableName, $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::GREATER_THAN_OR_EQUAL, false, false);
+        return $this;
     }
-  
-    @Override
-    public TaskQuery followUpBeforeExpression(string $followUpBeforeExpression) {
-      $this->followUpNullAccepted = false;
-      expressions.put("followUpBefore", followUpBeforeExpression);
-      return $this;
+
+    public function caseInstanceVariableValueLessThan(string $variableName, $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::LESS_THAN, false, false);
+        return $this;
     }
-  
-    @Override
-    public TaskQuery followUpBeforeOrNotExistent(Date followUpDate) {
-      $this->followUpBefore = followUpDate;
-      $this->followUpNullAccepted = true;
-      expressions.remove("followUpBeforeOrNotExistent");
-      return $this;
+
+    public function caseInstanceVariableValueLessThanOrEquals(string $variableName, $variableValue): TaskQueryInterface
+    {
+        $this->addVariable($variableName, $variableValue, QueryOperator::LESS_THAN_OR_EQUAL, false, false);
+        return $this;
     }
-  
-    @Override
-    public TaskQuery followUpBeforeOrNotExistentExpression(string $followUpDateExpression) {
-      expressions.put("followUpBeforeOrNotExistent", followUpDateExpression);
-      $this->followUpNullAccepted = true;
-      return $this;
+
+    public function processDefinitionKey(string $processDefinitionKey): TaskQueryInterface
+    {
+        $this->processDefinitionKey = $processDefinitionKey;
+        return $this;
     }
-  
-    public void setFollowUpNullAccepted(boolean followUpNullAccepted) {
-      $this->followUpNullAccepted = followUpNullAccepted;
+
+    public function processDefinitionKeyIn(array $processDefinitionKeys): TaskQueryInterface
+    {
+        $this->processDefinitionKeys = $processDefinitionKeys;
+        return $this;
     }
-  
-    @Override
-    public TaskQuery followUpAfter(Date followUpAfter) {
-      $this->followUpAfter = followUpAfter;
-      expressions.remove("followUpAfter");
-      return $this;
+
+    public function processDefinitionId(string $processDefinitionId): TaskQueryInterface
+    {
+        $this->processDefinitionId = $processDefinitionId;
+        return $this;
     }
-  
-    @Override
-    public TaskQuery followUpAfterExpression(string $followUpAfterExpression) {
-      expressions.put("followUpAfter", followUpAfterExpression);
-      return $this;
+
+    public function processDefinitionName(string $processDefinitionName): TaskQueryInterface
+    {
+        $this->processDefinitionName = $processDefinitionName;
+        return $this;
     }
-  
-    @Override
-    public TaskQuery excludeSubtasks() {
-      $this->excludeSubtasks = true;
-      return $this;
+
+    public function processDefinitionNameLike(string $processDefinitionName): TaskQueryInterface
+    {
+        $this->processDefinitionNameLike = $processDefinitionName;
+        return $this;
     }
-  
-    @Override
-    public TaskQuery active() {
-      $this->suspensionState = SuspensionState.ACTIVE;
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery suspended() {
-      $this->suspensionState = SuspensionState.SUSPENDED;
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery initializeFormKeys() {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set initializeFormKeys() within 'or' query");
-      }
-  
-      $this->initializeFormKeys = true;
-      return $this;
-    }
-  
-    public TaskQuery taskNameCaseInsensitive() {
-      $this->taskNameCaseInsensitive = true;
-      return $this;
-    }
-  
-    @Override
-    protected boolean hasExcludingConditions() {
-      return super.hasExcludingConditions()
-        || CompareUtil.areNotInAscendingOrder(minPriority, priority, maxPriority)
-        || CompareUtil.areNotInAscendingOrder(dueAfter, dueDate, dueBefore)
-        || CompareUtil.areNotInAscendingOrder(followUpAfter, followUpDate, followUpBefore)
-        || CompareUtil.areNotInAscendingOrder(createTimeAfter, createTime, createTimeBefore)
-        || CompareUtil.elementIsNotContainedInArray(key, taskDefinitionKeys)
-        || CompareUtil.elementIsNotContainedInArray(processDefinitionKey, processDefinitionKeys)
-        || CompareUtil.elementIsNotContainedInArray(processInstanceBusinessKey, processInstanceBusinessKeys);
-    }
-  
-    public List<String> getCandidateGroups() {
-      if (cachedCandidateGroups != null) {
-        return cachedCandidateGroups;
-      }
-  
-      if (candidateGroup != null && candidateGroups != null) {
-        cachedCandidateGroups = new ArrayList<>(candidateGroups);
-        if (!isOrQueryActive) {
-          // get intersection of candidateGroups and candidateGroup
-          cachedCandidateGroups.retainAll(Collections.singletonList(candidateGroup));
-        } else {
-          // get union of candidateGroups and candidateGroup
-          if (!candidateGroups.contains(candidateGroup)) {
-            cachedCandidateGroups.add(candidateGroup);
-          }
-        }
-      } else if (candidateGroup != null) {
-        cachedCandidateGroups = Collections.singletonList(candidateGroup);
-      } else if (candidateGroups != null) {
-        cachedCandidateGroups = candidateGroups;
-      }
-  
-      if (candidateUser != null) {
-        List<String> groupsForCandidateUser = getGroupsForCandidateUser(candidateUser);
-  
-        if (cachedCandidateGroups == null) {
-          cachedCandidateGroups = groupsForCandidateUser;
-        } else {
-          for (string $group : groupsForCandidateUser) {
-            if (!cachedCandidateGroups.contains(group)) {
-              cachedCandidateGroups.add(group);
+
+    public function dueDate(string $dueDate): TaskQueryInterface
+    {
+        // The dueDate filter can't be used in an AND query with
+        // the withoutDueDate filter. They can be combined in an OR query
+        if (!$this->isOrQueryActive) {
+            if ($this->isWithoutDueDate) {
+                throw new ProcessEngineException("Invalid query usage: cannot set both dueDate and withoutDueDate filters.");
             }
-          }
         }
-      }
-  
-      return cachedCandidateGroups;
+
+        $this->dueDate = $dueDate;
+        unset($this->expressions["dueDate"]);
+        return $this;
     }
-  
-    public Boolean isWithCandidateGroups() {
-      if ($this->withCandidateGroups == null) {
-        return false;
-      } else {
-        return withCandidateGroups;
-      }
-    }
-  
-    public Boolean isWithCandidateUsers() {
-      if ($this->withCandidateUsers == null) {
-        return false;
-      } else {
-        return withCandidateUsers;
-      }
-    }
-  
-    public Boolean isWithCandidateGroupsInternal() {
-      return withCandidateGroups;
-    }
-  
-    public Boolean isWithoutCandidateGroups() {
-      if ($this->withoutCandidateGroups == null) {
-        return false;
-      } else {
-        return withoutCandidateGroups;
-      }
-    }
-  
-    public Boolean isWithoutCandidateUsers() {
-      if ($this->withoutCandidateUsers == null) {
-        return false;
-      } else {
-        return withoutCandidateUsers;
-      }
-    }
-  
-    public Boolean isWithoutCandidateGroupsInternal() {
-      return withoutCandidateGroups;
-    }
-  
-    public List<String> getCandidateGroupsInternal() {
-      return candidateGroups;
-    }
-  
-    protected List<String> getGroupsForCandidateUser(string $candidateUser) {
-      Map<String, List<String>> cachedUserGroups = getCachedUserGroups();
-      if (cachedUserGroups.containsKey(candidateUser)) {
-        return cachedUserGroups->get(candidateUser);
-      }
-  
-      List<Group> groups = Context::getCommandContext()
-          ->getReadOnlyIdentityProvider()
-          ->createGroupQuery()
-          ->groupMember(candidateUser)
-          ->list();
-  
-      List<String> groupIds = new ArrayList<>();
-      for (Group group : groups) {
-        groupIds.add(group->getId());
-      }
-  
-      cachedUserGroups.put(candidateUser, groupIds);
-  
-      return groupIds;
-    }
-  
-    protected Map<String, List<String>> getCachedUserGroups() {
-      // store and retrieve cached user groups always from the first query
-      if (queries->get(0).cachedUserGroups == null) {
-        queries->get(0).cachedUserGroups = new HashMap<>();
-      }
-      return queries->get(0).cachedUserGroups;
-    }
-  
-    protected void ensureOrExpressionsEvaluated() {
-      // skips first query as it has already been evaluated
-      for (int i = 1; i < queries.size(); i++) {
-        queries->get(i).validate();
-        queries->get(i).evaluateExpressions();
-      }
-    }
-  
-    protected void ensureVariablesInitialized() {
-      ProcessEngineConfigurationImpl processEngineConfiguration = Context::getProcessEngineConfiguration();
-      VariableSerializers variableSerializers = processEngineConfiguration->getVariableSerializers();
-      String dbType = processEngineConfiguration->getDatabaseType();
-      for(QueryVariableValue var : variables) {
-        var.initialize(variableSerializers, dbType);
-      }
-  
-      if (!queries.isEmpty()) {
-        for (TaskQueryImpl orQuery: queries) {
-          for (QueryVariableValue var : orQuery.variables) {
-            var.initialize(variableSerializers, dbType);
-          }
+
+    public function dueDateExpression(string $dueDateExpression): TaskQueryInterface
+    {
+        // The dueDateExpression filter can't be used in an AND query with
+        // the withoutDueDate filter. They can be combined in an OR query
+        if (!$this->isOrQueryActive) {
+            if ($this->isWithoutDueDate) {
+                throw new ProcessEngineException("Invalid query usage: cannot set both dueDateExpression and withoutDueDate filters.");
+            }
         }
-      }
+
+        $this->expressions["dueDate"] = $dueDateExpression;
+        return $this;
     }
-  
-    public void addVariable(string $name, Object value, QueryOperator operator, boolean isTaskVariable, boolean isProcessInstanceVariable) {
-      EnsureUtil::ensureNotNull("name", name);
-  
-      if(value == null || isBoolean(value)) {
-        // Null-values and booleans can only be used in EQUALS and NOT_EQUALS
-        switch(operator) {
-        case GREATER_THAN:
-          throw new ProcessEngineException("Booleans and null cannot be used in 'greater than' condition");
-        case LESS_THAN:
-          throw new ProcessEngineException("Booleans and null cannot be used in 'less than' condition");
-        case GREATER_THAN_OR_EQUAL:
-          throw new ProcessEngineException("Booleans and null cannot be used in 'greater than or equal' condition");
-        case LESS_THAN_OR_EQUAL:
-          throw new ProcessEngineException("Booleans and null cannot be used in 'less than or equal' condition");
-        case LIKE:
-          throw new ProcessEngineException("Booleans and null cannot be used in 'like' condition");
-        case NOT_LIKE:
-          throw new ProcessEngineException("Booleans and null cannot be used in 'not like' condition");
-        default:
-          break;
+
+    public function dueBefore(string $dueBefore): TaskQueryInterface
+    {
+        // The dueBefore filter can't be used in an AND query with
+        // the withoutDueDate filter. They can be combined in an OR query
+        if (!$this->isOrQueryActive) {
+            if ($this->isWithoutDueDate) {
+                throw new ProcessEngineException("Invalid query usage: cannot set both dueBefore and withoutDueDate filters.");
+            }
         }
-      }
-  
-      boolean shouldMatchVariableValuesIgnoreCase = TRUE.equals(variableValuesIgnoreCase) && value != null && String.class.isAssignableFrom(value->getClass());
-      addVariable(new TaskQueryVariableValue(name, value, operator, isTaskVariable, isProcessInstanceVariable, TRUE.equals(variableNamesIgnoreCase), shouldMatchVariableValuesIgnoreCase));
+
+        $this->dueBefore = $dueBefore;
+        unset($this->expressions["dueBefore"]);
+        return $this;
     }
-  
-    protected void addVariable(TaskQueryVariableValue taskQueryVariableValue) {
-      variables.add(taskQueryVariableValue);
-    }
-  
-    private boolean isBoolean(Object value) {
-        if (value == null) {
-          return false;
+
+    public function dueBeforeExpression(string $dueDate): TaskQueryInterface
+    {
+        // The dueBeforeExpression filter can't be used in an AND query with
+        // the withoutDueDate filter. They can be combined in an OR query
+        if (!$this->isOrQueryActive) {
+            if ($this->isWithoutDueDate) {
+                throw new ProcessEngineException("Invalid query usage: cannot set both dueBeforeExpression and withoutDueDate filters.");
+            }
         }
-        return Boolean.class.isAssignableFrom(value->getClass()) || boolean.class.isAssignableFrom(value->getClass());
-      }
-  
+
+        $this->expressions["dueBefore"] = $dueDate;
+        return $this;
+    }
+
+    public function dueAfter(string $dueAfter): TaskQueryInterface
+    {
+        // The dueAfter filter can't be used in an AND query with
+        // the withoutDueDate filter. They can be combined in an OR query
+        if (!$this->isOrQueryActive) {
+            if ($this->isWithoutDueDate) {
+                throw new ProcessEngineException("Invalid query usage: cannot set both dueAfter and withoutDueDate filters.");
+            }
+        }
+
+        $this->dueAfter = $dueAfter;
+        unset($this->expressions["dueAfter"]);
+        return $this;
+    }
+
+    public function dueAfterExpression(string $dueDateExpression): TaskQueryInterface
+    {
+        // The dueAfterExpression filter can't be used in an AND query with
+        // the withoutDueDate filter. They can be combined in an OR query
+        if (!$this->isOrQueryActive) {
+            if ($this->isWithoutDueDate) {
+                throw new ProcessEngineException("Invalid query usage: cannot set both dueAfterExpression and withoutDueDate filters.");
+            }
+        }
+
+        $this->expressions["dueAfter"] = $dueDateExpression;
+        return $this;
+    }
+
+    public function withoutDueDate(): TaskQueryInterface
+    {
+        // The due date filters can't be used in an AND query with
+        // the withoutDueDate filter. They can be combined in an OR query
+        if (!$this->isOrQueryActive) {
+            if (
+                $this->dueAfter != null ||
+                $this->dueBefore != null ||
+                $this->dueDate != null ||
+                array_key_exists("dueDate", $this->expressions) ||
+                array_key_exists("dueBefore", $this->expressions) ||
+                array_key_exists("dueAfter", $this->expressions)
+            ) {
+                throw new ProcessEngineException("Invalid query usage: cannot set both due date (equal to, before, or after) and withoutDueDate filters.");
+            }
+        }
+
+        $this->isWithoutDueDate = true;
+        return $this;
+    }
+
+    public function followUpDate(string $followUpDate): TaskQueryInterface
+    {
+        $this->followUpDate = $followUpDate;
+        unset($this->expressions["followUpDate"]);
+        return $this;
+    }
+
+    public function followUpDateExpression(string $followUpDateExpression): TaskQueryInterface
+    {
+        $this->expressions["followUpDate"] = $followUpDateExpression;
+        return $this;
+    }
+
+    public function followUpBefore(string $followUpBefore): TaskQueryInterface
+    {
+        $this->followUpBefore = $followUpBefore;
+        $this->followUpNullAccepted = false;
+        unset($this->expressions["followUpBefore"]);
+        return $this;
+    }
+
+    public function followUpBeforeExpression(string $followUpBeforeExpression): TaskQueryInterface
+    {
+        $this->followUpNullAccepted = false;
+        $this->expressions["followUpBefore"] = $followUpBeforeExpression;
+        return $this;
+    }
+
+    public function followUpBeforeOrNotExistent(string $followUpDate): TaskQueryInterface
+    {
+        $this->followUpBefore = $followUpDate;
+        $this->followUpNullAccepted = true;
+        unset($this->expressions["followUpBeforeOrNotExistent"]);
+        return $this;
+    }
+
+    public function followUpBeforeOrNotExistentExpression(string $followUpDateExpression): TaskQueryInterface
+    {
+        $this->expressions["followUpBeforeOrNotExistent"] = $followUpDateExpression;
+        $this->followUpNullAccepted = true;
+        return $this;
+    }
+
+    public function setFollowUpNullAccepted(bool $followUpNullAccepted): void
+    {
+        $this->followUpNullAccepted = $followUpNullAccepted;
+    }
+
+    public function followUpAfter(string $followUpAfter): TaskQueryInterface
+    {
+        $this->followUpAfter = $followUpAfter;
+        unset($this->expressions["followUpAfter"]);
+        return $this;
+    }
+
+    public function followUpAfterExpression(string $followUpAfterExpression): TaskQueryInterface
+    {
+        $this->expressions["followUpAfter"] = $followUpAfterExpression;
+        return $this;
+    }
+
+    public function excludeSubtasks(): TaskQueryInterface
+    {
+        $this->excludeSubtasks = true;
+        return $this;
+    }
+
+    public function active(): TaskQueryInterface
+    {
+        $this->suspensionState = SuspensionState::active();
+        return $this;
+    }
+
+    public function suspended(): TaskQueryInterface
+    {
+        $this->suspensionState = SuspensionState::suspended();
+        return $this;
+    }
+
+    public function initializeFormKeys(): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set initializeFormKeys() within 'or' query");
+        }
+
+        $this->initializeFormKeys = true;
+        return $this;
+    }
+
+    public function taskNameCaseInsensitive(): TaskQueryInterface
+    {
+        $this->taskNameCaseInsensitive = true;
+        return $this;
+    }
+
+    protected function hasExcludingConditions(): bool
+    {
+        return parent::hasExcludingConditions()
+          || CompareUtil::areNotInAscendingOrder($this->minPriority, $this->priority, $this->maxPriority)
+          || CompareUtil::areNotInAscendingOrder($this->dueAfter, $this->dueDate, $this->dueBefore)
+          || CompareUtil::areNotInAscendingOrder($this->followUpAfter, $this->followUpDate, $this->followUpBefore)
+          || CompareUtil::areNotInAscendingOrder($this->createTimeAfter, $this->createTime, $this->createTimeBefore)
+          || CompareUtil::elementIsNotContainedInArray($this->key, $this->taskDefinitionKeys)
+          || CompareUtil::elementIsNotContainedInArray($this->processDefinitionKey, $this->processDefinitionKeys)
+          || CompareUtil::elementIsNotContainedInArray($this->processInstanceBusinessKey, $this->processInstanceBusinessKeys);
+    }
+
+    public function getCandidateGroups(): array
+    {
+        if (!empty($this->cachedCandidateGroups)) {
+            return $this->cachedCandidateGroups;
+        }
+
+        if ($this->candidateGroup != null && !empty($this->candidateGroups)) {
+            $this->cachedCandidateGroups = $this->candidateGroups;
+            if (!$this->isOrQueryActive) {
+                // get intersection of candidateGroups and candidateGroup
+                $this->cachedCandidateGroups = array_intersect($this->cachedCandidateGroups, [$this->candidateGroup]);
+            } else {
+                // get union of candidateGroups and candidateGroup
+                if (!in_array($this->candidateGroup, $this->candidateGroups)) {
+                    $this->cachedCandidateGroups[] = $this->candidateGroup;
+                }
+            }
+        } elseif ($this->candidateGroup != null) {
+            $this->cachedCandidateGroups = [$this->candidateGroup];
+        } elseif (!empty($this->candidateGroups)) {
+            $this->cachedCandidateGroups = $candidateGroups;
+        }
+
+        if ($this->candidateUser != null) {
+            $groupsForCandidateUser = $this->getGroupsForCandidateUser($this->candidateUser);
+
+            if (empty($this->cachedCandidateGroups)) {
+                $this->cachedCandidateGroups = $groupsForCandidateUser;
+            } else {
+                foreach ($groupsForCandidateUser as $$group) {
+                    if (!in_array($group, $this->cachedCandidateGroups)) {
+                        $this->cachedCandidateGroups[] = $group;
+                    }
+                }
+            }
+        }
+
+        return $this->cachedCandidateGroups;
+    }
+
+    public function isWithCandidateGroups(): bool
+    {
+        if ($this->withCandidateGroups == null) {
+            return false;
+        } else {
+            return $this->withCandidateGroups;
+        }
+    }
+
+    public function isWithCandidateUsers(): bool
+    {
+        if ($this->withCandidateUsers == null) {
+            return false;
+        } else {
+            return $this->withCandidateUsers;
+        }
+    }
+
+    public function isWithCandidateGroupsInternal(): bool
+    {
+        return $this->withCandidateGroups;
+    }
+
+    public function isWithoutCandidateGroups(): bool
+    {
+        if ($this->withoutCandidateGroups == null) {
+            return false;
+        } else {
+            return $this->withoutCandidateGroups;
+        }
+    }
+
+    public function isWithoutCandidateUsers(): bool
+    {
+        if ($this->withoutCandidateUsers == null) {
+            return false;
+        } else {
+            return $this->withoutCandidateUsers;
+        }
+    }
+
+    public function isWithoutCandidateGroupsInternal(): bool
+    {
+        return $this->withoutCandidateGroups;
+    }
+
+    public function getCandidateGroupsInternal(): array
+    {
+        return $this->candidateGroups;
+    }
+
+    protected function getGroupsForCandidateUser(string $candidateUser): array
+    {
+        $cachedUserGroups = $this->getCachedUserGroups();
+        if (array_key_exists($candidateUser, $cachedUserGroups)) {
+            return $cachedUserGroups[$candidateUser];
+        }
+
+        $groups = Context::getCommandContext()
+            ->getReadOnlyIdentityProvider()
+            ->createGroupQuery()
+            ->groupMember($candidateUser)
+            ->list();
+
+        $groupIds = [];
+        foreach ($groups as $group) {
+            $groupIds[] = $group->getId();
+        }
+
+        $this->setCachedUserGroup($candidateUser, $groupIds);
+
+        return $groupIds;
+    }
+
+    protected function getCachedUserGroups(): array
+    {
+        // store and retrieve cached user groups always from the first query
+        if ($this->queries[0]->cachedUserGroups == null) {
+            $this->queries[0]->cachedUserGroups = [];
+        }
+        return $this->queries[0]->cachedUserGroups;
+    }
+
+    protected function setCachedUserGroup(string $candidateUser, array $groupIds): void
+    {
+        $this->getCachedUserGroups();
+        $this->queries[0]->cachedUserGroups[$candidateUser] = $groupIds;
+    }
+
+    protected function ensureOrExpressionsEvaluated(): void
+    {
+        // skips first query as it has already been evaluated
+        for ($i = 1; $i < count($this->queries); $i += 1) {
+            $this->queries[$i]->validate();
+            $this->queries[$i]->evaluateExpressions();
+        }
+    }
+
+    protected function ensureVariablesInitialized(): void
+    {
+        $processEngineConfiguration = Context::getProcessEngineConfiguration();
+        $variableSerializers = $processEngineConfiguration->getVariableSerializers();
+        $dbType = $processEngineConfiguration->getDatabaseType();
+        foreach ($variables as $var) {
+            $var->initialize($variableSerializers, $dbType);
+        }
+
+        if (!empty($this->queries)) {
+            foreach ($this->queries as $orQuery) {
+                foreach ($orQuery->variables as $var) {
+                    $var->initialize($variableSerializers, $dbType);
+                }
+            }
+        }
+    }
+
+    public function addVariable($name, $value = null, string $operator = null, bool $isTaskVariable = null, bool $isProcessInstanceVariable = null): void
+    {
+        if ($name instanceof TaskQueryVariableValue) {
+            $this->variables[] = $taskQueryVariableValue;
+        } else {
+            EnsureUtil::ensureNotNull("name", "name", $name);
+
+            if ($value == null || $this->isBoolean($value)) {
+                // Null-values and booleans can only be used in EQUALS and NOT_EQUALS
+                switch ($operator) {
+                    case QueryOperator::GREATER_THAN:
+                        throw new ProcessEngineException("Booleans and null cannot be used in 'greater than' condition");
+                    case QueryOperator::LESS_THAN:
+                        throw new ProcessEngineException("Booleans and null cannot be used in 'less than' condition");
+                    case QueryOperator::GREATER_THAN_OR_EQUAL:
+                        throw new ProcessEngineException("Booleans and null cannot be used in 'greater than or equal' condition");
+                    case QueryOperator::LESS_THAN_OR_EQUAL:
+                        throw new ProcessEngineException("Booleans and null cannot be used in 'less than or equal' condition");
+                    case QueryOperator::LIKE:
+                        throw new ProcessEngineException("Booleans and null cannot be used in 'like' condition");
+                    case QueryOperator::NOT_LIKE:
+                        throw new ProcessEngineException("Booleans and null cannot be used in 'not like' condition");
+                    default:
+                        break;
+                }
+            }
+
+            $shouldMatchVariableValuesIgnoreCase = $variableValuesIgnoreCase == true && $value != null && is_string($value);
+            $this->addVariable(new TaskQueryVariableValue($name, $value, $operator, $isTaskVariable, $isProcessInstanceVariable, $variableNamesIgnoreCase == true, $shouldMatchVariableValuesIgnoreCase));
+        }
+    }
+
+    private function isBoolean($value = null): bool
+    {
+        if ($value == null) {
+            return false;
+        }
+        return is_bool($value) || strtolower($value) == "true" || strtolower($value) == "false";
+    }
+
     //ordering ////////////////////////////////////////////////////////////////
-  
-    @Override
-    public TaskQuery orderByTaskId() {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskId() within 'or' query");
-      }
-  
-      return orderBy(TaskQueryProperty.TASK_ID);
-    }
-  
-    @Override
-    public TaskQuery orderByTaskName() {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskName() within 'or' query");
-      }
-  
-      return orderBy(TaskQueryProperty.NAME);
-    }
-  
-    @Override
-    public TaskQuery orderByTaskNameCaseInsensitive() {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskNameCaseInsensitive() within 'or' query");
-      }
-  
-      taskNameCaseInsensitive();
-      return orderBy(TaskQueryProperty.NAME_CASE_INSENSITIVE);
-    }
-  
-    @Override
-    public TaskQuery orderByTaskDescription() {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskDescription() within 'or' query");
-      }
-  
-      return orderBy(TaskQueryProperty.DESCRIPTION);
-    }
-  
-    @Override
-    public TaskQuery orderByTaskPriority() {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskPriority() within 'or' query");
-      }
-  
-      return orderBy(TaskQueryProperty.PRIORITY);
-    }
-  
-    @Override
-    public TaskQuery orderByProcessInstanceId() {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set orderByProcessInstanceId() within 'or' query");
-      }
-  
-      return orderBy(TaskQueryProperty.PROCESS_INSTANCE_ID);
-    }
-  
-    @Override
-    public TaskQuery orderByCaseInstanceId() {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set orderByCaseInstanceId() within 'or' query");
-      }
-  
-      return orderBy(TaskQueryProperty.CASE_INSTANCE_ID);
-    }
-  
-    @Override
-    public TaskQuery orderByExecutionId() {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set orderByExecutionId() within 'or' query");
-      }
-  
-      return orderBy(TaskQueryProperty.EXECUTION_ID);
-    }
-  
-    @Override
-    public TaskQuery orderByTenantId() {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set orderByTenantId() within 'or' query");
-      }
-  
-      return orderBy(TaskQueryProperty.TENANT_ID);
-    }
-  
-    @Override
-    public TaskQuery orderByCaseExecutionId() {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set orderByCaseExecutionId() within 'or' query");
-      }
-  
-      return orderBy(TaskQueryProperty.CASE_EXECUTION_ID);
-    }
-  
-    @Override
-    public TaskQuery orderByTaskAssignee() {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskAssignee() within 'or' query");
-      }
-  
-      return orderBy(TaskQueryProperty.ASSIGNEE);
-    }
-  
-    @Override
-    public TaskQuery orderByTaskCreateTime() {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskCreateTime() within 'or' query");
-      }
-  
-      return orderBy(TaskQueryProperty.CREATE_TIME);
-    }
-  
-    @Override
-    public TaskQuery orderByDueDate() {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set orderByDueDate() within 'or' query");
-      }
-  
-      return orderBy(TaskQueryProperty.DUE_DATE);
-    }
-  
-    @Override
-    public TaskQuery orderByFollowUpDate() {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set orderByFollowUpDate() within 'or' query");
-      }
-  
-      return orderBy(TaskQueryProperty.FOLLOW_UP_DATE);
-    }
-  
-    @Override
-    public TaskQuery orderByProcessVariable(string $variableName, ValueType valueType) {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set orderByProcessVariable() within 'or' query");
-      }
-  
-      EnsureUtil::ensureNotNull("variableName", variableName);
-      EnsureUtil::ensureNotNull("valueType", valueType);
-  
-      orderBy(VariableOrderProperty.forProcessInstanceVariable(variableName, valueType));
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery orderByExecutionVariable(string $variableName, ValueType valueType) {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set orderByExecutionVariable() within 'or' query");
-      }
-  
-      EnsureUtil::ensureNotNull("variableName", variableName);
-      EnsureUtil::ensureNotNull("valueType", valueType);
-  
-      orderBy(VariableOrderProperty.forExecutionVariable(variableName, valueType));
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery orderByTaskVariable(string $variableName, ValueType valueType) {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskVariable() within 'or' query");
-      }
-  
-      EnsureUtil::ensureNotNull("variableName", variableName);
-      EnsureUtil::ensureNotNull("valueType", valueType);
-  
-      orderBy(VariableOrderProperty.forTaskVariable(variableName, valueType));
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery orderByCaseExecutionVariable(string $variableName, ValueType valueType) {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set orderByCaseExecutionVariable() within 'or' query");
-      }
-  
-      EnsureUtil::ensureNotNull("variableName", variableName);
-      EnsureUtil::ensureNotNull("valueType", valueType);
-  
-      orderBy(VariableOrderProperty.forCaseExecutionVariable(variableName, valueType));
-      return $this;
-    }
-  
-    @Override
-    public TaskQuery orderByCaseInstanceVariable(string $variableName, ValueType valueType) {
-      if (isOrQueryActive) {
-        throw new ProcessEngineException("Invalid query usage: cannot set orderByCaseInstanceVariable() within 'or' query");
-      }
-  
-      EnsureUtil::ensureNotNull("variableName", variableName);
-      EnsureUtil::ensureNotNull("valueType", valueType);
-  
-      orderBy(VariableOrderProperty.forCaseInstanceVariable(variableName, valueType));
-      return $this;
-    }
-  
-    //results ////////////////////////////////////////////////////////////////
-  
-    @Override
-    public List<Task> executeList(CommandContext commandContext, Page page) {
-      ensureOrExpressionsEvaluated();
-      ensureVariablesInitialized();
-      checkQueryOk();
-  
-      resetCachedCandidateGroups();
-  
-      //check if candidateGroup and candidateGroups intersect
-      if (getCandidateGroup() != null && getCandidateGroupsInternal() != null && getCandidateGroups().isEmpty()) {
-        return Collections.emptyList();
-      }
-  
-      decideAuthorizationJoinType(commandContext);
-  
-      List<Task> taskList = commandContext
-        ->getTaskManager()
-        .findTasksByQueryCriteria(this);
-  
-      if (initializeFormKeys) {
-        for (Task task : taskList) {
-          // initialize the form keys of the tasks
-          ((TaskEntity) task).initializeFormKey();
+
+    public function orderByTaskId(): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskId() within 'or' query");
         }
-      }
-  
-      return taskList;
+
+        return $this->orderBy(TaskQueryProperty::taskId());
     }
-  
-    @Override
-    public long executeCount(CommandContext commandContext) {
-      ensureOrExpressionsEvaluated();
-      ensureVariablesInitialized();
-      checkQueryOk();
-  
-      resetCachedCandidateGroups();
-  
-      //check if candidateGroup and candidateGroups intersect
-      if (getCandidateGroup() != null && getCandidateGroupsInternal() != null && getCandidateGroups().isEmpty()) {
-        return 0;
-      }
-  
-      decideAuthorizationJoinType(commandContext);
-  
-      return commandContext
-        ->getTaskManager()
-        .findTaskCountByQueryCriteria(this);
+
+    public function orderByTaskName(): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskName() within 'or' query");
+        }
+
+        return $this->orderBy(TaskQueryProperty::name());
     }
-  
-    protected void decideAuthorizationJoinType(CommandContext commandContext) {
-      boolean cmmnEnabled = commandContext->getProcessEngineConfiguration().isCmmnEnabled();
-      authCheck->setUseLeftJoin(cmmnEnabled);
+
+    public function orderByTaskNameCaseInsensitive(): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskNameCaseInsensitive() within 'or' query");
+        }
+
+        $this->taskNameCaseInsensitive();
+        return $this->orderBy(TaskQueryProperty::nameCaseInsensitive());
     }
-  
-    protected void resetCachedCandidateGroups() {
-      cachedCandidateGroups = null;
-      for (int i = 1; i < queries.size(); i++) {
-        queries->get(i).cachedCandidateGroups = null;
-      }
+
+    public function orderByTaskDescription(): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskDescription() within 'or' query");
+        }
+
+        return $this->orderBy(TaskQueryProperty::description());
     }
-  
+
+    public function orderByTaskPriority(): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskPriority() within 'or' query");
+        }
+
+        return $this->orderBy(TaskQueryProperty::priority());
+    }
+
+    public function orderByProcessInstanceId(): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set orderByProcessInstanceId() within 'or' query");
+        }
+
+        return $this->orderBy(TaskQueryProperty::processInstanceId());
+    }
+
+    public function orderByCaseInstanceId(): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set orderByCaseInstanceId() within 'or' query");
+        }
+
+        return $this->orderBy(TaskQueryProperty::caseInstanceId());
+    }
+
+    public function orderByExecutionId(): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set orderByExecutionId() within 'or' query");
+        }
+
+        return $this->orderBy(TaskQueryProperty::executionId());
+    }
+
+    public function orderByTenantId(): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set orderByTenantId() within 'or' query");
+        }
+
+        return $this->orderBy(TaskQueryProperty::tenantId());
+    }
+
+    public function orderByCaseExecutionId(): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set orderByCaseExecutionId() within 'or' query");
+        }
+
+        return $this->orderBy(TaskQueryProperty::caseExecutionId());
+    }
+
+    public function orderByTaskAssignee(): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskAssignee() within 'or' query");
+        }
+
+        return $this->orderBy(TaskQueryProperty::assignee());
+    }
+
+    public function orderByTaskCreateTime(): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskCreateTime() within 'or' query");
+        }
+
+        return $this->orderBy(TaskQueryProperty::createTime());
+    }
+
+    public function orderByDueDate(): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set orderByDueDate() within 'or' query");
+        }
+
+        return $this->orderBy(TaskQueryProperty::dueDate());
+    }
+
+    public function orderByFollowUpDate(): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set orderByFollowUpDate() within 'or' query");
+        }
+
+        return $this->orderBy(TaskQueryProperty::followUpDate());
+    }
+
+    public function orderByProcessVariable(string $variableName, ValueTypeInterface $valueType): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set orderByProcessVariable() within 'or' query");
+        }
+
+        EnsureUtil::ensureNotNull("variableName", "variableName", $variableName);
+        EnsureUtil::ensureNotNull("valueType", "valueType", $valueType);
+
+        $this->orderBy(VariableOrderProperty::forProcessInstanceVariable($variableName, $valueType));
+        return $this;
+    }
+
+    public function orderByExecutionVariable(string $variableName, ValueTypeInterface $valueType): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set orderByExecutionVariable() within 'or' query");
+        }
+
+        EnsureUtil::ensureNotNull("variableName", "variableName", $variableName);
+        EnsureUtil::ensureNotNull("valueType", "valueType", $valueType);
+
+        $this->orderBy(VariableOrderProperty::forExecutionVariable($variableName, $valueType));
+        return $this;
+    }
+
+    public function orderByTaskVariable(string $variableName, ValueTypeInterface $valueType): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskVariable() within 'or' query");
+        }
+
+        EnsureUtil::ensureNotNull("variableName", "variableName", $variableName);
+        EnsureUtil::ensureNotNull("valueType", "valueType", $valueType);
+
+        $this->orderBy(VariableOrderProperty::forTaskVariable($variableName, $valueType));
+        return $this;
+    }
+
+    public function orderByCaseExecutionVariable(string $variableName, ValueTypeInterface $valueType): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set orderByCaseExecutionVariable() within 'or' query");
+        }
+
+        EnsureUtil::ensureNotNull("variableName", "variableName", $variableName);
+        EnsureUtil::ensureNotNull("valueType", "valueType", $valueType);
+
+        $this->orderBy(VariableOrderProperty::forCaseExecutionVariable($variableName, $valueType));
+        return $this;
+    }
+
+    public function orderByCaseInstanceVariable(string $variableName, ValueTypeInterface $valueType): TaskQueryInterface
+    {
+        if ($this->isOrQueryActive) {
+            throw new ProcessEngineException("Invalid query usage: cannot set orderByCaseInstanceVariable() within 'or' query");
+        }
+
+        EnsureUtil::ensureNotNull("variableName", "variableName", $variableName);
+        EnsureUtil::ensureNotNull("valueType", "valueType", $valueType);
+
+        $this->orderBy(VariableOrderProperty::forCaseInstanceVariable($variableName, $valueType));
+        return $this;
+    }
+
+    //results ////////////////////////////////////////////////////////////////
+
+    public function executeList(CommandContext $commandContext, Page $page): array
+    {
+        $this->ensureOrExpressionsEvaluated();
+        $this->ensureVariablesInitialized();
+        $this->checkQueryOk();
+
+        $this->resetCachedCandidateGroups();
+
+        //check if candidateGroup and candidateGroups intersect
+        if ($this->getCandidateGroup() != null && $this->getCandidateGroupsInternal() != null && empty($this->getCandidateGroups())) {
+            return [];
+        }
+
+        $this->decideAuthorizationJoinType($commandContext);
+
+        $taskList = $commandContext
+          ->getTaskManager()
+          ->findTasksByQueryCriteria($this);
+
+        if ($this->initializeFormKeys) {
+            foreach ($taskList as $task) {
+                // initialize the form keys of the tasks
+                $task->initializeFormKey();
+            }
+        }
+
+        return $taskList;
+    }
+
+    public function executeCount(CommandContext $commandContext): int
+    {
+        $this->ensureOrExpressionsEvaluated();
+        $this->ensureVariablesInitialized();
+        $this->checkQueryOk();
+
+        $this->resetCachedCandidateGroups();
+
+        //check if candidateGroup and candidateGroups intersect
+        if ($this->getCandidateGroup() != null && $this->getCandidateGroupsInternal() != null && empty($this->getCandidateGroups())) {
+            return 0;
+        }
+
+        $this->decideAuthorizationJoinType($commandContext);
+
+        return $commandContext
+          ->getTaskManager()
+          ->findTaskCountByQueryCriteria($this);
+    }
+
+    protected function decideAuthorizationJoinType(CommandContext $commandContext): void
+    {
+        //$cmmnEnabled = commandContext->getProcessEngineConfiguration()->isCmmnEnabled();
+        $cmmnEnabled = false;
+        $this->authCheck->setUseLeftJoin($cmmnEnabled);
+    }
+
+    protected function resetCachedCandidateGroups(): void
+    {
+        $this->cachedCandidateGroups = null;
+        for ($i = 1; $i < count($this->queries); $i += 1) {
+            $this->queries[$i]->cachedCandidateGroups = null;
+        }
+    }
+
     //getters ////////////////////////////////////////////////////////////////
-  
-    public String getName() {
-      return name;
+
+    public function getName(): string
+    {
+        return $this->name;
     }
-  
-    public String getNameNotEqual() {
-      return nameNotEqual;
+
+    public function getNameNotEqual(): string
+    {
+        return $this->nameNotEqual;
     }
-  
-    public String getNameLike() {
-      return nameLike;
+
+    public function getNameLike(): string
+    {
+        return $this->nameLike;
     }
-  
-    public String getNameNotLike() {
-      return nameNotLike;
+
+    public function getNameNotLike(): string
+    {
+        return $this->nameNotLike;
     }
-  
-    public String getAssignee() {
-      return assignee;
+
+    public function getAssignee(): string
+    {
+        return $this->assignee;
     }
-  
-    public String getAssigneeLike() {
-      return assigneeLike;
+
+    public function getAssigneeLike(): string
+    {
+        return $this->assigneeLike;
     }
-  
-    public Set<String> getAssigneeIn() {
-      return assigneeIn;
+
+    public function getAssigneeIn(): array
+    {
+        return $this->assigneeIn;
     }
-  
-    public Set<String> getAssigneeNotIn() {
-      return assigneeNotIn;
+
+    public function getAssigneeNotIn(): array
+    {
+        return $this->assigneeNotIn;
     }
-  
-    public String getInvolvedUser() {
-      return involvedUser;
+
+    public function getInvolvedUser(): string
+    {
+        return $this->involvedUser;
     }
-  
-    public String getOwner() {
-      return owner;
+
+    public function getOwner(): string
+    {
+        return $this->owner;
     }
-  
-    public Boolean isAssigned() {
-      if (assigned == null) {
-        return false;
-      } else {
-        return assigned;
-      }
+
+    public function isAssigned(): bool
+    {
+        if ($this->assigned == null) {
+            return false;
+        } else {
+            return $this->assigned;
+        }
     }
-  
-    public Boolean isAssignedInternal() {
-      return assigned;
+
+    public function isAssignedInternal(): bool
+    {
+        return $this->assigned;
     }
-  
-    public boolean isUnassigned() {
-      if (unassigned == null) {
-        return false;
-      }
-      else {
-        return unassigned;
-      }
+
+    public function isUnassigned(): bool
+    {
+        if ($this->unassigned == null) {
+            return false;
+        } else {
+            return $this->unassigned;
+        }
     }
-  
-    public Boolean isUnassignedInternal() {
-      return unassigned;
+
+    public function isUnassignedInternal(): bool
+    {
+        return $this->unassigned;
     }
-  
-    public DelegationState getDelegationState() {
-      return delegationState;
+
+    public function getDelegationState(): string
+    {
+        return $this->delegationState;
     }
-  
-    public boolean isNoDelegationState() {
-      return noDelegationState;
+
+    public function isNoDelegationState(): bool
+    {
+        return $this->noDelegationState;
     }
-  
-    public String getDelegationStateString() {
-      return (delegationState!=null ? delegationState.toString() : null);
+
+    public function getDelegationStateString(): ?string
+    {
+        return $this->delegationState;
     }
-  
-    public String getCandidateUser() {
-      return candidateUser;
+
+    public function getCandidateUser(): string
+    {
+        return $this->candidateUser;
     }
-  
-    public String getCandidateGroup() {
-      return candidateGroup;
+
+    public function getCandidateGroup(): string
+    {
+        return $this->candidateGroup;
     }
-  
-    public boolean isIncludeAssignedTasks() {
-      return includeAssignedTasks != null ? includeAssignedTasks : false;
+
+    public function isIncludeAssignedTasks(): bool
+    {
+        return !empty($this->includeAssignedTasks) ? $this->includeAssignedTasks : false;
     }
-  
-    public Boolean isIncludeAssignedTasksInternal() {
-      return includeAssignedTasks;
+
+    public function isIncludeAssignedTasksInternal(): bool
+    {
+        return $this->includeAssignedTasks;
     }
-  
-    public String getProcessInstanceId() {
-      return processInstanceId;
+
+    public function getProcessInstanceId(): string
+    {
+        return $this->processInstanceId;
     }
-  
-    public String[] getProcessInstanceIdIn() {
-      return processInstanceIdIn;
+
+    public function getProcessInstanceIdIn(): array
+    {
+        return $this->processInstanceIdIn;
     }
-  
-    public String getExecutionId() {
-      return executionId;
+
+    public function getExecutionId(): string
+    {
+        return $this->executionId;
     }
-  
-    public String[] getActivityInstanceIdIn() {
-      return activityInstanceIdIn;
+
+    public function getActivityInstanceIdIn(): array
+    {
+        return $this->activityInstanceIdIn;
     }
-  
-    public String[] getTenantIds() {
-      return tenantIds;
+
+    public function getTenantIds(): array
+    {
+        return $this->tenantIds;
     }
-  
-    public String getTaskId() {
-      return taskId;
+
+    public function getTaskId(): string
+    {
+        return $this->taskId;
     }
-  
-    public String[] getTaskIdIn() {
-      return taskIdIn;
+
+    public function getTaskIdIn(): array
+    {
+        return $this->taskIdIn;
     }
-  
-    public String getDescription() {
-      return description;
+
+    public function getDescription(): string
+    {
+        return $this->description;
     }
-  
-    public String getDescriptionLike() {
-      return descriptionLike;
+
+    public function getDescriptionLike(): string
+    {
+        return $this->descriptionLike;
     }
-  
-    public Integer getPriority() {
-      return priority;
+
+    public function getPriority(): int
+    {
+        return $this->priority;
     }
-  
-    public Integer getMinPriority() {
-      return minPriority;
+
+    public function getMinPriority(): int
+    {
+        return $this->minPriority;
     }
-  
-    public Integer getMaxPriority() {
-      return maxPriority;
+
+    public function getMaxPriority(): int
+    {
+        return $this->maxPriority;
     }
-  
-    public Date getCreateTime() {
-      return createTime;
+
+    public function getCreateTime(): string
+    {
+        return $this->createTime;
     }
-  
-    public Date getCreateTimeBefore() {
-      return createTimeBefore;
+
+    public function getCreateTimeBefore(): string
+    {
+        return $this->createTimeBefore;
     }
-  
-    public Date getCreateTimeAfter() {
-      return createTimeAfter;
+
+    public function getCreateTimeAfter(): string
+    {
+        return $this->createTimeAfter;
     }
-  
-    public String getKey() {
-      return key;
+
+    public function getKey(): string
+    {
+        return $this->key;
     }
-  
-    public String[] getKeys() {
-      return taskDefinitionKeys;
+
+    public function getKeys(): array
+    {
+        return $this->taskDefinitionKeys;
     }
-  
-    public String getKeyLike() {
-      return keyLike;
+
+    public function getKeyLike(): string
+    {
+        return $this->keyLike;
     }
-  
-    public String getParentTaskId() {
-      return parentTaskId;
+
+    public function getParentTaskId(): string
+    {
+        return $this->parentTaskId;
     }
-  
-    public List<TaskQueryVariableValue> getVariables() {
-      return variables;
+
+    public function getVariables(): array
+    {
+        return $this->variables;
     }
-  
-    public String getProcessDefinitionKey() {
-      return processDefinitionKey;
+
+    public function getProcessDefinitionKey(): string
+    {
+        return $this->processDefinitionKey;
     }
-  
-    public String[] getProcessDefinitionKeys() {
-      return processDefinitionKeys;
+
+    public function getProcessDefinitionKeys(): array
+    {
+        return $this->processDefinitionKeys;
     }
-  
-    public String getProcessDefinitionId() {
-      return processDefinitionId;
+
+    public function getProcessDefinitionId(): string
+    {
+        return $this->processDefinitionId;
     }
-  
-    public String getProcessDefinitionName() {
-      return processDefinitionName;
+
+    public function getProcessDefinitionName(): string
+    {
+        return $this->processDefinitionName;
     }
-  
-    public String getProcessDefinitionNameLike() {
-      return processDefinitionNameLike;
+
+    public function getProcessDefinitionNameLike(): string
+    {
+        return $this->processDefinitionNameLike;
     }
-  
-    public String getProcessInstanceBusinessKey() {
-      return processInstanceBusinessKey;
+
+    public function getProcessInstanceBusinessKey(): string
+    {
+        return $this->processInstanceBusinessKey;
     }
-  
-    public String[] getProcessInstanceBusinessKeys() {
-      return processInstanceBusinessKeys;
+
+    public function getProcessInstanceBusinessKeys(): array
+    {
+        return $this->processInstanceBusinessKeys;
     }
-  
-    public String getProcessInstanceBusinessKeyLike() {
-      return processInstanceBusinessKeyLike;
+
+    public function getProcessInstanceBusinessKeyLike(): string
+    {
+        return $this->processInstanceBusinessKeyLike;
     }
-  
-    public Date getDueDate() {
-      return dueDate;
+
+    public function getDueDate(): string
+    {
+        return $this->dueDate;
     }
-  
-    public Date getDueBefore() {
-      return dueBefore;
+
+    public function getDueBefore(): string
+    {
+        return $this->dueBefore;
     }
-  
-    public Date getDueAfter() {
-      return dueAfter;
+
+    public function getDueAfter(): string
+    {
+        return $this->dueAfter;
     }
-  
-    public Date getFollowUpDate() {
-      return followUpDate;
+
+    public function getFollowUpDate(): string
+    {
+        return $this->followUpDate;
     }
-  
-    public Date getFollowUpBefore() {
-      return followUpBefore;
+
+    public function getFollowUpBefore(): string
+    {
+        return $this->followUpBefore;
     }
-  
-    public Date getFollowUpAfter() {
-      return followUpAfter;
+
+    public function getFollowUpAfter(): string
+    {
+        return $this->followUpAfter;
     }
-  
-    public boolean isExcludeSubtasks() {
-      return excludeSubtasks;
+
+    public function isExcludeSubtasks(): bool
+    {
+        return $this->excludeSubtasks;
     }
-  
-    public SuspensionState getSuspensionState() {
-      return suspensionState;
+
+    public function getSuspensionState(): string
+    {
+        return $this->suspensionState;
     }
-  
-    public String getCaseInstanceId() {
+
+    /*public String getCaseInstanceId() {
       return caseInstanceId;
     }
-  
+
     public String getCaseInstanceBusinessKey() {
-      return caseInstanceBusinessKey;
+        return caseInstanceBusinessKey;
     }
-  
+
     public String getCaseInstanceBusinessKeyLike() {
-      return caseInstanceBusinessKeyLike;
+        return caseInstanceBusinessKeyLike;
     }
-  
+
     public String getCaseExecutionId() {
-      return caseExecutionId;
+        return caseExecutionId;
     }
-  
+
     public String getCaseDefinitionId() {
-      return caseDefinitionId;
+        return caseDefinitionId;
     }
-  
+
     public String getCaseDefinitionKey() {
-      return caseDefinitionKey;
+        return caseDefinitionKey;
     }
-  
+
     public String getCaseDefinitionName() {
-      return caseDefinitionName;
+        return caseDefinitionName;
+    }*/
+
+    public function getCaseDefinitionNameLike(): string
+    {
+        return $this->caseDefinitionNameLike;
     }
-  
-    public String getCaseDefinitionNameLike() {
-      return caseDefinitionNameLike;
+
+    public function isInitializeFormKeys(): bool
+    {
+        return $this->initializeFormKeys;
     }
-  
-    public boolean isInitializeFormKeys() {
-      return initializeFormKeys;
+
+    public function isTaskNameCaseInsensitive(): bool
+    {
+        return $this->taskNameCaseInsensitive;
     }
-  
-    public boolean isTaskNameCaseInsensitive() {
-      return taskNameCaseInsensitive;
+
+    public function isWithoutTenantId(): bool
+    {
+        return $this->isWithoutTenantId;
     }
-  
-    public boolean isWithoutTenantId() {
-      return isWithoutTenantId;
+
+    public function isWithoutDueDate(): bool
+    {
+        return $this->isWithoutDueDate;
     }
-  
-    public boolean isWithoutDueDate() {
-      return isWithoutDueDate;
+
+    public function getTaskDefinitionKeys(): array
+    {
+        return $this->taskDefinitionKeys;
     }
-  
-    public String[] getTaskDefinitionKeys() {
-      return taskDefinitionKeys;
+
+    public function getIsTenantIdSet(): bool
+    {
+        return $this->isWithoutTenantId;
     }
-  
-    public boolean getIsTenantIdSet() {
-      return isWithoutTenantId;
+
+    public function isVariableNamesIgnoreCase(): bool
+    {
+        return $this->variableNamesIgnoreCase;
     }
-  
-    public Boolean isVariableNamesIgnoreCase() {
-      return variableNamesIgnoreCase;
+
+    public function isVariableValuesIgnoreCase(): bool
+    {
+        return $this->variableValuesIgnoreCase;
     }
-  
-    public Boolean isVariableValuesIgnoreCase() {
-      return variableValuesIgnoreCase;
+
+    public function getQueries(): array
+    {
+        return $this->queries;
     }
-  
-    public List<TaskQueryImpl> getQueries() {
-      return queries;
+
+    public function isOrQueryActive(): bool
+    {
+        return $this->isOrQueryActive;
     }
-  
-    public boolean isOrQueryActive() {
-      return isOrQueryActive;
+
+    public function addOrQuery(TaskQueryImpl $orQuery): void
+    {
+        $orQuery->isOrQueryActive = true;
+        $this->queries[] = $orQuery;
     }
-  
-    public void addOrQuery(TaskQueryImpl orQuery) {
-      orQuery.isOrQueryActive = true;
-      $this->queries.add(orQuery);
+
+    public function setOrQueryActive(): void
+    {
+        $this->isOrQueryActive = true;
     }
-  
-    public void setOrQueryActive() {
-      isOrQueryActive = true;
-    }
-  
-    @Override
-    public TaskQuery extend(TaskQuery extending) {
-      TaskQueryImpl extendingQuery = (TaskQueryImpl) extending;
-      TaskQueryImpl extendedQuery = new TaskQueryImpl();
-  
-      // only add the base query's validators to the new query;
-      // this is because the extending query's validators may not be applicable to the base
-      // query and should therefore be executed before extending the query
-      extendedQuery.validators = new HashSet<>(validators);
-  
-      if (extendingQuery->getName() != null) {
-        extendedQuery.taskName(extendingQuery->getName());
-      }
-      else if ($this->getName() != null) {
-        extendedQuery.taskName($this->getName());
-      }
-  
-      if (extendingQuery->getNameLike() != null) {
-        extendedQuery.taskNameLike(extendingQuery->getNameLike());
-      }
-      else if ($this->getNameLike() != null) {
-        extendedQuery.taskNameLike($this->getNameLike());
-      }
-  
-      if (extendingQuery->getNameNotEqual() != null) {
-        extendedQuery.taskNameNotEqual(extendingQuery->getNameNotEqual());
-      }
-      else if ($this->getNameNotEqual() != null) {
-        extendedQuery.taskNameNotEqual($this->getNameNotEqual());
-      }
-  
-      if (extendingQuery->getNameNotLike() != null) {
-        extendedQuery.taskNameNotLike(extendingQuery->getNameNotLike());
-      }
-      else if ($this->getNameNotLike() != null) {
-        extendedQuery.taskNameNotLike($this->getNameNotLike());
-      }
-  
-      if (extendingQuery->getAssignee() != null) {
-        extendedQuery.taskAssignee(extendingQuery->getAssignee());
-      }
-      else if ($this->getAssignee() != null) {
-        extendedQuery.taskAssignee($this->getAssignee());
-      }
-  
-      if (extendingQuery->getAssigneeLike() != null) {
-        extendedQuery.taskAssigneeLike(extendingQuery->getAssigneeLike());
-      }
-      else if ($this->getAssigneeLike() != null) {
-        extendedQuery.taskAssigneeLike($this->getAssigneeLike());
-      }
-  
-      if (extendingQuery->getAssigneeIn() != null) {
-        extendedQuery.taskAssigneeIn(extendingQuery
-            ->getAssigneeIn()
-            .toArray(new String[extendingQuery->getAssigneeIn().size()]));
-      }
-      else if ($this->getAssigneeIn() != null) {
-        extendedQuery.taskAssigneeIn($this->getAssigneeIn()
-            .toArray(new String[$this->getAssigneeIn().size()]));
-      }
-      if (extendingQuery->getAssigneeNotIn() != null) {
-        extendedQuery.taskAssigneeNotIn(extendingQuery
-            ->getAssigneeNotIn()
-            .toArray(new String[extendingQuery->getAssigneeNotIn().size()]));
-      }
-      else if ($this->getAssigneeNotIn() != null) {
-        extendedQuery.taskAssigneeNotIn($this->getAssigneeNotIn()
-            .toArray(new String[$this->getAssigneeNotIn().size()]));
-      }
-  
-      if (extendingQuery->getInvolvedUser() != null) {
-        extendedQuery.taskInvolvedUser(extendingQuery->getInvolvedUser());
-      }
-      else if ($this->getInvolvedUser() != null) {
-        extendedQuery.taskInvolvedUser($this->getInvolvedUser());
-      }
-  
-      if (extendingQuery->getOwner() != null) {
-        extendedQuery.taskOwner(extendingQuery->getOwner());
-      }
-      else if ($this->getOwner() != null) {
-        extendedQuery.taskOwner($this->getOwner());
-      }
-  
-      if (extendingQuery.isAssigned() || $this->isAssigned()) {
-        extendedQuery.taskAssigned();
-      }
-  
-      if (extendingQuery.isUnassigned() || $this->isUnassigned()) {
-        extendedQuery.taskUnassigned();
-      }
-  
-      if (extendingQuery->getDelegationState() != null) {
-        extendedQuery.taskDelegationState(extendingQuery->getDelegationState());
-      }
-      else if ($this->getDelegationState() != null) {
-        extendedQuery.taskDelegationState($this->getDelegationState());
-      }
-  
-      if (extendingQuery->getCandidateUser() != null) {
-        extendedQuery.taskCandidateUser(extendingQuery->getCandidateUser());
-      }
-      else if ($this->getCandidateUser() != null) {
-        extendedQuery.taskCandidateUser($this->getCandidateUser());
-      }
-  
-      if (extendingQuery->getCandidateGroup() != null) {
-        extendedQuery.taskCandidateGroup(extendingQuery->getCandidateGroup());
-      }
-      else if ($this->getCandidateGroup() != null) {
-        extendedQuery.taskCandidateGroup($this->getCandidateGroup());
-      }
-  
-      if (extendingQuery.isWithCandidateGroups() || $this->isWithCandidateGroups()) {
-        extendedQuery.withCandidateGroups();
-      }
-  
-      if (extendingQuery.isWithCandidateUsers() || $this->isWithCandidateUsers()) {
-        extendedQuery.withCandidateUsers();
-      }
-  
-      if (extendingQuery.isWithoutCandidateGroups() || $this->isWithoutCandidateGroups()) {
-        extendedQuery.withoutCandidateGroups();
-      }
-  
-      if (extendingQuery.isWithoutCandidateUsers() || $this->isWithoutCandidateUsers()) {
-        extendedQuery.withoutCandidateUsers();
-      }
-  
-      if (extendingQuery->getCandidateGroupsInternal() != null) {
-        extendedQuery.taskCandidateGroupIn(extendingQuery->getCandidateGroupsInternal());
-      }
-      else if ($this->getCandidateGroupsInternal() != null) {
-        extendedQuery.taskCandidateGroupIn($this->getCandidateGroupsInternal());
-      }
-  
-      if (extendingQuery->getProcessInstanceId() != null) {
-        extendedQuery.processInstanceId(extendingQuery->getProcessInstanceId());
-      }
-      else if ($this->getProcessInstanceId() != null) {
-        extendedQuery.processInstanceId($this->getProcessInstanceId());
-      }
-  
-      if (extendingQuery->getProcessInstanceIdIn() != null) {
-        extendedQuery.processInstanceIdIn(extendingQuery->getProcessInstanceIdIn());
-      } else if ($this->processInstanceIdIn() != null) {
-        extendedQuery.processInstanceIdIn($this->getProcessInstanceIdIn());
-      }
-  
-      if (extendingQuery->getExecutionId() != null) {
-        extendedQuery.executionId(extendingQuery->getExecutionId());
-      }
-      else if ($this->getExecutionId() != null) {
-        extendedQuery.executionId($this->getExecutionId());
-      }
-  
-      if (extendingQuery->getActivityInstanceIdIn() != null) {
-        extendedQuery.activityInstanceIdIn(extendingQuery->getActivityInstanceIdIn());
-      }
-      else if ($this->getActivityInstanceIdIn() != null) {
-        extendedQuery.activityInstanceIdIn($this->getActivityInstanceIdIn());
-      }
-  
-      if (extendingQuery->getTaskId() != null) {
-        extendedQuery.taskId(extendingQuery->getTaskId());
-      }
-      else if ($this->getTaskId() != null) {
-        extendedQuery.taskId($this->getTaskId());
-      }
-  
-      if (extendingQuery->getTaskIdIn() != null) {
-        extendedQuery.taskIdIn(extendingQuery->getTaskIdIn());
-      } else if ($this->getTaskIdIn() != null) {
-        extendedQuery.taskIdIn($this->getTaskIdIn());
-      }
-  
-      if (extendingQuery->getDescription() != null) {
-        extendedQuery.taskDescription(extendingQuery->getDescription());
-      }
-      else if ($this->getDescription() != null) {
-        extendedQuery.taskDescription($this->getDescription());
-      }
-  
-      if (extendingQuery->getDescriptionLike() != null) {
-        extendedQuery.taskDescriptionLike(extendingQuery->getDescriptionLike());
-      }
-      else if ($this->getDescriptionLike() != null) {
-        extendedQuery.taskDescriptionLike($this->getDescriptionLike());
-      }
-  
-      if (extendingQuery->getPriority() != null) {
-        extendedQuery.taskPriority(extendingQuery->getPriority());
-      }
-      else if ($this->getPriority() != null) {
-        extendedQuery.taskPriority($this->getPriority());
-      }
-  
-      if (extendingQuery->getMinPriority() != null) {
-        extendedQuery.taskMinPriority(extendingQuery->getMinPriority());
-      }
-      else if ($this->getMinPriority() != null) {
-        extendedQuery.taskMinPriority($this->getMinPriority());
-      }
-  
-      if (extendingQuery->getMaxPriority() != null) {
-        extendedQuery.taskMaxPriority(extendingQuery->getMaxPriority());
-      }
-      else if ($this->getMaxPriority() != null) {
-        extendedQuery.taskMaxPriority($this->getMaxPriority());
-      }
-  
-      if (extendingQuery->getCreateTime() != null) {
-        extendedQuery.taskCreatedOn(extendingQuery->getCreateTime());
-      }
-      else if ($this->getCreateTime() != null) {
-        extendedQuery.taskCreatedOn($this->getCreateTime());
-      }
-  
-      if (extendingQuery->getCreateTimeBefore() != null) {
-        extendedQuery.taskCreatedBefore(extendingQuery->getCreateTimeBefore());
-      }
-      else if ($this->getCreateTimeBefore() != null) {
-        extendedQuery.taskCreatedBefore($this->getCreateTimeBefore());
-      }
-  
-      if (extendingQuery->getCreateTimeAfter() != null) {
-        extendedQuery.taskCreatedAfter(extendingQuery->getCreateTimeAfter());
-      }
-      else if ($this->getCreateTimeAfter() != null) {
-        extendedQuery.taskCreatedAfter($this->getCreateTimeAfter());
-      }
-  
-      if (extendingQuery->getKey() != null) {
-        extendedQuery.taskDefinitionKey(extendingQuery->getKey());
-      }
-      else if ($this->getKey() != null) {
-        extendedQuery.taskDefinitionKey($this->getKey());
-      }
-  
-      if (extendingQuery->getKeyLike() != null) {
-        extendedQuery.taskDefinitionKeyLike(extendingQuery->getKeyLike());
-      }
-      else if ($this->getKeyLike() != null) {
-        extendedQuery.taskDefinitionKeyLike($this->getKeyLike());
-      }
-  
-      if (extendingQuery->getKeys() != null) {
-        extendedQuery.taskDefinitionKeyIn(extendingQuery->getKeys());
-      }
-      else if ($this->getKeys() != null) {
-        extendedQuery.taskDefinitionKeyIn($this->getKeys());
-      }
-  
-      if (extendingQuery->getParentTaskId() != null) {
-        extendedQuery.taskParentTaskId(extendingQuery->getParentTaskId());
-      }
-      else if ($this->getParentTaskId() != null) {
-        extendedQuery.taskParentTaskId($this->getParentTaskId());
-      }
-  
-      if (extendingQuery->getProcessDefinitionKey() != null) {
-        extendedQuery.processDefinitionKey(extendingQuery->getProcessDefinitionKey());
-      }
-      else if ($this->getProcessDefinitionKey() != null) {
-        extendedQuery.processDefinitionKey($this->getProcessDefinitionKey());
-      }
-  
-      if (extendingQuery->getProcessDefinitionKeys() != null) {
-        extendedQuery.processDefinitionKeyIn(extendingQuery->getProcessDefinitionKeys());
-      }
-      else if ($this->getProcessDefinitionKeys() != null) {
-        extendedQuery.processDefinitionKeyIn($this->getProcessDefinitionKeys());
-      }
-  
-      if (extendingQuery->getProcessDefinitionId() != null) {
-        extendedQuery.processDefinitionId(extendingQuery->getProcessDefinitionId());
-      }
-      else if ($this->getProcessDefinitionId() != null) {
-        extendedQuery.processDefinitionId($this->getProcessDefinitionId());
-      }
-  
-      if (extendingQuery->getProcessDefinitionName() != null) {
-        extendedQuery.processDefinitionName(extendingQuery->getProcessDefinitionName());
-      }
-      else if ($this->getProcessDefinitionName() != null) {
-        extendedQuery.processDefinitionName($this->getProcessDefinitionName());
-      }
-  
-      if (extendingQuery->getProcessDefinitionNameLike() != null) {
-        extendedQuery.processDefinitionNameLike(extendingQuery->getProcessDefinitionNameLike());
-      }
-      else if ($this->getProcessDefinitionNameLike() != null) {
-        extendedQuery.processDefinitionNameLike($this->getProcessDefinitionNameLike());
-      }
-  
-      if (extendingQuery->getProcessInstanceBusinessKey() != null) {
-        extendedQuery.processInstanceBusinessKey(extendingQuery->getProcessInstanceBusinessKey());
-      }
-      else if ($this->getProcessInstanceBusinessKey() != null) {
-        extendedQuery.processInstanceBusinessKey($this->getProcessInstanceBusinessKey());
-      }
-  
-      if (extendingQuery->getProcessInstanceBusinessKeyLike() != null) {
-        extendedQuery.processInstanceBusinessKeyLike(extendingQuery->getProcessInstanceBusinessKeyLike());
-      }
-      else if ($this->getProcessInstanceBusinessKeyLike() != null) {
-        extendedQuery.processInstanceBusinessKeyLike($this->getProcessInstanceBusinessKeyLike());
-      }
-  
-      if (extendingQuery->getDueDate() != null) {
-        extendedQuery.dueDate(extendingQuery->getDueDate());
-      }
-      else if ($this->getDueDate() != null) {
-        extendedQuery.dueDate($this->getDueDate());
-      }
-  
-      if (extendingQuery->getDueBefore() != null) {
-        extendedQuery.dueBefore(extendingQuery->getDueBefore());
-      }
-      else if ($this->getDueBefore() != null) {
-        extendedQuery.dueBefore($this->getDueBefore());
-      }
-  
-      if (extendingQuery->getDueAfter() != null) {
-        extendedQuery.dueAfter(extendingQuery->getDueAfter());
-      }
-      else if ($this->getDueAfter() != null) {
-        extendedQuery.dueAfter($this->getDueAfter());
-      }
-  
-      if (extendingQuery.isWithoutDueDate() || $this->isWithoutDueDate()) {
-        extendedQuery.withoutDueDate();
-      }
-  
-      if (extendingQuery->getFollowUpDate() != null) {
-        extendedQuery.followUpDate(extendingQuery->getFollowUpDate());
-      }
-      else if ($this->getFollowUpDate() != null) {
-        extendedQuery.followUpDate($this->getFollowUpDate());
-      }
-  
-      if (extendingQuery->getFollowUpBefore() != null) {
-        extendedQuery.followUpBefore(extendingQuery->getFollowUpBefore());
-      }
-      else if ($this->getFollowUpBefore() != null) {
-        extendedQuery.followUpBefore($this->getFollowUpBefore());
-      }
-  
-      if (extendingQuery->getFollowUpAfter() != null) {
-        extendedQuery.followUpAfter(extendingQuery->getFollowUpAfter());
-      }
-      else if ($this->getFollowUpAfter() != null) {
-        extendedQuery.followUpAfter($this->getFollowUpAfter());
-      }
-  
-      if (extendingQuery.isFollowUpNullAccepted() || $this->isFollowUpNullAccepted()) {
-        extendedQuery->setFollowUpNullAccepted(true);
-      }
-  
-      if (extendingQuery.isExcludeSubtasks() || $this->isExcludeSubtasks()) {
-        extendedQuery.excludeSubtasks();
-      }
-  
-      if (extendingQuery->getSuspensionState() != null) {
-        if (extendingQuery->getSuspensionState().equals(SuspensionState.ACTIVE)) {
-          extendedQuery.active();
+
+    public function extend(TaskQueryInterface $extending): TaskQueryInterface
+    {
+        $extendingQuery = $extending;
+        $extendedQuery = new TaskQueryImpl();
+
+        // only add the base query's validators to the new query;
+        // this is because the extending query's validators may not be applicable to the base
+        // query and should therefore be executed before extending the query
+        $extendedQuery->validators = $this->validators;
+
+        if ($extendingQuery->getName() != null) {
+            $extendedQuery->taskName($extendingQuery->getName());
+        } elseif ($this->getName() != null) {
+            $extendedQuery->taskName($this->getName());
         }
-        else if (extendingQuery->getSuspensionState().equals(SuspensionState.SUSPENDED)) {
-          extendedQuery.suspended();
+
+        if ($extendingQuery->getNameLike() != null) {
+            $extendedQuery->taskNameLike($extendingQuery->getNameLike());
+        } elseif ($this->getNameLike() != null) {
+            $extendedQuery->taskNameLike($this->getNameLike());
         }
-      }
-      else if ($this->getSuspensionState() != null) {
-        if ($this->getSuspensionState().equals(SuspensionState.ACTIVE)) {
-          extendedQuery.active();
+
+        if ($extendingQuery->getNameNotEqual() != null) {
+            $extendedQuery->taskNameNotEqual($extendingQuery->getNameNotEqual());
+        } elseif ($this->getNameNotEqual() != null) {
+            $extendedQuery->taskNameNotEqual($this->getNameNotEqual());
         }
-        else if ($this->getSuspensionState().equals(SuspensionState.SUSPENDED)) {
-          extendedQuery.suspended();
+
+        if ($extendingQuery->getNameNotLike() != null) {
+            $extendedQuery->taskNameNotLike($extendingQuery->getNameNotLike());
+        } elseif ($this->getNameNotLike() != null) {
+            $extendedQuery->taskNameNotLike($this->getNameNotLike());
         }
-      }
-  
-      if (extendingQuery->getCaseInstanceId() != null) {
-        extendedQuery.caseInstanceId(extendingQuery->getCaseInstanceId());
-      }
-      else if ($this->getCaseInstanceId() != null) {
-        extendedQuery.caseInstanceId($this->getCaseInstanceId());
-      }
-  
-      if (extendingQuery->getCaseInstanceBusinessKey() != null) {
-        extendedQuery.caseInstanceBusinessKey(extendingQuery->getCaseInstanceBusinessKey());
-      }
-      else if ($this->getCaseInstanceBusinessKey() != null) {
-        extendedQuery.caseInstanceBusinessKey($this->getCaseInstanceBusinessKey());
-      }
-  
-      if (extendingQuery->getCaseInstanceBusinessKeyLike() != null) {
-        extendedQuery.caseInstanceBusinessKeyLike(extendingQuery->getCaseInstanceBusinessKeyLike());
-      }
-      else if ($this->getCaseInstanceBusinessKeyLike() != null) {
-        extendedQuery.caseInstanceBusinessKeyLike($this->getCaseInstanceBusinessKeyLike());
-      }
-  
-      if (extendingQuery->getCaseExecutionId() != null) {
-        extendedQuery.caseExecutionId(extendingQuery->getCaseExecutionId());
-      }
-      else if ($this->getCaseExecutionId() != null) {
-        extendedQuery.caseExecutionId($this->getCaseExecutionId());
-      }
-  
-      if (extendingQuery->getCaseDefinitionId() != null) {
-        extendedQuery.caseDefinitionId(extendingQuery->getCaseDefinitionId());
-      }
-      else if ($this->getCaseDefinitionId() != null) {
-        extendedQuery.caseDefinitionId($this->getCaseDefinitionId());
-      }
-  
-      if (extendingQuery->getCaseDefinitionKey() != null) {
-        extendedQuery.caseDefinitionKey(extendingQuery->getCaseDefinitionKey());
-      }
-      else if ($this->getCaseDefinitionKey() != null) {
-        extendedQuery.caseDefinitionKey($this->getCaseDefinitionKey());
-      }
-  
-      if (extendingQuery->getCaseDefinitionName() != null) {
-        extendedQuery.caseDefinitionName(extendingQuery->getCaseDefinitionName());
-      }
-      else if ($this->getCaseDefinitionName() != null) {
-        extendedQuery.caseDefinitionName($this->getCaseDefinitionName());
-      }
-  
-      if (extendingQuery->getCaseDefinitionNameLike() != null) {
-        extendedQuery.caseDefinitionNameLike(extendingQuery->getCaseDefinitionNameLike());
-      }
-      else if ($this->getCaseDefinitionNameLike() != null) {
-        extendedQuery.caseDefinitionNameLike($this->getCaseDefinitionNameLike());
-      }
-  
-      if (extendingQuery.isInitializeFormKeys() || $this->isInitializeFormKeys()) {
-        extendedQuery.initializeFormKeys();
-      }
-  
-      if (extendingQuery.isTaskNameCaseInsensitive() || $this->isTaskNameCaseInsensitive()) {
-        extendedQuery.taskNameCaseInsensitive();
-      }
-  
-      if (extendingQuery->getTenantIds() != null) {
-        extendedQuery.tenantIdIn(extendingQuery->getTenantIds());
-      } else if ($this->getTenantIds() != null) {
-        extendedQuery.tenantIdIn($this->getTenantIds());
-      }
-  
-      if (extendingQuery.isWithoutTenantId() || $this->isWithoutTenantId()) {
-        extendedQuery.withoutTenantId();
-      }
-  
-      // merge variables
-      mergeVariables(extendedQuery, extendingQuery);
-  
-      // merge expressions
-      mergeExpressions(extendedQuery, extendingQuery);
-  
-      // include taskAssigned tasks has to be set after expression as it asserts on already set
-      // candidate properties which could be expressions
-      if (extendingQuery.isIncludeAssignedTasks() || $this->isIncludeAssignedTasks()) {
-        extendedQuery.includeAssignedTasks();
-      }
-  
-      mergeOrdering(extendedQuery, extendingQuery);
-  
-      extendedQuery.queries = new ArrayList<>(Arrays.asList(extendedQuery));
-  
-      if (queries.size() > 1) {
-        queries.remove(0);
-        extendedQuery.queries.addAll(queries);
-      }
-  
-      if (extendingQuery.queries.size() > 1) {
-        extendingQuery.queries.remove(0);
-        extendedQuery.queries.addAll(extendingQuery.queries);
-      }
-  
-      return extendedQuery;
+
+        if ($extendingQuery->getAssignee() != null) {
+            $extendedQuery->taskAssignee($extendingQuery->getAssignee());
+        } elseif ($this->getAssignee() != null) {
+            $extendedQuery->taskAssignee($this->getAssignee());
+        }
+
+        if ($extendingQuery->getAssigneeLike() != null) {
+            $extendedQuery->taskAssigneeLike($extendingQuery->getAssigneeLike());
+        } elseif ($this->getAssigneeLike() != null) {
+            $extendedQuery->taskAssigneeLike($this->getAssigneeLike());
+        }
+
+        if ($extendingQuery->getAssigneeIn() != null) {
+            $extendedQuery->taskAssigneeIn($extendingQuery->getAssigneeIn());
+        } elseif ($this->getAssigneeIn() != null) {
+            $extendedQuery->taskAssigneeIn($this->getAssigneeIn());
+        }
+        if ($extendingQuery->getAssigneeNotIn() != null) {
+            $extendedQuery->taskAssigneeNotIn($extendingQuery->getAssigneeNotIn());
+        } elseif ($this->getAssigneeNotIn() != null) {
+            $extendedQuery->taskAssigneeNotIn($this->getAssigneeNotIn());
+        }
+
+        if ($extendingQuery->getInvolvedUser() != null) {
+            $extendedQuery->taskInvolvedUser($extendingQuery->getInvolvedUser());
+        } elseif ($this->getInvolvedUser() != null) {
+            $extendedQuery->taskInvolvedUser($this->getInvolvedUser());
+        }
+
+        if ($extendingQuery->getOwner() != null) {
+            $extendedQuery->taskOwner($extendingQuery->getOwner());
+        } elseif ($this->getOwner() != null) {
+            $extendedQuery->taskOwner($this->getOwner());
+        }
+
+        if ($extendingQuery->isAssigned() || $this->isAssigned()) {
+            $extendedQuery->taskAssigned();
+        }
+
+        if ($extendingQuery->isUnassigned() || $this->isUnassigned()) {
+            $extendedQuery->taskUnassigned();
+        }
+
+        if ($extendingQuery->getDelegationState() != null) {
+            $extendedQuery->taskDelegationState($extendingQuery->getDelegationState());
+        } elseif ($this->getDelegationState() != null) {
+            $extendedQuery->taskDelegationState($this->getDelegationState());
+        }
+
+        if ($extendingQuery->getCandidateUser() != null) {
+            $extendedQuery->taskCandidateUser($extendingQuery->getCandidateUser());
+        } elseif ($this->getCandidateUser() != null) {
+            $extendedQuery->taskCandidateUser($this->getCandidateUser());
+        }
+
+        if ($extendingQuery->getCandidateGroup() != null) {
+            $extendedQuery->taskCandidateGroup($extendingQuery->getCandidateGroup());
+        } elseif ($this->getCandidateGroup() != null) {
+            $extendedQuery->taskCandidateGroup($this->getCandidateGroup());
+        }
+
+        if ($extendingQuery->isWithCandidateGroups() || $this->isWithCandidateGroups()) {
+            $extendedQuery->withCandidateGroups();
+        }
+
+        if ($extendingQuery->isWithCandidateUsers() || $this->isWithCandidateUsers()) {
+            $extendedQuery->withCandidateUsers();
+        }
+
+        if ($extendingQuery->isWithoutCandidateGroups() || $this->isWithoutCandidateGroups()) {
+            $extendedQuery->withoutCandidateGroups();
+        }
+
+        if ($extendingQuery->isWithoutCandidateUsers() || $this->isWithoutCandidateUsers()) {
+            $extendedQuery->withoutCandidateUsers();
+        }
+
+        if ($extendingQuery->getCandidateGroupsInternal() != null) {
+            $extendedQuery->taskCandidateGroupIn($extendingQuery->getCandidateGroupsInternal());
+        } elseif ($this->getCandidateGroupsInternal() != null) {
+            $extendedQuery->taskCandidateGroupIn($this->getCandidateGroupsInternal());
+        }
+
+        if ($extendingQuery->getProcessInstanceId() != null) {
+            $extendedQuery->processInstanceId($extendingQuery->getProcessInstanceId());
+        } elseif ($this->getProcessInstanceId() != null) {
+            $extendedQuery->processInstanceId($this->getProcessInstanceId());
+        }
+
+        if ($extendingQuery->getProcessInstanceIdIn() != null) {
+            $extendedQuery->processInstanceIdIn($extendingQuery->getProcessInstanceIdIn());
+        } elseif ($this->processInstanceIdIn() != null) {
+            $extendedQuery->processInstanceIdIn($this->getProcessInstanceIdIn());
+        }
+
+        if ($extendingQuery->getExecutionId() != null) {
+            $extendedQuery->executionId($extendingQuery->getExecutionId());
+        } elseif ($this->getExecutionId() != null) {
+            $extendedQuery->executionId($this->getExecutionId());
+        }
+
+        if ($extendingQuery->getActivityInstanceIdIn() != null) {
+            $extendedQuery->activityInstanceIdIn($extendingQuery->getActivityInstanceIdIn());
+        } elseif ($this->getActivityInstanceIdIn() != null) {
+            $extendedQuery->activityInstanceIdIn($this->getActivityInstanceIdIn());
+        }
+
+        if ($extendingQuery->getTaskId() != null) {
+            $extendedQuery->taskId($extendingQuery->getTaskId());
+        } elseif ($this->getTaskId() != null) {
+            $extendedQuery->taskId($this->getTaskId());
+        }
+
+        if ($extendingQuery->getTaskIdIn() != null) {
+            $extendedQuery->taskIdIn($extendingQuery->getTaskIdIn());
+        } elseif ($this->getTaskIdIn() != null) {
+            $extendedQuery->taskIdIn($this->getTaskIdIn());
+        }
+
+        if ($extendingQuery->getDescription() != null) {
+            $extendedQuery->taskDescription($extendingQuery->getDescription());
+        } elseif ($this->getDescription() != null) {
+            $extendedQuery->taskDescription($this->getDescription());
+        }
+
+        if ($extendingQuery->getDescriptionLike() != null) {
+            $extendedQuery->taskDescriptionLike($extendingQuery->getDescriptionLike());
+        } elseif ($this->getDescriptionLike() != null) {
+            $extendedQuery->taskDescriptionLike($this->getDescriptionLike());
+        }
+
+        if ($extendingQuery->getPriority() != null) {
+            $extendedQuery->taskPriority($extendingQuery->getPriority());
+        } elseif ($this->getPriority() != null) {
+            $extendedQuery->taskPriority($this->getPriority());
+        }
+
+        if ($extendingQuery->getMinPriority() != null) {
+            $extendedQuery->taskMinPriority($extendingQuery->getMinPriority());
+        } elseif ($this->getMinPriority() != null) {
+            $extendedQuery->taskMinPriority($this->getMinPriority());
+        }
+
+        if ($extendingQuery->getMaxPriority() != null) {
+            $extendedQuery->taskMaxPriority($extendingQuery->getMaxPriority());
+        } elseif ($this->getMaxPriority() != null) {
+            $extendedQuery->taskMaxPriority($this->getMaxPriority());
+        }
+
+        if ($extendingQuery->getCreateTime() != null) {
+            $extendedQuery->taskCreatedOn($extendingQuery->getCreateTime());
+        } elseif ($this->getCreateTime() != null) {
+            $extendedQuery->taskCreatedOn($this->getCreateTime());
+        }
+
+        if ($extendingQuery->getCreateTimeBefore() != null) {
+            $extendedQuery->taskCreatedBefore($extendingQuery->getCreateTimeBefore());
+        } elseif ($this->getCreateTimeBefore() != null) {
+            $extendedQuery->taskCreatedBefore($this->getCreateTimeBefore());
+        }
+
+        if ($extendingQuery->getCreateTimeAfter() != null) {
+            $extendedQuery->taskCreatedAfter($extendingQuery->getCreateTimeAfter());
+        } elseif ($this->getCreateTimeAfter() != null) {
+            $extendedQuery->taskCreatedAfter($this->getCreateTimeAfter());
+        }
+
+        if ($extendingQuery->getKey() != null) {
+            $extendedQuery->taskDefinitionKey($extendingQuery->getKey());
+        } elseif ($this->getKey() != null) {
+            $extendedQuery->taskDefinitionKey($this->getKey());
+        }
+
+        if ($extendingQuery->getKeyLike() != null) {
+            $extendedQuery->taskDefinitionKeyLike($extendingQuery->getKeyLike());
+        } elseif ($this->getKeyLike() != null) {
+            $extendedQuery->taskDefinitionKeyLike($this->getKeyLike());
+        }
+
+        if ($extendingQuery->getKeys() != null) {
+            $extendedQuery->taskDefinitionKeyIn($extendingQuery->getKeys());
+        } elseif ($this->getKeys() != null) {
+            $extendedQuery->taskDefinitionKeyIn($this->getKeys());
+        }
+
+        if ($extendingQuery->getParentTaskId() != null) {
+            $extendedQuery->taskParentTaskId($extendingQuery->getParentTaskId());
+        } elseif ($this->getParentTaskId() != null) {
+            $extendedQuery->taskParentTaskId($this->getParentTaskId());
+        }
+
+        if ($extendingQuery->getProcessDefinitionKey() != null) {
+            $extendedQuery->processDefinitionKey($extendingQuery->getProcessDefinitionKey());
+        } elseif ($this->getProcessDefinitionKey() != null) {
+            $extendedQuery->processDefinitionKey($this->getProcessDefinitionKey());
+        }
+
+        if ($extendingQuery->getProcessDefinitionKeys() != null) {
+            $extendedQuery->processDefinitionKeyIn($extendingQuery->getProcessDefinitionKeys());
+        } elseif ($this->getProcessDefinitionKeys() != null) {
+            $extendedQuery->processDefinitionKeyIn($this->getProcessDefinitionKeys());
+        }
+
+        if ($extendingQuery->getProcessDefinitionId() != null) {
+            $extendedQuery->processDefinitionId($extendingQuery->getProcessDefinitionId());
+        } elseif ($this->getProcessDefinitionId() != null) {
+            $extendedQuery->processDefinitionId($this->getProcessDefinitionId());
+        }
+
+        if ($extendingQuery->getProcessDefinitionName() != null) {
+            $extendedQuery->processDefinitionName($extendingQuery->getProcessDefinitionName());
+        } elseif ($this->getProcessDefinitionName() != null) {
+            $extendedQuery->processDefinitionName($this->getProcessDefinitionName());
+        }
+
+        if ($extendingQuery->getProcessDefinitionNameLike() != null) {
+            $extendedQuery->processDefinitionNameLike($extendingQuery->getProcessDefinitionNameLike());
+        } elseif ($this->getProcessDefinitionNameLike() != null) {
+            $extendedQuery->processDefinitionNameLike($this->getProcessDefinitionNameLike());
+        }
+
+        if ($extendingQuery->getProcessInstanceBusinessKey() != null) {
+            $extendedQuery->processInstanceBusinessKey($extendingQuery->getProcessInstanceBusinessKey());
+        } elseif ($this->getProcessInstanceBusinessKey() != null) {
+            $extendedQuery->processInstanceBusinessKey($this->getProcessInstanceBusinessKey());
+        }
+
+        if ($extendingQuery->getProcessInstanceBusinessKeyLike() != null) {
+            $extendedQuery->processInstanceBusinessKeyLike($extendingQuery->getProcessInstanceBusinessKeyLike());
+        } elseif ($this->getProcessInstanceBusinessKeyLike() != null) {
+            $extendedQuery->processInstanceBusinessKeyLike($this->getProcessInstanceBusinessKeyLike());
+        }
+
+        if ($extendingQuery->getDueDate() != null) {
+            $extendedQuery->dueDate($extendingQuery->getDueDate());
+        } elseif ($this->getDueDate() != null) {
+            $extendedQuery->dueDate($this->getDueDate());
+        }
+
+        if ($extendingQuery->getDueBefore() != null) {
+            $extendedQuery->dueBefore($extendingQuery->getDueBefore());
+        } elseif ($this->getDueBefore() != null) {
+            $extendedQuery->dueBefore($this->getDueBefore());
+        }
+
+        if ($extendingQuery->getDueAfter() != null) {
+            $extendedQuery->dueAfter($extendingQuery->getDueAfter());
+        } elseif ($this->getDueAfter() != null) {
+            $extendedQuery->dueAfter($this->getDueAfter());
+        }
+
+        if ($extendingQuery->isWithoutDueDate() || $this->isWithoutDueDate()) {
+            $extendedQuery->withoutDueDate();
+        }
+
+        if ($extendingQuery->getFollowUpDate() != null) {
+            $extendedQuery->followUpDate($extendingQuery->getFollowUpDate());
+        } elseif ($this->getFollowUpDate() != null) {
+            $extendedQuery->followUpDate($this->getFollowUpDate());
+        }
+
+        if ($extendingQuery->getFollowUpBefore() != null) {
+            $extendedQuery->followUpBefore($extendingQuery->getFollowUpBefore());
+        } elseif ($this->getFollowUpBefore() != null) {
+            $extendedQuery->followUpBefore($this->getFollowUpBefore());
+        }
+
+        if ($extendingQuery->getFollowUpAfter() != null) {
+            $extendedQuery->followUpAfter($extendingQuery->getFollowUpAfter());
+        } elseif ($this->getFollowUpAfter() != null) {
+            $extendedQuery->followUpAfter($this->getFollowUpAfter());
+        }
+
+        if ($extendingQuery->isFollowUpNullAccepted() || $this->isFollowUpNullAccepted()) {
+            $extendedQuery->setFollowUpNullAccepted(true);
+        }
+
+        if ($extendingQuery->isExcludeSubtasks() || $this->isExcludeSubtasks()) {
+            $extendedQuery->excludeSubtasks();
+        }
+
+        if ($extendingQuery->getSuspensionState() != null) {
+            if ($extendingQuery->getSuspensionState() == SuspensionState::active()) {
+                $extendedQuery->active();
+            } elseif ($extendingQuery->getSuspensionState() == SuspensionState::suspended()) {
+                $extendedQuery->suspended();
+            }
+        } elseif ($this->getSuspensionState() != null) {
+            if ($this->getSuspensionState() == SuspensionState::active()) {
+                $extendedQuery->active();
+            } elseif ($this->getSuspensionState() == SuspensionState::suspended()) {
+                $extendedQuery->suspended();
+            }
+        }
+
+        /*if ($extendingQuery->getCaseInstanceId() != null) {
+          $extendedQuery.caseInstanceId($extendingQuery->getCaseInstanceId());
+        }
+        elseif ($this->getCaseInstanceId() != null) {
+          $extendedQuery.caseInstanceId($this->getCaseInstanceId());
+        }
+
+        if ($extendingQuery->getCaseInstanceBusinessKey() != null) {
+          $extendedQuery.caseInstanceBusinessKey($extendingQuery->getCaseInstanceBusinessKey());
+        }
+        elseif ($this->getCaseInstanceBusinessKey() != null) {
+          $extendedQuery.caseInstanceBusinessKey($this->getCaseInstanceBusinessKey());
+        }
+
+        if (extendingQuery->getCaseInstanceBusinessKeyLike() != null) {
+          extendedQuery.caseInstanceBusinessKeyLike(extendingQuery->getCaseInstanceBusinessKeyLike());
+        }
+        elseif ($this->getCaseInstanceBusinessKeyLike() != null) {
+          extendedQuery.caseInstanceBusinessKeyLike($this->getCaseInstanceBusinessKeyLike());
+        }
+
+        if (extendingQuery->getCaseExecutionId() != null) {
+          extendedQuery.caseExecutionId(extendingQuery->getCaseExecutionId());
+        }
+        elseif ($this->getCaseExecutionId() != null) {
+          extendedQuery.caseExecutionId($this->getCaseExecutionId());
+        }
+
+        if (extendingQuery->getCaseDefinitionId() != null) {
+          extendedQuery.caseDefinitionId(extendingQuery->getCaseDefinitionId());
+        }
+        elseif ($this->getCaseDefinitionId() != null) {
+          extendedQuery.caseDefinitionId($this->getCaseDefinitionId());
+        }
+
+        if (extendingQuery->getCaseDefinitionKey() != null) {
+          extendedQuery.caseDefinitionKey(extendingQuery->getCaseDefinitionKey());
+        }
+        elseif ($this->getCaseDefinitionKey() != null) {
+          extendedQuery.caseDefinitionKey($this->getCaseDefinitionKey());
+        }
+
+        if (extendingQuery->getCaseDefinitionName() != null) {
+          extendedQuery.caseDefinitionName(extendingQuery->getCaseDefinitionName());
+        }
+        elseif ($this->getCaseDefinitionName() != null) {
+          extendedQuery.caseDefinitionName($this->getCaseDefinitionName());
+        }
+
+        if (extendingQuery->getCaseDefinitionNameLike() != null) {
+          extendedQuery.caseDefinitionNameLike(extendingQuery->getCaseDefinitionNameLike());
+        }
+        elseif ($this->getCaseDefinitionNameLike() != null) {
+          extendedQuery.caseDefinitionNameLike($this->getCaseDefinitionNameLike());
+        }*/
+
+        if ($extendingQuery->isInitializeFormKeys() || $this->isInitializeFormKeys()) {
+            $extendedQuery->initializeFormKeys();
+        }
+
+        if ($extendingQuery->isTaskNameCaseInsensitive() || $this->isTaskNameCaseInsensitive()) {
+            $extendedQuery->taskNameCaseInsensitive();
+        }
+
+        if ($extendingQuery->getTenantIds() != null) {
+            $extendedQuery->tenantIdIn($extendingQuery->getTenantIds());
+        } elseif ($this->getTenantIds() != null) {
+            $extendedQuery->tenantIdIn($this->getTenantIds());
+        }
+
+        if ($extendingQuery->isWithoutTenantId() || $this->isWithoutTenantId()) {
+            $extendedQuery->withoutTenantId();
+        }
+
+        // merge variables
+        $this->mergeVariables($extendedQuery, $extendingQuery);
+
+        // merge expressions
+        $this->mergeExpressions($extendedQuery, $extendingQuery);
+
+        // include taskAssigned tasks has to be set after expression as it asserts on already set
+        // candidate properties which could be expressions
+        if ($extendingQuery->isIncludeAssignedTasks() || $this->isIncludeAssignedTasks()) {
+            $extendedQuery->includeAssignedTasks();
+        }
+
+        $this->mergeOrdering($extendedQuery, $extendingQuery);
+
+        $extendedQuery->queries = [$extendedQuery];
+
+        if (count($this->queries) > 1) {
+            unset($this->queries[0]);
+            $extendedQuery->queries = array_merge($extendedQuery->queries, $this->queries);
+        }
+
+        if (count($extendingQuery->queries) > 1) {
+            unset($extendingQuery->queries[0]);
+            $extendedQuery->queries = array_merge($extendedQuery->queries, $extendingQuery->queries);
+        }
+
+        return $extendedQuery;
     }
-  
+
     /**
      * Simple implementation of variable merging. Variables are only overridden if they have the same name and are
      * in the same scope (ie are process instance, task or case execution variables).
      */
-    protected void mergeVariables(TaskQueryImpl extendedQuery, TaskQueryImpl extendingQuery) {
-      List<TaskQueryVariableValue> extendingVariables = extendingQuery->getVariables();
-  
-      Set<TaskQueryVariableValueComparable> extendingVariablesComparable = new HashSet<>();
-  
-      // set extending variables and save names for comparison of original variables
-      for (TaskQueryVariableValue extendingVariable : extendingVariables) {
-        extendedQuery.addVariable(extendingVariable);
-        extendingVariablesComparable.add(new TaskQueryVariableValueComparable(extendingVariable));
-      }
-  
-      for (TaskQueryVariableValue originalVariable : $this->getVariables()) {
-        if (!extendingVariablesComparable.contains(new TaskQueryVariableValueComparable(originalVariable))) {
-          extendedQuery.addVariable(originalVariable);
+    protected function mergeVariables(TaskQueryImpl $extendedQuery, TaskQueryImpl $extendingQuery): void
+    {
+        $extendingVariables = $extendingQuery->getVariables();
+
+        $extendingVariablesComparable = [];
+
+        // set extending variables and save names for comparison of original variables
+        foreach ($extendingVariables as $extendingVariable) {
+            $extendedQuery->addVariable($extendingVariable);
+            $extendingVariablesComparable[] = new TaskQueryVariableValueComparable($extendingVariable);
         }
-      }
-  
+
+        foreach ($this->getVariables() as $originalVariable) {
+            if (!in_array(new TaskQueryVariableValueComparable($originalVariable), $extendingVariablesComparable)) {
+                $extendedQuery->addVariable($originalVariable);
+            }
+        }
     }
-  
-    protected class TaskQueryVariableValueComparable {
-  
-      protected TaskQueryVariableValue variableValue;
-  
-      public TaskQueryVariableValueComparable(TaskQueryVariableValue variableValue) {
-        $this->variableValue = variableValue;
-      }
-  
-      public TaskQueryVariableValue getVariableValue() {
-        return variableValue;
-      }
-  
-      @Override
-      public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o->getClass()) return false;
-  
-        TaskQueryVariableValue other = ((TaskQueryVariableValueComparable) o)->getVariableValue();
-  
-        return variableValue->getName().equals(other->getName())
-               && variableValue.isProcessInstanceVariable() == other.isProcessInstanceVariable()
-               && variableValue.isLocal() == other.isLocal();
-      }
-  
-      @Override
-      public int hashCode() {
-        int result = variableValue->getName() != null ? variableValue->getName().hashCode() : 0;
-        result = 31 * result + (variableValue.isProcessInstanceVariable() ? 1 : 0);
-        result = 31 * result + (variableValue.isLocal() ? 1 : 0);
-        return result;
-      }
-  
+
+    public function isFollowUpNullAccepted(): bool
+    {
+        return $this->followUpNullAccepted;
     }
-  
-    public boolean isFollowUpNullAccepted() {
-        return followUpNullAccepted;
-    }
-  
-    public TaskQuery taskNameNotEqual(string $name) {
-        $this->nameNotEqual = name;
+
+    public function taskNameNotEqual(string $name): TaskQueryInterface
+    {
+        $this->nameNotEqual = $name;
         return $this;
     }
-  
-    public TaskQuery taskNameNotLike(string $nameNotLike) {
-        EnsureUtil::ensureNotNull("Task nameNotLike", nameNotLike);
-        $this->nameNotLike = nameNotLike;
+
+    public function taskNameNotLike(string $nameNotLike): TaskQueryInterface
+    {
+        EnsureUtil::ensureNotNull("Task nameNotLike", "nameNotLike", $nameNotLike);
+        $this->nameNotLike = $nameNotLike;
         return $this;
     }
-  
+
     /**
      * @return true if the query is not supposed to find CMMN or standalone tasks
      */
-    public boolean isQueryForProcessTasksOnly() {
-        ProcessEngineConfigurationImpl engineConfiguration = Context::getProcessEngineConfiguration();    
-        return !engineConfiguration.isCmmnEnabled() && !engineConfiguration.isStandaloneTasksEnabled();
+    public function isQueryForProcessTasksOnly(): bool
+    {
+        $engineConfiguration = Context::getProcessEngineConfiguration();
+        return !$engineConfiguration->isStandaloneTasksEnabled();//!engineConfiguration->isCmmnEnabled() &&
     }
-  
-    public TaskQuery or() {
-        if (this != queries->get(0)) {
+
+    public function or(): TaskQueryInterface
+    {
+        if (!empty($this->queries) && $this != $this->queries[0]) {
             throw new ProcessEngineException("Invalid query usage: cannot set or() within 'or' query");
         }
-    
-        TaskQueryImpl orQuery = new TaskQueryImpl();
-        orQuery.isOrQueryActive = true;
-        orQuery.queries = queries;
-        queries.add(orQuery);
-        return orQuery;
+
+        $orQuery = new TaskQueryImpl();
+        $orQuery->isOrQueryActive = true;
+        $orQuery->queries = $this->queries;
+        $queries->add($orQuery);
+        return $orQuery;
     }
-  
-    public TaskQuery endOr() {
-        if (!queries.isEmpty() && this != queries->get(queries.size()-1)) {
+
+    public function endOr(): TaskQueryInterface
+    {
+        if (!empty($this->queries) && $this != $this->queries[count($this->queries) - 1]) {
             throw new ProcessEngineException("Invalid query usage: cannot set endOr() before or()");
         }
-    
-        return queries->get(0);
+
+        return $this->queries[0];
     }
-  
-    public TaskQuery matchVariableNamesIgnoreCase() {
+
+    public function matchVariableNamesIgnoreCase(): TaskQueryInterface
+    {
         $this->variableNamesIgnoreCase = true;
-        for (TaskQueryVariableValue variable : $this->variables) {
-            variable->setVariableNameIgnoreCase(true);
+        foreach ($this->variables as $variable) {
+            $variable->setVariableNameIgnoreCase(true);
         }
         return $this;
     }
-  
-    public TaskQuery matchVariableValuesIgnoreCase() {
+
+    public function matchVariableValuesIgnoreCase(): TaskQueryInterface
+    {
         $this->variableValuesIgnoreCase = true;
-        for (TaskQueryVariableValue variable : $this->variables) {
-            variable->setVariableValueIgnoreCase(true);
+        foreach ($this->variables as $variable) {
+            $variable->setVariableValueIgnoreCase(true);
         }
         return $this;
     }

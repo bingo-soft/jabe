@@ -37,7 +37,7 @@ interface RepositoryServiceInterface
      *
      * @see ProcessApplicationDeploymentBuilder
      */
-    public function createDeployment(?ProcessApplicationReference $processApplication = null): ProcessApplicationDeploymentBuilderInterface;
+    public function createDeployment(ProcessApplicationReference $processApplication = null): ProcessApplicationDeploymentBuilderInterface;
 
     /**
      * Deletes the given deployment.
@@ -49,7 +49,7 @@ interface RepositoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no {@link Permissions#DELETE} permission on {@link Resources#DEPLOYMENT}.
      */
-    public function deleteDeployment(string $deploymentId, ?bool $cascade = false, ?bool $skipCustomListeners = false, bool $skipIoMappings = false): void;
+    public function deleteDeployment(string $deploymentId, bool $cascade = false, bool $skipCustomListeners = false, bool $skipIoMappings = false): void;
 
     /**
      * Deletes the process definition which belongs to the given process definition id.
@@ -69,7 +69,7 @@ interface RepositoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no {@link Permissions#DELETE} permission on {@link Resources#PROCESS_DEFINITION}.
      */
-    public function deleteProcessDefinition(string $processDefinitionId, ?bool $cascade = false, ?bool $skipCustomListeners = false, ?bool $skipIoMappings = false): void;
+    public function deleteProcessDefinition(string $processDefinitionId, bool $cascade = false, bool $skipCustomListeners = false, bool $skipIoMappings = false): void;
 
     /**
      * Fluent builder to delete process definitions.
@@ -166,7 +166,7 @@ interface RepositoryServiceInterface
      *
      * @see RuntimeService#suspendProcessInstanceById(String)
      */
-    public function suspendProcessDefinitionById(string $processDefinitionId, bool $suspendProcessInstances, string $suspensionDate): void;
+    public function suspendProcessDefinitionById(string $processDefinitionId, bool $suspendProcessInstances = null, string $suspensionDate = null): void;
 
     /**
      * Suspends the <strong>all</strong> process definitions with the given key (= id in the bpmn20.xml file).
@@ -196,7 +196,7 @@ interface RepositoryServiceInterface
      *
      * @see RuntimeService#suspendProcessInstanceById(String)
      */
-    public function suspendProcessDefinitionByKey(string $processDefinitionKey, ?bool $suspendProcessInstances = false, ?string $suspensionDate = null): void;
+    public function suspendProcessDefinitionByKey(string $processDefinitionKey, bool $suspendProcessInstances = null, string $suspensionDate = null): void;
 
     /**
      * Activates the process definition with the given id.
@@ -223,7 +223,7 @@ interface RepositoryServiceInterface
      *
      * @see RuntimeService#activateProcessInstanceById(String)
      */
-    public function activateProcessDefinitionById(string $processDefinitionId, ?bool $activateProcessInstances = false, ?string $activationDate = null): void;
+    public function activateProcessDefinitionById(string $processDefinitionId, bool $activateProcessInstances = null, string $activationDate = null): void;
 
     /**
      * Activates the process definition with the given key (=id in the bpmn20.xml file).
@@ -250,7 +250,7 @@ interface RepositoryServiceInterface
      *
      * @see RuntimeService#activateProcessInstanceById(String)
      */
-    public function activateProcessDefinitionByKey(string $processDefinitionKey, ?bool $activateProcessInstances = false, ?string $activationDate = null): void;
+    public function activateProcessDefinitionByKey(string $processDefinitionKey, bool $activateProcessInstances = null, string $activationDate = null): void;
 
     /**
      * Activate or suspend process definitions using a fluent builder. Specify the

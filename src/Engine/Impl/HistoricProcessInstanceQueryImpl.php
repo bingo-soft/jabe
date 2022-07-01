@@ -855,7 +855,7 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         }
         $orQuery = new HistoricProcessInstanceQueryImpl();
         $orQuery->isOrQueryActive = true;
-        $orQuery->queries = $queries;
+        $orQuery->queries = $this->queries;
         $this->queries[] = $orQuery;
         return $orQuery;
     }

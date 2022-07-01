@@ -40,7 +40,7 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
     protected $variablesLocal;
     protected $ancestorActivityInstanceId;
 
-    public function __construct(string $processInstanceId, string $ancestorActivityInstanceId)
+    public function __construct(string $processInstanceId, ?string $ancestorActivityInstanceId = null)
     {
         parent::__construct($processInstanceId);
         $this->ancestorActivityInstanceId = $ancestorActivityInstanceId;

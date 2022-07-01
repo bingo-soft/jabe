@@ -13,7 +13,7 @@ class TransitionInstantiationCmd extends AbstractInstantiationCmd
 {
     protected $transitionId;
 
-    public function __construct(?string $processInstanceId, string $transitionId, ?string $ancestorActivityInstanceId)
+    public function __construct(?string $processInstanceId, string $transitionId, ?string $ancestorActivityInstanceId = null)
     {
         parent::__construct($processInstanceId, $ancestorActivityInstanceId);
         $this->transitionId = $transitionId;

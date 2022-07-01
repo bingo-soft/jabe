@@ -281,6 +281,11 @@ class CommandContext
         return $session;
     }
 
+    public function addSession(string $sessionClass, DbSqlSession $session): void
+    {
+        $this->sessions[$sessionClass] = $session;
+    }
+
     public function getDbEntityManager(): DbEntityManager
     {
         return $this->getSession(DbEntityManager::class);

@@ -23,7 +23,12 @@ class GetDeployedTaskFormCmd extends AbstractGetDeployedFormCmd
 
     protected function getFormData(): FormDataInterface
     {
-        return $this->commandContext->runWithoutAuthorization(new GetTaskFormCmd($this->taskId));
+        $commandContext = $this->commandContext;
+        $taskId = $this->taskId;
+        return $this->commandContext->runWithoutAuthorization(function () use ($commandContext, $taskId) {
+            $cmd = new GetTaskFormCmd($taskId);
+            return $cmd->execute($commandContext);
+        });
     }
 
     protected function checkAuthorization(): void

@@ -24,7 +24,7 @@ interface ProcessInstantiationBuilderInterface extends ActivityInstantiationBuil
     /**
      * Associate a case instance with the process instance
      */
-    public function caseInstanceId(string $caseInstanceId): ProcessInstantiationBuilderInterface;
+    //public function caseInstanceId(string $caseInstanceId): ProcessInstantiationBuilderInterface;
 
     /**
      * Start the process instance.
@@ -40,7 +40,7 @@ interface ProcessInstantiationBuilderInterface extends ActivityInstantiationBuil
      * @return the newly created process instance
      * @see also {@link #executeWithVariablesInReturn(boolean, boolean)}.
      */
-    public function execute(bool $skipCustomListeners, bool $skipIoMappings): ProcessInstanceInterface;
+    public function execute(bool $skipCustomListeners = false, bool $skipIoMappings = false);
 
     /**
      * Start the process instance. If no instantiation instructions are set then
@@ -70,5 +70,5 @@ interface ProcessInstantiationBuilderInterface extends ActivityInstantiationBuil
      *           Use {@link #execute()} instead.
      *
      */
-    public function executeWithVariablesInReturn(bool $skipCustomListeners, bool $skipIoMappings): ProcessInstanceWithVariablesInterface;
+    public function executeWithVariablesInReturn(bool $skipCustomListeners = false, bool $skipIoMappings = false): ProcessInstanceWithVariablesInterface;
 }
