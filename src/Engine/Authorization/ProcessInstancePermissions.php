@@ -91,7 +91,7 @@ class ProcessInstancePermissions implements PermissionInterface
         return self::$SUSPEND;
     }
 
-    private static $UPDATE_VARIABLE = 128;
+    private static $UPDATE_VARIABLE;
 
     public static function updateVariable(): PermissionInterface
     {

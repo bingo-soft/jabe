@@ -20,26 +20,26 @@ class Permissions implements PermissionInterface
                 "NONE",
                 0,
                 [
-                    Resources::APPLICATION,
-                    Resources::USER,
-                    Resources::GROUP,
-                    Resources::GROUP_MEMBERSHIP,
-                    Resources::AUTHORIZATION,
-                    Resources::PROCESS_DEFINITION,
-                    Resources::TASK,
-                    Resources::PROCESS_INSTANCE,
-                    Resources::DEPLOYMENT,
-                    Resources::DECISION_DEFINITION,
-                    Resources::TENANT,
-                    Resources::TENANT_MEMBERSHIP,
-                    Resources::BATCH,
-                    Resources::DECISION_REQUIREMENTS_DEFINITION,
-                    Resources::REPORT,
-                    Resources::DASHBOARD,
-                    Resources::OPERATION_LOG_CATEGORY,
-                    Resources::OPTIMIZE,
-                    Resources::HISTORIC_TASK,
-                    Resources::HISTORIC_PROCESS_INSTANCE
+                    Resources::application(),
+                    Resources::user(),
+                    Resources::group(),
+                    Resources::groupMembership(),
+                    Resources::authorization(),
+                    Resources::processDefinition(),
+                    Resources::task(),
+                    Resources::processInstance(),
+                    Resources::deployment(),
+                    Resources::decisionDefinition(),
+                    Resources::tenant(),
+                    Resources::tenantMembership(),
+                    Resources::batch(),
+                    Resources::decisionRequirementsDefinition(),
+                    Resources::report(),
+                    Resources::dashboard(),
+                    Resources::operationLogCategory(),
+                    Resources::optimize(),
+                    Resources::historicTask(),
+                    Resources::historicProcessInstance()
                 ]
             );
         }
@@ -55,26 +55,26 @@ class Permissions implements PermissionInterface
                 "ALL",
                 PHP_INT_MAX,
                 [
-                    Resources::APPLICATION,
-                    Resources::USER,
-                    Resources::GROUP,
-                    Resources::GROUP_MEMBERSHIP,
-                    Resources::AUTHORIZATION,
-                    Resources::PROCESS_DEFINITION,
-                    Resources::TASK,
-                    Resources::PROCESS_INSTANCE,
-                    Resources::DEPLOYMENT,
-                    Resources::DECISION_DEFINITION,
-                    Resources::TENANT,
-                    Resources::TENANT_MEMBERSHIP,
-                    Resources::BATCH,
-                    Resources::DECISION_REQUIREMENTS_DEFINITION,
-                    Resources::REPORT,
-                    Resources::DASHBOARD,
-                    Resources::OPERATION_LOG_CATEGORY,
-                    Resources::OPTIMIZE,
-                    Resources::HISTORIC_TASK,
-                    Resources::HISTORIC_PROCESS_INSTANCE
+                    Resources::application(),
+                    Resources::user(),
+                    Resources::group(),
+                    Resources::groupMembership(),
+                    Resources::authorization(),
+                    Resources::processDefinition(),
+                    Resources::task(),
+                    Resources::processInstance(),
+                    Resources::deployment(),
+                    Resources::decisionDefinition(),
+                    Resources::tenant(),
+                    Resources::tenantMembership(),
+                    Resources::batch(),
+                    Resources::decisionRequirementsDefinition(),
+                    Resources::report(),
+                    Resources::dashboard(),
+                    Resources::operationLogCategory(),
+                    Resources::optimize(),
+                    Resources::historicTask(),
+                    Resources::historicProcessInstance()
                 ]
             );
         }
@@ -90,19 +90,19 @@ class Permissions implements PermissionInterface
                 "READ",
                 2,
                 [
-                    Resources::USER,
-                    Resources::GROUP,
-                    Resources::AUTHORIZATION,
-                    Resources::PROCESS_DEFINITION,
-                    Resources::TASK,
-                    Resources::PROCESS_INSTANCE,
-                    Resources::DEPLOYMENT,
-                    Resources::DECISION_DEFINITION,
-                    Resources::TENANT,
-                    Resources::BATCH,
-                    Resources::DECISION_REQUIREMENTS_DEFINITION,
-                    Resources::REPORT,
-                    Resources::DASHBOARD
+                    Resources::user(),
+                    Resources::group(),
+                    Resources::authorization(),
+                    Resources::processDefinition(),
+                    Resources::task(),
+                    Resources::processInstance(),
+                    Resources::deployment(),
+                    Resources::decisionDefinition(),
+                    Resources::tenant(),
+                    Resources::batch(),
+                    Resources::decisionRequirementsDefinition(),
+                    Resources::report(),
+                    Resources::dashboard()
                 ]
             );
         }
@@ -118,17 +118,17 @@ class Permissions implements PermissionInterface
                 "UPDATE",
                 4,
                 [
-                    Resources::USER,
-                    Resources::GROUP,
-                    Resources::AUTHORIZATION,
-                    Resources::PROCESS_DEFINITION,
-                    Resources::TASK,
-                    Resources::PROCESS_INSTANCE,
-                    Resources::DECISION_DEFINITION,
-                    Resources::TENANT,
-                    Resources::BATCH,
-                    Resources::REPORT,
-                    Resources::DASHBOARD
+                    Resources::user(),
+                    Resources::group(),
+                    Resources::authorization(),
+                    Resources::processDefinition(),
+                    Resources::task(),
+                    Resources::processInstance(),
+                    Resources::decisionDefinition(),
+                    Resources::tenant(),
+                    Resources::batch(),
+                    Resources::report(),
+                    Resources::dashboard()
                 ]
             );
         }
@@ -144,18 +144,18 @@ class Permissions implements PermissionInterface
                 "CREATE",
                 8,
                 [
-                    Resources::USER,
-                    Resources::GROUP,
-                    Resources::GROUP_MEMBERSHIP,
-                    Resources::AUTHORIZATION,
-                    Resources::TASK,
-                    Resources::PROCESS_INSTANCE,
-                    Resources::DEPLOYMENT,
-                    Resources::TENANT,
-                    Resources::TENANT_MEMBERSHIP,
-                    Resources::BATCH,
-                    Resources::REPORT,
-                    Resources::DASHBOARD
+                    Resources::user(),
+                    Resources::group(),
+                    Resources::groupMembership(),
+                    Resources::authorization(),
+                    Resources::task(),
+                    Resources::processInstance(),
+                    Resources::deployment(),
+                    Resources::tenant(),
+                    Resources::tenantMembership(),
+                    Resources::batch(),
+                    Resources::report(),
+                    Resources::dashboard()
                 ]
             );
         }
@@ -171,19 +171,19 @@ class Permissions implements PermissionInterface
                 "DELETE",
                 16,
                 [
-                    Resources::USER,
-                    Resources::GROUP,
-                    Resources::GROUP_MEMBERSHIP,
-                    Resources::AUTHORIZATION,
-                    Resources::PROCESS_DEFINITION,
-                    Resources::TASK,
-                    Resources::PROCESS_INSTANCE,
-                    Resources::DEPLOYMENT,
-                    Resources::TENANT,
-                    Resources::TENANT_MEMBERSHIP,
-                    Resources::BATCH,
-                    Resources::REPORT,
-                    Resources::DASHBOARD
+                    Resources::user(),
+                    Resources::group(),
+                    Resources::groupMembership(),
+                    Resources::authorization(),
+                    Resources::processDefinition(),
+                    Resources::task(),
+                    Resources::processInstance(),
+                    Resources::deployment(),
+                    Resources::tenant(),
+                    Resources::tenantMembership(),
+                    Resources::batch(),
+                    Resources::report(),
+                    Resources::dashboard()
                 ]
             );
         }
@@ -199,7 +199,7 @@ class Permissions implements PermissionInterface
                 "ACCESS",
                 32,
                 [
-                    Resources::APPLICATION
+                    Resources::application()
                 ]
             );
         }
@@ -215,7 +215,7 @@ class Permissions implements PermissionInterface
                 "READ_TASK",
                 64,
                 [
-                    Resources::PROCESS_DEFINITION
+                    Resources::processDefinition()
                 ]
             );
         }
@@ -231,7 +231,7 @@ class Permissions implements PermissionInterface
                 "UPDATE_TASK",
                 128,
                 [
-                    Resources::PROCESS_DEFINITION
+                    Resources::processDefinition()
                 ]
             );
         }
@@ -247,8 +247,8 @@ class Permissions implements PermissionInterface
                 "CREATE_INSTANCE",
                 256,
                 [
-                    Resources::DECISION_DEFINITION,
-                    Resources::PROCESS_DEFINITION
+                    Resources::decisionDefinition(),
+                    Resources::processDefinition()
                 ]
             );
         }
@@ -264,7 +264,7 @@ class Permissions implements PermissionInterface
                 "READ_INSTANCE",
                 512,
                 [
-                    Resources::PROCESS_DEFINITION
+                    Resources::processDefinition()
                 ]
             );
         }
@@ -280,7 +280,7 @@ class Permissions implements PermissionInterface
                 "UPDATE_INSTANCE",
                 1024,
                 [
-                    Resources::PROCESS_DEFINITION
+                    Resources::processDefinition()
                 ]
             );
         }
@@ -296,7 +296,7 @@ class Permissions implements PermissionInterface
                 "DELETE_INSTANCE",
                 2048,
                 [
-                    Resources::PROCESS_DEFINITION
+                    Resources::processDefinition()
                 ]
             );
         }
@@ -312,10 +312,10 @@ class Permissions implements PermissionInterface
                 "READ_HISTORY",
                 4096,
                 [
-                    Resources::BATCH,
-                    Resources::DECISION_DEFINITION,
-                    Resources::PROCESS_DEFINITION,
-                    Resources::TASK
+                    Resources::batch(),
+                    Resources::decisionDefinition(),
+                    Resources::processDefinition(),
+                    Resources::task()
                 ]
             );
         }
@@ -331,9 +331,9 @@ class Permissions implements PermissionInterface
                 "DELETE_HISTORY",
                 8192,
                 [
-                    Resources::BATCH,
-                    Resources::DECISION_DEFINITION,
-                    Resources::PROCESS_DEFINITION
+                    Resources::batch(),
+                    Resources::decisionDefinition(),
+                    Resources::processDefinition()
                 ]
             );
         }
@@ -349,8 +349,8 @@ class Permissions implements PermissionInterface
                 "TASK_WORK",
                 16384,
                 [
-                    Resources::PROCESS_DEFINITION,
-                    Resources::TASK
+                    Resources::processDefinition(),
+                    Resources::task()
                 ]
             );
         }
@@ -366,8 +366,8 @@ class Permissions implements PermissionInterface
                 "TASK_ASSIGN",
                 32768,
                 [
-                    Resources::PROCESS_DEFINITION,
-                    Resources::TASK
+                    Resources::processDefinition(),
+                    Resources::task()
                 ]
             );
         }
@@ -383,7 +383,7 @@ class Permissions implements PermissionInterface
                 "MIGRATE_INSTANCE",
                 65536,
                 [
-                    Resources::PROCESS_DEFINITION
+                    Resources::processDefinition()
                 ]
             );
         }

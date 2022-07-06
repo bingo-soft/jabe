@@ -10,7 +10,7 @@ class JobStateImpl implements JobStateInterface
     public function __construct(int $stateCode, string $string)
     {
         $this->stateCode = $stateCode;
-        $this->name = string;
+        $this->name = $string;
     }
 
     public function getStateCode(): int
@@ -25,21 +25,21 @@ class JobStateImpl implements JobStateInterface
 
     public static function created(): JobStateInterface
     {
-        return new ExternalTaskStateImpl(0, "created");
+        return new JobStateImpl(0, "created");
     }
 
     public static function failed(): JobStateInterface
     {
-        return new ExternalTaskStateImpl(1, "failed");
+        return new JobStateImpl(1, "failed");
     }
 
     public static function successful(): JobStateInterface
     {
-        return new ExternalTaskStateImpl(2, "successful");
+        return new JobStateImpl(2, "successful");
     }
 
     public static function deleted(): JobStateInterface
     {
-        return new ExternalTaskStateImpl(3, "successful");
+        return new JobStateImpl(3, "successful");
     }
 }

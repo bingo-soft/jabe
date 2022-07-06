@@ -265,7 +265,7 @@ abstract class AbstractManager implements SessionInterface
 
     // authorizations ///////////////////////////////////////
 
-    protected function getCommandContext(): CommandContext
+    protected function getCommandContext(): ?CommandContext
     {
         return Context::getCommandContext();
     }

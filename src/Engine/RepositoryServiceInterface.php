@@ -292,7 +292,7 @@ interface RepositoryServiceInterface
      *
      * @param processDefinitionId
      *          id of a {@link ProcessDefinition}, cannot be null.
-     * @return null when the diagram resource name of a {@link ProcessDefinition} is null.
+     * @return mixed null when the diagram resource name of a {@link ProcessDefinition} is null.
      *
      * @throws ProcessEngineException
      *           when the process diagram doesn't exist.
@@ -319,14 +319,14 @@ interface RepositoryServiceInterface
      * @param processDefinitionId id of a {@link ProcessDefinition}, cannot be null.
      * @return Map with process element ids as keys and positions and dimensions as values.
      *
-     * @return null when the input stream of a process diagram is null.
+     * @return DiagramLayout null when the input stream of a process diagram is null.
      *
      * @throws ProcessEngineException
      *          When the process model or diagram doesn't exist.
      * @throws AuthorizationException
      *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.
      */
-    public function getProcessDiagramLayout(string $processDefinitionId): DiagramLayout;
+    public function getProcessDiagramLayout(string $processDefinitionId): ?DiagramLayout;
 
     /**
      * Returns the {@link BpmnModelInstance} for the given processDefinitionId.

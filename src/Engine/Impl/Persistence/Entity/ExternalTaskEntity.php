@@ -320,7 +320,7 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
      * Method implementation relies on the command context object,
      * therefore should be invoked from the commands only
      *
-     * @return error details persisted in byte array table
+     * @return string error details persisted in byte array table
      */
     public function getErrorDetails(): string
     {

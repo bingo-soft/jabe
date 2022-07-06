@@ -10,7 +10,7 @@ class IncidentStateImpl implements IncidentStateInterface
     public function __construct(int $suspensionCode, string $string)
     {
         $this->stateCode = $suspensionCode;
-        $this->name = string;
+        $this->name = $string;
     }
 
     public function getStateCode(): int

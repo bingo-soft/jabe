@@ -221,7 +221,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
         return self::$SUSPEND;
     }
 
-    private static $READ_INSTANCE_VARIABLE = 2097152;
+    private static $READ_INSTANCE_VARIABLE;
 
     public static function readInstanceVariable(): PermissionInterface
     {

@@ -29,7 +29,7 @@ abstract class ELResolver
      * @param base
      *            The base object to return the most general property type for, or null to enumerate
      *            the set of top-level variables that this resolver can evaluate.
-     * @return null if this ELResolver does not know how to handle the given base object; otherwise
+     * @return string null if this ELResolver does not know how to handle the given base object; otherwise
      *         Object.class if any type of property is accepted; otherwise the most general property
      *         type accepted for the given base.
      */

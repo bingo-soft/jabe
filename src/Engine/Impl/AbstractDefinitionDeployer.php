@@ -121,7 +121,7 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
      * Note that if abc.a.png, abc.b.png and abc.c.png don't exist, all
      * processes will have the same image: abc.png.
      *
-     * @return null if no matching image resource is found.
+     * @return string null if no matching image resource is found.
      */
     protected function getDiagramResourceForDefinition(DeploymentEntity $deployment, string $resourceName, DefinitionEntity $definition, array $resources): ?string
     {
@@ -350,12 +350,12 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
         return $definitionId;
     }
 
-    protected function getProcessEngineConfiguration(): ProcessEngineConfigurationImpl
+    protected function getProcessEngineConfiguration(): ?ProcessEngineConfigurationImpl
     {
         return Context::getProcessEngineConfiguration();
     }
 
-    protected function getCommandContext(): CommandContext
+    protected function getCommandContext(): ?CommandContext
     {
         return Context::getCommandContext();
     }

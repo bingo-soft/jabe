@@ -2,10 +2,6 @@
 
 namespace Jabe\Engine\Authorization;
 
-use Jabe\Engine\Authorization\{
-    PermissionInterface,
-    ResourceInterface
-};
 use Jabe\Engine\Query\QueryInterface;
 
 interface AuthorizationQuery extends QueryInterface

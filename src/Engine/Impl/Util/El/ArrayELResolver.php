@@ -28,7 +28,7 @@ class ArrayELResolver extends ELResolver
      * @param base
      *            The array to analyze. Only bases that are a Java language array are handled by
      *            this resolver.
-     * @return null if base is not a Java language array; otherwise Integer.class.
+     * @return string null if base is not a Java language array; otherwise Integer.class.
      */
     public function getCommonPropertyType(?ELContext $context, $base): ?string
     {
@@ -45,7 +45,7 @@ class ArrayELResolver extends ELResolver
      * @param base
      *            The array to analyze. Only bases that are a Java language array are handled by
      *            this resolver.
-     * @return null.
+     * @return array null.
      */
     public function getFeatureDescriptors(?ELContext $context, $base): ?array
     {

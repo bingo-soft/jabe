@@ -20,7 +20,7 @@ use Jabe\Engine\Query\{
     QueryPropertyInterface
 };
 
-abstract class AbstractQuery extends ListQueryParameterObject implements CommandInterface
+abstract class AbstractQuery extends ListQueryParameterObject implements CommandInterface, QueryInterface
 {
     public const SORTORDER_ASC = "asc";
     public const SORTORDER_DESC = "desc";
@@ -57,11 +57,11 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
         return $this;
     }
 
-    public function orderBy(QueryPropertyInterface $property): QueryInterface
+    public function orderBy($property): QueryInterface
     {
         if ($property instanceof QueryPropertyInterface) {
             return $this->orderBy(new QueryOrderingProperty(null, $property));
-        } elseif ($property instanceof QueryOrderingProperty) {
+        } else /*if ($property instanceof QueryOrderingProperty)*/{
             $this->orderingProperties[] = $property;
             return $this;
         }
@@ -133,7 +133,7 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
 
         switch ($resultType) {
             case self::RESULT_TYPES['SINGLE_RESULT']:
-                return executeSingleResult(Context::getCommandContext());
+                return $this->executeSingleResult(Context::getCommandContext());
             case self::RESULT_TYPES['LIST_PAGE']:
             case self::RESULT_TYPES['LIST']:
                 return $this->evaluateExpressionsAndExecuteList(Context::getCommandContext(), null);
@@ -273,7 +273,7 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
 
     protected function getMethod(string $methodName): \ReflectionMethod
     {
-        $ref = new ReflectionClass($this);
+        $ref = new \ReflectionClass($this);
         foreach ($ref->getMethods() as $method) {
             if ($method->name == $methodName) {
                 return $method;

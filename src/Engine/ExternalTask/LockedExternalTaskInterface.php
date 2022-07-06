@@ -77,7 +77,7 @@ interface LockedExternalTaskInterface
     public function getErrorMessage(): string;
 
     /**
-     * @return error details submitted with the latest reported failure executing this task;
+     * @return string error details submitted with the latest reported failure executing this task;
      *   <code>null</code> if no failure was reported previously or if no error details
      *   was submitted
      *

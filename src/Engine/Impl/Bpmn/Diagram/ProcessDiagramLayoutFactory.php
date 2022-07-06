@@ -44,7 +44,7 @@ class ProcessDiagramLayoutFactory
      *          BPMN 2.0 diagram in PNG format (JPEG and other formats supported
      *          by {@link ImageIO} may also work)
      * @return Layout of the process diagram
-     * @return null when parameter imageStream is null
+     * @return DiagramLayout null when parameter imageStream is null
      */
     public function getProcessDiagramLayout($bpmnXmlStream, $imageStream = null): ?DiagramLayout
     {
@@ -62,7 +62,7 @@ class ProcessDiagramLayoutFactory
      *          BPMN 2.0 diagram in PNG format (JPEG and other formats supported
      *          by {@link ImageIO} may also work)
      * @return Layout of the process diagram
-     * @return null when parameter imageStream is null
+     * @return DiagramLayout null when parameter imageStream is null
      */
     public function getBpmnProcessDiagramLayout(DomDocumentExt $bpmnModel, $imageStream = null): ?DiagramLayout
     {

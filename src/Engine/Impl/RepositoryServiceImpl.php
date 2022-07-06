@@ -256,7 +256,7 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
         return $this->commandExecutor->execute(new GetDeploymentCaseDiagramCmd(caseDefinitionId));
     }*/
 
-    public function getProcessDiagramLayout(string $processDefinitionId): DiagramLayout
+    public function getProcessDiagramLayout(string $processDefinitionId): ?DiagramLayout
     {
         return $this->commandExecutor->execute(new GetDeploymentProcessDiagramLayoutCmd($processDefinitionId));
     }
