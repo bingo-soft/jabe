@@ -21,7 +21,7 @@ abstract class AbstractCompensateEventDefinitionBuilder extends AbstractRootElem
     public function activityRef(string $activityId): AbstractCompensateEventDefinitionBuilder
     {
         $activity = $this->modelInstance->getModelElementById($activityId);
-        if ($activity == null) {
+        if ($activity === null) {
             throw new BpmnModelException(sprintf("Activity with id '%s' does not exist", $activityId));
         }
         $event = $this->element->getParentElement();

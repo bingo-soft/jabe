@@ -29,7 +29,7 @@ class FormValidators
         if ("validator" == $name) {
             // custom validators
 
-            if ($config == null || empty($config)) {
+            if ($config === null || empty($config)) {
                 $bpmnParse->addError(
                     "validator configuration needs to provide either a fully " .
                     "qualified classname or an expression resolving to a custom FormFieldValidator implementation.",
@@ -51,7 +51,7 @@ class FormValidators
             if (array_key_exists($name, $this->validators)) {
                 $validator = $this->validators[$name];
             }
-            if ($validator != null) {
+            if ($validator !== null) {
                 $validatorInstance = $this->createValidatorInstance($validator);
                 return $validatorInstance;
             } else {

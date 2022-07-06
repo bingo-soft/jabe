@@ -74,17 +74,17 @@ class CompleteTaskCmd implements CommandInterface, \Serializable
         $execution = $task->getProcessInstance();
         $variablesListener = null;
 
-        if ($this->returnVariables && $execution != null) {
+        if ($this->returnVariables && $execution !== null) {
             $variablesListener = new ExecutionVariableSnapshotObserver($execution, false, $this->deserializeReturnedVariables);
         }
 
         $this->completeTask($task);
 
         if ($this->returnVariables) {
-            if ($variablesListener != null) {
+            if ($variablesListener !== null) {
                 return $variablesListener->getVariables();
             } else {
-                //return $task->getCaseDefinitionId() != null ? null : $task->getVariablesTyped(false);
+                //return $task->getCaseDefinitionId() !== null ? null : $task->getVariablesTyped(false);
                 return $task->getVariablesTyped(false);
             }
         } else {

@@ -26,7 +26,7 @@ class SchemaLogQueryImpl extends AbstractQuery implements SchemaLogQueryInterfac
 
     public static function timestamp(): QueryPropertyImpl
     {
-        if (self::$TIMESTAMP_PROPERTY == null) {
+        if (self::$TIMESTAMP_PROPERTY === null) {
             self::$TIMESTAMP_PROPERTY = new QueryPropertyImpl("TIMESTAMP_");
         }
         return self::$TIMESTAMP_PROPERTY;

@@ -39,7 +39,7 @@ class TenantManager extends AbstractManager
 
     public function isAuthenticatedTenant(?string $tenantId): bool
     {
-        if ($tenantId != null && $this->isTenantCheckEnabled()) {
+        if ($tenantId !== null && $this->isTenantCheckEnabled()) {
             $currentAuthentication = $this->getCurrentAuthentication();
             $authenticatedTenantIds = $currentAuthentication->getTenantIds();
             if (!empty($authenticatedTenantIds)) {
@@ -56,7 +56,7 @@ class TenantManager extends AbstractManager
     {
         return Context::getProcessEngineConfiguration()->isTenantCheckEnabled()
             && Context::getCommandContext()->isTenantCheckEnabled()
-            && $this->getCurrentAuthentication() != null
+            && $this->getCurrentAuthentication() !== null
             && !$this->getAuthorizationManager()->isAdmin($this->getCurrentAuthentication());
     }
 }

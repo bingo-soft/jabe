@@ -24,7 +24,7 @@ class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer
 
         $cachedEntity = $this->findInCache(HistoricActivityInstanceEventEntity::class, $activityInstanceId);
 
-        if ($cachedEntity != null) {
+        if ($cachedEntity !== null) {
             return $cachedEntity;
         } else {
             return $this->newActivityInstanceEventEntity($execution);
@@ -37,7 +37,7 @@ class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer
 
         $cachedEntity = $this->findInCache(HistoricProcessInstanceEventEntity::class, $processInstanceId);
 
-        if ($cachedEntity != null) {
+        if ($cachedEntity !== null) {
             return $cachedEntity;
         } else {
             return $this->newProcessInstanceEventEntity($execution);
@@ -50,7 +50,7 @@ class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer
 
         $cachedEntity = $this->findInCache(HistoricTaskInstanceEventEntity::class, $taskId);
 
-        if ($cachedEntity != null) {
+        if ($cachedEntity !== null) {
             return $cachedEntity;
         } else {
             return $this->newTaskInstanceEventEntity($task);
@@ -63,7 +63,7 @@ class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer
 
         $cachedEntity = $this->findInCache(HistoricIncidentEventEntity::class, $incidentId);
 
-        if ($cachedEntity != null) {
+        if ($cachedEntity !== null) {
             return $cachedEntity;
         } else {
             return $this->newIncidentEventEntity($incident);
@@ -76,7 +76,7 @@ class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer
 
         $cachedEntity = $this->findInCache(HistoricBatchEntity::class, $batchId);
 
-        if ($cachedEntity != null) {
+        if ($cachedEntity !== null) {
             return $cachedEntity;
         } else {
             return $this->newBatchEventEntity($batch);

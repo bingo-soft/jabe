@@ -22,7 +22,7 @@ class HistoricJobLogQueryProperty
 
     public static function jobId(): QueryPropertyImpl
     {
-        if (self::$JOB_ID == null) {
+        if (self::$JOB_ID === null) {
             self::$JOB_ID = new QueryPropertyImpl("JOB_ID_");
         }
         return self::$JOB_ID;
@@ -30,7 +30,7 @@ class HistoricJobLogQueryProperty
 
     public static function jobDefinitionId(): QueryPropertyImpl
     {
-        if (self::$JOB_DEFINITION_ID == null) {
+        if (self::$JOB_DEFINITION_ID === null) {
             self::$JOB_DEFINITION_ID = new QueryPropertyImpl("JOB_DEF_ID_");
         }
         return self::$JOB_DEFINITION_ID;
@@ -38,7 +38,7 @@ class HistoricJobLogQueryProperty
 
     public static function timestamp(): QueryPropertyImpl
     {
-        if (self::$TIMESTAMP == null) {
+        if (self::$TIMESTAMP === null) {
             self::$TIMESTAMP = new QueryPropertyImpl("TIMESTAMP_");
         }
         return self::$TIMESTAMP;
@@ -46,7 +46,7 @@ class HistoricJobLogQueryProperty
 
     public static function activityId(): QueryPropertyImpl
     {
-        if (self::$ACTIVITY_ID == null) {
+        if (self::$ACTIVITY_ID === null) {
             self::$ACTIVITY_ID = new QueryPropertyImpl("ACT_ID_");
         }
         return self::$ACTIVITY_ID;
@@ -54,7 +54,7 @@ class HistoricJobLogQueryProperty
 
     public static function executionId(): QueryPropertyImpl
     {
-        if (self::$EXECUTION_ID == null) {
+        if (self::$EXECUTION_ID === null) {
             self::$EXECUTION_ID = new QueryPropertyImpl("EXECUTION_ID_");
         }
         return self::$EXECUTION_ID;
@@ -62,7 +62,7 @@ class HistoricJobLogQueryProperty
 
     public static function processInstanceId(): QueryPropertyImpl
     {
-        if (self::$PROCESS_INSTANCE_ID == null) {
+        if (self::$PROCESS_INSTANCE_ID === null) {
             self::$PROCESS_INSTANCE_ID = new QueryPropertyImpl("PROCESS_INSTANCE_ID_");
         }
         return self::$PROCESS_INSTANCE_ID;
@@ -70,7 +70,7 @@ class HistoricJobLogQueryProperty
 
     public static function processDefinitionId(): QueryPropertyImpl
     {
-        if (self::$PROCESS_DEFINITION_ID == null) {
+        if (self::$PROCESS_DEFINITION_ID === null) {
             self::$PROCESS_DEFINITION_ID = new QueryPropertyImpl("PROCESS_DEF_ID_");
         }
         return self::$PROCESS_DEFINITION_ID;
@@ -78,7 +78,7 @@ class HistoricJobLogQueryProperty
 
     public static function processDefinitionKey(): QueryPropertyImpl
     {
-        if (self::$PROCESS_DEFINITION_KEY == null) {
+        if (self::$PROCESS_DEFINITION_KEY === null) {
             self::$PROCESS_DEFINITION_KEY = new QueryPropertyImpl("PROCESS_DEF_KEY_");
         }
         return self::$PROCESS_DEFINITION_KEY;
@@ -86,7 +86,7 @@ class HistoricJobLogQueryProperty
 
     public static function deploymentId(): QueryPropertyImpl
     {
-        if (self::$DEPLOYMENT_ID == null) {
+        if (self::$DEPLOYMENT_ID === null) {
             self::$DEPLOYMENT_ID = new QueryPropertyImpl("DEPLOYMENT_ID_");
         }
         return self::$DEPLOYMENT_ID;
@@ -94,7 +94,7 @@ class HistoricJobLogQueryProperty
 
     public static function duedate(): QueryPropertyImpl
     {
-        if (self::$DUEDATE == null) {
+        if (self::$DUEDATE === null) {
             self::$DUEDATE = new QueryPropertyImpl("JOB_DUEDATE_");
         }
         return self::$DUEDATE;
@@ -102,7 +102,7 @@ class HistoricJobLogQueryProperty
 
     public static function retries(): QueryPropertyImpl
     {
-        if (self::$RETRIES == null) {
+        if (self::$RETRIES === null) {
             self::$RETRIES = new QueryPropertyImpl("JOB_RETRIES_");
         }
         return self::$RETRIES;
@@ -110,7 +110,7 @@ class HistoricJobLogQueryProperty
 
     public static function priority(): QueryPropertyImpl
     {
-        if (self::$PRIORITY == null) {
+        if (self::$PRIORITY === null) {
             self::$PRIORITY = new QueryPropertyImpl("JOB_PRIORITY_");
         }
         return self::$PRIORITY;
@@ -118,7 +118,7 @@ class HistoricJobLogQueryProperty
 
     public static function sequenceCounter(): QueryPropertyImpl
     {
-        if (self::$SEQUENCE_COUNTER == null) {
+        if (self::$SEQUENCE_COUNTER === null) {
             self::$SEQUENCE_COUNTER = new QueryPropertyImpl("SEQUENCE_COUNTER_");
         }
         return self::$SEQUENCE_COUNTER;
@@ -126,7 +126,7 @@ class HistoricJobLogQueryProperty
 
     public static function tenantId(): QueryPropertyImpl
     {
-        if (self::$TENANT_ID == null) {
+        if (self::$TENANT_ID === null) {
             self::$TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
         }
         return self::$TENANT_ID;
@@ -134,7 +134,7 @@ class HistoricJobLogQueryProperty
 
     public static function hostname(): QueryPropertyImpl
     {
-        if (self::$HOSTNAME == null) {
+        if (self::$HOSTNAME === null) {
             self::$HOSTNAME = new QueryPropertyImpl("HOSTNAME_");
         }
         return self::$HOSTNAME;

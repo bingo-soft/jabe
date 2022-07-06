@@ -19,7 +19,7 @@ class SaxParser
 
     public static function getInstance()
     {
-        if (self::$INSTANCE == null) {
+        if (self::$INSTANCE === null) {
             self::$INSTANCE = new SaxParser(xml_parser_create());
             self::$INSTANCE->free(false);
         }
@@ -33,7 +33,7 @@ class SaxParser
 
     public function free(bool $flag = true): void
     {
-        if ($flag && $this->xmlParser != null) {
+        if ($flag && $this->xmlParser !== null) {
             xml_parser_free($this->xmlParser);
             $this->xmlParser = null;
             $this->isFree = $flag;
@@ -50,7 +50,7 @@ class SaxParser
 
     public function getXmlParser()
     {
-        if ($this->xmlParser == null) {
+        if ($this->xmlParser === null) {
             $this->init();
         }
         return $this->xmlParser;

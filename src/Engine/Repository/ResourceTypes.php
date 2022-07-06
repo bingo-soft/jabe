@@ -12,7 +12,7 @@ class ResourceTypes implements ResourceTypeInterface
 
     public static function repository(): ResourceTypeInterface
     {
-        if (self::$REPOSITORY == null) {
+        if (self::$REPOSITORY === null) {
             self::$REPOSITORY = new ResourceTypes('REPOSITORY', 1);
         }
         return self::$REPOSITORY;
@@ -20,7 +20,7 @@ class ResourceTypes implements ResourceTypeInterface
 
     public static function runtime(): ResourceTypeInterface
     {
-        if (self::$RUNTIME == null) {
+        if (self::$RUNTIME === null) {
             self::$RUNTIME = new ResourceTypes('RUNTIME', 2);
         }
         return self::$RUNTIME;
@@ -28,7 +28,7 @@ class ResourceTypes implements ResourceTypeInterface
 
     public static function history(): ResourceTypeInterface
     {
-        if (self::$HISTORY == null) {
+        if (self::$HISTORY === null) {
             self::$HISTORY = new ResourceTypes('HISTORY', 3);
         }
         return self::$HISTORY;

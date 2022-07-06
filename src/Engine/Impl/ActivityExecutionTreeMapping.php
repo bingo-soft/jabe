@@ -105,8 +105,8 @@ class ActivityExecutionTreeMapping
     {
         foreach ($leaves as $leaf) {
             $activity = $leaf->getActivity();
-            if ($activity != null) {
-                if ($leaf->getActivityInstanceId() != null) {
+            if ($activity !== null) {
+                if ($leaf->getActivityInstanceId() !== null) {
                     EnsureUtil::ensureNotNull("activity", "activity", $activity);
                     $this->submitExecution($leaf, $activity);
                 }

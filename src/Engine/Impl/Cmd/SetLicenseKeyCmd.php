@@ -27,7 +27,7 @@ class SetLicenseKeyCmd extends LicenseCmd implements CommandInterface
 
         $resourceManager = $commandContext->getResourceManager();
         $key = $resourceManager->findLicenseKeyResource();
-        if ($key != null) {
+        if ($key !== null) {
             (new DeleteLicenseKeyCmd(false, false))->execute($commandContext);
         }
         $key = new ResourceEntity();
@@ -54,7 +54,7 @@ class SetLicenseKeyCmd extends LicenseCmd implements CommandInterface
         $currentLicenseData = $managementService->getLicenseKeyFromTelemetry();
         // only report license body without signature
         $licenseKeyData = LicenseKeyDataImpl::fromRawString($this->licenseKey);
-        if ($currentLicenseData == null || $licenseKeyData->getRaw() != $currentLicenseData->getRaw()) {
+        if ($currentLicenseData === null || $licenseKeyData->getRaw() != $currentLicenseData->getRaw()) {
             $managementService->setLicenseKeyForTelemetry($licenseKeyData);
         }
 

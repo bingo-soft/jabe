@@ -142,12 +142,12 @@ class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategyInterface
             }
 
             $numJobsSubmittedForExecution = count($acquiredJobBatches);
-            if ($resubmittedJobBatches != null) {
+            if ($resubmittedJobBatches !== null) {
                 $numJobsSubmittedForExecution += count($resubmittedJobBatches);
             }
 
             $numJobsRejected = 0;
-            if ($rejectedJobBatches != null) {
+            if ($rejectedJobBatches !== null) {
                 $numJobsRejected += count($rejectedJobBatches);
             }
 
@@ -165,7 +165,7 @@ class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategyInterface
         if ($context->isJobAdded()) {
             $this->idleLevel = 0;
         } else {
-            if ($context->areAllEnginesIdle() || $context->getAcquisitionException() != null) {
+            if ($context->areAllEnginesIdle() || $context->getAcquisitionException() !== null) {
                 if ($this->idleLevel < $this->maxIdleLevel) {
                     $this->idleLevel += 1;
                 }
@@ -206,7 +206,7 @@ class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategyInterface
             if (array_key_exists($engineName, $rejectedJobsByEngine)) {
                 $rejectedJobBatchesForEngine = $rejectedJobsByEngine[$engineName];
             }
-            if ($rejectedJobBatchesForEngine != null) {
+            if ($rejectedJobBatchesForEngine !== null) {
                 $numJobsToAcquire -= count($rejectedJobBatchesForEngine);
             }
             $numJobsToAcquire = max(0, $numJobsToAcquire);

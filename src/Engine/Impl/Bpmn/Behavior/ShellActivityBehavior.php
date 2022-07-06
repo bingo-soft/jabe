@@ -56,9 +56,9 @@ class ShellActivityBehavior extends AbstractBpmnActivityBehavior
         $redirectErrorStr = $this->getStringFromField($this->redirectError, $execution);
         $cleanEnvStr = $this->getStringFromField($this->cleanEnv, $execution);
 
-        $this->waitFlag = $this->waitStr == null || $this->waitStr == "true";
-        $this->redirectErrorFlag = $redirectErrorStr != null && $redirectErrorStr == "true";
-        $this->cleanEnvBoolan = $cleanEnvStr != null && $cleanEnvStr == "true";
+        $this->waitFlag = $this->waitStr === null || $this->waitStr == "true";
+        $this->redirectErrorFlag = $redirectErrorStr !== null && $redirectErrorStr == "true";
+        $this->cleanEnvBoolan = $cleanEnvStr !== null && $cleanEnvStr == "true";
         $this->directoryStr = $this->getStringFromField($this->directory, $execution);
     }
 
@@ -69,19 +69,19 @@ class ShellActivityBehavior extends AbstractBpmnActivityBehavior
         $argList = [];
         $argList[] = $this->commandStr;
 
-        if ($this->arg1Str != null) {
+        if ($this->arg1Str !== null) {
             $argList[] = $this->arg1Str;
         }
-        if ($this->arg2Str != null) {
+        if ($this->arg2Str !== null) {
             $argList[] = $this->arg2Str;
         }
-        if ($this->arg3Str != null) {
+        if ($this->arg3Str !== null) {
             $argList[] = $this->arg3Str;
         }
-        if ($this->arg4Str != null) {
+        if ($this->arg4Str !== null) {
             $argList[] = $this->arg4Str;
         }
-        if ($this->arg5Str != null) {
+        if ($this->arg5Str !== null) {
             $argList[] = $this->arg5Str;
         }
 
@@ -93,12 +93,12 @@ class ShellActivityBehavior extends AbstractBpmnActivityBehavior
             if ($this->waitFlag) {
                 $errorCode = $process->wait();
 
-                if ($this->resultVariableStr != null) {
+                if ($this->resultVariableStr !== null) {
                     $result = $process->getOutput();
                     $execution->setVariable($this->resultVariableStr, $result);
                 }
 
-                if ($this->errorCodeVariableStr != null) {
+                if ($this->errorCodeVariableStr !== null) {
                     $execution->setVariable($this->errorCodeVariableStr, intval($errorCode));
                 }
             }
@@ -112,9 +112,9 @@ class ShellActivityBehavior extends AbstractBpmnActivityBehavior
 
     protected function getStringFromField(?ExpressionInterface $expression, DelegateExecutionInterface $execution): ?string
     {
-        if ($arg2expression != null) {
+        if ($arg2expression !== null) {
             $value = $expression->getValue($execution);
-            if ($value != null) {
+            if ($value !== null) {
                 return $value;
             }
         }

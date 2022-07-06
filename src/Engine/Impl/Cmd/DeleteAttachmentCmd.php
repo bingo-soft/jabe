@@ -45,13 +45,13 @@ class DeleteAttachmentCmd implements CommandInterface, \Serializable
             ->getDbEntityManager()
             ->delete($attachment);
 
-        if ($attachment->getContentId() != null) {
+        if ($attachment->getContentId() !== null) {
             $commandContext
             ->getByteArrayManager()
             ->deleteByteArrayById($attachment->getContentId());
         }
 
-        if ($attachment->getTaskId() != null) {
+        if ($attachment->getTaskId() !== null) {
             $task = $commandContext
                 ->getTaskManager()
                 ->findTaskById($attachment->getTaskId());

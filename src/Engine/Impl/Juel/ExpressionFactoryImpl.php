@@ -21,17 +21,17 @@ class ExpressionFactoryImpl extends ExpressionFactory
 
     public function __construct(?Profile $profile = null, ?TreeStore $store = null, ?TypeConverter $converter = null)
     {
-        if ($profile == null) {
+        if ($profile === null) {
             $profile = new Profile(Profile::DEFAULT);
         }
         $features = $profile->features();
-        if ($store == null && $converter == null) {
+        if ($store === null && $converter === null) {
             $this->store = $this->createTreeStore($features);
             $this->converter = TypeConverter::getDefault();
-        } elseif ($store != null && $converter == null) {
+        } elseif ($store !== null && $converter === null) {
             $this->store = $store;
             $this->converter = TypeConverter::getDefault();
-        } elseif ($store == null && $converter != null) {
+        } elseif ($store === null && $converter !== null) {
             $this->store = $this->createTreeStore($features);
             $this->converter = $converter;
         } else {
@@ -59,7 +59,7 @@ class ExpressionFactoryImpl extends ExpressionFactory
 
     public function createValueExpression(?ELContext $context = null, ?string $expression = null, $instance = null, ?string $expectedType = null): ValueExpression
     {
-        if ($instance != null) {
+        if ($instance !== null) {
             return new ObjectValueExpression($this->converter, $instance, $expectedType);
         }
         return new TreeValueExpression(

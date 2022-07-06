@@ -22,7 +22,7 @@ class ActivityCancellationCmd extends AbstractProcessInstanceModificationCommand
     //@TODO. Check invocation arguments ordering
     public function __construct(?string $processInstanceId, string $activityId)
     {
-        if ($processInstanceId != null) {
+        if ($processInstanceId !== null) {
             parent::__construct($processInstanceId);
         }
         $this->activityId = $activityId;
@@ -47,7 +47,7 @@ class ActivityCancellationCmd extends AbstractProcessInstanceModificationCommand
         $parentScopeIds = [];
         $scope = $processDefinition->findActivity($activityId);
 
-        while ($scope != null) {
+        while ($scope !== null) {
             $parentScopeIds[] = $scope->getId();
             $scope = $scope->getFlowScope();
         }

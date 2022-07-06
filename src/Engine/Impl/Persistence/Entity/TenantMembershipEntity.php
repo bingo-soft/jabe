@@ -55,7 +55,7 @@ class TenantMembershipEntity implements \Serializable, DbEntityInterface
 
     public function getUserId(): ?string
     {
-        if ($this->user != null) {
+        if ($this->user !== null) {
             return $this->user->getId();
         } else {
             return null;
@@ -64,7 +64,7 @@ class TenantMembershipEntity implements \Serializable, DbEntityInterface
 
     public function getGroupId(): ?string
     {
-        if ($this->group != null) {
+        if ($this->group !== null) {
             return $this->group->getId();
         } else {
             return null;

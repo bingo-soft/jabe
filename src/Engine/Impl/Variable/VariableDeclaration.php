@@ -27,7 +27,7 @@ class VariableDeclaration implements \Serializable
 
     public function initialize(VariableScopeInterface $innerScopeInstance, VariableScopeInterface $outerScopeInstance): void
     {
-        if ($this->sourceVariableName != null) {
+        if ($this->sourceVariableName !== null) {
             if ($outerScopeInstance->hasVariable($this->sourceVariableName)) {
                 $value = $outerScopeInstance->getVariable($this->sourceVariableName);
                 $innerScopeInstance->setVariable($this->destinationVariableName, $value);
@@ -38,12 +38,12 @@ class VariableDeclaration implements \Serializable
             }
         }
 
-        if ($this->sourceExpression != null) {
+        if ($this->sourceExpression !== null) {
             $value = $this->sourceExpression->getValue($outerScopeInstance);
             $innerScopeInstance->setVariable($this->destinationVariableName, $value);
         }
 
-        if ($this->link != null) {
+        if ($this->link !== null) {
             if ($outerScopeInstance->hasVariable($this->sourceVariableName)) {
                 $value = $outerScopeInstance->getVariable($this->sourceVariableName);
                 $innerScopeInstance->setVariable($this->destinationVariableName, $value);
@@ -54,7 +54,7 @@ class VariableDeclaration implements \Serializable
             }
         }
 
-        if ($this->linkExpression != null) {
+        if ($this->linkExpression !== null) {
             $value = $this->sourceExpression->getValue($outerScopeInstance);
             $innerScopeInstance->setVariable($this->destinationVariableName, $value);
         }
@@ -63,7 +63,7 @@ class VariableDeclaration implements \Serializable
     public function destroy(VariableScopeInterface $innerScopeInstance, VariableScopeInterface $outerScopeInstance): void
     {
 
-        if ($this->destinationVariableName != null) {
+        if ($this->destinationVariableName !== null) {
             if ($innerScopeInstance->hasVariable($this->sourceVariableName)) {
                 $value = $innerScopeInstance->getVariable($this->sourceVariableName);
                 $outerScopeInstance->setVariable($this->destinationVariableName, $value);
@@ -73,12 +73,12 @@ class VariableDeclaration implements \Serializable
             }
         }
 
-        if ($this->destinationExpression != null) {
+        if ($this->destinationExpression !== null) {
             $value = $this->destinationExpression->getValue($innerScopeInstance);
             $outerScopeInstance->setVariable($this->destinationVariableName, $value);
         }
 
-        if ($this->link != null) {
+        if ($this->link !== null) {
             if ($innerScopeInstance->hasVariable($this->sourceVariableName)) {
                 $value = $innerScopeInstance->getVariable($this->sourceVariableName);
                 $outerScopeInstance->setVariable($this->destinationVariableName, $value);
@@ -88,7 +88,7 @@ class VariableDeclaration implements \Serializable
             }
         }
 
-        if ($this->linkExpression != null) {
+        if ($this->linkExpression !== null) {
             $value = $this->sourceExpression->getValue($innerScopeInstance);
             $outerScopeInstance->setVariable($this->destinationVariableName, $value);
         }

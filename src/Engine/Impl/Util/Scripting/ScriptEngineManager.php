@@ -121,7 +121,7 @@ class ScriptEngineManager
                 }
             }
 
-            if ($names != null) {
+            if ($names !== null) {
                 foreach ($names as $name) {
                     if ($shortName == $name) {
                         try {
@@ -176,7 +176,7 @@ class ScriptEngineManager
                     throw $exp;
                 }
             }
-            if ($exts == null) {
+            if ($exts === null) {
                 continue;
             }
             foreach ($exts as $ext) {

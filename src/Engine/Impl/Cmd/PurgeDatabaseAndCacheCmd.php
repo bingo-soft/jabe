@@ -68,7 +68,7 @@ class PurgeDatabaseAndCacheCmd implements CommandInterface
 
                 if ($count > 0) {
                     // allow License Key in byte array table
-                    if ($tableNameWithoutPrefix == "ACT_GE_BYTEARRAY" && $commandContext->getResourceManager()->findLicenseKeyResource() != null) {
+                    if ($tableNameWithoutPrefix == "ACT_GE_BYTEARRAY" && $commandContext->getResourceManager()->findLicenseKeyResource() !== null) {
                         if ($count != 1) {
                             $purgeByteArrayPreserveLicenseKeyBulkOp = new DbBulkOperation(
                                 DbOperationType::DELETE_BULK,

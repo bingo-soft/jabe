@@ -24,7 +24,7 @@ class BooleanFormType extends SimpleFormFieldType
             return $propertyValue;
         } else {
             $value = $propertyValue->getValue();
-            if ($value == null) {
+            if ($value === null) {
                 return Variables::booleanValue(null, $propertyValue->isTransient());
             } elseif (is_bool($value) || is_string($value)) {
                 return Variables::booleanValue(boolval($value), $propertyValue->isTransient());

@@ -84,7 +84,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
         if (!$isLocal) {
             $parentScope = $this->getParentVariableScope();
             // Do not propagate to parent if all variables in 'variableNames' are already collected!
-            if ($parentScope != null && ($collectAll || array_keys($resultVariables) != $variableNames)) {
+            if ($parentScope !== null && ($collectAll || array_keys($resultVariables) != $variableNames)) {
                 $parentScope->collectVariables($resultVariables, $variableNames, $isLocal, $deserializeValues);
             }
         }
@@ -102,9 +102,9 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
 
     protected function getValueFromVariableInstance(bool $deserializeObjectValue, ?CoreVariableInstanceInterface $variableInstance = null)
     {
-        if ($variableInstance != null) {
+        if ($variableInstance !== null) {
             $typedValue = $variableInstance->getTypedValue($deserializeObjectValue);
-            if ($typedValue != null) {
+            if ($typedValue !== null) {
                 return $typedValue->getValue();
             }
         }
@@ -125,7 +125,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
 
     private function getTypedValueFromVariableInstance(bool $deserializeValue, CoreVariableInstanceInterface $variableInstance): ?TypedValueInterface
     {
-        if ($variableInstance != null) {
+        if ($variableInstance !== null) {
             return $variableInstance->getTypedValue($deserializeValue);
         } else {
             return null;
@@ -135,11 +135,11 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
     public function getVariableInstance(string $variableName): ?CoreVariableInstanceInterface
     {
         $variableInstance = $this->getVariableInstanceLocal($variableName);
-        if ($variableInstance != null) {
+        if ($variableInstance !== null) {
             return $variableInstance;
         }
         $parentScope = $this->getParentVariableScope();
-        if ($parentScope != null) {
+        if ($parentScope !== null) {
             return $parentScope->getVariableInstance($variableName);
         }
         return null;
@@ -161,7 +161,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
             return true;
         }
         $parentScope = $this->getParentVariableScope();
-        return $parentScope != null && $parentScope->hasVariables();
+        return $parentScope !== null && $parentScope->hasVariables();
     }
 
     public function hasVariablesLocal(): bool
@@ -175,7 +175,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
             return true;
         }
         $parentScope = $this->getParentVariableScope();
-        return $parentScope != null && $parentScope->hasVariable($variableName);
+        return $parentScope !== null && $parentScope->hasVariable($variableName);
     }
 
     public function hasVariableLocal(string $variableName): bool
@@ -186,7 +186,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
     protected function collectVariableNames(array $variableNames): array
     {
         $parentScope = $this->getParentVariableScope();
-        if ($parentScope != null) {
+        if ($parentScope !== null) {
             $variableNames = array_merge($variableNames, $parentScope->collectVariableNames($variableNames));
         }
         foreach ($this->getVariableStore()->getVariables() as $variableInstance) {
@@ -276,8 +276,8 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
                 return;
             }
             $parentVariableScope = $this->getParentVariableScope();
-            if ($parentVariableScope != null) {
-                if ($sourceActivityVariableScope == null) {
+            if ($parentVariableScope !== null) {
+                if ($sourceActivityVariableScope === null) {
                     $parentVariableScope->setVariable($variableName, $value);
                 } else {
                     $parentVariableScope->setVariable($variableName, $value, $sourceActivityVariableScope);
@@ -371,7 +371,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
 
     protected function removeVariable(string $variableName, ?AbstractVariableScope $sourceActivityExecution = null): void
     {
-        if ($sourceActivityExecution == null) {
+        if ($sourceActivityExecution === null) {
             $sourceActivityExecution = $this->getSourceActivityVariableScope();
         }
         if ($this->getVariableStore()->containsKey($variableName)) {
@@ -379,8 +379,8 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
             return;
         }
         $parentVariableScope = $this->getParentVariableScope();
-        if ($parentVariableScope != null) {
-            if ($sourceActivityExecution == null) {
+        if ($parentVariableScope !== null) {
+            if ($sourceActivityExecution === null) {
                 $parentVariableScope->removeVariable($variableName);
             } else {
                 $parentVariableScope->removeVariable($variableName, $sourceActivityExecution);
@@ -395,7 +395,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
 
     protected function removeVariableLocal(string $variableName, ?AbstractVariableScope $sourceActivityExecution = null): void
     {
-        if ($sourceActivityExecution == null) {
+        if ($sourceActivityExecution === null) {
             $sourceActivityExecution = $this->getSourceActivityVariableScope();
         }
         if ($this->getVariableStore()->containsKey($variableName)) {

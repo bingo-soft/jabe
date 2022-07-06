@@ -17,7 +17,7 @@ class CompositeFunctionMapper extends FunctionMapper
     {
         foreach ($this->delegateMappers as $mapper) {
             $resolvedFunction = $mapper->resolveFunction($prefix, $localName);
-            if ($resolvedFunction != null) {
+            if ($resolvedFunction !== null) {
                 return $resolvedFunction;
             }
         }

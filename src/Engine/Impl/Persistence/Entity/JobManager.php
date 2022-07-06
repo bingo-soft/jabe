@@ -45,7 +45,7 @@ class JobManager extends AbstractManager
 
     public function __construct()
     {
-        if (self::$JOB_PRIORITY_ORDERING_PROPERTY == null) {
+        if (self::$JOB_PRIORITY_ORDERING_PROPERTY === null) {
             self::$JOB_PRIORITY_ORDERING_PROPERTY = new QueryOrderingProperty(null, JobQueryProperty::priority());
             self::$JOB_TYPE_ORDERING_PROPERTY = new QueryOrderingProperty(null, JobQueryProperty::type());
             self::$JOB_DUEDATE_ORDERING_PROPERTY = new QueryOrderingProperty(null, JobQueryProperty::duedate());
@@ -139,7 +139,7 @@ class JobManager extends AbstractManager
                 !$job->isSuspended()
                 && $job->isExclusive()
                 && $this->isJobDue($job)
-                && $jobExecutorContext != null
+                && $jobExecutorContext !== null
                 && $jobExecutorContext->isExecutingExclusiveJob()
                 && $this->areInSameProcessInstance($job, $jobExecutorContext->getCurrentJob())
             ) {
@@ -162,14 +162,14 @@ class JobManager extends AbstractManager
 
     protected function areInSameProcessInstance(JobEntity $job1, JobEntity $job2): bool
     {
-        if ($job1 == null || $job2 == null) {
+        if ($job1 === null || $job2 === null) {
             return false;
         }
 
         $instance1 = $job1->getProcessInstanceId();
         $instance2 = $job2->getProcessInstanceId();
 
-        return $instance1 != null && $instance1 == $instance2;
+        return $instance1 !== null && $instance1 == $instance2;
     }
 
     protected function isJobPriorityInJobExecutorPriorityRange(int $jobPriority): bool
@@ -177,8 +177,8 @@ class JobManager extends AbstractManager
         $configuration = Context::getProcessEngineConfiguration();
         $jobExecutorPriorityRangeMin = $configuration->getJobExecutorPriorityRangeMin();
         $jobExecutorPriorityRangeMax = $configuration->getJobExecutorPriorityRangeMax();
-        return ($jobExecutorPriorityRangeMin == null || $jobExecutorPriorityRangeMin <= $jobPriority)
-            && ($jobExecutorPriorityRangeMax == null || $jobExecutorPriorityRangeMax >= $jobPriority);
+        return ($jobExecutorPriorityRangeMin === null || $jobExecutorPriorityRangeMin <= $jobPriority)
+            && ($jobExecutorPriorityRangeMax === null || $jobExecutorPriorityRangeMax >= $jobPriority);
     }
 
     public function cancelTimers(ExecutionEntity $execution): void
@@ -441,6 +441,6 @@ class JobManager extends AbstractManager
         $duedateUt = (new \DateTime($duedate))->getTimestamp();
         $nowUt = $now->getTimestamp();
 
-        return $duedate == null || $duedateUt <= $nowUt;
+        return $duedate === null || $duedateUt <= $nowUt;
     }
 }

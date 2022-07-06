@@ -134,12 +134,12 @@ class TelemetrySendingTask extends TimerTask
     {
         $internals = $this->staticData->getProduct()->getInternals();
 
-        if ($internals->getApplicationServer() == null) {
+        if ($internals->getApplicationServer() === null) {
             $applicationServer = $telemetryRegistry->getApplicationServer();
             $internals->setApplicationServer($applicationServer);
         }
 
-        if ($internals->isTelemetryEnabled() == null) {
+        if ($internals->isTelemetryEnabled() === null) {
             $internals->setTelemetryEnabled(true);// this can only be true, otherwise we would not collect data to send
         }
 
@@ -151,7 +151,7 @@ class TelemetrySendingTask extends TimerTask
     protected function isTelemetryEnabled(): bool
     {
         $telemetryEnabled = $this->commandExecutor->execute(new IsTelemetryEnabledCmd());
-        return $telemetryEnabled != null && $telemetryEnabled->booleanValue();
+        return $telemetryEnabled !== null && $telemetryEnabled->booleanValue();
     }
 
     protected function sendData(TelemetryDataImpl $dataToSend): void
@@ -167,7 +167,7 @@ class TelemetrySendingTask extends TimerTask
 
         $response = $this->httpConnector->request(ConnectUtil::METHOD_NAME_POST, $this->telemetryEndpoint, $requestParams);
 
-        if ($response == null) {
+        if ($response === null) {
             //LOG.unexpectedResponseWhileSendingTelemetryData();
         } else {
             $responseCode = $response->getResponseParameter(ConnectUtil::PARAM_NAME_RESPONSE_STATUS_CODE);
@@ -199,7 +199,7 @@ class TelemetrySendingTask extends TimerTask
             $this->telemetryRegistry->markOccurrence($key, $value->getCount());
         }
 
-        if ($this->metricsRegistry != null) {
+        if ($this->metricsRegistry !== null) {
             $metrics = $internals->getMetrics();
 
             foreach (self::METRICS_TO_REPORT as $metricToReport) {
@@ -240,7 +240,7 @@ class TelemetrySendingTask extends TimerTask
     {
         $metrics = [];
 
-        if ($this->metricsRegistry != null) {
+        if ($this->metricsRegistry !== null) {
             $telemetryMeters = $metricsRegistry->getTelemetryMeters();
 
             foreach (self::METRICS_TO_REPORT as $metricToReport) {

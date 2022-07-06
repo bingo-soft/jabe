@@ -61,7 +61,7 @@ abstract class AbstractProcessInstanceModificationCommand implements CommandInte
         } else {
             foreach ($tree->getChildActivityInstances() as $child) {
                 $matchingChildInstance = $this->findActivityInstance($child, $activityInstanceId);
-                if ($matchingChildInstance != null) {
+                if ($matchingChildInstance !== null) {
                     return $matchingChildInstance;
                 }
             }
@@ -79,7 +79,7 @@ abstract class AbstractProcessInstanceModificationCommand implements CommandInte
 
         foreach ($tree->getChildActivityInstances() as $child) {
             $matchingChildInstance = $this->findTransitionInstance($child, $transitionInstanceId);
-            if ($matchingChildInstance != null) {
+            if ($matchingChildInstance !== null) {
                 return $matchingChildInstance;
             }
         }
@@ -118,9 +118,9 @@ abstract class AbstractProcessInstanceModificationCommand implements CommandInte
             //     => the concurrent execution has been removed and therefore references the scope execution (first hop)
             //     => the scope execution may have been replaced itself again with another concurrent execution (second hop)
             //   note that the scope execution may have a long "history" of replacements, but only the last replacement is relevant here
-            if ($cachedExecution != null) {
+            if ($cachedExecution !== null) {
                 $replacingExecution = $cachedExecution->resolveReplacedBy();
-                if ($replacingExecution != null) {
+                if ($replacingExecution !== null) {
                     $match = $replacingExecution->getId() == $instance->getId();
                 }
             }

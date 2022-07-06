@@ -32,8 +32,8 @@ class ErrorDeclarationForProcessInstanceFinder implements TreeVisitorInterface
             $activityHandler = $scope->getProcessDefinition()->findActivity($errorEventDefinition->getHandlerActivityId());
             if (
                 (!$this->isReThrowingErrorEventSubprocess($activityHandler)) &&
-                (($exception != null && $errorEventDefinition->catchesException($exception)) ||
-                ($exception == null && $errorEventDefinition->catchesError($errorCode)))
+                (($exception !== null && $errorEventDefinition->catchesException($exception)) ||
+                ($exception === null && $errorEventDefinition->catchesError($errorCode)))
             ) {
                 $errorHandlerActivity = $activityHandler;
                 $this->errorEventDefinition = $errorEventDefinition;

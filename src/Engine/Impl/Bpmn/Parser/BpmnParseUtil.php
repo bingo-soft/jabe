@@ -54,7 +54,7 @@ class BpmnParseUtil
     public static function parseInputOutput(Element $element): ?IoMapping
     {
         $inputOutputElement = $element->element(BpmnParse::BPMN_EXTENSIONS_NS_PREFIX . ":inputOutput");
-        if ($inputOutputElement != null) {
+        if ($inputOutputElement !== null) {
             $ioMapping = new IoMapping();
             self::parseInputParameters($inputOutputElement, $ioMapping);
             self::parseOutputParameters($inputOutputElement, $ioMapping);
@@ -186,7 +186,7 @@ class BpmnParseUtil
         // SCRIPT
         if ($parameterElement->getTagName() == "script") {
             $executableScript = self::parseScript($parameterElement);
-            if ($executableScript != null) {
+            if ($executableScript !== null) {
                 return new ScriptValueProvider($executableScript);
             } else {
                 return new NullValueProvider();
@@ -231,7 +231,7 @@ class BpmnParseUtil
     {
         $propertiesMap = [];
         $propertiesElement = self::findExtensionElement($element, "properties");
-        if ($propertiesElement != null) {
+        if ($propertiesElement !== null) {
             $properties = $propertiesElement->elements(BpmnParse::BPMN_EXTENSIONS_NS_PREFIX . ":property");
             foreach ($properties as $property) {
                 $propertiesMap[$property->attribute("name")] = $property->attribute("value");

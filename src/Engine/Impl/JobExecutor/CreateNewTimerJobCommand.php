@@ -24,7 +24,7 @@ class CreateNewTimerJobCommand implements CommandInterface
 
         $newDueDate = $failedJob->calculateRepeat();
 
-        if ($newDueDate != null) {
+        if ($newDueDate !== null) {
             $failedJob->createNewTimerJob($newDueDate);
 
             // update configuration of failed job

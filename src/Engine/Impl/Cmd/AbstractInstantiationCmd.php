@@ -121,7 +121,7 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
         $scopeExecution = null;
 
         // if no explicit ancestor activity instance is set
-        if ($this->ancestorActivityInstanceId == null) {
+        if ($this->ancestorActivityInstanceId === null) {
             // walk until a scope is reached for which executions exist
             $walker->walkWhile(new class ($processDefinition, $mapping) implements WalkConditionInterface {
 
@@ -229,7 +229,7 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
         }
 
         $startBehavior = ActivityStartBehavior::CONCURRENT_IN_FLOW_SCOPE;
-        if ($topMostActivity != null) {
+        if ($topMostActivity !== null) {
             $startBehavior = $topMostActivity->getActivityStartBehavior();
 
             if (!empty($activitiesToInstantiate)) {
@@ -259,7 +259,7 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
             case self::CANCEL_EVENT_SCOPE:
                 $scopeToCancel = $topMostActivity->getEventScope();
                 $executionToCancel = $this->getSingleExecutionForScope($mapping, $scopeToCancel);
-                if ($executionToCancel != null) {
+                if ($executionToCancel !== null) {
                     $executionToCancel->deleteCascade("Cancelling activity " . $topMostActivity . " executed.", $this->skipCustomListeners, $this->skipIoMappings);
                     $this->instantiate($executionToCancel->getParent(), $activitiesToInstantiate, $elementToInstantiate);
                 } else {
@@ -288,7 +288,7 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
                 // or this execution has ended executing its scope, it can be reused
                 if (
                     !$scopeExecution->hasChildren() &&
-                    ($scopeExecution->getActivity() == null || $scopeExecution->isEnded())
+                    ($scopeExecution->getActivity() === null || $scopeExecution->isEnded())
                 ) {
                     // reuse the scope execution
                     $this->instantiate($scopeExecution, $activitiesToInstantiate, $elementToInstantiate);
@@ -309,7 +309,7 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
     protected function supportsConcurrentChildInstantiation(ScopeImpl $flowScope): bool
     {
         $behavior = $flowScope->getActivityBehavior();
-        return $behavior == null || !($behavior instanceof SequentialMultiInstanceActivityBehavior);
+        return $behavior === null || !($behavior instanceof SequentialMultiInstanceActivityBehavior);
     }
 
     protected function getSingleExecutionForScope(ActivityExecutionTreeMapping $mapping, ScopeImpl $scope): ?ExecutionEntity

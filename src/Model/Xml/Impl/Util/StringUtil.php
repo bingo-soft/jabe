@@ -34,6 +34,6 @@ class StringUtil
 
     public static function joinList(?array $list, string $separator): ?string
     {
-        return $list == null ? null : implode($separator, $list);
+        return $list === null ? null : implode($separator, $list);
     }
 }

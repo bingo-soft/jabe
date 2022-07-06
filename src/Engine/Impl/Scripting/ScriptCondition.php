@@ -25,7 +25,7 @@ class ScriptCondition implements ConditionInterface
 
     public function evaluate(?VariableScopeInterface $scope, DelegateExecutionInterface $execution): bool
     {
-        if ($scope == null) {
+        if ($scope === null) {
             $scope = $execution;
         }
         $invocation = new ScriptInvocation($script, $scope, $execution);

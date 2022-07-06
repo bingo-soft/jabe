@@ -31,9 +31,9 @@ class UnlockJobCmd implements CommandInterface
     {
         $job = $this->getJob();
 
-        if (Context::getJobExecutorContext() == null) {
+        if (Context::getJobExecutorContext() === null) {
             EnsureUtil::ensureNotNull("Job with id " . $this->jobId . " does not exist", "job", $job);
-        } elseif (Context::getJobExecutorContext() != null && $job == null) {
+        } elseif (Context::getJobExecutorContext() !== null && $job === null) {
             // CAM-1842
             // Job was acquired but does not exist anymore. This is not a problem.
             // It usually means that the job has been deleted after it was acquired which can happen if the

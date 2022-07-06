@@ -32,7 +32,7 @@ class AbstractBpmnActivityBehavior extends FlowNodeActivityBehavior
         $compensationHandler = $currentActivity->findCompensationHandler();
 
         // subscription for compensation event subprocess is already created
-        if ($compensationHandler != null && !$this->isCompensationEventSubprocess($compensationHandler)) {
+        if ($compensationHandler !== null && !$this->isCompensationEventSubprocess($compensationHandler)) {
             $this->createCompensateEventSubscription($execution, $compensationHandler);
         }
         parent::doLeave($execution);
@@ -102,7 +102,7 @@ class AbstractBpmnActivityBehavior extends FlowNodeActivityBehavior
         // do not have to compensate embedded subprocesses (which are still non-event-scope executions)
 
         if (empty($execution->getNonEventScopeExecutions())) {
-            if ($execution->getParent() != null) {
+            if ($execution->getParent() !== null) {
                 $parent = $execution->getParent();
                 $execution->remove();
                 $parent->signal(CompensationUtil::SIGNAL_COMPENSATION_DONE, null);

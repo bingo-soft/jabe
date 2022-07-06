@@ -20,7 +20,7 @@ class ActivityBeforeInstantiationCmd extends AbstractInstantiationCmd
     //@TODO. Check invocation arguments ordering
     public function __construct(?string $processInstanceId, string $activityId, ?string $ancestorActivityInstanceId = null)
     {
-        if ($processInstanceId != null) {
+        if ($processInstanceId !== null) {
             parent::__construct($processInstanceId, $ancestorActivityInstanceId);
         }
         $this->activityId = $activityId;
@@ -34,7 +34,7 @@ class ActivityBeforeInstantiationCmd extends AbstractInstantiationCmd
         $activity = $processDefinition->findActivity($activityId);
 
         // forbid instantiation of compensation boundary events
-        if ($activity != null && "compensationBoundaryCatch" == $activity->getProperty("type")) {
+        if ($activity !== null && "compensationBoundaryCatch" == $activity->getProperty("type")) {
             throw new ProcessEngineException("Cannot start before activity " . $this->activityId . "; activity " .
             "is a compensation boundary event.");
         }
@@ -65,7 +65,7 @@ class ActivityBeforeInstantiationCmd extends AbstractInstantiationCmd
         $sb .= "Start before activity '";
         $sb .= $this->activityId;
         $sb .= "'";
-        if ($this->ancestorActivityInstanceId != null) {
+        if ($this->ancestorActivityInstanceId !== null) {
             $sb .= " with ancestor activity instance '";
             $sb .= $this->ancestorActivityInstanceId;
             $sb .= "'";

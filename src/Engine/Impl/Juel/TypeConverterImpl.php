@@ -17,7 +17,7 @@ class TypeConverterImpl extends TypeConverter
 
     protected function coerceToBoolean($value): bool
     {
-        if ($value == null || $value == "") {
+        if ($value === null || $value == "") {
             return false;
         }
         if (gettype($value)  == "boolean") {
@@ -31,7 +31,7 @@ class TypeConverterImpl extends TypeConverter
 
     protected function coerceToCharacter($value): string
     {
-        if ($value == null || $value == "") {
+        if ($value === null || $value == "") {
             return "";
         }
         if (gettype($value)  == "string") {
@@ -45,7 +45,7 @@ class TypeConverterImpl extends TypeConverter
 
     protected function coerceToDouble($value, string $shouldBe = "double"): float
     {
-        if ($value == null || $value == "") {
+        if ($value === null || $value == "") {
             return 0.0;
         }
         if (gettype($value)  == "double") {
@@ -64,7 +64,7 @@ class TypeConverterImpl extends TypeConverter
 
     protected function coerceToInteger($value): int
     {
-        if ($value == null || $value == "") {
+        if ($value === null || $value == "") {
             return 0;
         }
         if (gettype($value)  == "integer") {
@@ -78,7 +78,7 @@ class TypeConverterImpl extends TypeConverter
 
     protected function coerceToString($value): string
     {
-        if ($value == null) {
+        if ($value === null) {
             return "";
         }
         try {

@@ -47,7 +47,7 @@ class GetRenderedTaskFormCmd implements CommandInterface, \Serializable
         EnsureUtil::ensureNotNull("Task form definition for '" . $this->taskId . "' not found", "task.getTaskDefinition()", $task->getTaskDefinition());
 
         $taskFormHandler = $task->getTaskDefinition()->getTaskFormHandler();
-        if ($taskFormHandler == null) {
+        if ($taskFormHandler === null) {
             return null;
         }
 

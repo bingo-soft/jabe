@@ -85,7 +85,7 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
             $definition->setResourceName($resourceName);
 
             $diagramResourceName = $this->getDiagramResourceForDefinition($deployment, $resourceName, $definition, $deployment->getResources());
-            if ($diagramResourceName != null) {
+            if ($diagramResourceName !== null) {
                 $definition->setDiagramResourceName($diagramResourceName);
             }
         }
@@ -320,7 +320,7 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
     protected function getNextVersion(DeploymentEntity $deployment, DefinitionEntity $newDefinition, DefinitionEntity $latestDefinition): int
     {
         $result = 1;
-        if ($latestDefinition != null) {
+        if ($latestDefinition !== null) {
             $latestVersion = $latestDefinition->getVersion();
             $result = $latestVersion + 1;
         }

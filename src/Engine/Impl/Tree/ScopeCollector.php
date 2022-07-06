@@ -10,7 +10,7 @@ class ScopeCollector implements TreeVisitorInterface
 
     public function visit(/*ScopeImpl */$obj): void
     {
-        if ($obj != null && $obj->isScope()) {
+        if ($obj !== null && $obj->isScope()) {
             $this->scopes[] = $obj;
         }
     }

@@ -38,7 +38,7 @@ class DoubleTypeImpl extends PrimitiveValueTypeImpl
         }
         $doubleValue = null;
         $numberValue = $typedValue;
-        if ($numberValue->getValue() != null) {
+        if ($numberValue->getValue() !== null) {
             $doubleValue = Variables::doubleValue($numberValue->getValue()->doubleValue());
         } else {
             $doubleValue = Variables::doubleValue(null);

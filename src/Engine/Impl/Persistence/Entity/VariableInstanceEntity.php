@@ -153,22 +153,22 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
     public function getPersistentState()
     {
         $persistentState = [];
-        if ($this->typedValueField->getSerializerName() != null) {
+        if ($this->typedValueField->getSerializerName() !== null) {
             $persistentState["serializerName"] = $typedValueField->getSerializerName();
         }
-        if ($this->longValue != null) {
+        if ($this->longValue !== null) {
             $persistentState["longValue"] = $this->longValue;
         }
-        if ($this->doubleValue != null) {
+        if ($this->doubleValue !== null) {
             $persistentState["doubleValue"] = $this->doubleValue;
         }
-        if ($this->textValue != null) {
+        if ($this->textValue !== null) {
             $persistentState["textValue"] = $this->textValue;
         }
-        if ($this->textValue2 != null) {
+        if ($this->textValue2 !== null) {
             $persistentState["textValue2"] = $this->textValue2;
         }
-        if ($this->byteArrayField->getByteArrayId() != null) {
+        if ($this->byteArrayField->getByteArrayId() !== null) {
             $persistentState["byteArrayValueId"] = $this->byteArrayField->getByteArrayId();
         }
 
@@ -216,7 +216,7 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
     }
 
     public void setCaseExecution(CaseExecutionEntity caseExecution) {
-        if (caseExecution != null) {
+        if (caseExecution !== null) {
             $this->caseInstanceId = caseExecution->getCaseInstanceId();
             $this->caseExecutionId = caseExecution->getId();
             $this->tenantId = caseExecution->getTenantId();
@@ -286,7 +286,7 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
         $this->textValue2 = null;
         $this->typedValueField->clear();
 
-        if ($byteArrayField->getByteArrayId() != null) {
+        if ($byteArrayField->getByteArrayId() !== null) {
             $this->deleteByteArrayValue();
             $this->setByteArrayValueId(null);
         }
@@ -309,7 +309,7 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
 
     protected function ensureExecutionInitialized(): void
     {
-        if ($this->execution == null && $this->executionId != null) {
+        if ($this->execution === null && $this->executionId !== null) {
             $this->execution = Context::getCommandContext()
                 ->getExecutionManager()
                 ->findExecutionById($this->executionId);
@@ -325,7 +325,7 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
     public function setExecution(ExecutionEntity $execution): void
     {
         $this->execution = $execution;
-        if ($this->execution == null) {
+        if ($this->execution === null) {
             $this->executionId = null;
             $this->processInstanceId = null;
             $this->processDefinitionId = null;
@@ -341,7 +341,7 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
     // case execution ///////////////////////////////////////////////////////////
 
     /*public CaseExecutionEntity getCaseExecution() {
-        if (caseExecutionId != null) {
+        if (caseExecutionId !== null) {
             return Context
                 ->getCommandContext()
                 ->getCaseExecutionManager()
@@ -482,14 +482,14 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
 
     public function setTask(TaskEntity $task): void
     {
-        if ($task != null) {
+        if ($task !== null) {
             $this->taskId = $task->getId();
             $this->tenantId = $task->getTenantId();
 
-            if ($task->getExecution() != null) {
+            if ($task->getExecution() !== null) {
                 $this->setExecution($task->getExecution());
             }
-            /*if ($task->getCaseExecution() != null) {
+            /*if ($task->getCaseExecution() !== null) {
                 setCaseExecution(task->getCaseExecution());
             }*/
         } else {
@@ -522,15 +522,15 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
 
     public function getVariableScopeId(): ?string
     {
-        if ($this->variableScopeId != null) {
+        if ($this->variableScopeId !== null) {
             return $this->variableScopeId;
         }
 
-        if ($this->taskId != null) {
+        if ($this->taskId !== null) {
             return $this->taskId;
         }
 
-        if ($this->executionId != null) {
+        if ($this->executionId !== null) {
             return $this->executionId;
         }
 
@@ -544,21 +544,21 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
 
     protected function getVariableScope(): ?VariableScopeInterface
     {
-        if ($this->taskId != null) {
+        if ($this->taskId !== null) {
             return $this->getTask();
-        } elseif ($this->executionId != null) {
+        } elseif ($this->executionId !== null) {
             return $this->getExecution();
         } else {
             return null;
         }
-        /*elseif (caseExecutionId != null) {
+        /*elseif (caseExecutionId !== null) {
             return getCaseExecution();
         }*/
     }
 
     protected function getTask(): ?TaskEntity
     {
-        if ($this->taskId != null) {
+        if ($this->taskId !== null) {
             return Context::getCommandContext()->getTaskManager()->findTaskById($this->taskId);
         } else {
             return null;
@@ -600,7 +600,7 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
         //   of variable value can never become null
 
         $targetProcessApplication = getContextProcessApplication();
-        if ($targetProcessApplication != null) {
+        if ($targetProcessApplication !== null) {
             $scope = $this;
             Context::executeWithinProcessApplication(
                 function () use ($scope, $updatedValue) {
@@ -619,14 +619,14 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
 
     protected function getContextProcessApplication(): ?ProcessApplicationReferenceInterface
     {
-        if ($this->taskId != null) {
+        if ($this->taskId !== null) {
             return ProcessApplicationContextUtil::getTargetProcessApplication($this->getTask());
-        } elseif ($this->executionId != null) {
+        } elseif ($this->executionId !== null) {
             return ProcessApplicationContextUtil::getTargetProcessApplication($this->getExecution());
         } else {
             return null;
         }
-        /*elseif (caseExecutionId != null) {
+        /*elseif (caseExecutionId !== null) {
             return ProcessApplicationContextUtil->getTargetProcessApplication(getCaseExecution());
         } */
     }
@@ -704,14 +704,14 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
         if ($this == $obj) {
             return true;
         }
-        if ($obj == null) {
+        if ($obj === null) {
             return false;
         }
         if (get_class($this) != get_class($obj)) {
             return false;
         }
-        if ($this->id == null) {
-            if ($obj->id != null) {
+        if ($this->id === null) {
+            if ($obj->id !== null) {
                 return false;
             }
         } elseif ($this->id != $obj->id) {
@@ -759,19 +759,19 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
     {
         $referenceIdAndClass = [];
 
-        if ($this->processInstanceId != null) {
+        if ($this->processInstanceId !== null) {
             $referenceIdAndClass[$this->processInstanceId] = ExecutionEntity::class;
         }
-        if ($this->executionId != null) {
+        if ($this->executionId !== null) {
             $referenceIdAndClass[$this->executionId] = ExecutionEntity::class;
         }
-        /*if (caseInstanceId != null){
+        /*if (caseInstanceId !== null){
             referenceIdAndClass.put(caseInstanceId, CaseExecutionEntity::class);
         }
-        if (caseExecutionId != null){
+        if (caseExecutionId !== null){
             referenceIdAndClass.put(caseExecutionId, CaseExecutionEntity::class);
         }*/
-        if ($this->getByteArrayValueId() != null) {
+        if ($this->getByteArrayValueId() !== null) {
             $referenceIdAndClass[$this->getByteArrayValueId()] = ByteArrayEntity::class;
         }
 

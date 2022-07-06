@@ -19,7 +19,7 @@ class MethodWrapper implements \Serializable
         if (!empty($parameters)) {
             foreach ($parameters as $param) {
                 $type = $param->getType();
-                if ($type != null) {
+                if ($type !== null) {
                     $types[] = $type->getName();
                 } else {
                     $types[] = "undefined";

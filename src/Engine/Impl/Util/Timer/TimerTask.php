@@ -81,7 +81,7 @@ abstract class TimerTask extends \Threaded implements RunnableInterface
      */
     public function cancel(): bool
     {
-        if ($this->lock == null) {
+        if ($this->lock === null) {
             $this->lock = new class () extends \Threaded
             {
             };

@@ -34,7 +34,7 @@ abstract class AbstractBpmnModelElementBuilder
     public function subProcessDone(): SubProcessBuilder
     {
         $lastSubProcess = $this->element->getScope();
-        if ($lastSubProcess != null && $lastSubProcess instanceof SubProcessInterface) {
+        if ($lastSubProcess !== null && $lastSubProcess instanceof SubProcessInterface) {
             return $lastSubProcess->builder();
         } else {
             throw new BpmnModelException("Unable to find a parent subProcess.");
@@ -44,7 +44,7 @@ abstract class AbstractBpmnModelElementBuilder
     public function transactionDone(): TransactionBuilder
     {
         $lastTransaction = $this->element->getScope();
-        if ($lastTransaction != null && $lastTransaction instanceof TransactionInterface) {
+        if ($lastTransaction !== null && $lastTransaction instanceof TransactionInterface) {
             return new TransactionBuilder($this->modelInstance, $lastTransaction);
         } else {
             throw new BpmnModelException("Unable to find a parent transaction.");
@@ -54,9 +54,9 @@ abstract class AbstractBpmnModelElementBuilder
     public function throwEventDefinitionDone(): AbstractThrowEventBuilder
     {
         $lastEvent = $this->element->getDomElement()->getParentElement()->getModelElementInstance();
-        if ($lastEvent != null && $lastEvent instanceof IntermediateThrowEventInterface) {
+        if ($lastEvent !== null && $lastEvent instanceof IntermediateThrowEventInterface) {
             return new IntermediateThrowEventBuilder($this->modelInstance, $lastEvent);
-        } elseif ($lastEvent != null && $lastEvent instanceof EndEventInterface) {
+        } elseif ($lastEvent !== null && $lastEvent instanceof EndEventInterface) {
             return new EndEventBuilder($this->modelInstance, $lastEvent);
         } else {
             throw new BpmnModelException("Unable to find a parent event.");

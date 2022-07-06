@@ -40,7 +40,7 @@ class Parse
 
     public function sourceInputStream($inputStream): Parse
     {
-        if ($this->name == null) {
+        if ($this->name === null) {
             $this->name("inputStream");
         }
         $this->streamSource = $inputStream;

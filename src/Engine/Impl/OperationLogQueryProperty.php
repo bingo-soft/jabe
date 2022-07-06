@@ -8,7 +8,7 @@ class OperationLogQueryProperty
 
     public static function timestamp(): QueryPropertyImpl
     {
-        if (self::$TIMESTAMP == null) {
+        if (self::$TIMESTAMP === null) {
             self::$TIMESTAMP = new QueryPropertyImpl("TIMESTAMP_");
         }
         return self::$TIMESTAMP;

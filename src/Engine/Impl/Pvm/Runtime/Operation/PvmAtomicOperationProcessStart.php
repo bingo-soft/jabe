@@ -39,7 +39,7 @@ class PvmAtomicOperationProcessStart extends AbstractPvmEventAtomicOperation
         // asynchronously
         $execution->setProcessInstanceStarting(true);
 
-        if ($execution->getActivity() != null && $execution->getActivity()->isAsyncBefore()) {
+        if ($execution->getActivity() !== null && $execution->getActivity()->isAsyncBefore()) {
             LegacyBehavior::createMissingHistoricVariables($execution);
         }
 

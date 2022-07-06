@@ -121,14 +121,14 @@ class TelemetryReporter
 
     public function reportNow(): void
     {
-        if ($this->telemetrySendingTask != null) {
+        if ($this->telemetrySendingTask !== null) {
             $this->telemetrySendingTask->run();
         }
     }
 
     public function isScheduled(): bool
     {
-        return $this->timer != null;
+        return $this->timer !== null;
     }
 
     public function getReportingIntervalInSeconds(): int
@@ -159,6 +159,6 @@ class TelemetryReporter
     public function getInitialReportingDelaySeconds(): int
     {
         $enabled = $this->commandExecutor->execute(new IsTelemetryEnabledCmd());
-        return $enabled == null ? self::EXTENDED_INIT_REPORT_DELAY_SECONDS : self::DEFAULT_INIT_REPORT_DELAY_SECONDS;
+        return $enabled === null ? self::EXTENDED_INIT_REPORT_DELAY_SECONDS : self::DEFAULT_INIT_REPORT_DELAY_SECONDS;
     }
 }

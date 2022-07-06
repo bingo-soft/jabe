@@ -100,13 +100,13 @@ class UpdateProcessInstanceSuspensionStateBuilderImpl implements UpdateProcessIn
 
     protected function validateParameters(): void
     {
-        if ($this->processInstanceId == null && $this->processDefinitionId == null && $this->processDefinitionKey == null) {
+        if ($this->processInstanceId === null && $this->processDefinitionId === null && $this->processDefinitionKey === null) {
             throw new \Exception("Need to specify either a process instance id, a process definition id or a process definition key.");
         }
-        if ($this->isProcessDefinitionTenantIdSet && ($this->processInstanceId != null || $this->processDefinitionId != null)) {
+        if ($this->isProcessDefinitionTenantIdSet && ($this->processInstanceId !== null || $this->processDefinitionId !== null)) {
             //throw LOG.exceptionUpdateSuspensionStateForTenantOnlyByProcessDefinitionKey();
         }
-        if ($this->commandExecutor == null) {
+        if ($this->commandExecutor === null) {
             throw new \Exception("Command executor is undefined!");
         }
     }

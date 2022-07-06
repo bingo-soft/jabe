@@ -38,9 +38,9 @@ abstract class AbstractGetDeployedFormCmd implements CommandInterface
         $formKey = $formData->getFormKey();
         $formRef = $formData->getFormRef();
 
-        if ($formKey != null) {
+        if ($formKey !== null) {
             return $this->getResourceForFormKey($formData, $formKey);
-        } elseif ($formRef != null && $formRef->getKey() != null) {
+        } elseif ($formRef !== null && $formRef->getKey() !== null) {
             return $this->getResourceForFormRef($formRef, $formData->getDeploymentId());
         } else {
             throw new BadUserRequestException("One of the attributes 'formKey' and 'camunda:formRef' must be supplied but none were set.");
@@ -74,7 +74,7 @@ abstract class AbstractGetDeployedFormCmd implements CommandInterface
             return $cmd->execute($ctx);
         });
 
-        if ($definition == null) {
+        if ($definition === null) {
             throw new NotFoundException("No Form Definition was found for Form Ref: " . $formRef);
         }
 

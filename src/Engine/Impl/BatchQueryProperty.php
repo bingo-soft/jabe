@@ -11,7 +11,7 @@ class BatchQueryProperty
 
     public static function id(): QueryPropertyInterface
     {
-        if (self::$ID == null) {
+        if (self::$ID === null) {
             self::$ID = new QueryPropertyImpl("ID_");
         }
         return self::$ID;
@@ -19,7 +19,7 @@ class BatchQueryProperty
 
     public static function tenantId(): QueryPropertyInterface
     {
-        if (self::$TENANT_ID == null) {
+        if (self::$TENANT_ID === null) {
             self::$TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
         }
         return self::$TENANT_ID;

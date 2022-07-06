@@ -65,7 +65,7 @@ class TimerDeclarationImpl extends JobDeclaration
     protected function newJobInstance($execution = null): TimerEntity
     {
         $timer = new TimerEntity($this);
-        if ($execution != null) {
+        if ($execution !== null) {
             $timer->setExecution($execution);
         }
         return $timer;
@@ -100,7 +100,7 @@ class TimerDeclarationImpl extends JobDeclaration
             ->getBusinessCalendarManager()
             ->getBusinessCalendar(TimerDeclarationType::calendarName($this->type));
 
-        if ($this->description == null) {
+        if ($this->description === null) {
             throw new ProcessEngineException("Timer '" . $context->getActivityId() . "' was not configured with a valid duration/time");
         }
 
@@ -110,7 +110,7 @@ class TimerDeclarationImpl extends JobDeclaration
         // ACT-1415: timer-declaration on start-event may contain expressions NOT
         // evaluating variables but other context, evaluating should happen nevertheless
         $scopeForExpression = $context;
-        if ($scopeForExpression == null) {
+        if ($scopeForExpression === null) {
             $scopeForExpression = StartProcessVariableScope::getSharedInstance();
         }
 
@@ -123,9 +123,9 @@ class TimerDeclarationImpl extends JobDeclaration
             throw new ProcessEngineException("Timer '" . $context->getActivityId() . "' was not configured with a valid duration/time, either hand in a java.util.Date or a String in format 'yyyy-MM-dd'T'hh:mm:ss'");
         }
 
-        if ($duedate == null) {
+        if ($duedate === null) {
             if ($this->creationDateBased) {
-                if ($job->getCreateTime() == null) {
+                if ($job->getCreateTime() === null) {
                     throw new ProcessEngineException("Timer '" . $context->getActivityId() . "' has no creation time and cannot be recalculated based on creation date. Either recalculate on your own or trigger recalculation with creationDateBased set to false.");
                 }
                 $duedate = $businessCalendar->resolveDuedate($dueDateString, $job->getCreateTime());
@@ -195,7 +195,7 @@ class TimerDeclarationImpl extends JobDeclaration
      */
     public static function getDeclarationsForScope(?PvmScopeInterface $scope): array
     {
-        if ($scope == null) {
+        if ($scope === null) {
             return [];
         }
 
@@ -212,7 +212,7 @@ class TimerDeclarationImpl extends JobDeclaration
      */
     public static function getTimeoutListenerDeclarationsForScope(?PvmScopeInterface $scope): array
     {
-        if ($scope == null) {
+        if ($scope === null) {
             return [];
         }
 

@@ -81,7 +81,7 @@ class ModifyProcessInstanceAsyncCmd implements CommandInterface
 
     protected function ensureProcessInstanceExists(string $processInstanceId, ?ExecutionEntity $processInstance): void
     {
-        if ($processInstance == null) {
+        if ($processInstance === null) {
             //throw LOG.processInstanceDoesNotExist(processInstanceId);
             throw new \Exception("processInstanceDoesNotExist $processInstanceId");
         }

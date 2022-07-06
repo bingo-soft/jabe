@@ -74,7 +74,7 @@ class ProcessDataStack
         if ($this->isNotBlank($this->mdcName)) {
             $currentValue = $this->getCurrentValue();
 
-            if ($currentValue == null || $currentValue == self::NULL_VALUE) {
+            if ($currentValue === null || $currentValue == self::NULL_VALUE) {
                 MdcAccess::remove($mdcName);
             } else {
                 MdcAccess::put($this->mdcName, $currentValue);

@@ -40,7 +40,7 @@ class GetTaskFormCmd implements CommandInterface, \Serializable
             $checker->checkReadTaskVariable($task);
         }
 
-        if ($task->getTaskDefinition() != null) {
+        if ($task->getTaskDefinition() !== null) {
             $taskFormHandler = $task->getTaskDefinition()->getTaskFormHandler();
             EnsureUtil::ensureNotNull("No taskFormHandler specified for task '" . $this->taskId . "'", "taskFormHandler", $taskFormHandler);
 

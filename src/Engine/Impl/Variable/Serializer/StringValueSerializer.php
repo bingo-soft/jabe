@@ -33,7 +33,7 @@ class StringValueSerializer extends PrimitiveValueSerializer
     public function readValue(ValueFieldsInterface $valueFields, bool $isTransient, bool $deserializeValue = false): StringValueInterface
     {
         $textValue = $valueFields->getTextValue();
-        if ($textValue == null && self::EMPTY_STRING == $valueFields->getTextValue2()) {
+        if ($textValue === null && self::EMPTY_STRING == $valueFields->getTextValue2()) {
             $textValue = "";
         }
         return Variables::stringValue($textValue, $asTransientValue);

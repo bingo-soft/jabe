@@ -43,7 +43,7 @@ class TransactionTest extends BpmnModelElementInstanceTest
         );
         $transaction = $modelInstance->getModelElementById("transaction");
 
-        $this->assertFalse($transaction == null);
+        $this->assertFalse($transaction === null);
         $this->assertEquals("Image", $transaction->getMethod());
         $this->assertCount(1, $transaction->getFlowElements());
     }
@@ -66,7 +66,7 @@ class TransactionTest extends BpmnModelElementInstanceTest
         $transactionElements = $newDoc->getElementsByTagName("transaction");
         $this->assertCount(1, $transactionElements);
         $transactionElement = $transactionElements[0];
-        $this->assertFalse($transactionElement == null);
+        $this->assertFalse($transactionElement === null);
 
         $methodAttribute = $transactionElement->attributes->getNamedItem("method");
         $this->assertEquals("##Store", $methodAttribute->nodeValue);

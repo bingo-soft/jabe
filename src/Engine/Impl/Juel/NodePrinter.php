@@ -6,7 +6,7 @@ class NodePrinter
 {
     private static function isLastSibling(Node $node, ?Node $parent = null): bool
     {
-        if ($parent != null) {
+        if ($parent !== null) {
             return $node == $parent->getChild($parent->getCardinality() - 1);
         }
         return true;

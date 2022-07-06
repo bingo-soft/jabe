@@ -45,7 +45,7 @@ class ThrowSignalEventActivityBehavior extends AbstractBpmnActivityBehavior
     {
         $eventSubscriptionManager = Context::getCommandContext()->getEventSubscriptionManager();
 
-        if ($tenantId != null) {
+        if ($tenantId !== null) {
             return $eventSubscriptionManager
                 ->findSignalEventSubscriptionsByEventNameAndTenantIdIncludeWithoutTenantId($signalName, $tenantId);
         } else {
@@ -62,12 +62,12 @@ class ThrowSignalEventActivityBehavior extends AbstractBpmnActivityBehavior
 
     protected function isStartEventSubscription(EventSubscriptionEntity $signalEventSubscriptionEntity): bool
     {
-        return $signalEventSubscriptionEntity->getExecutionId() == null;
+        return $signalEventSubscriptionEntity->getExecutionId() === null;
     }
 
     protected function isActiveIntermediateEventSubscription(EventSubscriptionEntity $signalEventSubscriptionEntity): bool
     {
         $execution = $signalEventSubscriptionEntity->getExecution();
-        return $execution != null && !$execution->isEnded() && !$execution->isCanceled();
+        return $execution !== null && !$execution->isEnded() && !$execution->isCanceled();
     }
 }

@@ -18,7 +18,7 @@ class TelemetryRegistry
 
     public function getApplicationServer(): ApplicationServerImpl
     {
-        if ($this->applicationServer == null) {
+        if ($this->applicationServer === null) {
             $this->applicationServer = PlatformTelemetryRegistry::getApplicationServer();
         }
         return $this->applicationServer;

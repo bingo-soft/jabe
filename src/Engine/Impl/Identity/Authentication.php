@@ -15,11 +15,11 @@ class Authentication
     ) {
         $this->authenticatedUserId = $authenticatedUserId;
 
-        if ($authenticatedGroupIds != null) {
+        if ($authenticatedGroupIds !== null) {
             $this->authenticatedGroupIds = $authenticatedGroupIds;
         }
 
-        if ($authenticatedTenantIds != null) {
+        if ($authenticatedTenantIds !== null) {
             $this->authenticatedTenantIds = $authenticatedTenantIds;
         }
     }

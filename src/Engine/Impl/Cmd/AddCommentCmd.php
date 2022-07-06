@@ -58,7 +58,7 @@ class AddCommentCmd implements CommandInterface, \Serializable
 
     public function execute(CommandContext $commandContext)
     {
-        if ($this->processInstanceId == null && $this->taskId == null) {
+        if ($this->processInstanceId === null && $this->taskId === null) {
             throw new ProcessEngineException("Process instance id and task id is null");
         }
 
@@ -74,7 +74,7 @@ class AddCommentCmd implements CommandInterface, \Serializable
         $comment->setAction(EventInterface::ACTION_ADD_COMMENT);
 
         $execution = $this->getExecution($commandContext);
-        if ($execution != null) {
+        if ($execution !== null) {
             $comment->setRootProcessInstanceId($execution->getRootProcessInstanceId());
         }
 
@@ -95,7 +95,7 @@ class AddCommentCmd implements CommandInterface, \Serializable
             ->insert($comment);
 
         $task = $this->getTask($commandContext);
-        if ($task != null) {
+        if ($task !== null) {
             $task->triggerUpdateEvent();
         }
 
@@ -104,9 +104,9 @@ class AddCommentCmd implements CommandInterface, \Serializable
 
     protected function getExecution(CommandContext $commandContext): ?ExecutionEntity
     {
-        if ($this->taskId != null) {
+        if ($this->taskId !== null) {
             $task = $this->getTask($commandContext);
-            if ($task != null) {
+            if ($task !== null) {
                 return $task->getExecution();
             } else {
                 return null;
@@ -118,7 +118,7 @@ class AddCommentCmd implements CommandInterface, \Serializable
 
     protected function getProcessInstance(CommandContext $commandContext): ?ExecutionEntity
     {
-        if ($this->processInstanceId != null) {
+        if ($this->processInstanceId !== null) {
             return $commandContext->getExecutionManager()->findExecutionById($processInstanceId);
         } else {
             return null;
@@ -127,7 +127,7 @@ class AddCommentCmd implements CommandInterface, \Serializable
 
     protected function getTask(CommandContext $commandContext): ?TaskEntity
     {
-        if ($this->taskId != null) {
+        if ($this->taskId !== null) {
             return $commandContext->getTaskManager()->findTaskById($this->taskId);
         } else {
             return null;
@@ -155,9 +155,9 @@ class AddCommentCmd implements CommandInterface, \Serializable
     protected function provideRemovalTime(CommentEntity $comment): void
     {
         $rootProcessInstanceId = $comment->getRootProcessInstanceId();
-        if ($rootProcessInstanceId != null) {
+        if ($rootProcessInstanceId !== null) {
             $historicRootProcessInstance = $this->getHistoricRootProcessInstance($rootProcessInstanceId);
-            if ($historicRootProcessInstance != null) {
+            if ($historicRootProcessInstance !== null) {
                 $removalTime = $historicRootProcessInstance->getRemovalTime();
                 $comment->setRemovalTime($removalTime);
             }

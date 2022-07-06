@@ -28,7 +28,7 @@ class ProcessApplicationContextInterceptor extends CommandInterceptor
     {
         $processApplicationIdentifier = ProcessApplicationContextImpl::get();
 
-        if ($processApplicationIdentifier != null) {
+        if ($processApplicationIdentifier !== null) {
             // clear the identifier so this interceptor does not apply to nested commands
             ProcessApplicationContextImpl::clear();
 
@@ -52,15 +52,15 @@ class ProcessApplicationContextInterceptor extends CommandInterceptor
 
     protected function getPaReference(ProcessApplicationIdentifier $processApplicationIdentifier): ?ProcessApplicationReferenceInterface
     {
-        if ($processApplicationIdentifier->getReference() != null) {
+        if ($processApplicationIdentifier->getReference() !== null) {
             return $processApplicationIdentifier->getReference();
-        } elseif ($processApplicationIdentifier->getProcessApplication() != null) {
+        } elseif ($processApplicationIdentifier->getProcessApplication() !== null) {
             return $processApplicationIdentifier->getProcessApplication()->getReference();
-        } elseif ($processApplicationIdentifier->getName() != null) {
+        } elseif ($processApplicationIdentifier->getName() !== null) {
             $runtimeContainerDelegate = RuntimeContainerDelegate::instance()->get();
             $reference = $runtimeContainerDelegate->getDeployedProcessApplication($processApplicationIdentifier->getName());
 
-            if ($reference == null) {
+            if ($reference === null) {
                 //throw LOG.paWithNameNotRegistered(processApplicationIdentifier.getName());
             } else {
                 return $reference;

@@ -106,7 +106,7 @@ class HistoricVariableInstanceQueryImpl extends AbstractQuery implements Histori
     public function matchVariableNamesIgnoreCase(): HistoricVariableInstanceQueryInterface
     {
         $this->variableNamesIgnoreCase = true;
-        if ($this->queryVariableValue != null) {
+        if ($this->queryVariableValue !== null) {
             $this->queryVariableValue->variableNameIgnoreCase = true;
         }
         return $this;
@@ -115,7 +115,7 @@ class HistoricVariableInstanceQueryImpl extends AbstractQuery implements Histori
     public function matchVariableValuesIgnoreCase(): HistoricVariableInstanceQueryInterface
     {
         $this->variableValuesIgnoreCase = true;
-        if ($this->queryVariableValue != null) {
+        if ($this->queryVariableValue !== null) {
             $this->queryVariableValue->variableValueIgnoreCase = true;
         }
         return $this;
@@ -195,7 +195,7 @@ class HistoricVariableInstanceQueryImpl extends AbstractQuery implements Histori
 
     protected function ensureVariablesInitialized(): void
     {
-        if ($this->queryVariableValue != null) {
+        if ($this->queryVariableValue !== null) {
             $processEngineConfiguration = Context::getProcessEngineConfiguration();
             $variableSerializers = $processEngineConfiguration->getVariableSerializers();
             $dbType = $processEngineConfiguration->getDatabaseType();

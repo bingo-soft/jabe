@@ -38,11 +38,11 @@ class FileValueSerializer extends PrimitiveValueSerializer
         $data = $value->getByteArray();
         $valueFields->setByteArrayValue($data);
         $valueFields->setTextValue($value->getFilename());
-        if ($value->getMimeType() == null && $value->getEncoding() != null) {
+        if ($value->getMimeType() === null && $value->getEncoding() !== null) {
             $valueFields->setTextValue2(self::MIMETYPE_ENCODING_SEPARATOR . $value->getEncoding());
-        } elseif ($value->getMimeType() != null && $value->getEncoding() == null) {
+        } elseif ($value->getMimeType() !== null && $value->getEncoding() === null) {
             $valueFields->setTextValue2($value->getMimeType() . self::MIMETYPE_ENCODING_SEPARATOR);
-        } elseif ($value->getMimeType() != null && $value->getEncoding() != null) {
+        } elseif ($value->getMimeType() !== null && $value->getEncoding() !== null) {
             $valueFields->setTextValue2($value->getMimeType() . self::MIMETYPE_ENCODING_SEPARATOR . $value->getEncoding());
         }
     }
@@ -55,16 +55,16 @@ class FileValueSerializer extends PrimitiveValueSerializer
     public function readValue(ValueFieldsInterface $valueFields, bool $isTransient, bool $deserializeValue = false): FileValueInterface
     {
         $fileName = $valueFields->getTextValue();
-        if ($fileName == null) {
+        if ($fileName === null) {
             // ensure file name is not null
             $fileName = "";
         }
         $builder = Variables::fileValue($fileName);
-        if ($valueFields->getByteArrayValue() != null) {
+        if ($valueFields->getByteArrayValue() !== null) {
             $builder->file($valueFields->getByteArrayValue());
         }
         // to ensure the same array size all the time
-        if ($valueFields->getTextValue2() != null) {
+        if ($valueFields->getTextValue2() !== null) {
             $split = explode(self::MIMETYPE_ENCODING_SEPARATOR, $valueFields->getTextValue2(), self::NR_OF_VALUES_IN_TEXTFIELD2);
 
             $mimeType = count($split) == 2 ? $split[0] : null;
@@ -86,7 +86,7 @@ class FileValueSerializer extends PrimitiveValueSerializer
 
     protected function canWriteValue(?TypedValueInterface $value): bool
     {
-        if ($value == null || $value->getType() == null) {
+        if ($value === null || $value->getType() === null) {
             // untyped value
             return false;
         }

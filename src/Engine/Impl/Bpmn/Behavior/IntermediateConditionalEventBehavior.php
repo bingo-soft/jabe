@@ -37,9 +37,9 @@ class IntermediateConditionalEventBehavior extends IntermediateCatchEventActivit
         $execution = $eventSubscription->getExecution();
 
         if (
-            $execution != null &&
+            $execution !== null &&
             !$execution->isEnded() &&
-            $variableEvent != null &&
+            $variableEvent !== null &&
             $conditionalEvent->tryEvaluate($variableEvent, $execution) &&
             $execution->isActive() &&
             $execution->isScope()

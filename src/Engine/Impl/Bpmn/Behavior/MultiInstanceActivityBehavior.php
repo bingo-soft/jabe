@@ -58,11 +58,11 @@ abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivityBehavio
 
     protected function evaluateCollectionVariable(ActivityExecutionInterface $execution, int $loopCounter): void
     {
-        if ($this->usesCollection() && $this->collectionElementVariable != null) {
+        if ($this->usesCollection() && $this->collectionElementVariable !== null) {
             $collection = null;
-            if ($this->collectionExpression != null) {
+            if ($this->collectionExpression !== null) {
                 $collection = $this->collectionExpression->getValue($execution);
-            } elseif ($collectionVariable != null) {
+            } elseif ($collectionVariable !== null) {
                 $collection = $execution->getVariable($collectionVariable);
             }
 
@@ -78,15 +78,15 @@ abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivityBehavio
     protected function resolveNrOfInstances(ActivityExecutionInterface $execution): int
     {
         $nrOfInstances = -1;
-        if ($this->loopCardinalityExpression != null) {
+        if ($this->loopCardinalityExpression !== null) {
             $nrOfInstances = $this->resolveLoopCardinality($execution);
-        } elseif ($this->collectionExpression != null) {
+        } elseif ($this->collectionExpression !== null) {
             $obj = $collectionExpression->getValue($execution);
             if (!is_array($obj)) {
                 //throw LOG.unresolvableExpressionException($collectionExpression->getExpressionText(), "Collection");
             }
             $nrOfInstances = count($obj);
-        } elseif ($this->collectionVariable != null) {
+        } elseif ($this->collectionVariable !== null) {
             $obj = $execution->getVariable($this->collectionVariable);
             if (!is_array($obj)) {
                 //throw LOG.invalidVariableTypeException(collectionVariable, "Collection");
@@ -108,8 +108,8 @@ abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivityBehavio
 
     protected function usesCollection(): bool
     {
-        return $this->collectionExpression != null
-                    || $this->collectionVariable != null;
+        return $this->collectionExpression !== null
+                    || $this->collectionVariable !== null;
     }
 
     protected function resolveLoopCardinality(ActivityExecutionInterface $execution): int
@@ -127,7 +127,7 @@ abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivityBehavio
 
     protected function completionConditionSatisfied(ActivityExecutionInterface $execution): bool
     {
-        if ($this->completionConditionExpression != null) {
+        if ($this->completionConditionExpression !== null) {
             $value = $this->completionConditionExpression->getValue($execution);
             if (!is_bool($value)) {
                 //throw LOG.expressionNotBooleanException("completionCondition", completionConditionExpression->getExpressionText());

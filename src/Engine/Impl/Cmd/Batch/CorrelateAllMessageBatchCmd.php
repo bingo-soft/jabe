@@ -110,11 +110,11 @@ class CorrelateAllMessageBatchCmd implements CommandInterface
             );
         }
 
-        if ($this->processInstanceQuery != null) {
+        if ($this->processInstanceQuery !== null) {
             $elementConfiguration->addDeploymentMappings($this->processInstanceQuery->listDeploymentIdMappings());
         }
 
-        if ($this->historicProcessInstanceQuery != null) {
+        if ($this->historicProcessInstanceQuery !== null) {
             $elementConfiguration->addDeploymentMappings($historicProcessInstanceQuery->listDeploymentIdMappings());
         }
 

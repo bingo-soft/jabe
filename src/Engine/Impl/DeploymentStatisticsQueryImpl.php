@@ -68,13 +68,13 @@ class DeploymentStatisticsQueryImpl extends AbstractQuery implements DeploymentS
 
     public function isIncidentsToInclude(): bool
     {
-        return $this->includeIncidents || $this->includeIncidentsForType != null;
+        return $this->includeIncidents || $this->includeIncidentsForType !== null;
     }
 
     protected function checkQueryOk(): void
     {
         parent::checkQueryOk();
-        if ($this->includeIncidents && $this->includeIncidentsForType != null) {
+        if ($this->includeIncidents && $this->includeIncidentsForType !== null) {
             throw new ProcessEngineException("Invalid query: It is not possible to use includeIncident() and includeIncidentForType() to execute one query.");
         }
     }

@@ -162,7 +162,7 @@ class Parser
      */
     protected function consumeToken(?string $expected = null): ?Token
     {
-        if ($expected != null) {
+        if ($expected !== null) {
             if ($this->token->getSymbol() != $expected) {
                 $this->fail($expected);
             }
@@ -590,7 +590,7 @@ class Parser
         $this->consumeToken(Symbol::LPAREN);
         $l = [];
         $v = $this->expr(false);
-        if ($v != null) {
+        if ($v !== null) {
             $l[] = $v;
             while ($this->token->getSymbol() == Symbol::COMMA) {
                 $this->consumeToken();

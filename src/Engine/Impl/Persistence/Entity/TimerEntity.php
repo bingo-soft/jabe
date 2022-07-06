@@ -58,13 +58,13 @@ class TimerEntity extends JobEntity
     {
         if ($this->getJobHandler() instanceof TimerEventJobHandler) {
             $configuration = $this->getJobHandlerConfiguration();
-            if ($this->repeat != null && !$configuration->isFollowUpJobCreated()) {
+            if ($this->repeat !== null && !$configuration->isFollowUpJobCreated()) {
                 // this timer is a repeating timer and
                 // a follow up timer job has not been scheduled yet
 
                 $newDueDate = $this->calculateRepeat();
 
-                if ($newDueDate != null) {
+                if ($newDueDate !== null) {
                     // the listener is added to the transaction as SYNC on ROLLABCK,
                     // when it is necessary to schedule a new timer job invocation.
                     // If the transaction does not rollback, it is ignored.

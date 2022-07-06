@@ -58,7 +58,7 @@ class SetJobDefinitionPriorityCmd implements CommandInterface
         $opLogContext = new UserOperationLogContext();
         $this->createJobDefinitionOperationLogEntry($opLogContext, $currentPriority, $jobDefinition);
 
-        if ($this->cascade && $this->priority != null) {
+        if ($this->cascade && $this->priority !== null) {
             $commandContext->getJobManager()->updateJobPriorityByDefinitionId($this->jobDefinitionId, $this->priority);
             $this->createCascadeJobsOperationLogEntry($opLogContext, $jobDefinition);
         }

@@ -27,11 +27,11 @@ class DefaultStartFormHandler extends DefaultFormHandler implements StartFormHan
         $formDefinitionBinding = $startFormDefinition->getFormDefinitionBinding();
         $formDefinitionVersion = $startFormDefinition->getFormDefinitionVersion();
 
-        if ($formKey != null) {
+        if ($formKey !== null) {
             $startFormData->setFormKey($formKey->getExpressionText());
-        } elseif ($formDefinitionKey != null && $formDefinitionBinding != null) {
+        } elseif ($formDefinitionKey !== null && $formDefinitionBinding !== null) {
             $ref = new FormRefImpl($formDefinitionKey->getExpressionText(), $formDefinitionBinding);
-            if ($formDefinitionBinding == self::FORM_REF_BINDING_VERSION && $formDefinitionVersion != null) {
+            if ($formDefinitionBinding == self::FORM_REF_BINDING_VERSION && $formDefinitionVersion !== null) {
                 $ref->setVersion(intval($formDefinitionVersion->getExpressionText()));
             }
             $startFormData->setFormRef($ref);

@@ -84,14 +84,14 @@ abstract class DefaultPriorityProvider implements PriorityProviderInterface
 
     public function determinePriority(ExecutionEntity $execution, $param, string $jobDefinitionId): int
     {
-        if ($param != null || $execution != null) {
+        if ($param !== null || $execution !== null) {
             $specificPriority = $this->getSpecificPriority($execution, $param, $jobDefinitionId);
-            if ($specificPriority != null) {
+            if ($specificPriority !== null) {
                 return $specificPriority;
             }
 
             $processDefinitionPriority = $this->getProcessDefinitionPriority($execution, $param);
-            if ($processDefinitionPriority != null) {
+            if ($processDefinitionPriority !== null) {
                 return $processDefinitionPriority;
             }
         }
@@ -133,9 +133,9 @@ abstract class DefaultPriorityProvider implements PriorityProviderInterface
      */
     protected function getProcessDefinedPriority(ProcessDefinitionImpl $processDefinition, string $propertyKey, ExecutionEntity $execution, string $errorMsgHead): ?int
     {
-        if ($processDefinition != null) {
+        if ($processDefinition !== null) {
             $priorityProvider = $processDefinition->getProperty($propertyKey);
-            if ($priorityProvider != null) {
+            if ($priorityProvider !== null) {
                 return $this->evaluateValueProvider($priorityProvider, $execution, $errorMsgHead);
             }
         }
@@ -154,7 +154,7 @@ abstract class DefaultPriorityProvider implements PriorityProviderInterface
     {
         // a context switch failure can occur, if the current engine has no PA registration for the deployment
         // subclasses may assert the actual throwable to narrow down the diagnose
-        return ProcessApplicationContextUtil::getTargetProcessApplication($contextExecution) == null;
+        return ProcessApplicationContextUtil::getTargetProcessApplication($contextExecution) === null;
     }
 
     /**

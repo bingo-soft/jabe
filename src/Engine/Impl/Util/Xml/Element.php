@@ -30,7 +30,7 @@ class Element
 
     public function elements(?string $tagName = null): array
     {
-        if ($tagName == null) {
+        if ($tagName === null) {
             return $this->elements;
         }
         $selectedElements = [];
@@ -50,9 +50,9 @@ class Element
             if (empty($elementsNS) && $nameSpace->hasAlternativeUri()) {
                 $elementsNS = $this->elementsNS($nameSpace->getAlternativeUri(), $tagName);
             }
-        } elseif (is_string($nameSpace) || $nameSpace == null) {
+        } elseif (is_string($nameSpace) || $nameSpace === null) {
             foreach ($this->elements($tagName) as $element) {
-                if ($nameSpace == null || $nameSpace == $element->getUri()) {
+                if ($nameSpace === null || $nameSpace == $element->getUri()) {
                     $elementsNS[] = $element;
                 }
             }
@@ -107,10 +107,10 @@ class Element
     public function attributeNS($namespace, string $name, string $defaultValue = null): string
     {
         $attribute = $this->attribute($this->composeMapKey($namespace, $name));
-        if ($attribute == null && ($namespace instanceof XmlNamespace && $namespace->hasAlternativeUri())) {
+        if ($attribute === null && ($namespace instanceof XmlNamespace && $namespace->hasAlternativeUri())) {
             $attribute = $this->attribute($this->composeMapKey($namespace->getAlternativeUri(), $name));
         }
-        if ($attribute == null) {
+        if ($attribute === null) {
             return $defaultValue;
         }
         return $attribute;

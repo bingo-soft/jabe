@@ -18,7 +18,7 @@ class DataStoreTest extends TestCase
     public function testGetDataStore(): void
     {
         $dataStore = $this->modelInstance->getModelElementById("myDataStore");
-        $this->assertFalse($dataStore == null);
+        $this->assertFalse($dataStore === null);
         $this->assertEquals("My Data Store", $dataStore->getName());
         $this->assertEquals(23, $dataStore->getCapacity());
         $this->assertFalse($dataStore->isUnlimited());
@@ -28,7 +28,7 @@ class DataStoreTest extends TestCase
     {
         $dataStoreReference = $this->modelInstance->getModelElementById("myDataStoreReference");
         $dataStore = $this->modelInstance->getModelElementById("myDataStore");
-        $this->assertFalse($dataStoreReference == null);
+        $this->assertFalse($dataStoreReference === null);
         $this->assertEquals("My Data Store Reference", $dataStoreReference->getName());
         $this->assertTrue($dataStoreReference->getDataStore()->equals($dataStore));
     }

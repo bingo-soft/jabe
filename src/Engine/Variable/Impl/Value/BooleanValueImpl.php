@@ -10,7 +10,7 @@ class BooleanValueImpl extends PrimitiveTypeValueImpl implements BooleanValueInt
     public function __construct(?bool $value, ?bool $isTransient = null)
     {
         parent::__construct($value, ValueType::getBoolean());
-        if ($isTransient != null) {
+        if ($isTransient !== null) {
             $this->isTransient = $isTransient;
         }
     }

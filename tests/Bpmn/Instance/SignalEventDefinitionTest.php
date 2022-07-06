@@ -23,7 +23,7 @@ class SignalEventDefinitionTest extends AbstractEventDefinitionTest
         $eventDefinition = $this->eventDefinitionQuery->filterByType(
             SignalEventDefinitionInterface::class
         )->singleResult();
-        $this->assertFalse($eventDefinition == null);
+        $this->assertFalse($eventDefinition === null);
 
         $this->assertFalse($eventDefinition->isAsync());
 
@@ -31,7 +31,7 @@ class SignalEventDefinitionTest extends AbstractEventDefinitionTest
         $this->assertTrue($eventDefinition->isAsync());
 
         $signal = $eventDefinition->getSignal();
-        $this->assertFalse($signal == null);
+        $this->assertFalse($signal === null);
         $this->assertEquals("signal", $signal->getId());
         $this->assertEquals("signal", $signal->getName());
         $this->assertEquals("itemDef", $signal->getStructure()->getId());

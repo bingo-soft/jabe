@@ -26,7 +26,7 @@ class AstIdentifier extends AstNode implements IdentifierNode
     public function getType(Bindings $bindings, ELContext $context): ?string
     {
         $expression = $bindings->getVariable($this->index);
-        if ($expression != null) {
+        if ($expression !== null) {
             return $expression->getType($context);
         }
         $context->setPropertyResolved(false);
@@ -56,7 +56,7 @@ class AstIdentifier extends AstNode implements IdentifierNode
     public function getValueReference(Bindings $bindings, ELContext $context): ?ValueReference
     {
         $expression = $bindings->getVariable($this->index);
-        if ($expression != null) {
+        if ($expression !== null) {
             return $expression->getValueReference($context);
         }
         return new ValueReference(null, $this->name);
@@ -65,7 +65,7 @@ class AstIdentifier extends AstNode implements IdentifierNode
     public function eval(Bindings $bindings, ELContext $context)
     {
         $expression = $bindings->getVariable($this->index);
-        if ($expression != null) {
+        if ($expression !== null) {
             return $expression->getValue($context);
         }
         $context->setPropertyResolved(false);
@@ -79,7 +79,7 @@ class AstIdentifier extends AstNode implements IdentifierNode
     public function setValue(Bindings $bindings, ELContext $context, $value): void
     {
         $expression = $bindings->getVariable($this->index);
-        if ($expression != null) {
+        if ($expression !== null) {
             $expression->setValue($context, $value);
             return;
         }
@@ -93,7 +93,7 @@ class AstIdentifier extends AstNode implements IdentifierNode
     public function isReadOnly(Bindings $bindings, ELContext $context): bool
     {
         $expression = $bindings->getVariable($this->index);
-        if ($expression != null) {
+        if ($expression !== null) {
             return $expression->isReadOnly($context);
         }
         $context->setPropertyResolved(false);
@@ -107,12 +107,12 @@ class AstIdentifier extends AstNode implements IdentifierNode
     protected function getMethod(Bindings $bindings, ELContext $context, ?string $returnType = null, ?array $paramTypes = []): \ReflectionMethod
     {
         $value = $this->eval($bindings, $context);
-        if ($value == null) {
+        if ($value === null) {
             throw new MethodNotFoundException(LocalMessages::get("error.identifier.method.notfound", $this->name));
         }
         if ($value instanceof \ReflectionMethod) {
             $method = $value;
-            if ($returnType != null && $returnType != $method->getReturnType()) {
+            if ($returnType !== null && $returnType != $method->getReturnType()) {
                 throw new MethodNotFoundException(LocalMessages::get("error.identifier.method.notfound", $this->name));
             }
             return $method;
@@ -143,7 +143,7 @@ class AstIdentifier extends AstNode implements IdentifierNode
 
     public function appendStructure(string &$b, Bindings $bindings): void
     {
-        $b .= $bindings != null && $bindings->isVariableBound($this->index) ? "<var>" : $this->name;
+        $b .= $bindings !== null && $bindings->isVariableBound($this->index) ? "<var>" : $this->name;
     }
 
     public function getIndex(): int

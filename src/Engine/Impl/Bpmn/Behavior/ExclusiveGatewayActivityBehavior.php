@@ -37,20 +37,20 @@ class ExclusiveGatewayActivityBehavior extends GatewayActivityBehavior
         foreach ($transitionIterator as $seqFlow) {
             $condition = $seqFlow->getProperty(BpmnParse::PROPERTYNAME_CONDITION);
             if (
-                ($condition == null && ($defaultSequenceFlow == null || !$defaultSequenceFlow == $seqFlow->getId())) ||
-                ($condition != null && $condition->evaluate($execution))
+                ($condition === null && ($defaultSequenceFlow === null || !$defaultSequenceFlow == $seqFlow->getId())) ||
+                ($condition !== null && $condition->evaluate($execution))
             ) {
                 //LOG.outgoingSequenceFlowSelected(seqFlow.getId());
                 $outgoingSeqFlow = $seqFlow;
             }
         }
 
-        if ($outgoingSeqFlow != null) {
+        if ($outgoingSeqFlow !== null) {
             $execution->leaveActivityViaTransition($outgoingSeqFlow);
         } else {
-            if ($defaultSequenceFlow != null) {
+            if ($defaultSequenceFlow !== null) {
                 $defaultTransition = $execution->getActivity()->findOutgoingTransition($defaultSequenceFlow);
-                if ($defaultTransition != null) {
+                if ($defaultTransition !== null) {
                     $execution->leaveActivityViaTransition($defaultTransition);
                 } else {
                     //throw LOG.missingDefaultFlowException(execution.getActivity().getId(), defaultSequenceFlow);

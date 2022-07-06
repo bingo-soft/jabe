@@ -77,7 +77,7 @@ abstract class AbstractVariableCmd implements CommandInterface, \Serializable
     protected function onSuccess(AbstractVariableScope $scope): void
     {
         $contextExecution = $this->getContextExecution();
-        if ($contextExecution != null) {
+        if ($contextExecution !== null) {
             $contextExecution->dispatchDelayedEventsAndPerformOperation(null);
         }
     }

@@ -27,7 +27,7 @@ class DateValueSerializer extends PrimitiveValueSerializer
     public function writeValue(DateValueInterface $typedValue, ValueFieldsInterface $valueFields): void
     {
         $dateValue = $typedValue->getValue();
-        if ($dateValue != null) {
+        if ($dateValue !== null) {
             $valueFields->setTextValue($dateValue);
         } else {
             $valueFields->setTextValue(null);

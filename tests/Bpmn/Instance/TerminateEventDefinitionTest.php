@@ -14,6 +14,6 @@ class TerminateEventDefinitionTest extends AbstractEventDefinitionTest
         $eventDefinition = $this->eventDefinitionQuery->filterByType(
             TerminateEventDefinitionInterface::class
         )->singleResult();
-        $this->assertFalse($eventDefinition == null);
+        $this->assertFalse($eventDefinition === null);
     }
 }

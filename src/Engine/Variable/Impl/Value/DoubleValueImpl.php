@@ -10,7 +10,7 @@ class DoubleValueImpl extends PrimitiveTypeValueImpl implements DoubleValueInter
     public function __construct(?float $value, ?bool $isTransient = null)
     {
         parent::__construct($value, ValueType::getDouble());
-        if ($isTransient != null) {
+        if ($isTransient !== null) {
             $this->isTransient = $isTransient;
         }
     }

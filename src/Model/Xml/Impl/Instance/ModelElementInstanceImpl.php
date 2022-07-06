@@ -52,7 +52,7 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
     public function getParentElement(): ?ModelElementInstanceInterface
     {
         $parentElement = $this->domElement->getParentElement();
-        if ($parentElement != null) {
+        if ($parentElement !== null) {
             return ModelUtil::getModelElement($parentElement, $this->modelInstance);
         } else {
             return null;
@@ -87,7 +87,7 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
             $this->domElement->setAttribute(null, $attributeName, $xmlValue, $isIdAttribute);
         }
         $attribute = $this->elementType->getAttribute($attributeName);
-        if ($attribute != null && $withReferenceUpdate) {
+        if ($attribute !== null && $withReferenceUpdate) {
             $attribute->updateIncomingReferences($this, $xmlValue, $oldValue);
         }
     }
@@ -107,21 +107,21 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
             $this->domElement->setAttribute($namespaceForSetting, $attributeName, $xmlValue, false);
         }
         $attribute = $this->elementType->getAttribute($attributeName);
-        if ($attribute != null && $withReferenceUpdate) {
+        if ($attribute !== null && $withReferenceUpdate) {
             $attribute->updateIncomingReferences($this, $xmlValue, $oldValue);
         }
     }
 
     private function determineNamespace(string $intendedNamespace, string $attributeName): string
     {
-        $isSetInIntendedNamespace = $this->getAttributeValueNs($intendedNamespace, $attributeName) != null;
+        $isSetInIntendedNamespace = $this->getAttributeValueNs($intendedNamespace, $attributeName) !== null;
         if ($isSetInIntendedNamespace) {
             return $intendedNamespace;
         } else {
             $alternativeNamespaces = $this->modelInstance->getModel()->getAlternativeNamespaces($intendedNamespace);
             if (!empty($alternativeNamespaces)) {
                 foreach ($alternativeNamespaces as $alternativeNamespace) {
-                    if ($this->getAttributeValueNs($alternativeNamespace, $attributeName) != null) {
+                    if ($this->getAttributeValueNs($alternativeNamespace, $attributeName) !== null) {
                         return $alternativeNamespace;
                     }
                 }
@@ -133,9 +133,9 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
     public function removeAttribute(string $attributeName): void
     {
         $attribute = $this->elementType->getAttribute($attributeName);
-        if ($attribute != null) {
+        if ($attribute !== null) {
             $identifier = $attribute->getValue($this);
-            if ($identifier != null) {
+            if ($identifier !== null) {
                 $attribute->unlinkReference($this, $identifier);
             }
         }
@@ -145,9 +145,9 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
     public function removeAttributeNs(string $namespaceUri, string $attributeName): void
     {
         $attribute = $this->elementType->getAttribute($attributeName);
-        if ($attribute != null) {
+        if ($attribute !== null) {
             $identifier = $attribute->getValue($this);
-            if ($identifier != null) {
+            if ($identifier !== null) {
                 $attribute->unlinkReference($this, $identifier);
             }
         }
@@ -205,7 +205,7 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
             $childElement->getNameSpaceURI(),
             $childElement->getLocalName()
         );
-        if ($existingChild == null) {
+        if ($existingChild === null) {
             $this->addChildElement($newChild);
         } else {
             $this->replaceChildElement($existingChild, $newChildElement);
@@ -231,7 +231,7 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
         $oldId = $oldInstance->getAttributeValue("id");
         $newId = $newInstance->getAttributeValue("id");
 
-        if ($oldId == null || $newId == null) {
+        if ($oldId === null || $newId === null) {
             return;
         }
 
@@ -248,7 +248,7 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
     public function replaceWithElement(ModelElementInstanceInterface $newElement): void
     {
         $parentElement = $this->getParentElement();
-        if ($parentElement != null) {
+        if ($parentElement !== null) {
             $parentElement->replaceChildElement($this, $newElement);
         } else {
             throw new ModelException("Unable to remove replace without parent");
@@ -320,7 +320,7 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
         ModelElementInstanceInterface $elementToInsert,
         ?ModelElementInstanceInterface $insertAfterElement
     ): void {
-        if ($insertAfterElement == null || $insertAfterElement->getDomElement() == null) {
+        if ($insertAfterElement === null || $insertAfterElement->getDomElement() === null) {
             $this->domElement->insertChildElementAfter($elementToInsert->getDomElement(), null);
         } else {
             $this->domElement->insertChildElementAfter(
@@ -340,7 +340,7 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
         $attributes = $this->elementType->getAllAttributes();
         foreach ($attributes as $attribute) {
             $identifier = $attribute->getValue($this);
-            if ($identifier != null) {
+            if ($identifier !== null) {
                 $attribute->unlinkReference($this, $identifier);
             }
         }
@@ -359,7 +359,7 @@ class ModelElementInstanceImpl implements ModelElementInstanceInterface
 
     public function equals(?ModelElementInstanceInterface $obj): bool
     {
-        if ($obj == null) {
+        if ($obj === null) {
             return false;
         } else {
             return $obj->domElement->equals($this->domElement);

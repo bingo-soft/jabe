@@ -13,7 +13,7 @@ abstract class SingleReferenceWalker extends ReferenceWalker
     {
         $nextElement = $this->nextElement();
 
-        if ($nextElement != null) {
+        if ($nextElement !== null) {
             return [$nextElement];
         }
         return [];

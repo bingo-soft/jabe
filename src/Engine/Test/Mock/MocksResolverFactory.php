@@ -17,7 +17,7 @@ class MocksResolverFactory implements ResolverFactoryInterface, ResolverInterfac
 
     public function containsKey($key): bool
     {
-        return Mocks::get($key) != null;
+        return Mocks::get($key) !== null;
     }
 
     public function get($key)

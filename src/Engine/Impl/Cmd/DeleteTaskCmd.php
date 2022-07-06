@@ -53,7 +53,7 @@ class DeleteTaskCmd implements CommandInterface, \Serializable
 
     public function execute(CommandContext $commandContext)
     {
-        if ($this->taskId != null) {
+        if ($this->taskId !== null) {
             $this->deleteTask($this->taskId, $commandContext);
         } elseif (!empty($this->taskIds)) {
             foreach ($this->taskIds as $taskId) {
@@ -71,17 +71,17 @@ class DeleteTaskCmd implements CommandInterface, \Serializable
         $taskManager = $commandContext->getTaskManager();
         $task = $taskManager->findTaskById($taskId);
 
-        if ($task != null) {
-            if ($task->getExecutionId() != null) {
+        if ($task !== null) {
+            if ($task->getExecutionId() !== null) {
                 throw new ProcessEngineException("The task cannot be deleted because is part of a running process");
-            }/* elseif (task.getCaseExecutionId() != null) {
+            }/* elseif (task.getCaseExecutionId() !== null) {
                 throw new ProcessEngineException("The task cannot be deleted because is part of a running case instance");
             }*/
 
             $this->checkDeleteTask($task, $commandContext);
             $task->logUserOperation(UserOperationLogEntryInterface::OPERATION_TYPE_DELETE);
 
-            $reason = ($this->deleteReason == null || strlen($this->deleteReason) == 0) ? TaskEntity::DELETE_REASON_DELETED : $this->deleteReason;
+            $reason = ($this->deleteReason === null || strlen($this->deleteReason) == 0) ? TaskEntity::DELETE_REASON_DELETED : $this->deleteReason;
             $task->delete($reason, $this->cascade);
         } elseif ($this->cascade) {
             Context::getCommandContext()

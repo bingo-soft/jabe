@@ -30,7 +30,7 @@ class DeleteDeploymentFailCmd extends AbstractCommand
             $cmd = new RegisterDeploymentCmd($scope->deploymentId);
             $cmd->execute($commandContext);
         });
-        if ($this->processApplicationReference != null) {
+        if ($this->processApplicationReference !== null) {
             $commandContext->runWithoutAuthorization(function () use ($scope, $commandContex) {
                 $cmd = new RegisterProcessApplicationCmd($scope->deploymentId, $scope->processApplicationReference);
                 $cmd->execute($commandContex);

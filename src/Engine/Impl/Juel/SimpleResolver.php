@@ -26,13 +26,13 @@ class SimpleResolver extends ELResolver
      */
     public function __construct(?ELResolver $resolver = null, bool $readOnly = false)
     {
-        if (self::$DEFAULT_RESOLVER_READ_ONLY == null) {
+        if (self::$DEFAULT_RESOLVER_READ_ONLY === null) {
             self::$DEFAULT_RESOLVER_READ_ONLY = new CompositeELResolver();
             self::$DEFAULT_RESOLVER_READ_ONLY->add(new ArrayELResolver(true));
             self::$DEFAULT_RESOLVER_READ_ONLY->add(new ListELResolver(true));
             self::$DEFAULT_RESOLVER_READ_ONLY->add(new MapELResolver(true));
         }
-        if (self::$DEFAULT_RESOLVER_READ_WRITE == null) {
+        if (self::$DEFAULT_RESOLVER_READ_WRITE === null) {
             self::$DEFAULT_RESOLVER_READ_WRITE = new CompositeELResolver();
             self::$DEFAULT_RESOLVER_READ_WRITE->add(new ArrayELResolver(false));
             self::$DEFAULT_RESOLVER_READ_WRITE->add(new ListELResolver(false));

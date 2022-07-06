@@ -29,7 +29,7 @@ class DbEntityCache
 
     public function __construct(DbEntityCacheKeyMapping $cacheKeyMapping = null)
     {
-        if ($cacheKeyMapping == null) {
+        if ($cacheKeyMapping === null) {
             DbEntityCacheKeyMapping::emptyMapping();
         } else {
             $this->cacheKeyMapping = $cacheKeyMapping;
@@ -48,7 +48,7 @@ class DbEntityCache
     {
         $cacheKey = $this->cacheKeyMapping->getEntityCacheKey($type);
         $cachedDbEntity = $this->getCachedEntity($cacheKey, $id);
-        if ($cachedDbEntity != null) {
+        if ($cachedDbEntity !== null) {
             $dbEntity = $cachedDbEntity->getEntity();
             if (!is_a($dbEntity, $type)) {
                 //throw LOG.entityCacheLookupException(type, id, dbEntity.getClass(), null);
@@ -74,7 +74,7 @@ class DbEntityCache
             $entities = null;
         }
         $result = [];
-        if ($entities == null) {
+        if ($entities === null) {
             return [];
         } else {
             foreach (array_values($entities) as $cachedEntity) {
@@ -269,7 +269,7 @@ class DbEntityCache
      */
     public function contains(DbEntityInterface $dbEntity): bool
     {
-        return $this->getCachedEntity($dbEntity) != null;
+        return $this->getCachedEntity($dbEntity) !== null;
     }
 
     /**
@@ -283,7 +283,7 @@ class DbEntityCache
     public function isPersistent(DbEntityInterface $dbEntity): bool
     {
         $cachedDbEntity = $this->getCachedEntity($dbEntity);
-        if ($cachedDbEntity == null) {
+        if ($cachedDbEntity === null) {
             return false;
         } else {
             return $cachedDbEntity->getEntityState() == DbEntityState::PERSISTENT;
@@ -301,7 +301,7 @@ class DbEntityCache
     public function isDeleted(DbEntityInterface $dbEntity): bool
     {
         $cachedDbEntity = $this->getCachedEntity($dbEntity);
-        if ($cachedDbEntity == null) {
+        if ($cachedDbEntity === null) {
             return false;
         } else {
             return $cachedDbEntity->getEntityState() == DbEntityState::DELETED_MERGED
@@ -321,7 +321,7 @@ class DbEntityCache
     public function isTransient(DbEntityInterface $dbEntity): bool
     {
         $cachedDbEntity = $this->getCachedEntity($dbEntity);
-        if ($cachedDbEntity == null) {
+        if ($cachedDbEntity === null) {
             return false;
         } else {
             return $cachedDbEntity->getEntityState() == DbEntityState::TRANSIENT;
@@ -346,7 +346,7 @@ class DbEntityCache
     public function setDeleted(DbEntityInterface $dbEntity): void
     {
         $cachedEntity = $this->getCachedEntity($dbEntity);
-        if ($cachedEntity != null) {
+        if ($cachedEntity !== null) {
             if ($cachedEntity->getEntityState() == DbEntityState::TRANSIENT) {
                 $cachedEntity->setEntityState(DbEntityState::DELETED_TRANSIENT);
             } elseif ($cachedEntity->getEntityState() == DbEntityState::PERSISTENT) {

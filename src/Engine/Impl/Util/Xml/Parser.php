@@ -12,7 +12,7 @@ class Parser
 
     public static function getInstance(): Parser
     {
-        if (self::$INSTANCE == null) {
+        if (self::$INSTANCE === null) {
             self::$INSTANCE = new Parser();
         }
         return self::$INSTANCE;

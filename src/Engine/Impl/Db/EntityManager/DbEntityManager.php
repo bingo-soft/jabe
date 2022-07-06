@@ -87,7 +87,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
     {
         $this->idGenerator = $idGenerator;
         $this->persistenceSession = $persistenceSession;
-        if ($this->persistenceSession != null) {
+        if ($this->persistenceSession !== null) {
             $this->persistenceSession->addEntityLoadListener($this);
         }
         $this->initializeEntityCache();
@@ -105,17 +105,17 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
         $processEngineConfiguration = Context::getProcessEngineConfiguration();
 
         if (
-            $processEngineConfiguration != null
+            $processEngineConfiguration !== null
             && $processEngineConfiguration->isDbEntityCacheReuseEnabled()
-            && $jobExecutorContext != null
+            && $jobExecutorContext !== null
         ) {
             $this->dbEntityCache = $jobExecutorContext->getEntityCache();
-            if ($this->dbEntityCache == null) {
+            if ($this->dbEntityCache === null) {
                 $this->dbEntityCache = new DbEntityCache($processEngineConfiguration->getDbEntityCacheKeyMapping());
                 $jobExecutorContext->setEntityCache($this->dbEntityCache);
             }
         } else {
-            if ($processEngineConfiguration != null) {
+            if ($processEngineConfiguration !== null) {
                 $this->dbEntityCache = new DbEntityCache($processEngineConfiguration->getDbEntityCacheKeyMapping());
             } else {
                 $this->dbEntityCache = new DbEntityCache();
@@ -127,11 +127,11 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
 
     public function selectList(string $statement, $parameter = null, $pageOrFirstResult = null, $maxResults = null): array
     {
-        if ($parameter == null) {
+        if ($parameter === null) {
             return $this->selectList($statement, null, 0, PHP_INT_MAX);
-        } elseif ($parameter instanceof ListQueryParameterObject && $pageOrFirstResult == null) {
+        } elseif ($parameter instanceof ListQueryParameterObject && $pageOrFirstResult === null) {
             return $this->selectListWithRawParameter($statement, $parameter, $parameter->getFirstResult(), $parameter->getMaxResults());
-        } elseif ($pageOrFirstResult == null) {
+        } elseif ($pageOrFirstResult === null) {
             return $this->selectList($statement, $parameter, 0, PHP_INT_MAX);
         } elseif ($pageOrFirstResult instanceof Page) {
             if ($parameter instanceof ListQueryParameterObject) {
@@ -199,7 +199,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
 
     protected function filterLoadedObjects(array $loadedObjects): array
     {
-        if (empty($loadedObjects) || $loadedObjects[0] == null) {
+        if (empty($loadedObjects) || $loadedObjects[0] === null) {
             return $loadedObjects;
         }
         if (!(is_a($loadedObjects[0], DbEntityInterface::class))) {
@@ -218,7 +218,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
     protected function cacheFilter(DbEntityInterface $persistentObject): DbEntityInterface
     {
         $cachedPersistentObject = $this->dbEntityCache->get(get_class($persistentObject), $persistentObject->getId());
-        if ($cachedPersistentObject != null) {
+        if ($cachedPersistentObject !== null) {
             return $cachedPersistentObject;
         } else {
             return $persistentObject;
@@ -249,7 +249,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
     public function isDirty(DbEntityInterface $dbEntity): bool
     {
         $cachedEntity = $this->dbEntityCache->getCachedEntity($dbEntity);
-        if ($cachedEntity == null) {
+        if ($cachedEntity === null) {
             return false;
         } else {
             return $cachedEntity->isDirty() || $cachedEntity->getEntityState() == DbEntityState::MERGED;
@@ -361,7 +361,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
     public function flushEntity(DbEntityInterface $entity): void
     {
         $cachedEntity = $this->dbEntityCache->getCachedEntity($entity);
-        if ($cachedEntity != null) {
+        if ($cachedEntity !== null) {
             $this->flushCachedEntity($cachedEntity);
         }
 
@@ -417,7 +417,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
         if (!empty($optimisticLockingListeners)) {
             foreach ($optimisticLockingListeners as $optimisticLockingListener) {
                 if (
-                    $optimisticLockingListener->getEntityType() == null
+                    $optimisticLockingListener->getEntityType() === null
                     || is_a($optimisticLockingListener->getEntityType(), $dbOperation->getEntityType(), true)
                 ) {
                     $handlingResult = $optimisticLockingListener->failedOperation($dbOperation);
@@ -519,7 +519,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
     public function merge(DbEntityInterface $dbEntity): void
     {
 
-        if ($dbEntity->getId() == null) {
+        if ($dbEntity->getId() === null) {
             //throw LOG.mergeDbEntityException(dbEntity);
             throw new \Exception("mergeDbEntityException");
         }
@@ -535,7 +535,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
     public function forceUpdate(DbEntityInterface $entity): void
     {
         $cachedEntity = $this->dbEntityCache->getCachedEntity($entity);
-        if ($cachedEntity != null && $cachedEntity->getEntityState() == DbEntityState::PERSISTENT) {
+        if ($cachedEntity !== null && $cachedEntity->getEntityState() == DbEntityState::PERSISTENT) {
             $cachedEntity->forceSetDirty();
         }
     }
@@ -637,7 +637,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
 
     protected function ensureHasId(DbEntityInterface $dbEntity): void
     {
-        if ($dbEntity->getId() == null) {
+        if ($dbEntity->getId() === null) {
             $nextId = $idGenerator->getNextId();
             $dbEntity->setId($nextId);
         }

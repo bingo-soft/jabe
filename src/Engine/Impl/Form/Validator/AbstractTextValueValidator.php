@@ -8,7 +8,7 @@ abstract class AbstractTextValueValidator implements FormFieldValidatorInterface
 {
     public function validate($submittedValue, FormFieldValidatorContextInterface $validatorContext): bool
     {
-        if ($submittedValue == null) {
+        if ($submittedValue === null) {
             return $this->isNullValid();
         }
 

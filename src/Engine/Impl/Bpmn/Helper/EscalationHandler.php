@@ -27,7 +27,7 @@ class EscalationHandler
     {
         $escalationEventDefinition = self::executeEscalation($execution, $escalationCode);
 
-        if ($escalationEventDefinition == null) {
+        if ($escalationEventDefinition === null) {
             //throw LOG.missingBoundaryCatchEventEscalation(execution.getActivity().getId(), escalationCode);
         }
     }
@@ -58,12 +58,12 @@ class EscalationHandler
 
             public function isFulfilled($element = null): bool
             {
-                return $this->escalationEventDefinitionFinder->getEscalationEventDefinition() != null || $element == null;
+                return $this->escalationEventDefinitionFinder->getEscalationEventDefinition() !== null || $element === null;
             }
         });
 
         $escalationEventDefinition = $escalationEventDefinitionFinder->getEscalationEventDefinition();
-        if ($escalationEventDefinition != null) {
+        if ($escalationEventDefinition !== null) {
             self::executeEscalationHandler($escalationEventDefinition, $activityExecutionMappingCollector, $escalationCode);
         }
         return $escalationEventDefinition;
@@ -78,7 +78,7 @@ class EscalationHandler
         $escalationScope = self::getScopeForEscalation($escalationEventDefinition);
         $escalationExecution = $activityExecutionMappingCollector->getExecutionForScope($escalationScope);
 
-        if ($escalationEventDefinition->getEscalationCodeVariable() != null) {
+        if ($escalationEventDefinition->getEscalationCodeVariable() !== null) {
             $escalationExecution->setVariable($escalationEventDefinition->getEscalationCodeVariable(), $escalationCode);
         }
 

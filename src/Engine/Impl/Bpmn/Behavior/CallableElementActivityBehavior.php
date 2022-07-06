@@ -69,7 +69,7 @@ abstract class CallableElementActivityBehavior extends AbstractBpmnActivityBehav
     protected function resolveDelegation(ActivityExecutionInterface $execution): ?DelegateVariableMappingInterface
     {
         $delegate = $this->resolveDelegateClass($execution);
-        return $delegate != null ? $this->getDelegateVariableMapping($delegate) : null;
+        return $delegate !== null ? $this->getDelegateVariableMapping($delegate) : null;
     }
 
     public function resolveDelegateClass(ActivityExecutionInterface $execution)
@@ -88,9 +88,9 @@ abstract class CallableElementActivityBehavior extends AbstractBpmnActivityBehav
     protected function instantiateDelegateClass(ActivityExecutionInterface $execution)
     {
         $delegate = null;
-        if ($this->expression != null) {
+        if ($this->expression !== null) {
             $delegate = $expression->getValue($execution);
-        } elseif ($this->className != null) {
+        } elseif ($this->className !== null) {
             $delegate = ClassDelegateUtil::instantiateDelegate($className, null);
         }
         return $delegate;
@@ -101,7 +101,7 @@ abstract class CallableElementActivityBehavior extends AbstractBpmnActivityBehav
         $variables = $this->getInputVariables($execution);
 
         $varMapping = $this->resolveDelegation($execution);
-        if ($varMapping != null) {
+        if ($varMapping !== null) {
             $this->invokeVarMappingDelegation(new class ($execution, $variables, $varMapping) extends DelegateInvocation {
                 private $executions;
                 private $variables;
@@ -135,7 +135,7 @@ abstract class CallableElementActivityBehavior extends AbstractBpmnActivityBehav
         $execution->setVariablesLocal($localVariables);
 
         $varMapping = $this->resolveDelegation($execution);
-        if ($varMapping != null) {
+        if ($varMapping !== null) {
             $this->invokeVarMappingDelegation(new class ($execution, $varMapping, $subInstance) extends DelegateInvocation {
                 private $executions;
                 private $subInstance;
@@ -167,7 +167,7 @@ abstract class CallableElementActivityBehavior extends AbstractBpmnActivityBehav
 
     protected function filterVariables(VariableMapInterface $variables): VariableMapInterface
     {
-        if ($variables != null) {
+        if ($variables !== null) {
             foreach ($this->variablesFilter as $key) {
                 $variables->remove($key);
             }

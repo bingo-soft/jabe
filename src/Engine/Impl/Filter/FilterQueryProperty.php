@@ -13,7 +13,7 @@ class FilterQueryProperty
 
     public static function filterId(): QueryPropertyImpl
     {
-        if (self::$FILTER_ID == null) {
+        if (self::$FILTER_ID === null) {
             self::$FILTER_ID = new QueryPropertyImpl("ID_");
         }
         return self::$FILTER_ID;
@@ -21,7 +21,7 @@ class FilterQueryProperty
 
     public static function resourceType(): QueryPropertyImpl
     {
-        if (self::$RESOURCE_TYPE == null) {
+        if (self::$RESOURCE_TYPE === null) {
             self::$RESOURCE_TYPE = new QueryPropertyImpl("RESOURCE_TYPE_");
         }
         return self::$RESOURCE_TYPE;
@@ -29,7 +29,7 @@ class FilterQueryProperty
 
     public static function name(): QueryPropertyImpl
     {
-        if (self::$NAME == null) {
+        if (self::$NAME === null) {
             self::$NAME = new QueryPropertyImpl("NAME_");
         }
         return self::$NAME;
@@ -37,7 +37,7 @@ class FilterQueryProperty
 
     public static function owner(): QueryPropertyImpl
     {
-        if (self::$OWNER == null) {
+        if (self::$OWNER === null) {
             self::$OWNER = new QueryPropertyImpl("OWNER_");
         }
         return self::$OWNER;
@@ -45,7 +45,7 @@ class FilterQueryProperty
 
     public static function query(): QueryPropertyImpl
     {
-        if (self::$QUERY == null) {
+        if (self::$QUERY === null) {
             self::$QUERY = new QueryPropertyImpl("QUERY_");
         }
         return self::$QUERY;
@@ -53,7 +53,7 @@ class FilterQueryProperty
 
     public static function properties(): QueryPropertyImpl
     {
-        if (self::$PROPERTIES == null) {
+        if (self::$PROPERTIES === null) {
             self::$PROPERTIES = new QueryPropertyImpl("PROPERTIES_");
         }
         return self::$PROPERTIES;

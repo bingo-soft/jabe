@@ -265,7 +265,7 @@ class Bpmn
 
     public static function getInstance(): Bpmn
     {
-        if (self::$INSTANCE == null) {
+        if (self::$INSTANCE === null) {
             self::$INSTANCE = new Bpmn();
             self::$INSTANCE->bpmnParser = new BpmnParser();
         }
@@ -411,7 +411,7 @@ class Bpmn
 
         $builder = $process->builder();
 
-        if ($processId != null) {
+        if ($processId !== null) {
             $builder->id($processId);
         }
 

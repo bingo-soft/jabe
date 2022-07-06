@@ -36,7 +36,7 @@ class SaveFilterCmd implements CommandInterface, \Serializable
     {
         EnsureUtil::ensureNotNull("filter", "filter", $this->filter);
 
-        $operation = $this->filter->getId() == null ? UserOperationLogEntryInterface::OPERATION_TYPE_CREATE : UserOperationLogEntryInterface::PERATION_TYPE_UPDATE;
+        $operation = $this->filter->getId() === null ? UserOperationLogEntryInterface::OPERATION_TYPE_CREATE : UserOperationLogEntryInterface::PERATION_TYPE_UPDATE;
 
         $savedFilter = $commandContext
             ->getFilterManager()

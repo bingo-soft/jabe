@@ -107,7 +107,7 @@ class ProcessDataContext
 
         if (self::isNotBlank($this->mdcPropertyApplicationName)) {
             $currentPa = Context::getCurrentProcessApplication();
-            if ($currentPa != null) {
+            if ($currentPa !== null) {
                 $this->addToStack($currentPa->getName(), $this->mdcPropertyApplicationName);
             }
         }
@@ -192,7 +192,7 @@ class ProcessDataContext
 
     protected static function isNotBlank(?string $property): bool
     {
-        return $property != null && !empty(trim($property));
+        return $property !== null && !empty(trim($property));
     }
 
     protected static function valuesEqual(?string $val1, ?string $val2): bool
@@ -202,6 +202,6 @@ class ProcessDataContext
 
     protected static function isNull(?string $value): bool
     {
-        return $value == null || self::NULL_VALUE == $value;
+        return $value === null || self::NULL_VALUE == $value;
     }
 }

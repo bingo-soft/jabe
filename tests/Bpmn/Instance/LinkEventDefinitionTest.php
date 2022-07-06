@@ -33,7 +33,7 @@ class LinkEventDefinitionTest extends AbstractEventDefinitionTest
         $eventDefinition = $this->eventDefinitionQuery->filterByType(
             LinkEventDefinitionInterface::class
         )->singleResult();
-        $this->assertFalse($eventDefinition == null);
+        $this->assertFalse($eventDefinition === null);
 
         $this->assertEquals("link", $eventDefinition->getName());
         $this->assertEquals("link", $eventDefinition->getSources()[0]->getName());

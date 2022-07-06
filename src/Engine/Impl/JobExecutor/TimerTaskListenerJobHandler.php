@@ -28,7 +28,7 @@ class TimerTaskListenerJobHandler extends TimerEventJobHandler
             }
         }
 
-        if ($targetTask != null) {
+        if ($targetTask !== null) {
             $targetTask->triggerTimeoutEvent($configuration->getTimerElementSecondaryKey());
         } else {
             throw new ProcessEngineException("Error while triggering timeout task listener '" . $configuration->getTimerElementSecondaryKey()

@@ -56,7 +56,7 @@ class CacheDeployer
     {
         $deployment->clearResources();
         foreach ($resourceNames as $resourceName) {
-            if ($resourceName != null) {
+            if ($resourceName !== null) {
                 // with the given resource we prevent the deployment of querying
                 // the database which means using all resources that were utilized during the deployment
                 $resource = Context::getCommandContext()->getResourceManager()->findResourceByDeploymentIdAndResourceName($deployment->getId(), $resourceName);

@@ -162,7 +162,7 @@ class TableDataManager extends AbstractManager
 
     protected function getTableCount(?string $tableName = null)
     {
-        if ($tableName != null) {
+        if ($tableName !== null) {
             //LOG.selectTableCountForTable(tableName);
             $count = $this->getDbEntityManager()->selectOne(
                 "selectTableCount",
@@ -260,7 +260,7 @@ class TableDataManager extends AbstractManager
             } catch (\Exception $se) {
                 throw $se;
             } finally {
-                if ($resultSet != null) {
+                if ($resultSet !== null) {
                     //$resultSet->close();
                 }
             }

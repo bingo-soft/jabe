@@ -19,7 +19,7 @@ class ScriptBindingsFactory
         $scriptResolvers = [];
         foreach ($this->resolverFactories as $scriptResolverFactory) {
             $resolver = $scriptResolverFactory->createResolver($variableScope);
-            if ($resolver != null) {
+            if ($resolver !== null) {
                 $scriptResolvers->add($resolver);
             }
         }

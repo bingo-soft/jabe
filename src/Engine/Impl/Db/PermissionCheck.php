@@ -33,7 +33,7 @@ class PermissionCheck
     public function setPermission(PermissionInterface $permission): void
     {
         $this->permission = $permission;
-        if ($permission != null) {
+        if ($permission !== null) {
             $this->perms = $permission->getValue();
         }
     }
@@ -52,7 +52,7 @@ class PermissionCheck
     {
         $this->resource = $resource;
 
-        if ($resource != null) {
+        if ($resource !== null) {
             $this->resourceType = $resource->resourceType();
         }
     }

@@ -47,7 +47,7 @@ class AttachmentManager extends AbstractHistoricManager
         $attachments = $this->getDbEntityManager()->selectList("selectAttachmentsByTaskId", $taskId);
         foreach ($attachments as $attachment) {
             $contentId = $attachment->getContentId();
-            if ($contentId != null) {
+            if ($contentId !== null) {
                 $this->getByteArrayManager()->deleteByteArrayById($contentId);
             }
             $this->getDbEntityManager()->delete($attachment);

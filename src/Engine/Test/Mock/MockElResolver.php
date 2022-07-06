@@ -27,7 +27,7 @@ class MockElResolver extends ELResolver
     public function getValue(?ELContext $context, $base, $property)
     {
         $object = Mocks::get($property);
-        if ($object != null) {
+        if ($object !== null) {
             $context->setPropertyResolved(true);
         }
         return $object;

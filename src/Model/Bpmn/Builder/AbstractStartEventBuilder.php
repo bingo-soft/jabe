@@ -51,7 +51,7 @@ abstract class AbstractStartEventBuilder extends AbstractCatchEventBuilder
 
     public function error(?string $errorCode = null, ?string $errorMessage = null): AbstractStartEventBuilder
     {
-        if ($errorCode == null) {
+        if ($errorCode === null) {
             $errorEventDefinition = $this->createInstance(ErrorEventDefinitionInterface::class);
         } else {
             $errorEventDefinition = $this->createErrorEventDefinition($errorCode, $errorMessage);
@@ -64,7 +64,7 @@ abstract class AbstractStartEventBuilder extends AbstractCatchEventBuilder
     public function errorEventDefinition(?string $id = null): ErrorEventDefinitionBuilder
     {
         $errorEventDefinition = $this->createEmptyErrorEventDefinition();
-        if ($id != null) {
+        if ($id !== null) {
             $errorEventDefinition->setId($id);
         }
         $this->element->addEventDefinition($errorEventDefinition);
@@ -73,7 +73,7 @@ abstract class AbstractStartEventBuilder extends AbstractCatchEventBuilder
 
     public function escalation(?string $escalationCode = null): AbstractStartEventBuilder
     {
-        if ($escalationCode == null) {
+        if ($escalationCode === null) {
             $escalationEventDefinition = $this->createInstance(EscalationEventDefinitionInterface::class);
         } else {
             $escalationEventDefinition = $this->createEscalationEventDefinition($escalationCode);

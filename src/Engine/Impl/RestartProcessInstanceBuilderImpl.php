@@ -35,7 +35,7 @@ class RestartProcessInstanceBuilderImpl implements RestartProcessInstanceBuilder
             EnsureUtil::ensureNotNull(NotValidException::class, "processDefinitionId", $processDefinitionId);
             $this->commandExecutor = $processDefinitionIdOrExecutor;
             $this->processDefinitionId = $processDefinitionId;
-        } elseif (is_string($processDefinitionIdOrExecutor) && $processDefinitionId == null) {
+        } elseif (is_string($processDefinitionIdOrExecutor) && $processDefinitionId === null) {
             $this->processDefinitionId = $processDefinitionIdOrExecutor;
         }
     }

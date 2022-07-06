@@ -21,7 +21,7 @@ class CommandCounterInterceptor extends CommandInterceptor
             return $this->next->execute($command);
         } finally {
             $telemetryRegistry = $processEngineConfiguration->getTelemetryRegistry();
-            if ($telemetryRegistry != null && $telemetryRegistry->isCollectingTelemetryDataEnabled()) {
+            if ($telemetryRegistry !== null && $telemetryRegistry->isCollectingTelemetryDataEnabled()) {
                 $class = get_class($command);
                 $className = ClassNameUtil::getClassNameWithoutPackage($class);
                 $ref = new \ReflectionClass($class);

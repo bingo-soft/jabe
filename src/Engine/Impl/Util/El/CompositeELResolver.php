@@ -17,7 +17,7 @@ class CompositeELResolver extends ELResolver
      */
     public function add(?ELResolver $elResolver): void
     {
-        if ($elResolver == null) {
+        if ($elResolver === null) {
             throw new \Exception("resolver must not be null");
         }
         $this->resolvers[] = $elResolver;
@@ -44,8 +44,8 @@ class CompositeELResolver extends ELResolver
         $result = null;
         foreach ($this->resolvers as $resolver) {
             $type = $resolver->getCommonPropertyType($context, $base);
-            if ($type != null) {
-                if ($result == null || gettype($result) == $type) {
+            if ($type !== null) {
+                if ($result === null || gettype($result) == $type) {
                     $result = $type;
                 } elseif (gettype($result) != $type) {
                     $result = gettype(new \stdClass());

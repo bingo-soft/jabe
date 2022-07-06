@@ -33,7 +33,7 @@ class DeletePropertyCmd implements CommandInterface
 
         $propertyEntity = $propertyManager->findPropertyById($this->name);
 
-        if ($propertyEntity != null) {
+        if ($propertyEntity !== null) {
             $propertyManager->delete($propertyEntity);
 
             $commandContext->getOperationLogManager()->logPropertyOperation(

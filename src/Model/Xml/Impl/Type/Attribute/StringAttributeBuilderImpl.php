@@ -82,7 +82,7 @@ class StringAttributeBuilderImpl extends AttributeBuilderImpl implements StringA
 
     protected function setAttributeReference(AttributeReferenceBuilderInterface $referenceBuilder): void
     {
-        if ($this->referenceBuilder != null) {
+        if ($this->referenceBuilder !== null) {
             throw new ModelException("An attribute cannot have more than one reference");
         }
         $this->referenceBuilder = $referenceBuilder;
@@ -91,7 +91,7 @@ class StringAttributeBuilderImpl extends AttributeBuilderImpl implements StringA
     public function performModelBuild(ModelInterface $model): void
     {
         parent::performModelBuild($model);
-        if ($this->referenceBuilder != null) {
+        if ($this->referenceBuilder !== null) {
             $this->referenceBuilder->performModelBuild($model);
         }
     }

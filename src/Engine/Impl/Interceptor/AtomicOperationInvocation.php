@@ -45,7 +45,7 @@ class AtomicOperationInvocation
         ) {
             // execution might be replaced in the meantime:
             $replacedBy = $execution->getReplacedBy();
-            if ($replacedBy != null) {
+            if ($replacedBy !== null) {
                 $this->execution = $replacedBy;
             }
         }
@@ -73,7 +73,7 @@ class AtomicOperationInvocation
         }
 
         $currentPa = Context::getCurrentProcessApplication();
-        if ($currentPa != null) {
+        if ($currentPa !== null) {
             $this->applicationContextName = $currentPa->getName();
         }
         $this->activityId = $execution->getActivityId();

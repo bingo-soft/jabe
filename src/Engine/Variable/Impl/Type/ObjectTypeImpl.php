@@ -49,12 +49,12 @@ class ObjectTypeImpl extends AbstractValueTypeImpl implements SerializableValueT
         $valueInfo = [];
 
         $serializationDataFormat = $objectValue->getSerializationDataFormat();
-        if ($serializationDataFormat != null) {
+        if ($serializationDataFormat !== null) {
             $valueInfo[self::VALUE_INFO_SERIALIZATION_DATA_FORMAT] = $serializationDataFormat;
         }
 
         $objectTypeName = $objectValue->getObjectTypeName();
-        if ($objectTypeName != null) {
+        if ($objectTypeName !== null) {
             $valueInfo[self::VALUE_INFO_OBJECT_TYPE_NAME] = $objectTypeName;
         }
 
@@ -69,7 +69,7 @@ class ObjectTypeImpl extends AbstractValueTypeImpl implements SerializableValueT
     {
         $builder = Variables::serializedObjectValue($serializedValue);
 
-        if ($valueInfo != null) {
+        if ($valueInfo !== null) {
             $this->applyValueInfo($builder, $valueInfo);
         }
 
@@ -84,7 +84,7 @@ class ObjectTypeImpl extends AbstractValueTypeImpl implements SerializableValueT
         }
 
         $serializationDataFormat = $valueInfo[self::VALUE_INFO_SERIALIZATION_DATA_FORMAT];
-        if ($serializationDataFormat != null) {
+        if ($serializationDataFormat !== null) {
             $builder->serializationDataFormat($serializationDataFormat);
         }
 

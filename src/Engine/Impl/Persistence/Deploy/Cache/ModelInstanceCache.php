@@ -29,13 +29,13 @@ abstract class ModelInstanceCache
     {
         if ($definitionEl instanceof ResourceDefinitionEntityInterface) {
             $bpmnModelInstance = $this->instanceCache->get($definitionEl->getId());
-            if ($bpmnModelInstance == null) {
+            if ($bpmnModelInstance === null) {
                 $bpmnModelInstance = $this->loadAndCacheBpmnModelInstance($definitionEl);
             }
             return $bpmnModelInstance;
         } elseif (is_string($definitionEl)) {
             $bpmnModelInstance = $this->instanceCache->get($definitionEl);
-            if ($bpmnModelInstance == null) {
+            if ($bpmnModelInstance === null) {
                 $definition = $this->definitionCache->findDeployedDefinitionById($definitionEl);
                 $bpmnModelInstance = $this->loadAndCacheBpmnModelInstance($definition);
             }

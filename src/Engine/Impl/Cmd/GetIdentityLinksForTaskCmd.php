@@ -52,14 +52,14 @@ class GetIdentityLinksForTaskCmd implements CommandInterface, \Serializable
         // Note: we cant move this code to the TaskEntity (which would be cleaner),
         // since the task.delete cascased to all associated identityLinks
         // and of course this leads to exception while trying to delete a non-existing identityLink
-        if ($task->getAssignee() != null) {
+        if ($task->getAssignee() !== null) {
             $identityLink = new IdentityLinkEntity();
             $identityLink->setUserId($task->getAssignee());
             $identityLink->setTask($task);
             $identityLink->setType(IdentityLinkType::ASSIGNEE);
             $identityLinks[] = $identityLink;
         }
-        if ($task->getOwner() != null) {
+        if ($task->getOwner() !== null) {
             $identityLink = new IdentityLinkEntity();
             $identityLink->setUserId($task->getOwner());
             $identityLink->setTask($task);

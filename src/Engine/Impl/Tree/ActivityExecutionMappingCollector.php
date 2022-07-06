@@ -35,7 +35,7 @@ class ActivityExecutionMappingCollector implements TreeVisitorInterface
 
     private function appendActivityExecutionMapping(ActivityExecutionInterface $execution): void
     {
-        if ($execution->getActivity() != null && !LegacyBehavior::hasInvalidIntermediaryActivityId($execution)) {
+        if ($execution->getActivity() !== null && !LegacyBehavior::hasInvalidIntermediaryActivityId($execution)) {
             $this->activityExecutionMapping = array_merge($this->activityExecutionMapping, $execution->createActivityExecutionMapping());
         }
     }

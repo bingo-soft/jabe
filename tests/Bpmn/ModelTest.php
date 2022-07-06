@@ -29,7 +29,7 @@ class ModelTest extends TestCase
         $bpmnModelInstance->setDefinitions($definitions);
 
         $definitions = $bpmnModelInstance->getDefinitions();
-        $this->assertFalse($definitions == null);
+        $this->assertFalse($definitions === null);
     }
 
     public function testBaseTypeCalculation(): void

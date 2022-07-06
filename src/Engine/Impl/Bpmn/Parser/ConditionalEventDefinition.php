@@ -78,7 +78,7 @@ class ConditionalEventDefinition extends EventSubscriptionDeclaration
     public function shouldEvaluateForVariableEvent(VariableEvent $event): bool
     {
         return
-        ($this->variableName == null || $event->getVariableInstance()->getName() == $this->variableName)
+        ($this->variableName === null || $event->getVariableInstance()->getName() == $this->variableName)
                                                 &&
         (empty($this->variableEvents) || in_array($event->getEventName(), $variableEvents));
     }

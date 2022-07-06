@@ -72,7 +72,7 @@ class CleanableHistoricBatchReportImpl extends AbstractQuery implements Cleanabl
             $batchOperationKeys = array_keys($batchJobHandlers);
         }
 
-        if ($batchOperationKeys != null) {
+        if ($batchOperationKeys !== null) {
             foreach ($batchOperationKeys as $batchOperation) {
                 $ttl = $batchOperations[$batchOperation];
                 $batchOperations[$batchOperation] = $ttl;

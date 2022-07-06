@@ -26,7 +26,7 @@ class AstBinary extends AstRightValue
 
     public static function add(): BinaryOperator
     {
-        if (self::$ADD == null) {
+        if (self::$ADD === null) {
             self::$ADD = new class extends SimpleBinaryOperator
             {
                 public function apply(TypeConverter $converter, $o1, $o2)
@@ -44,7 +44,7 @@ class AstBinary extends AstRightValue
 
     public static function and(): BinaryOperator
     {
-        if (self::$AND == null) {
+        if (self::$AND === null) {
             self::$AND = new class implements BinaryOperator
             {
                 public function eval(Bindings $bindings, ELContext $context, AstNode $left, AstNode $right)
@@ -63,7 +63,7 @@ class AstBinary extends AstRightValue
 
     public static function div(): BinaryOperator
     {
-        if (self::$DIV == null) {
+        if (self::$DIV === null) {
             self::$DIV = new class extends SimpleBinaryOperator
             {
                 public function apply(TypeConverter $converter, $o1, $o2)
@@ -81,7 +81,7 @@ class AstBinary extends AstRightValue
 
     public static function eq(): BinaryOperator
     {
-        if (self::$EQ == null) {
+        if (self::$EQ === null) {
             self::$EQ = new class extends SimpleBinaryOperator
             {
                 public function apply(TypeConverter $converter, $o1, $o2)
@@ -99,7 +99,7 @@ class AstBinary extends AstRightValue
 
     public static function ge(): BinaryOperator
     {
-        if (self::$GE == null) {
+        if (self::$GE === null) {
             self::$GE = new class extends SimpleBinaryOperator
             {
                 public function apply(TypeConverter $converter, $o1, $o2)
@@ -117,7 +117,7 @@ class AstBinary extends AstRightValue
 
     public static function gt(): BinaryOperator
     {
-        if (self::$GT == null) {
+        if (self::$GT === null) {
             self::$GT = new class extends SimpleBinaryOperator
             {
                 public function apply(TypeConverter $converter, $o1, $o2)
@@ -135,7 +135,7 @@ class AstBinary extends AstRightValue
 
     public static function le(): BinaryOperator
     {
-        if (self::$LE == null) {
+        if (self::$LE === null) {
             self::$LE = new class extends SimpleBinaryOperator
             {
                 public function apply(TypeConverter $converter, $o1, $o2)
@@ -153,7 +153,7 @@ class AstBinary extends AstRightValue
 
     public static function lt(): BinaryOperator
     {
-        if (self::$LT == null) {
+        if (self::$LT === null) {
             self::$LT = new class extends SimpleBinaryOperator
             {
                 public function apply(TypeConverter $converter, $o1, $o2)
@@ -171,7 +171,7 @@ class AstBinary extends AstRightValue
 
     public static function mod(): BinaryOperator
     {
-        if (self::$MOD == null) {
+        if (self::$MOD === null) {
             self::$MOD = new class extends SimpleBinaryOperator
             {
                 public function apply(TypeConverter $converter, $o1, $o2)
@@ -189,7 +189,7 @@ class AstBinary extends AstRightValue
 
     public static function mul(): BinaryOperator
     {
-        if (self::$MUL == null) {
+        if (self::$MUL === null) {
             self::$MUL = new class extends SimpleBinaryOperator
             {
                 public function apply(TypeConverter $converter, $o1, $o2)
@@ -207,7 +207,7 @@ class AstBinary extends AstRightValue
 
     public static function ne(): BinaryOperator
     {
-        if (self::$NE == null) {
+        if (self::$NE === null) {
             self::$NE = new class extends SimpleBinaryOperator
             {
                 public function apply(TypeConverter $converter, $o1, $o2)
@@ -225,7 +225,7 @@ class AstBinary extends AstRightValue
 
     public static function or(): BinaryOperator
     {
-        if (self::$OR == null) {
+        if (self::$OR === null) {
             self::$OR = new class implements BinaryOperator
             {
                 public function eval(Bindings $bindings, ELContext $context, AstNode $left, AstNode $right)
@@ -244,7 +244,7 @@ class AstBinary extends AstRightValue
 
     public static function sub(): BinaryOperator
     {
-        if (self::$SUB == null) {
+        if (self::$SUB === null) {
             self::$SUB = new class extends SimpleBinaryOperator
             {
                 public function apply(TypeConverter $converter, $o1, $o2)

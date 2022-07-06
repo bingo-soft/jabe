@@ -82,7 +82,7 @@ abstract class JobExecutor
 
     protected function ensureInitialization(): void
     {
-        if ($this->acquireJobsCmdFactory == null) {
+        if ($this->acquireJobsCmdFactory === null) {
             $this->acquireJobsCmdFactory =  new DefaultAcquireJobsCommandFactory($this);
         }
         $this->acquireJobsRunnable = new SequentialJobAcquisitionRunnable($this);
@@ -137,7 +137,7 @@ abstract class JobExecutor
      */
     /*public function executeJobs(array $jobIds, ?ProcessEngineImpl $processEngine = null): void
     {
-        if ($processEngine == null && !empty($this->processEngines)) {
+        if ($processEngine === null && !empty($this->processEngines)) {
             $this->executeJobs($jobIds, $this->processEngines[0]);
         }
     }*/
@@ -153,7 +153,7 @@ abstract class JobExecutor
 
     public function logAcquiredJobs(?ProcessEngineImpl $engine, int $numJobs): void
     {
-        if ($engine != null && $engine->getProcessEngineConfiguration()->isMetricsEnabled()) {
+        if ($engine !== null && $engine->getProcessEngineConfiguration()->isMetricsEnabled()) {
             $engine->getProcessEngineConfiguration()
             ->getMetricsRegistry()
             ->markOccurrence(Metrics::JOB_ACQUIRED_SUCCESS, $numJobs);
@@ -162,7 +162,7 @@ abstract class JobExecutor
 
     public function logAcquisitionFailureJobs(?ProcessEngineImpl $engine, int $numJobs): void
     {
-        if ($engine != null && $engine->getProcessEngineConfiguration()->isMetricsEnabled()) {
+        if ($engine !== null && $engine->getProcessEngineConfiguration()->isMetricsEnabled()) {
             $engine->getProcessEngineConfiguration()
             ->getMetricsRegistry()
             ->markOccurrence(Metrics::JOB_ACQUIRED_FAILURE, $numJobs);
@@ -171,7 +171,7 @@ abstract class JobExecutor
 
     public function logRejectedExecution(ProcessEngineImpl $engine, int $numJobs): void
     {
-        if ($engine != null && $engine->getProcessEngineConfiguration()->isMetricsEnabled()) {
+        if ($engine !== null && $engine->getProcessEngineConfiguration()->isMetricsEnabled()) {
             $engine->getProcessEngineConfiguration()
             ->getMetricsRegistry()
             ->markOccurrence(Metrics::JOB_EXECUTION_REJECTED, $numJobs);
@@ -363,7 +363,7 @@ abstract class JobExecutor
 
     protected function startJobAcquisitionThread(): void
     {
-        if ($this->jobAcquisitionThread == null) {
+        if ($this->jobAcquisitionThread === null) {
             $jobs = $this->acquireJobsRunnable;
             $this->jobAcquisitionThread = new \Swoole\Process(function () use ($jobs) {
                 $jobs->run();

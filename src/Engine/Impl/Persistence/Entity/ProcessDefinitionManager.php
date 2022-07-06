@@ -82,7 +82,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
         $parameters["processDefinitionKey"] = $processDefinitionKey;
         $parameters["tenantId"] = $tenantId;
 
-        if ($tenantId == null) {
+        if ($tenantId === null) {
             return $this->getDbEntityManager()->selectOne("selectLatestProcessDefinitionByKeyWithoutTenantId", $parameters);
         } else {
             return $this->getDbEntityManager()->selectOne("selectLatestProcessDefinitionByKeyAndTenantId", $parameters);
@@ -131,9 +131,9 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
         ?string $tenantId
     ): ?ProcessDefinitionEntity {
         $parameters = [];
-        if ($processDefinitionVersion != null) {
+        if ($processDefinitionVersion !== null) {
             $parameters["processDefinitionVersion"] = $processDefinitionVersion;
-        } elseif ($processDefinitionVersionTag != null) {
+        } elseif ($processDefinitionVersionTag !== null) {
             $parameters["processDefinitionVersionTag"] = $processDefinitionVersionTag;
         }
         $parameters["processDefinitionKey"] = $processDefinitionKey;
@@ -143,10 +143,10 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
         if (count($results) == 1) {
             return $results[0];
         } elseif (count($results) > 1) {
-            if ($processDefinitionVersion != null) {
+            if ($processDefinitionVersion !== null) {
                 //throw LOG.toManyProcessDefinitionsException(results.size(), $processDefinitionKey, "version", $processDefinitionVersion.toString(), $tenantId);
                 throw new \Exception("version");
-            } elseif ($processDefinitionVersionTag != null) {
+            } elseif ($processDefinitionVersionTag !== null) {
                 //throw LOG.toManyProcessDefinitionsException(results.size(), $processDefinitionKey, "versionTag", $processDefinitionVersionTag, $tenantId);
                 throw new \Exception("versionTag");
             }
@@ -279,7 +279,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
             ->findLatestProcessDefinitionByKeyAndTenantId($processDefinition->getKey(), $processDefinition->getTenantId());
 
         // delete timer start event jobs only if this is the latest version of the process definition.
-        if ($latestVersion != null && $latestVersion->getId() == $processDefinition->getId()) {
+        if ($latestVersion !== null && $latestVersion->getId() == $processDefinition->getId()) {
             foreach ($timerStartJobs as $job) {
                 $job->delete();
             }

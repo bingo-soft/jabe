@@ -25,13 +25,13 @@ class CallableElement extends BaseCallableElement
 
     public function getBusinessKey(VariableScopeInterface $variableScope): ?string
     {
-        if ($this->businessKeyValueProvider == null) {
+        if ($this->businessKeyValueProvider === null) {
             return null;
         }
 
         $result = $this->businessKeyValueProvider->getValue($variableScope);
 
-        if ($result != null && !is_string($result)) {
+        if ($result !== null && !is_string($result)) {
             throw new \Exception("Cannot cast '" . $result . "' to string");
         }
 

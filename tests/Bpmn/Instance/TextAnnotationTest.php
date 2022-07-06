@@ -56,7 +56,7 @@ class TextAnnotationTest extends BpmnModelElementInstanceTest
     public function testGetTextAnnotationById(): void
     {
         $textAnnotation = $this->modelInstance->getModelElementById("textAnnotation2");
-        $this->assertFalse($textAnnotation == null);
+        $this->assertFalse($textAnnotation === null);
         $this->assertEquals("text/plain", $textAnnotation->getTextFormat());
         $text = $textAnnotation->getText();
         $this->assertEquals("Attached text annotation", $text->getTextContent());

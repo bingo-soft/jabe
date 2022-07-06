@@ -29,7 +29,7 @@ class SimpleContext extends ELContext
      */
     public function setFunction(string $prefix, string $localName, \ReflectionMethod $method): void
     {
-        if ($this->functions == null) {
+        if ($this->functions === null) {
             $this->functions = new Functions();
         }
         $this->functions->setFunction($prefix, $localName, $method);
@@ -40,7 +40,7 @@ class SimpleContext extends ELContext
      */
     public function setVariable(string $name, ValueExpression $expression): ValueExpression
     {
-        if ($this->variables == null) {
+        if ($this->variables === null) {
             $this->variables = new Variables();
         }
         return $this->variables->setVariable($name, $expression);
@@ -51,7 +51,7 @@ class SimpleContext extends ELContext
      */
     public function getFunctionMapper(): ?FunctionMapper
     {
-        if ($this->functions == null) {
+        if ($this->functions === null) {
             $this->functions = new Functions();
         }
         return $this->functions;
@@ -62,7 +62,7 @@ class SimpleContext extends ELContext
      */
     public function getVariableMapper(): ?VariableMapper
     {
-        if ($this->variables == null) {
+        if ($this->variables === null) {
             $this->variables = new Variables();
         }
         return $this->variables;
@@ -73,7 +73,7 @@ class SimpleContext extends ELContext
      */
     public function getELResolver(): ?ELResolver
     {
-        if ($this->resolver == null) {
+        if ($this->resolver === null) {
             $this->resolver = new SimpleResolver();
         }
         return $this->resolver;

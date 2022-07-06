@@ -34,12 +34,12 @@ class FormPropertyHandler
         $formProperty = new FormPropertyImpl($this);
         $modelValue = null;
 
-        if ($execution != null) {
-            if ($this->variableName != null || $this->variableExpression == null) {
-                $varName = $this->variableName != null ? $this->variableName : $this->id;
+        if ($execution !== null) {
+            if ($this->variableName !== null || $this->variableExpression === null) {
+                $varName = $this->variableName !== null ? $this->variableName : $this->id;
                 if ($execution->hasVariable($varName)) {
                     $modelValue = $execution->getVariable($varName);
-                } elseif ($this->defaultExpression != null) {
+                } elseif ($this->defaultExpression !== null) {
                     $modelValue = $this->defaultExpression->getValue($execution);
                 }
             } else {
@@ -48,17 +48,17 @@ class FormPropertyHandler
         } else {
             // Execution is null, the form-property is used in a start-form. Default value
             // should be available (ACT-1028) even though no execution is available.
-            if ($this->defaultExpression != null) {
+            if ($this->defaultExpression !== null) {
                 $modelValue = $this->defaultExpression->getValue(StartProcessVariableScope::getSharedInstance());
             }
         }
 
         if (is_string($modelValue)) {
             $formProperty->setValue($modelValue);
-        } elseif ($this->type != null) {
+        } elseif ($this->type !== null) {
             $formValue = $this->type->convertModelValueToFormValue($modelValue);
             $formProperty->setValue($formValue);
-        } elseif ($modelValue != null) {
+        } elseif ($modelValue !== null) {
             $formProperty->setValue(strval($modelValue));
         }
 
@@ -71,33 +71,33 @@ class FormPropertyHandler
             throw new ProcessEngineException("form property '" . $this->id . "' is not writable");
         }
 
-        if ($this->isRequired && !$variables->containsKey($this->id) && $this->defaultExpression == null) {
+        if ($this->isRequired && !$variables->containsKey($this->id) && $this->defaultExpression === null) {
             throw new ProcessEngineException("form property '" . $this->id . "' is required");
         }
 
         $modelValue = null;
         if ($variables->containsKey($this->id)) {
             $propertyValue = $variables->remove($this->id);
-            if ($this->type != null) {
+            if ($this->type !== null) {
                 $modelValue = $this->type->convertFormValueToModelValue($propertyValue);
             } else {
                 $modelValue = $propertyValue;
             }
-        } elseif ($this->defaultExpression != null) {
+        } elseif ($this->defaultExpression !== null) {
             $expressionValue = $this->defaultExpression->getValue($variableScope);
-            if ($this->type != null && $expressionValue != null) {
+            if ($this->type !== null && $expressionValue !== null) {
                 $modelValue = $this->type->convertFormValueToModelValue(strval($expressionValue));
-            } elseif ($expressionValue != null) {
+            } elseif ($expressionValue !== null) {
                 $modelValue = strval($expressionValue);
             } elseif ($this->isRequired) {
                 throw new ProcessEngineException("form property '" . $this->id . "' is required");
             }
         }
 
-        if ($modelValue != null) {
-            if ($this->variableName != null) {
+        if ($modelValue !== null) {
+            if ($this->variableName !== null) {
                 $variableScope->setVariable($this->variableName, $modelValue);
-            } elseif ($this->variableExpression != null) {
+            } elseif ($this->variableExpression !== null) {
                 $this->variableExpression->setValue($modelValue, $variableScope);
             } else {
                 $variableScope->setVariable($this->id, $modelValue);

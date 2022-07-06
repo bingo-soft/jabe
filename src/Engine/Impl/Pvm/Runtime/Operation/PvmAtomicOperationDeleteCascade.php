@@ -33,14 +33,14 @@ class PvmAtomicOperationDeleteCascade implements PvmAtomicOperationInterface
 
             // propagate properties
             $deleteRoot = $this->getDeleteRoot($execution);
-            if ($deleteRoot != null) {
+            if ($deleteRoot !== null) {
                 $nextLeaf->setSkipCustomListeners($deleteRoot->isSkipCustomListeners());
                 $nextLeaf->setSkipIoMappings($deleteRoot->isSkipIoMappings());
                 $nextLeaf->setExternallyTerminated($deleteRoot->isExternallyTerminated());
             }
 
             $subProcessInstance = $nextLeaf->getSubProcessInstance();
-            if ($subProcessInstance != null) {
+            if ($subProcessInstance !== null) {
                 if ($deleteRoot->isSkipSubprocesses()) {
                     $subProcessInstance->setSuperExecution(null);
                 } else {
@@ -68,7 +68,7 @@ class PvmAtomicOperationDeleteCascade implements PvmAtomicOperationInterface
 
     protected function getDeleteRoot(PvmExecutionImpl $execution): ?PvmExecutionImpl
     {
-        if ($execution == null) {
+        if ($execution === null) {
             return null;
         } elseif ($execution->isDeleteRoot()) {
             return $execution;

@@ -80,7 +80,7 @@ class ModelImpl implements ModelInterface
 
     public function getType(?string $instanceClass): ?ModelElementTypeInterface
     {
-        if ($instanceClass != null && array_key_exists($instanceClass, $this->typesByClass)) {
+        if ($instanceClass !== null && array_key_exists($instanceClass, $this->typesByClass)) {
             return $this->typesByClass[$instanceClass];
         }
         return null;

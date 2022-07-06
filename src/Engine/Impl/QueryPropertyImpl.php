@@ -4,7 +4,7 @@ namespace Jabe\Engine\Impl;
 
 use Jabe\Engine\Query\QueryPropertyInterface;
 
-class QueryPropertyImpl implements QueryPropertyInterface
+class QueryPropertyImpl implements QueryPropertyInterface, \Serializable
 {
     protected $name;
     protected $function;
@@ -30,7 +30,7 @@ class QueryPropertyImpl implements QueryPropertyInterface
         if ($this == $obj) {
             return true;
         }
-        if ($obj == null) {
+        if ($obj === null) {
             return false;
         }
         if (get_class($this) != get_class($obj)) {

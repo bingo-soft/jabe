@@ -44,7 +44,7 @@ class DeleteTaskMetricsCmd implements CommandInterface, \Serializable
     public function writeUserOperationLog(CommandContext $commandContext): void
     {
         $propertyChanges = [];
-        if ($this->timestamp != null) {
+        if ($this->timestamp !== null) {
             $propertyChanges[] = new PropertyChange("timestamp", null, $this->timestamp);
         }
         if (empty($propertyChanges)) {

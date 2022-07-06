@@ -57,7 +57,7 @@ abstract class AbstractNativeQuery implements CommandInterface, NativeQueryInter
     public function singleResult()
     {
         $this->resultType = self::RESULT_TYPES['SINGLE_RESULT'];
-        if ($this->commandExecutor != null) {
+        if ($this->commandExecutor !== null) {
             return $this->commandExecutor->execute($this);
         }
         return $this->executeSingleResult(Context::getCommandContext());
@@ -66,7 +66,7 @@ abstract class AbstractNativeQuery implements CommandInterface, NativeQueryInter
     public function list(): array
     {
         $this->resultType = self::RESULT_TYPES['LIST'];
-        if ($this->commandExecutor != null) {
+        if ($this->commandExecutor !== null) {
             return $this->commandExecutor->execute($this);
         }
         return $this->executeList(Context::getCommandContext(), $this->getParameterMap(), 0, PHP_INT_MAX);
@@ -77,7 +77,7 @@ abstract class AbstractNativeQuery implements CommandInterface, NativeQueryInter
         $this->firstResult = $firstResult;
         $this->maxResults = $maxResults;
         $this->resultType = self::RESULT_TYPES['LIST_PAGE'];
-        if ($this->commandExecutor != null) {
+        if ($this->commandExecutor !== null) {
             return $this->commandExecutor->execute($this);
         }
         return $this->executeList(Context::getCommandContext(), $this->getParameterMap(), $this->firstResult, $this->maxResults);
@@ -86,7 +86,7 @@ abstract class AbstractNativeQuery implements CommandInterface, NativeQueryInter
     public function count(): int
     {
         $this->resultType = self::RESULT_TYPES['COUNT'];
-        if ($this->commandExecutor != null) {
+        if ($this->commandExecutor !== null) {
             return $this->commandExecutor->execute($this);
         }
         return $this->executeCount(Context::getCommandContext(), $this->getParameterMap());

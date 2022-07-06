@@ -20,10 +20,10 @@ class FormTypes
         $formType = null;
         $typeText = $formFieldElement->attribute("type");
         $datePatternText = $formFieldElement->attribute("datePattern");
-        if ($typeText == null && DefaultFormHandler::FORM_FIELD_ELEMENT == $formFieldElement->getTagName()) {
+        if ($typeText === null && DefaultFormHandler::FORM_FIELD_ELEMENT == $formFieldElement->getTagName()) {
             $bpmnParse->addError("form field must have a 'type' attribute", $formFieldElement);
         }
-        if ("date" == $typeText && $datePatternText != null) {
+        if ("date" == $typeText && $datePatternText !== null) {
             $formType = new DateFormType($datePatternText);
         } elseif ("enum" == $typeText) {
             $values = [];
@@ -33,12 +33,12 @@ class FormTypes
                 $values[$valueId] = $valueName;
             }
             $formType = new EnumFormType($values);
-        } elseif ($typeText != null) {
+        } elseif ($typeText !== null) {
             $formType = null;
             if (array_key_exists($typeText, $this->formTypes)) {
                 $formType = $this->formTypes[$typeText];
             }
-            if ($formType == null) {
+            if ($formType === null) {
                 $bpmnParse->addError("unknown type '" . $typeText . "'", $formFieldElement);
             }
         }

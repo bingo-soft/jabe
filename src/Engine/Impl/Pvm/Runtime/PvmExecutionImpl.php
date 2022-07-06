@@ -182,11 +182,11 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         $subProcessInstance->setProcessInstance($subProcessInstance);
         $subProcessInstance->setActivity($processDefinition->getInitial());
 
-        if ($businessKey != null) {
+        if ($businessKey !== null) {
             $subProcessInstance->setBusinessKey($businessKey);
         }
 
-        /*if (caseInstanceId != null) {
+        /*if (caseInstanceId !== null) {
             subProcessInstance->setCaseInstanceId(caseInstanceId);
         }*/
 
@@ -212,7 +212,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         $currentScope = $this->getScopeActivity();
         if ($currentScope != $currentScope->getProcessDefinition()) {
             $currentActivity = $currentScope;
-            if ($currentActivity != null && $currentActivity->getIoMapping() != null && !$this->skipIoMapping) {
+            if ($currentActivity !== null && $currentActivity->getIoMapping() !== null && !$this->skipIoMapping) {
                 $currentActivity->getIoMapping()->executeInputParameters($this);
             }
         }
@@ -233,7 +233,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
             $this->setVariables($variables);
         }
 
-        if ($formProperties != null) {
+        if ($formProperties !== null) {
             FormPropertyHelper::initFormPropertiesOnScope($formProperties, $this);
         }
 
@@ -290,14 +290,14 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         $this->skipCustomListeners = $skipCustomListeners;
         $this->skipIoMapping = $skipIoMappings;
 
-        if ($this->getSubProcessInstance() != null) {
+        if ($this->getSubProcessInstance() !== null) {
             $this->getSubProcessInstance()->deleteCascade($reason, $skipCustomListeners, $skipIoMappings, $externallyTerminated, false);
         }
 
         // remove all child executions and sub process instances:
         $executions = $this->getNonEventScopeExecutions();
         foreach ($executions as $childExecution) {
-            if ($childExecution->getSubProcessInstance() != null) {
+            if ($childExecution->getSubProcessInstance() !== null) {
                 $childExecution->getSubProcessInstance()->deleteCascade($reason, $skipCustomListeners, $skipIoMappings, $externallyTerminated, false);
             }
             $childExecution->deleteCascade($reason, $skipCustomListeners, $skipIoMappings, $externallyTerminated, false);
@@ -305,7 +305,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
         // fire activity end on active activity
         $activity = $this->getActivity();
-        if ($this->isActive && $activity != null) {
+        if ($this->isActive && $activity !== null) {
             // set activity instance state to cancel
             if ($this->activityInstanceState != ActivityInstanceState::ending()->getStateCode()) {
                 $this->setCanceled(true);
@@ -354,7 +354,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
         $parent = $this->getParent();
 
-        if ($parent->getActivity() == null) {
+        if ($parent->getActivity() === null) {
             $parent->setActivity($this->getActivity()->getFlowScope());
         }
 
@@ -383,7 +383,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
     public function remove(): void
     {
         $parent = $this->getParent();
-        if ($parent != null) {
+        if ($parent !== null) {
             $parent->removeExecution($this);
 
             // if the sequence counter is greater than the
@@ -618,9 +618,9 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         //   note that the scope execution may have a long "history" of replacements, but only the last replacement is relevant here
         $replacingExecution = $this->getReplacedBy();
 
-        if ($replacingExecution != null) {
+        if ($replacingExecution !== null) {
             $secondHopReplacingExecution = $replacingExecution->getReplacedBy();
-            if ($secondHopReplacingExecution != null) {
+            if ($secondHopReplacingExecution !== null) {
                 $replacingExecution = $secondHopReplacingExecution;
             }
         }
@@ -630,12 +630,12 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
     public function hasReplacedParent(): bool
     {
-        return $this->getParent() != null && $this->getParent()->getReplacedBy() == $this;
+        return $this->getParent() !== null && $this->getParent()->getReplacedBy() == $this;
     }
 
     public function isReplacedByParent(): bool
     {
-        return $this->getReplacedBy() != null && $this->getReplacedBy() == $this->getParent();
+        return $this->getReplacedBy() !== null && $this->getReplacedBy() == $this->getParent();
     }
 
     /**
@@ -716,7 +716,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
     public function signal(string $signalName, $signalData): void
     {
-        if ($this->getActivity() == null) {
+        if ($this->getActivity() === null) {
             throw new PvmException("cannot signal execution " . $this->id . ": it has no current activity");
         }
 
@@ -730,7 +730,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
     public function take(): void
     {
-        if ($this->transition == null) {
+        if ($this->transition === null) {
             throw new PvmException($this->__toString() . ": no transition to take specified");
         }
         $transitionImpl = $this->transition;
@@ -818,9 +818,9 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         $flowScope = null;
         if (!empty($activityStack)) {
             $flowScope = $activityStack[0]->getFlowScope();
-        } elseif ($targetActivity != null) {
+        } elseif ($targetActivity !== null) {
             $flowScope = $targetActivity->getFlowScope();
-        } elseif ($targetTransition != null) {
+        } elseif ($targetTransition !== null) {
             $flowScope = $targetTransition->getSource()->getFlowScope();
         }
 
@@ -912,12 +912,12 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
             $this->setStartContext($executionStartContext);
 
             $this->performOperation(AtomicOperation::activityInitStack());
-        } elseif ($targetActivity != null) {
+        } elseif ($targetActivity !== null) {
             $this->setVariables($variables);
             $this->setVariablesLocal($localVariables);
             $this->setActivity($targetActivity);
             $this->performOperation(AtomicOperation::activityStartCReateScope());
-        } elseif ($targetTransition != null) {
+        } elseif ($targetTransition !== null) {
             $this->setVariables($variables);
             $this->setVariablesLocal($localVariables);
             $this->setActivity($targetTransition->getSource());
@@ -1013,7 +1013,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         }
 
         $propagatingExecution = this;
-        if ($this->getReplacedBy() != null) {
+        if ($this->getReplacedBy() !== null) {
             $propagatingExecution = $this->getReplacedBy();
         }
 
@@ -1032,8 +1032,8 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
     public function isActive(?string $activityId = null): bool
     {
-        if ($activityId != null) {
-            return $this->findExecution($activityId) != null;
+        if ($activityId !== null) {
+            return $this->findExecution($activityId) !== null;
         }
         $this->isActive;
     }
@@ -1080,14 +1080,14 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
     public function findExecution(string $activityId): ?PvmExecutionImpl
     {
         if (
-            ($this->getActivity() != null)
+            ($this->getActivity() !== null)
             && ($this->getActivity()->getId() == $activityId)
         ) {
             return $this;
         }
         foreach ($this->getExecutions() as $nestedExecution) {
             $result = $nestedExecution->findExecution($activityId);
-            if ($result != null) {
+            if ($result !== null) {
                 return result;
             }
         }
@@ -1105,7 +1105,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
     protected function collectExecutions(string $activityId, array &$executions): array
     {
         if (
-            ($this->getActivity() != null)
+            ($this->getActivity() !== null)
             && ($this->getActivity()->getId() == $activityId)
         ) {
             $executions[] = $this;
@@ -1126,7 +1126,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
     protected function collectActiveActivityIds(array &$activeActivityIds): void
     {
         $activity = $this->getActivity();
-        if ($this->isActive && $activity != null) {
+        if ($this->isActive && $activity !== null) {
             $activeActivityIds[] = $activity->getId();
         }
 
@@ -1220,7 +1220,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
     public function getActivityId(): ?string
     {
         $activity = $this->getActivity();
-        if ($activity != null) {
+        if ($activity !== null) {
             return $activity->getId();
         }
         return null;
@@ -1229,7 +1229,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
     public function getCurrentActivityName(): ?string
     {
         $activity = $this->getActivity();
-        if ($activity != null) {
+        if ($activity !== null) {
             return $activity->getName();
         }
         return null;
@@ -1289,7 +1289,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
     public function leaveActivityInstance(): void
     {
-        if ($this->activityInstanceId != null) {
+        if ($this->activityInstanceId !== null) {
             //LOG.debugLeavesActivityInstance(this, activityInstanceId);
         }
         $this->activityInstanceId = $this->getParentActivityInstanceId();
@@ -1322,7 +1322,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
     public function getParentId(): ?string
     {
         $parent = $this->getParent();
-        if ($parent != null) {
+        if ($parent !== null) {
             return $parent->getId();
         }
         return null;
@@ -1343,11 +1343,11 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
         $this->setParentExecution($parent);
 
-        if ($currentParent != null) {
+        if ($currentParent !== null) {
             $currentParent->removeExecution($this);
         }
 
-        if ($parent != null) {
+        if ($parent !== null) {
             $parent->addExecution($this);
         }
     }
@@ -1435,11 +1435,11 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
                 public function isFulfilled($scope = null): bool
                 {
-                    return $scope == null || $scope->getId() == $this->targetScopeId;
+                    return $scope === null || $scope->getId() == $this->targetScopeId;
                 }
             });
 
-            if ($targetFlowScope == null) {
+            if ($targetFlowScope === null) {
                 //throw LOG.scopeNotFoundException(targetScopeId, this->getId());
             }
 
@@ -1471,7 +1471,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
                 $scopeExecution = $map[1];
             }
         }
-        if ($scopeExecution == null) {
+        if ($scopeExecution === null) {
             // the target scope is scope but no corresponding execution was found
             // => legacy behavior
             $scopeExecution = LegacyBehavior::getScopeExecution(targetScope, activityExecutionMapping);
@@ -1495,7 +1495,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         $activity = $this->getActivity();
 
         if (
-            !$activity->isScope() || $this->activityInstanceId == null
+            !$activity->isScope() || $this->activityInstanceId === null
             || ($activity->isScope() && !$this->isScope() && $activity->getActivityBehavior() instanceof CompositeActivityBehaviorInterface)
         ) {
             // if
@@ -1518,7 +1518,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         ?ScopeImpl $currentScope = null,
         ?array $mapping = null
     ): array {
-        if ($currentScope != null && $mapping != null) {
+        if ($currentScope !== null && $mapping !== null) {
             if (!$this->isScope()) {
                 throw new ProcessEngineException("Execution must be a scope execution");
             }
@@ -1547,7 +1547,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
                                 break;
                             }
                         }
-                        return $element == null || $contains;
+                        return $element === null || $contains;
                     }
                 });
             $scopeExecutions = $scopeExecutionCollector->getScopeExecutions();
@@ -1573,7 +1573,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
                                 break;
                             }
                         }
-                        return $element == null || $contains;
+                        return $element === null || $contains;
                     }
                 });
 
@@ -1613,7 +1613,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
                             }
                         }
 
-                        if ($priorMappingExecution != null && !$contains) {
+                        if ($priorMappingExecution !== null && !$contains) {
                             $this->outerScope->scopeExecutions[] = $priorMappingExecution;
                         }
                     }
@@ -1634,7 +1634,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
                 // Wounderful! The trees are out of sync. This is due to legacy behavior
                 return LegacyBehavior::createActivityExecutionMapping($scopeExecutions, $scopes);
             }
-        } elseif ($currentScope != null) {
+        } elseif ($currentScope !== null) {
             if (!$this->isScope()) {
                 throw new ProcessEngineException("Execution must be a scope execution");
             }
@@ -1687,7 +1687,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
             $mapping = $this->createActivityExecutionMapping($currentScope, $mapping);
 
             return $mapping;
-        } elseif ($currentScope == null && $mapping == null) {
+        } elseif ($currentScope === null && $mapping === null) {
             $currentActivity = $this->getActivity();
             EnsureUtil::ensureNotNull("activity of current execution", "currentActivity", $currentActivity);
 
@@ -1736,7 +1736,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
             $this->setVariableLocal($variableName, $value);
         } else {
             $executionForFlowScope = $this->findExecutionForFlowScope($targetActivityId);
-            if ($executionForFlowScope != null) {
+            if ($executionForFlowScope !== null) {
                 $executionForFlowScope->setVariableLocal($variableName, $value);
             }
         }
@@ -1809,7 +1809,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
     public function getCurrentTransitionId(): ?string
     {
         $transition = $this->getTransition();
-        if ($transition != null) {
+        if ($transition !== null) {
             return $transition->getId();
         }
         return null;
@@ -1914,7 +1914,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         $this->scopeInstantiationContext = null;
 
         $parent = $this;
-        while (($parent = $parent->getParent()) != null && $parent->scopeInstantiationContext != null) {
+        while (($parent = $parent->getParent()) !== null && $parent->scopeInstantiationContext !== null) {
             $parent->scopeInstantiationContext = null;
         }
     }
@@ -1926,7 +1926,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
     public function isProcessInstanceExecution(): bool
     {
-        return $this->getParent() == null;
+        return $this->getParent() === null;
     }
 
     public function setStartContext(ScopeInstantiationContext $startContext): void
@@ -1972,7 +1972,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
     public function getParentScopeExecution(bool $considerSuperExecution): PvmExecutionImpl
     {
         if ($this->isProcessInstanceExecution()) {
-            if ($considerSuperExecution && $this->getSuperExecution() != null) {
+            if ($considerSuperExecution && $this->getSuperExecution() !== null) {
                 $superExecution = $this->getSuperExecution();
                 if ($superExecution->isScope()) {
                     return $superExecution;
@@ -2010,7 +2010,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         } elseif ($target instanceof DelayedVariableEvent) {
             //if process definition has no conditional events the variable events does not have to be delayed
             $hasConditionalEvents = $this->getProcessDefinition()->getProperties()->get(BpmnProperties::hasConditionalEvents());
-            if ($hasConditionalEvents == null || $hasConditionalEvents != true) {
+            if ($hasConditionalEvents === null || $hasConditionalEvents != true) {
                 return;
             }
 
@@ -2128,7 +2128,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
         $dispatching->callback($execution);
 
-        $execution = $execution->getReplacedBy() != null ? $execution->getReplacedBy() : $execution;
+        $execution = $execution->getReplacedBy() !== null ? $execution->getReplacedBy() : $execution;
         $currentActivityInstanceId = $this->getActivityInstanceId($execution);
         $currentActivityId = $execution->getActivityId();
 
@@ -2141,7 +2141,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
     protected function continueExecutionIfNotCanceled(?CallbackInterface $continuation, PvmExecutionImpl $execution): void
     {
-        if ($continuation != null && !$execution->isCanceled()) {
+        if ($continuation !== null && !$execution->isCanceled()) {
             $continuation->callback($execution);
         }
     }
@@ -2170,7 +2170,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         //to check the latest state.
         foreach ($delayedEvents as $event) {
             $targetScope = $event->getTargetScope();
-            $replaced = $targetScope->getReplacedBy() != null ? $targetScope->getReplacedBy() : $targetScope;
+            $replaced = $targetScope->getReplacedBy() !== null ? $targetScope->getReplacedBy() : $targetScope;
             $this->dispatchOnSameActivity($targetScope, $replaced, $activityIds, $activityInstanceIds, $event);
         }
     }
@@ -2263,7 +2263,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         $targetActivity = $targetScope->getActivity();
         return
             //if not leaf, activity id is null -> dispatchable
-            $targetScope->getActivityId() == null ||
+            $targetScope->getActivityId() === null ||
             // if leaf and not scope -> dispatchable
             !$targetActivity->isScope() ||
             // if leaf, scope and state in default -> dispatchable
@@ -2289,10 +2289,10 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
     ): bool {
         return
             //activityInstanceId's can be null on transitions, so the activityId must be equal
-            (($lastActivityInstanceId == null && $lastActivityInstanceId == $currentActivityInstanceId && $lastActivityId == $currentActivityId)
+            (($lastActivityInstanceId === null && $lastActivityInstanceId == $currentActivityInstanceId && $lastActivityId == $currentActivityId)
             //if activityInstanceId's are not null they must be equal -> otherwise execution changed
-            || ($lastActivityInstanceId != null && $lastActivityInstanceId == $currentActivityInstanceId
-            && ($lastActivityId == null || $lastActivityId == $currentActivityId)));
+            || ($lastActivityInstanceId !== null && $lastActivityInstanceId == $currentActivityInstanceId
+            && ($lastActivityId === null || $lastActivityId == $currentActivityId)));
     }
 
     /**
@@ -2303,12 +2303,12 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
      */
     private function getActivityInstanceId(?PvmExecutionImpl $targetScope = null): ?string
     {
-        if ($targetScope != null) {
+        if ($targetScope !== null) {
             if ($targetScope->isConcurrent()) {
                 return $targetScope->getActivityInstanceId();
             } else {
                 $targetActivity = $targetScope->getActivity();
-                if (($targetActivity != null && empty($targetActivity->getActivities()))) {
+                if (($targetActivity !== null && empty($targetActivity->getActivities()))) {
                     return $targetScope->getActivityInstanceId();
                 }
                 return $targetScope->getParentActivityInstanceId();

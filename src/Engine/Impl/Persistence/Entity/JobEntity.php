@@ -88,7 +88,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
     public function execute(CommandContext $commandContext)
     {
-        if ($this->executionId != null) {
+        if ($this->executionId !== null) {
             $execution = $this->getExecution();
             EnsureUtil::ensureNotNull("Cannot find execution with id '" . $this->executionId . "' referenced from job '" . $this . "'", "execution", $execution);
         }
@@ -130,7 +130,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
         // add link to execution and deployment
         $execution = $this->getExecution();
-        if ($execution != null) {
+        if ($execution !== null) {
             $execution->addJob($this);
 
             $processDefinition = $execution->getProcessDefinition();
@@ -150,7 +150,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
         // clean additional data related to this job
         $jobHandler = $this->getJobHandler();
-        if ($jobHandler != null) {
+        if ($jobHandler !== null) {
             $jobHandler->onDelete($this->getJobHandlerConfiguration(), $this);
         }
 
@@ -159,13 +159,13 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         $commandContext->getJobManager()->deleteJob($this, !$executingJob);
 
         // Also delete the job's exception byte array
-        if ($this->exceptionByteArrayId != null) {
+        if ($this->exceptionByteArrayId !== null) {
             $commandContext->getByteArrayManager()->deleteByteArrayById($this->exceptionByteArrayId);
         }
 
         // remove link to execution
         $execution = $this->getExecution();
-        if ($execution != null) {
+        if ($execution !== null) {
             $execution->removeJob($this);
         }
 
@@ -185,7 +185,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         $persistentState["jobHandlerConfiguration"] = $this->jobHandlerConfiguration;
         $persistentState["priority"] = $this->priority;
         $persistentState["tenantId"] = $this->tenantId;
-        if ($this->exceptionByteArrayId != null) {
+        if ($this->exceptionByteArrayId !== null) {
             $persistentState["exceptionByteArrayId"] = $exceptionByteArrayId;
         }
         return $persistentState;
@@ -193,7 +193,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
     public function setExecution(ExecutionEntity $execution): void
     {
-        if ($execution != null) {
+        if ($execution !== null) {
             $this->execution = $execution;
             $this->executionId = $execution->getId();
             $this->processInstanceId = $execution->getProcessInstanceId();
@@ -243,7 +243,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
     protected function ensureExecutionInitialized(): void
     {
-        if ($this->execution == null && $this->executionId != null) {
+        if ($this->execution === null && $this->executionId !== null) {
             $this->execution = Context::getCommandContext()
                 ->getExecutionManager()
                 ->findExecutionById($this->executionId);
@@ -291,7 +291,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
             $incidentHandlerType = IncidentInterface::FAILED_JOB_HANDLER_TYPE;
 
             // make sure job has an ID set:
-            if ($this->id == null) {
+            if ($this->id === null) {
                 $this->id = $processEngineConfiguration
                     ->getIdGenerator()
                     ->getNextId();
@@ -308,7 +308,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
                         $historicIncidentEvent = Context::getCommandContext()
                             ->getHistoricIncidentManager()
                             ->findHistoricIncidentById($incident->getId());
-                        if ($historicIncidentEvent != null) {
+                        if ($historicIncidentEvent !== null) {
                             $historicIncidentEvent->setHistoryConfiguration($this->getLastFailureLogId());
                             Context::getCommandContext()->getDbEntityManager()->merge($historicIncidentEvent);
                         }
@@ -389,7 +389,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
         $byteArray = $this->getExceptionByteArray();
 
-        if ($byteArray == null) {
+        if ($byteArray === null) {
             $byteArray = ExceptionUtil::createJobExceptionByteArray($exceptionBytes, ResourceTypes::runtime());
             $this->exceptionByteArrayId = $byteArray->getId();
             $this->exceptionByteArray = $byteArray;
@@ -410,7 +410,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
     public function getJobHandlerConfiguration(): ?JobHandlerConfigurationInterface
     {
         $handler = $this->getJobHandler();
-        if ($handler != null) {
+        if ($handler !== null) {
             return $handler->newConfiguration($this->jobHandlerConfiguration);
         }
         return null;
@@ -465,7 +465,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
     public function setJobDefinition(?JobDefinitionInterface $jobDefinition): void
     {
         $this->jobDefinition = $jobDefinition;
-        if ($jobDefinition != null) {
+        if ($jobDefinition !== null) {
             $this->jobDefinitionId = $jobDefinition->getId();
         } else {
             $this->jobDefinitionId = null;
@@ -474,7 +474,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
     protected function ensureJobDefinitionInitialized(): void
     {
-        if ($this->jobDefinition == null && $this->jobDefinitionId != null) {
+        if ($this->jobDefinition === null && $this->jobDefinitionId !== null) {
             $this->jobDefinition = Context::getCommandContext()
                 ->getJobDefinitionManager()
                 ->findById($this->jobDefinitionId);
@@ -499,7 +499,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
     protected function ensureExceptionByteArrayInitialized(): void
     {
-        if ($this->exceptionByteArray == null && $this->exceptionByteArrayId != null) {
+        if ($this->exceptionByteArray === null && $this->exceptionByteArrayId !== null) {
             $this->exceptionByteArray = Context::getCommandContext()
                 ->getDbEntityManager()
                 ->selectById(ByteArrayEntity::class, $this->exceptionByteArrayId);
@@ -512,7 +512,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
         // Avoid NPE when the job was reconfigured by another
         // node in the meantime
-        if ($byteArray != null) {
+        if ($byteArray !== null) {
             Context::getCommandContext()
                 ->getDbEntityManager()
                 ->delete($byteArray);
@@ -534,8 +534,8 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
     public function isInInconsistentLockState(): bool
     {
-        return ($this->lockOwner != null && $this->lockExpirationTime == null)
-            || ($this->retries == 0 && ($this->lockOwner != null || $this->lockExpirationTime != null));
+        return ($this->lockOwner !== null && $this->lockExpirationTime === null)
+            || ($this->retries == 0 && ($this->lockOwner !== null || $this->lockExpirationTime !== null));
     }
 
     public function resetLock(): void
@@ -587,13 +587,13 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
     protected function ensureActivityIdInitialized(): void
     {
-        if ($this->activityId == null) {
+        if ($this->activityId === null) {
             $jobDefinition = $this->getJobDefinition();
-            if ($jobDefinition != null) {
+            if ($jobDefinition !== null) {
                 $this->activityId = $jobDefinition->getActivityId();
             } else {
                 $execution = $this->getExecution();
-                if ($execution != null) {
+                if ($execution !== null) {
                     $this->activityId = $execution->getActivityId();
                 }
             }
@@ -618,14 +618,14 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         if ($this == $obj) {
             return true;
         }
-        if ($obj == null) {
+        if ($obj === null) {
             return false;
         }
         if (get_class($this) != get_class($obj)) {
             return false;
         }
-        if ($this->id == null) {
-            if ($obj->id != null) {
+        if ($this->id === null) {
+            if ($obj->id !== null) {
                 return false;
             }
         } elseif ($this->id != $obj->id) {
@@ -643,7 +643,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
     {
         $referenceIdAndClass = [];
 
-        if ($this->exceptionByteArrayId != null) {
+        if ($this->exceptionByteArrayId !== null) {
             $referenceIdAndClass[$this->exceptionByteArrayId] = ByteArrayEntity::class;
         }
 
@@ -657,7 +657,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
     public function postLoad(): void
     {
-        if ($this->exceptionByteArrayId != null) {
+        if ($this->exceptionByteArrayId !== null) {
             $this->persistedDependentEntities = [];
             $this->persistedDependentEntities[$this->exceptionByteArrayId] = ByteArrayEntity::class;
         } else {

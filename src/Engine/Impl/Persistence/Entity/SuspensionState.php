@@ -29,7 +29,7 @@ class SuspensionState implements \Serializable
 
     public static function active(): SuspensionState
     {
-        if (self::$ACTIVE == null) {
+        if (self::$ACTIVE === null) {
             self::$ACTIVE = new SuspensionStateImpl(1, "active");
         }
         return self::$ACTIVE;
@@ -37,7 +37,7 @@ class SuspensionState implements \Serializable
 
     public static function suspended(): SuspensionState
     {
-        if (self::$SUSPENDED == null) {
+        if (self::$SUSPENDED === null) {
             self::$SUSPENDED = new SuspensionStateImpl(1, "suspended");
         }
         return self::$SUSPENDED;
@@ -63,7 +63,7 @@ class SuspensionState implements \Serializable
         if ($this == $obj) {
             return true;
         }
-        if ($obj == null) {
+        if ($obj === null) {
             return false;
         }
         if (get_class($this) != get_class($obj)) {

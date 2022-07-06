@@ -35,7 +35,7 @@ class RestartProcessInstancesJobHandler extends AbstractBatchJobHandler
 
     protected function postProcessJob(RestartProcessInstancesBatchConfiguration $configuration, JobEntity $job, RestartProcessInstancesBatchConfiguration $jobConfiguration): void
     {
-        if ($job->getDeploymentId() == null) {
+        if ($job->getDeploymentId() === null) {
             $commandContext = Context::getCommandContext();
             $processDefinitionEntity = $commandContext->getProcessEngineConfiguration()->getDeploymentCache()
                 ->findDeployedProcessDefinitionById($configuration->getProcessDefinitionId());
@@ -84,7 +84,7 @@ class RestartProcessInstancesJobHandler extends AbstractBatchJobHandler
 
     public function getJobDeclaration(): JobDeclaration
     {
-        if (self::$JOB_DECLARATION == null) {
+        if (self::$JOB_DECLARATION === null) {
             self::$JOB_DECLARATION = new BatchJobDeclaration(BatchInterface::TYPE_PROCESS_INSTANCE_RESTART);
         }
         return self::$JOB_DECLARATION;

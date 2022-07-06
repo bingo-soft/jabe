@@ -61,10 +61,10 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
         $rootCauseIncidentId = $rootCauseIncidentId ?? $this->id;
         $execution = getExecution();
 
-        if ($execution != null) {
+        if ($execution !== null) {
             $superExecution = $execution->getProcessInstance()->getSuperExecution();
 
-            if ($superExecution != null) {
+            if ($superExecution !== null) {
                 // create a new incident
                 $newIncident = $this->create($incidentType);
                 $newIncident->setExecution($superExecution);
@@ -104,13 +104,13 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
         $newIncident->setHistoryConfiguration($context->getHistoryConfiguration());
         $newIncident->setFailedActivityId($context->getFailedActivityId());
 
-        if ($context->getExecutionId() != null) {
+        if ($context->getExecutionId() !== null) {
             // fetch execution
             $execution = Context::getCommandContext()
             ->getExecutionManager()
             ->findExecutionById($context->getExecutionId());
 
-            if ($execution != null) {
+            if ($execution !== null) {
                 // link incident with execution
                 $newIncident->setExecution($execution);
             } else {
@@ -166,7 +166,7 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
     {
         $execution = $this->getExecution();
 
-        if ($execution != null) {
+        if ($execution !== null) {
             // Extract possible super execution of the assigned execution
             $superExecution = null;
             if ($execution->getId() == $execution->getProcessInstanceId()) {
@@ -175,11 +175,11 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
                 $superExecution = $execution->getProcessInstance()->getSuperExecution();
             }
 
-            if ($superExecution != null) {
+            if ($superExecution !== null) {
                 // get the incident, where this incident is the cause
                 $parentIncident = $superExecution->getIncidentByCauseIncidentId($this->getId());
 
-                if ($parentIncident != null) {
+                if ($parentIncident !== null) {
                     // remove the incident
                     $parentIncident->remove($resolved);
                 }
@@ -235,7 +235,7 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
     {
         $referenceIds = [];
 
-        if ($this->causeIncidentId != null) {
+        if ($this->causeIncidentId !== null) {
             $referenceIds[] = $this->causeIncidentId;
         }
 
@@ -246,22 +246,22 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
     {
         $referenceIdAndClass = [];
 
-        if ($this->causeIncidentId != null) {
+        if ($this->causeIncidentId !== null) {
             $referenceIdAndClass[$this->causeIncidentId] = IncidentEntity::class;
         }
-        if ($this->processDefinitionId != null) {
+        if ($this->processDefinitionId !== null) {
             $referenceIdAndClass[$this->processDefinitionId] = ProcessDefinitionEntity::class;
         }
-        if ($this->processInstanceId != null) {
+        if ($this->processInstanceId !== null) {
             $referenceIdAndClass[$this->processInstanceId] = ExecutionEntity::class;
         }
-        if ($this->jobDefinitionId != null) {
+        if ($this->jobDefinitionId !== null) {
             $referenceIdAndClass[$this->jobDefinitionId] = JobDefinitionEntity::class;
         }
-        if ($this->executionId != null) {
+        if ($this->executionId !== null) {
             $referenceIdAndClass[$this->executionId] = ExecutionEntity::class;
         }
-        if ($this->rootCauseIncidentId != null) {
+        if ($this->rootCauseIncidentId !== null) {
             $referenceIdAndClass[$this->rootCauseIncidentId] = IncidentEntity::class;
         }
 
@@ -340,7 +340,7 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
 
     public function getProcessDefinition(): ?ProcessDefinitionEntity
     {
-        if ($this->processDefinitionId != null) {
+        if ($this->processDefinitionId !== null) {
             return Context::getProcessEngineConfiguration()
                 ->getDeploymentCache()
                 ->findDeployedProcessDefinitionById($this->processDefinitionId);
@@ -411,11 +411,11 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
     public function setExecution(ExecutionEntity $execution): void
     {
         $oldExecution = $this->getExecution();
-        if ($oldExecution != null) {
+        if ($oldExecution !== null) {
             $oldExecution->removeIncident($this);
         }
 
-        if ($execution != null) {
+        if ($execution !== null) {
             $this->executionId = $execution->getId();
             $this->processInstanceId = $execution->getProcessInstanceId();
             $execution->addIncident($this);
@@ -427,12 +427,12 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
 
     public function getExecution(): ?ExecutionEntity
     {
-        if ($this->executionId != null) {
+        if ($this->executionId !== null) {
             $execution = Context::getCommandContext()
             ->getExecutionManager()
             ->findExecutionById($this->executionId);
 
-            if ($execution == null) {
+            if ($execution === null) {
                 //LOG.executionNotFound(executionId);
             }
 
@@ -566,14 +566,14 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
         if ($this == $obj) {
             return true;
         }
-        if ($obj == null) {
+        if ($obj === null) {
             return false;
         }
         if (get_class($this) != get_class($obj)) {
             return false;
         }
-        if ($this->id == null) {
-            if ($obj->id != null) {
+        if ($this->id === null) {
+            if ($obj->id !== null) {
                 return false;
             }
         } elseif ($this->id != $obj->id) {

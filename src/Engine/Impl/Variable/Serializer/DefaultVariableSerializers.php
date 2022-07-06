@@ -13,7 +13,7 @@ class DefaultVariableSerializers implements VariableSerializersInterface
 
     public function __construct(?DefaultVariableSerializers $serializers = null)
     {
-        if ($serializers != null) {
+        if ($serializers !== null) {
             $this->serializerList = $serializers->serializerList;
             $this->serializerMap = $serializers->serializerMap;
         }
@@ -34,12 +34,12 @@ class DefaultVariableSerializers implements VariableSerializersInterface
         $matchedSerializers = [];
 
         $type = $value->getType();
-        if ($type != null && $type->isAbstract()) {
+        if ($type !== null && $type->isAbstract()) {
             throw new ProcessEngineException("Cannot serialize value of abstract type " . $type->getName());
         }
 
         foreach ($serializerList as $serializer) {
-            if ($type == null || $serializer->getType() == $type) {
+            if ($type === null || $serializer->getType() == $type) {
                 if ($serializer->canHandle($value)) {
                     $matchedSerializers[] = $serializer;
                     if ($serializer->getType()->isPrimitiveValueType()) {
@@ -50,9 +50,9 @@ class DefaultVariableSerializers implements VariableSerializersInterface
         }
 
         if (empty($matchedSerializers)) {
-            if ($fallBackSerializerFactory != null) {
+            if ($fallBackSerializerFactory !== null) {
                 $serializer = $fallBackSerializerFactory->getSerializer($value);
-                if ($serializer != null) {
+                if ($serializer !== null) {
                     return $serializer;
                 }
             }
@@ -62,7 +62,7 @@ class DefaultVariableSerializers implements VariableSerializersInterface
             return $matchedSerializers[0];
         } else {
             // ambiguous match, use default serializer
-            if ($defaultSerializationFormat != null) {
+            if ($defaultSerializationFormat !== null) {
                 foreach ($matchedSerializers as $typedValueSerializer) {
                     if ($defaultSerializationFormat == $typedValueSerializer->getSerializationDataformat()) {
                         return $typedValueSerializer;
@@ -76,7 +76,7 @@ class DefaultVariableSerializers implements VariableSerializersInterface
 
     public function addSerializer(TypedValueSerializerInterface $serializer, ?int $index = null): DefaultVariableSerializers
     {
-        if ($index == null) {
+        if ($index === null) {
             $index = count($this->serializerList);
         }
         $this->serializerList[] = $serializer;
@@ -129,7 +129,7 @@ class DefaultVariableSerializers implements VariableSerializersInterface
         foreach ($this->serializerList as $thisSerializer) {
             $serializer = $other->getSerializerByName($thisSerializer->getName());
 
-            if ($serializer == null) {
+            if ($serializer === null) {
                 $serializer = $thisSerializer;
             }
 

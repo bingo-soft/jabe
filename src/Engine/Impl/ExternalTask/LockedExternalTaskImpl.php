@@ -171,7 +171,7 @@ class LockedExternalTaskImpl implements LockedExternalTaskInterface
         if ($includeExtensionProperties) {
             $result->extensionProperties = $execution->getActivity()->getProperty(BpmnProperties::extensionProperties()->getName());
         }
-        if ($result->extensionProperties == null) {
+        if ($result->extensionProperties === null) {
             $result->extensionProperties = [];
         }
 

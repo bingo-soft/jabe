@@ -56,12 +56,12 @@ abstract class AbstractUpdateProcessInstancesSuspendStateCmd implements CommandI
         }
 
         $processInstanceQuery = $builder->getProcessInstanceQuery();
-        if ($processInstanceQuery != null) {
+        if ($processInstanceQuery !== null) {
             $elementConfiguration->addDeploymentMappings($processInstanceQuery->listDeploymentIdMappings());
         }
 
         $historicProcessInstanceQuery = $builder->getHistoricProcessInstanceQuery();
-        if ($historicProcessInstanceQuery != null) {
+        if ($historicProcessInstanceQuery !== null) {
             $elementConfiguration->addDeploymentMappings($historicProcessInstanceQuery->listDeploymentIdMappings());
         }
 

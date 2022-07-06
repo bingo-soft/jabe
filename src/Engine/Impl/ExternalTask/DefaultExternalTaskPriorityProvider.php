@@ -24,7 +24,7 @@ class DefaultExternalTaskPriorityProvider extends DefaultPriorityProvider
     public function getSpecificPriority(ExecutionEntity $execution, ExternalTaskActivityBehavior $param, string $jobDefinitionId): ?int
     {
         $priorityProvider = $param->getPriorityValueProvider();
-        if ($priorityProvider != null) {
+        if ($priorityProvider !== null) {
             return $this->evaluateValueProvider($priorityProvider, $execution, "");
         }
         return null;

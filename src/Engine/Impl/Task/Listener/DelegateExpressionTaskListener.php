@@ -30,7 +30,7 @@ class DelegateExpressionTaskListener implements TaskListenerInterface
         // execution can change: eg. delegateExpression='${mySpringBeanFactory.randomSpringBean()}'
 
         $variableScope = $delegateTask->getExecution();
-        if ($variableScope == null) {
+        if ($variableScope === null) {
             //$variableScope = $delegateTask->getCaseExecution();
         }
 

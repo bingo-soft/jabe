@@ -27,7 +27,7 @@ class FailedJobListenerCmd implements CommandInterface
             ->getJobManager()
             ->findJobById($this->jobId);
 
-        if ($job != null) {
+        if ($job !== null) {
             $job->setFailedActivityId($this->listener->getJobFailureCollector()->getFailedActivityId());
             $this->listener->fireHistoricJobFailedEvt($job);
             $this->cmd->execute($commandContext);

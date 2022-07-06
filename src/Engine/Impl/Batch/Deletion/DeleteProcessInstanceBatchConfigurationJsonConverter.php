@@ -21,7 +21,7 @@ class DeleteProcessInstanceBatchConfigurationJsonConverter extends JsonObjectCon
 
     public static function instance(): DeleteProcessInstanceBatchConfigurationJsonConverter
     {
-        if (self::$INSTANCE == null) {
+        if (self::$INSTANCE === null) {
             self::$INSTANCE = new DeleteProcessInstanceBatchConfigurationJsonConverter();
         }
         return self::$INSTANCE;

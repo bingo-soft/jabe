@@ -41,7 +41,7 @@ class SaveAuthorizationCmd implements CommandInterface
 
         $operationType = null;
         $previousValues = null;
-        if ($this->authorization->getId() == null) {
+        if ($this->authorization->getId() === null) {
             $authorizationManager->insert($this->authorization);
             $operationType = UserOperationLogEntryInterface::OPERATION_TYPE_CREATE;
         } else {
@@ -124,7 +124,7 @@ class SaveAuthorizationCmd implements CommandInterface
 
     protected function isNullOrAny(?string $resourceId): bool
     {
-        return $this->resourceId == null || $this->isAny($resourceId);
+        return $this->resourceId === null || $this->isAny($resourceId);
     }
 
     protected function isAny(string $resourceId): bool

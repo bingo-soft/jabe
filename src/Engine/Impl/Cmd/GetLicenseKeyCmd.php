@@ -15,13 +15,13 @@ class GetLicenseKeyCmd extends LicenseCmd implements CommandInterface
 
         // case I: license is stored as BLOB
         $licenseResource = $commandContext->getResourceManager()->findLicenseKeyResource();
-        if ($licenseResource != null) {
+        if ($licenseResource !== null) {
             return $licenseResource->getBytes();
         }
 
         // case II: license is stored in properties
         $licenseProperty = $commandContext->getPropertyManager()->findPropertyById(self::LICENSE_KEY_PROPERTY_NAME);
-        if ($licenseProperty != null) {
+        if ($licenseProperty !== null) {
             return $licenseProperty->getValue();
         }
 

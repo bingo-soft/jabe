@@ -246,7 +246,7 @@ class ArrayBlockingQueue extends AbstractQueue implements BlockingQueueInterface
     {
         $this->lock->trylock();
         try {
-            if ($c == null) {
+            if ($c === null) {
                 $a = [];
                 for ($i = $this->takeIndex, $k = 0; $k < $this->count; $i = $this->inc($i), $k += 1) {
                     $a[$k] = $this->items[$i];

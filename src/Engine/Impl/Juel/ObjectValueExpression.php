@@ -27,7 +27,7 @@ class ObjectValueExpression extends ValueExpression
         $this->object = $object;
         $this->type = $type;
 
-        if ($type == null) {
+        if ($type === null) {
             throw new \Exception(LocalMessages::get("error.value.notype"));
         }
     }
@@ -54,11 +54,11 @@ class ObjectValueExpression extends ValueExpression
      */
     public function equals($obj): bool
     {
-        if ($obj != null && get_class($obj) == get_class($this)) {
+        if ($obj !== null && get_class($obj) == get_class($this)) {
             if ($this->type != $obj->type) {
                 return false;
             }
-            return $this->object == $obj->object || $object != null && $object == $obj->object;
+            return $this->object == $obj->object || $object !== null && $object == $obj->object;
         }
         return false;
     }

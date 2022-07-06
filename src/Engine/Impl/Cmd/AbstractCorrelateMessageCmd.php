@@ -43,7 +43,7 @@ abstract class AbstractCorrelateMessageCmd
     {
         $this->builder = $builder;
         $this->messageName = $builder->getMessageName();
-        if ($variablesEnabled != null) {
+        if ($variablesEnabled !== null) {
             $this->variablesEnabled = $variablesEnabled;
             $this->deserializeVariableValues = $deserializeVariableValues;
         }
@@ -94,7 +94,7 @@ abstract class AbstractCorrelateMessageCmd
         $resultWithVariables = new MessageCorrelationResultImpl($handlerResult);
         if (MessageCorrelationResultType::EXECUTION == $handlerResult->getResultType()) {
             $execution = $this->findProcessInstanceExecution($commandContext, $handlerResult);
-            if ($this->variablesEnabled && $execution != null) {
+            if ($this->variablesEnabled && $execution !== null) {
                 $this->variablesListener = new ExecutionVariableSnapshotObserver($execution, false, $this->deserializeVariableValues);
             }
             $this->triggerExecution($commandContext, $handlerResult);
@@ -103,7 +103,7 @@ abstract class AbstractCorrelateMessageCmd
             $resultWithVariables->setProcessInstance($instance);
         }
 
-        if ($this->variablesListener != null) {
+        if ($this->variablesListener !== null) {
             $resultWithVariables->setVariables($this->variablesListener->getVariables());
         }
 

@@ -32,7 +32,7 @@ abstract class AbstractTypedValueSerializer implements TypedValueSerializerInter
 
     public function canHandle(TypedValueInterface $value): bool
     {
-        if ($value->getType() != null && !is_a($this->valueType, get_class($value->getType))) {
+        if ($value->getType() !== null && !is_a($this->valueType, get_class($value->getType))) {
             return false;
         } else {
             return $this->canWriteValue($value);

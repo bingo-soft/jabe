@@ -27,7 +27,7 @@ class RestartProcessInstancesBatchConfigurationJsonConverter extends JsonObjectC
 
     public static function instance(): RestartProcessInstancesBatchConfigurationJsonConverter
     {
-        if (self::$INSTANCE == null) {
+        if (self::$INSTANCE === null) {
             self::$INSTANCE = new RestartProcessInstancesBatchConfigurationJsonConverter();
         }
         return self::$INSTANCE;

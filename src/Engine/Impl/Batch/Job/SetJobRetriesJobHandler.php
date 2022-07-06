@@ -33,7 +33,7 @@ class SetJobRetriesJobHandler extends AbstractBatchJobHandler
 
     public function getJobDeclaration(): JobDeclaration
     {
-        if (self::$JOB_DECLARATION == null) {
+        if (self::$JOB_DECLARATION === null) {
             self::$JOB_DECLARATION = new BatchJobDeclaration(BatchInterface::TYPE_SET_JOB_RETRIES);
         }
         return self::$JOB_DECLARATION;

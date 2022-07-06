@@ -35,7 +35,7 @@ class ErrorEventDefinition implements \Serializable
     public function getPrecedence(): int
     {
         // handlers with error code take precedence over catchall-handlers
-        return $this->precedence + ($this->errorCode != null ? 1 : 0);
+        return $this->precedence + ($this->errorCode !== null ? 1 : 0);
     }
 
     public function setPrecedence(int $precedence): void
@@ -45,17 +45,17 @@ class ErrorEventDefinition implements \Serializable
 
     public function catchesError(string $errorCode): bool
     {
-        return $this->errorCode == null || $this->errorCode == $errorCode;
+        return $this->errorCode === null || $this->errorCode == $errorCode;
     }
 
     public function catchesException(\Exception $ex): bool
     {
 
-        if ($this->errorCode == null) {
+        if ($this->errorCode === null) {
             return false;
         } else {
             // unbox exception
-            while ($ex instanceof ProcessEngineException && $ex->getCause() != null) {
+            while ($ex instanceof ProcessEngineException && $ex->getCause() !== null) {
                 $ex = $ex->getCause();
             }
 

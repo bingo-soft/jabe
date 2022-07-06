@@ -37,7 +37,7 @@ class DeleteLicenseKeyCmd extends LicenseCmd implements CommandInterface
 
         // delete license key BLOB
         $licenseKey = $resourceManager->findLicenseKeyResource();
-        if ($licenseKey != null) {
+        if ($licenseKey !== null) {
             $resourceManager->delete($licenseKey);
         }
 

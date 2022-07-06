@@ -27,9 +27,9 @@ class WsdlModelTest extends TestCase
         $this->parseModel("counter");
         $defs = $this->modelInstance->getDocumentElement();
         $types = $defs->getTypes();
-        $this->assertFalse($types == null);
+        $this->assertFalse($types === null);
         $schema = $defs->getTypes()->getSchema();
-        $this->assertFalse($schema == null);
+        $this->assertFalse($schema === null);
         $services = $this->modelInstance->getModelElementsByType(ServiceInterface::class);
         $bindings = $this->modelInstance->getModelElementsByType(BindingInterface::class);
         $this->assertCount(1, $bindings);

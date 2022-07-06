@@ -16,7 +16,7 @@ class VariableStore
 
     public function __construct(?VariablesProviderInterface $provider = null, VariableStoreObserverInterface ...$observers)
     {
-        if ($provider == null) {
+        if ($provider === null) {
             $this->$variablesProvider = VariableCollectionProvider::emptyVariables();
         }
         $this->observers = empty($observers) ? [] : $observers;
@@ -27,7 +27,7 @@ class VariableStore
      */
     public function setVariablesProvider(VariablesProviderInterface $variablesProvider): void
     {
-        if ($this->variables == null) {
+        if ($this->variables === null) {
             $this->variablesProvider = $variablesProvider;
         }
     }
@@ -139,7 +139,7 @@ class VariableStore
 
     public function isInitialized(): bool
     {
-        return $this->variables != null;
+        return $this->variables !== null;
     }
 
     public function forceInitialization(): void

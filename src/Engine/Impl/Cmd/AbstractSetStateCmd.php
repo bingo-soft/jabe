@@ -34,12 +34,12 @@ abstract class AbstractSetStateCmd implements CommandInterface
         $this->checkParameters($commandContext);
         $this->checkAuthorization($commandContext);
 
-        if ($this->executionDate == null) {
+        if ($this->executionDate === null) {
             $this->updateSuspensionState($commandContext, $this->getNewSuspensionState());
 
             if ($this->isIncludeSubResources()) {
                 $cmd = $this->getNextCommand();
-                if ($cmd != null) {
+                if ($cmd !== null) {
                     $cmd->disableLogUserOperation();
                     // avoids unnecessary authorization checks
                     // pre-requirement: the necessary authorization check
@@ -137,10 +137,10 @@ abstract class AbstractSetStateCmd implements CommandInterface
     protected function getDeploymentIdByProcessDefinition(CommandContext $commandContext, string $processDefinitionId): ?string
     {
         $definition = $commandContext->getProcessDefinitionManager()->getCachedResourceDefinitionEntity($this->processDefinitionId);
-        if ($definition == null) {
+        if ($definition === null) {
             $definition = $commandContext->getProcessDefinitionManager()->findLatestDefinitionById($processDefinitionId);
         }
-        if ($definition != null) {
+        if ($definition !== null) {
             return $definition->getDeploymentId();
         }
         return null;
@@ -160,7 +160,7 @@ abstract class AbstractSetStateCmd implements CommandInterface
             $definitions = $commandContext->getProcessDefinitionManager()->findLatestProcessDefinitionsByKey($processDefinitionKey);
             $definition = empty($definitions) ? null : $definitions[0];
         }
-        if ($definition != null) {
+        if ($definition !== null) {
             return $definition->getDeploymentId();
         }
         return null;
@@ -170,8 +170,8 @@ abstract class AbstractSetStateCmd implements CommandInterface
     {
         $jobDefinitionManager = $commandContext->getJobDefinitionManager();
         $jobDefinition = $jobDefinitionManager->findById($jobDefinitionId);
-        if ($jobDefinition != null) {
-            if ($jobDefinition->getProcessDefinitionId() != null) {
+        if ($jobDefinition !== null) {
+            if ($jobDefinition->getProcessDefinitionId() !== null) {
                 return $this->getDeploymentIdByProcessDefinition($commandContext, $jobDefinition->getProcessDefinitionId());
             }
         }

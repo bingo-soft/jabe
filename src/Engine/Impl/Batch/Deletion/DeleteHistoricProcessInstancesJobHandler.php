@@ -38,7 +38,7 @@ class DeleteHistoricProcessInstancesJobHandler extends AbstractBatchJobHandler
 
     public function getJobDeclaration(): JobDeclaration
     {
-        if (self::$JOB_DECLARATION == null) {
+        if (self::$JOB_DECLARATION === null) {
             self::$JOB_DECLARATION = new BatchJobDeclaration(BatchInterface::TYPE_HISTORIC_PROCESS_INSTANCE_DELETION);
         }
         return self::$JOB_DECLARATION;

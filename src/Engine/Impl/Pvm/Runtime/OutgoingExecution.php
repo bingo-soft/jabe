@@ -24,7 +24,7 @@ class OutgoingExecution
 
     public function take(): void
     {
-        if ($this->outgoingExecution->getReplacedBy() != null) {
+        if ($this->outgoingExecution->getReplacedBy() !== null) {
             $this->outgoingExecution = $this->outgoingExecution->getReplacedBy();
         }
         if (!$this->outgoingExecution->isEnded()) {

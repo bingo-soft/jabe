@@ -81,7 +81,7 @@ class ArrayELResolver extends ELResolver
      */
     public function getType(?ELContext $context, $base, $property)
     {
-        if ($context == null) {
+        if ($context === null) {
             throw new \Exception("context is null");
         }
         $result = null;
@@ -122,7 +122,7 @@ class ArrayELResolver extends ELResolver
      */
     public function getValue(?ELContext $context, $base, $property)
     {
-        if ($context == null) {
+        if ($context === null) {
             throw new \Exception("context is null");
         }
         $result = null;
@@ -164,7 +164,7 @@ class ArrayELResolver extends ELResolver
      */
     public function isReadOnly(?ELContext $context, $base, $property): bool
     {
-        if ($context == null) {
+        if ($context === null) {
             throw new \Exception("context is null");
         }
         if ($this->isResolvable($base)) {
@@ -212,7 +212,7 @@ class ArrayELResolver extends ELResolver
      */
     public function setValue(?ELContext $context, $base, $property, $value): void
     {
-        if ($context == null) {
+        if ($context === null) {
             throw new \Exception("context is null");
         }
         if ($this->isResolvable($base)) {
@@ -231,11 +231,11 @@ class ArrayELResolver extends ELResolver
      *            The bean to analyze.
      * @param property
      *            The name of the property to analyze. Will be coerced to a String.
-     * @return base != null && base.getClass().isArray()
+     * @return base !== null && base.getClass().isArray()
      */
     private function isResolvable($base = null): bool
     {
-        return $base != null && is_array($base);
+        return $base !== null && is_array($base);
     }
 
     /**
@@ -257,7 +257,7 @@ class ArrayELResolver extends ELResolver
         if (is_numeric($property)) {
             $index = intval($property);
         }
-        if ($base != null && ($index < 0 || $index >= count($base))) {
+        if ($base !== null && ($index < 0 || $index >= count($base))) {
             throw new PropertyNotFoundException("Array index out of bounds: " . $index);
         }
         return $index;

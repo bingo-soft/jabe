@@ -42,9 +42,9 @@ class GetUserPictureCmd implements CommandInterface, \Serializable
         $pictureInfo = $commandContext->getIdentityInfoManager()
             ->findUserInfoByUserIdAndKey($this->userId, "picture");
 
-        if ($pictureInfo != null) {
+        if ($pictureInfo !== null) {
             $pictureByteArrayId = $pictureInfo->getValue();
-            if ($pictureByteArrayId != null) {
+            if ($pictureByteArrayId !== null) {
                 $byteArray = $commandContext->getDbEntityManager()
                     ->selectById(ByteArrayEntity::class, $pictureByteArrayId);
                 return new Picture($byteArray->getBytes(), $byteArray->getName());

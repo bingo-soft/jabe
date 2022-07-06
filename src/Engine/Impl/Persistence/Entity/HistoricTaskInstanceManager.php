@@ -111,7 +111,7 @@ class HistoricTaskInstanceManager extends AbstractHistoricManager
     {
         if ($this->isHistoryEnabled()) {
             $historicTaskInstance = findHistoricTaskInstanceById($taskId);
-            if ($historicTaskInstance != null) {
+            if ($historicTaskInstance !== null) {
                 $commandContext = Context::getCommandContext();
 
                 $commandContext

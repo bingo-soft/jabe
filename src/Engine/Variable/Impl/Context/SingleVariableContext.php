@@ -27,8 +27,8 @@ class SingleVariableContext implements VariableContextInterface
 
     public function containsVariable(?string $name = null): bool
     {
-        if ($this->name == null) {
-            return $name == null;
+        if ($this->name === null) {
+            return $name === null;
         } else {
             return $this->name == $name;
         }

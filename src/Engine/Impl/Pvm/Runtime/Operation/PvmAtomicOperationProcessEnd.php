@@ -39,7 +39,7 @@ class PvmAtomicOperationProcessEnd extends PvmAtomicOperationActivityInstanceEnd
         $transferVariablesBehavior = null;
 
         // copy variables before destroying the ended sub process instance
-        if ($superExecution != null) {
+        if ($superExecution !== null) {
             $activity = $superExecution->getActivity();
             $subProcessActivityBehavior = $activity->getActivityBehavior();
             try {
@@ -48,7 +48,7 @@ class PvmAtomicOperationProcessEnd extends PvmAtomicOperationActivityInstanceEnd
                 //LOG.exceptionWhileCompletingSupProcess(execution, e);
                 throw new ProcessEngineException("Error while completing sub process of execution " . $execution, $e);
             }
-        } /*else if (superCaseExecution != null) {
+        } /*else if (superCaseExecution !== null) {
                 CmmnActivity activity = superCaseExecution.getActivity();
                 transferVariablesBehavior = (TransferVariablesActivityBehavior) activity.getActivityBehavior();
             try {
@@ -66,7 +66,7 @@ class PvmAtomicOperationProcessEnd extends PvmAtomicOperationActivityInstanceEnd
         $execution->remove();
 
         // and trigger execution afterwards
-        if ($superExecution != null) {
+        if ($superExecution !== null) {
             $superExecution->setSubProcessInstance(null);
             try {
                 $subProcessActivityBehavior->completed($superExecution);
@@ -74,7 +74,7 @@ class PvmAtomicOperationProcessEnd extends PvmAtomicOperationActivityInstanceEnd
                 //LOG.exceptionWhileCompletingSupProcess(execution, e);
                 throw new ProcessEngineException("Error while completing sub process of execution " . $execution, $e);
             }
-        } elseif ($superCaseExecution != null) {
+        } elseif ($superCaseExecution !== null) {
             $superCaseExecution->complete();
         }
     }

@@ -133,7 +133,7 @@ class RecalculateJobDuedateCmd implements CommandInterface, \Serializable
     protected function findTimerDeclaration(CommandContext $commandContext, JobEntity $job): ?TimerDeclarationImpl
     {
         $timerDeclaration = null;
-        if ($job->getExecutionId() != null) {
+        if ($job->getExecutionId() !== null) {
             // timeout listener or boundary / intermediate / subprocess start event
             $timerDeclaration = $this->findTimerDeclarationForActivity($commandContext, $job);
         } else {
@@ -141,7 +141,7 @@ class RecalculateJobDuedateCmd implements CommandInterface, \Serializable
             $timerDeclaration = $this->findTimerDeclarationForProcessStartEvent($commandContext, $job);
         }
 
-        if ($timerDeclaration == null) {
+        if ($timerDeclaration === null) {
             throw new ProcessEngineException("No timer declaration found for job id '" . $this->jobId . "'.");
         }
         return $timerDeclaration;
@@ -150,11 +150,11 @@ class RecalculateJobDuedateCmd implements CommandInterface, \Serializable
     protected function findTimerDeclarationForActivity(CommandContext $commandContext, JobEntity $job): ?TimerDeclarationImpl
     {
         $execution = $commandContext->getExecutionManager()->findExecutionById($job->getExecutionId());
-        if ($execution == null) {
+        if ($execution === null) {
             throw new ProcessEngineException("No execution found with id '" . $job->getExecutionId() . "' for job id '" . $this->jobId . "'.");
         }
         $activity = $execution->getProcessDefinition()->findActivity($job->getActivityId());
-        if ($activity != null) {
+        if ($activity !== null) {
             if (TimerTaskListenerJobHandler::TYPE == $job->getJobHandlerType()) {
                 return $this->findTimeoutListenerDeclaration($job, $activity);
             }

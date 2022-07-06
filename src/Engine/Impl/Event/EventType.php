@@ -8,7 +8,7 @@ class EventType
 
     public static function message(): EventType
     {
-        if (self::$MESSAGE == null) {
+        if (self::$MESSAGE === null) {
             self::$MESSAGE = new EventType("message");
         }
         return self::$MESSAGE;
@@ -18,7 +18,7 @@ class EventType
 
     public static function signal(): EventType
     {
-        if (self::$SIGNAL == null) {
+        if (self::$SIGNAL === null) {
             self::$SIGNAL = new EventType("signal");
         }
         return self::$SIGNAL;
@@ -28,7 +28,7 @@ class EventType
 
     public static function compensate(): EventType
     {
-        if (self::$COMPENSATE == null) {
+        if (self::$COMPENSATE === null) {
             self::$COMPENSATE = new EventType("compensate");
         }
         return self::$COMPENSATE;
@@ -38,7 +38,7 @@ class EventType
 
     public static function conditional(): EventType
     {
-        if (self::$CONDITONAL == null) {
+        if (self::$CONDITONAL === null) {
             self::$CONDITONAL = new EventType("conditional");
         }
         return self::$CONDITONAL;

@@ -33,7 +33,7 @@ abstract class AbstractBoundaryEventBuilder extends AbstractCatchEventBuilder
 
     public function error(?string $errorCode = null, ?string $errorMessage = null): AbstractBoundaryEventBuilder
     {
-        if ($errorCode == null && $errorMessage == null) {
+        if ($errorCode === null && $errorMessage === null) {
             $errorEventDefinition = $this->createInstance(ErrorEventDefinitionInterface::class);
         } else {
             $errorEventDefinition = $this->createErrorEventDefinition($errorCode, $errorMessage);
@@ -45,7 +45,7 @@ abstract class AbstractBoundaryEventBuilder extends AbstractCatchEventBuilder
     public function errorEventDefinition(?string $id = null): ErrorEventDefinitionBuilder
     {
         $errorEventDefinition = $this->createEmptyErrorEventDefinition();
-        if ($id != null) {
+        if ($id !== null) {
             $errorEventDefinition->setId($id);
         }
         $this->element->addEventDefinition($errorEventDefinition);
@@ -54,7 +54,7 @@ abstract class AbstractBoundaryEventBuilder extends AbstractCatchEventBuilder
 
     public function escalation(?string $escalationCode = null): AbstractBoundaryEventBuilder
     {
-        if ($escalationCode == null) {
+        if ($escalationCode === null) {
             $escalationEventDefinition = $this->createInstance(EscalationEventDefinitionInterface::class);
         } else {
             $escalationEventDefinition = $this->createEscalationEventDefinition($escalationCode);
@@ -71,7 +71,7 @@ abstract class AbstractBoundaryEventBuilder extends AbstractCatchEventBuilder
         $x = 0;
         $y = 0;
 
-        if ($source != null) {
+        if ($source !== null) {
             $sourceBounds = $source->getBounds();
 
             $sourceX = $sourceBounds->getX();
@@ -96,7 +96,7 @@ abstract class AbstractBoundaryEventBuilder extends AbstractCatchEventBuilder
         $source = $this->findBpmnShape($edgeSource);
         $target = $this->findBpmnShape($edgeTarget);
 
-        if ($source != null && $target != null) {
+        if ($source !== null && $target !== null) {
             $sourceBounds = $source->getBounds();
             $targetBounds = $target->getBounds();
 

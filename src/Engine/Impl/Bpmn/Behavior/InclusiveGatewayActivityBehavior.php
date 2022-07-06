@@ -36,9 +36,9 @@ class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior
 
             // find matching non-default sequence flows
             foreach ($execution->getActivity()->getOutgoingTransitions() as $outgoingTransition) {
-                if ($defaultSequenceFlow == null || $outgoingTransition->getId() != $defaultSequenceFlow) {
+                if ($defaultSequenceFlow === null || $outgoingTransition->getId() != $defaultSequenceFlow) {
                     $condition = $outgoingTransition->getProperty(BpmnParse::PROPERTYNAME_CONDITION);
-                    if ($condition == null || $condition->evaluate($execution)) {
+                    if ($condition === null || $condition->evaluate($execution)) {
                         $transitionsToTake[] = $outgoingTransition;
                     }
                 }
@@ -46,9 +46,9 @@ class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior
 
             // if none found, add default flow
             if (empty($transitionsToTake)) {
-                if ($defaultSequenceFlow != null) {
+                if ($defaultSequenceFlow !== null) {
                     $defaultTransition = $execution->getActivity()->findOutgoingTransition($defaultSequenceFlow);
-                    if ($defaultTransition == null) {
+                    if ($defaultTransition === null) {
                         //throw LOG.missingDefaultFlowException(execution.getActivity().getId(), defaultSequenceFlow);
                     }
 
@@ -114,7 +114,7 @@ class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior
     protected function canReachActivity(ActivityExecutionInterface $execution, PvmActivityInterface $activity): bool
     {
         $pvmTransition = $execution->getTransition();
-        if ($pvmTransition != null) {
+        if ($pvmTransition !== null) {
             return $this->isReachable($pvmTransition->getDestination(), $activity, []);
         } else {
             return $this->isReachable($execution->getActivity(), $activity, []);
@@ -153,7 +153,7 @@ class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior
                 }
             } else {
                 $flowScope = $srcActivity->getFlowScope();
-                if ($flowScope != null && $flowScope instanceof PvmActivityInterface) {
+                if ($flowScope !== null && $flowScope instanceof PvmActivityInterface) {
                     return $this->isReachable($flowScope, $targetActivity, $visitedActivities);
                 }
             }
@@ -168,7 +168,7 @@ class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior
                         break;
                     }
                 }
-                if ($destinationActivity != null && !$contains) {
+                if ($destinationActivity !== null && !$contains) {
                     $reachable = $this->isReachable($destinationActivity, $targetActivity, $visitedActivities);
                     // If false, we should investigate other paths, and not yet return the result
                     if ($reachable) {

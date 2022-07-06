@@ -16,7 +16,7 @@ class OutputParameter extends IoParameter
 
     protected function execute(AbstractVariableScope $innerScope, ?AbstractVariableScope $outerScope = null): void
     {
-        if ($outerScope == null) {
+        if ($outerScope === null) {
             $outerScope = $innerScope->getParentVariableScope();
         }
 

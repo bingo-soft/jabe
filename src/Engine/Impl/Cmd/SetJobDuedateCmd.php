@@ -50,7 +50,7 @@ class SetJobDuedateCmd implements CommandInterface, \Serializable
     {
         $job = $commandContext->getJobManager()
                 ->findJobById($this->jobId);
-        if ($job != null) {
+        if ($job !== null) {
             foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
                 $checker->checkUpdateJob($job);
             }
@@ -66,7 +66,7 @@ class SetJobDuedateCmd implements CommandInterface, \Serializable
             );
 
             // for timer jobs cascade due date changes
-            if ($this->cascade && $this->newDuedate != null && $job instanceof TimerEntity) {
+            if ($this->cascade && $this->newDuedate !== null && $job instanceof TimerEntity) {
                 $offset = (new \DateTime($newDuedate))->format('Uv') - (new \DateTime($job->getDuedate()))->format('Uv');
                 $job->setRepeatOffset($job->getRepeatOffset() + $offset);
             }

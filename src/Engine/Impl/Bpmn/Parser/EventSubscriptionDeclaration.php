@@ -39,7 +39,7 @@ class EventSubscriptionDeclaration
 
     public static function getDeclarationsForScope(?PvmScopeInterface $scope): array
     {
-        if ($scope == null) {
+        if ($scope === null) {
             return [];
         }
 
@@ -56,7 +56,7 @@ class EventSubscriptionDeclaration
 
     public function hasEventName(): bool
     {
-        return !( $this->eventName == null || "" == trim($this->getUnresolvedEventName()) );
+        return !( $this->eventName === null || "" == trim($this->getUnresolvedEventName()) );
     }
 
     public function isEventNameLiteralText(): bool
@@ -142,7 +142,7 @@ class EventSubscriptionDeclaration
 
         $eventName = $this->resolveExpressionOfEventName($execution);
         $eventSubscriptionEntity->setEventName($eventName);
-        if ($this->activityId != null) {
+        if ($this->activityId !== null) {
             $activity = $execution->getProcessDefinition()->findActivity($this->activityId);
             $eventSubscriptionEntity->setActivity($activity);
         }
@@ -167,7 +167,7 @@ class EventSubscriptionDeclaration
 
     protected function isExpressionAvailable(): bool
     {
-        return $this->eventName != null;
+        return $this->eventName !== null;
     }
 
     public function updateSubscription(EventSubscriptionEntity $eventSubscription): void

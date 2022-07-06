@@ -85,7 +85,7 @@ class GetActivityInstanceCmd implements CommandInterface
         foreach ($leaves as $leaf) {
             // skip leafs without activity, e.g. if only the process instance exists after cancellation
             // it will not have an activity set
-            if ($leaf->getActivity() == null) {
+            if ($leaf->getActivity() === null) {
                 continue;
             }
 
@@ -94,7 +94,7 @@ class GetActivityInstanceCmd implements CommandInterface
 
             // create an activity/transition instance for each leaf that executes a non-scope activity
             // and does not throw compensation
-            if ($leaf->getActivityInstanceId() != null) {
+            if ($leaf->getActivityInstanceId() !== null) {
                 if (!CompensationBehavior::isCompensationThrowing($leaf) || LegacyBehavior::isCompensationThrowing($leaf, $activityExecutionMapping)) {
                     $parentActivityInstanceId = null;
                     foreach ($activityExecutionMapping as $pair) {
@@ -214,7 +214,7 @@ class GetActivityInstanceCmd implements CommandInterface
         $actInst->setActivityId($scope->getId());
 
         $name = $scope->getName();
-        if ($name == null) {
+        if ($name === null) {
             $name = $scope->getProperty("name");
         }
         $actInst->setActivityName($name);
@@ -235,14 +235,14 @@ class GetActivityInstanceCmd implements CommandInterface
 
         // do not collect incidents if scopeExecution is a compacted subtree
         // and we currently create the scope activity instance
-        if ($executionActivity == null || $executionActivity == $scope) {
+        if ($executionActivity === null || $executionActivity == $scope) {
             $incidentIds = array_merge($incidentIds, $this->getIncidentIds($incidentsByExecution, $scopeExecution));
             $incidents = array_merge($incidents, $this->getIncidents($incidentsByExecution, $scopeExecution));
         }
 
         foreach ($scopeExecution->getNonEventScopeExecutions() as $childExecution) {
             // add all concurrent children that are not in an activity
-            if ($childExecution->isConcurrent() && $childExecution->getActivityId() == null) {
+            if ($childExecution->isConcurrent() && $childExecution->getActivityId() === null) {
                 $executionIds[] = $childExecution->getId();
                 $incidentIds = array_merge($incidentIds, $this->getIncidentIds($incidentsByExecution, $childExecution));
                 $incidents = array_merge($incidents, $this->getIncidents($incidentsByExecution, $childExecution));
@@ -272,9 +272,9 @@ class GetActivityInstanceCmd implements CommandInterface
         $transitionInstance->setActivityId($activityInstanceIdexecution->getActivityId());
 
         $activity = $execution->getActivity();
-        if ($activity != null) {
+        if ($activity !== null) {
             $name = $activity->getName();
-            if ($name == null) {
+            if ($name === null) {
                 $name = $activity->getProperty("name");
             }
             $transitionInstance->setActivityName($name);
@@ -297,13 +297,13 @@ class GetActivityInstanceCmd implements CommandInterface
         $childTransitionInstances = [];
 
         foreach (array_values($activityInstances) as $instance) {
-            if ($instance->getParentActivityInstanceId() != null) {
+            if ($instance->getParentActivityInstanceId() !== null) {
                 $key = $instance->getParentActivityInstanceId();
                 $parentInstance = null;
                 if (array_key_exists($key, $activityInstances)) {
                     $parentInstance = $activityInstances[$key];
                 }
-                if ($parentInstance == null) {
+                if ($parentInstance === null) {
                     throw new ProcessEngineException("No parent activity instance with id " . $instance->getParentActivityInstanceId() . " generated");
                 }
                 $this->putListElement($childActivityInstances, $parentInstance, $instance);
@@ -311,13 +311,13 @@ class GetActivityInstanceCmd implements CommandInterface
         }
 
         foreach (array_values($transitionInstances) as $instance) {
-            if ($instance->getParentActivityInstanceId() != null) {
+            if ($instance->getParentActivityInstanceId() !== null) {
                 $key = $instance->getParentActivityInstanceId();
                 $parentInstance = null;
                 if (array_key_exists($key, $activityInstances)) {
                     $parentInstance = $activityInstances[$key];
                 }
-                if ($parentInstance == null) {
+                if ($parentInstance === null) {
                     throw new ProcessEngineException("No parent activity instance with id " . $instance->getParentActivityInstanceId() . " generated");
                 }
                 $this->putListElement($childTransitionInstances, $parentInstance, $instance);
@@ -423,7 +423,7 @@ class GetActivityInstanceCmd implements CommandInterface
         $processInstance = $commandContext->getExecutionManager()->findExecutionById($processInstanceId);
 
         // initialize parent/child sets
-        if ($processInstance != null) {
+        if ($processInstance !== null) {
             $processInstance->restoreProcessInstance($executions, null, null, null, null, null, null);
         }
 

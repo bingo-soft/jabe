@@ -37,7 +37,7 @@ class WSService implements BpmnInterfaceImplementationInterface
 
     public function getClient(): SyncWebServiceClientInterface
     {
-        if ($this->client == null) {
+        if ($this->client === null) {
             // TODO refactor to use configuration
             $factory = ReflectUtil::instantiate(ProcessEngineConfigurationImpl::DEFAULT_WS_SYNC_FACTORY);
             $this->client = $factory->create($this->wsdlLocation);

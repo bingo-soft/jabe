@@ -39,7 +39,7 @@ class SignalEventHandler extends EventHandlerImpl
 
         $deploymentCache = Context::getProcessEngineConfiguration()->getDeploymentCache();
         $processDefinition = $deploymentCache->findDeployedProcessDefinitionById($processDefinitionId);
-        if ($processDefinition == null || $processDefinition->isSuspended()) {
+        if ($processDefinition === null || $processDefinition->isSuspended()) {
             // ignore event subscription
             //LOG.debugIgnoringEventSubscription(eventSubscription, processDefinitionId);
         } else {
@@ -56,7 +56,7 @@ class SignalEventHandler extends EventHandlerImpl
         ?string $businessKey,
         CommandContext $commandContext
     ): void {
-        if ($eventSubscription->getExecutionId() != null) {
+        if ($eventSubscription->getExecutionId() !== null) {
             $this->handleIntermediateEvent($eventSubscription, $payload, $localPayload, $commandContext);
         } else {
             $this->handleStartEvent($eventSubscription, $payload, $businessKey, $commandContext);

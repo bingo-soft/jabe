@@ -64,7 +64,7 @@ abstract class AbstractActivityBuilder extends AbstractFlowNodeBuilder
         $attachedToElement = $this->findBpmnShape($this->element);
         $x = 0;
 
-        if ($attachedToElement != null) {
+        if ($attachedToElement !== null) {
             $attachedToBounds = $attachedToElement->getBounds();
 
             $boundaryEvents = $this->element->getParentElement()->getChildElementsByType(BoundaryEventInterface::class);
@@ -101,7 +101,7 @@ abstract class AbstractActivityBuilder extends AbstractFlowNodeBuilder
         $boundaryBounds = $bpmnShape->getBounds();
         $x = 0;
         $y = 0;
-        if ($activity != null) {
+        if ($activity !== null) {
             $activityBounds = $activity->getBounds();
             $activityY = $activityBounds->getY();
             $activityHeight = $activityBounds->getHeight();

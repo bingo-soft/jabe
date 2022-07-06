@@ -6,4 +6,7 @@
     <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint"/>-->
     <file>src/</file>
     <exclude-pattern>vendor</exclude-pattern>
+    <rule ref="Generic.Files.LineEndings">
+        <exclude name="Generic.Files.LineEndings.InvalidEOLChar"/>
+    </rule>
 </ruleset>

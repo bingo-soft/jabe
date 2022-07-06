@@ -12,8 +12,8 @@ class ApplicationServerImpl implements ApplicationServerInterface
 
     public function __construct(string $vendorOrVersion, string $version = null)
     {
-        $this->vendor = $version == null ? ParseUtil::parseServerVendor($vendorOrVersion) : $vendorOrVersion;
-        $this->version = $version == null ? $vendorOrVersion : $version;
+        $this->vendor = $version === null ? ParseUtil::parseServerVendor($vendorOrVersion) : $vendorOrVersion;
+        $this->version = $version === null ? $vendorOrVersion : $version;
     }
 
     public function __toString()

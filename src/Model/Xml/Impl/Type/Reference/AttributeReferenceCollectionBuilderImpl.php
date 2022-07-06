@@ -41,7 +41,7 @@ class AttributeReferenceCollectionBuilderImpl implements
         $this->attributeReferenceCollection->setReferenceTargetElementType($referenceTargetType);
 
         $idAttribute = $referenceTargetType->getAttribute("id");
-        if ($idAttribute != null) {
+        if ($idAttribute !== null) {
             $idAttribute->registerIncoming($this->attributeReferenceCollection);
             $this->attributeReferenceCollection->setReferenceTargetAttribute($idAttribute);
         } else {

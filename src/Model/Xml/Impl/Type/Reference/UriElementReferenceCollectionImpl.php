@@ -18,7 +18,7 @@ class UriElementReferenceCollectionImpl extends ElementReferenceCollectionImpl
     public function getReferenceIdentifier(ModelElementInstanceInterface $referenceSourceElement)
     {
         $identifier = $referenceSourceElement->getAttributeValue("href");
-        if ($identifier != null) {
+        if ($identifier !== null) {
             $parts = explode('#', $identifier);
             if (count($parts) > 1) {
                 return $parts[count($parts) - 1];

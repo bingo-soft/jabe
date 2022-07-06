@@ -43,11 +43,11 @@ class ElementReferenceImpl extends ElementReferenceCollectionImpl implements Ele
         ModelElementInstanceInterface $referenceSourceParentElement
     ) {
         $referenceSource = $this->getReferenceSource($referenceSourceParentElement);
-        if ($referenceSource != null) {
+        if ($referenceSource !== null) {
             $identifier = $this->getReferenceIdentifier($referenceSource);
             $referenceTargetElement = $referenceSourceParentElement->getModelInstance()
                 ->getModelElementById($identifier);
-            if ($referenceTargetElement != null) {
+            if ($referenceTargetElement !== null) {
                 return $referenceTargetElement;
             } else {
                 throw new ModelException(sprintf("Unable to find a model element instance for id %s", $identifier));
@@ -68,7 +68,7 @@ class ElementReferenceImpl extends ElementReferenceCollectionImpl implements Ele
         $modelInstance = $referenceSourceParentElement->getModelInstance();
         $identifier = $this->referenceTargetAttribute->getValue($referenceTargetElement);
         $existingElement = $modelInstance->getModelElementById($identifier);
-        if ($existingElement == null || !$existingElement->equals($referenceTargetElement)) {
+        if ($existingElement === null || !$existingElement->equals($referenceTargetElement)) {
             throw new ModelReferenceException("Cannot create reference to model element");
         } else {
             $referenceSourceElement = $modelInstance->newInstance($this->getReferenceSourceElementType());

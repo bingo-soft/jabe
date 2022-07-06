@@ -411,7 +411,7 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
                 ->findBpmnModelInstanceForProcessDefinition($processDefinition);
 
             $processElement = $bpmnModelInstance->getModelElementById($processDefinition->getKey());
-            if ($processElement != null) {
+            if ($processElement !== null) {
                 $documentations = $processElement->getChildElementsByType(DocumentationInterface::class);
                 $docStrings = [];
                 foreach ($documentations as $documentation) {
@@ -428,7 +428,7 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
     {
         parent::checkQueryOk();
 
-        if ($this->latest && ( ($this->id != null) || ($this->version != null) || ($this->deploymentId != null))) {
+        if ($this->latest && ( ($this->id !== null) || ($this->version !== null) || ($this->deploymentId !== null))) {
             throw new ProcessEngineException("Calling latest() can only be used in combination with key(String) and keyLike(String) or name(String) and nameLike(String)");
         }
     }
@@ -586,7 +586,7 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
             return $this->cachedCandidateGroups;
         }
 
-        if ($this->authorizationUserId != null) {
+        if ($this->authorizationUserId !== null) {
             $groups = Context::getCommandContext()
                 ->getReadOnlyIdentityProvider()
                 ->createGroupQuery()

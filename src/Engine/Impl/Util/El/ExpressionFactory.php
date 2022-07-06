@@ -21,7 +21,7 @@ abstract class ExpressionFactory
      */
     private static function newInstance(?array $properties = null, string $className): ExpressionFactory
     {
-        if ($properties != null) {
+        if ($properties !== null) {
             return $className::newInstance(...$properties);
         }
         return $className::newInstance();

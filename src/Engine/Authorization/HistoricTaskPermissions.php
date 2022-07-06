@@ -13,7 +13,7 @@ class HistoricTaskPermissions implements PermissionInterface
 
     public static function none(): PermissionInterface
     {
-        if (self::$NONE == null) {
+        if (self::$NONE === null) {
             self::$NONE = new HistoricTaskPermissions(
                 "NONE",
                 0
@@ -26,7 +26,7 @@ class HistoricTaskPermissions implements PermissionInterface
 
     public static function all(): PermissionInterface
     {
-        if (self::$ALL == null) {
+        if (self::$ALL === null) {
             self::$ALL = new HistoricTaskPermissions(
                 "ALL",
                 INF
@@ -39,7 +39,7 @@ class HistoricTaskPermissions implements PermissionInterface
 
     public static function read(): PermissionInterface
     {
-        if (self::$READ == null) {
+        if (self::$READ === null) {
             self::$READ = new HistoricTaskPermissions(
                 "READ",
                 2
@@ -52,7 +52,7 @@ class HistoricTaskPermissions implements PermissionInterface
 
     public static function readVariable(): PermissionInterface
     {
-        if (self::$READ_VARIABLE == null) {
+        if (self::$READ_VARIABLE === null) {
             self::$READ_VARIABLE = new HistoricTaskPermissions(
                 "READ_VARIABLE",
                 64
@@ -65,7 +65,7 @@ class HistoricTaskPermissions implements PermissionInterface
 
     public static function resources(): array
     {
-        if (self::$RESOURCES == null) {
+        if (self::$RESOURCES === null) {
             self::$RESOURCES = [ Resources::historicTask() ];
         }
         return self::$RESOURCES;

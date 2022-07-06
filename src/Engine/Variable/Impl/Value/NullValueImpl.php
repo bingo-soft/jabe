@@ -21,7 +21,7 @@ class NullValueImpl implements TypedValueInterface
 
     public static function getInstance(bool $isTransient): NullValueImpl
     {
-        if (self::$INSTANCE == null) {
+        if (self::$INSTANCE === null) {
             self::$INSTANCE = new NullValueImpl(false);
             self::$INSTANCE_TRANSIENT = new NullValueImpl(true);
         }

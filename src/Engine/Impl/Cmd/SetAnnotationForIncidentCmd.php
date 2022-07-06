@@ -36,9 +36,9 @@ class SetAnnotationForIncidentCmd implements CommandInterface
         $incident = $commandContext->getIncidentManager()->findIncidentById($this->incidentId);
         EnsureUtil::ensureNotNull(BadUserRequestException::class, "incident", $incident);
 
-        if ($incident->getExecutionId() != null) {
+        if ($incident->getExecutionId() !== null) {
             $execution = $commandContext->getExecutionManager()->findExecutionById($incident->getExecutionId());
-            if ($execution != null) {
+            if ($execution !== null) {
                 // check rights for updating an execution-related incident
                 foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
                     $checker->checkUpdateProcessInstance($execution);
@@ -50,7 +50,7 @@ class SetAnnotationForIncidentCmd implements CommandInterface
 
         $this->triggerHistoryEvent($commandContext, $incident);
 
-        if ($this->annotation == null) {
+        if ($this->annotation === null) {
             $commandContext->getOperationLogManager()
                 ->logClearIncidentAnnotationOperation($this->incidentId);
         } else {

@@ -40,7 +40,7 @@ class IdsElementReferenceCollectionImpl extends ElementReferenceCollectionImpl
             $identifiers = $this->getReferenceIdentifiers($referenceSourceElement);
             foreach ($identifiers as $identifier) {
                 $referenceTargetElement = $document->getElementById($identifier);
-                if ($referenceTargetElement != null) {
+                if ($referenceTargetElement !== null) {
                     $referenceTargetElements[] = $referenceTargetElement;
                 } else {
                     throw new ModelException(sprintf("Unable to find a model element instance for id %s", $identifier));

@@ -39,12 +39,12 @@ abstract class AbstractSetExternalTaskRetriesCmd implements CommandInterface
         }
 
         $processInstanceQuery = $builder->getProcessInstanceQuery();
-        if ($processInstanceQuery != null) {
+        if ($processInstanceQuery !== null) {
             $collectedProcessInstanceIds = array_merge($collectedProcessInstanceIds, $processInstanceQuery->listIds());
         }
 
         $historicProcessInstanceQuery = $builder->getHistoricProcessInstanceQuery();
-        if ($historicProcessInstanceQuery != null) {
+        if ($historicProcessInstanceQuery !== null) {
             $collectedProcessInstanceIds = array_merge($collectedProcessInstanceIds, $historicProcessInstanceQuery->istIds());
         }
 
@@ -69,7 +69,7 @@ abstract class AbstractSetExternalTaskRetriesCmd implements CommandInterface
         }
 
         $externalTaskQuery = $builder->getExternalTaskQuery();
-        if ($externalTaskQuery != null) {
+        if ($externalTaskQuery !== null) {
             $elementConfiguration->addDeploymentMappings($externalTaskQuery->listDeploymentIdMappings());
         }
 

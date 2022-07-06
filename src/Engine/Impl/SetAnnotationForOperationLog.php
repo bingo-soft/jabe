@@ -47,7 +47,7 @@ class SetAnnotationForOperationLog implements CommandInterface
         $commandContext->getOperationLogManager()
             ->updateOperationLogAnnotationByOperationId($this->operationId, $annotation);
 
-        if ($this->annotation == null) {
+        if ($this->annotation === null) {
             $commandContext->getOperationLogManager()
                 ->logClearAnnotationOperation($this->operationId);
         } else {

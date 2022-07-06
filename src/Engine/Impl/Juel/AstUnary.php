@@ -18,7 +18,7 @@ class AstUnary extends AstRightValue
 
     public static function empty(): UnaryOperator
     {
-        if (self::$EMPTY == null) {
+        if (self::$EMPTY === null) {
             self::$EMPTY = new class extends SimpleUnaryOperator
             {
                 public function apply(TypeConverter $converter, $o)
@@ -36,7 +36,7 @@ class AstUnary extends AstRightValue
 
     public static function neg(): UnaryOperator
     {
-        if (self::$NEG == null) {
+        if (self::$NEG === null) {
             self::$NEG = new class extends SimpleUnaryOperator
             {
                 public function apply(TypeConverter $converter, $o)
@@ -54,7 +54,7 @@ class AstUnary extends AstRightValue
 
     public static function not(): UnaryOperator
     {
-        if (self::$NOT == null) {
+        if (self::$NOT === null) {
             self::$NOT = new class extends SimpleUnaryOperator
             {
                 public function apply(TypeConverter $converter, $o)

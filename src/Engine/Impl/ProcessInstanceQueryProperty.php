@@ -12,7 +12,7 @@ class ProcessInstanceQueryProperty
 
     public static function processInstanceId(): QueryPropertyImpl
     {
-        if (self::$PROCESS_INSTANCE_ID == null) {
+        if (self::$PROCESS_INSTANCE_ID === null) {
             //@TODO. Same name properties!
             self::$PROCESS_INSTANCE_ID = new QueryPropertyImpl("ID_");
         }
@@ -21,7 +21,7 @@ class ProcessInstanceQueryProperty
 
     public static function processDefinitionKey(): QueryPropertyImpl
     {
-        if (self::$PROCESS_DEFINITION_KEY == null) {
+        if (self::$PROCESS_DEFINITION_KEY === null) {
             self::$PROCESS_DEFINITION_KEY = new QueryPropertyImpl("KEY_");
         }
         return self::$PROCESS_DEFINITION_KEY;
@@ -29,7 +29,7 @@ class ProcessInstanceQueryProperty
 
     public static function processDefinitionId(): QueryPropertyImpl
     {
-        if (self::$PROCESS_DEFINITION_ID == null) {
+        if (self::$PROCESS_DEFINITION_ID === null) {
             self::$PROCESS_DEFINITION_ID = new QueryPropertyImpl("ID_");
         }
         return self::$PROCESS_DEFINITION_ID;
@@ -37,7 +37,7 @@ class ProcessInstanceQueryProperty
 
     public static function tenantId(): QueryPropertyImpl
     {
-        if (self::$TENANT_ID == null) {
+        if (self::$TENANT_ID === null) {
             self::$TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
         }
         return self::$TENANT_ID;
@@ -45,7 +45,7 @@ class ProcessInstanceQueryProperty
 
     public static function businessKey(): QueryPropertyImpl
     {
-        if (self::$BUSINESS_KEY == null) {
+        if (self::$BUSINESS_KEY === null) {
             self::$BUSINESS_KEY = new QueryPropertyImpl("BUSINESS_KEY_");
         }
         return self::$BUSINESS_KEY;

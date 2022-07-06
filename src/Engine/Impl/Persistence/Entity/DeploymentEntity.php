@@ -84,7 +84,7 @@ class DeploymentEntity implements \Serializable, DeploymentWithDefinitionsInterf
     // lazy loading /////////////////////////////////////////////////////////////
     public function getResources(): array
     {
-        if (empty($this->resources) && $this->id != null) {
+        if (empty($this->resources) && $this->id !== null) {
             $resourcesList = Context::getCommandContext()
             ->getResourceManager()
             ->findResourcesByDeploymentId($id);
@@ -116,7 +116,7 @@ class DeploymentEntity implements \Serializable, DeploymentWithDefinitionsInterf
 
     public function getDeployedArtifacts(?string $clazz = null): array
     {
-        if ($clazz == null) {
+        if ($clazz === null) {
             return $this->deployedArtifacts;
         } else {
             if (empty($this->deployedArtifacts)) {

@@ -30,7 +30,7 @@ class TaskManager extends AbstractManager
             ->processInstanceId($processInstanceId)
             ->list();
 
-        $reason = ($deleteReason == null || strlen($deleteReason) == 0) ? TaskEntity::DELETE_REASON_DELETED : $deleteReason;
+        $reason = ($deleteReason === null || strlen($deleteReason) == 0) ? TaskEntity::DELETE_REASON_DELETED : $deleteReason;
 
         foreach ($tasks as $task) {
             $task->delete($reason, $cascade, $skipCustomListeners);
@@ -43,7 +43,7 @@ class TaskManager extends AbstractManager
             .caseInstanceId(caseInstanceId)
             .list();
 
-        String reason = (deleteReason == null || deleteReason.length() == 0) ? TaskEntity.DELETE_REASON_DELETED : deleteReason;
+        String reason = (deleteReason === null || deleteReason.length() == 0) ? TaskEntity.DELETE_REASON_DELETED : deleteReason;
 
         for (TaskEntity task: tasks) {
             task.delete(reason, cascade, false);
@@ -107,7 +107,7 @@ class TaskManager extends AbstractManager
 
     public function findTasksByQueryCriteria(TaskQueryImpl $taskQuery, ?Page $page = null): array
     {
-        if ($page == null) {
+        if ($page === null) {
             $this->configureQuery($taskQuery);
             return $this->getDbEntityManager()->selectList("selectTaskByQueryCriteria", $taskQuery);
         } else {

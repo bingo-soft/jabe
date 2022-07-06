@@ -33,7 +33,7 @@ class BpmnExceptionHandler
     public static function propagateException(ActivityExecutionInterface $execution, \Exception $ex): void
     {
         $bpmnError = self::checkIfCauseOfExceptionIsBpmnError($ex);
-        if ($bpmnError != null) {
+        if ($bpmnError !== null) {
             self::propagateBpmnError($bpmnError, $execution);
         } else {
             self::propagateExceptionAsError($ex, $execution);
@@ -56,7 +56,7 @@ class BpmnExceptionHandler
 
     protected static function isProcessEngineExceptionWithoutCause(\Exception $exception): bool
     {
-        return $exception instanceof ProcessEngineException && $exception->getCause() == null;
+        return $exception instanceof ProcessEngineException && $exception->getCause() === null;
     }
 
     /**
@@ -74,7 +74,7 @@ class BpmnExceptionHandler
             return $e;
         }
         if (method_exists($e, 'getCause')) {
-            if ($e->getCause() == null) {
+            if ($e->getCause() === null) {
                 return null;
             }
             self::checkIfCauseOfExceptionIsBpmnError($e->getCause());
@@ -111,7 +111,7 @@ class BpmnExceptionHandler
 
                 public function isFulfilled($element = null): bool
                 {
-                    return $this->errorDeclarationFinder->getErrorEventDefinition() != null || $element == null;
+                    return $this->errorDeclarationFinder->getErrorEventDefinition() !== null || $element === null;
                 }
             });
         } catch (\Exception $e) {
@@ -124,8 +124,8 @@ class BpmnExceptionHandler
         $errorHandlingActivity = $errorDeclarationFinder->getErrorHandlerActivity();
 
         // process the error
-        if ($errorHandlingActivity == null) {
-            if ($origException == null) {
+        if ($errorHandlingActivity === null) {
+            if ($origException === null) {
                 if (Context::getCommandContext()->getProcessEngineConfiguration()->isEnableExceptionsAfterUnhandledBpmnError()) {
                     //throw LOG.missingBoundaryCatchEventError(execution.getActivity().getId(), errorCode);
                 } else {
@@ -140,10 +140,10 @@ class BpmnExceptionHandler
             $errorDefinition = $errorDeclarationFinder->getErrorEventDefinition();
             $errorHandlingExecution = $activityExecutionMappingCollector->getExecutionForScope($errorHandlingActivity->getEventScope());
 
-            if ($errorDefinition->getErrorCodeVariable() != null) {
+            if ($errorDefinition->getErrorCodeVariable() !== null) {
                 $errorHandlingExecution->setVariable($errorDefinition->getErrorCodeVariable(), $errorCode);
             }
-            if ($errorDefinition->getErrorMessageVariable() != null) {
+            if ($errorDefinition->getErrorMessageVariable() !== null) {
                 $errorHandlingExecution->setVariable($errorDefinition->getErrorMessageVariable(), $errorMessage);
             }
             $errorHandlingExecution->executeActivity($errorHandlingActivity);

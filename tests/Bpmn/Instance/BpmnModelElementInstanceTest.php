@@ -40,9 +40,9 @@ abstract class BpmnModelElementInstanceTest extends AbstractModelElementInstance
 
     public function testModelNotNull(): void
     {
-        $this->assertFalse($this->modelInstance == null);
-        $this->assertFalse($this->model == null);
-        $this->assertFalse($this->modelElementType == null);
+        $this->assertFalse($this->modelInstance === null);
+        $this->assertFalse($this->model === null);
+        $this->assertFalse($this->modelElementType === null);
     }
 
     public function testType(): void
@@ -59,7 +59,7 @@ abstract class BpmnModelElementInstanceTest extends AbstractModelElementInstance
             $this->assertFalse($this->modelElementType->isAbstract());
         }
 
-        if ($assumption->extendsType == null) {
+        if ($assumption->extendsType === null) {
             $this->assertNull($this->modelElementType->getBaseType());
         } else {
             $this->assertEquals($assumption->extendsType, $this->modelElementType->getBaseType());
@@ -73,7 +73,7 @@ abstract class BpmnModelElementInstanceTest extends AbstractModelElementInstance
             }
         } else {
             $modelElementInstance = $this->modelInstance->newInstance($this->modelElementType);
-            $this->assertFalse($modelElementInstance == null);
+            $this->assertFalse($modelElementInstance === null);
         }
     }
 
@@ -93,7 +93,7 @@ abstract class BpmnModelElementInstanceTest extends AbstractModelElementInstance
                     }
                 }
                 $this->assertTrue($exists);
-                if ($assumption->namespaceUri != null) {
+                if ($assumption->namespaceUri !== null) {
                     $this->assertEquals($assumption->namespaceUri, $assumption->childElementType->getTypeNamespace());
                 }
                 $coll = $this->modelElementType->getChildElementCollection($assumption->childElementType);
@@ -118,7 +118,7 @@ abstract class BpmnModelElementInstanceTest extends AbstractModelElementInstance
                     $this->modelElementType->getTypeName()
                 );
 
-                if ($assumption->namespace != null) {
+                if ($assumption->namespace !== null) {
                     $this->assertEquals($assumption->namespace, $attribute->getNamespaceUri());
                 } else {
                     $this->assertNull($attribute->getNamespaceUri());

@@ -52,21 +52,21 @@ class DbBulkOperation extends DbOperation
         if ($this == $obj) {
             return true;
         }
-        if ($obj == null) {
+        if ($obj === null) {
             return false;
         }
         if (get_class($this) != get_class($obj)) {
             return false;
         }
-        if ($this->parameter == null) {
-            if ($obj->parameter != null) {
+        if ($this->parameter === null) {
+            if ($obj->parameter !== null) {
                 return false;
             }
         } elseif ($this->parameter != $other->parameter) {
             return false;
         }
-        if ($this->statement == null) {
-            if ($obj->statement != null) {
+        if ($this->statement === null) {
+            if ($obj->statement !== null) {
                 return false;
             }
         } elseif ($this->statement != $obj->statement) {

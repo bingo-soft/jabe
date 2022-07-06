@@ -18,7 +18,7 @@ class CompositeVariableContext implements VariableContextInterface
     {
         foreach ($delegateContexts as $variableContext) {
             $resolvedValue = $variableContext->resolve($variableName);
-            if ($resolvedValue != null) {
+            if ($resolvedValue !== null) {
                 return $resolvedValue;
             }
         }

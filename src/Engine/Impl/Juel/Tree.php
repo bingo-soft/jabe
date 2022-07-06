@@ -76,7 +76,7 @@ class Tree
     {
         $methods = [];
         if (!empty($this->functions)) {
-            if ($fnMapper == null) {
+            if ($fnMapper === null) {
                 throw new ELException(LocalMessages::get("error.function.nomapper"));
             }
             foreach ($this->functions as $node) {
@@ -88,7 +88,7 @@ class Tree
                 } else {
                     $method = $fnMapper->resolveFunction(substr($image, 0, $colon), substr($image, $colon + 1));
                 }
-                if ($method == null) {
+                if ($method === null) {
                     throw new ELException(LocalMessages::get("error.function.notfound", $image));
                 }
                 if ($node->isVarArgs() && $method->isVariadic()) {
@@ -107,7 +107,7 @@ class Tree
         if (count($this->identifiers) > 0) {
             foreach ($this->identifiers as $node) {
                 $expression = null;
-                if ($varMapper != null) {
+                if ($varMapper !== null) {
                     $expression = $varMapper->resolveVariable($node->getName());
                 }
                 $expressions[$node->getIndex()] = $expression;

@@ -43,7 +43,7 @@ class SourceExecutableScript extends CompiledExecutableScript
             $this->compileScript($engine);
         }
 
-        if ($this->getCompiledScript() != null) {
+        if ($this->getCompiledScript() !== null) {
             return parent::evaluate($engine, $variableScope, $bindings);
         } else {
             try {
@@ -62,7 +62,7 @@ class SourceExecutableScript extends CompiledExecutableScript
     {
         $processEngineConfiguration = Context::getProcessEngineConfiguration();
         if ($processEngineConfiguration->isEnableScriptEngineCaching() && $processEngineConfiguration->isEnableScriptCompilation()) {
-            if ($this->getCompiledScript() == null && $this->shouldBeCompiled) {
+            if ($this->getCompiledScript() === null && $this->shouldBeCompiled) {
                 // try to compile script
                 $compiledScript = $this->compile($engine, $language, $scriptSource);
 

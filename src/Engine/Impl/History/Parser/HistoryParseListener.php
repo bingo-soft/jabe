@@ -260,7 +260,7 @@ class HistoryParseListener implements BpmnParseListenerInterface
 
     protected function ensureHistoryLevelInitialized(): void
     {
-        if ($this->historyLevel == null) {
+        if ($this->historyLevel === null) {
             $this->historyLevel = Context::getProcessEngineConfiguration()->getHistoryLevel();
         }
     }

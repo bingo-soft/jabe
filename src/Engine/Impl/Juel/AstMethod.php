@@ -76,11 +76,11 @@ class AstMethod extends AstNode
     public function invoke(Bindings $bindings, ELContext $context, ?string $returnType = null, ?array $paramTypes = [], ?array $paramValues = [])
     {
         $base = $this->property->getPrefix()->eval($bindings, $context);
-        if ($base == null) {
+        if ($base === null) {
             throw new PropertyNotFoundException(LocalMessages::get("error.property.base.null", $property->getPrefix()));
         }
         $method = $property->getProperty($bindings, $context);
-        if ($method == null) {
+        if ($method === null) {
             throw new PropertyNotFoundException(LocalMessages::get("error.property.method.notfound", "null", $base));
         }
         $name = $bindings->convert($method, "string");
@@ -101,7 +101,7 @@ class AstMethod extends AstNode
 
     public function getChild(int $i): ?AstNode
     {
-        return $i == 0 ? $this->property : $i == 1 ? $this->params : null;
+        return $i == 0 ? $this->property : ($i == 1 ? $this->params : null);
     }
 
     public function __toString()

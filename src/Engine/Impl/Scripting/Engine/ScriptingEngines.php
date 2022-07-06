@@ -72,12 +72,12 @@ class ScriptingEngines implements DmnScriptEngineResolverInterface
 
         $engine = null;
         if ($config->isEnableFetchScriptEngineFromProcessApplication()) {
-            if ($pa != null) {
+            if ($pa !== null) {
                 $engine = $this->getPaScriptEngine($language, $pa);
             }
         }
 
-        if ($engine == null) {
+        if ($engine === null) {
             $engine = $this->getGlobalScriptEngine($language);
         }
 

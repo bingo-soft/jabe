@@ -59,7 +59,7 @@ abstract class ExternalTaskCmd implements CommandInterface
         ?string $operationType,
         ?array $propertyChanges = []
     ): void {
-        if ($operationType != null) {
+        if ($operationType !== null) {
             $commandContext->getOperationLogManager()->logExternalTaskOperation(
                 $operationType,
                 $externalTask,

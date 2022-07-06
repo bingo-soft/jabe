@@ -31,7 +31,7 @@ class ProcessApplicationReferenceImpl implements ProcessApplicationReferenceInte
     public function getProcessApplication(): ?AbstractProcessApplication
     {
         $application = $this->processApplication->get();
-        if ($application == null) {
+        if ($application === null) {
             //throw LOG.processApplicationUnavailableException(name);
         } else {
             return $application;

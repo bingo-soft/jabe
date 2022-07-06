@@ -28,7 +28,7 @@ class BooleanValueSerializer extends PrimitiveValueSerializer
         $boolValue = null;
         $intValue = $valueFields->getIntValue();
 
-        if ($intValue != null) {
+        if ($intValue !== null) {
             $boolValue = $intValue == self::TRUE;
         }
 
@@ -40,7 +40,7 @@ class BooleanValueSerializer extends PrimitiveValueSerializer
         $intValue = null;
         $boolValue = $variableValue->getValue();
 
-        if ($boolValue != null) {
+        if ($boolValue !== null) {
             $intValue = $boolValue ? self::TRUE : self::FALSE;
         }
 

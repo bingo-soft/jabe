@@ -18,7 +18,7 @@ class DefaultHistoryRemovalTimeProvider implements HistoryRemovalTimeProvider
         if ($instance instanceof HistoricProcessInstanceEventEntity) {
             $historyTimeToLive = $definition->getHistoryTimeToLive();
 
-            if ($historyTimeToLive != null) {
+            if ($historyTimeToLive !== null) {
                 if ($this->isProcessInstanceRunning($instance)) {
                     $startTime = $instance->getStartTime();
                     return self::determineRemovalTime($startTime, $historyTimeToLive);
@@ -29,9 +29,9 @@ class DefaultHistoryRemovalTimeProvider implements HistoryRemovalTimeProvider
             }
         } elseif ($instance instanceof HistoricBatchEntity) {
             $batchOperation = $instance->getType();
-            if ($batchOperation != null) {
+            if ($batchOperation !== null) {
                 $historyTimeToLive = $this->getTTLByBatchOperation($batchOperation);
-                if ($historyTimeToLive != null) {
+                if ($historyTimeToLive !== null) {
                     if ($this->isBatchRunning($instance)) {
                         $startTime = $instance->getStartTime();
                         return self::determineRemovalTime($startTime, $historyTimeToLive);
@@ -50,7 +50,7 @@ class DefaultHistoryRemovalTimeProvider implements HistoryRemovalTimeProvider
 
       Integer historyTimeToLive = decisionDefinition.getHistoryTimeToLive();
 
-      if (historyTimeToLive != null) {
+      if (historyTimeToLive !== null) {
         Date evaluationTime = historicRootDecisionInstance.getEvaluationTime();
         return determineRemovalTime(evaluationTime, historyTimeToLive);
       }
@@ -60,12 +60,12 @@ class DefaultHistoryRemovalTimeProvider implements HistoryRemovalTimeProvider
 
     protected function isBatchRunning(HistoricBatchEntity $historicBatch): bool
     {
-        return $historicBatch->getEndTime() == null;
+        return $historicBatch->getEndTime() === null;
     }
 
     protected function isBatchEnded(HistoricBatchEntity $historicBatch): bool
     {
-        return $historicBatch->getEndTime() != null;
+        return $historicBatch->getEndTime() !== null;
     }
 
     protected function getTTLByBatchOperation(string $batchOperation): int
@@ -78,12 +78,12 @@ class DefaultHistoryRemovalTimeProvider implements HistoryRemovalTimeProvider
 
     protected function isProcessInstanceRunning(HistoricProcessInstanceEventEntity $historicProcessInstance): bool
     {
-        return $historicProcessInstance->getEndTime() == null;
+        return $historicProcessInstance->getEndTime() === null;
     }
 
     protected function isProcessInstanceEnded(HistoricProcessInstanceEventEntity $historicProcessInstance): bool
     {
-        return $historicProcessInstance->getEndTime() != null;
+        return $historicProcessInstance->getEndTime() !== null;
     }
 
     public static function determineRemovalTime(string $initTime, int $timeToLive): string

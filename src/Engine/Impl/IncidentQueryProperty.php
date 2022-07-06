@@ -19,7 +19,7 @@ class IncidentQueryProperty
 
     public static function incidentId(): QueryPropertyImpl
     {
-        if (self::$INCIDENT_ID == null) {
+        if (self::$INCIDENT_ID === null) {
             self::$INCIDENT_ID = new QueryPropertyImpl("ID_");
         }
         return self::$INCIDENT_ID;
@@ -27,7 +27,7 @@ class IncidentQueryProperty
 
     public static function incidentMessage(): QueryPropertyImpl
     {
-        if (self::$INCIDENT_MESSAGE == null) {
+        if (self::$INCIDENT_MESSAGE === null) {
             self::$INCIDENT_MESSAGE = new QueryPropertyImpl("INCIDENT_MSG_");
         }
         return self::$INCIDENT_MESSAGE;
@@ -35,7 +35,7 @@ class IncidentQueryProperty
 
     public static function incidentTimestamp(): QueryPropertyImpl
     {
-        if (self::$INCIDENT_TIMESTAMP == null) {
+        if (self::$INCIDENT_TIMESTAMP === null) {
             self::$INCIDENT_TIMESTAMP = new QueryPropertyImpl("INCIDENT_TIMESTAMP_");
         }
         return self::$INCIDENT_TIMESTAMP;
@@ -43,7 +43,7 @@ class IncidentQueryProperty
 
     public static function incidentType(): QueryPropertyImpl
     {
-        if (self::$INCIDENT_TYPE == null) {
+        if (self::$INCIDENT_TYPE === null) {
             self::$INCIDENT_TYPE = new QueryPropertyImpl("INCIDENT_TYPE_");
         }
         return self::$INCIDENT_TYPE;
@@ -51,7 +51,7 @@ class IncidentQueryProperty
 
     public static function executionId(): QueryPropertyImpl
     {
-        if (self::$EXECUTION_ID == null) {
+        if (self::$EXECUTION_ID === null) {
             self::$EXECUTION_ID = new QueryPropertyImpl("EXECUTION_ID_");
         }
         return self::$EXECUTION_ID;
@@ -59,7 +59,7 @@ class IncidentQueryProperty
 
     public static function activityId(): QueryPropertyImpl
     {
-        if (self::$ACTIVITY_ID == null) {
+        if (self::$ACTIVITY_ID === null) {
             self::$ACTIVITY_ID = new QueryPropertyImpl("ACTIVITY_ID_");
         }
         return self::$ACTIVITY_ID;
@@ -67,7 +67,7 @@ class IncidentQueryProperty
 
     public static function processInstanceId(): QueryPropertyImpl
     {
-        if (self::$PROCESS_INSTANCE_ID == null) {
+        if (self::$PROCESS_INSTANCE_ID === null) {
             self::$PROCESS_INSTANCE_ID = new QueryPropertyImpl("PROC_INST_ID_");
         }
         return self::$PROCESS_INSTANCE_ID;
@@ -75,7 +75,7 @@ class IncidentQueryProperty
 
     public static function procesDefinitionId(): QueryPropertyImpl
     {
-        if (self::$PROCESS_DEFINITION_ID == null) {
+        if (self::$PROCESS_DEFINITION_ID === null) {
             self::$PROCESS_DEFINITION_ID = new QueryPropertyImpl("PROC_DEF_ID_");
         }
         return self::$PROCESS_DEFINITION_ID;
@@ -83,7 +83,7 @@ class IncidentQueryProperty
 
     public static function causeIncidentId(): QueryPropertyImpl
     {
-        if (self::$CAUSE_INCIDENT_ID == null) {
+        if (self::$CAUSE_INCIDENT_ID === null) {
             self::$CAUSE_INCIDENT_ID = new QueryPropertyImpl("CAUSE_INCIDENT_ID_");
         }
         return self::$CAUSE_INCIDENT_ID;
@@ -91,7 +91,7 @@ class IncidentQueryProperty
 
     public static function rootCauseIncidentId(): QueryPropertyImpl
     {
-        if (self::$ROOT_CAUSE_INCIDENT_ID == null) {
+        if (self::$ROOT_CAUSE_INCIDENT_ID === null) {
             self::$ROOT_CAUSE_INCIDENT_ID = new QueryPropertyImpl("ROOT_CAUSE_INCIDENT_ID_");
         }
         return self::$ROOT_CAUSE_INCIDENT_ID;
@@ -99,7 +99,7 @@ class IncidentQueryProperty
 
     public static function configuration(): QueryPropertyImpl
     {
-        if (self::$CONFIGURATION == null) {
+        if (self::$CONFIGURATION === null) {
             self::$CONFIGURATION = new QueryPropertyImpl("CONFIGURATION_");
         }
         return self::$CONFIGURATION;
@@ -107,7 +107,7 @@ class IncidentQueryProperty
 
     public static function tenantId(): QueryPropertyImpl
     {
-        if (self::$TENANT_ID == null) {
+        if (self::$TENANT_ID === null) {
             self::$TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
         }
         return self::$TENANT_ID;

@@ -89,7 +89,7 @@ class DeleteHistoricProcessInstancesBatchCmd implements CommandInterface
         }
 
         $processInstanceQuery = $this->historicProcessInstanceQuery;
-        if ($processInstanceQuery != null) {
+        if ($processInstanceQuery !== null) {
             $elementConfiguration->addDeploymentMappings($processInstanceQuery->listDeploymentIdMappings());
         }
 

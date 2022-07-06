@@ -31,11 +31,11 @@ class PvmAtomicOperationActivityInitStackNotifyListenerStart extends PvmAtomicOp
     protected function getScope(CoreExecution $execution): CoreModelElement
     {
         $activity = $execution->getActivity();
-        if ($activity != null) {
+        if ($activity !== null) {
             return $activity;
         } else {
             $parent = $execution->getParent();
-            if ($parent != null) {
+            if ($parent !== null) {
                 return $this->getScope($execution->getParent());
             }
             return $execution->getProcessDefinition();
@@ -65,7 +65,7 @@ class PvmAtomicOperationActivityInitStackNotifyListenerStart extends PvmAtomicOp
         }
 
         // if the stack has been instantiated
-        if (empty($instantiationStack->getActivities()) && $instantiationStack->getTargetActivity() != null) {
+        if (empty($instantiationStack->getActivities()) && $instantiationStack->getTargetActivity() !== null) {
             // as if we are entering the target activity instance id via a transition
             $propagatingExecution->setActivityInstanceId(null);
 
@@ -74,7 +74,7 @@ class PvmAtomicOperationActivityInitStackNotifyListenerStart extends PvmAtomicOp
             $propagatingExecution->setActivity($instantiationStack->getTargetActivity());
             $propagatingExecution->disposeScopeInstantiationContext();
             $propagatingExecution->performOperation(self::activityStartCreateScope());
-        } elseif (empty($instantiationStack->getActivities()) && $instantiationStack->getTargetTransition() != null) {
+        } elseif (empty($instantiationStack->getActivities()) && $instantiationStack->getTargetTransition() !== null) {
             // as if we are entering the target activity instance id via a transition
             $propagatingExecution->setActivityInstanceId(null);
 

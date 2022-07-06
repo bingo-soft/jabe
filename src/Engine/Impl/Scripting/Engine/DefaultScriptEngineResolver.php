@@ -49,10 +49,10 @@ class DefaultScriptEngineResolver implements ScriptEngineResolverInterface
                 $scriptEngine = $this->cachedEngines[$language];
             }
 
-            if ($scriptEngine == null) {
+            if ($scriptEngine === null) {
                 $scriptEngine = $this->scriptEngineManager->getEngineByName($language);
 
-                if ($scriptEngine != null) {
+                if ($scriptEngine !== null) {
                     if ($this->isCachable($scriptEngine)) {
                         $this->cachedEngines[$language] = $scriptEngine;
                     }

@@ -86,7 +86,7 @@ class TreeMethodExpression extends MethodExpression
 
     private function getStructuralId(): string
     {
-        if ($this->structure == null) {
+        if ($this->structure === null) {
             $this->structure = $this->node->getStructuralId($this->bindings);
         }
         return $this->structure;
@@ -159,7 +159,7 @@ class TreeMethodExpression extends MethodExpression
      */
     public function equals($obj): bool
     {
-        if ($obj != null && get_class($obj) == get_class($this)) {
+        if ($obj !== null && get_class($obj) == get_class($this)) {
             if ($this->builder != $obj->builder) {
                 return false;
             }

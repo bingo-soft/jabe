@@ -60,7 +60,7 @@ class SubmitTaskFormCmd implements CommandInterface, \Serializable
         }
 
         $taskDefinition = $task->getTaskDefinition();
-        if ($taskDefinition != null) {
+        if ($taskDefinition !== null) {
             $taskFormHandler = $taskDefinition->getTaskFormHandler();
             $taskFormHandler->submitFormVariables($this->properties, $task);
         } else {
@@ -70,7 +70,7 @@ class SubmitTaskFormCmd implements CommandInterface, \Serializable
 
         $execution = $task->getProcessInstance();
         $variablesListener = null;
-        if ($this->returnVariables && $execution != null) {
+        if ($this->returnVariables && $execution !== null) {
             $variablesListener = new ExecutionVariableSnapshotObserver($execution, false, $this->deserializeValues);
         }
 
@@ -85,10 +85,10 @@ class SubmitTaskFormCmd implements CommandInterface, \Serializable
         }
 
         if ($this->returnVariables) {
-            if ($variablesListener != null) {
+            if ($variablesListener !== null) {
                 return $variablesListener->getVariables();
             } else {
-                //return $task->getCaseDefinitionId() == null ? null : task.getVariablesTyped(false);
+                //return $task->getCaseDefinitionId() === null ? null : task.getVariablesTyped(false);
                 return $task->getVariablesTyped(false);
             }
         } else {

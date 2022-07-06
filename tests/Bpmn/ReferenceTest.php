@@ -160,13 +160,13 @@ class ReferenceTest extends BpmnModelTest
     {
         $messageEventDefinition = $this->bpmnModelInstance->getModelElementById("message-event-definition");
         $message = $this->bpmnModelInstance->getModelElementById("message-id");
-        $this->assertFalse($messageEventDefinition->getMessage() == null);
+        $this->assertFalse($messageEventDefinition->getMessage() === null);
         $this->assertTrue($messageEventDefinition->getMessage()->equals($message));
         $message->setId("changed-message");
-        $this->assertFalse($messageEventDefinition->getMessage() == null);
+        $this->assertFalse($messageEventDefinition->getMessage() === null);
         $this->assertTrue($messageEventDefinition->getMessage()->equals($message));
         $message->setAttributeValue("id", "again-changed-message", true);
-        $this->assertFalse($messageEventDefinition->getMessage() == null);
+        $this->assertFalse($messageEventDefinition->getMessage() === null);
         $this->assertTrue($messageEventDefinition->getMessage()->equals($message));
 
         $startEvent = $this->bpmnModelInstance->getModelElementById("start-event");

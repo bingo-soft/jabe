@@ -20,7 +20,7 @@ class ProcessApplicationBeanElResolverDelegate extends AbstractElResolverDelegat
     {
         $processApplicationReference = Context::getCurrentProcessApplication();
 
-        if ($processApplicationReference != null) {
+        if ($processApplicationReference !== null) {
             try {
                 $processApplication = $processApplicationReference->getProcessApplication();
                 return $processApplication->getBeanElResolver();

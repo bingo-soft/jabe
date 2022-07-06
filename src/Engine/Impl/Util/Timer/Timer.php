@@ -40,7 +40,7 @@ class Timer
 
     private static function serialNumber(): int
     {
-        if (self::$nextSerialNumber == null) {
+        if (self::$nextSerialNumber === null) {
             self::$nextSerialNumber = new AtomicInteger(0);
         }
         return self::$nextSerialNumber->getAndIncrement();
@@ -59,7 +59,7 @@ class Timer
     {
         $this->queue = new TaskQueue();
         $this->thread = new TimerThread($this->queue);
-        if ($name == null) {
+        if ($name === null) {
             $name = "Timer-" . self::serialNumber();
         }
         $this->thread->setName($name);
@@ -79,13 +79,13 @@ class Timer
      */
     public function schedule(TimerTask $task, $delayOrDatetime, $period = null): void
     {
-        if (is_int($delayOrDatetime) && $period == null) {
+        if (is_int($delayOrDatetime) && $period === null) {
             if ($delayOrDatetime < 0) {
                 throw new \Exception("Negative delay.");
             } else {
                 $this->sched($task, floor(microtime(true) * 1000) + $delayOrDatetime, 0);
             }
-        } elseif ($delayOrDatetime instanceof \DateTime && $period == null) {
+        } elseif ($delayOrDatetime instanceof \DateTime && $period === null) {
             $this->sched($task, $delayOrDatetime->getTimestamp() * 1000, 0);
         } elseif (is_int($delayOrDatetime) && is_int($period)) {
             if ($delayOrDatetime < 0) {

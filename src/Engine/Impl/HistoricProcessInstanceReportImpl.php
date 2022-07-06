@@ -71,7 +71,7 @@ class HistoricProcessInstanceReportImpl implements HistoricProcessInstanceReport
 
         $commandContext = Context::getCommandContext();
 
-        if ($commandContext == null) {
+        if ($commandContext === null) {
             return $commandExecutor->execute(new ExecuteDurationReportCmd($this));
         } else {
             return $this->executeDurationReport($commandContext);
@@ -109,7 +109,7 @@ class HistoricProcessInstanceReportImpl implements HistoricProcessInstanceReport
                         $processDefinition = $commandContext->getProcessDefinitionManager()
                             ->findLatestProcessDefinitionById($processDefinitionId);
 
-                        if ($processDefinition != null && $processDefinition->getKey() != null) {
+                        if ($processDefinition !== null && $processDefinition->getKey() !== null) {
                             $processDefinitionKeys[] = $processDefinition->getKey();
                         }
                     }

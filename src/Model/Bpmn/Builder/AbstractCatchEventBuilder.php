@@ -60,7 +60,7 @@ abstract class AbstractCatchEventBuilder extends AbstractEventBuilder
     public function compensateEventDefinition(?string $id = null): CompensateEventDefinitionBuilder
     {
         $eventDefinition = $this->createInstance(CompensateEventDefinitionInterface::class);
-        if ($id != null) {
+        if ($id !== null) {
             $eventDefinition->setId($id);
         }
         $this->element->addEventDefinition($eventDefinition);
@@ -70,7 +70,7 @@ abstract class AbstractCatchEventBuilder extends AbstractEventBuilder
     public function conditionalEventDefinition(?string $id = null): ConditionalEventDefinitionBuilder
     {
         $eventDefinition = $this->createInstance(ConditionalEventDefinitionInterface::class);
-        if ($id != null) {
+        if ($id !== null) {
             $eventDefinition->setId($id);
         }
         $this->element->addEventDefinition($eventDefinition);

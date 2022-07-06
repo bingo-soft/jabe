@@ -66,7 +66,7 @@ class AttributeCreateTest extends TestModelTest
         $this->assertNull($this->nameAttribute->getDefaultValue());
 
         $this->nameAttribute->setDefaultValue($defaultName);
-        $this->assertFalse($this->tweety->getName() == null);
+        $this->assertFalse($this->tweety->getName() === null);
         $this->assertEquals($this->tweety->getName(), $this->nameAttribute->getDefaultValue());
 
 
@@ -118,7 +118,7 @@ class AttributeCreateTest extends TestModelTest
     public function testRemoveAttribute(): void
     {
         $this->tweety->setName("test");
-        $this->assertFalse($this->tweety->getName() == null);
+        $this->assertFalse($this->tweety->getName() === null);
         $this->assertEquals($this->tweety->getName(), $this->nameAttribute->getValue($this->tweety));
 
         $this->nameAttribute->removeAttribute($this->tweety);

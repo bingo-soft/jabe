@@ -24,13 +24,13 @@ class DefaultJobPriorityProvider extends DefaultPriorityProvider
     {
         $specificPriority = null;
         $jobDefinition = $this->getJobDefinitionFor($jobDefinitionId);
-        if ($jobDefinition != null) {
+        if ($jobDefinition !== null) {
             $specificPriority = $jobDefinition->getOverridingJobPriority();
         }
 
-        if ($specificPriority == null) {
+        if ($specificPriority === null) {
             $priorityProvider = $param->getJobPriorityProvider();
-            if ($priorityProvider != null) {
+            if ($priorityProvider !== null) {
                 $specificPriority = $this->evaluateValueProvider($priorityProvider, $execution, $this->describeContext($param, $execution));
             }
         }
@@ -45,7 +45,7 @@ class DefaultJobPriorityProvider extends DefaultPriorityProvider
 
     protected function getJobDefinitionFor(?string $jobDefinitionId): ?JobDefinitionEntity
     {
-        if ($jobDefinitionId != null) {
+        if ($jobDefinitionId !== null) {
             return Context::getCommandContext()
             ->getJobDefinitionManager()
             ->findById($jobDefinitionId);
@@ -56,9 +56,9 @@ class DefaultJobPriorityProvider extends DefaultPriorityProvider
 
     protected function getActivityPriority(ExecutionEntity $execution, ?JobDeclaration $jobDeclaration): int
     {
-        if ($jobDeclaration != null) {
+        if ($jobDeclaration !== null) {
             $priorityProvider = $jobDeclaration->getJobPriorityProvider();
-            if ($priorityProvider != null) {
+            if ($priorityProvider !== null) {
                 return $this->evaluateValueProvider($priorityProvider, $execution, $this->describeContext($jobDeclaration, $execution));
             }
         }

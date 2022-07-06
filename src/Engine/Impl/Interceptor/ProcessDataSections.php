@@ -37,7 +37,7 @@ class ProcessDataSections
     public function popCurrentSection(): void
     {
         $section = array_shift($this->sections);
-        if ($section != null) {
+        if ($section !== null) {
             foreach ($section as $stack) {
                 $stack->removeCurrentValue();
             }

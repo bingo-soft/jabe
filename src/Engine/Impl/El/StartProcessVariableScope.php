@@ -18,7 +18,7 @@ class StartProcessVariableScope implements VariableScopeInterface
 
     public function __construct()
     {
-        if (self::$EMPTY_VARIABLE_MAP == null) {
+        if (self::$EMPTY_VARIABLE_MAP === null) {
             self::$EMPTY_VARIABLE_MAP = Variables::fromMap([]);
         }
     }
@@ -29,7 +29,7 @@ class StartProcessVariableScope implements VariableScopeInterface
      */
     public static function getSharedInstance(): StartProcessVariableScope
     {
-        if (self::$INSTANCE == null) {
+        if (self::$INSTANCE === null) {
             self::$INSTANCE = new StartProcessVariableScope();
         }
         return self::$INSTANCE;

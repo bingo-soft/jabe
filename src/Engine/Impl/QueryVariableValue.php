@@ -28,7 +28,7 @@ class QueryVariableValue implements \Serializable
 
     public function initialize(VariableSerializersInterface $serializers, string $dbType): void
     {
-        if ($value->getType() != null && $value->getType()->isAbstract()) {
+        if ($value->getType() !== null && $value->getType()->isAbstract()) {
             $this->valueCondition = new CompositeQueryVariableValueCondition($this);
         } else {
             $this->valueCondition = new SingleQueryVariableValueCondition($this);
@@ -49,7 +49,7 @@ class QueryVariableValue implements \Serializable
 
     public function getOperator(): string
     {
-        if ($this->operator != null) {
+        if ($this->operator !== null) {
             return $this->operator;
         }
         return QueryOperator::EQUALS;

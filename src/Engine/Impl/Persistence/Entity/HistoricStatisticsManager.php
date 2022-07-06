@@ -46,11 +46,11 @@ class HistoricStatisticsManager extends AbstractManager
     {
         $commandContext = $this->getCommandContext();
 
-        if ($this->isAuthorizationEnabled() && $this->getCurrentAuthentication() != null && $commandContext->isAuthorizationCheckEnabled()) {
+        if ($this->isAuthorizationEnabled() && $this->getCurrentAuthentication() !== null && $commandContext->isAuthorizationCheckEnabled()) {
             $processDefinitionId = $query->getProcessDefinitionId();
             $definition = $this->getProcessDefinitionManager()->findLatestProcessDefinitionById($processDefinitionId);
 
-            if ($definition == null) {
+            if ($definition === null) {
                 return false;
             }
 

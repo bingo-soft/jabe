@@ -275,7 +275,7 @@ class DbSqlSessionFactory implements SessionFactoryInterface
     protected static function addDatabaseSpecificStatement(string $databaseType, string $activitiStatement, string $doctrineStatement): void
     {
         $specificStatements = array_key_exists($databaseType, self::$databaseSpecificStatements) ? self::$databaseSpecificStatements[$databaseType] : null;
-        if ($specificStatements == null) {
+        if ($specificStatements === null) {
             $specificStatements = [];
             self::$databaseSpecificStatements[$databaseType] = [ $doctrineStatement ];
         } else {

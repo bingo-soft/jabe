@@ -30,6 +30,6 @@ abstract class PrimitiveValueSerializer extends AbstractTypedValueSerializer
     {
         $value = $typedValue->getValue();
         $phpType = $this->getType()->getPhpType();
-        return $value == null || $phpType == gettype($value);
+        return $value === null || $phpType == gettype($value);
     }
 }

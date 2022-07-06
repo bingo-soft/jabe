@@ -44,7 +44,7 @@ class ElementReferenceCollectionImpl extends ReferenceImpl implements ElementRef
         $modelInstance = $referenceSourceParentElement->getModelInstance();
         $referenceTargetIdentifier = $this->referenceTargetAttribute->getValue($referenceTargetElement);
         $existingElement = $modelInstance->getModelElementById($referenceTargetIdentifier);
-        if ($existingElement == null || !$referenceTargetElement->equals($existingElement)) {
+        if ($existingElement === null || !$referenceTargetElement->equals($existingElement)) {
             throw new ModelReferenceException("Cannot create reference to model element");
         } else {
             $referenceSourceElement = $modelInstance->newInstance($this->referenceSourceType);
@@ -90,7 +90,7 @@ class ElementReferenceCollectionImpl extends ReferenceImpl implements ElementRef
         string $newIdentifier
     ): void {
         $referencingTextContent = $this->getReferenceIdentifier($referenceSourceElement);
-        if ($oldIdentifier != null && $oldIdentifier == $referencingTextContent) {
+        if ($oldIdentifier !== null && $oldIdentifier == $referencingTextContent) {
             $this->setReferenceIdentifier($referenceSourceElement, $newIdentifier);
         }
     }
@@ -122,7 +122,7 @@ class ElementReferenceCollectionImpl extends ReferenceImpl implements ElementRef
         foreach ($referenceSourceElements as $referenceSourceElement) {
             $identifier = $this->getReferenceIdentifier($referenceSourceElement);
             $referenceTargetElement = $document->getElementById($identifier);
-            if ($referenceTargetElement != null) {
+            if ($referenceTargetElement !== null) {
                 $referenceTargetElements[] = $referenceTargetElement;
             } else {
                 throw new ModelException(spintf("Unable to find a model element instance for id %s", $identifier));
@@ -145,7 +145,7 @@ class ElementReferenceCollectionImpl extends ReferenceImpl implements ElementRef
         ModelElementInstanceImpl $referenceSourceParentElement,
         ?ModelElementInstanceInterface $elementToAdd
     ): bool {
-        if ($elementToAdd == null) {
+        if ($elementToAdd === null) {
             return false;
         } else {
             foreach ($this->getView($referenceSourceParentElement) as $el) {

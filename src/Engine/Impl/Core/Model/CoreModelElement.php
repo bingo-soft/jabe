@@ -104,7 +104,7 @@ abstract class CoreModelElement implements \Serializable
     public function getListeners(?string $eventName = null): array
     {
         $listeners = $this->listeners;
-        if ($eventName == null) {
+        if ($eventName === null) {
             return $listeners;
         }
         if (array_key_exists($eventName, $listeners)) {
@@ -116,7 +116,7 @@ abstract class CoreModelElement implements \Serializable
     public function getBuiltInListeners(?string $eventName = null): array
     {
         $listeners = $this->builtInListeners;
-        if ($eventName == null) {
+        if ($eventName === null) {
             return $listeners;
         }
         if (array_key_exists($eventName, $listeners)) {
@@ -128,7 +128,7 @@ abstract class CoreModelElement implements \Serializable
     public function getVariableListenersLocal(?string $eventName = null): array
     {
         $listeners = $this->variableListeners;
-        if ($eventName == null) {
+        if ($eventName === null) {
             return $listeners;
         }
         if (array_key_exists($eventName, $listeners)) {
@@ -140,7 +140,7 @@ abstract class CoreModelElement implements \Serializable
     public function getBuiltInVariableListenersLocal(?string $eventName = null): array
     {
         $listeners = $this->builtInVariableListeners;
-        if ($eventName == null) {
+        if ($eventName === null) {
             return $listeners;
         }
         if (array_key_exists($eventName, $listeners)) {

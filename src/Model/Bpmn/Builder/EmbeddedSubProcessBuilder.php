@@ -23,7 +23,7 @@ class EmbeddedSubProcessBuilder extends AbstractEmbeddedSubProcessBuilder
         $startShape = $this->subProcessBuilder->createBpmnShape($start);
         $subProcessShape = $this->subProcessBuilder->findBpmnShape($this->subProcessBuilder->getElement());
 
-        if ($subProcessShape != null) {
+        if ($subProcessShape !== null) {
             $subProcessBounds = $subProcessShape->getBounds();
             $startBounds = $startShape->getBounds();
 

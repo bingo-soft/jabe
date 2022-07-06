@@ -40,7 +40,7 @@ class GetAttachmentContentCmd implements CommandInterface, \Serializable
         $attachment = $dbEntityManger->selectById(AttachmentEntity::class, $this->attachmentId);
 
         $contentId = $attachment->getContentId();
-        if ($contentId == null) {
+        if ($contentId === null) {
             return null;
         }
 

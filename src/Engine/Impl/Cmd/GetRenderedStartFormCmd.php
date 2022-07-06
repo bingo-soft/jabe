@@ -49,7 +49,7 @@ class GetRenderedStartFormCmd implements CommandInterface, \Serializable
         }
 
         $startFormHandler = $processDefinition->getStartFormHandler();
-        if ($startFormHandler == null) {
+        if ($startFormHandler === null) {
             return null;
         }
 

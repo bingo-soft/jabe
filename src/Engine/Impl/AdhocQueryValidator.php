@@ -12,7 +12,7 @@ class AdhocQueryValidator implements ValidatorInterface
 
     public static function instance(): ValidatorInterface
     {
-        if (self::$INSTANCE == null) {
+        if (self::$INSTANCE === null) {
             self::$INSTANCE = new AdhocQueryValidator();
         }
         return self::$INSTANCE;

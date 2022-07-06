@@ -323,7 +323,7 @@ abstract class AbstractManager implements SessionInterface
             Context::getCommandContext()->runWithoutAuthorization(function () use ($scope, $authorizations) {
                 $authorizationManager = $scope->getAuthorizationManager();
                 foreach ($authorizations as $authorization) {
-                    if ($authorization->getId() == null) {
+                    if ($authorization->getId() === null) {
                         $authorizationManager->insert($authorization);
                     } else {
                         $authorizationManager->update($authorization);

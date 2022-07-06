@@ -20,7 +20,7 @@ class ProcessApplicationContextUtil
 
     public static function getTargetProcessApplication($execution = null): ?ProcessApplicationReferenceInterface
     {
-        if ($execution == null) {
+        if ($execution === null) {
             return null;
         }
 
@@ -28,22 +28,22 @@ class ProcessApplicationContextUtil
             $processApplicationForDeployment = self::getTargetProcessApplication($execution->getProcessDefinition());
             return $processApplicationForDeployment;
         } elseif ($execution instanceof TaskEntity) {
-            if ($execution->getProcessDefinition() != null) {
+            if ($execution->getProcessDefinition() !== null) {
                 return self::getTargetProcessApplication($execution->getProcessDefinition());
             }
             return null;
         } elseif ($execution instanceof ResourceDefinitionEntity) {
             $reference = self::getTargetProcessApplication($execution->getDeploymentId());
 
-            if ($reference == null && self::areProcessApplicationsRegistered()) {
+            if ($reference === null && self::areProcessApplicationsRegistered()) {
                 $previous = $execution->getPreviousDefinition();
 
                 // do it in a iterative way instead of recursive to avoid
                 // a possible StackOverflowException in cases with a lot
                 // of versions of a definition
-                while ($previous != null) {
+                while ($previous !== null) {
                     $reference = self::getTargetProcessApplication($previous->getDeploymentId());
-                    if ($reference == null) {
+                    if ($reference === null) {
                         $previous = $previous->getPreviousDefinition();
                     } else {
                         return $reference;
@@ -71,11 +71,11 @@ class ProcessApplicationContextUtil
     {
         $currentProcessApplication = Context::getCurrentProcessApplication();
 
-        if ($processApplicationReference == null) {
+        if ($processApplicationReference === null) {
             return false;
         }
 
-        if ($currentProcessApplication == null) {
+        if ($currentProcessApplication === null) {
             return true;
         }
         //@TODO

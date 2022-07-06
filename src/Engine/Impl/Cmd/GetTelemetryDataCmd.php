@@ -19,7 +19,7 @@ class GetTelemetryDataCmd implements CommandInterface
         $this->configuration = $commandContext->getProcessEngineConfiguration();
 
         $telemetryReporter = $this->configuration->getTelemetryReporter();
-        if ($telemetryReporter != null) {
+        if ($telemetryReporter !== null) {
             return $telemetryReporter->getTelemetrySendingTask()->updateAndSendData(false, false);
         } else {
             //throw ProcessEngineLogger.TELEMETRY_LOGGER.exceptionWhileRetrievingTelemetryDataRegistryNull();

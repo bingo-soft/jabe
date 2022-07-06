@@ -20,7 +20,7 @@ class SetUserInfoCmd implements CommandInterface, \Serializable
 
     public function __cosntruct(string $userId, string $passwordOrKey, string $nameOrValue, string $accountUsername = null, string $accountPassword = null, array $accountDetails = [])
     {
-        if ($accountUsername == null) {
+        if ($accountUsername === null) {
             $this->userId = $userId;
             $this->type = IdentityInfoEntity::TYPE_USERINFO;
             $this->key = $passwordOrKey;

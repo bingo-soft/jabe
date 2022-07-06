@@ -102,7 +102,7 @@ class HistoricExternalTaskLogEntity extends HistoryEvent implements HistoricExte
         //   relevant for relational history databases that follow our schema restrictions;
         //   a similar problem exists in ExternalTaskEntity#setErrorMessage where truncation may not be required for custom
         //   persistence implementations
-        if ($errorMessage != null && strlen($errorMessage) > ExternalTaskEntity::MAX_EXCEPTION_MESSAGE_LENGTH) {
+        if ($errorMessage !== null && strlen($errorMessage) > ExternalTaskEntity::MAX_EXCEPTION_MESSAGE_LENGTH) {
             $this->errorMessage = substr($errorMessage, 0, ExternalTaskEntity::MAX_EXCEPTION_MESSAGE_LENGTH);
         } else {
             $this->errorMessage = $errorMessage;
@@ -139,7 +139,7 @@ class HistoricExternalTaskLogEntity extends HistoryEvent implements HistoricExte
 
     protected function getErrorByteArray(): ?ByteArrayEntity
     {
-        if ($this->errorDetailsByteArrayId != null) {
+        if ($this->errorDetailsByteArrayId !== null) {
             return Context::getCommandContext()
                 ->getDbEntityManager()
                 ->selectById(ByteArrayEntity::class, $errorDetailsByteArrayId);

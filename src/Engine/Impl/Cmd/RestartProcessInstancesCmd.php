@@ -138,7 +138,7 @@ class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCmd
 
     public function ensureHistoricProcessInstanceNotActive(HistoricProcessInstanceInterface $instance): void
     {
-        if ($instance->getEndTime() == null) {
+        if ($instance->getEndTime() === null) {
             //throw LOG.historicProcessInstanceActive(instance);
         }
     }
@@ -154,7 +154,7 @@ class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCmd
         HistoricProcessInstanceInterface $processInstance
     ): void {
         $tenantId = $processInstance->getTenantId();
-        if ($processDefinition->getTenantId() == null && $tenantId != null) {
+        if ($processDefinition->getTenantId() === null && $tenantId !== null) {
             $instantiationBuilder->tenantId($tenantId);
         }
 
@@ -192,7 +192,7 @@ class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCmd
         if (count($historicDetails) == 0) {
             $startActivityInstance = $this->resolveStartActivityInstance($processInstance);
 
-            if ($startActivityInstance != null) {
+            if ($startActivityInstance !== null) {
                 $queryWithStartActivities = $historyService->createHistoricDetailQuery()
                         ->variableUpdates()
                         ->activityInstanceId($startActivityInstance->getId())

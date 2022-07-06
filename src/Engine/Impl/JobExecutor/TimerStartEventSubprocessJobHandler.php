@@ -22,7 +22,7 @@ class TimerStartEventSubprocessJobHandler extends TimerEventJobHandler
         $eventSubprocessActivity = $execution->getProcessDefinition()
             ->findActivity($activityId);
 
-        if ($eventSubprocessActivity != null) {
+        if ($eventSubprocessActivity !== null) {
             $execution->executeEventHandlerActivity($eventSubprocessActivity);
         } else {
             throw new ProcessEngineException("Error while triggering event subprocess using timer start event: cannot find activity with id '" . $configuration . "'.");

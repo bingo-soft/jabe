@@ -41,7 +41,7 @@ abstract class AbstractRestartProcessInstanceCmd implements CommandInterface
         }
 
         $historicProcessInstanceQuery = $builder->getHistoricProcessInstanceQuery();
-        if ($historicProcessInstanceQuery != null) {
+        if ($historicProcessInstanceQuery !== null) {
             $collectedProcessInstanceIds = array_merge($collectedProcessInstanceIds, $historicProcessInstanceQuery->listIds());
         }
 

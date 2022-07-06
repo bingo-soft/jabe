@@ -183,7 +183,7 @@ class AuthorizationEntity implements AuthorizationInterface, DbEntityInterface, 
 
     public function setGroupId(string $groupId): void
     {
-        if ($groupId != null && $this->authorizationType == self::AUTH_TYPE_GLOBAL) {
+        if ($groupId !== null && $this->authorizationType == self::AUTH_TYPE_GLOBAL) {
             //throw LOG.notUsableGroupIdForGlobalAuthorizationException();
         }
         $this->groupId = $groupId;
@@ -196,7 +196,7 @@ class AuthorizationEntity implements AuthorizationInterface, DbEntityInterface, 
 
     public function setUserId(string $userId): void
     {
-        if ($userId != null && $this->authorizationType == self::AUTH_TYPE_GLOBAL && self::ANY != $userId) {
+        if ($userId !== null && $this->authorizationType == self::AUTH_TYPE_GLOBAL && self::ANY != $userId) {
             //throw LOG.illegalValueForUserIdException(userId, ANY);
         }
         $this->userId = $userId;

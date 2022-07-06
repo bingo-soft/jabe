@@ -32,7 +32,7 @@ class JuelFormEngine implements FormEngineInterface
 
     public function renderStartForm(StartFormDataInterface $startForm)
     {
-        if ($startForm->getFormKey() == null) {
+        if ($startForm->getFormKey() === null) {
             return null;
         }
         $formTemplateString = $this->getFormTemplateString($startForm, $startForm->getFormKey());
@@ -41,7 +41,7 @@ class JuelFormEngine implements FormEngineInterface
 
     public function renderTaskForm(TaskFormDataInterface $taskForm)
     {
-        if ($taskForm->getFormKey() == null) {
+        if ($taskForm->getFormKey() === null) {
             return null;
         }
         $formTemplateString = $this->getFormTemplateString($taskForm, $taskForm->getFormKey());

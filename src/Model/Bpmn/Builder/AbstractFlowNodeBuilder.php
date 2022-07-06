@@ -53,7 +53,7 @@ abstract class AbstractFlowNodeBuilder extends AbstractFlowElementBuilder
 
     private function getCurrentSequenceFlowBuilder(): ?SequenceFlowBuilder
     {
-        if ($this->currentSequenceFlowBuilder == null) {
+        if ($this->currentSequenceFlowBuilder === null) {
             $sequenceFlow = $this->createSibling(SequenceFlowInterface::class, null);
             $this->currentSequenceFlowBuilder = $sequenceFlow->builder();
         }
@@ -106,7 +106,7 @@ abstract class AbstractFlowNodeBuilder extends AbstractFlowElementBuilder
 
     public function compensationDone(): AbstractFlowNodeBuilder
     {
-        if ($this->compensateBoundaryEvent != null) {
+        if ($this->compensateBoundaryEvent !== null) {
             return $this->compensateBoundaryEvent->getAttachedTo()->builder();
         } else {
             throw new BpmnModelException("No compensation in progress. Call compensationStart() first.");
@@ -251,7 +251,7 @@ abstract class AbstractFlowNodeBuilder extends AbstractFlowElementBuilder
     public function moveToNode(string $identifier): AbstractFlowNodeBuilder
     {
         $instance = $this->modelInstance->getModelElementById($identifier);
-        if ($instance != null && $instance instanceof FlowNodeInterface) {
+        if ($instance !== null && $instance instanceof FlowNodeInterface) {
             return $instance->builder();
         } else {
             throw new BpmnModelException(sprintf("Flow node not found for id %s", $identifier));
@@ -261,7 +261,7 @@ abstract class AbstractFlowNodeBuilder extends AbstractFlowElementBuilder
     public function moveToActivity(string $identifier): AbstractActivityBuilder
     {
         $instance = $this->modelInstance->getModelElementById($identifier);
-        if ($instance != null && $instance instanceof ActivityInterface) {
+        if ($instance !== null && $instance instanceof ActivityInterface) {
             return $instance->builder();
         } else {
             throw new BpmnModelException(sprintf("Activity node not found for id %s", $identifier));
@@ -271,7 +271,7 @@ abstract class AbstractFlowNodeBuilder extends AbstractFlowElementBuilder
     public function connectTo(string $identifier): AbstractFlowNodeBuilder
     {
         $target = $this->modelInstance->getModelElementById($identifier);
-        if ($target == null) {
+        if ($target === null) {
             throw new BpmnModelException(
                 sprintf("Unable to connect %s to element %s cause it not exists.", $element->getId(), $identifier)
             );
@@ -371,11 +371,11 @@ abstract class AbstractFlowNodeBuilder extends AbstractFlowElementBuilder
 
     public function isBoundaryEventWithStartedCompensation(): bool
     {
-        return $this->compensationStarted && $this->compensateBoundaryEvent != null;
+        return $this->compensationStarted && $this->compensateBoundaryEvent !== null;
     }
 
     public function isCompensationHandler(): bool
     {
-        return !$this->compensationStarted && $this->compensateBoundaryEvent != null;
+        return !$this->compensationStarted && $this->compensateBoundaryEvent !== null;
     }
 }

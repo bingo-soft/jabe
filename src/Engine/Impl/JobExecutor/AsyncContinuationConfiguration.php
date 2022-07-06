@@ -31,7 +31,7 @@ class AsyncContinuationConfiguration implements JobHandlerConfigurationInterface
     {
         $configuration = $this->atomicOperation;
 
-        if ($this->transitionId != null) {
+        if ($this->transitionId !== null) {
             // store id of selected transition in case this is async after.
             // id is not serialized with the execution -> we need to remember it as
             // job handler configuration.

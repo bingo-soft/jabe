@@ -25,14 +25,14 @@ class DetermineHistoryLevelCmd implements CommandInterface
 
         $result = null;
 
-        if ($databaseHistoryLevel != null) {
+        if ($databaseHistoryLevel !== null) {
             foreach ($historyLevels as $historyLevel) {
                 if ($historyLevel->getId() == $databaseHistoryLevel) {
                     $result = $historyLevel;
                     break;
                 }
             }
-            if ($result != null) {
+            if ($result !== null) {
                 return $result;
             } else {
                 // if a custom non-null value is not registered, throw an exception.

@@ -104,19 +104,19 @@ class MetricIntervalEntity implements MetricIntervalValueInterface, DbEntityInte
         if ($this == $obj) {
             return true;
         }
-        if ($obj == null) {
+        if ($obj === null) {
             return false;
         }
         if (get_class($this) != get_class($obj)) {
             return false;
         }
-        if (($this->name == null) ? ($obj->name != null) : $this->name != $obj->name) {
+        if (($this->name === null) ? ($obj->name !== null) : $this->name != $obj->name) {
             return false;
         }
-        if (($this->reporter == null) ? ($obj->reporter != null) : $this->reporter != $obj->reporter) {
+        if (($this->reporter === null) ? ($obj->reporter !== null) : $this->reporter != $obj->reporter) {
             return false;
         }
-        if ($this->timestamp != $obj->timestamp && ($this->timestamp == null || $this->timestamp != $obj->timestamp)) {
+        if ($this->timestamp != $obj->timestamp && ($this->timestamp === null || $this->timestamp != $obj->timestamp)) {
             return false;
         }
         return true;

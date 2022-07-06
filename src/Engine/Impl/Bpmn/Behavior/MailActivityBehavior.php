@@ -61,9 +61,9 @@ class MailActivityBehavior extends AbstractBpmnActivityBehavior
 
     protected function createEmail(string $text, string $html): PHPMailer
     {
-        if ($html != null) {
+        if ($html !== null) {
             return $this->createHtmlEmail($text, $html);
-        } elseif ($text != null) {
+        } elseif ($text !== null) {
             return $this->createTextOnlyEmail($text);
         } else {
             //throw LOG.emailFormatException();
@@ -76,7 +76,7 @@ class MailActivityBehavior extends AbstractBpmnActivityBehavior
         try {
             $email->isHTML(true);
             $email->Body = $html;
-            if ($text != null) { // for email clients that don't support html
+            if ($text !== null) { // for email clients that don't support html
                 $email->AltBody = $text;
             }
             return $email;
@@ -121,7 +121,7 @@ class MailActivityBehavior extends AbstractBpmnActivityBehavior
     {
         $fromAddress = null;
 
-        if ($from != null) {
+        if ($from !== null) {
             $fromAddress = $from;
         } else { // use default configured from address in process engine config
             $fromAddress = Context::getProcessEngineConfiguration()->getMailServerDefaultFrom();
@@ -186,7 +186,7 @@ class MailActivityBehavior extends AbstractBpmnActivityBehavior
 
         $user = $processEngineConfiguration->getMailServerUsername();
         $password = $processEngineConfiguration->getMailServerPassword();
-        if ($user != null && $password != null) {
+        if ($user !== null && $password !== null) {
             $email->SMTPAuth = true;
             $email->Username = $user;
             $email->Password = $password;
@@ -195,14 +195,14 @@ class MailActivityBehavior extends AbstractBpmnActivityBehavior
 
     protected function setCharset(PHPMailer $email, string $charSetStr): void
     {
-        /*if (charset != null) {
+        /*if (charset !== null) {
             email.setCharset(charSetStr);
         }*/
     }
 
     protected function splitAndTrim(?string $str): array
     {
-        if ($str != null) {
+        if ($str !== null) {
             $splittedStrings = explode(',', $str);
             for ($i = 0; $i < strlen($splittedStrings); $i += 1) {
                 $splittedStrings[$i] = trim($splittedStrings[$i]);
@@ -214,9 +214,9 @@ class MailActivityBehavior extends AbstractBpmnActivityBehavior
 
     protected function getStringFromField(?ExpressionInterface $expression, DelegateExecutionInterface $execution): ?string
     {
-        if ($expression != null) {
+        if ($expression !== null) {
             $value = $expression->getValue($execution);
-            if ($value != null) {
+            if ($value !== null) {
                 return $value;
             }
         }

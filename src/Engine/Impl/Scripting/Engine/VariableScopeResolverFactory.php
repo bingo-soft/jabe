@@ -8,7 +8,7 @@ class VariableScopeResolverFactory implements ResolverFactoryInterface
 {
     public function createResolver(?VariableScopeInterface $variableScope = null): ?ResolverInterface
     {
-        if ($variableScope != null) {
+        if ($variableScope !== null) {
             return new VariableScopeResolver($variableScope);
         }
         return null;

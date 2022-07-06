@@ -20,7 +20,7 @@ class PasswordPolicyResultImpl implements PasswordPolicyResultInterface
 
     public function isValid(): bool
     {
-        return $this->violatedRules == null || count($violatedRules) == 0;
+        return $this->violatedRules === null || count($violatedRules) == 0;
     }
 
     public function getViolatedRules(): array

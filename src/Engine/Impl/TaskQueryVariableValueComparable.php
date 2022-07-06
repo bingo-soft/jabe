@@ -21,7 +21,7 @@ class TaskQueryVariableValueComparable
         if ($this == $o) {
             return true;
         }
-        if ($o == null || get_class($this) != get_class($o)) {
+        if ($o === null || get_class($this) != get_class($o)) {
             return false;
         }
 

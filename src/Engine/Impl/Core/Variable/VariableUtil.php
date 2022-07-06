@@ -46,13 +46,13 @@ class VariableUtil
                 $phpSerializationDataFormat = SerializationDataFormats::PHP;
                 $requestedDataFormat = $serializableValue->getSerializationDataFormat();
 
-                if ($requestedDataFormat == null) {
+                if ($requestedDataFormat === null) {
                     $fallbackSerializerFactory = $processEngineConfiguration->getFallbackSerializerFactory();
 
                     // check if PHP serializer will be used
                     $serializerForValue = TypedValueField::getSerializers()
                         ->findSerializerForValue($serializableValue, $fallbackSerializerFactory);
-                    if ($serializerForValue != null) {
+                    if ($serializerForValue !== null) {
                         $requestedDataFormat = $serializerForValue->getSerializationDataformat();
                     }
                 }

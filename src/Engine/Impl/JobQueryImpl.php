@@ -331,20 +331,20 @@ class JobQueryImpl extends AbstractQuery implements JobQueryInterface, \Serializ
     private function hasExcludingDueDateParameters(): bool
     {
         $dueDates = [];
-        if ($this->duedateHigherThan != null && $this->duedateHigherThanOrEqual != null) {
+        if ($this->duedateHigherThan !== null && $this->duedateHigherThanOrEqual !== null) {
             $dueDates[] = CompareUtil::min($this->duedateHigherThan, $this->duedateHigherThanOrEqual);
             $dueDates[] = CompareUtil::max($this->duedateHigherThan, $this->duedateHigherThanOrEqual);
-        } elseif ($this->duedateHigherThan != null) {
+        } elseif ($this->duedateHigherThan !== null) {
             $dueDates[] = $duedateHigherThan;
-        } elseif ($this->duedateHigherThanOrEqual != null) {
+        } elseif ($this->duedateHigherThanOrEqual !== null) {
             $dueDates[] = $this->duedateHigherThanOrEqual;
         }
-        if ($this->duedateLowerThan != null && $this->duedateLowerThanOrEqual != null) {
+        if ($this->duedateLowerThan !== null && $this->duedateLowerThanOrEqual !== null) {
             $dueDates[] = CompareUtil::min($this->duedateLowerThan, $this->duedateLowerThanOrEqual);
             $dueDates[] = CompareUtil::max($this->duedateLowerThan, $this->duedateLowerThanOrEqual);
-        } elseif ($this->duedateLowerThan != null) {
+        } elseif ($this->duedateLowerThan !== null) {
             $dueDates[] = $this->duedateLowerThan;
-        } elseif ($this->duedateLowerThanOrEqual != null) {
+        } elseif ($this->duedateLowerThanOrEqual !== null) {
             $dueDates[] = $this->duedateLowerThanOrEqual;
         }
         return CompareUtil::areNotInAscendingOrder($dueDates);

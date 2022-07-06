@@ -18,7 +18,7 @@ class IsTelemetryEnabledCmd implements CommandInterface
         $authorizationManager->checkAdminOrPermission("checkReadTelemetryCollectionStatusData");
 
         $telemetryProperty = $commandContext->getPropertyManager()->findPropertyById("telemetry.enabled");
-        if ($telemetryProperty != null) {
+        if ($telemetryProperty !== null) {
             if (strtolower($telemetryProperty->getValue()) == "null") {
                 return null;
             } else {

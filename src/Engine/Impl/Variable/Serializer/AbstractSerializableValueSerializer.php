@@ -33,7 +33,7 @@ abstract class AbstractSerializableValueSerializer extends AbstractTypedValueSer
 
         if ($value->isDeserialized()) {
             $objectToSerialize = $value->getValue();
-            if ($objectToSerialize != null) {
+            if ($objectToSerialize !== null) {
                 // serialize to byte array
                 try {
                     $serializedByteValue = $this->serializeToByteArray($objectToSerialize);
@@ -43,7 +43,7 @@ abstract class AbstractSerializableValueSerializer extends AbstractTypedValueSer
                 }
             }
         } else {
-            if ($serializedStringValue != null) {
+            if ($serializedStringValue !== null) {
                 $serializedByteValue = $this->serializedStringValue;
             }
         }
@@ -62,7 +62,7 @@ abstract class AbstractSerializableValueSerializer extends AbstractTypedValueSer
 
         if ($deserializeObjectValue) {
             $deserializedObject = null;
-            if ($serializedByteValue != null) {
+            if ($serializedByteValue !== null) {
                 try {
                     $deserializedObject = $this->deserializeFromByteArray($serializedByteValue, $valueFields);
                 } catch (\Exception $e) {
@@ -102,11 +102,11 @@ abstract class AbstractSerializableValueSerializer extends AbstractTypedValueSer
                 // serialized object => dataformat must match
                 return $this->serializationDataFormat == $requestedDataFormat;
             } else {
-                $canSerialize = $typedValue->getValue() == null || $this->canSerializeValue($typedValue->getValue());
-                return $canSerialize && ($requestedDataFormat == null || $this->serializationDataFormat == $requestedDataFormat);
+                $canSerialize = $typedValue->getValue() === null || $this->canSerializeValue($typedValue->getValue());
+                return $canSerialize && ($requestedDataFormat === null || $this->serializationDataFormat == $requestedDataFormat);
             }
         } else {
-            return $typedValue->getValue() == null || $this->canSerializeValue($typedValue->getValue());
+            return $typedValue->getValue() === null || $this->canSerializeValue($typedValue->getValue());
         }
     }
 

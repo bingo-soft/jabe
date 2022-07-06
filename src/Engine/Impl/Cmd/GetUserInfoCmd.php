@@ -39,6 +39,6 @@ class GetUserInfoCmd implements CommandInterface, \Serializable
             ->getIdentityInfoManager()
             ->findUserInfoByUserIdAndKey($this->userId, $this->key);
 
-        return ($identityInfo != null ? $identityInfo->getValue() : null);
+        return ($identityInfo !== null ? $identityInfo->getValue() : null);
     }
 }

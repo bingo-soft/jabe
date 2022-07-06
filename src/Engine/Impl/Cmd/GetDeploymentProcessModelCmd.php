@@ -47,7 +47,7 @@ class GetDeploymentProcessModelCmd implements CommandInterface, \Serializable
         $deploymentId = $processDefinition->getDeploymentId();
         $resourceName = $processDefinition->getResourceName();
 
-        if ($resourceName == null) {
+        if ($resourceName === null) {
             return null;
         } else {
             $processDiagramStream = $commandContext->runWithoutAuthorization(function () use ($commandContext, $deploymentId, $resourceName) {

@@ -50,7 +50,7 @@ class AsyncContinuationJobHandler implements JobHandlerInterface
 
         // reset transition id.
         $transitionId = $configuration->getTransitionId();
-        if ($transitionId != null) {
+        if ($transitionId !== null) {
             $activity = $execution->getActivity();
             $transition = $activity->findOutgoingTransition($transitionId);
             $execution->setTransition($transition);
@@ -62,7 +62,7 @@ class AsyncContinuationJobHandler implements JobHandlerInterface
 
     public function findMatchingAtomicOperation(?string $operationName): ?AtomicOperation
     {
-        if ($operationName == null) {
+        if ($operationName === null) {
             // default operation for backwards compatibility
             return AtomicOperation::transitionCreateScope();
         } else {
@@ -103,7 +103,7 @@ class AsyncContinuationJobHandler implements JobHandlerInterface
     {
         $configuration = [];
 
-        if ($jobConfiguration != null) {
+        if ($jobConfiguration !== null) {
             $configParts = explode('$', $jobConfiguration);
             if (count($configuration) > 2) {
                 throw new ProcessEngineException("Illegal async continuation job handler configuration: '" . $jobConfiguration . "': exprecting one part or two parts seperated by '$'.");

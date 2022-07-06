@@ -15,7 +15,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function none(): PermissionInterface
     {
-        if (self::$NONE == null) {
+        if (self::$NONE === null) {
             self::$NONE = new ProcessDefinitionPermissions("NONE", 0);
         }
         return self::$NONE;
@@ -25,7 +25,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function all(): PermissionInterface
     {
-        if (self::$ALL == null) {
+        if (self::$ALL === null) {
             self::$ALL = new ProcessDefinitionPermissions("ALL", PHP_INT_MAX);
         }
         return self::$ALL;
@@ -35,7 +35,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function read(): PermissionInterface
     {
-        if (self::$READ == null) {
+        if (self::$READ === null) {
             self::$READ = new ProcessDefinitionPermissions("READ", 2);
         }
         return self::$READ;
@@ -45,7 +45,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function update(): PermissionInterface
     {
-        if (self::$UPDATE == null) {
+        if (self::$UPDATE === null) {
             self::$UPDATE = new ProcessDefinitionPermissions("UPDATE", 4);
         }
         return self::$UPDATE;
@@ -55,7 +55,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function delete(): PermissionInterface
     {
-        if (self::$DELETE == null) {
+        if (self::$DELETE === null) {
             self::$DELETE = new ProcessDefinitionPermissions("DELETE", 16);
         }
         return self::$DELETE;
@@ -65,7 +65,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function retryJob(): PermissionInterface
     {
-        if (self::$RETRY_JOB == null) {
+        if (self::$RETRY_JOB === null) {
             self::$RETRY_JOB = new ProcessDefinitionPermissions("RETRY_JOB", 32);
         }
         return self::$RETRY_JOB;
@@ -75,7 +75,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function readTask(): PermissionInterface
     {
-        if (self::$READ_TASK == null) {
+        if (self::$READ_TASK === null) {
             self::$READ_TASK = new ProcessDefinitionPermissions("READ_TASK", 64);
         }
         return self::$READ_TASK;
@@ -85,7 +85,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function updateTask(): PermissionInterface
     {
-        if (self::$UPDATE_TASK == null) {
+        if (self::$UPDATE_TASK === null) {
             self::$UPDATE_TASK = new ProcessDefinitionPermissions("UPDATE_TASK", 128);
         }
         return self::$UPDATE_TASK;
@@ -95,7 +95,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function createInstance(): PermissionInterface
     {
-        if (self::$CREATE_INSTANCE == null) {
+        if (self::$CREATE_INSTANCE === null) {
             self::$CREATE_INSTANCE = new ProcessDefinitionPermissions("CREATE_INSTANCE", 256);
         }
         return self::$CREATE_INSTANCE;
@@ -105,7 +105,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function readInstance(): PermissionInterface
     {
-        if (self::$READ_INSTANCE == null) {
+        if (self::$READ_INSTANCE === null) {
             self::$READ_INSTANCE = new ProcessDefinitionPermissions("READ_INSTANCE", 512);
         }
         return self::$READ_INSTANCE;
@@ -115,7 +115,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function updateInstance(): PermissionInterface
     {
-        if (self::$UPDATE_INSTANCE == null) {
+        if (self::$UPDATE_INSTANCE === null) {
             self::$UPDATE_INSTANCE = new ProcessDefinitionPermissions("UPDATE_INSTANCE", 1024);
         }
         return self::$UPDATE_INSTANCE;
@@ -125,7 +125,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function deleteInstance(): PermissionInterface
     {
-        if (self::$DELETE_INSTANCE == null) {
+        if (self::$DELETE_INSTANCE === null) {
             self::$DELETE_INSTANCE = new ProcessDefinitionPermissions("DELETE_INSTANCE", 2048);
         }
         return self::$DELETE_INSTANCE;
@@ -135,7 +135,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function readHistory(): PermissionInterface
     {
-        if (self::$READ_HISTORY == null) {
+        if (self::$READ_HISTORY === null) {
             self::$READ_HISTORY = new ProcessDefinitionPermissions("READ_HISTORY", 4096);
         }
         return self::$READ_HISTORY;
@@ -145,7 +145,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function deleteHistory(): PermissionInterface
     {
-        if (self::$DELETE_HISTORY == null) {
+        if (self::$DELETE_HISTORY === null) {
             self::$DELETE_HISTORY = new ProcessDefinitionPermissions("DELETE_HISTORY", 8192);
         }
         return self::$DELETE_HISTORY;
@@ -155,7 +155,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function taskWork(): PermissionInterface
     {
-        if (self::$TASK_WORK == null) {
+        if (self::$TASK_WORK === null) {
             self::$TASK_WORK = new ProcessDefinitionPermissions("TASK_WORK", 16384);
         }
         return self::$TASK_WORK;
@@ -165,7 +165,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function taskAssign(): PermissionInterface
     {
-        if (self::$TASK_ASSIGN == null) {
+        if (self::$TASK_ASSIGN === null) {
             self::$TASK_ASSIGN = new ProcessDefinitionPermissions("TASK_ASSIGN", 32768);
         }
         return self::$TASK_ASSIGN;
@@ -175,7 +175,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function migrateInstance(): PermissionInterface
     {
-        if (self::$MIGRATE_INSTANCE == null) {
+        if (self::$MIGRATE_INSTANCE === null) {
             self::$MIGRATE_INSTANCE = new ProcessDefinitionPermissions("MIGRATE_INSTANCE", 65536);
         }
         return self::$MIGRATE_INSTANCE;
@@ -185,7 +185,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function suspendInstance(): PermissionInterface
     {
-        if (self::$SUSPEND_INSTANCE == null) {
+        if (self::$SUSPEND_INSTANCE === null) {
             self::$SUSPEND_INSTANCE = new ProcessDefinitionPermissions("SUSPEND_INSTANCE", 131072);
         }
         return self::$SUSPEND_INSTANCE;
@@ -195,7 +195,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function updateInstanceVariable(): PermissionInterface
     {
-        if (self::$UPDATE_INSTANCE_VARIABLE == null) {
+        if (self::$UPDATE_INSTANCE_VARIABLE === null) {
             self::$UPDATE_INSTANCE_VARIABLE = new ProcessDefinitionPermissions("UPDATE_INSTANCE_VARIABLE", 262144);
         }
         return self::$UPDATE_INSTANCE_VARIABLE;
@@ -205,7 +205,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function updateTaskVariable(): PermissionInterface
     {
-        if (self::$UPDATE_TASK_VARIABLE == null) {
+        if (self::$UPDATE_TASK_VARIABLE === null) {
             self::$UPDATE_TASK_VARIABLE = new ProcessDefinitionPermissions("UPDATE_TASK_VARIABLE", 524288);
         }
         return self::$UPDATE_TASK_VARIABLE;
@@ -215,7 +215,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function suspend(): PermissionInterface
     {
-        if (self::$SUSPEND == null) {
+        if (self::$SUSPEND === null) {
             self::$SUSPEND = new ProcessDefinitionPermissions("SUSPEND", 1048576);
         }
         return self::$SUSPEND;
@@ -225,7 +225,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function readInstanceVariable(): PermissionInterface
     {
-        if (self::$READ_INSTANCE_VARIABLE == null) {
+        if (self::$READ_INSTANCE_VARIABLE === null) {
             self::$READ_INSTANCE_VARIABLE = new ProcessDefinitionPermissions("READ_INSTANCE_VARIABLE", 2097152);
         }
         return self::$READ_INSTANCE_VARIABLE;
@@ -235,7 +235,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function readHistoryVariable(): PermissionInterface
     {
-        if (self::$READ_INSTANCE_VARIABLE == null) {
+        if (self::$READ_INSTANCE_VARIABLE === null) {
             self::$READ_INSTANCE_VARIABLE = new ProcessDefinitionPermissions("READ_HISTORY_VARIABLE", 4194304);
         }
         return self::$READ_INSTANCE_VARIABLE;
@@ -245,7 +245,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function readTaskVariable(): PermissionInterface
     {
-        if (self::$READ_TASK_VARIABLE == null) {
+        if (self::$READ_TASK_VARIABLE === null) {
             self::$READ_TASK_VARIABLE = new ProcessDefinitionPermissions("READ_TASK_VARIABLE", 8388608);
         }
         return self::$READ_TASK_VARIABLE;
@@ -255,7 +255,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function updateHistory(): PermissionInterface
     {
-        if (self::$UPDATE_HISTORY == null) {
+        if (self::$UPDATE_HISTORY === null) {
             self::$UPDATE_HISTORY = new ProcessDefinitionPermissions("UPDATE_HISTORY", 16777216);
         }
         return self::$UPDATE_HISTORY;
@@ -265,7 +265,7 @@ class ProcessDefinitionPermissions implements PermissionInterface
 
     public static function resources(): array
     {
-        if (self::$RESOURCES == null) {
+        if (self::$RESOURCES === null) {
             self::$RESOURCES = [ Resources::processDefinition() ];
         }
         return self::$RESOURCES;

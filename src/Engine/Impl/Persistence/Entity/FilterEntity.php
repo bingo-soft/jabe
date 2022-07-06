@@ -43,7 +43,7 @@ class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface,
     {
         $this->setResourceType($resourceType);
         $this->setQueryInternal("{}");
-        if (self::$queryConverter == null) {
+        if (self::$queryConverter === null) {
             self::$queryConverter = [EntityTypes::TASK => new JsonTaskQueryConverter()];
         }
     }
@@ -163,7 +163,7 @@ class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface,
 
     public function setPropertiesInternal(string $properties): void
     {
-        if ($properties != null) {
+        if ($properties !== null) {
             $json = JsonUtil::asObject($properties);
             $this->properties = JsonUtil::asMap($json);
         } else {
@@ -233,7 +233,7 @@ class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface,
 
     public function postLoad(): void
     {
-        if ($query != null) {
+        if ($query !== null) {
             $query->addValidator(StoredQueryValidator::get());
         }
     }

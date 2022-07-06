@@ -99,14 +99,14 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
 
     protected function ensureCorrelationProcessInstanceVariablesInitialized(): void
     {
-        if ($this->correlationProcessInstanceVariables == null) {
+        if ($this->correlationProcessInstanceVariables === null) {
             $this->correlationProcessInstanceVariables = new VariableMapImpl();
         }
     }
 
     protected function ensureCorrelationLocalVariablesInitialized(): void
     {
-        if ($this->correlationLocalVariables == null) {
+        if ($this->correlationLocalVariables === null) {
             $this->correlationLocalVariables = new VariableMapImpl();
         }
     }
@@ -161,14 +161,14 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
 
     protected function ensurePayloadProcessInstanceVariablesInitialized(): void
     {
-        if ($this->payloadProcessInstanceVariables == null) {
+        if ($this->payloadProcessInstanceVariables === null) {
             $this->payloadProcessInstanceVariables = new VariableMapImpl();
         }
     }
 
     protected function ensurePayloadProcessInstanceVariablesLocalInitialized(): void
     {
-        if ($this->payloadProcessInstanceVariablesLocal == null) {
+        if ($this->payloadProcessInstanceVariablesLocal === null) {
             $this->payloadProcessInstanceVariablesLocal = new VariableMapImpl();
         }
     }
@@ -286,7 +286,7 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
 
     protected function ensureProcessDefinitionIdNotSet(): void
     {
-        if ($this->processDefinitionId != null) {
+        if ($this->processDefinitionId !== null) {
             //throw LOG.exceptionCorrelateMessageWithProcessDefinitionId();
             throw new \Exception("exceptionCorrelateMessageWithProcessDefinitionId");
         }
@@ -294,7 +294,7 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
 
     protected function ensureProcessInstanceAndTenantIdNotSet(): void
     {
-        if ($this->processInstanceId != null && $this->isTenantIdSet) {
+        if ($this->processInstanceId !== null && $this->isTenantIdSet) {
             //throw LOG.exceptionCorrelateMessageWithProcessInstanceAndTenantId();
             throw new \Exception("exceptionCorrelateMessageWithProcessInstanceAndTenantId");
         }
@@ -302,7 +302,7 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
 
     protected function ensureCorrelationVariablesNotSet(): void
     {
-        if ($this->correlationProcessInstanceVariables != null || $this->correlationLocalVariables != null) {
+        if ($this->correlationProcessInstanceVariables !== null || $this->correlationLocalVariables !== null) {
             //throw LOG.exceptionCorrelateStartMessageWithCorrelationVariables();
             throw new \Exception("exceptionCorrelateStartMessageWithCorrelationVariables");
         }
@@ -310,7 +310,7 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
 
     protected function ensureProcessDefinitionAndTenantIdNotSet(): void
     {
-        if ($this->processDefinitionId != null && $this->isTenantIdSet) {
+        if ($this->processDefinitionId !== null && $this->isTenantIdSet) {
             //throw LOG.exceptionCorrelateMessageWithProcessDefinitionAndTenantId();
             throw new \Exception("exceptionCorrelateMessageWithProcessDefinitionAndTenantId");
         }
@@ -318,7 +318,7 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
 
     protected function execute(CommandInterface $command)
     {
-        if ($this->commandExecutor != null) {
+        if ($this->commandExecutor !== null) {
             return $this->commandExecutor->execute($command);
         } else {
             return $command->execute($commandContext);

@@ -75,7 +75,7 @@ class BatchDbSqlSession extends DbSqlSession
     {
         $batchExecutorException = ExceptionUtil::findBatchExecutorException($exception);
 
-        if ($batchExecutorException == null) {
+        if ($batchExecutorException === null) {
             // Unexpected exception
             throw $exception;
         }
@@ -163,7 +163,7 @@ class BatchDbSqlSession extends DbSqlSession
         /*
         * case 2: The next operation is the one that failed
         */
-        if ($failure != null && !$failureHandled) {
+        if ($failure !== null && !$failureHandled) {
             EnsureUtil::ensureTrue("More batch results than scheduled operations detected. This indicates a bug", $operationsIt->valid());
 
             $failedOperation = $operationsIt->current();

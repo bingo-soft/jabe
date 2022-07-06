@@ -2,7 +2,7 @@
 
 namespace Jabe\Engine\Impl;
 
-class Direction
+class Direction implements \Serializable
 {
     private static $ASCENDING;
     private static $DESCENDING;
@@ -14,9 +14,22 @@ class Direction
         $this->name = $name;
     }
 
+    public function serialize()
+    {
+        return json_encode([
+            'name' => $this->name
+        ]);
+    }
+
+    public function unserialize($data)
+    {
+        $json = json_decode($data);
+        $this->name = $json->name;
+    }
+
     public static function ascending(): Direction
     {
-        if (self::$ASCENDING == null) {
+        if (self::$ASCENDING === null) {
             self::$ASCENDING = new Direction("asc");
         }
         return self::$ASCENDING;
@@ -24,7 +37,7 @@ class Direction
 
     public function descending(): Direction
     {
-        if (self::$DESCENDING == null) {
+        if (self::$DESCENDING === null) {
             self::$DESCENDING = new Direction("desc");
         }
         return self::$DESCENDING;

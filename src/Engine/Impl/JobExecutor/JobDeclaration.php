@@ -74,12 +74,12 @@ abstract class JobDeclaration implements \Serializable
         $jobDefinitionId = $this->resolveJobDefinitionId($context);
         $job->setJobDefinitionId($jobDefinitionId);
 
-        if ($jobDefinitionId != null) {
+        if ($jobDefinitionId !== null) {
             $jobDefinition = Context::getCommandContext()
             ->getJobDefinitionManager()
             ->findById($jobDefinitionId);
 
-            if ($jobDefinition != null) {
+            if ($jobDefinition !== null) {
                 // if job definition is suspended while creating a job instance,
                 // suspend the job instance right away:
                 $job->setSuspensionState($jobDefinition->getSuspensionState());
@@ -108,7 +108,7 @@ abstract class JobDeclaration implements \Serializable
             $job->setPriority($priority);
         }
 
-        if ($contextExecution != null) {
+        if ($contextExecution !== null) {
             // in case of shared process definitions, the job definitions have no tenant id.
             // To distinguish jobs between tenants and enable the tenant check for the job executor,
             // use the tenant id from the execution.
@@ -198,7 +198,7 @@ abstract class JobDeclaration implements \Serializable
     public function resolveDueDate($context): string
     {
         $processEngineConfiguration = Context::getProcessEngineConfiguration();
-        if ($processEngineConfiguration != null && ($processEngineConfiguration->isJobExecutorAcquireByDueDate() || $processEngineConfiguration->isEnsureJobDueDateNotNull())) {
+        if ($processEngineConfiguration !== null && ($processEngineConfiguration->isJobExecutorAcquireByDueDate() || $processEngineConfiguration->isEnsureJobDueDateNotNull())) {
             return ClockUtil::getCurrentTime()->format('c');
         } else {
             return null;
@@ -217,7 +217,7 @@ abstract class JobDeclaration implements \Serializable
 
     public function getActivityId(): ?string
     {
-        if ($this->activity != null) {
+        if ($this->activity !== null) {
             return $this->activity->getId();
         } else {
             return null;
@@ -236,7 +236,7 @@ abstract class JobDeclaration implements \Serializable
 
     public function getProcessDefinition(): ?ProcessDefinitionImpl
     {
-        if ($this->activity != null) {
+        if ($this->activity !== null) {
             return $this->activity->getProcessDefinition();
         } else {
             return null;

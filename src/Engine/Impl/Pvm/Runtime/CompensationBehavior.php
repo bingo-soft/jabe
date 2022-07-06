@@ -18,15 +18,15 @@ class CompensationBehavior
     {
         $activity = $execution->getActivity();
 
-        return $execution->isScope() && $activity != null && $activity->isCompensationHandler() && !$activity->isScope();
+        return $execution->isScope() && $activity !== null && $activity->isCompensationHandler() && !$activity->isScope();
     }
 
     public static function isCompensationThrowing(PvmExecutionImpl $execution): bool
     {
         $currentActivity = $execution->getActivity();
-        if ($currentActivity != null) {
+        if ($currentActivity !== null) {
             $isCompensationThrowing = $currentActivity->getProperty(BpmnParse::PROPERTYNAME_THROWS_COMPENSATION);
-            if ($isCompensationThrowing != null && $isCompensationThrowing) {
+            if ($isCompensationThrowing !== null && $isCompensationThrowing) {
                 return true;
             }
         }
@@ -49,7 +49,7 @@ class CompensationBehavior
     {
         $currentActivity = $scopeExecution->getActivity();
 
-        if ($currentActivity != null) {
+        if ($currentActivity !== null) {
             return $scopeExecution->isScope()
                 && $currentActivity->isScope()
                 && !empty($scopeExecution->getNonEventScopeExecutions())

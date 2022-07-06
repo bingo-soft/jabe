@@ -356,7 +356,7 @@ class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements Proc
 
     public function rootProcessInstances(): ProcessInstanceQueryInterface
     {
-        if ($this->superProcessInstanceId != null) {
+        if ($this->superProcessInstanceId !== null) {
             throw new ProcessEngineException("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId");
         }
         $this->isRootProcessInstances = true;
@@ -365,7 +365,7 @@ class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements Proc
 
     public function leafProcessInstances(): ProcessInstanceQueryInterface
     {
-        if ($this->subProcessInstanceId != null) {
+        if ($this->subProcessInstanceId !== null) {
             throw new ProcessEngineException("Invalid query usage: cannot set both leafProcessInstances and subProcessInstanceId");
         }
         $this->isLeafProcessInstances = true;

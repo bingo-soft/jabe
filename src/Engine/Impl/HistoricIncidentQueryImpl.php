@@ -202,7 +202,7 @@ class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl implements His
 
     public function open(): HistoricIncidentQueryInterface
     {
-        if ($this->incidentState != null) {
+        if ($this->incidentState !== null) {
             throw new ProcessEngineException("Already querying for incident state <" . $this->incidentState . ">");
         }
         $this->incidentState = IncidentStateImpl::default();
@@ -211,7 +211,7 @@ class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl implements His
 
     public function resolved(): HistoricIncidentQueryInterface
     {
-        if ($this->incidentState != null) {
+        if ($this->incidentState !== null) {
             throw new ProcessEngineException("Already querying for incident state <" . $this->incidentState . ">");
         }
         $this->incidentState = IncidentStateImpl::resolved();
@@ -220,7 +220,7 @@ class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl implements His
 
     public function deleted(): HistoricIncidentQueryInterface
     {
-        if ($this->incidentState != null) {
+        if ($this->incidentState !== null) {
             throw new ProcessEngineException("Already querying for incident state <" . $this->incidentState . ">");
         }
         $this->incidentState = IncidentStateImpl::deleted();

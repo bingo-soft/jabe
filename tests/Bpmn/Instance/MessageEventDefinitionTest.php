@@ -35,7 +35,7 @@ class MessageEventDefinitionTest extends AbstractEventDefinitionTest
         $eventDefinition = $this->eventDefinitionQuery->filterByType(
             MessageEventDefinitionInterface::class
         )->singleResult();
-        $this->assertFalse($eventDefinition == null);
+        $this->assertFalse($eventDefinition === null);
 
         $this->assertEquals("message", $eventDefinition->getMessage()->getId());
         $this->assertNull($eventDefinition->getOperation());

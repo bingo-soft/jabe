@@ -29,7 +29,7 @@ class ScriptTaskActivityBehavior extends TaskActivityBehavior
             $invocation = new ScriptInvocation($scope->script, $execution);
             Context::getProcessEngineConfiguration()->getDelegateInterceptor()->handleInvocation($invocation);
             $result = $invocation->getInvocationResult();
-            if ($result != null && $resultVariable != null) {
+            if ($result !== null && $resultVariable !== null) {
                 $execution->setVariable($resultVariable, $result);
             }
             $scope->leave($execution);
@@ -50,7 +50,7 @@ class ScriptTaskActivityBehavior extends TaskActivityBehavior
     {
         if ($e instanceof BpmnError) {
             return $e;
-        } elseif (!method_exists($e, 'getCause') || $e->getCause() == null) {
+        } elseif (!method_exists($e, 'getCause') || $e->getCause() === null) {
             return null;
         }
         return $this->checkIfCauseOfExceptionIsBpmnError($e->getCause());

@@ -11,7 +11,7 @@ class ActivityStackCollector implements TreeVisitorInterface
 
     public function visit(/*ScopeImpl */$scope): void
     {
-        if ($scope != null && is_a($scope, PvmActivity::class, true)) {
+        if ($scope !== null && is_a($scope, PvmActivity::class, true)) {
             $this->activityStack[] = $scope;
         }
     }

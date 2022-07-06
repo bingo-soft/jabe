@@ -20,7 +20,7 @@ class SetJobRetriesBatchConfigurationJsonConverter extends JsonObjectConverter
 
     public static function instance(): SetJobRetriesBatchConfigurationJsonConverter
     {
-        if (self::$INSTANCE == null) {
+        if (self::$INSTANCE === null) {
             self::$INSTANCE = new SetJobRetriesBatchConfigurationJsonConverter();
         }
         return self::$INSTANCE;

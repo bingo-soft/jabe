@@ -26,7 +26,7 @@ class SimpleScriptContext implements ScriptContextInterface
     {
         $this->engineScope = new SimpleBindings();
         $this->globalScope = null;
-        if (self::$scopes == null) {
+        if (self::$scopes === null) {
             self::$scopes = [];
             self::$scopes[] = self::ENGINE_SCOPE;
             self::$scopes[] = self::GLOBAL_SCOPE;
@@ -78,12 +78,12 @@ class SimpleScriptContext implements ScriptContextInterface
     public function getAttribute(string $name, ?int $scope = null)
     {
         $this->checkName($name);
-        if ($scope != null) {
+        if ($scope !== null) {
             switch ($scope) {
                 case self::ENGINE_SCOPE:
                     return $this->engineScope->get($name);
                 case self::GLOBAL_SCOPE:
-                    if ($this->globalScope != null) {
+                    if ($this->globalScope !== null) {
                         return $this->globalScope->get($name);
                     }
                     return null;
@@ -93,7 +93,7 @@ class SimpleScriptContext implements ScriptContextInterface
         }
         if ($this->engineScope->containsKey($name)) {
             return $this->getAttribute($name, self::ENGINE_SCOPE);
-        } elseif ($this->globalScope != null && $this->globalScope->containsKey($name)) {
+        } elseif ($this->globalScope !== null && $this->globalScope->containsKey($name)) {
             return $this->getAttribute($name, self::GLOBAL_SCOPE);
         }
 
@@ -116,12 +116,12 @@ class SimpleScriptContext implements ScriptContextInterface
         $this->checkName($name);
         switch ($scope) {
             case self::ENGINE_SCOPE:
-                if ($this->getBindings(self::ENGINE_SCOPE) != null) {
+                if ($this->getBindings(self::ENGINE_SCOPE) !== null) {
                     return $this->getBindings(self::ENGINE_SCOPE)->remove($name);
                 }
                 return null;
             case self::GLOBAL_SCOPE:
-                if ($this->getBindings(self::GLOBAL_SCOPE) != null) {
+                if ($this->getBindings(self::GLOBAL_SCOPE) !== null) {
                     return $this->getBindings(self::GLOBAL_SCOPE)->remove($name);
                 }
                 return null;
@@ -149,7 +149,7 @@ class SimpleScriptContext implements ScriptContextInterface
                 $this->engineScope->put($name, $value);
                 return;
             case self::GLOBAL_SCOPE:
-                if ($this->globalScope != null) {
+                if ($this->globalScope !== null) {
                     $this->globalScope->put($name, $value);
                 }
                 return;
@@ -172,7 +172,7 @@ class SimpleScriptContext implements ScriptContextInterface
         $this->checkName($name);
         if ($this->engineScope->containsKey($name)) {
             return self::ENGINE_SCOPE;
-        } elseif ($this->globalScope != null && $this->globalScope->containsKey($name)) {
+        } elseif ($this->globalScope !== null && $this->globalScope->containsKey($name)) {
             return self::GLOBAL_SCOPE;
         } else {
             return -1;

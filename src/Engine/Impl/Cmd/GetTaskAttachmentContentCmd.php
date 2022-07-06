@@ -40,12 +40,12 @@ class GetTaskAttachmentContentCmd implements CommandInterface, \Serializable
             ->getAttachmentManager()
             ->findAttachmentByTaskIdAndAttachmentId($this->taskId, $this->attachmentId);
 
-        if ($attachment == null) {
+        if ($attachment === null) {
             return null;
         }
 
         $contentId = $attachment->getContentId();
-        if ($contentId == null) {
+        if ($contentId === null) {
             return null;
         }
 

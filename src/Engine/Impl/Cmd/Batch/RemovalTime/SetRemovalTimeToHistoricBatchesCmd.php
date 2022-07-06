@@ -40,12 +40,12 @@ class SetRemovalTimeToHistoricBatchesCmd implements CommandInterface
     {
         $instanceIds = $this->builder->getIds();
         $instanceQuery = $this->builder->getQuery();
-        if ($instanceQuery == null && empty($instanceIds)) {
+        if ($instanceQuery === null && empty($instanceIds)) {
             throw new BadUserRequestException("Neither query nor ids provided.");
         }
 
         $collectedInstanceIds = [];
-        if ($instanceQuery != null) {
+        if ($instanceQuery !== null) {
             foreach ($instanceQuery->list() as $historicBatch) {
                 $collectedInstanceIds[] = $historicBatch->getId();
             }
@@ -88,7 +88,7 @@ class SetRemovalTimeToHistoricBatchesCmd implements CommandInterface
             ->batchId($instanceId)
             ->singleResult();
 
-            if ($batch != null) {
+            if ($batch !== null) {
                 $ids[] = $batch->getId();
             }
         }

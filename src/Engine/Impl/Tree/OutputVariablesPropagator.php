@@ -23,6 +23,6 @@ class OutputVariablesPropagator implements TreeVisitorInterface
 
     protected function isProcessInstanceOfSubprocess(ActivityExecutionInterface $execution): bool
     {
-        return $execution->isProcessInstanceExecution() && $execution->getSuperExecution() != null;
+        return $execution->isProcessInstanceExecution() && $execution->getSuperExecution() !== null;
     }
 }

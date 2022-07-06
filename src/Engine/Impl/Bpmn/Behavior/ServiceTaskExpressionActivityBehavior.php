@@ -22,7 +22,7 @@ class ServiceTaskExpressionActivityBehavior extends TaskActivityBehavior
         $this->executeWithErrorPropagation($execution, function () use ($scope, $execution) {
             //getValue() can have side-effects, that's why we have to call it independently from the result variable
             $value = $scope->expression->getValue($execution);
-            if ($scope->resultVariable != null) {
+            if ($scope->resultVariable !== null) {
                 $execution->setVariable($scope->resultVariable, $value);
             }
             $scope->leave($execution);

@@ -58,11 +58,11 @@ abstract class ExecutableScript
             $definitionIdMessage = " in the process definition with id '" . $variableScope->getProcessDefinitionId() . "'";
         } elseif ($variableScope instanceof TaskEntity) {
             $task = $variableScope;
-            if ($task->getExecution() != null) {
+            if ($task->getExecution() !== null) {
                 $activityId = $task->getExecution()->getActivityId();
                 $definitionIdMessage = " in the process definition with id '" . $task->getProcessDefinitionId() . "'";
             }
-            /*if ($task.getCaseExecution() != null) {
+            /*if ($task.getCaseExecution() !== null) {
                 activityId = task.getCaseExecution().getActivityId();
                 definitionIdMessage = " in the case definition with id '" + task.getCaseDefinitionId() + "'";
             }*/
@@ -71,7 +71,7 @@ abstract class ExecutableScript
             definitionIdMessage = " in the case definition with id '" + ((DelegateCaseExecution) variableScope).getCaseDefinitionId() + "'";
         }*/
 
-        if ($activityId == null) {
+        if ($activityId === null) {
             return "";
         } else {
             return " while executing activity '" . $activityId . "'" . $definitionIdMessage;

@@ -27,7 +27,7 @@ abstract class AttributeReferenceCollection extends AttributeReferenceImpl imple
     ): void {
         $referencingIdentifier = $this->getReferenceIdentifier($referenceSourceElement);
         $references = StringUtil::splitListBySeparator($referencingIdentifier, $this->separator);
-        if ($oldIdentifier != null && in_array($oldIdentifier, $references)) {
+        if ($oldIdentifier !== null && in_array($oldIdentifier, $references)) {
             $referencingIdentifier = str_replace($oldIdentifier, $newIdentifier, $referencingIdentifier);
             $this->setReferenceIdentifier($referenceSourceElement, $newIdentifier);
         }
@@ -59,7 +59,7 @@ abstract class AttributeReferenceCollection extends AttributeReferenceImpl imple
         $referenceTargetElements = [];
         foreach ($references as $reference) {
             $referenceTargetElement = $document->getElementById($reference);
-            if ($referenceTargetElement != null) {
+            if ($referenceTargetElement !== null) {
                 $referenceTargetElements[] = $referenceTargetElement;
             } else {
                 throw new ModelException(sprintf("Unable to find a model element instance for id %s", $identifier));

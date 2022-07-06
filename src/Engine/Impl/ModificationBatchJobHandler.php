@@ -27,7 +27,7 @@ class ModificationBatchJobHandler extends AbstractBatchJobHandler
 
     public function __construct()
     {
-        if (self::$JOB_DECLARATION == null) {
+        if (self::$JOB_DECLARATION === null) {
             self::$JOB_DECLARATION = new BatchJobDeclaration(BatchInterface::TYPE_PROCESS_INSTANCE_MODIFICATION);
         }
     }
@@ -39,7 +39,7 @@ class ModificationBatchJobHandler extends AbstractBatchJobHandler
 
     protected function postProcessJob(ModificationBatchConfiguration $configuration, JobEntity $job, ModificationBatchConfiguration $jobConfiguration): void
     {
-        if ($job->getDeploymentId() == null) {
+        if ($job->getDeploymentId() === null) {
             $commandContext = Context::getCommandContext();
             $processDefinitionEntity = $commandContext->getProcessEngineConfiguration()->getDeploymentCache()
                 ->findDeployedProcessDefinitionById($configuration->getProcessDefinitionId());

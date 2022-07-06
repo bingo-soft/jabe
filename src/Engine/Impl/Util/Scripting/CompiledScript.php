@@ -39,7 +39,7 @@ abstract class CompiledScript
     {
         $ctxt = $this->getEngine()->getContext();
 
-        if ($bindings != null) {
+        if ($bindings !== null) {
             $tempctxt = new SimpleScriptContext();
             $tempctxt->setBindings($bindings, ScriptContextInterface::ENGINE_SCOPE);
             $tempctxt->setBindings(

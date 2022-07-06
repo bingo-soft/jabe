@@ -19,7 +19,7 @@ class BaseCallableElement
     {
         $result = $this->definitionKeyValueProvider->getValue($variableScope);
 
-        if ($result != null && !(is_string($result))) {
+        if ($result !== null && !(is_string($result))) {
             throw new \Exception("Cannot cast '" . $result . "' to string");
         }
 
@@ -48,7 +48,7 @@ class BaseCallableElement
 
     public function isLatestBinding(): bool
     {
-        return $this->binding == null || CallableElementBinding::LATEST == $this->binding;
+        return $this->binding === null || CallableElementBinding::LATEST == $this->binding;
     }
 
     public function isDeploymentBinding(): bool
@@ -70,7 +70,7 @@ class BaseCallableElement
     {
         $result = $this->versionValueProvider->getValue($variableScope);
 
-        if ($result != null) {
+        if ($result !== null) {
             return intval($result);
         }
 
@@ -91,7 +91,7 @@ class BaseCallableElement
     {
         $result = $this->versionTagValueProvider->getValue($variableScope);
 
-        if ($result != null) {
+        if ($result !== null) {
             return strval($result);
         }
 

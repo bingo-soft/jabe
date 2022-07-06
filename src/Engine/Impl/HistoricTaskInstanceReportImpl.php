@@ -37,7 +37,7 @@ class HistoricTaskInstanceReportImpl implements HistoricTaskInstanceReportInterf
     public function countByProcessDefinitionKey(): array
     {
         $commandContext = Context::getCommandContext();
-        if ($commandContext == null) {
+        if ($commandContext === null) {
             return $this->commandExecutor->execute(new HistoricTaskInstanceCountByProcessDefinitionKey($this));
         } else {
             return $this->executeCountByProcessDefinitionKey($commandContext);
@@ -54,7 +54,7 @@ class HistoricTaskInstanceReportImpl implements HistoricTaskInstanceReportInterf
     {
         $commandContext = Context::getCommandContext();
 
-        if ($commandContext == null) {
+        if ($commandContext === null) {
             return $this->commandExecutor->execute(new HistoricTaskInstanceCountByNameCmd($this));
         } else {
             return $this->executeCountByTaskName($commandContext);
@@ -74,7 +74,7 @@ class HistoricTaskInstanceReportImpl implements HistoricTaskInstanceReportInterf
 
         $commandContext = Context::getCommandContext();
 
-        if ($commandContext == null) {
+        if ($commandContext === null) {
             return $this->commandExecutor->execute(new ExecuteDurationCmd($this));
         } else {
             return $this->executeDuration($commandContext);

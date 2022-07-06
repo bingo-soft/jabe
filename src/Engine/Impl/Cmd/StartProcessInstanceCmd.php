@@ -37,7 +37,7 @@ class StartProcessInstanceCmd implements CommandInterface
             null
         );
 
-        if ($this->instantiationBuilder->getTenantId() != null) {
+        if ($this->instantiationBuilder->getTenantId() !== null) {
             $processInstance->setTenantId($this->instantiationBuilder->getTenantId());
         }
 

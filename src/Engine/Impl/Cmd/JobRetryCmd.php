@@ -33,7 +33,7 @@ abstract class JobRetryCmd implements CommandInterface
 
     protected function logException(JobEntity $job): void
     {
-        if ($this->exception != null) {
+        if ($this->exception !== null) {
             $job->setExceptionMessage($exception->getMessage());
             $job->setExceptionStacktrace($exception->getTraceAsString());
         }
@@ -41,7 +41,7 @@ abstract class JobRetryCmd implements CommandInterface
 
     protected function decrementRetries(JobEntity $job): void
     {
-        if ($this->exception == null || $this->shouldDecrementRetriesFor($this->exception)) {
+        if ($this->exception === null || $this->shouldDecrementRetriesFor($this->exception)) {
             $job->setRetries($job->getRetries() - 1);
         }
     }

@@ -33,7 +33,7 @@ class EnumFormType extends SimpleFormFieldType
     public function convertValue(TypedValueInterface $propertyValue): TypedValueInterface
     {
         $value = $propertyValue->getValue();
-        if ($value == null || is_string($value)) {
+        if ($value === null || is_string($value)) {
             $this->validateValue($value);
             return Variables::stringValue(strval($value), $propertyValue->isTransient());
         } else {
@@ -43,7 +43,7 @@ class EnumFormType extends SimpleFormFieldType
 
     protected function validateValue($value = null): void
     {
-        if ($value != null) {
+        if ($value !== null) {
             if (!empty($this->values) && !array_key_exists($value, $this->values)) {
                 throw new ProcessEngineException("Invalid value for enum form property: " . $value);
             }

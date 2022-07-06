@@ -43,10 +43,10 @@ class FormFieldHandler
         $formField->setId($id);
 
         // set label (evaluate expression)
-        $variableScope = $executionEntity != null ? $executionEntity : StartProcessVariableScope::getSharedInstance();
-        if ($label != null) {
+        $variableScope = $executionEntity !== null ? $executionEntity : StartProcessVariableScope::getSharedInstance();
+        if ($label !== null) {
             $labelValueObject = $label->getValue($variableScope);
-            if ($labelValueObject != null) {
+            if ($labelValueObject !== null) {
                 $formField->setLabel(strval($labelValueObject));
             }
         }
@@ -58,10 +58,10 @@ class FormFieldHandler
 
         // set default value (evaluate expression)
         $defaultValue = null;
-        if ($defaultValueExpression != null) {
+        if ($defaultValueExpression !== null) {
             $defaultValue = $defaultValueExpression->getValue($variableScope);
 
-            if ($defaultValue != null) {
+            if ($defaultValue !== null) {
                 $formField->setDefaultValue($this->type->convertFormValueToModelValue($defaultValue));
             } else {
                 $formField->setDefaultValue(null);
@@ -70,7 +70,7 @@ class FormFieldHandler
 
         // value
         $value = $variableScope->getVariableTyped($id);
-        if ($value != null) {
+        if ($value !== null) {
             $formValue = null;
             try {
                 $formValue = $type->convertToFormValue($value);
@@ -109,7 +109,7 @@ class FormFieldHandler
         // perform validation
         foreach ($this->validationHandlers as $validationHandler) {
             $value = null;
-            if ($submittedValue != null) {
+            if ($submittedValue !== null) {
                 $value = $submittedValue->getValue();
             }
             $validationHandler->validate($value, $allValues, $this, $variableScope);
@@ -117,24 +117,24 @@ class FormFieldHandler
 
         // update variable(s)
         $modelValue = null;
-        if ($submittedValue != null) {
-            if ($this->type != null) {
+        if ($submittedValue !== null) {
+            if ($this->type !== null) {
                 $modelValue = $this->type->convertToModelValue($submittedValue);
             } else {
                 $modelValue = $submittedValue;
             }
-        } elseif ($defaultValueExpression != null) {
+        } elseif ($defaultValueExpression !== null) {
             $expressionValue = Variables::untypedValue($defaultValueExpression->getValue($variableScope));
-            if ($this->type != null) {
+            if ($this->type !== null) {
                 // first, need to convert to model value since the default value may be a String Constant specified in the model xml.
                 $modelValue = $this->type->convertToModelValue(Variables::untypedValue($expressionValue));
-            } elseif ($expressionValue != null) {
+            } elseif ($expressionValue !== null) {
                 $modelValue = Variables::stringValue(strval($expressionValue->getValue()));
             }
         }
 
-        if ($modelValue != null) {
-            if ($this->id != null) {
+        if ($modelValue !== null) {
+            if ($this->id !== null) {
                 $variableScope->setVariable($id, $modelValue);
             }
         }

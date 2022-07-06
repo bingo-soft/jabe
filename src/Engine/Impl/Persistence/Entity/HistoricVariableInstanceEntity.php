@@ -97,7 +97,7 @@ class HistoricVariableInstanceEntity implements ValueFieldsInterface, HistoricVa
 
         $this->byteArrayField->deleteByteArrayValue();
 
-        if ($historyEvent->getByteValue() != null) {
+        if ($historyEvent->getByteValue() !== null) {
             $this->byteArrayField->setRootProcessInstanceId($this->rootProcessInstanceId);
             $this->byteArrayField->setRemovalTime($this->removalTime);
             $this->setByteArrayValue($historyEvent->getByteValue());

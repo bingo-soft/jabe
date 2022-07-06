@@ -16,7 +16,7 @@ class DiGeneratorForFlowNodesTest extends TestCase
 
     protected function tearDown(): void
     {
-        if ($this->instance != null) {
+        if ($this->instance !== null) {
             Bpmn::getInstance()->validateModel($this->instance);
         }
     }
@@ -31,9 +31,9 @@ class DiGeneratorForFlowNodesTest extends TestCase
         $this->assertCount(1, $bpmnDiagrams);
 
         $diagram = $bpmnDiagrams[0];
-        $this->assertFalse($diagram->getId() == null);
+        $this->assertFalse($diagram->getId() === null);
 
-        $this->assertFalse($diagram->getBpmnPlane() == null);
+        $this->assertFalse($diagram->getBpmnPlane() === null);
         $this->assertTrue($diagram->getBpmnPlane()->getBpmnElement()->equals($this->instance->getModelElementById("process")));
     }
 
@@ -277,7 +277,7 @@ class DiGeneratorForFlowNodesTest extends TestCase
         $this->assertCount(3, $allShapes);
 
         $bpmnShapeSubProcess = $this->findBpmnShape(BpmnTestConstants::SUB_PROCESS_ID);
-        $this->assertFalse($bpmnShapeSubProcess == null);
+        $this->assertFalse($bpmnShapeSubProcess === null);
         $this->assertSubProcessSize($bpmnShapeSubProcess);
         $this->assertTrue($bpmnShapeSubProcess->isExpanded());
     }
@@ -308,7 +308,7 @@ class DiGeneratorForFlowNodesTest extends TestCase
         $this->assertEventShapeProperties("innerEndEvent");
 
         $bpmnShapeSubProcess = $this->findBpmnShape(BpmnTestConstants::SUB_PROCESS_ID);
-        $this->assertFalse($bpmnShapeSubProcess == null);
+        $this->assertFalse($bpmnShapeSubProcess === null);
         $this->assertTrue($bpmnShapeSubProcess->isExpanded());
     }
 
@@ -337,7 +337,7 @@ class DiGeneratorForFlowNodesTest extends TestCase
         $this->assertEventShapeProperties("innerEndEvent");
 
         $bpmnShapeEventSubProcess = $this->findBpmnShape(BpmnTestConstants::SUB_PROCESS_ID);
-        $this->assertFalse($bpmnShapeEventSubProcess == null);
+        $this->assertFalse($bpmnShapeEventSubProcess === null);
         $this->assertTrue($bpmnShapeEventSubProcess->isExpanded());
     }
 
@@ -386,7 +386,7 @@ class DiGeneratorForFlowNodesTest extends TestCase
         $this->assertEventShapeProperties("innerEndEvent");
 
         $bpmnShapeSubProcess = $this->findBpmnShape(BpmnTestConstants::TRANSACTION_ID);
-        $this->assertFalse($bpmnShapeSubProcess == null);
+        $this->assertFalse($bpmnShapeSubProcess === null);
         $this->assertTrue($bpmnShapeSubProcess->isExpanded());
     }
 
@@ -472,21 +472,21 @@ class DiGeneratorForFlowNodesTest extends TestCase
     protected function assertTaskShapeProperties(string $id): void
     {
         $bpmnShapeTask = $this->findBpmnShape($id);
-        $this->assertFalse($bpmnShapeTask == null);
+        $this->assertFalse($bpmnShapeTask === null);
         $this->assertActivitySize($bpmnShapeTask);
     }
 
     protected function assertEventShapeProperties(string $id): void
     {
         $bpmnShapeEvent = $this->findBpmnShape($id);
-        $this->assertFalse($bpmnShapeEvent == null);
+        $this->assertFalse($bpmnShapeEvent === null);
         $this->assertEventSize($bpmnShapeEvent);
     }
 
     protected function assertGatewayShapeProperties(string $id): void
     {
         $bpmnShapeGateway = $this->findBpmnShape($id);
-        $this->assertFalse($bpmnShapeGateway == null);
+        $this->assertFalse($bpmnShapeGateway === null);
         $this->assertGatewaySize($bpmnShapeGateway);
     }
 

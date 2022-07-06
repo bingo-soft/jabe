@@ -25,7 +25,7 @@ class ConditionalEventHandler implements EventHandlerInterface
         CommandContext $commandContext
     ): void {
         $variableEvent = null;
-        if ($payload == null || $payload instanceof VariableEvent) {
+        if ($payload === null || $payload instanceof VariableEvent) {
             $variableEvent = $payload;
         } else {
             throw new ProcessEngineException("Payload have to be " . VariableEvent::class . ", to evaluate condition.");

@@ -63,11 +63,11 @@ class DeleteHistoricVariableInstanceCmd implements CommandInterface, \Serializab
         // create user operation log
         $definition = null;
         try {
-            if ($variable->getProcessDefinitionId() != null) {
+            if ($variable->getProcessDefinitionId() !== null) {
                 $definition = $commandContext->getProcessEngineConfiguration()->getDeploymentCache()->findDeployedProcessDefinitionById(
                     $variable->getProcessDefinitionId()
                 );
-            }/*elseif ($variable.getCaseDefinitionId() != null) {
+            }/*elseif ($variable.getCaseDefinitionId() !== null) {
                 definition = commandContext.getProcessEngineConfiguration().getDeploymentCache().findDeployedCaseDefinitionById(variable.getCaseDefinitionId());
             }*/
         } catch (\Exception $nve) {

@@ -19,7 +19,7 @@ class ErrorEndEventActivityBehavior extends AbstractBpmnActivityBehavior
 
     public function execute(ActivityExecutionInterface $execution): void
     {
-        $errorMessageValue = $this->errorMessageExpression != null ? $this->errorMessageExpression->getValue($execution) : null;
+        $errorMessageValue = $this->errorMessageExpression !== null ? $this->errorMessageExpression->getValue($execution) : null;
         BpmnExceptionHandler::propagateError($this->errorCode, $errorMessageValue, null, $execution);
     }
 

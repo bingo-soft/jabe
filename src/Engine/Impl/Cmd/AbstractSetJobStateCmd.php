@@ -41,11 +41,11 @@ abstract class AbstractSetJobStateCmd extends AbstractSetStateCmd
     protected function checkParameters(CommandContext $commandContext): void
     {
         if (
-            $this->jobId == null
-            && $this->jobDefinitionId == null
-            && $this->processInstanceId == null
-            && $this->rocessDefinitionId == null
-            && $this->processDefinitionKey == null
+            $this->jobId === null
+            && $this->jobDefinitionId === null
+            && $this->processInstanceId === null
+            && $this->rocessDefinitionId === null
+            && $this->processDefinitionKey === null
         ) {
             throw new ProcessEngineException("Job id, job definition id, process instance id, process definition id nor process definition key cannot be null");
         }
@@ -54,12 +54,12 @@ abstract class AbstractSetJobStateCmd extends AbstractSetStateCmd
     protected function checkAuthorization(CommandContext $commandContext): void
     {
         foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
-            if ($this->jobId != null) {
+            if ($this->jobId !== null) {
                 $jobManager = $commandContext->getJobManager();
                 $job = $jobManager->findJobById($jobId);
-                if ($job != null) {
+                if ($job !== null) {
                     $processInstanceId = $job->getProcessInstanceId();
-                    if ($processInstanceId != null) {
+                    if ($processInstanceId !== null) {
                         $checker->checkUpdateProcessInstanceById($processInstanceId);
                     } else {
                         // start timer job is not assigned to a specific process
@@ -67,27 +67,27 @@ abstract class AbstractSetJobStateCmd extends AbstractSetStateCmd
                         // exists a UPDATE_INSTANCES permission on process definition or
                         // a UPDATE permission on any process instance
                         $processDefinitionKey = $job->getProcessDefinitionKey();
-                        if ($processDefinitionKey != null) {
+                        if ($processDefinitionKey !== null) {
                             $checker->checkUpdateProcessInstanceByProcessDefinitionKey($processDefinitionKey);
                         }
                     }
-                    // if (processInstanceId == null && processDefinitionKey == null):
+                    // if (processInstanceId === null && processDefinitionKey === null):
                     // job is not assigned to any process instance nor process definition
                     // then it is always possible to activate/suspend the corresponding job
                     // -> no authorization check necessary
                 }
-            } elseif ($this->jobDefinitionId != null) {
+            } elseif ($this->jobDefinitionId !== null) {
                 $jobDefinitionManager = $commandContext->getJobDefinitionManager();
                 $jobDefinition = $jobDefinitionManager->findById($this->jobDefinitionId);
-                if ($jobDefinition != null) {
+                if ($jobDefinition !== null) {
                     $processDefinitionKey = $jobDefinition->getProcessDefinitionKey();
                     $checker->checkUpdateProcessInstanceByProcessDefinitionKey($processDefinitionKey);
                 }
-            } elseif ($this->processInstanceId != null) {
+            } elseif ($this->processInstanceId !== null) {
                 $checker->checkUpdateProcessInstanceById($this->processInstanceId);
-            } elseif ($this->processDefinitionId != null) {
+            } elseif ($this->processDefinitionId !== null) {
                 $checker->checkUpdateProcessInstanceByProcessDefinitionId($this->processDefinitionId);
-            } elseif ($this->processDefinitionKey != null) {
+            } elseif ($this->processDefinitionKey !== null) {
                 $checker->checkUpdateProcessInstanceByProcessDefinitionKey($this->processDefinitionKey);
             }
         }
@@ -96,15 +96,15 @@ abstract class AbstractSetJobStateCmd extends AbstractSetStateCmd
     protected function updateSuspensionState(CommandContext $commandContext, SuspensionState $suspensionState): void
     {
         $jobManager = $commandContext->getJobManager();
-        if ($this->jobId != null) {
+        if ($this->jobId !== null) {
             $jobManager->updateJobSuspensionStateById($this->jobId, $suspensionState);
-        } elseif ($this->jobDefinitionId != null) {
+        } elseif ($this->jobDefinitionId !== null) {
             $jobManager->updateJobSuspensionStateByJobDefinitionId($this->jobDefinitionId, $suspensionState);
-        } elseif ($this->processInstanceId != null) {
+        } elseif ($this->processInstanceId !== null) {
             $jobManager->updateJobSuspensionStateByProcessInstanceId($this->processInstanceId, $suspensionState);
-        } elseif ($this->processDefinitionId != null) {
+        } elseif ($this->processDefinitionId !== null) {
             $jobManager->updateJobSuspensionStateByProcessDefinitionId($this->processDefinitionId, $suspensionState);
-        } elseif ($this->processDefinitionKey != null) {
+        } elseif ($this->processDefinitionKey !== null) {
             if (!$this->processDefinitionTenantIdSet) {
                 $jobManager->updateJobSuspensionStateByProcessDefinitionKey($this->processDefinitionKey, $suspensionState);
             } else {

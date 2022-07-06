@@ -18,11 +18,11 @@ class FileValueTypeImpl extends AbstractValueTypeImpl implements FileValueTypeIn
 
     public function createValue($stream, ?array $valueInfo = null): TypedValueInterface
     {
-        if ($valueInfo == null) {
+        if ($valueInfo === null) {
             throw new \InvalidArgumentException("Cannot create file without valueInfo.");
         }
         $filename = $valueInfo[self::VALUE_INFO_FILE_NAME];
-        if ($filename == null) {
+        if ($filename === null) {
             throw new \InvalidArgumentException("Cannot create file without filename!");
         }
         $builder = Variables::fileValue($filename);
@@ -36,7 +36,7 @@ class FileValueTypeImpl extends AbstractValueTypeImpl implements FileValueTypeIn
         if (array_key_exists(self::VALUE_INFO_FILE_MIME_TYPE, $valueInfo)) {
             $mimeType = $valueInfo[self::VALUE_INFO_FILE_MIME_TYPE];
 
-            if ($mimeType == null) {
+            if ($mimeType === null) {
                 throw new \InvalidArgumentException("The provided mime type is null");
             }
 
@@ -45,7 +45,7 @@ class FileValueTypeImpl extends AbstractValueTypeImpl implements FileValueTypeIn
         if (array_key_exists(self::VALUE_INFO_FILE_ENCODING, $valueInfo)) {
             $encoding = $valueInfo[self::VALUE_INFO_FILE_ENCODING];
 
-            if ($encoding == null) {
+            if ($encoding === null) {
                 throw new \InvalidArgumentException("The provided encoding is null");
             }
 
@@ -64,10 +64,10 @@ class FileValueTypeImpl extends AbstractValueTypeImpl implements FileValueTypeIn
         $fileValue = $typedValue;
         $result = [];
         $result[self::VALUE_INFO_FILE_NAME] = $fileValue->getFilename();
-        if ($fileValue->getMimeType() != null) {
+        if ($fileValue->getMimeType() !== null) {
             $result[self::VALUE_INFO_FILE_MIME_TYPE] = $fileValue->getMimeType();
         }
-        if ($fileValue->getEncoding() != null) {
+        if ($fileValue->getEncoding() !== null) {
             $result[self::VALUE_INFO_FILE_ENCODING] = $fileValue->getEncoding();
         }
         if ($fileValue->isTransient()) {

@@ -48,7 +48,7 @@ abstract class ScopeImpl extends CoreActivity implements PvmScopeInterface
 
         foreach ($this->flowActivities as $childActivity) {
             $nestedTransition = $childActivity->findTransition($transitionId);
-            if ($nestedTransition != null) {
+            if ($nestedTransition !== null) {
                 return $nestedTransition;
             }
         }
@@ -62,7 +62,7 @@ abstract class ScopeImpl extends CoreActivity implements PvmScopeInterface
             throw new ProcessEngineException("This is not a sub process scope.");
         }
         $activity = $this->findActivity($activityId);
-        if ($activity == null || $activity->getLevelOfSubprocessScope() != $this) {
+        if ($activity === null || $activity->getLevelOfSubprocessScope() != $this) {
             return null;
         }
         return $activity;
@@ -118,8 +118,8 @@ abstract class ScopeImpl extends CoreActivity implements PvmScopeInterface
     public function createActivity(string $activityId): ActivityImpl
     {
         $activity = new ActivityImpl($activityId, $this->processDefinition);
-        if ($activityId != null) {
-            if ($this->processDefinition->findActivity($activityId) != null) {
+        if ($activityId !== null) {
+            if ($this->processDefinition->findActivity($activityId) !== null) {
                 throw new PvmException("duplicate activity id '" . $activityId . "'");
             }
             if (array_key_exists($activityId, $this->BACKLOG)) {
@@ -136,7 +136,7 @@ abstract class ScopeImpl extends CoreActivity implements PvmScopeInterface
     public function isAncestorFlowScopeOf(ScopeImpl $other): bool
     {
         $otherAncestor = $other->getFlowScope();
-        while ($otherAncestor != null) {
+        while ($otherAncestor !== null) {
             if ($this == $otherAncestor) {
                 return true;
             } else {

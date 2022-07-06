@@ -24,7 +24,7 @@ class ErrorEventDefinitionTest extends AbstractEventDefinitionTest
         $eventDefinition = $this->eventDefinitionQuery->filterByType(
             ErrorEventDefinitionInterface::class
         )->singleResult();
-        $this->assertFalse($eventDefinition == null);
+        $this->assertFalse($eventDefinition === null);
 
         $this->assertEquals("error", $eventDefinition->getError()->getId());
     }

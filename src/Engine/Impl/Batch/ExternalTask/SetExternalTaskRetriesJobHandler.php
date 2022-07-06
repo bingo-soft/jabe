@@ -35,7 +35,7 @@ class SetExternalTaskRetriesJobHandler extends AbstractBatchJobHandler
 
     public function getJobDeclaration(): JobDeclaration
     {
-        if (self::$JOB_DECLARATION == null) {
+        if (self::$JOB_DECLARATION === null) {
             self::$JOB_DECLARATION = new BatchJobDeclaration(BatchInterface::TYPE_SET_EXTERNAL_TASK_RETRIES);
         }
         return self::$JOB_DECLARATION;

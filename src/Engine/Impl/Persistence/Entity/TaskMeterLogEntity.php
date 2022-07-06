@@ -18,7 +18,7 @@ class TaskMeterLogEntity implements DbEntityInterface, HasDbReferencesInterface,
 
     public function __construct(?string $assignee = null, ?string $timestamp = null)
     {
-        if ($assignee != null && $timestamp != null) {
+        if ($assignee !== null && $timestamp !== null) {
             $this->assigneeHash = $this->createHashAsLong($assignee);
             $this->timestamp = $timestamp;
         }

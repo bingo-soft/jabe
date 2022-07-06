@@ -102,11 +102,11 @@ class AnimalCreateModelTest extends TestModelTest
     public function testGetElementById(): void
     {
         $this->assertFalse(
-            $this->tweety->getModelInstance()->getModelElementById($this->tweety->getId()) == null
+            $this->tweety->getModelInstance()->getModelElementById($this->tweety->getId()) === null
         );
         $this->tweety->setId("new-" . $this->tweety->getId());
         $this->assertFalse(
-            $this->tweety->getModelInstance()->getModelElementById($this->tweety->getId()) == null
+            $this->tweety->getModelInstance()->getModelElementById($this->tweety->getId()) === null
         );
     }
 

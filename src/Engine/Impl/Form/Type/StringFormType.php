@@ -23,7 +23,7 @@ class StringFormType extends SimpleFormFieldType
             return $propertyValue;
         } else {
             $value = $propertyValue->getValue();
-            if ($value == null) {
+            if ($value === null) {
                 return Variables::stringValue(null, $propertyValue->isTransient());
             } else {
                 return Variables::stringValue(strval($value), $propertyValue->isTransient());

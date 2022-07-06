@@ -30,7 +30,7 @@ class PvmAtomicOperationTransitionNotifyListenerStart extends PvmAtomicOperation
 
         $transition = $execution->getTransition();
         $destination;
-        if ($transition == null) { // this is null after async cont. -> transition is not stored in execution
+        if ($transition === null) { // this is null after async cont. -> transition is not stored in execution
             $destination = $execution->getActivity();
         } else {
             $destination = $transition->getDestination();

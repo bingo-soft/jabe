@@ -43,7 +43,7 @@ class VariableListenerInvocationListener implements VariableInstanceLifecycleLis
         } elseif ($sourceScope instanceof TaskEntity) {
             $task = $sourceScope;
             $execution = $task->getExecution();
-            if ($execution != null) {
+            if ($execution !== null) {
                 $this->addEventToScopeExecution($execution, $event);
             }
         } elseif ($sourceScope->getParentVariableScope() instanceof ExecutionEntity) {

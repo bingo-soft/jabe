@@ -69,21 +69,21 @@ class ProcessBuilderTest extends TestCase
         $this->modelInstance = Bpmn::getInstance()->createProcess()->done();
 
         $definitions = $this->modelInstance->getDefinitions();
-        $this->assertFalse($definitions == null);
+        $this->assertFalse($definitions === null);
         $this->assertEquals(BpmnModelConstants::BPMN20_NS, $definitions->getTargetNamespace());
 
         $processes = $this->modelInstance->getModelElementsByType($this->processType);
         $this->assertCount(1, $processes);
 
         $process = $processes[0];
-        $this->assertFalse($process->getId() == null);
+        $this->assertFalse($process->getId() === null);
     }
 
     public function testGetElement(): void
     {
         // Make sure this method is publicly available
         $process = Bpmn::getInstance()->createProcess()->getElement();
-        $this->assertFalse($process == null);
+        $this->assertFalse($process === null);
     }
 
     public function testCreateProcessWithStartEvent(): void
@@ -479,7 +479,7 @@ class ProcessBuilderTest extends TestCase
         );
         $this->assertCount(1, $errorEventDefinitions);
         $errorEventDefinition = $errorEventDefinitions[0];
-        $this->assertFalse($errorEventDefinition == null);
+        $this->assertFalse($errorEventDefinition === null);
         $this->assertEquals("id", $errorEventDefinition->getId());
         $this->assertEquals("expression", $errorEventDefinition->getExpression());
         $this->assertErrorEventDefinition("boundary", "myErrorCode", "errorMessage");
@@ -495,7 +495,7 @@ class ProcessBuilderTest extends TestCase
             ErrorEventDefinitionInterface::class
         );
         $error = $errorEventDefinition->getError();
-        $this->assertFalse($error == null);
+        $this->assertFalse($error === null);
         $this->assertEquals($errorCode, $error->getErrorCode());
         $this->assertEquals($errorMessage, $error->getErrorMessage());
         return $error;
@@ -506,7 +506,7 @@ class ProcessBuilderTest extends TestCase
         string $eventDefinitionType
     ): EventDefinitionInterface {
         $element = $this->modelInstance->getModelElementById($elementId);
-        $this->assertFalse($element == null);
+        $this->assertFalse($element === null);
         $eventDefinitions = $element->getChildElementsByType(EventDefinitionInterface::class);
         $this->assertCount(1, $eventDefinitions);
 
@@ -544,7 +544,7 @@ class ProcessBuilderTest extends TestCase
         $failedJobRetryTimeCycle = $element->getExtensionElements()->getElementsQuery()->filterByType(
             FailedJobRetryTimeCycleInterface::class
         )->singleResult();
-        $this->assertFalse($failedJobRetryTimeCycle == null);
+        $this->assertFalse($failedJobRetryTimeCycle === null);
         $this->assertEquals(self::FAILED_JOB_RETRY_TIME_CYCLE, $failedJobRetryTimeCycle->getTextContent());
     }
 
@@ -781,11 +781,11 @@ class ProcessBuilderTest extends TestCase
             $elementId,
             ErrorEventDefinitionInterface::class
         );
-        $this->assertFalse($errorEventDefinition == null);
-        if ($errorCodeVariable != null) {
+        $this->assertFalse($errorEventDefinition === null);
+        if ($errorCodeVariable !== null) {
             $this->assertEquals($errorCodeVariable, $errorEventDefinition->getErrorCodeVariable());
         }
-        if ($errorMessageVariable != null) {
+        if ($errorMessageVariable !== null) {
             $this->assertEquals($errorMessageVariable, $errorEventDefinition->getErrorMessageVariable());
         }
     }
@@ -1322,7 +1322,7 @@ class ProcessBuilderTest extends TestCase
           ->done();
 
         $event = $this->modelInstance->getModelElementById("messageEventDefinition");
-        $this->assertFalse($event == null);
+        $this->assertFalse($event === null);
 
         $this->modelInstance = Bpmn::getInstance()->createProcess()
           ->startEvent()
@@ -1331,7 +1331,7 @@ class ProcessBuilderTest extends TestCase
           ->done();
 
         $event = $this->modelInstance->getModelElementById("messageEventDefinition1");
-        $this->assertFalse($event == null);
+        $this->assertFalse($event === null);
         $this->modelInstance = Bpmn::getInstance()->createProcess()
           ->startEvent()
           ->endEvent("end1")
@@ -1339,7 +1339,7 @@ class ProcessBuilderTest extends TestCase
           ->done();
 
         $event = $this->modelInstance->getModelElementById("messageEventDefinition");
-        $this->assertFalse($event == null);
+        $this->assertFalse($event === null);
 
         $this->modelInstance = Bpmn::getInstance()->createProcess()
           ->startEvent()
@@ -1348,7 +1348,7 @@ class ProcessBuilderTest extends TestCase
           ->done();
 
         $event = $this->modelInstance->getModelElementById("messageEventDefinition1");
-        $this->assertFalse($event == null);
+        $this->assertFalse($event === null);
     }
 
     public function testReceiveTaskMessage(): void
@@ -1361,7 +1361,7 @@ class ProcessBuilderTest extends TestCase
         $receiveTask = $this->modelInstance->getModelElementById("receive");
 
         $message = $receiveTask->getMessage();
-        $this->assertFalse($message == null);
+        $this->assertFalse($message === null);
         $this->assertEquals("message", $message->getName());
     }
 
@@ -1394,7 +1394,7 @@ class ProcessBuilderTest extends TestCase
         $sendTask = $this->modelInstance->getModelElementById("send");
 
         $message = $sendTask->getMessage();
-        $this->assertFalse($message == null);
+        $this->assertFalse($message === null);
         $this->assertEquals("message", $message->getName());
     }
 
@@ -1433,7 +1433,7 @@ class ProcessBuilderTest extends TestCase
             SignalEventDefinitionInterface::class
         );
         $signal = $signalEventDefinition->getSignal();
-        $this->assertFalse($signal == null);
+        $this->assertFalse($signal === null);
         $this->assertEquals($signalName, $signal->getName());
 
         return $signal;
@@ -1574,19 +1574,19 @@ class ProcessBuilderTest extends TestCase
 
         $paramCounter = 0;
         foreach ($inParams as $inParam) {
-            if ($inParam->getVariables() != null) {
+            if ($inParam->getVariables() !== null) {
                 $this->assertEquals("all", $inParam->getVariables());
                 if ($inParam->getLocal()) {
                     $paramCounter += 1;
                 }
-            } elseif ($inParam->getBusinessKey() != null) {
+            } elseif ($inParam->getBusinessKey() !== null) {
                 $this->assertEquals("aBusinessKey", $inParam->getBusinessKey());
                 $paramCounter += 1;
-            } elseif ($inParam->getSourceExpression() != null) {
+            } elseif ($inParam->getSourceExpression() !== null) {
                 $this->assertEquals('${"sourceExpression"}', $inParam->getSourceExpression());
                 $this->assertEquals("target2", $inParam->getTarget());
                 $paramCounter += 1;
-            } elseif ($inParam->getSource() != null) {
+            } elseif ($inParam->getSource() !== null) {
                 $this->assertEquals("source", $inParam->getSource());
                 $this->assertEquals("target1", $inParam->getTarget());
                 $paramCounter += 1;
@@ -1788,7 +1788,7 @@ class ProcessBuilderTest extends TestCase
         $this->assertCount(1, $timeouts);
 
         $timeout = $timeouts[0];
-        $this->assertFalse($timeout->getTimeCycle() == null);
+        $this->assertFalse($timeout->getTimeCycle() === null);
         $this->assertEquals("R/PT1H", $timeout->getTimeCycle()->getRawTextContent());
         $this->assertNull($timeout->getTimeDate());
         $this->assertNull($timeout->getTimeDuration());
@@ -1817,7 +1817,7 @@ class ProcessBuilderTest extends TestCase
 
         $timeout = $timeouts[0];
         $this->assertNull($timeout->getTimeCycle());
-        $this->assertFalse($timeout->getTimeDate() == null);
+        $this->assertFalse($timeout->getTimeDate() === null);
         $this->assertEquals("2019-09-09T12:12:12", $timeout->getTimeDate()->getRawTextContent());
         $this->assertNull($timeout->getTimeDuration());
     }
@@ -1848,7 +1848,7 @@ class ProcessBuilderTest extends TestCase
         $timeout = $timeouts[0];
         $this->assertNull($timeout->getTimeCycle());
         $this->assertNull($timeout->getTimeDate());
-        $this->assertFalse($timeout->getTimeDuration() == null);
+        $this->assertFalse($timeout->getTimeDuration() === null);
         $this->assertEquals("PT1H", $timeout->getTimeDuration()->getRawTextContent());
     }
 
@@ -1876,7 +1876,7 @@ class ProcessBuilderTest extends TestCase
         $timeout = $timeouts[0];
         $this->assertNull($timeout->getTimeCycle());
         $this->assertNull($timeout->getTimeDate());
-        $this->assertFalse($timeout->getTimeDuration() == null);
+        $this->assertFalse($timeout->getTimeDuration() === null);
         $this->assertEquals("PT1H", $timeout->getTimeDuration()->getRawTextContent());
     }
 
@@ -1902,7 +1902,7 @@ class ProcessBuilderTest extends TestCase
         $this->assertCount(1, $timeouts);
 
         $timeout = $timeouts[0];
-        $this->assertFalse($timeout->getTimeCycle() == null);
+        $this->assertFalse($timeout->getTimeCycle() === null);
         $this->assertEquals("R/PT1H", $timeout->getTimeCycle()->getRawTextContent());
         $this->assertNull($timeout->getTimeDate());
         $this->assertNull($timeout->getTimeDuration());
@@ -1930,7 +1930,7 @@ class ProcessBuilderTest extends TestCase
         $this->assertCount(1, $timeouts);
 
         $timeout = $timeouts[0];
-        $this->assertFalse($timeout->getTimeDate() == null);
+        $this->assertFalse($timeout->getTimeDate() === null);
         $this->assertEquals("2019-09-09T12:12:12", $timeout->getTimeDate()->getRawTextContent());
         $this->assertNull($timeout->getTimeCycle());
         $this->assertNull($timeout->getTimeDuration());
@@ -1961,7 +1961,7 @@ class ProcessBuilderTest extends TestCase
         $this->assertCount(1, $timeouts);
 
         $timeout = $timeouts[0];
-        $this->assertFalse($timeout->getTimeCycle() == null);
+        $this->assertFalse($timeout->getTimeCycle() === null);
         $this->assertEquals("R/PT1H", $timeout->getTimeCycle()->getRawTextContent());
         $this->assertNull($timeout->getTimeDate());
         $this->assertNull($timeout->getTimeDuration());
@@ -1992,7 +1992,7 @@ class ProcessBuilderTest extends TestCase
         $this->assertCount(1, $timeouts);
 
         $timeout = $timeouts[0];
-        $this->assertFalse($timeout->getTimeDate() == null);
+        $this->assertFalse($timeout->getTimeDate() === null);
         $this->assertEquals("2019-09-09T12:12:12", $timeout->getTimeDate()->getRawTextContent());
         $this->assertNull($timeout->getTimeCycle());
         $this->assertNull($timeout->getTimeDuration());
@@ -2025,7 +2025,7 @@ class ProcessBuilderTest extends TestCase
         $timeout = $timeouts[0];
         $this->assertNull($timeout->getTimeCycle());
         $this->assertNull($timeout->getTimeDate());
-        $this->assertFalse($timeout->getTimeDuration() == null);
+        $this->assertFalse($timeout->getTimeDuration() === null);
         $this->assertEquals("PT1H", $timeout->getTimeDuration()->getRawTextContent());
     }
 
@@ -2051,7 +2051,7 @@ class ProcessBuilderTest extends TestCase
         $this->assertCount(1, $timeouts);
 
         $timeout = $timeouts[0];
-        $this->assertFalse($timeout->getTimeCycle() == null);
+        $this->assertFalse($timeout->getTimeCycle() === null);
         $this->assertEquals("R/PT1H", $timeout->getTimeCycle()->getRawTextContent());
         $this->assertNull($timeout->getTimeDate());
         $this->assertNull($timeout->getTimeDuration());
@@ -2079,7 +2079,7 @@ class ProcessBuilderTest extends TestCase
         $this->assertCount(1, $timeouts);
 
         $timeout = $timeouts[0];
-        $this->assertFalse($timeout->getTimeDate() == null);
+        $this->assertFalse($timeout->getTimeDate() === null);
         $this->assertEquals("2019-09-09T12:12:12", $timeout->getTimeDate()->getRawTextContent());
         $this->assertNull($timeout->getTimeCycle());
         $this->assertNull($timeout->getTimeDuration());
@@ -2109,7 +2109,7 @@ class ProcessBuilderTest extends TestCase
         $timeout = $timeouts[0];
         $this->assertNull($timeout->getTimeCycle());
         $this->assertNull($timeout->getTimeDate());
-        $this->assertFalse($timeout->getTimeDuration() == null);
+        $this->assertFalse($timeout->getTimeDuration() === null);
         $this->assertEquals("PT1H", $timeout->getTimeDuration()->getRawTextContent());
     }
 
@@ -2238,7 +2238,7 @@ class ProcessBuilderTest extends TestCase
     {
         $inputOutput = $element->getExtensionElements()->getElementsQuery()
                        ->filterByType(InputOutputInterface::class)->singleResult();
-        $this->assertFalse($inputOutput == null);
+        $this->assertFalse($inputOutput === null);
 
         $inputParameters = $inputOutput->getInputParameters();
         $this->assertCount(2, $inputParameters);
@@ -2453,7 +2453,7 @@ class ProcessBuilderTest extends TestCase
             TimerEventDefinitionInterface::class
         );
         $timeDate = $timerEventDefinition->getTimeDate();
-        $this->assertFalse($timeDate == null);
+        $this->assertFalse($timeDate === null);
         $this->assertEquals($timerDate, $timeDate->getTextContent());
     }
 
@@ -2464,7 +2464,7 @@ class ProcessBuilderTest extends TestCase
             TimerEventDefinitionInterface::class
         );
         $timeDuration = $timerEventDefinition->getTimeDuration();
-        $this->assertFalse($timeDuration == null);
+        $this->assertFalse($timeDuration === null);
         $this->assertEquals($timerDuration, $timeDuration->getTextContent());
     }
 
@@ -2475,7 +2475,7 @@ class ProcessBuilderTest extends TestCase
             TimerEventDefinitionInterface::class
         );
         $timeCycle = $timerEventDefinition->getTimeCycle();
-        $this->assertFalse($timeCycle == null);
+        $this->assertFalse($timeCycle === null);
         $this->assertEquals($timerCycle, $timeCycle->getTextContent());
     }
 
@@ -2868,7 +2868,7 @@ class ProcessBuilderTest extends TestCase
             EscalationEventDefinitionInterface::class
         );
         $escalation = $escalationEventDefinition->getEscalation();
-        $this->assertFalse($escalation == null);
+        $this->assertFalse($escalation === null);
         $this->assertEquals($escalationCode, $escalation->getEscalationCode());
 
         return $escalation;
@@ -2994,7 +2994,7 @@ class ProcessBuilderTest extends TestCase
           ->done();
 
         $startEvent = $this->modelInstance->getModelElementById("subProcessStart");
-        $this->assertFalse($startEvent == null);
+        $this->assertFalse($startEvent === null);
         $this->assertTrue($startEvent->isInterrupting());
     }
 
@@ -3013,7 +3013,7 @@ class ProcessBuilderTest extends TestCase
           ->done();
 
         $startEvent = $this->modelInstance->getModelElementById("subProcessStart");
-        $this->assertFalse($startEvent == null);
+        $this->assertFalse($startEvent === null);
         $this->assertFalse($startEvent->isInterrupting());
     }
 
@@ -3043,11 +3043,11 @@ class ProcessBuilderTest extends TestCase
 
     protected function assertFormField(BaseElementInterface $element): void
     {
-        $this->assertFalse($element->getExtensionElements() == null);
+        $this->assertFalse($element->getExtensionElements() === null);
 
         $formData = $element->getExtensionElements()->getElementsQuery()
                     ->filterByType(FormDataInterface::class)->singleResult();
-        $this->assertFalse($formData == null);
+        $this->assertFalse($formData === null);
 
         $formFields = $formData->getFormFields();
         $this->assertCount(2, $formFields);

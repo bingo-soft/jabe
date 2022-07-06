@@ -107,7 +107,7 @@ class ChildElementCollectionImpl implements ChildElementCollectionInterface
 
     public function contains(ModelElementInstanceImpl $modelElement, ?ModelElementInstanceInterface $e): bool
     {
-        if ($e == null) {
+        if ($e === null) {
             return false;
         } else {
             foreach ($this->getView($modelElement) as $el) {

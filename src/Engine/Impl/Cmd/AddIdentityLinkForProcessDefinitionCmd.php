@@ -48,7 +48,7 @@ class AddIdentityLinkForProcessDefinitionCmd implements CommandInterface, \Seria
     {
         EnsureUtil::ensureNotNull("processDefinitionId", $processDefinitionId);
 
-        if ($userId == null && $groupId == null) {
+        if ($userId === null && $groupId === null) {
             throw new ProcessEngineException("userId and groupId cannot both be null");
         }
     }

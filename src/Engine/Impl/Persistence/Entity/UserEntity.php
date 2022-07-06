@@ -148,12 +148,12 @@ class UserEntity implements UserInterface, \Serializable, DbEntityInterface, Has
 
     public function encryptPassword(?string $password = null, ?string $salt = null)
     {
-        if ($password == null && $salt == null) {
-            if ($this->newPassword != null) {
+        if ($password === null && $salt === null) {
+            if ($this->newPassword !== null) {
                 $this->salt = $this->generateSalt();
                 $this->setDbPassword($this->encryptPassword($this->newPassword, $this->salt));
             }
-        } elseif ($password == null) {
+        } elseif ($password === null) {
             return null;
         } else {
             $saltedPassword = $this->saltPassword($password, $salt);
@@ -181,7 +181,7 @@ class UserEntity implements UserInterface, \Serializable, DbEntityInterface, Has
 
     public function hasNewPassword(): bool
     {
-        return $this->newPassword != null;
+        return $this->newPassword !== null;
     }
 
     public function serialize()

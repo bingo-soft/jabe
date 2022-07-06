@@ -21,10 +21,10 @@ class XmlParserTest extends TestCase
         $parse->execute();
         $this->assertEquals("DEFINITIONS", $parse->getRootElement()->getTagName());
         $this->assertCount(6, $parse->getRootElement()->elements());
-        $this->assertFalse($parse->getRootElement()->element("process") == null);
-        $this->assertTrue($parse->getRootElement()->element("FAKE") == null);
+        $this->assertFalse($parse->getRootElement()->element("process") === null);
+        $this->assertTrue($parse->getRootElement()->element("FAKE") === null);
         $this->assertCount(2, $parse->getRootElement()->element("PROCESS")->elements());
-        $this->assertFalse($parse->getRootElement()->element("PROCESS")->element("userTask") == null);
+        $this->assertFalse($parse->getRootElement()->element("PROCESS")->element("userTask") === null);
     }
 
     public function testExtension(): void

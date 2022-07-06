@@ -16,7 +16,7 @@ class ProcessApplicationElResolverDelegate extends AbstractElResolverDelegate
     protected function getElResolverDelegate(): ?ELResolver
     {
         $processApplicationReference = Context::getCurrentProcessApplication();
-        if ($processApplicationReference != null) {
+        if ($processApplicationReference !== null) {
             try {
                 $processApplication = $processApplicationReference->getProcessApplication();
                 return $processApplication->getElResolver();

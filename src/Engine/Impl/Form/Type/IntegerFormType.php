@@ -24,7 +24,7 @@ class IntegerFormType extends SimpleFormFieldType
             return $propertyValue;
         } else {
             $value = $propertyValue->getValue();
-            if ($value == null) {
+            if ($value === null) {
                 return Variables::intgerValue(null, $propertyValue->isTransient());
             } elseif (is_numeric($value) || is_string($value)) {
                 return Variables::intgerValue(intval($value), $propertyValue->isTransient());

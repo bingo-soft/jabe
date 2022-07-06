@@ -56,7 +56,7 @@ abstract class AbstractDeleteProcessInstanceCmd
         $executionManager = $commandContext->getExecutionManager();
         $execution = $executionManager->findExecutionById($processInstanceId);
 
-        if (!$this->failIfNotExists && $execution == null) {
+        if (!$this->failIfNotExists && $execution === null) {
             return;
         }
 
@@ -80,7 +80,7 @@ abstract class AbstractDeleteProcessInstanceCmd
         }
 
         $superExecution = $execution->getSuperExecution();
-        if ($superExecution != null) {
+        if ($superExecution !== null) {
             $commandContext->runWithoutAuthorization(function () use ($commandContext, $deleteReason, $externallyTerminated, $skipCustomListeners, $skipIoMappings, $superExecution) {
                 $builder = (new ProcessInstanceModificationBuilderImpl($commandContext, $superExecution->getProcessInstanceId(), $deleteReason))
                 ->cancellationSourceExternal($externallyTerminated)->cancelActivityInstance($superExecution->getActivityInstanceId());

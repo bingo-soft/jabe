@@ -42,7 +42,7 @@ class CollectionUtil
         if (array_key_exists($key, $map)) {
             $list = $map[$key];
         }
-        if ($list == null) {
+        if ($list === null) {
             $list = [];
             $map[$key] = $list;
         }
@@ -55,7 +55,7 @@ class CollectionUtil
         if (array_key_exists($key, $map)) {
             $list = $map[$key];
         }
-        if ($list == null) {
+        if ($list === null) {
             $list = [];
             $map[$key] = $list;
         }
@@ -68,7 +68,7 @@ class CollectionUtil
         if (array_key_exists($key, $map)) {
             $set = $map[$key];
         }
-        if ($set == null) {
+        if ($set === null) {
             $set = [];
             $map[$key] = $set;
         }

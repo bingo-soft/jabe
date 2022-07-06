@@ -9,6 +9,6 @@ class BpmnTest extends TestCase
 {
     public function testBpmn(): void
     {
-        $this->assertFalse(Bpmn::getInstance() == null);
+        $this->assertFalse(Bpmn::getInstance() === null);
     }
 }

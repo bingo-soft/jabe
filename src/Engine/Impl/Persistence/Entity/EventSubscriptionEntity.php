@@ -51,7 +51,7 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
     public function __construct(?ExecutionEntity $executionEntity = null, ?EventType $eventType = null)
     {
         $this->created = ClockUtil::getCurrentTime()->format('c');
-        $this->eventType = $eventType != null ? $eventType->name() : null;
+        $this->eventType = $eventType !== null ? $eventType->name() : null;
 
         $this->setExecution($executionEntity);
         $this->setActivity($execution->getActivity());
@@ -80,7 +80,7 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
     {
         $asyncDeclaration = $this->getJobDeclaration();
 
-        if ($asyncDeclaration == null) {
+        if ($asyncDeclaration === null) {
             // fallback to sync if we couldn't find a job declaration
             $this->processEventSync($payload, $payloadLocal, $businessKey);
         } else {
@@ -123,7 +123,7 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
     {
         // add reference in execution
         $execution = $this->getExecution();
-        if ($execution != null) {
+        if ($execution !== null) {
             $execution->addEventSubscription($this);
         }
     }
@@ -132,7 +132,7 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
     {
         // remove reference in execution
         $execution = $this->getExecution();
-        if ($execution != null) {
+        if ($execution !== null) {
             $execution->removeEventSubscription($this);
         }
     }
@@ -151,7 +151,7 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
 
     public function getExecution(): ?ExecutionEntity
     {
-        if ($this->execution == null && $this->executionId != null) {
+        if ($this->execution === null && $this->executionId !== null) {
             $this->execution = Context::getCommandContext()
                     ->getExecutionManager()
                     ->findExecutionById($this->executionId);
@@ -161,7 +161,7 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
 
     public function setExecution(?ExecutionEntity $execution = null): void
     {
-        if ($execution != null) {
+        if ($execution !== null) {
             $this->execution = $execution;
             $this->executionId = $execution->getId();
             $this->addToExecution();
@@ -174,7 +174,7 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
 
     public function getActivity(): ?ActivityImpl
     {
-        if ($this->activity == null && $this->activityId != null) {
+        if ($this->activity === null && $this->activityId !== null) {
             $processDefinition = $this->getProcessDefinition();
             $this->activity = $processDefinition->findActivity($this->activityId);
         }
@@ -183,7 +183,7 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
 
     public function getProcessDefinition(): ?ProcessDefinitionEntity
     {
-        if ($this->executionId != null) {
+        if ($this->executionId !== null) {
             $execution = $this->getExecution();
             return $execution->getProcessDefinition();
         } else {
@@ -199,14 +199,14 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
     public function setActivity(?ActivityImpl $activity = null): void
     {
         $this->activity = $activity;
-        if ($activity != null) {
+        if ($activity !== null) {
             $this->activityId = $activity->getId();
         }
     }
 
     public function getJobDeclaration(): ?EventSubscriptionJobDeclaration
     {
-        if ($this->jobDeclaration == null) {
+        if ($this->jobDeclaration === null) {
             $this->jobDeclaration = EventSubscriptionJobDeclaration::findDeclarationForSubscription($this);
         }
 
@@ -329,14 +329,14 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
         if ($this == $obj) {
             return true;
         }
-        if ($obj == null) {
+        if ($obj === null) {
             return false;
         }
         if (get_class($this) != get_class($obj)) {
             return false;
         }
-        if ($this->id == null) {
-            if ($obj->id != null) {
+        if ($this->id === null) {
+            if ($obj->id !== null) {
                 return false;
             }
         } elseif ($this->id != $obj->id) {

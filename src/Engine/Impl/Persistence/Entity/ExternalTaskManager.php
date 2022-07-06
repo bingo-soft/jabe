@@ -38,7 +38,7 @@ class ExternalTaskManager extends AbstractManager
 
     public static function extTaskPriorityOrderingProperty(): QueryOrderingProperty
     {
-        if (self::$EXT_TASK_PRIORITY_ORDERING_PROPERTY == null) {
+        if (self::$EXT_TASK_PRIORITY_ORDERING_PROPERTY === null) {
             self::$EXT_TASK_PRIORITY_ORDERING_PROPERTY = new QueryOrderingProperty(ExternalTaskQueryProperty::priority(), Direction::descending());
         }
         return self::$EXT_TASK_PRIORITY_ORDERING_PROPERTY;

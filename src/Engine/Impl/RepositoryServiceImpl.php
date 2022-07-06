@@ -65,7 +65,7 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
 
     public function createDeployment(ProcessApplicationReferenceInterface $processApplication = null): ProcessApplicationDeploymentBuilderInterface
     {
-        if ($processApplication == null) {
+        if ($processApplication === null) {
             return new DeploymentBuilderImpl($this);
         } else {
             return new ProcessApplicationDeploymentBuilderImpl($this, $processApplication);
@@ -165,7 +165,7 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
 
     public function suspendProcessDefinitionById(string $processDefinitionId, bool $suspendProcessInstances = null, string $suspensionDate = null): void
     {
-        if ($suspendProcessInstances == null) {
+        if ($suspendProcessInstances === null) {
             $this->updateProcessDefinitionSuspensionState()
             ->byProcessDefinitionId($processDefinitionId)
             ->suspend();
@@ -180,7 +180,7 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
 
     public function suspendProcessDefinitionByKey(string $processDefinitionKey, bool $suspendProcessInstances = null, string $suspensionDate = null): void
     {
-        if ($suspendProcessInstances == null) {
+        if ($suspendProcessInstances === null) {
             $this->updateProcessDefinitionSuspensionState()
             ->byProcessDefinitionKey($processDefinitionKey)
             ->suspend();
@@ -195,7 +195,7 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
 
     public function activateProcessDefinitionById(string $processDefinitionId, bool $activateProcessInstances = null, string $activationDate = null): void
     {
-        if ($activateProcessInstances == null) {
+        if ($activateProcessInstances === null) {
             $this->updateProcessDefinitionSuspensionState()
             ->byProcessDefinitionId($processDefinitionId)
             ->activate();
@@ -210,7 +210,7 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
 
     public function activateProcessDefinitionByKey(string $processDefinitionKey, bool $activateProcessInstances = null, string $activationDate = null): void
     {
-        if ($activateProcessInstances == null) {
+        if ($activateProcessInstances === null) {
             $this->updateProcessDefinitionSuspensionState()
             ->byProcessDefinitionKey($processDefinitionKey)
             ->activate();

@@ -29,7 +29,7 @@ class ObjectValueImpl extends AbstractTypedValue implements ObjectValueInterface
         $this->serializationDataFormat = $serializationDataFormat;
         $this->objectTypeName = $objectTypeName;
         $this->isDeserialized = $isDeserialized;
-        if ($isTransient != null) {
+        if ($isTransient !== null) {
             $this->isTransient = $isTransient;
         }
     }
@@ -71,7 +71,7 @@ class ObjectValueImpl extends AbstractTypedValue implements ObjectValueInterface
 
     public function getValue(?string $type = null)
     {
-        if ($type != null) {
+        if ($type !== null) {
             $value = $this->getValue();
             if (is_a($value, $type)) {
                 return $this->getValue();
@@ -88,7 +88,7 @@ class ObjectValueImpl extends AbstractTypedValue implements ObjectValueInterface
 
     public function getObjectType(): ?string
     {
-        if ($this->getValue() == null) {
+        if ($this->getValue() === null) {
             return null;
         } else {
             return get_class($this->getValue());
@@ -113,7 +113,7 @@ class ObjectValueImpl extends AbstractTypedValue implements ObjectValueInterface
             . ", serializationDataFormat=" . $this->serializationDataFormat
             . ", objectTypeName=" . $this->objectTypeName
             . ", serializedValue=" .
-            ($this->serializedValue != null ? (strlen($this->serializedValue) . " chars") : "null")
+            ($this->serializedValue !== null ? (strlen($this->serializedValue) . " chars") : "null")
             . ", isTransient=" . $this->isTransient
             . "]";
     }

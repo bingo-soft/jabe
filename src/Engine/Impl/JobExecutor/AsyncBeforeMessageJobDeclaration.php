@@ -10,7 +10,7 @@ class AsyncBeforeMessageJobDeclaration extends MessageJobDeclaration
 
     public function __construct()
     {
-        if (self::$asyncBeforeOperations == null) {
+        if (self::$asyncBeforeOperations === null) {
             self::$asyncBeforeOperations = [
                 AtomicOperation::transitionCreateScope()->getCanonicalName(),
                 AtomicOperation::processStart()->getCanonicalName(),

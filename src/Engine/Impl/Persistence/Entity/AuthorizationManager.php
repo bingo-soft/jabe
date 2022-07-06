@@ -140,7 +140,7 @@ class AuthorizationManager extends AbstractManager
         $params["groupId"] = $groupId;
         $params["resourceId"] = $resourceId;
 
-        if ($resource != null) {
+        if ($resource !== null) {
             $params["resourceType"] = $resource->resourceType();
         }
 
@@ -207,9 +207,9 @@ class AuthorizationManager extends AbstractManager
         ?ResourceInterface $resource = null,
         ?string $resourceId = null
     ): bool {
-        if ($userId == null) {
+        if ($userId === null) {
             $currentAuthentication = $this->getCurrentAuthentication();
-            if ($currentAuthentication == null) {
+            if ($currentAuthentication === null) {
                 return true;
             }
             $userId = $currentAuthentication->getUserId();
@@ -258,9 +258,9 @@ class AuthorizationManager extends AbstractManager
     {
         $isRevokeAuthCheckEnabled = $this->isRevokeAuthCheckUsed;
 
-        if ($this->isRevokeAuthCheckEnabled == null) {
+        if ($this->isRevokeAuthCheckEnabled === null) {
             $configuredMode = Context::getProcessEngineConfiguration()->getAuthorizationCheckRevokes();
-            if ($configuredMode != null) {
+            if ($configuredMode !== null) {
                 $configuredMode = strtolower($configuredMode);
             }
             if (ProcessEngineConfiguration::AUTHORIZATION_CHECK_REVOKE_ALWAYS == $configuredMode) {
@@ -337,7 +337,7 @@ class AuthorizationManager extends AbstractManager
         ?PermissionInterface $permission = null
     ): void {
         if ($query instanceof AbstractQuery) {
-            if ($resource == null) {
+            if ($resource === null) {
                 $authCheck = $query->getAuthCheck();
                 $authCheck->clearPermissionChecks();
 
@@ -392,7 +392,7 @@ class AuthorizationManager extends AbstractManager
     protected function addPermissionCheck(AuthorizationCheck $authCheck, CompositePermissionCheck $compositeCheck): void
     {
         $commandContext = $this->getCommandContext();
-        if ($this->isAuthorizationEnabled() && $this->getCurrentAuthentication() != null && $commandContext->isAuthorizationCheckEnabled()) {
+        if ($this->isAuthorizationEnabled() && $this->getCurrentAuthentication() !== null && $commandContext->isAuthorizationCheckEnabled()) {
             $authCheck->setPermissionChecks($compositeCheck);
         }
     }
@@ -473,7 +473,7 @@ class AuthorizationManager extends AbstractManager
 
         if (
             $this->isAuthorizationEnabled() && $commandContext->isAuthorizationCheckEnabled()
-            && $currentAuthentication != null  && !$this->isAdmin($currentAuthentication)
+            && $currentAuthentication !== null  && !$this->isAdmin($currentAuthentication)
         ) {
             //throw LOG.requiredCamundaAdminException();
         }
@@ -499,7 +499,7 @@ class AuthorizationManager extends AbstractManager
         }
 
         $userId = $authentication->getUserId();
-        if ($userId != null) {
+        if ($userId !== null) {
             $commandContext = Context::getCommandContext();
             $adminUsers = $commandContext->getProcessEngineConfiguration()->getAdminUsers();
             return !empty($adminUsers) && in_array($userId, $adminUsers);
@@ -1106,8 +1106,8 @@ class AuthorizationManager extends AbstractManager
         $commandContext = Context::getCommandContext();
         return $this->isAuthorizationEnabled()
             && $commandContext->isAuthorizationCheckEnabled()
-            && $currentAuthentication != null
-            && $currentAuthentication->getUserId() != null;
+            && $currentAuthentication !== null
+            && $currentAuthentication->getUserId() !== null;
     }
 
     public function isEnsureSpecificVariablePermission(): bool

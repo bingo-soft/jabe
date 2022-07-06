@@ -20,7 +20,7 @@ class GetFormKeyCmd implements CommandInterface
     public function __construct(string $processDefinitionId, ?string $taskDefinitionKey = null)
     {
         $this->setProcessDefinitionId($processDefinitionId);
-        if ($taskDefinitionKey != null) {
+        if ($taskDefinitionKey !== null) {
             if (empty($taskDefinitionKey)) {
                 throw new ProcessEngineException("The task definition key is mandatory, but '" . $taskDefinitionKey . "' has been provided.");
             }
@@ -48,7 +48,7 @@ class GetFormKeyCmd implements CommandInterface
 
         $formKeyExpression = null;
 
-        if ($this->taskDefinitionKey == null) {
+        if ($this->taskDefinitionKey === null) {
             $formDefinition = $processDefinition->getStartFormDefinition();
             $formKeyExpression = $formDefinition->getFormKey();
         } else {
@@ -57,7 +57,7 @@ class GetFormKeyCmd implements CommandInterface
         }
 
         $formKey = null;
-        if ($formKeyExpression != null) {
+        if ($formKeyExpression !== null) {
             $formKey = $formKeyExpression->getExpressionText();
         }
         return $formKey;

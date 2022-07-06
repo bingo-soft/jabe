@@ -35,7 +35,7 @@ class SetJobsRetriesBatchCmd extends AbstractSetJobsRetriesBatchCmd
             );
         }
 
-        if ($this->jobQuery != null) {
+        if ($this->jobQuery !== null) {
             $elementConfiguration->addDeploymentMappings($jobQuery->listDeploymentIdMappings());
         }
 

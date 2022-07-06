@@ -70,7 +70,7 @@ class ProcessInstanceModificationCmd extends AbstractModificationCmd
 
     protected function ensureProcessInstanceExist(string $processInstanceId, ExecutionEntity $processInstance): void
     {
-        if ($processInstance == null) {
+        if ($processInstance === null) {
             //throw LOG.processInstanceDoesNotExist(processInstanceId);
             throw new \Exception("processInstanceDoesNotExist($processInstanceId)");
         }
@@ -94,7 +94,7 @@ class ProcessInstanceModificationCmd extends AbstractModificationCmd
             ) {
                 $processInstanceModificationBuilder->addModificationOperation($instruction);
             } else {
-                if ($activityInstanceTree == null) {
+                if ($activityInstanceTree === null) {
                     $activityInstanceTree = $commandContext->runWithoutAuthorization(function () use ($commandContext, $processInstanceId) {
                         $cmd = new GetActivityInstanceCmd($processInstanceId);
                         return $cmd->execute($commandContext);

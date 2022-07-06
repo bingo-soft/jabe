@@ -51,7 +51,7 @@ class GetDeployedProcessDefinitionCmd implements CommandInterface
     {
         $deploymentCache = $commandContext->getProcessEngineConfiguration()->getDeploymentCache();
 
-        if ($this->processDefinitionId != null) {
+        if ($this->processDefinitionId !== null) {
             return $this->findById($deploymentCache, $this->processDefinitionId);
         } else {
             return $this->findByKey($deploymentCache, $this->processDefinitionKey);

@@ -11,7 +11,7 @@ class DeploymentQueryProperty
 
     public function deploymentId(): QueryPropertyImpl
     {
-        if (self::$DEPLOYMENT_ID == null) {
+        if (self::$DEPLOYMENT_ID === null) {
             self::$DEPLOYMENT_ID = new QueryPropertyImpl("ID_");
         }
         return self::$DEPLOYMENT_ID;
@@ -19,7 +19,7 @@ class DeploymentQueryProperty
 
     public function deploymentName(): QueryPropertyImpl
     {
-        if (self::$DEPLOYMENT_NAME == null) {
+        if (self::$DEPLOYMENT_NAME === null) {
             self::$DEPLOYMENT_NAME = new QueryPropertyImpl("NAME_");
         }
         return self::$DEPLOYMENT_NAME;
@@ -27,7 +27,7 @@ class DeploymentQueryProperty
 
     public function deployTime(): QueryPropertyImpl
     {
-        if (self::$DEPLOY_TIME == null) {
+        if (self::$DEPLOY_TIME === null) {
             self::$DEPLOY_TIME = new QueryPropertyImpl("DEPLOY_TIME_");
         }
         return self::$DEPLOY_TIME;
@@ -35,7 +35,7 @@ class DeploymentQueryProperty
 
     public function tenantId(): QueryPropertyImpl
     {
-        if (self::$TENANT_ID == null) {
+        if (self::$TENANT_ID === null) {
             self::$TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
         }
         return self::$TENANT_ID;

@@ -42,10 +42,10 @@ class ProcessApplicationIdentifier
     public function __toString()
     {
         $paName = $this->name;
-        if ($paName == null && $this->reference != null) {
+        if ($paName === null && $this->reference !== null) {
             $paName = $this->reference->getName();
         }
-        if ($paName == null && $this->processApplication != null) {
+        if ($paName === null && $this->processApplication !== null) {
             $paName = $this->processApplication->getName();
         }
         return "ProcessApplicationIdentifier[name=" . $paName . "]";

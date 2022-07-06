@@ -36,7 +36,7 @@ class DateFormType extends AbstractFormFieldType
     public function convertToModelValue(TypedValueInterface $propertyValue): TypedValueInterface
     {
         $value = $propertyValue->getValue();
-        if ($value == null) {
+        if ($value === null) {
             return Variables::dateValue(null, $propertyValue->isTransient());
         } elseif ($value instanceof \DateTime) {
             return Variables::dateValue($value, $propertyValue->isTransient());
@@ -57,7 +57,7 @@ class DateFormType extends AbstractFormFieldType
 
     public function convertToFormValue(TypedValueInterface $modelValue): TypedValueInterface
     {
-        if ($modelValue->getValue() == null) {
+        if ($modelValue->getValue() === null) {
             return Variables::stringValue("", $modelValue->isTransient());
         } elseif ($modelValue->getType() == ValueTypeInterface::DATE) {
             return Variables::stringValue($modelValue->getValue(), $modelValue->isTransient());

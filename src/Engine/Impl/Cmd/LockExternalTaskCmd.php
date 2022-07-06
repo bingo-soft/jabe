@@ -39,9 +39,9 @@ class LockExternalTaskCmd extends HandleExternalTaskCmd
         $existingLockExpirationTime = $externalTask->getLockExpirationTime();
 
         // check if another worker is attempting to lock the same task
-        $workerValidation = $existingWorkerId != null && $this->workerId != $existingWorkerId;
+        $workerValidation = $existingWorkerId !== null && $this->workerId != $existingWorkerId;
         // and check if an existing lock is already expired
-        $lockValidation = $existingLockExpirationTime != null
+        $lockValidation = $existingLockExpirationTime !== null
             && ClockUtil::getCurrentTime() <= new \DateTime($existingLockExpirationTime);
 
         return $workerValidation && $lockValidation;

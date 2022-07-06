@@ -23,7 +23,7 @@ class Operation
 
     public function __construct(string $id = null, string $name = null, BpmnInterface $bpmnInterface = null, MessageDefinition $inMessage = null)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->setId($id);
             $this->setName($name);
             $this->setInterface($bpmnInterface);

@@ -42,9 +42,9 @@ class VariableScopeElResolver extends ELResolver
     public function getValue(?ELContext $context, $base, $property)
     {
         $object = $context->getContext(VariableScopeInterface::class);
-        if ($object != null) {
+        if ($object !== null) {
             $variableScope = $object;
-            if ($base == null) {
+            if ($base === null) {
                 $variable = strval($property);
 
                 if (
@@ -58,7 +58,7 @@ class VariableScopeElResolver extends ELResolver
                 } elseif (
                     self::$EXTERNAL_TASK_KEY == $property
                     && $variableScope instanceof ExecutionEntity
-                    && $variableScope->getActivity() != null
+                    && $variableScope->getActivity() !== null
                     && $variableScope->getActivity()->getActivityBehavior() instanceof ExternalTaskActivityBehavior
                 ) {
                     $externalTasks = $variableScope->getExternalTasks();
@@ -88,20 +88,20 @@ class VariableScopeElResolver extends ELResolver
 
     public function isReadOnly(?ELContext $context, $base, $property): bool
     {
-        if ($base == null) {
+        if ($base === null) {
             $variable = strval($property);
             $object = $context->getContext(VariableScopeInterface::class);
-            return $object != null && !$object->hasVariable($variable);
+            return $object !== null && !$object->hasVariable($variable);
         }
         return true;
     }
 
     public function setValue(?ELContext $context, $base, $property, $value): void
     {
-        if ($base == null) {
+        if ($base === null) {
             $variable = strval($property);
             $object = $context->getContext(VariableScopeInterface::class);
-            if ($object != null) {
+            if ($object !== null) {
                 $variableScope = $object;
                 if ($variableScope->hasVariable($variable)) {
                     $variableScope->setVariable($variable, $value);

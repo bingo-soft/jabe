@@ -31,7 +31,7 @@ class SetPropertyCmd implements CommandInterface
 
         $property = $propertyManager->findPropertyById($this->name);
         $operation = null;
-        if ($property != null) {
+        if ($property !== null) {
             // update
             $property->setValue($this->value);
             $operation = UserOperationLogEntryInterface::OPERATION_TYPE_UPDATE;

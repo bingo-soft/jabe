@@ -82,12 +82,12 @@ class IdentityLinkEntity implements \Serializable, IdentityLinkInterface, DbEnti
 
     public function isUser(): bool
     {
-        return $this->userId != null;
+        return $this->userId !== null;
     }
 
     public function isGroup(): bool
     {
-        return $this->groupId != null;
+        return $this->groupId !== null;
     }
 
     public function getId(): ?string
@@ -117,7 +117,7 @@ class IdentityLinkEntity implements \Serializable, IdentityLinkInterface, DbEnti
 
     public function setUserId(string $userId): void
     {
-        if ($this->groupId != null && $userId != null) {
+        if ($this->groupId !== null && $userId !== null) {
             //throw LOG.taskIsAlreadyAssignedException("userId", "groupId");
             throw new \Exception("IdentityLinkEntity exception");
         }
@@ -131,7 +131,7 @@ class IdentityLinkEntity implements \Serializable, IdentityLinkInterface, DbEnti
 
     public function setGroupId(string $groupId): void
     {
-        if ($this->userId != null && $groupId != null) {
+        if ($this->userId !== null && $groupId !== null) {
             //throw LOG.taskIsAlreadyAssignedException("groupId", "userId");
             throw new \Exception("IdentityLinkEntity exception");
         }
@@ -170,7 +170,7 @@ class IdentityLinkEntity implements \Serializable, IdentityLinkInterface, DbEnti
 
     public function getTask(): ?TaskEntity
     {
-        if (($this->task == null) && ($this->taskId != null)) {
+        if (($this->task === null) && ($this->taskId !== null)) {
             $this->task = Context::getCommandContext()
             ->getTaskManager()
             ->findTaskById($taskId);
@@ -186,7 +186,7 @@ class IdentityLinkEntity implements \Serializable, IdentityLinkInterface, DbEnti
 
     public function getProcessDef(): ?ProcessDefinitionEntity
     {
-        if (($this->processDef == null) && ($this->processDefId != null)) {
+        if (($this->processDef === null) && ($this->processDefId !== null)) {
             $this->processDef = Context::getCommandContext()
                     ->getProcessDefinitionManager()
                     ->findLatestProcessDefinitionById($processDefId);
@@ -242,10 +242,10 @@ class IdentityLinkEntity implements \Serializable, IdentityLinkInterface, DbEnti
     {
         $referenceIdAndClass = [];
 
-        if ($this->processDefId != null) {
+        if ($this->processDefId !== null) {
             $referenceIdAndClass[$this->processDefId] = ProcessDefinitionEntity::class;
         }
-        if ($this->taskId != null) {
+        if ($this->taskId !== null) {
             $referenceIdAndClass[$this->taskId] = TaskEntity::class;
         }
 

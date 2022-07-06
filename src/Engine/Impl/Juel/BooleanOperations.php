@@ -77,7 +77,7 @@ class BooleanOperations
         if ($o1 == $o2) {
             return false;
         }
-        if ($o1 == null || $o2 == null) {
+        if ($o1 === null || $o2 === null) {
             return false;
         }
         return self::lt0($converter, $o1, $o2);
@@ -88,7 +88,7 @@ class BooleanOperations
         if ($o1 == $o2) {
             return false;
         }
-        if ($o1 == null || $o2 == null) {
+        if ($o1 === null || $o2 === null) {
             return false;
         }
         return self::gt0($converter, $o1, $o2);
@@ -99,7 +99,7 @@ class BooleanOperations
         if ($o1 == $o2) {
             return false;
         }
-        if ($o1 == null || $o2 == null) {
+        if ($o1 === null || $o2 === null) {
             return false;
         }
         return !self::lt0($converter, $o1, $o2);
@@ -110,7 +110,7 @@ class BooleanOperations
         if ($o1 == $o2) {
             return false;
         }
-        if ($o1 == null || $o2 == null) {
+        if ($o1 === null || $o2 === null) {
             return false;
         }
         return !self::gt0($converter, $o1, $o2);
@@ -121,7 +121,7 @@ class BooleanOperations
         if ($o1 == $o2) {
             return false;
         }
-        if ($o1 == null || $o2 == null) {
+        if ($o1 === null || $o2 === null) {
             return false;
         }
         $t1 = gettype($o1);

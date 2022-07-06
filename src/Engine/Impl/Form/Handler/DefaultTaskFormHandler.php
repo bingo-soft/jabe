@@ -26,18 +26,18 @@ class DefaultTaskFormHandler extends DefaultFormHandler implements TaskFormHandl
         $formDefinitionBinding = $formDefinition->getFormDefinitionBinding();
         $formDefinitionVersion = $formDefinition->getFormDefinitionVersion();
 
-        if ($formKey != null) {
+        if ($formKey !== null) {
             $formValue = $formKey->getValue($task);
-            if ($formValue != null) {
+            if ($formValue !== null) {
                 $taskFormData->setFormKey(strval($formValue));
             }
-        } elseif ($formDefinitionKey != null && $formDefinitionBinding != null) {
+        } elseif ($formDefinitionKey !== null && $formDefinitionBinding !== null) {
             $formRefKeyValue = $formDefinitionKey->getValue($task);
-            if ($formRefKeyValue != null) {
+            if ($formRefKeyValue !== null) {
                 $ref = new FormRefImpl(strval($formRefKeyValue), $formDefinitionBinding);
-                if ($formDefinitionBinding == self::FORM_REF_BINDING_VERSION && $formDefinitionVersion != null) {
+                if ($formDefinitionBinding == self::FORM_REF_BINDING_VERSION && $formDefinitionVersion !== null) {
                     $formRefVersionValue = $formDefinitionVersion->getValue($task);
-                    if ($formRefVersionValue != null) {
+                    if ($formRefVersionValue !== null) {
                         $ref->setVersion(intval($formRefVersionValue));
                     }
                 }

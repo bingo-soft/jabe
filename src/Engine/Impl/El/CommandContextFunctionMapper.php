@@ -24,7 +24,7 @@ class CommandContextFunctionMapper extends FunctionMapper
 
     protected function ensureContextFunctionMapInitialized(): void
     {
-        if (self::$COMMAND_CONTEXT_FUNCTION_MAP == null) {
+        if (self::$COMMAND_CONTEXT_FUNCTION_MAP === null) {
             self::$COMMAND_CONTEXT_FUNCTION_MAP = [];
             $this->createMethodBindings();
         }
@@ -40,7 +40,7 @@ class CommandContextFunctionMapper extends FunctionMapper
     public static function currentUser(): ?string
     {
         $commandContext = Context::getCommandContext();
-        if ($commandContext != null) {
+        if ($commandContext !== null) {
             return $commandContext->getAuthenticatedUserId();
         } else {
             return null;
@@ -50,7 +50,7 @@ class CommandContextFunctionMapper extends FunctionMapper
     public static function currentUserGroups(): array
     {
         $commandContext = Context::getCommandContext();
-        if ($commandContext != null) {
+        if ($commandContext !== null) {
             return $commandContext->getAuthenticatedGroupIds();
         } else {
             return null;

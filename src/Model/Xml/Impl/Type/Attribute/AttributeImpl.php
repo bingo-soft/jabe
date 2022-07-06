@@ -50,16 +50,16 @@ abstract class AttributeImpl implements AttributeInterface
      */
     public function getValue(ModelElementInstanceInterface $modelElement)
     {
-        if ($this->namespaceUri == null) {
+        if ($this->namespaceUri === null) {
             $value = $modelElement->getAttributeValue($this->attributeName);
         } else {
             $value = $modelElement->getAttributeValueNs($this->namespaceUri, $this->attributeName);
-            if ($value == null) {
+            if ($value === null) {
                 $alternativeNamespaces = $this->owningElementType->getModel()
                                              ->getAlternativeNamespaces($this->namespaceUri);
                 foreach ($alternativeNamespaces as $namespace) {
                     $value = $modelElement->getAttributeValueNs($namespace, $this->attributeName);
-                    if ($value != null) {
+                    if ($value !== null) {
                         break;
                     }
                 }
@@ -83,7 +83,7 @@ abstract class AttributeImpl implements AttributeInterface
         bool $withReferenceUpdate = true
     ): void {
         $xmlValue = $this->convertModelValueToXmlValue($value);
-        if ($this->namespaceUri == null) {
+        if ($this->namespaceUri === null) {
             $modelElement->setAttributeValue(
                 $this->attributeName,
                 $xmlValue,
@@ -169,7 +169,7 @@ abstract class AttributeImpl implements AttributeInterface
 
     public function removeAttribute(ModelElementInstanceInterface $modelElement): void
     {
-        if ($this->namespaceUri == null) {
+        if ($this->namespaceUri === null) {
             $modelElement->removeAttribute($this->attributeName);
         } else {
             $modelElement->removeAttributeNs($this->namespaceUri, $this->attributeName);

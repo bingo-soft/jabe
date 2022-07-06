@@ -142,7 +142,7 @@ class DeleteProcessDefinitionsByIdsCmd implements CommandInterface, \Serializabl
         if ($this->isLatestProcessDefinition($firstProcessDefinition)) {
             foreach ($processDefinitions as $processDefinition) {
                 $previousProcessDefinitionId = $processDefinition->getPreviousProcessDefinitionId();
-                if ($previousProcessDefinitionId != null && !in_array($previousProcessDefinitionId, $this->processDefinitionIds)) {
+                if ($previousProcessDefinitionId !== null && !in_array($previousProcessDefinitionId, $this->processDefinitionIds)) {
                     $commandContext = Context::getCommandContext();
                     $processDefinitionManager = $commandContext->getProcessDefinitionManager();
                     $newLatestProcessDefinition = $processDefinitionManager->findLatestDefinitionById($previousProcessDefinitionId);
@@ -205,7 +205,7 @@ class DeleteProcessDefinitionsByIdsCmd implements CommandInterface, \Serializabl
             );
         }
 
-        if ($newLatestProcessDefinition != null) {
+        if ($newLatestProcessDefinition !== null) {
             $configuration = Context::getProcessEngineConfiguration();
             $deploymentCache = $configuration->getDeploymentCache();
             $newLatestProcessDefinition = $deploymentCache->resolveProcessDefinition($newLatestProcessDefinition);

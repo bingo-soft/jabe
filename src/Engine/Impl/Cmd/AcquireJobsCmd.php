@@ -54,7 +54,7 @@ class AcquireJobsCmd implements CommandInterface, OptimisticLockingListenerInter
                 if (array_key_exists($job->getProcessInstanceId(), $exclusiveJobsByProcessInstance)) {
                     $list = $exclusiveJobsByProcessInstance[$job->getProcessInstanceId()];
                 }
-                if ($list == null) {
+                if ($list === null) {
                     $list = [];
                 }
                 $list[] = $job->getId();

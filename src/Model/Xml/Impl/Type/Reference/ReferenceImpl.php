@@ -42,7 +42,7 @@ abstract class ReferenceImpl implements ReferenceInterface
         $referenceTargetIdentifier = $this->referenceTargetAttribute->getValue($referenceTargetElement);
         $xml = $modelInstance->getDocument()->getDomSource()->saveXML();
         $existingElement = $modelInstance->getModelElementById($referenceTargetIdentifier);
-        if ($existingElement == null || !$existingElement->equals($referenceTargetElement)) {
+        if ($existingElement === null || !$existingElement->equals($referenceTargetElement)) {
             throw new ModelReferenceException("Cannot create reference to model element");
         } else {
             $this->setReferenceIdentifier($referenceSourceElement, $referenceTargetIdentifier);

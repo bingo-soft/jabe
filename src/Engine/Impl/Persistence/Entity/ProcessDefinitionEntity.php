@@ -76,7 +76,7 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
     {
         $newExecution = ExecutionEntity::createNewExecution();
 
-        if ($this->tenantId != null) {
+        if ($this->tenantId !== null) {
             $newExecution->setTenantId($tenantId);
         }
 
@@ -100,16 +100,16 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         $processInstance->setProcessInstance($processInstance);
 
         // initialize business key
-        if ($businessKey != null) {
+        if ($businessKey !== null) {
             $processInstance->setBusinessKey($businessKey);
         }
 
         // initialize case instance id
-        /*if ($caseInstanceId != null) {
+        /*if ($caseInstanceId !== null) {
             $processInstance->setCaseInstanceId($caseInstanceId);
         }*/
 
-        if ($this->tenantId != null) {
+        if ($this->tenantId !== null) {
             $processInstance->setTenantId($this->tenantId);
         }
 
@@ -181,14 +181,14 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         $previousProcessDefinition = null;
 
         $previousProcessDefinitionId = $this->getPreviousProcessDefinitionId();
-        if ($previousProcessDefinitionId != null) {
+        if ($previousProcessDefinitionId !== null) {
             $previousProcessDefinition = $this->loadProcessDefinition($previousProcessDefinitionId);
 
-            if ($previousProcessDefinition == null) {
+            if ($previousProcessDefinition === null) {
                 $this->resetPreviousProcessDefinitionId();
                 $previousProcessDefinitionId = $this->getPreviousProcessDefinitionId();
 
-                if ($previousProcessDefinitionId != null) {
+                if ($previousProcessDefinitionId !== null) {
                     $previousProcessDefinition = $this->loadProcessDefinition($previousProcessDefinitionId);
                 }
             }
@@ -207,12 +207,12 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
 
         $processDefinition = $deploymentCache->findProcessDefinitionFromCache($processDefinitionId);
 
-        if ($processDefinition == null) {
+        if ($processDefinition === null) {
             $commandContext = Context::getCommandContext();
             $processDefinitionManager = $commandContext->getProcessDefinitionManager();
             $processDefinition = $processDefinitionManager->findLatestProcessDefinitionById($processDefinitionId);
 
-            if ($processDefinition != null) {
+            if ($processDefinition !== null) {
                 $processDefinition = $deploymentCache->resolveProcessDefinition($processDefinition);
             }
         }
@@ -239,12 +239,12 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
 
     protected function ensurePreviousProcessDefinitionIdInitialized(): void
     {
-        if ($this->previousProcessDefinitionId == null && !$this->firstVersion) {
+        if ($this->previousProcessDefinitionId === null && !$this->firstVersion) {
             $this->previousProcessDefinitionId = Context::getCommandContext()
                 ->getProcessDefinitionManager()
                 ->findPreviousProcessDefinitionId($this->key, $this->version, $this->tenantId);
 
-            if ($this->previousProcessDefinitionId == null) {
+            if ($this->previousProcessDefinitionId === null) {
                 $this->firstVersion = true;
             }
         }

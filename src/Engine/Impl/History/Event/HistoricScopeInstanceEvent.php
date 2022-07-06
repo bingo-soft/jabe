@@ -32,9 +32,9 @@ class HistoricScopeInstanceEvent extends HistoryEvent
 
     public function getDurationInMillis(): ?int
     {
-        if ($this->durationInMillis != null) {
+        if ($this->durationInMillis !== null) {
             return $this->durationInMillis;
-        } elseif ($this->startTime != null && $this->endTime != null) {
+        } elseif ($this->startTime !== null && $this->endTime !== null) {
             //@TODO. Probably should multiply by 1000?
             $et = new \DateTime($this->endTime);
             $endTimeUt = $et->getTimestamp();

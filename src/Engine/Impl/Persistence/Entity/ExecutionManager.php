@@ -58,7 +58,7 @@ class ExecutionManager extends AbstractManager
     {
         $execution = $this->findExecutionById($processInstanceId);
 
-        if ($execution == null) {
+        if ($execution === null) {
             //throw LOG.requestedProcessInstanceNotFoundException(processInstanceId);
             throw new \Exception("Execution");
         }

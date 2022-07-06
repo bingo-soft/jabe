@@ -30,7 +30,7 @@ class DomDocumentImpl implements DomDocumentInterface
     public function getRootElement(): ?DomElementInterface
     {
         $documentElement = $this->document->documentElement;
-        if ($documentElement != null) {
+        if ($documentElement !== null) {
             return new DomElementImpl($documentElement);
         } else {
             return null;
@@ -41,7 +41,7 @@ class DomDocumentImpl implements DomDocumentInterface
     {
         $documentElement = $this->document->documentElement;
         $newDocumentElement = $rootElement->getElement();
-        if ($documentElement != null) {
+        if ($documentElement !== null) {
             $this->document->replaceChild($newDocumentElement, $documentElement);
         } else {
             $this->document->appendChild($newDocumentElement);
@@ -58,7 +58,7 @@ class DomDocumentImpl implements DomDocumentInterface
     public function getElementById(string $id): ?DomElementInterface
     {
         $element = $this->document->getElementById($id);
-        if ($element != null) {
+        if ($element !== null) {
             return new DomElementImpl($element);
         } else {
             return null;
@@ -74,7 +74,7 @@ class DomDocumentImpl implements DomDocumentInterface
     public function registerNamespace(?string $prefix, string $namespaceUri): void
     {
         $rootElement = $this->getRootElement();
-        if ($rootElement != null) {
+        if ($rootElement !== null) {
             $rootElement->registerNamespace($prefix, $namespaceUri);
         } else {
             throw new ModelException("Unable to define a new namespace without a root document element");
@@ -84,7 +84,7 @@ class DomDocumentImpl implements DomDocumentInterface
     public function getUnusedGenericNsPrefix(): string
     {
         $documentElement = $this->document->documentElement;
-        if ($documentElement == null) {
+        if ($documentElement === null) {
             return self::GENERIC_NS_PREFIX . "0";
         } else {
             for ($i = 0; $i < PHP_INT_MAX; $i += 1) {

@@ -28,7 +28,7 @@ class EventSubProcessStartConditionalEventActivityBehavior extends EventSubProce
         $execution = $eventSubscription->getExecution();
 
         if (
-            $execution != null &&
+            $execution !== null &&
             !$execution->isEnded() &&
             $execution->isScope() &&
             $conditionalEvent->tryEvaluate($variableEvent, $execution)

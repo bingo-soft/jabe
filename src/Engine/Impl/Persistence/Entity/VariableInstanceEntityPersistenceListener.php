@@ -13,7 +13,7 @@ class VariableInstanceEntityPersistenceListener implements VariableInstanceLifec
 
     public static function instance(): VariableInstanceLifecycleListenerInterface
     {
-        if (self::$INSTANCE == null) {
+        if (self::$INSTANCE === null) {
             self::$INSTANCE = new VariableInstanceEntityPersistenceListener();
         }
         return self::$INSTANCE;

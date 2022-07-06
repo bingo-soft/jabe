@@ -109,9 +109,9 @@ abstract class AbstractRenderFormDelegate
     protected function renderFormData(FormDataInterface $formData): string
     {
         if (
-            $formData == null
-            || ($formData->getFormFields() == null || $formData->getFormFields()->isEmpty())
-            && ($formData->getFormProperties() == null || $formData->getFormProperties()->isEmpty())
+            $formData === null
+            || ($formData->getFormFields() === null || $formData->getFormFields()->isEmpty())
+            && ($formData->getFormProperties() === null || $formData->getFormProperties()->isEmpty())
         ) {
             return null;
         } else {
@@ -150,7 +150,7 @@ abstract class AbstractRenderFormDelegate
         $formFieldLabel = $formField->getLabel();
 
         // write label
-        if ($formFieldLabel != null && !empty($formFieldLabel)) {
+        if ($formFieldLabel !== null && !empty($formFieldLabel)) {
             $labelElement = (new HtmlElementWriter(self::LABEL_ELEMENT))
                 ->attribute(self::FOR_ATTRIBUTE, $formFieldId)
                 ->textContent($formFieldLabel);
@@ -272,7 +272,7 @@ abstract class AbstractRenderFormDelegate
 
         // add default value
         $defaultValue = $formField->getDefaultValue();
-        if ($defaultValue != null) {
+        if ($defaultValue !== null) {
             $inputField->attribute(self::VALUE_ATTRIBUTE, strval($defaultValue));
         }
 

@@ -87,7 +87,7 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
 
         EnsureUtil::ensureNotNull("You should call any of the orderBy methods first before specifying a direction", "currentOrderingProperty", $currentOrderingProperty);
 
-        if ($currentOrderingProperty->getDirection() != null) {
+        if ($currentOrderingProperty->getDirection() !== null) {
             EnsureUtil::ensureNull("Invalid query: can specify only one direction desc() or asc() for an ordering constraint", "direction", $direction);
         }
 
@@ -124,9 +124,9 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
 
     public function executeResult(string $resultType)
     {
-        if ($this->commandExecutor != null) {
+        if ($this->commandExecutor !== null) {
             if (!$this->maxResultsLimitEnabled) {
-                $this->maxResultsLimitEnabled = Context::getCommandContext() == null;
+                $this->maxResultsLimitEnabled = Context::getCommandContext() === null;
             }
             return $this->commandExecutor->execute($this);
         }
@@ -145,7 +145,7 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
     public function count(): int
     {
         $this->resultType = self::RESULT_TYPES['COUNT'];
-        if ($this->commandExecutor != null) {
+        if ($this->commandExecutor !== null) {
             return $this->commandExecutor->execute($this);
         }
         return $this->evaluateExpressionsAndExecuteCount(Context::getCommandContext());
@@ -154,7 +154,7 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
     public function unlimitedList(): array
     {
         $this->resultType = self::RESULT_TYPES['LIST'];
-        if ($this->commandExecutor != null) {
+        if ($this->commandExecutor !== null) {
             return $this->commandExecutor->execute($this);
         }
         return $this->evaluateExpressionsAndExecuteList(Context::getCommandContext(), null);
@@ -339,7 +339,7 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
     {
         $this->resultType = self::RESULT_TYPES['LIST_IDS'];
         $ids = [];
-        if ($this->commandExecutor != null) {
+        if ($this->commandExecutor !== null) {
             $ids = $this->commandExecutor->execute($this);
         } else {
             $ids = $this->evaluateExpressionsAndExecuteIdsList(Context::getCommandContext());
@@ -356,7 +356,7 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
     {
         $this->resultType = self::RESULT_TYPES['LIST_DEPLOYMENT_ID_MAPPINGS'];
         $ids = [];
-        if ($this->commandExecutor != null) {
+        if ($this->commandExecutor !== null) {
             $ids = $this->commandExecutor->execute($this);
         } else {
             $ids = $this->evaluateExpressionsAndExecuteDeploymentIdMappingsList(Context::getCommandContext());

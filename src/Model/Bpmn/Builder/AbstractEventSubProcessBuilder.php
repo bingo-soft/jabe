@@ -25,7 +25,7 @@ abstract class AbstractEventSubProcessBuilder extends AbstractFlowElementBuilder
         $startShape = $this->createBpmnShape($start);
         $subProcessShape = $this->findBpmnShape($this->getElement());
 
-        if ($subProcessShape != null) {
+        if ($subProcessShape !== null) {
             $subProcessBounds = $subProcessShape->getBounds();
             $startBounds = $startShape->getBounds();
 

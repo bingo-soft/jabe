@@ -29,7 +29,7 @@ class FilterManager extends AbstractManager
         $query = $filter->getQuery();
         $query->validate(StoredQueryValidator::get());
 
-        if ($filter->getId() == null) {
+        if ($filter->getId() === null) {
             $this->checkAuthorization(Permissions::create(), Resources::filter(), AuthorizationInterface::ANY);
             $this->getDbEntityManager()->insert($filter);
             $this->createDefaultAuthorizations($filter);

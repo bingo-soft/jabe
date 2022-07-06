@@ -94,7 +94,7 @@ class ProcessEngineImpl implements ProcessEngineInterface
 
         $this->executeSchemaOperations();
 
-        if ($this->name == null) {
+        if ($this->name === null) {
             //LOG.processEngineCreated(ProcessEngines.NAME_DEFAULT);
         } else {
             //LOG.processEngineCreated(name);
@@ -102,7 +102,7 @@ class ProcessEngineImpl implements ProcessEngineInterface
 
         ProcessEngines::registerProcessEngine($this);
 
-        if (($this->jobExecutor != null)) {
+        if (($this->jobExecutor !== null)) {
             // register process engine with Job Executor
             $this->jobExecutor->registerProcessEngine($this);
         }
@@ -113,7 +113,7 @@ class ProcessEngineImpl implements ProcessEngineInterface
             // if no static hostname AND custom HostnameProvider are set.
             // See ProcessEngineConfigurationImpl#initHostname()
             if (
-                $this->processEngineConfiguration->getMetricsReporterIdProvider() != null
+                $this->processEngineConfiguration->getMetricsReporterIdProvider() !== null
                 && $this->processEngineConfiguration->getHostnameProvider() instanceof SimpleIpBasedProvider
             ) {
                 $reporterId = $this->processEngineConfiguration->getMetricsReporterIdProvider()->provideId($this);
@@ -160,11 +160,11 @@ class ProcessEngineImpl implements ProcessEngineInterface
         }
 
         $telemetryReporter = $this->processEngineConfiguration->getTelemetryReporter();
-        if ($telemetryReporter != null) {
+        if ($telemetryReporter !== null) {
             $telemetryReporter->stop();
         }
 
-        if (($this->jobExecutor != null)) {
+        if (($this->jobExecutor !== null)) {
             // unregister process engine with Job Executor
             $this->jobExecutor->unregisterProcessEngine($this);
         }

@@ -23,7 +23,7 @@ class JobFailureCollector implements CommandContextListenerInterface
     public function setFailure(\Throwable $failure): void
     {
         // log failure if not already present
-        if ($this->failure == null) {
+        if ($this->failure === null) {
             $this->failure = $failure;
         }
     }

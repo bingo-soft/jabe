@@ -95,11 +95,11 @@ class BatchBuilder
 
     protected function checkPermissions(): void
     {
-        if ($this->permission == null && $this->permissionHandler == null) {
+        if ($this->permission === null && $this->permissionHandler === null) {
             throw new ProcessEngineException("No permission check performed!");
         }
 
-        if ($this->permission != null) {
+        if ($this->permission !== null) {
             $checkers = $this->commandContext->getProcessEngineConfiguration()
                 ->getCommandCheckers();
             foreach ($checkers as $checker) {
@@ -107,7 +107,7 @@ class BatchBuilder
             }
         }
 
-        if ($this->permissionHandler != null) {
+        if ($this->permissionHandler !== null) {
             $this->permissionHandler->check($this->commandContext);
         }
     }
@@ -140,7 +140,7 @@ class BatchBuilder
 
     protected function setTotalJobs(BatchEntity $batch, int $invocationPerBatchJobCount): void
     {
-        if ($this->totalJobsCount != null) {
+        if ($this->totalJobsCount !== null) {
             $batch->setTotalJobs($this->totalJobsCount);
         } else {
             $instanceIds = $this->config->getIds();
@@ -157,7 +157,7 @@ class BatchBuilder
         $this->commandContext->getBatchManager()->insertBatch($batch);
 
         $seedDeploymentId = null;
-        if ($this->config->getIdMappings() != null && !empty($this->config->getIdMappings())) {
+        if ($this->config->getIdMappings() !== null && !empty($this->config->getIdMappings())) {
             $seedDeploymentId = $this->config->getIdMappings()[0]->getDeploymentId();
         }
 
@@ -172,10 +172,10 @@ class BatchBuilder
 
     public function writeOperationLog(): void
     {
-        if ($this->operationLogInstanceCountHandler == null && $this->operationLogHandler == null) {
+        if ($this->operationLogInstanceCountHandler === null && $this->operationLogHandler === null) {
             throw new ProcessEngineException("No operation log handler specified!");
         }
-        if ($this->operationLogInstanceCountHandler != null) {
+        if ($this->operationLogInstanceCountHandler !== null) {
             $instanceIds = $this->config->getIds();
 
             $instanceCount = count($instanceIds);

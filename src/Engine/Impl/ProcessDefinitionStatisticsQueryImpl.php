@@ -67,16 +67,16 @@ class ProcessDefinitionStatisticsQueryImpl extends AbstractQuery implements Proc
 
     public function isIncidentsToInclude(): bool
     {
-        return $this->includeIncidents || $this->includeRootIncidents || $this->includeIncidentsForType != null;
+        return $this->includeIncidents || $this->includeRootIncidents || $this->includeIncidentsForType !== null;
     }
 
     protected function checkQueryOk(): void
     {
         parent::checkQueryOk();
-        if ($this->includeIncidents && $this->includeIncidentsForType != null) {
+        if ($this->includeIncidents && $this->includeIncidentsForType !== null) {
             throw new ProcessEngineException("Invalid query: It is not possible to use includeIncident() and includeIncidentForType() to execute one query.");
         }
-        if ($this->includeRootIncidents && $this->includeIncidentsForType != null) {
+        if ($this->includeRootIncidents && $this->includeIncidentsForType !== null) {
             throw new ProcessEngineException("Invalid query: It is not possible to use includeRootIncident() and includeIncidentForType() to execute one query.");
         }
         if ($this->includeIncidents && $this->includeRootIncidents) {

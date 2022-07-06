@@ -34,7 +34,7 @@ class GetTaskFormVariablesCmd extends AbstractGetFormVariablesCmd
 
         // first, evaluate form fields
         $taskDefinition = $task->getTaskDefinition();
-        if ($taskDefinition != null) {
+        if ($taskDefinition !== null) {
             $taskFormData = $taskDefinition->getTaskFormHandler()->createTaskForm($task);
             foreach ($taskFormData->getFormFields() as $formField) {
                 if (empty($this->formVariableNames) || in_array($formField->getId(), $this->formVariableNames)) {

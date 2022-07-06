@@ -75,7 +75,7 @@ abstract class AbstractBaseElementBuilder extends AbstractBpmnModelElementBuilde
         ?string $identifier = null
     ): BpmnModelElementInstanceInterface {
         $instance = $this->createInstance($typeClass, $identifier);
-        if ($parent == null) {
+        if ($parent === null) {
             $parent = $this->element;
         }
         $parent->addChildElement($instance);
@@ -93,7 +93,7 @@ abstract class AbstractBaseElementBuilder extends AbstractBpmnModelElementBuilde
         ?BpmnModelElementInstanceInterface $parent,
         string $typeClass
     ): BpmnModelElementInstanceInterface {
-        if ($parent == null) {
+        if ($parent === null) {
             $parent = $this->element;
         }
         $childrenOfType = $parent->getChildElementsByType($typeClass);
@@ -177,7 +177,7 @@ abstract class AbstractBaseElementBuilder extends AbstractBpmnModelElementBuilde
         $definitions = $this->modelInstance->getModelElementsByType(ErrorEventDefinitionInterface::class);
         foreach ($definitions as $definition) {
             $error = $definition->getError();
-            if ($error != null && $error->getErrorCode() == $errorCode) {
+            if ($error !== null && $error->getErrorCode() == $errorCode) {
                 return $definition;
             }
         }
@@ -277,7 +277,7 @@ abstract class AbstractBaseElementBuilder extends AbstractBpmnModelElementBuilde
     public function createBpmnShape(FlowNodeInterface $node): ?BpmnShapeInterface
     {
         $bpmnPlane = $this->findBpmnPlane();
-        if ($bpmnPlane != null) {
+        if ($bpmnPlane !== null) {
             $bpmnShape = $this->createInstance(BpmnShapeInterface::class);
             $bpmnShape->setBpmnElement($node);
             $nodeBounds = $this->createInstance(BoundsInterface::class);
@@ -319,7 +319,7 @@ abstract class AbstractBaseElementBuilder extends AbstractBpmnModelElementBuilde
         $x = 0;
         $y = 0;
 
-        if ($source != null) {
+        if ($source !== null) {
             $sourceBounds = $source->getBounds();
 
             $sourceX = $sourceBounds->getX();
@@ -337,7 +337,7 @@ abstract class AbstractBaseElementBuilder extends AbstractBpmnModelElementBuilde
                 } else {
                     $last = $outgoing[count($outgoing) - 1];
                     $targetShape = $this->findBpmnShape($last->getTarget());
-                    if ($targetShape != null) {
+                    if ($targetShape !== null) {
                         $targetBounds = $targetShape->getBounds();
                         $lastY = $targetBounds->getY();
                         $lastHeight = $targetBounds->getHeight();
@@ -353,7 +353,7 @@ abstract class AbstractBaseElementBuilder extends AbstractBpmnModelElementBuilde
     public function createEdge(BaseElementInterface $baseElement): ?BpmnEdgeInterface
     {
         $bpmnPlane = $this->findBpmnPlane();
-        if ($bpmnPlane != null) {
+        if ($bpmnPlane !== null) {
             $edge = $this->createInstance(BpmnEdgeInterface::class);
             $edge->setBpmnElement($baseElement);
             $this->setWaypoints($edge);
@@ -383,7 +383,7 @@ abstract class AbstractBaseElementBuilder extends AbstractBpmnModelElementBuilde
         $source = $this->findBpmnShape($edgeSource);
         $target = $this->findBpmnShape($edgeTarget);
 
-        if ($source != null && $target != null) {
+        if ($source !== null && $target !== null) {
             $sourceBounds = $source->getBounds();
             $targetBounds = $target->getBounds();
 
@@ -463,7 +463,7 @@ abstract class AbstractBaseElementBuilder extends AbstractBpmnModelElementBuilde
         while ($parent instanceof SubProcessInterface) {
             $subProcessShape = $this->findBpmnShape($parent);
 
-            if ($subProcessShape != null) {
+            if ($subProcessShape !== null) {
                 $subProcessBounds = $subProcessShape->getBounds();
                 $innerX = $innerShapeBounds->getX();
                 $innerWidth = $innerShapeBounds->getWidth();

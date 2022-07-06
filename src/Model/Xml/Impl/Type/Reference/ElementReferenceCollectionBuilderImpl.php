@@ -39,7 +39,7 @@ class ElementReferenceCollectionBuilderImpl implements ElementReferenceCollectio
         $this->elementReferenceCollectionImpl->setReferenceSourceElementType($referenceSourceType);
 
         $idAttribute = $referenceTargetType->getAttribute("id");
-        if ($idAttribute != null) {
+        if ($idAttribute !== null) {
             $idAttribute->registerIncoming($this->elementReferenceCollectionImpl);
             $this->elementReferenceCollectionImpl->setReferenceTargetAttribute($idAttribute);
         } else {

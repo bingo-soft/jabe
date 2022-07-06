@@ -41,7 +41,7 @@ class DeleteMetricsCmd implements CommandInterface, \Serializable
 
         $this->writeUserOperationLog($commandContext);
 
-        if ($this->timestamp == null && $this->reporter == null) {
+        if ($this->timestamp === null && $this->reporter === null) {
             $commandContext->getMeterLogManager()
             ->deleteAll();
         } else {
@@ -54,10 +54,10 @@ class DeleteMetricsCmd implements CommandInterface, \Serializable
     public function writeUserOperationLog(CommandContext $commandContext)
     {
         $propertyChanges = [];
-        if ($this->timestamp != null) {
+        if ($this->timestamp !== null) {
             $propertyChanges[] = new PropertyChange("timestamp", null, $this->timestamp);
         }
-        if ($this->reporter != null) {
+        if ($this->reporter !== null) {
             $propertyChanges[] = new PropertyChange("reporter", null, $this->reporter);
         }
         if (empty($propertyChanges)) {

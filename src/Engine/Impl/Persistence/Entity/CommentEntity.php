@@ -90,7 +90,7 @@ class CommentEntity implements CommentInterface, EventInterface, DbEntityInterfa
         if (is_array($messageParts)) {
             $stringBuilder = "";
             foreach ($messageParts as $part) {
-                if ($part != null) {
+                if ($part !== null) {
                     $stringBuilder .= str_replace(self::MESSAGE_PARTS_MARKER, " | ", $part);
                     $stringBuilder .= self::MESSAGE_PARTS_MARKER;
                 } else {

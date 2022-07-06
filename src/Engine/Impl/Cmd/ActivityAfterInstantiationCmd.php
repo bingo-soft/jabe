@@ -20,7 +20,7 @@ class ActivityAfterInstantiationCmd extends AbstractInstantiationCmd
     //@TODO. Check invocation arguments ordering
     public function __construct(?string $processInstanceId, string $activityId, ?string $ancestorActivityInstanceId = null)
     {
-        if ($processInstanceId != null) {
+        if ($processInstanceId !== null) {
             parent::__construct($processInstanceId, $ancestorActivityInstanceId);
         }
         $this->activityId = $activityId;
@@ -69,7 +69,7 @@ class ActivityAfterInstantiationCmd extends AbstractInstantiationCmd
         $sb .= "Start after activity '";
         $sb .= $this->activityId;
         $sb .= "'";
-        if ($this->ancestorActivityInstanceId != null) {
+        if ($this->ancestorActivityInstanceId !== null) {
             $sb .= " with ancestor activity instance '";
             $sb .= $this->ancestorActivityInstanceId;
             $sb .= "'";

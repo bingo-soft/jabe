@@ -13,7 +13,7 @@ class VariableInstanceSequenceCounterListener implements VariableInstanceLifecyc
 
     public static function instance(): VariableInstanceLifecycleListenerInterface
     {
-        if (self::$INSTANCE == null) {
+        if (self::$INSTANCE === null) {
             self::$INSTANCE = new VariableInstanceSequenceCounterListener();
         }
         return self::$INSTANCE;

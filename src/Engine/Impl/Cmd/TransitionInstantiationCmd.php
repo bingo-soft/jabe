@@ -42,7 +42,7 @@ class TransitionInstantiationCmd extends AbstractInstantiationCmd
         $sb .= "Start transition '";
         $sb .= $this->transitionId;
         $sb .= "'";
-        if ($this->ancestorActivityInstanceId != null) {
+        if ($this->ancestorActivityInstanceId !== null) {
             $sb .= " with ancestor activity instance '";
             $sb .= $this->ancestorActivityInstanceId;
             $sb .= "'";

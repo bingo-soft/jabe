@@ -61,12 +61,12 @@ abstract class AddIdentityLinkCmd implements CommandInterface, \Serializable
 
         // Special treatment for assignee, group cannot be used an userId may be null
         if (IdentityLinkType::ASSIGNEE == $type) {
-            if ($groupId != null) {
+            if ($groupId !== null) {
                 throw new ProcessEngineException("Incompatible usage: cannot use ASSIGNEE"
                     . " together with a groupId");
             }
         } else {
-            if ($userId == null && $groupId == null) {
+            if ($userId === null && $groupId === null) {
                 throw new ProcessEngineException("userId and groupId cannot both be null");
             }
         }

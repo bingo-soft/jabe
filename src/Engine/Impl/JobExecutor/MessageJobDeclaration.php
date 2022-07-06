@@ -53,8 +53,8 @@ class MessageJobDeclaration extends JobDeclaration
 
         $execution = $context->getExecution();
         $activity = $execution->getActivity();
-        if ($activity != null && $activity->isAsyncAfter()) {
-            if ($execution->getTransition() != null) {
+        if ($activity !== null && $activity->isAsyncAfter()) {
+            if ($execution->getTransition() !== null) {
                 // store id of selected transition in case this is async after.
                 // id is not serialized with the execution -> we need to remember it as
                 // job handler configuration.

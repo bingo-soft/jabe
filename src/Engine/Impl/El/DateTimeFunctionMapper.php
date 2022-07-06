@@ -21,7 +21,7 @@ class DateTimeFunctionMapper extends FunctionMapper
 
     protected function ensureContextFunctionMapInitialized(): void
     {
-        if (self::$DATE_TIME_FUNCTION_MAP == null) {
+        if (self::$DATE_TIME_FUNCTION_MAP === null) {
             self::$DATE_TIME_FUNCTION_MAP = [];
             $this->createMethodBindings();
         }

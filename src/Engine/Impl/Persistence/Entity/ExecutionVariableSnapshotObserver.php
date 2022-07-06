@@ -26,15 +26,15 @@ class ExecutionVariableSnapshotObserver implements ExecutionObserverInterface
 
     public function onClear(ExecutionEntity $execution): void
     {
-        if ($this->variableSnapshot == null) {
+        if ($this->variableSnapshot === null) {
             $this->variableSnapshot = $this->getVariables($this->localVariables);
         }
     }
 
     public function getVariables(?bool $localVariables = null): VariableMapInterface
     {
-        if ($localVariables == null) {
-            if ($this->variableSnapshot == null) {
+        if ($localVariables === null) {
+            if ($this->variableSnapshot === null) {
                 return $this->getVariables($this->localVariables);
             } else {
                 return $this->variableSnapshot;

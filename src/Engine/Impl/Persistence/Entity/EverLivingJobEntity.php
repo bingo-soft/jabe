@@ -30,7 +30,7 @@ class EverLivingJobEntity extends JobEntity
     {
         // clean additional data related to this job
         $jobHandler = $this->getJobHandler();
-        if ($jobHandler != null) {
+        if ($jobHandler !== null) {
             $jobHandler->onDelete($this->getJobHandlerConfiguration(), $this);
         }
 
@@ -38,7 +38,7 @@ class EverLivingJobEntity extends JobEntity
         $this->setRetries($commandContext->getProcessEngineConfiguration()->getDefaultNumberOfRetries());
 
         //delete the job's exception byte array and exception message
-        if ($this->exceptionByteArrayId != null) {
+        if ($this->exceptionByteArrayId !== null) {
             $this->clearFailedJobException();
         }
 

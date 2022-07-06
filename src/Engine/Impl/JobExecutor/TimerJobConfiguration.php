@@ -46,7 +46,7 @@ class TimerJobConfiguration implements JobHandlerConfigurationInterface
     {
         $canonicalString = $this->timerElementKey;
 
-        if ($this->timerElementSecondaryKey != null) {
+        if ($this->timerElementSecondaryKey !== null) {
             $canonicalString .= self::JOB_HANDLER_CONFIG_PROPERTY_DELIMITER . self::JOB_HANDLER_CONFIG_TASK_LISTENER_PREFIX . $this->timerElementSecondaryKey;
         }
 

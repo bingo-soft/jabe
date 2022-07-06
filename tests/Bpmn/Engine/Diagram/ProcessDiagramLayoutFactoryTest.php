@@ -15,6 +15,6 @@ class ProcessDiagramLayoutFactoryTest extends TestCase
         $layout = $factory->getProcessDiagramLayout($bpmnXmlStream, $imageStream);
         $this->assertCount(16, $layout->getElements());
         $this->assertCount(16, $layout->getNodes());
-        $this->assertFalse($layout->getNode("BPMNDiagram") == null);
+        $this->assertFalse($layout->getNode("BPMNDiagram") === null);
     }
 }

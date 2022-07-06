@@ -27,7 +27,7 @@ class ConcurrentLruCache implements CacheInterface
     {
         if (array_key_exists($key, $this->cache)) {
             $value = $this->cache[$key];
-            if ($value != null) {
+            if ($value !== null) {
                 foreach ($this->keys as $innerKey => $value) {
                     if ($value == $key) {
                         unset($this->keys[$innerKey]);
@@ -43,7 +43,7 @@ class ConcurrentLruCache implements CacheInterface
 
     public function put($key, $value): void
     {
-        if ($key == null || $value == null) {
+        if ($key === null || $value === null) {
             throw new \Exception("NullPointer");
         }
 
@@ -52,7 +52,7 @@ class ConcurrentLruCache implements CacheInterface
             $previousValue = $this->cache[$key];
         }
         $this->cache[$key] = $value;
-        if ($previousValue != null) {
+        if ($previousValue !== null) {
             foreach ($this->keys as $innerKey => $value) {
                 if ($value == $key) {
                     unset($this->keys[$innerKey]);
@@ -63,7 +63,7 @@ class ConcurrentLruCache implements CacheInterface
 
         if (count($this->cache) > $this->capacity) {
             $lruKey = array_shift($this->keys);
-            if ($lruKey != null) {
+            if ($lruKey !== null) {
                 foreach ($this->cache as $innerKey => $value) {
                     if ($value == $lruKey) {
                         unset($this->cache[$innerKey]);

@@ -31,7 +31,7 @@ abstract class HistoryExecutionListener implements ExecutionListenerInterface
         // delegate creation of the history event to the producer
         $historyEvent = $this->createHistoryEvent($execution);
 
-        if ($historyEvent != null) {
+        if ($historyEvent !== null) {
             // pass the event to the handler
             $historyEventHandler->handleEvent($historyEvent);
         }
@@ -39,7 +39,7 @@ abstract class HistoryExecutionListener implements ExecutionListenerInterface
 
     protected function ensureHistoryLevelInitialized(): void
     {
-        if ($this->historyLevel == null) {
+        if ($this->historyLevel === null) {
             $this->historyLevel = Context::getProcessEngineConfiguration()->getHistoryLevel();
         }
     }

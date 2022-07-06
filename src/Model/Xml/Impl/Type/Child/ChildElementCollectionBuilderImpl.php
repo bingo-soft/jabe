@@ -136,7 +136,7 @@ class ChildElementCollectionBuilderImpl implements ChildElementCollectionBuilder
 
     protected function setReferenceBuilder(ElementReferenceCollectionBuilderInterface $referenceBuilder): void
     {
-        if ($this->referenceBuilder != null) {
+        if ($this->referenceBuilder !== null) {
             new ModelException("An collection cannot have more than one reference");
         }
         $this->referebceBuilder = $referenceBuilder;
@@ -146,7 +146,7 @@ class ChildElementCollectionBuilderImpl implements ChildElementCollectionBuilder
     public function performModelBuild(ModelInterface $model): void
     {
         $elementType = $model->getType($this->childElementType);
-        if ($elementType == null) {
+        if ($elementType === null) {
             throw new ModelException(
                 sprintf(
                     "Undefined child element of type %s.",

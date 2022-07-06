@@ -25,7 +25,7 @@ class GetProcessApplicationForDeploymentCmd implements CommandInterface
             ->getProcessApplicationManager()
             ->getProcessApplicationForDeployment($this->deploymentId);
 
-        if ($reference != null) {
+        if ($reference !== null) {
             return $reference->getName();
         } else {
             return null;

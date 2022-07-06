@@ -148,7 +148,7 @@ class TaskDefinition
 
     public function getTaskListeners(?string $eventName = null): array
     {
-        if ($eventName != null) {
+        if ($eventName !== null) {
             if (array_key_exists($eventName, $this->taskListeners)) {
                 return $this->taskListeners[$eventName];
             }
@@ -159,7 +159,7 @@ class TaskDefinition
 
     public function getBuiltinTaskListeners(?string $eventName = null): array
     {
-        if ($eventName != null) {
+        if ($eventName !== null) {
             if (array_key_exists($eventName, $this->builtinTaskListeners)) {
                 return $this->builtinTaskListeners[$eventName];
             }

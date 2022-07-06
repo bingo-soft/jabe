@@ -137,9 +137,9 @@ class AlternativeNsTest extends TestModelTest
     public function testModifyingElementWithAlternativeNamespaceKeepsAlternativeNamespace(): void
     {
         $birdo = $this->modelInstance->getModelElementById("birdo");
-        $this->assertFalse($birdo == null);
+        $this->assertFalse($birdo === null);
         $wings = $birdo->getWings();
-        $this->assertFalse($wings == null);
+        $this->assertFalse($wings === null);
         $wings->setTextContent("kawusch");
 
         $childElementsByNameNs = $birdo->getDomElement()->getChildElementsByNameNs(self::MECHANICAL_NS, "wings");

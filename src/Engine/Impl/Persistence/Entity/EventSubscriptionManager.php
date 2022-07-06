@@ -131,7 +131,7 @@ class EventSubscriptionManager extends AbstractManager
 
         // add events created in this command (not visible yet in query)
         foreach ($this->createdSignalSubscriptions as $entity) {
-            if ($entity->getEventName() == $eventName && ($entity->getTenantId() == null || $this->hasTenantId($entity, $tenantId))) {
+            if ($entity->getEventName() == $eventName && ($entity->getTenantId() === null || $this->hasTenantId($entity, $tenantId))) {
                 $eventSubscriptions[] = $entity;
             }
         }
@@ -140,8 +140,8 @@ class EventSubscriptionManager extends AbstractManager
 
     protected function hasTenantId(EventSubscriptionEntity $entity, ?string $tenantId): bool
     {
-        if ($tenantId == null) {
-            return $entity->getTenantId() == null;
+        if ($tenantId === null) {
+            return $entity->getTenantId() === null;
         } else {
             return $tenantId == $entity->getTenantId();
         }
@@ -227,7 +227,7 @@ class EventSubscriptionManager extends AbstractManager
     {
         // first check cache in case entity is already loaded
         $cachedExecution = $this->getDbEntityManager()->getCachedEntity(ExecutionEntity::class, $executionId);
-        if ($cachedExecution != null && !$lockResult) {
+        if ($cachedExecution !== null && !$lockResult) {
             $eventSubscriptions = $cachedExecution->getEventSubscriptions();
             $result = [];
             foreach ($eventSubscriptions as $subscription) {
@@ -325,6 +325,6 @@ class EventSubscriptionManager extends AbstractManager
         $subscriptionEventName = $subscription->getEventName();
 
         return $type == $subscription->getEventType() &&
-                (($eventName == null && $subscriptionEventName == null) || ($eventName != null && $eventName == $subscriptionEventName));
+                (($eventName === null && $subscriptionEventName === null) || ($eventName !== null && $eventName == $subscriptionEventName));
     }
 }

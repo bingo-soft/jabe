@@ -50,7 +50,7 @@ class DefaultJobRetryCmd extends JobRetryCmd
 
         $activity = $this->getCurrentActivity($commandContext, $job);
 
-        if ($activity == null) {
+        if ($activity === null) {
             //LOG.debugFallbackToDefaultRetryStrategy();
             $this->executeStandardStrategy($commandContext);
         } else {
@@ -68,7 +68,7 @@ class DefaultJobRetryCmd extends JobRetryCmd
     protected function executeStandardStrategy(CommandContext $commandContext): void
     {
         $job = $this->getJob();
-        if ($job != null) {
+        if ($job !== null) {
             $job->unlock();
             $this->logException($job);
             $this->decrementRetries($job);
@@ -82,7 +82,7 @@ class DefaultJobRetryCmd extends JobRetryCmd
     {
         $retryConfiguration = $this->getFailedJobRetryConfiguration($job, $activity);
 
-        if ($retryConfiguration == null) {
+        if ($retryConfiguration === null) {
             $this->executeStandardStrategy($commandContext);
         } else {
             $isFirstExecution = $this->isFirstJobExecution($job);
@@ -142,7 +142,7 @@ class DefaultJobRetryCmd extends JobRetryCmd
             $retryConfiguration = $properties[$key];
         }
 
-        while ($retryConfiguration != null && $retryConfiguration->getExpression() != null) {
+        while ($retryConfiguration !== null && $retryConfiguration->getExpression() !== null) {
             $retryIntervals = $this->getFailedJobRetryTimeCycle($job, $retryConfiguration->getExpression());
             $retryConfiguration = ParseUtil::parseRetryIntervals($retryIntervals);
         }
@@ -155,13 +155,13 @@ class DefaultJobRetryCmd extends JobRetryCmd
         $executionId = $job->getExecutionId();
         $execution = null;
 
-        if ($executionId != null) {
+        if ($executionId !== null) {
             $execution = $this->fetchExecutionEntity($executionId);
         }
 
         $value = null;
 
-        if ($expression == null) {
+        if ($expression === null) {
             return null;
         }
 
@@ -186,7 +186,7 @@ class DefaultJobRetryCmd extends JobRetryCmd
 
     protected function isFirstJobExecution(JobEntity $job): bool
     {
-        return $job->getExceptionByteArrayId() == null && $job->getExceptionMessage() == null;
+        return $job->getExceptionByteArrayId() === null && $job->getExceptionMessage() === null;
     }
 
     protected function initializeRetries(JobEntity $job, int $retries): void

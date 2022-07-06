@@ -70,7 +70,7 @@ class SignalEventReceivedBuilderImpl implements SignalEventReceivedBuilderInterf
 
     public function send(): void
     {
-        if ($this->executionId != null && $this->isTenantIdSet) {
+        if ($this->executionId !== null && $this->isTenantIdSet) {
             //throw LOG.exceptionDeliverSignalToSingleExecutionWithTenantId();
             throw new \Exception("exceptionDeliverSignalToSingleExecutionWithTenantId");
         }

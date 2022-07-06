@@ -72,7 +72,7 @@ class MessageCorrelationAsyncBuilderImpl implements MessageCorrelationAsyncBuild
 
     protected function ensurePayloadProcessInstanceVariablesInitialized(): void
     {
-        if ($this->payloadProcessInstanceVariables == null) {
+        if ($this->payloadProcessInstanceVariables === null) {
             $this->payloadProcessInstanceVariables = new VariableMapImpl();
         }
     }

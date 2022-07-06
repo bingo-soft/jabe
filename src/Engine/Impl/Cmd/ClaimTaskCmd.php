@@ -49,8 +49,8 @@ class ClaimTaskCmd implements CommandInterface, \Serializable
 
         $this->checkClaimTask($task, $commandContext);
 
-        if ($this->userId != null) {
-            if ($task->getAssignee() != null) {
+        if ($this->userId !== null) {
+            if ($task->getAssignee() !== null) {
                 if ($task->getAssignee() != $this->userId) {
                     // When the task is already claimed by another user, throw exception. Otherwise, ignore
                     // this, post-conditions of method already met.

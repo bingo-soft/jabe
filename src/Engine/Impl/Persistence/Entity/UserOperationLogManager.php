@@ -125,7 +125,7 @@ class UserOperationLogManager extends AbstractHistoricManager
     {
         $operationResult = $this->getOperationType($operation);
         $operation = $operationResult ?? $operation;
-        if ($operation != null && $this->isUserOperationLogEnabled()) {
+        if ($operation !== null && $this->isUserOperationLogEnabled()) {
             $context = new UserOperationLogContext();
             $entryBuilder =
                 UserOperationLogContextEntryBuilder::entry($operation, EntityTypes::USER)
@@ -141,7 +141,7 @@ class UserOperationLogManager extends AbstractHistoricManager
     {
         $operationResult = $this->getOperationType($operation);
         $operation = $operationResult ?? $operation;
-        if ($operation != null && $this->isUserOperationLogEnabled()) {
+        if ($operation !== null && $this->isUserOperationLogEnabled()) {
             $context = new UserOperationLogContext();
             $entryBuilder =
                 UserOperationLogContextEntryBuilder::entry($operation, EntityTypes::GROUP)
@@ -157,7 +157,7 @@ class UserOperationLogManager extends AbstractHistoricManager
     {
         $operationResult = $this->getOperationType($operation);
         $operation = $operationResult ?? $operation;
-        if ($operation != null && $this->isUserOperationLogEnabled()) {
+        if ($operation !== null && $this->isUserOperationLogEnabled()) {
             $context = new UserOperationLogContext();
             $entryBuilder =
                 UserOperationLogContextEntryBuilder::entry($operation, EntityTypes::TENANT)
@@ -173,20 +173,20 @@ class UserOperationLogManager extends AbstractHistoricManager
     {
         $operationResult = $this->getOperationType($operation);
         $operation = $operationResult ?? $operation;
-        if ($operation != null && $this->isUserOperationLogEnabled()) {
-            $entityType = $tenantId == null ? EntityTypes::GROUP_MEMBERSHIP : EntityTypes::TENANT_MEMBERSHIP;
+        if ($operation !== null && $this->isUserOperationLogEnabled()) {
+            $entityType = $tenantId === null ? EntityTypes::GROUP_MEMBERSHIP : EntityTypes::TENANT_MEMBERSHIP;
             $context = new UserOperationLogContext();
             $entryBuilder =
                 UserOperationLogContextEntryBuilder::entry($operation, entityType)
                 ->category(UserOperationLogEntryInterface::CATEGORY_ADMIN);
             $propertyChanges = [];
-            if ($userId != null) {
+            if ($userId !== null) {
                 $propertyChanges[] = new PropertyChange("userId", null, $userId);
             }
-            if ($groupId != null) {
+            if ($groupId !== null) {
                 $propertyChanges[] = new PropertyChange("groupId", null, $groupId);
             }
-            if ($tenantId != null) {
+            if ($tenantId !== null) {
                 $propertyChanges[] = new PropertyChange("tenantId", null, $tenantId);
             }
             $entryBuilder->propertyChanges($propertyChanges);
@@ -246,19 +246,19 @@ class UserOperationLogManager extends AbstractHistoricManager
                 ->processDefinitionId($processDefinitionId)
                 ->processDefinitionKey($processDefinitionKey)
                 ->category(UserOperationLogEntryInterface::CATEGORY_OPERATOR);
-            if ($annotation != null) {
+            if ($annotation !== null) {
                 $entryBuilder->annotation($annotation);
             }
 
-            if ($processInstanceId != null) {
+            if ($processInstanceId !== null) {
                 $instance = $this->getProcessInstanceManager()->findExecutionById($processInstanceId);
 
-                if ($instance != null) {
+                if ($instance !== null) {
                     $entryBuilder->inContextOf($instance);
                 }
-            } elseif ($processDefinitionId != null) {
+            } elseif ($processDefinitionId !== null) {
                 $definition = $this->getProcessDefinitionManager()->findLatestProcessDefinitionById($processDefinitionId);
-                if ($definition != null) {
+                if ($definition !== null) {
                     $entryBuilder->inContextOf($definition);
                 }
             }
@@ -286,7 +286,7 @@ class UserOperationLogManager extends AbstractHistoricManager
                 ->processDefinitionKey($processDefinitionKey)
                 ->category(UserOperationLogEntryInterface::CATEGORY_OPERATOR);
 
-            if ($processDefinitionId != null) {
+            if ($processDefinitionId !== null) {
                 $definition = $this->getProcessDefinitionManager()->findLatestProcessDefinitionById($processDefinitionId);
                 $entryBuilder->inContextOf($definition);
             }
@@ -364,28 +364,28 @@ class UserOperationLogManager extends AbstractHistoricManager
                 ->propertyChanges($propertyChanges)
                 ->category(UserOperationLogEntryInterface::CATEGORY_OPERATOR);
 
-            if ($jobId != null) {
+            if ($jobId !== null) {
                 $job = $this->getJobManager()->findJobById($jobId);
                 // Backward compatibility
-                if ($job != null) {
+                if ($job !== null) {
                     $entryBuilder->inContextOf($job);
                 }
-            } elseif ($jobDefinitionId != null) {
+            } elseif ($jobDefinitionId !== null) {
                 $jobDefinition = $this->getJobDefinitionManager()->findById($jobDefinitionId);
                 // Backward compatibility
-                if ($jobDefinition != null) {
+                if ($jobDefinition !== null) {
                     $entryBuilder->inContextOf($jobDefinition);
                 }
-            } elseif ($processInstanceId != null) {
+            } elseif ($processInstanceId !== null) {
                 $processInstance = $this->getProcessInstanceManager()->findExecutionById($processInstanceId);
                 // Backward compatibility
-                if ($processInstance != null) {
+                if ($processInstance !== null) {
                     $entryBuilder->inContextOf($processInstance);
                 }
-            } elseif ($processDefinitionId != null) {
+            } elseif ($processDefinitionId !== null) {
                 $definition = $this->getProcessDefinitionManager()->findLatestProcessDefinitionById($processDefinitionId);
                 // Backward compatibility
-                if ($definition != null) {
+                if ($definition !== null) {
                     $entryBuilder->inContextOf($definition);
                 }
             }
@@ -412,16 +412,16 @@ class UserOperationLogManager extends AbstractHistoricManager
                 ->propertyChanges($propertyChange)
                 ->category(UserOperationLogEntryInterface::CATEGORY_OPERATOR);
 
-            if ($jobDefinitionId != null) {
+            if ($jobDefinitionId !== null) {
                 $jobDefinition = $this->getJobDefinitionManager()->findById($jobDefinitionId);
                 // Backward compatibility
-                if ($jobDefinition != null) {
+                if ($jobDefinition !== null) {
                     $entryBuilder->inContextOf($jobDefinition);
                 }
-            } elseif ($processDefinitionId != null) {
+            } elseif ($processDefinitionId !== null) {
                 $definition = $this->getProcessDefinitionManager()->findLatestProcessDefinitionById($processDefinitionId);
                 // Backward compatibility
-                if ($definition != null) {
+                if ($definition !== null) {
                     $entryBuilder->inContextOf($definition);
                 }
             }
@@ -470,11 +470,11 @@ class UserOperationLogManager extends AbstractHistoricManager
                 UserOperationLogContextEntryBuilder::entry($operation, EntityTypes::VARIABLE)
                 ->propertyChanges($propertyChange);
 
-            if ($executionId != null) {
+            if ($executionId !== null) {
                 $execution = $this->getProcessInstanceManager()->findExecutionById($executionId);
                 $entryBuilder->inContextOf($execution)
                     ->category(UserOperationLogEntryInterface::CATEGORY_OPERATOR);
-            } elseif ($taskId != null) {
+            } elseif ($taskId !== null) {
                 $task = $this->getTaskManager()->findTaskById($taskId);
                 $entryBuilder->inContextOf($task, [$propertyChange])
                     ->category(UserOperationLogEntryInterface::CATEGORY_TASK_WORKER);
@@ -578,12 +578,12 @@ class UserOperationLogManager extends AbstractHistoricManager
                 ->propertyChanges($propertyChanges)
                 ->category(UserOperationLogEntryInterface::CATEGORY_OPERATOR);
 
-            if ($externalTask != null) {
+            if ($externalTask !== null) {
                 $instance = null;
                 $definition = null;
-                if ($externalTask->getProcessInstanceId() != null) {
+                if ($externalTask->getProcessInstanceId() !== null) {
                     $instance = $this->getProcessInstanceManager()->findExecutionById($externalTask->getProcessInstanceId());
-                } elseif ($externalTask->getProcessDefinitionId() != null) {
+                } elseif ($externalTask->getProcessDefinitionId() !== null) {
                     $definition = $this->getProcessDefinitionManager()->findLatestProcessDefinitionById($externalTask->getProcessDefinitionId());
                 }
                 $entryBuilder->processInstanceId($externalTask->getProcessInstanceId())
@@ -693,16 +693,16 @@ class UserOperationLogManager extends AbstractHistoricManager
     {
         if ($this->isUserOperationLogEnabled()) {
             $propertyChanges = [];
-            $propertyChanges[] = new PropertyChange("permissionBits", $previousValues == null ? null : $previousValues->getPermissions(), $authorization->getPermissions());
-            $propertyChanges[] = new PropertyChange("permissions", $previousValues == null ? null : $this->getPermissionStringList($previousValues), $this->getPermissionStringList($authorization));
-            $propertyChanges[] = new PropertyChange("type", $previousValues == null ? null : $previousValues->getAuthorizationType(), $authorization->getAuthorizationType());
-            $propertyChanges[] = new PropertyChange("resource", $previousValues == null ? null : $this->getResourceName($previousValues->getResourceType()), $this->getResourceName($authorization->getResourceType()));
-            $propertyChanges[] = new PropertyChange("resourceId", $previousValues == null ? null : $previousValues->getResourceId(), $authorization->getResourceId());
-            if ($authorization->getUserId() != null || ($previousValues != null && $previousValues->getUserId() != null)) {
-                $propertyChanges[] = new PropertyChange("userId", $previousValues == null ? null : $previousValues->getUserId(), $authorization->getUserId());
+            $propertyChanges[] = new PropertyChange("permissionBits", $previousValues === null ? null : $previousValues->getPermissions(), $authorization->getPermissions());
+            $propertyChanges[] = new PropertyChange("permissions", $previousValues === null ? null : $this->getPermissionStringList($previousValues), $this->getPermissionStringList($authorization));
+            $propertyChanges[] = new PropertyChange("type", $previousValues === null ? null : $previousValues->getAuthorizationType(), $authorization->getAuthorizationType());
+            $propertyChanges[] = new PropertyChange("resource", $previousValues === null ? null : $this->getResourceName($previousValues->getResourceType()), $this->getResourceName($authorization->getResourceType()));
+            $propertyChanges[] = new PropertyChange("resourceId", $previousValues === null ? null : $previousValues->getResourceId(), $authorization->getResourceId());
+            if ($authorization->getUserId() !== null || ($previousValues !== null && $previousValues->getUserId() !== null)) {
+                $propertyChanges[] = new PropertyChange("userId", $previousValues === null ? null : $previousValues->getUserId(), $authorization->getUserId());
             }
-            if ($authorization->getGroupId() != null || ($previousValues != null && $previousValues->getGroupId() != null)) {
-                $propertyChanges[] = new PropertyChange("groupId", $previousValues == null ? null : $previousValues->getGroupId(), $authorization->getGroupId());
+            if ($authorization->getGroupId() !== null || ($previousValues !== null && $previousValues->getGroupId() !== null)) {
+                $propertyChanges[] = new PropertyChange("groupId", $previousValues === null ? null : $previousValues->getGroupId(), $authorization->getGroupId());
             }
 
             $context = new UserOperationLogContext();
@@ -758,7 +758,7 @@ class UserOperationLogManager extends AbstractHistoricManager
 
     protected function fireUserOperationLog(UserOperationLogContext $context): void
     {
-        if ($context->getUserId() == null) {
+        if ($context->getUserId() === null) {
             $context->setUserId($this->getAuthenticatedUserId());
         }
 

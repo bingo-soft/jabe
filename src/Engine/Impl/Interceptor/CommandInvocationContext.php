@@ -47,7 +47,7 @@ class CommandInvocationContext
 
     public function trySetThrowable(\Throwable $t): void
     {
-        if ($this->throwable == null) {
+        if ($this->throwable === null) {
             $this->throwable = $t;
         } else {
             //LOG.maskedExceptionInCommandContext(throwable);
@@ -104,7 +104,7 @@ class CommandInvocationContext
     {
         $invocation = array_shift($this->queuedInvocations);
         try {
-            if ($invocation != null) {
+            if ($invocation !== null) {
                 $invocation->execute($this->bpmnStackTrace, processDataContext);
             }
         } catch (\Exception $e) {
@@ -127,7 +127,7 @@ class CommandInvocationContext
 
     public function rethrow(): void
     {
-        if ($this->throwable != null) {
+        if ($this->throwable !== null) {
             throw new ProcessEngineException("exception while executing command ", $throwable);
         }
     }

@@ -47,7 +47,7 @@ class TaskDecorator
     protected function initializeTaskName(TaskEntity $task, VariableScopeInterface $variableScope): void
     {
         $nameExpression = $taskDefinition->getNameExpression();
-        if ($nameExpression != null) {
+        if ($nameExpression !== null) {
             $name = $nameExpression->getValue($variableScope);
             $task->setName($name);
         }
@@ -56,7 +56,7 @@ class TaskDecorator
     protected function initializeTaskDescription(TaskEntity $task, VariableScopeInterface $variableScope): void
     {
         $descriptionExpression = $taskDefinition->getDescriptionExpression();
-        if ($descriptionExpression != null) {
+        if ($descriptionExpression !== null) {
             $description = $descriptionExpression->getValue($variableScope);
             $task->setDescription($description);
         }
@@ -65,9 +65,9 @@ class TaskDecorator
     protected function initializeTaskDueDate(TaskEntity $task, VariableScopeInterface $variableScope): void
     {
         $dueDateExpression = $taskDefinition->getDueDateExpression();
-        if ($dueDateExpression != null) {
+        if ($dueDateExpression !== null) {
             $dueDate = $dueDateExpression->getValue($variableScope);
-            if ($dueDate != null) {
+            if ($dueDate !== null) {
                 if ($dueDate instanceof \DateTime) {
                     $task->setDueDate($dueDate->format('c'));
                 } elseif (is_string($dueDate)) {
@@ -84,9 +84,9 @@ class TaskDecorator
     protected function initializeTaskFollowUpDate(TaskEntity $task, VariableScopeInterface $variableScope): void
     {
         $followUpDateExpression = $taskDefinition->getFollowUpDateExpression();
-        if ($followUpDateExpression != null) {
+        if ($followUpDateExpression !== null) {
             $followUpDate = $followUpDateExpression->getValue($variableScope);
-            if ($followUpDate != null) {
+            if ($followUpDate !== null) {
                 if ($followUpDate instanceof \DateTime) {
                     $task->setFollowUpDate($followUpDate->format('c'));
                 } elseif (is_string($followUpDate)) {
@@ -103,9 +103,9 @@ class TaskDecorator
     protected function initializeTaskPriority(TaskEntity $task, VariableScopeInterface $variableScope): void
     {
         $priorityExpression = $taskDefinition->getPriorityExpression();
-        if ($priorityExpression != null) {
+        if ($priorityExpression !== null) {
             $priority = $priorityExpression->getValue($variableScope);
-            if ($priority != null) {
+            if ($priority !== null) {
                 if (is_string($priority)) {
                     try {
                         $task->setPriority(intval($priority));
@@ -135,7 +135,7 @@ class TaskDecorator
     protected function initializeTaskAssignee(TaskEntity $task, VariableScopeInterface $variableScope): void
     {
         $assigneeExpression = $taskDefinition->getAssigneeExpression();
-        if ($assigneeExpression != null) {
+        if ($assigneeExpression !== null) {
             $task->setAssignee($assigneeExpression->getValue($variableScope));
         }
     }

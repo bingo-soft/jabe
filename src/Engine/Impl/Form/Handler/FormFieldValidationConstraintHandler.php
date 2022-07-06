@@ -73,6 +73,6 @@ class FormFieldValidationConstraintHandler
 
     public function __toString()
     {
-        return $this->name . ($this->config != null ? ("(" . $this->config . ")") : "");
+        return $this->name . ($this->config !== null ? ("(" . $this->config . ")") : "");
     }
 }

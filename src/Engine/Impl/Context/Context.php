@@ -67,7 +67,7 @@ class Context
         $currentContext = $stack[count($stack) - 1];
         if (empty($stack)) {
             // do not clear when called from JobExecutor, will be cleared there after logging
-            if (self::getJobExecutorContext() == null) {
+            if (self::getJobExecutorContext() === null) {
                 $currentContext->getProcessDataContext()->clearMdc();
             }
         } else {

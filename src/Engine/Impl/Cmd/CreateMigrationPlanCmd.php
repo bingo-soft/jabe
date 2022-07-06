@@ -208,27 +208,27 @@ class CreateMigrationPlanCmd implements CommandInterface
 
             $sourceActivityId = $migrationInstruction->getSourceActivityId();
             $targetActivityId = $migrationInstruction->getTargetActivityId();
-            if ($sourceActivityId != null && $targetActivityId != null) {
+            if ($sourceActivityId !== null && $targetActivityId !== null) {
                 $sourceActivity = $sourceProcessDefinition->findActivity($sourceActivityId);
                 $targetActivity = $targetProcessDefinition->findActivity($migrationInstruction->getTargetActivityId());
 
-                if ($sourceActivity != null && $targetActivity != null) {
+                if ($sourceActivity !== null && $targetActivity !== null) {
                     $validatingMigrationInstructions->addInstruction(
                         new ValidatingMigrationInstructionImpl($sourceActivity, $targetActivity, $migrationInstruction->isUpdateEventTrigger())
                     );
                 } else {
-                    if ($sourceActivity == null) {
+                    if ($sourceActivity === null) {
                         $instructionReport->addFailure("Source activity '" . $sourceActivityId . "' does not exist");
                     }
-                    if ($targetActivity == null) {
+                    if ($targetActivity === null) {
                         $instructionReport->addFailure("Target activity '" . $targetActivityId . "' does not exist");
                     }
                 }
             } else {
-                if ($sourceActivityId == null) {
+                if ($sourceActivityId === null) {
                     $instructionReport->addFailure("Source activity id is null");
                 }
-                if ($targetActivityId == null) {
+                if ($targetActivityId === null) {
                     $instructionReport->addFailure("Target activity id is null");
                 }
             }

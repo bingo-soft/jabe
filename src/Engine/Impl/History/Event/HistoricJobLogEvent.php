@@ -126,7 +126,7 @@ class HistoricJobLogEvent extends HistoryEvent
 
     protected function getExceptionByteArray(): ?ByteArrayEntity
     {
-        if ($this->exceptionByteArrayId != null) {
+        if ($this->exceptionByteArrayId !== null) {
             return Context::getCommandContext()
             ->getDbEntityManager()
             ->selectById(ByteArrayEntity::class, $this->exceptionByteArrayId);

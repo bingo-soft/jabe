@@ -34,10 +34,10 @@ abstract class HistoryTaskListener implements TaskListenerInterface
 
         $execution = $task->getExecution();
 
-        if ($execution != null) {
+        if ($execution !== null) {
             // delegate creation of the history event to the producer
             $historyEvent = $this->createHistoryEvent($task, $execution);
-            if ($historyEvent != null) {
+            if ($historyEvent !== null) {
                 // pass the event to the handler
                 $historyEventHandler->handleEvent($historyEvent);
             }
@@ -46,7 +46,7 @@ abstract class HistoryTaskListener implements TaskListenerInterface
 
     protected function ensureHistoryLevelInitialized(): void
     {
-        if ($this->historyLevel == null) {
+        if ($this->historyLevel === null) {
             $this->historyLevel = Context::getProcessEngineConfiguration()->getHistoryLevel();
         }
     }

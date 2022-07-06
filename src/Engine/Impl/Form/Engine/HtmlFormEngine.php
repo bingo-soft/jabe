@@ -126,9 +126,9 @@ class HtmlFormEngine implements FormEngineInterface
     protected function renderFormData(FormDataInterface $formData): string
     {
         if (
-            $formData == null
-            || ($formData->getFormFields() == null || $formData->getFormFields()->isEmpty())
-            && ($formData->getFormProperties() == null || $formData->getFormProperties()->isEmpty())
+            $formData === null
+            || ($formData->getFormFields() === null || $formData->getFormFields()->isEmpty())
+            && ($formData->getFormProperties() === null || $formData->getFormProperties()->isEmpty())
         ) {
             return null;
         } else {
@@ -167,7 +167,7 @@ class HtmlFormEngine implements FormEngineInterface
         $formFieldLabel = $formField->getLabel();
 
         // write label
-        if ($formFieldLabel != null && !empty($formFieldLabel)) {
+        if ($formFieldLabel !== null && !empty($formFieldLabel)) {
             $labelElement = (new HtmlElementWriter(self::LABEL_ELEMENT))
                 ->attribute(self::FOR_ATTRIBUTE, $formFieldId)
                 ->textContent($formFieldLabel);
@@ -289,7 +289,7 @@ class HtmlFormEngine implements FormEngineInterface
 
         // add default value
         $defaultValue = $formField->getDefaultValue();
-        if ($defaultValue != null) {
+        if ($defaultValue !== null) {
             $inputField->attribute(self::VALUE_ATTRIBUTE, strval($defaultValue));
         }
 

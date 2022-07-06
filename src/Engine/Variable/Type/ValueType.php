@@ -43,6 +43,11 @@ class ValueType
         return new IntegerTypeImpl();
     }
 
+    public static function getLong(): PrimitiveValueTypeInterface
+    {
+        return new IntegerTypeImpl();
+    }
+
     public static function getString(): PrimitiveValueTypeInterface
     {
         return new StringTypeImpl();

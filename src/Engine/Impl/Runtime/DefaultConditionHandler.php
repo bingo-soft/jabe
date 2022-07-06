@@ -26,7 +26,7 @@ class DefaultConditionHandler implements ConditionHandlerInterface
 
     public function evaluateStartCondition(CommandContext $commandContext, ConditionSet $conditionSet): array
     {
-        if ($conditionSet->getProcessDefinitionId() == null) {
+        if ($conditionSet->getProcessDefinitionId() === null) {
             return $this->evaluateConditionStartByEventSubscription($commandContext, $conditionSet);
         } else {
             return $this->evaluateConditionStartByProcessDefinitionId($commandContext, $conditionSet, $conditionSet->getProcessDefinitionId());
@@ -75,7 +75,7 @@ class DefaultConditionHandler implements ConditionHandlerInterface
 
         $results = [];
 
-        if ($processDefinition != null && !$processDefinition->isSuspended()) {
+        if ($processDefinition !== null && !$processDefinition->isSuspended()) {
             $activities = $this->findConditionalStartEventActivities($processDefinition);
             if (empty($activities)) {
                 //throw LOG.exceptionWhenEvaluatingConditionalStartEventByProcessDefinition(processDefinitionId);

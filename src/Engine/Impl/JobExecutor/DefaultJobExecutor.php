@@ -19,7 +19,7 @@ class DefaultJobExecutor extends ThreadPoolJobExecutor
 
     protected function startExecutingJobs(): void
     {
-        if ($this->threadPoolExecutor == null || $this->threadPoolExecutor->isShutdown()) {
+        if ($this->threadPoolExecutor === null || $this->threadPoolExecutor->isShutdown()) {
             $threadPoolQueue = new ArrayBlockingQueue($this->queueSize);
             $this->threadPoolExecutor = new ProcessPoolExecutor($corePoolSize, 0, TimeUnit::MILLISECONDS, $threadPoolQueue);
             //$this->threadPoolExecutor->setRejectedExecutionHandler(...);

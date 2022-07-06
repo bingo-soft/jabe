@@ -47,7 +47,7 @@ class SetProcessDefinitionVersionCmd implements CommandInterface, \Serializable
         // process definition that the process instance is using
         $executionManager = $commandContext->getExecutionManager();
         $processInstance = $executionManager->findExecutionById($this->processInstanceId);
-        if ($processInstance == null) {
+        if ($processInstance === null) {
             throw new ProcessEngineException("No process instance found for id = '" . $this->processInstanceId . "'.");
         } elseif (!$processInstance->isProcessInstanceExecution()) {
             throw new ProcessEngineException(
@@ -153,15 +153,15 @@ class SetProcessDefinitionVersionCmd implements CommandInterface, \Serializable
         $activitiesMatch = $currentJobDefinition->getActivityId() == $newJobDefinition->getActivityId();
 
         $typesMatch =
-            ($currentJobDefinition->getJobType() == null && $newJobDefinition->getJobType() == null)
+            ($currentJobDefinition->getJobType() === null && $newJobDefinition->getJobType() === null)
                 ||
-            ($currentJobDefinition->getJobType() != null
+            ($currentJobDefinition->getJobType() !== null
                 && $currentJobDefinition->getJobType() == $newJobDefinition->getJobType());
 
         $configurationsMatch =
-            ($currentJobDefinition->getJobConfiguration() == null && $newJobDefinition->getJobConfiguration() == null)
+            ($currentJobDefinition->getJobConfiguration() === null && $newJobDefinition->getJobConfiguration() === null)
                 ||
-            ($currentJobDefinition->getJobConfiguration() != null
+            ($currentJobDefinition->getJobConfiguration() !== null
                 && $currentJobDefinition->getJobConfiguration() == $newJobDefinition->getJobConfiguration());
 
         return $activitiesMatch && $typesMatch && $configurationsMatch;
@@ -184,11 +184,11 @@ class SetProcessDefinitionVersionCmd implements CommandInterface, \Serializable
     protected function validateAndSwitchVersionOfExecution(CommandContext $commandContext, ExecutionEntity $execution, ProcessDefinitionEntity $newProcessDefinition): void
     {
         // check that the new process definition version contains the current activity
-        if ($execution->getActivity() != null) {
+        if ($execution->getActivity() !== null) {
             $activityId = $execution->getActivity()->getId();
             $newActivity = $newProcessDefinition->findActivity($activityId);
 
-            if ($newActivity == null) {
+            if ($newActivity === null) {
                 throw new ProcessEngineException(
                     "The new process definition " .
                     "(key = '" . $newProcessDefinition->getKey() . "') " .

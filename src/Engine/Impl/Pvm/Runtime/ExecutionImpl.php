@@ -138,7 +138,7 @@ class ExecutionImpl extends PvmExecutionImpl implements ActivityExecutionInterfa
     public function setSuperExecution(?PvmExecutionImpl $superExecution): void
     {
         $this->superExecution = $superExecution;
-        if ($this->superExecution != null) {
+        if ($this->superExecution !== null) {
             $this->superExecution->setSubProcessInstance(null);
         }
     }
@@ -298,7 +298,7 @@ class ExecutionImpl extends PvmExecutionImpl implements ActivityExecutionInterfa
     public function getCurrentActivityName(): ?string
     {
         $currentActivityName = null;
-        if ($this->activity != null) {
+        if ($this->activity !== null) {
             $currentActivityName = $this->activity->getProperty("name");
         }
         return $currentActivityName;

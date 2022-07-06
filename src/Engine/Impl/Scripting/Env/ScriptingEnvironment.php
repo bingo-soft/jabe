@@ -45,10 +45,10 @@ class ScriptingEnvironment
 
     public function execute(ExecutableScript $script, VariableScopeInterface $scope, ?BindingsInterface $bindings = null, ?ScriptEngineInterface $scriptEngine = null)
     {
-        if ($scriptEngine == null) {
+        if ($scriptEngine === null) {
             $scriptEngine = $this->scriptingEngines->getScriptEngineForLanguage($script->getLanguage());
         }
-        if ($bindings == null) {
+        if ($bindings === null) {
             $bindings = $this->scriptingEngines->createBindings($scriptEngine, $scope);
         }
         // first, evaluate the env scripts (if any)
@@ -68,12 +68,12 @@ class ScriptingEnvironment
 
         $result = null;
         if ($config->isEnableFetchScriptEngineFromProcessApplication()) {
-            if ($processApplication != null) {
+            if ($processApplication !== null) {
                 $result = $this->getPaEnvScripts($processApplication);
             }
         }
 
-        return $result != null ? $result : $this->env;
+        return $result !== null ? $result : $this->env;
     }
 
     protected function getPaEnvScripts(ProcessApplicationReferenceInterface $pa): array
@@ -103,7 +103,7 @@ class ScriptingEnvironment
         } elseif (is_string($scriptOrLang)) {
             $environment = $this->getEnv($scriptOrLang);
             $envScripts = $environment->get($scriptOrLang);
-            if ($envScripts == null) {
+            if ($envScripts === null) {
                 $envScripts = $this->initEnvForLanguage($scriptOrLang);
                 $environment->put($scriptOrLang, $envScripts);
             }
@@ -123,7 +123,7 @@ class ScriptingEnvironment
         $scripts = [];
         foreach ($envResolvers as $resolver) {
             $resolvedScripts = $resolver->resolve($language);
-            if ($resolvedScripts != null) {
+            if ($resolvedScripts !== null) {
                 foreach ($resolvedScripts as $resolvedScript) {
                     $scripts[] = $scriptFactory->createScriptFromSource($language, $resolvedScript);
                 }

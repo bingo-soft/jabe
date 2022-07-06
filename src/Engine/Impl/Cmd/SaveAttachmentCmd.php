@@ -28,10 +28,10 @@ class SaveAttachmentCmd implements CommandInterface
         $updateAttachment->setDescription($this->attachment->getDescription());
 
         $taskId = $this->attachment->getTaskId();
-        if ($taskId != null) {
+        if ($taskId !== null) {
             $task = $commandContext->getTaskManager()->findTaskById($taskId);
 
-            if ($task != null) {
+            if ($task !== null) {
                 $task->triggerUpdateEvent();
             }
         }

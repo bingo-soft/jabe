@@ -6,7 +6,7 @@ class NullCondition implements WalkConditionInterface
 {
     public function isFulfilled($element = null): bool
     {
-        return $element == null;
+        return $element === null;
     }
 
     public static function notNull(): WalkConditionInterface

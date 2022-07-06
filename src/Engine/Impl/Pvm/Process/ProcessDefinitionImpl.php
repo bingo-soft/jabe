@@ -33,7 +33,7 @@ class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefinitionInt
 
     protected function ensureDefaultInitialExists(): void
     {
-        if ($this->initial == null) {
+        if ($this->initial === null) {
             throw new \Exception("Process '" . $this->name . "' has no default start activity (e.g. none start event), hence you cannot use 'startProcessInstanceBy...' but have to start it using one of the modeled start events (e.g. message start events)");
         }
     }
@@ -41,7 +41,7 @@ class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefinitionInt
     public function createProcessInstance(?string $businessKey = null, ?string $caseInstanceId = null, ?ActivityImpl $initial = null): PvmProcessInstance
     {
         $this->ensureDefaultInitialExists();
-        if ($initial == null) {
+        if ($initial === null) {
             $initial = $this->initial;
         }
         $processInstance = $this->createProcessInstanceForInitial($initial);
@@ -55,7 +55,7 @@ class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefinitionInt
     /** creates a process instance using the provided activity as initial */
     public function createProcessInstanceForInitial(ActivityImpl $initial): PvmProcessInstance
     {
-        if ($initial == null) {
+        if ($initial === null) {
             throw new \Exception("Cannot start process instance, initial activity where the process instance should start is null");
         }
 
@@ -86,10 +86,10 @@ class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefinitionInt
                 $initialActivityStack = $stack[1];
             }
         }
-        if ($initialActivityStack == null) {
+        if ($initialActivityStack === null) {
             $initialActivityStack = [];
             $activity = $startActivity;
-            while ($activity != null) {
+            while ($activity !== null) {
                 array_unshift($initialActivityStack, $activity);
                 $activity = $activity->getParentFlowScopeActivity();
             }
@@ -117,7 +117,7 @@ class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefinitionInt
     {
         foreach ($this->laneSets as $set) {
             $lane = $set->getLaneForId($id);
-            if ($lane != null) {
+            if ($lane !== null) {
                 return $lane;
             }
         }

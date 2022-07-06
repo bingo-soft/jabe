@@ -32,10 +32,10 @@ class XmlQName
         ?string $namespaceUri,
         string $localName
     ) {
-        if ($element != null) {
+        if ($element !== null) {
             $document = $element->getDocument();
             $this->rootElement = $document->getRootElement();
-        } elseif ($document != null) {
+        } elseif ($document !== null) {
             $this->rootElement = $document->getRootElement();
         }
         $this->element = $element;
@@ -56,7 +56,7 @@ class XmlQName
 
     public function getPrefixedName(): string
     {
-        if ($this->prefix == null) {
+        if ($this->prefix === null) {
             $this->prefix = $this->determinePrefixAndNamespaceUri();
         }
         return QName::combine($this->prefix, $this->localName);
@@ -64,7 +64,7 @@ class XmlQName
 
     public function hasLocalNamespace(): bool
     {
-        if ($this->element != null) {
+        if ($this->element !== null) {
             return $this->element->getNamespaceURI() == $this->namespaceUri || empty($this->namespaceUri);
         }
         return false;
@@ -72,12 +72,12 @@ class XmlQName
 
     private function determinePrefixAndNamespaceUri(): ?string
     {
-        if ($this->namespaceUri != null) {
-            if ($this->rootElement != null && $this->namespaceUri == $this->rootElement->getNamespaceURI()) {
+        if ($this->namespaceUri !== null) {
+            if ($this->rootElement !== null && $this->namespaceUri == $this->rootElement->getNamespaceURI()) {
                 return null;
             } else {
                 $lookupPrefix = $this->lookupPrefix();
-                if ($lookupPrefix == null && $this->rootElement != null) {
+                if ($lookupPrefix === null && $this->rootElement !== null) {
                     $knownPrefix = array_search($this->namespaceUri, self::KNOWN_PREFIXES);
                     if ($knownPrefix === false) {
                         return $this->rootElement->registerNamespace(null, $this->namespaceUri);
@@ -98,11 +98,11 @@ class XmlQName
 
     private function lookupPrefix(): ?string
     {
-        if ($this->namespaceUri != null) {
+        if ($this->namespaceUri !== null) {
             $lookupPrefix = null;
-            if ($this->element != null) {
+            if ($this->element !== null) {
                 $lookupPrefix = $this->element->lookupPrefix($this->namespaceUri);
-            } elseif ($this->rootElement != null) {
+            } elseif ($this->rootElement !== null) {
                 $lookupPrefix = $this->rootElement->lookupPrefix($this->namespaceUri);
             }
             return $lookupPrefix;

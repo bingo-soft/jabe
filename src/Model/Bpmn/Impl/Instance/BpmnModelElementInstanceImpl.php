@@ -35,7 +35,7 @@ abstract class BpmnModelElementInstanceImpl extends ModelElementInstanceImpl imp
     public function getScope(): ?BpmnModelElementInstanceInterface
     {
         $parentElement = $this->getParentElement();
-        if ($parentElement != null) {
+        if ($parentElement !== null) {
             if ($parentElement->isScope()) {
                 return $parentElement;
             } else {

@@ -52,7 +52,7 @@ class DomElementImpl implements DomElementInterface
     public function getDocument(): ?DomDocumentInterface
     {
         $ownerDocument = $this->element->ownerDocument;
-        if ($ownerDocument != null) {
+        if ($ownerDocument !== null) {
             return new DomDocumentImpl($ownerDocument);
         } else {
             return null;
@@ -62,7 +62,7 @@ class DomElementImpl implements DomElementInterface
     public function getRootElement(): ?DomElementInterface
     {
         $document = $this->getDocument();
-        if ($document != null) {
+        if ($document !== null) {
             return $document->getRootElement();
         } else {
             return null;
@@ -72,7 +72,7 @@ class DomElementImpl implements DomElementInterface
     public function getParentElement(): ?DomElementInterface
     {
         $parentNode = $this->element->parentNode;
-        if ($parentNode != null && $parentNode instanceof DomElementExt) {
+        if ($parentNode !== null && $parentNode instanceof DomElementExt) {
             return new DomElementImpl($parentNode);
         } else {
             return null;
@@ -145,13 +145,13 @@ class DomElementImpl implements DomElementInterface
         ?DomElementInterface $insertAfter
     ): void {
         $newElement = $elementToInsert->getElement();
-        if ($insertAfter == null) {
+        if ($insertAfter === null) {
             $insertBeforeNode = $this->element->firstChild;
         } else {
             $insertBeforeNode = $insertAfter->getElement()->nextSibling;
         }
 
-        if ($insertBeforeNode != null) {
+        if ($insertBeforeNode !== null) {
             $this->element->insertBefore($newElement, $insertBeforeNode);
         } else {
             $this->element->appendChild($newElement);
@@ -160,7 +160,7 @@ class DomElementImpl implements DomElementInterface
 
     public function hasAttribute(?string $namespaceUri, string $localName): bool
     {
-        if ($namespaceUri == null) {
+        if ($namespaceUri === null) {
             return $this->element->hasAttribute($localName);
         } else {
             return $this->element->hasAttributeNS($namespaceUri, $localName);
@@ -257,7 +257,7 @@ class DomElementImpl implements DomElementInterface
      */
     public function registerNamespace(?string $prefix, string $namespaceUri)
     {
-        if ($prefix != null) {
+        if ($prefix !== null) {
             $this->element->setAttributeNS(
                 self::XMLNS_ATTRIBUTE_NS_URI,
                 self::XMLNS_ATTRIBUTE . ":" . $prefix,
@@ -265,18 +265,18 @@ class DomElementImpl implements DomElementInterface
             );
         } else {
             $lookupPrefix = $this->lookupPrefix($namespaceUri);
-            if ($lookupPrefix == null) {
+            if ($lookupPrefix === null) {
                 if (array_key_exists($namespaceUri, XmlQName::KNOWN_PREFIXES)) {
                     $prefix = XmlQName::KNOWN_PREFIXES[$namespaceUri];
                 }
                 if (
-                    $prefix != null &&
-                    $this->getRootElement() != null &&
+                    $prefix !== null &&
+                    $this->getRootElement() !== null &&
                     $this->getRootElement()->element->hasAttributeNS(self::XMLNS_ATTRIBUTE_NS_URI, $prefix)
                 ) {
                     $prefix = null;
                 }
-                if ($prefix == null) {
+                if ($prefix === null) {
                     $prefix = $this->getDocument()->getUnusedGenericNsPrefix();
                 }
                 $this->registerNamespace($prefix, $namespaceUri);
@@ -294,7 +294,7 @@ class DomElementImpl implements DomElementInterface
 
     public function equals(?DomElementInterface $obj): bool
     {
-        if ($obj == null) {
+        if ($obj === null) {
             return false;
         }
 

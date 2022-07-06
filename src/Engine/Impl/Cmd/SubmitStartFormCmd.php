@@ -52,7 +52,7 @@ class SubmitStartFormCmd implements CommandInterface, \Serializable
         }
 
         $processInstance = null;
-        if ($this->businessKey != null) {
+        if ($this->businessKey !== null) {
             $processInstance = $processDefinition->createProcessInstance($this->businessKey);
         } else {
             $processInstance = $processDefinition->createProcessInstance();

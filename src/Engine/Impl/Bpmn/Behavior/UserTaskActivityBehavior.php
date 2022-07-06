@@ -29,9 +29,9 @@ class UserTaskActivityBehavior extends TaskActivityBehavior implements Migration
 
     public function __construct(?ExpressionManager $expressionManager, ?TaskDefinition $taskDefinition, ?TaskDecorator $taskDecorator)
     {
-        if ($taskDecorator != null) {
+        if ($taskDecorator !== null) {
             $this->taskDecorator = $taskDecorator;
-        } elseif ($expressionManager != null && $taskDefinition != null) {
+        } elseif ($expressionManager !== null && $taskDefinition !== null) {
             $this->taskDecorator = new TaskDecorator($taskDefinition, $expressionManager);
         }
     }

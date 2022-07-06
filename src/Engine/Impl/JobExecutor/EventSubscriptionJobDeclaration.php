@@ -37,13 +37,13 @@ class EventSubscriptionJobDeclaration extends JobDeclaration
 
         $processDefinition = $eventSubscription->getProcessDefinition();
 
-        if ($processDefinition != null) {
+        if ($processDefinition !== null) {
             $message->setProcessDefinitionId($processDefinition->getId());
             $message->setProcessDefinitionKey($processDefinition->getKey());
         }
 
         // TODO: support payload
-        // if(payload != null) {
+        // if(payload !== null) {
         //   message.setEventPayload(payload);
         // }
 
@@ -78,7 +78,7 @@ class EventSubscriptionJobDeclaration extends JobDeclaration
     public static function getDeclarationsForActivity(PvmActivityInterface $activity): array
     {
         $result = $activity->getProperty(BpmnParse::PROPERTYNAME_EVENT_SUBSCRIPTION_JOB_DECLARATION);
-        if ($result != null) {
+        if ($result !== null) {
             return $result;
         } else {
             return [];

@@ -28,7 +28,7 @@ abstract class PvmAtomicOperationActivityInstanceStart extends AbstractPvmEventA
         // if we start a scope activity, remember current activity instance in parent
         $parent = $execution->getParent();
         $activity = $execution->getActivity();
-        if ($parent != null && $execution->isScope() && $activity->isScope() && $this->canHaveChildScopes($execution)) {
+        if ($parent !== null && $execution->isScope() && $activity->isScope() && $this->canHaveChildScopes($execution)) {
             $parent->setActivityInstanceId($execution->getActivityInstanceId());
         }
     }

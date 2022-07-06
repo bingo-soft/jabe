@@ -31,12 +31,12 @@ class ConditionalEventDefinitionTest extends AbstractEventDefinitionTest
         $eventDefinition = $this->eventDefinitionQuery->filterByType(
             ConditionalEventDefinitionInterface::class
         )->singleResult();
-        $this->assertFalse($eventDefinition == null);
+        $this->assertFalse($eventDefinition === null);
 
         $this->assertNull($eventDefinition->getVariableEvents());
         $this->assertNull($eventDefinition->getVariableName());
         $condition = $eventDefinition->getCondition();
-        $this->assertFalse($condition == null);
+        $this->assertFalse($condition === null);
         $this->assertEquals('${test}', $condition->getTextContent());
     }
 }

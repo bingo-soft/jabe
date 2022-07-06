@@ -65,7 +65,7 @@ class AstText extends AstNode
 
     public function invoke(Bindings $bindings, ELContext $context, ?string $returnType = null, ?array $paramTypes = [], ?array $paramValues = [])
     {
-        return $returnType == null ? $this->value : $bindings->convert($this->value, $returnType);
+        return $returnType === null ? $this->value : $bindings->convert($this->value, $returnType);
     }
 
     public function __toString()

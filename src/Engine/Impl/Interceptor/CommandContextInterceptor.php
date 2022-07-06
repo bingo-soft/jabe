@@ -34,14 +34,14 @@ class CommandContextInterceptor extends CommandInterceptor
         if (!$this->alwaysOpenNew) {
             // check whether we can reuse the command context
             $existingCommandContext = Context::getCommandContext();
-            if ($existingCommandContext != null && $this->isFromSameEngine($existingCommandContext)) {
+            if ($existingCommandContext !== null && $this->isFromSameEngine($existingCommandContext)) {
                 $context = $existingCommandContext;
             }
         }
 
         // only create a new command context on the current command level (CAM-10002)
         $isNew = ProcessEngineContextImpl::consume();
-        $openNew = ($context == null || $isNew);
+        $openNew = ($context === null || $isNew);
 
         $commandInvocationContext = new CommandInvocationContext($command, $this->processEngineConfiguration);
         Context::setCommandInvocationContext($commandInvocationContext);

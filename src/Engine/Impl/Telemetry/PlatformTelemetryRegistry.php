@@ -15,7 +15,7 @@ class PlatformTelemetryRegistry
 
     public static function setApplicationServer(string $applicationServerVersion): void
     {
-        if ($this->applicationServer == null) {
+        if ($this->applicationServer === null) {
             $this->applicationServer = new ApplicationServerImpl(null, $applicationServerVersion);
         }
     }

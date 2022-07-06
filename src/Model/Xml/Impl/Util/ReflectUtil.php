@@ -19,7 +19,7 @@ abstract class ReflectUtil
      */
     public static function getResource(string $name, $classLoader = null): ?string
     {
-        if ($classLoader != null && method_exists($classLoader, 'getResource')) {
+        if ($classLoader !== null && method_exists($classLoader, 'getResource')) {
             return $classLoader->getResource($name);
         }
         return file_exists($name) ? file_get_contents($name) : null;

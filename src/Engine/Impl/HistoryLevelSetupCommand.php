@@ -38,10 +38,10 @@ class HistoryLevelSetupCommand implements CommandInterface
 
         $configuredHistoryLevel = $processEngineConfiguration->getHistoryLevel();
 
-        if ($databaseHistoryLevel == null) {
+        if ($databaseHistoryLevel === null) {
             $this->acquireExclusiveLock($commandContext);
             $databaseHistoryLevel = (new DetermineHistoryLevelCmd($processEngineConfiguration->getHistoryLevels()))->execute($commandContext);
-            if ($databaseHistoryLevel == null) {
+            if ($databaseHistoryLevel === null) {
                 //LOG.noHistoryLevelPropertyFound();
                 $this->dbCreateHistoryLevel($commandContext);
             }
@@ -72,7 +72,7 @@ class HistoryLevelSetupCommand implements CommandInterface
     {
         try {
             $historyLevelProperty =  $commandContext->getPropertyManager()->findPropertyById("historyLevel");
-            return $historyLevelProperty != null ? intval($historyLevelProperty->getValue()) : null;
+            return $historyLevelProperty !== null ? intval($historyLevelProperty->getValue()) : null;
         } catch (\Exception $e) {
             //LOG.couldNotSelectHistoryLevel(e.getMessage());
             return null;
@@ -83,9 +83,9 @@ class HistoryLevelSetupCommand implements CommandInterface
     {
         $configuredHistoryLevel = $engineConfiguration->getHistoryLevel();
 
-        if ($configuredHistoryLevel == null && ProcessEngineConfiguration::HISTORY_AUTO == $engineConfiguration->getHistory()) {
+        if ($configuredHistoryLevel === null && ProcessEngineConfiguration::HISTORY_AUTO == $engineConfiguration->getHistory()) {
             // automatically determine history level or use default AUDIT
-            if ($databaseHistoryLevel != null) {
+            if ($databaseHistoryLevel !== null) {
                 $engineConfiguration->setHistoryLevel($databaseHistoryLevel);
             } else {
                 $engineConfiguration->setHistoryLevel($engineConfiguration->getDefaultHistoryLevel());
@@ -96,7 +96,7 @@ class HistoryLevelSetupCommand implements CommandInterface
     protected function checkStartupLockExists(CommandContext $commandContext): void
     {
         $historyStartupProperty = $commandContext->getPropertyManager()->findPropertyById("startup.lock");
-        if ($historyStartupProperty == null) {
+        if ($historyStartupProperty === null) {
             //LOG.noStartupLockPropertyFound();
         }
     }

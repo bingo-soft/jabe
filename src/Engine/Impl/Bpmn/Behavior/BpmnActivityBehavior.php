@@ -71,9 +71,9 @@ class BpmnActivityBehavior
 
         $outgoingTransitions = $execution->getActivity()->getOutgoingTransitions();
         foreach ($outgoingTransitions as $outgoingTransition) {
-            if ($defaultSequenceFlow == null || $outgoingTransition->getId() != $defaultSequenceFlow) {
+            if ($defaultSequenceFlow === null || $outgoingTransition->getId() != $defaultSequenceFlow) {
                 $condition = $outgoingTransition->getProperty(BpmnParse::PROPERTYNAME_CONDITION);
-                if ($condition == null || !$checkConditions || $condition->evaluate($execution)) {
+                if ($condition === null || !$checkConditions || $condition->evaluate($execution)) {
                     $transitionsToTake[] = $outgoingTransition;
                 }
             }
@@ -81,15 +81,15 @@ class BpmnActivityBehavior
         if (count($transitionsToTake) == 1) {
             $execution->leaveActivityViaTransition($transitionsToTake[0]);
         } elseif (count($transitionsToTake) > 1) {
-            if ($reusableExecutions == null || empty($reusableExecutions)) {
+            if ($reusableExecutions === null || empty($reusableExecutions)) {
                 $execution->leaveActivityViaTransitions($transitionsToTake, [$execution]);
             } else {
                 $execution->leaveActivityViaTransitions($transitionsToTake, $reusableExecutions);
             }
         } else {
-            if ($defaultSequenceFlow != null) {
+            if ($defaultSequenceFlow !== null) {
                 $defaultTransition = $execution->getActivity()->findOutgoingTransition($defaultSequenceFlow);
-                if ($defaultTransition != null) {
+                if ($defaultTransition !== null) {
                     $execution->leaveActivityViaTransition($defaultTransition);
                 } else {
                     //throw LOG.missingDefaultFlowException(execution.getActivity().getId(), defaultSequenceFlow);
@@ -110,7 +110,7 @@ class BpmnActivityBehavior
     protected function isAncestorCompensationThrowing(ActivityExecutionInterface $execution): bool
     {
         $parent = $execution->getParent();
-        while ($parent != null) {
+        while ($parent !== null) {
             if (CompensationBehavior::isCompensationThrowing($parent)) {
                 return true;
             }

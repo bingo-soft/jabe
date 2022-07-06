@@ -45,7 +45,7 @@ abstract class AbstractExecuteFilterCmd implements \Serializable
 
         EnsureUtil::ensureNotNull("No filter found for id '" . $this->filterId . "'", "filter", $filter);
 
-        if ($this->extendingQuery != null) {
+        if ($this->extendingQuery !== null) {
             $extendingQuery->validate();
             $filter = $filter->extend($extendingQuery);
         }

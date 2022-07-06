@@ -11,7 +11,7 @@ class VariableInstanceEntityFactory implements VariableInstanceFactoryInterface
 
     public static function instance(): VariableInstanceFactoryInterface
     {
-        if (self::$INSTANCE == null) {
+        if (self::$INSTANCE === null) {
             self::$INSTANCE = new VariableInstanceEntityFactory();
         }
         return self::$INSTANCE;

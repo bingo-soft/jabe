@@ -28,7 +28,7 @@ class IntegerTypeImpl extends PrimitiveValueTypeImpl
             return false;
         }
 
-        if ($typedValue->getType() != null) {
+        if ($typedValue->getType() !== null) {
             $numberValue = $typedValue;
             $numberValue2 = $numberValue->getValue()->integerValue();
 
@@ -49,7 +49,7 @@ class IntegerTypeImpl extends PrimitiveValueTypeImpl
         }
         $integerValue = null;
         $numberValue = $typedValue;
-        if ($numberValue->getValue() != null) {
+        if ($numberValue->getValue() !== null) {
             $integerValue = Variables::integerValue($numberValue->getValue()->integerValue());
         } else {
             $integerValue = Variables::integerValue(null);

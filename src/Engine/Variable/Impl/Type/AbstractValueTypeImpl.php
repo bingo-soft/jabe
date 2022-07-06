@@ -68,14 +68,14 @@ abstract class AbstractValueTypeImpl implements ValueTypeInterface
         if ($this == $obj) {
             return true;
         }
-        if ($obj == null) {
+        if ($obj === null) {
             return false;
         }
         if (get_class($this) != get_class($obj)) {
             return false;
         }
-        if ($this->name == null) {
-            if ($obj->name != null) {
+        if ($this->name === null) {
+            if ($obj->name !== null) {
                 return false;
             }
         } elseif ($this->name != $obj->name) {
@@ -87,7 +87,7 @@ abstract class AbstractValueTypeImpl implements ValueTypeInterface
     protected function isTransient(?array $valueInfo): bool
     {
         $isTransient = null;
-        if ($valueInfo != null && array_key_exists(self::VALUE_INFO_TRANSIENT, $valueInfo)) {
+        if ($valueInfo !== null && array_key_exists(self::VALUE_INFO_TRANSIENT, $valueInfo)) {
             $isTransient = $valueInfo[self::VALUE_INFO_TRANSIENT];
             if (is_bool($isTransient)) {
                 return $isTransient;

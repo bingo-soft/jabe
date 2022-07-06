@@ -35,7 +35,7 @@ abstract class ReferenceWalker
 
     public function walkWhile(?WalkConditionInterface $condition = null)
     {
-        if ($condition == null) {
+        if ($condition === null) {
             $condition = new NullCondition();
         }
         while (!$condition->isFulfilled($this->getCurrentElement())) {
@@ -58,7 +58,7 @@ abstract class ReferenceWalker
 
     public function walkUntil(?WalkConditionInterface $condition = null)
     {
-        if ($condition == null) {
+        if ($condition === null) {
             $condition = new NullCondition();
         }
 

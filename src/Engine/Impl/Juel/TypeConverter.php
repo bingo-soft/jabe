@@ -15,7 +15,7 @@ abstract class TypeConverter
 
     public static function getDefault(): TypeConverter
     {
-        if (self::$DEFAULT == null) {
+        if (self::$DEFAULT === null) {
             self::$DEFAULT = new TypeConverterImpl();
         }
         return self::$DEFAULT;

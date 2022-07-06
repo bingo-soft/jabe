@@ -104,7 +104,7 @@ abstract class AbstractScriptEngine implements ScriptEngineInterface
     public function put(string $key, $value): void
     {
         $nn = $this->getBindings(ScriptContextInterface::ENGINE_SCOPE);
-        if ($nn != null) {
+        if ($nn !== null) {
             $nn->put($key, $value);
         }
     }
@@ -121,7 +121,7 @@ abstract class AbstractScriptEngine implements ScriptEngineInterface
     public function get(string $key)
     {
         $nn = $this->getBindings(ScriptContextInterface::ENGINE_SCOPE);
-        if ($nn != null) {
+        if ($nn !== null) {
             return $nn->get($key);
         }
 
@@ -156,11 +156,11 @@ abstract class AbstractScriptEngine implements ScriptEngineInterface
         $ctxt = new SimpleScriptContext();
         $gs = $this->getBindings(ScriptContextInterface::GLOBAL_SCOPE);
 
-        if ($gs != null) {
+        if ($gs !== null) {
             $ctxt->setBindings($gs, ScriptContextInterface::GLOBAL_SCOPE);
         }
 
-        if ($nn != null) {
+        if ($nn !== null) {
             $ctxt->setBindings($nn, ScriptContextInterface::ENGINE_SCOPE);
         } else {
             throw new \Exception("Engine scope Bindings may not be null.");

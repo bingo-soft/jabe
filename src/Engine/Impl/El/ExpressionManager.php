@@ -58,7 +58,7 @@ class ExpressionManager
             $elContext = $variableScope->getCachedElContext();
         }
 
-        if ($elContext == null) {
+        if ($elContext === null) {
             $elContext = $this->createElContext($variableScope);
             if ($variableScope instanceof AbstractVariableScope) {
                 $variableScope->setCachedElContext($elContext);
@@ -83,7 +83,7 @@ class ExpressionManager
 
     protected function getCachedElResolver(): ELResolver
     {
-        if ($this->elResolver == null) {
+        if ($this->elResolver === null) {
             $this->elResolver = $this->createElResolver();
         }
         return $this->elResolver;

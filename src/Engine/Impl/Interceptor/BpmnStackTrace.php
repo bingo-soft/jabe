@@ -65,7 +65,7 @@ class BpmnStackTrace
             $writer .= $activityId;
 
             $activityName = $activity->get("activityName");
-            if ($activityName != null) {
+            if ($activityName !== null) {
                 $writer .= ", name=";
                 $writer .= $activityName;
             }
@@ -79,7 +79,7 @@ class BpmnStackTrace
         $activityTrace = [];
         foreach ($this->perfromedInvocations as $atomicOperationInvocation) {
             $activityId = $atomicOperationInvocation->getActivityId();
-            if ($activityId == null) {
+            if ($activityId === null) {
                 continue;
             }
 
@@ -87,7 +87,7 @@ class BpmnStackTrace
             $activity["activityId"] = $activityId;
 
             $activityName = $atomicOperationInvocation->getActivityName();
-            if ($activityName != null) {
+            if ($activityName !== null) {
                 $activity["activityName"] = $activityName;
             }
 
@@ -119,7 +119,7 @@ class BpmnStackTrace
             $writer .= ", ASYNC";
         }
 
-        if ($invocation->getApplicationContextName() != null) {
+        if ($invocation->getApplicationContextName() !== null) {
             $writer .= ", pa=";
             $writer .= $invocation->getApplicationContextName();
         }

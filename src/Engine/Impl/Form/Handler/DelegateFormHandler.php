@@ -37,7 +37,7 @@ abstract class DelegateFormHandler
     {
         $targetProcessApplication = ProcessApplicationContextUtil::getTargetProcessApplication($deploymentId);
 
-        if ($targetProcessApplication != null) {
+        if ($targetProcessApplication !== null) {
             $scope = $this;
             return Context::executeWithinProcessApplication(function () use ($scope, $callable) {
                 return $scope->doCall($callable);

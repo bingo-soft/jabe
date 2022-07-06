@@ -37,7 +37,7 @@ class ModelInstanceImpl implements ModelInstanceInterface
     public function getDocumentElement(): ?ModelElementInstanceInterface
     {
         $rootElement = $this->document->getRootElement();
-        if ($rootElement != null) {
+        if ($rootElement !== null) {
             return ModelUtil::getModelElement($rootElement, $this);
         } else {
             return null;
@@ -58,7 +58,7 @@ class ModelInstanceImpl implements ModelInstanceInterface
     {
         if (is_string($type)) {
             $modelElementType = $this->model->getType($type);
-            if ($modelElementType != null) {
+            if ($modelElementType !== null) {
                 $type = $modelElementType;
             } else {
                 throw new ModelException(
@@ -83,7 +83,7 @@ class ModelInstanceImpl implements ModelInstanceInterface
     public function registerGenericType(string $namespaceUri, string $localName): ModelElementTypeInterface
     {
         $elementType = $this->model->getTypeForName($namespaceUri, $localName);
-        if ($elementType == null) {
+        if ($elementType === null) {
             $elementType = $this->modelBuilder->defineGenericType($localName, $namespaceUri);
             $model = $this->modelBuilder->build();
         }
@@ -92,11 +92,11 @@ class ModelInstanceImpl implements ModelInstanceInterface
 
     public function getModelElementById(?string $id): ?ModelElementInstanceInterface
     {
-        if ($id == null) {
+        if ($id === null) {
             return null;
         }
         $element = $this->document->getElementById($id);
-        if ($element != null) {
+        if ($element !== null) {
             return ModelUtil::getModelElement($element, $this);
         } else {
             return null;

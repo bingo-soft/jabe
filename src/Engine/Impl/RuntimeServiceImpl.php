@@ -78,7 +78,7 @@ class RuntimeServiceImpl extends ServiceImpl implements RuntimeServiceInterface
     public function startProcessInstanceByKey(string $processDefinitionKey, string $businessKey = null, array $variables = []): ProcessInstance
     {
         $res = $this->createProcessInstanceByKey($processDefinitionKey);
-        if ($businessKey != null) {
+        if ($businessKey !== null) {
             $res->businessKey($businessKey);
         }
         if (!empty($variables)) {
@@ -90,7 +90,7 @@ class RuntimeServiceImpl extends ServiceImpl implements RuntimeServiceInterface
     public function startProcessInstanceById(string $processDefinitionId, string $businessKey = null, array $variables = []): ProcessInstanceInterface
     {
         $res = $this->createProcessInstanceById($processDefinitionId);
-        if ($businessKey != null) {
+        if ($businessKey !== null) {
             $res->businessKey($businessKey);
         }
         if (!empty($variables)) {
@@ -393,7 +393,7 @@ class RuntimeServiceImpl extends ServiceImpl implements RuntimeServiceInterface
     public function startProcessInstanceByMessage(string $messageName, string $businessKey = null, array $processVariables = []): ProcessInstanceInterface
     {
         $res = $this->createMessageCorrelation($messageName);
-        if ($businessKey != null) {
+        if ($businessKey !== null) {
             $res->processInstanceBusinessKey($businessKey);
         }
         if (!empty($processVariables)) {
@@ -405,7 +405,7 @@ class RuntimeServiceImpl extends ServiceImpl implements RuntimeServiceInterface
     public function startProcessInstanceByMessageAndProcessDefinitionId(string $messageName, string $processDefinitionId, string $businessKey = null, array $processVariables = []): ProcessInstanceInterface
     {
         $res = $this->createMessageCorrelation($messageName)->processDefinitionId($processDefinitionId);
-        if ($businessKey != null) {
+        if ($businessKey !== null) {
             $res->processInstanceBusinessKey($businessKey);
         }
         if (!empty($processVariables)) {
@@ -417,7 +417,7 @@ class RuntimeServiceImpl extends ServiceImpl implements RuntimeServiceInterface
     public function signalEventReceived(string $signalName, string $executionId = null, array $processVariables = []): void
     {
         $res = $this->createSignalEvent($signalName);
-        if ($executionId != null) {
+        if ($executionId !== null) {
             $res->executionId($executionId);
         }
         if (!empty($processVariables)) {
@@ -445,7 +445,7 @@ class RuntimeServiceImpl extends ServiceImpl implements RuntimeServiceInterface
     public function correlateMessage(string $messageName, string $businessKey = null, array $correlationKeys = null, array $processVariables = null): void
     {
         $res = $this->createMessageCorrelation($messageName);
-        if ($businessKey != null) {
+        if ($businessKey !== null) {
             $res->processInstanceBusinessKey($businessKey);
         }
         if (!empty($correlationKeys)) {

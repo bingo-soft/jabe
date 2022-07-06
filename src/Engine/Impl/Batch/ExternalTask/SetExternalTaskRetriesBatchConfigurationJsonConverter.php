@@ -19,7 +19,7 @@ class SetExternalTaskRetriesBatchConfigurationJsonConverter extends JsonObjectCo
 
     public static function instance(): SetExternalTaskRetriesBatchConfigurationJsonConverter
     {
-        if (self::$INSTANCE == null) {
+        if (self::$INSTANCE === null) {
             self::$INSTANCE = new SetExternalTaskRetriesBatchConfigurationJsonConverter();
         }
         return self::$INSTANCE;

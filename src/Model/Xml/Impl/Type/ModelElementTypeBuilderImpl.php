@@ -133,9 +133,9 @@ class ModelElementTypeBuilderImpl implements ModelElementTypeBuilderInterface, M
 
     public function buildTypeHierarchy(ModelInterface $model): void
     {
-        if ($this->extendedType != null) {
+        if ($this->extendedType !== null) {
             $extendedModelElementType = $this->model->getType($this->extendedType);
-            if ($extendedModelElementType == null) {
+            if ($extendedModelElementType === null) {
                 throw new ModelException(
                     sprintf(
                         "Type is defined to extend %s but no such type is defined.",

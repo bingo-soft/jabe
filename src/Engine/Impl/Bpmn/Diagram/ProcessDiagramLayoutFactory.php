@@ -66,7 +66,7 @@ class ProcessDiagramLayoutFactory
      */
     public function getBpmnProcessDiagramLayout(DomDocumentExt $bpmnModel, $imageStream = null): ?DiagramLayout
     {
-        if ($imageStream == null) {
+        if ($imageStream === null) {
             return null;
         }
         $diagramBoundsXml = $this->getDiagramBoundsFromBpmnDi($bpmnModel);

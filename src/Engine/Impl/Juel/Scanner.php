@@ -132,7 +132,7 @@ class Scanner
 
     protected function isEval(): bool
     {
-        return $this->token != null && $this->token->getSymbol() != Symbol::TEXT && $this->token->getSymbol() != Symbol::END_EVAL;
+        return $this->token !== null && $this->token->getSymbol() != Symbol::TEXT && $this->token->getSymbol() != Symbol::END_EVAL;
     }
 
     /**
@@ -338,7 +338,7 @@ class Scanner
             }
             $name = substr($this->input, $this->position, $i - $this->position);
             $keyword = $this->keyword($name);
-            return $keyword == null ? $this->token(Symbol::IDENTIFIER, $name, $i - $this->position) : $keyword;
+            return $keyword === null ? $this->token(Symbol::IDENTIFIER, $name, $i - $this->position) : $keyword;
         }
 
         throw new ScanException($this->position, "invalid character '" . $c1 . "'", "expression token");

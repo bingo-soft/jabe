@@ -103,12 +103,12 @@ class DeleteProcessInstanceBatchCmd implements CommandInterface
         }
 
         $processInstanceQuery = $this->processInstanceQuery;
-        if ($processInstanceQuery != null) {
+        if ($processInstanceQuery !== null) {
             $elementConfiguration->addDeploymentMappings($processInstanceQuery->listDeploymentIdMappings());
         }
 
         $historicProcessInstanceQuery = $this->historicProcessInstanceQuery;
-        if ($historicProcessInstanceQuery != null) {
+        if ($historicProcessInstanceQuery !== null) {
             $elementConfiguration->addDeploymentMappings($historicProcessInstanceQuery->listDeploymentIdMappings());
         }
 

@@ -19,7 +19,7 @@ class ProblemImpl implements ProblemInterface
         } elseif (is_string($e)) {
             $this->message = $errorMessage;
         }
-        if ($element != null) {
+        if ($element !== null) {
             $this->extractElementDetails($element);
         }
         if (is_string($elementIds)) {
@@ -38,8 +38,8 @@ class ProblemImpl implements ProblemInterface
 
     protected function concatenateErrorMessages(\Throwable $throwable = null): void
     {
-        while ($throwable != null) {
-            if ($this->message == null) {
+        while ($throwable !== null) {
+            if ($this->message === null) {
                 $this->message = $throwable->getMessage();
             } else {
                 $message .= ": " . $throwable->getMessage();
@@ -52,7 +52,7 @@ class ProblemImpl implements ProblemInterface
 
     protected function extractElementDetails(Element $element = null): void
     {
-        if ($element != null) {
+        if ($element !== null) {
             $this->line = $element->getLine();
             $this->column = $element->getColumn();
             $id = $element->attribute("id");

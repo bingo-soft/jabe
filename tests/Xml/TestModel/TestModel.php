@@ -34,7 +34,7 @@ class TestModel
 
     public static function getTestModel(): ModelInterface
     {
-        if (self::$model == null) {
+        if (self::$model === null) {
             $modelBuilder = self::getModelBuilder();
 
             Animals::registerType($modelBuilder);
@@ -64,7 +64,7 @@ class TestModel
 
     public static function getModelBuilder(): ModelBuilder
     {
-        if (self::$modelBuilder == null) {
+        if (self::$modelBuilder === null) {
             self::$modelBuilder = ModelBuilder::createInstance(TestModelConstants::MODEL_NAME);
         }
         return self::$modelBuilder;

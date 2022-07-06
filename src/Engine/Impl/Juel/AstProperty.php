@@ -39,11 +39,11 @@ abstract class AstProperty extends AstNode
     public function eval(Bindings $bindings, ELContext $context)
     {
         $base = $this->prefix->eval($bindings, $context);
-        if ($base == null) {
+        if ($base === null) {
             return null;
         }
         $property = $this->getProperty($bindings, $context);
-        if ($property == null && $this->strict) {
+        if ($property === null && $this->strict) {
             return null;
         }
         $context->setPropertyResolved(false);
@@ -75,11 +75,11 @@ abstract class AstProperty extends AstNode
             return null;
         }
         $base = $this->prefix->eval($bindings, $context);
-        if ($base == null) {
+        if ($base === null) {
             throw new PropertyNotFoundException(LocalMessages::get("error.property.base.null", $this->prefix));
         }
         $property = $this->getProperty($bindings, $context);
-        if ($property == null && $this->strict) {
+        if ($property === null && $this->strict) {
             throw new PropertyNotFoundException(LocalMessages::get("error.property.property.notfound", "null", $base));
         }
         $context->setPropertyResolved(false);
@@ -96,11 +96,11 @@ abstract class AstProperty extends AstNode
             return true;
         }
         $base = $this->prefix->eval($bindings, $context);
-        if ($base == null) {
+        if ($base === null) {
             throw new PropertyNotFoundException(LocalMessages::get("error.property.base.null", $this->prefix));
         }
         $property = $this->getProperty($bindings, $context);
-        if ($property == null && $this->strict) {
+        if ($property === null && $this->strict) {
             throw new PropertyNotFoundException(LocalMessages::get("error.property.property.notfound", "null", $base));
         }
         $context->setPropertyResolved(false);
@@ -117,11 +117,11 @@ abstract class AstProperty extends AstNode
             throw new ELException(LocalMessages::get("error.value.set.rvalue", $this->getStructuralId($bindings)));
         }
         $base = $this->prefix->eval($bindings, $context);
-        if ($base == null) {
+        if ($base === null) {
             throw new PropertyNotFoundException(LocalMessages::get("error.property.base.null", $this->prefix));
         }
         $property = $this->getProperty($bindings, $context);
-        if ($property == null && $this->strict) {
+        if ($property === null && $this->strict) {
             throw new PropertyNotFoundException(LocalMessages::get("error.property.property.notfound", "null", $base));
         }
         $context->setPropertyResolved(false);
@@ -139,7 +139,7 @@ abstract class AstProperty extends AstNode
         } catch (\Exception $e) {
             throw new \Exception(LocalMessages::get("error.property.method.notfound", $name, $clazz));
         }
-        if ($returnType != null && $returnType != $method->getReturnType()) {
+        if ($returnType !== null && $returnType != $method->getReturnType()) {
             throw new \Exception(LocalMessages::get("error.property.method.notfound", $name, $clazz));
         }
         return $method;
@@ -148,11 +148,11 @@ abstract class AstProperty extends AstNode
     public function getMethodInfo(Bindings $bindings, ELContext $context, ?string $returnType = null, ?array $paramTypes = []): ?MethodInfo
     {
         $base = $this->prefix->eval($bindings, $context);
-        if ($base == null) {
+        if ($base === null) {
             throw new PropertyNotFoundException(LocalMessages::get("error.property.base.null", $this->prefix));
         }
         $property = $this->getProperty($bindings, $context);
-        if ($property == null && $this->strict) {
+        if ($property === null && $this->strict) {
             throw new \Exception(LocalMessages::get("error.property.method.notfound", "null", $base));
         }
         $name = $bindings->convert($property, "string");
@@ -163,11 +163,11 @@ abstract class AstProperty extends AstNode
     public function invoke(Bindings $bindings, ELContext $context, ?string $returnType = null, ?array $paramTypes = [], ?array $paramValues = [])
     {
         $base = $this->prefix->eval($bindings, $context);
-        if ($base == null) {
+        if ($base === null) {
             throw new PropertyNotFoundException(LocalMessages::get("error.property.base.null", $this->prefix));
         }
         $property = $this->getProperty($bindings, $context);
-        if ($property == null && $this->strict) {
+        if ($property === null && $this->strict) {
             throw new \Exception(LocalMessages::get("error.property.method.notfound", "null", $base));
         }
         $name = $bindings->convert($property, "string");

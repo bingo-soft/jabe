@@ -158,7 +158,7 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
             return $this->commandExecutor->execute(
                 new SetJobsRetriesByProcessBatchCmd($ids, $queryOrRetries, $historicQueryOrRetries, $retries)
             );
-        } elseif ($queryOrRetries instanceof ProcessInstanceQueryInterface && $retries == null) {
+        } elseif ($queryOrRetries instanceof ProcessInstanceQueryInterface && $retries === null) {
             return $this->commandExecutor->execute(
                 new SetJobsRetriesByProcessBatchCmd($ids, $queryOrRetries, null, $historicQueryOrRetries)
             );
@@ -284,11 +284,11 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
 
     public function activateJobDefinitionById(string $jobDefinitionId, bool $activateJobs = false, string $activationDate = null): void
     {
-        if (!$activateJobs && $activationDate == null) {
+        if (!$activateJobs && $activationDate === null) {
             $this->updateJobDefinitionSuspensionState()
             ->byJobDefinitionId($jobDefinitionId)
             ->activate();
-        } elseif ($activationDate == null) {
+        } elseif ($activationDate === null) {
             $this->updateJobDefinitionSuspensionState()
                 ->byJobDefinitionId($jobDefinitionId)
                 ->includeJobs($activateJobs)
@@ -304,11 +304,11 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
 
     public function suspendJobDefinitionById(string $jobDefinitionId, bool $suspendJobs = false, string $suspensionDate = null): void
     {
-        if (!$suspendJobs && $suspensionDate == null) {
+        if (!$suspendJobs && $suspensionDate === null) {
             $this->updateJobDefinitionSuspensionState()
             ->byJobDefinitionId($jobDefinitionId)
             ->suspend();
-        } elseif ($suspensionDate == null) {
+        } elseif ($suspensionDate === null) {
             $this->updateJobDefinitionSuspensionState()
                 ->byJobDefinitionId($jobDefinitionId)
                 ->includeJobs($suspendJobs)
@@ -324,11 +324,11 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
 
     public function activateJobDefinitionByProcessDefinitionId(string $processDefinitionId, bool $activateJobs = false, string $activationDate = null): void
     {
-        if (!$activateJobs && $activationDate == null) {
+        if (!$activateJobs && $activationDate === null) {
             $this->updateJobDefinitionSuspensionState()
             ->byProcessDefinitionId($processDefinitionId)
             ->activate();
-        } elseif ($activationDate == null) {
+        } elseif ($activationDate === null) {
             $this->updateJobDefinitionSuspensionState()
                 ->byProcessDefinitionId($processDefinitionId)
                 ->includeJobs($activateJobs)
@@ -344,11 +344,11 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
 
     public function suspendJobDefinitionByProcessDefinitionId(string $processDefinitionId, bool $suspendJobs = false, string $suspensionDate = null): void
     {
-        if (!$suspendJobs && $suspensionDate == null) {
+        if (!$suspendJobs && $suspensionDate === null) {
             $this->updateJobDefinitionSuspensionState()
                 ->byProcessDefinitionId($processDefinitionId)
                 ->suspend();
-        } elseif ($suspensionDate == null) {
+        } elseif ($suspensionDate === null) {
             $this->updateJobDefinitionSuspensionState()
                 ->byProcessDefinitionId($processDefinitionId)
                 ->includeJobs($suspendJobs)
@@ -364,11 +364,11 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
 
     public function activateJobDefinitionByProcessDefinitionKey(string $processDefinitionKey, bool $activateJobs = false, string $activationDate = null): void
     {
-        if (!$activateJobs && $activationDate == null) {
+        if (!$activateJobs && $activationDate === null) {
             $this->updateJobDefinitionSuspensionState()
                 ->byProcessDefinitionKey($processDefinitionKey)
                 ->activate();
-        } elseif ($activationDate == null) {
+        } elseif ($activationDate === null) {
             $this->updateJobDefinitionSuspensionState()
                 ->byProcessDefinitionKey($processDefinitionKey)
                 ->includeJobs($activateJobs)
@@ -384,11 +384,11 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
 
     public function suspendJobDefinitionByProcessDefinitionKey(string $processDefinitionKey, bool $suspendJobs = false, string $suspensionDate = null): void
     {
-        if (!$suspendJobs && $suspensionDate == null) {
+        if (!$suspendJobs && $suspensionDate === null) {
             $this->updateJobDefinitionSuspensionState()
             ->byProcessDefinitionKey($processDefinitionKey)
             ->suspend();
-        } elseif ($suspensionDate == null) {
+        } elseif ($suspensionDate === null) {
             $this->updateJobDefinitionSuspensionState()
                 ->byProcessDefinitionKey($processDefinitionKey)
                 ->includeJobs($suspendJobs)
@@ -577,7 +577,7 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
     public function addWebappToTelemetry(string $webapp): bool
     {
         $telemetryRegistry = $this->processEngineConfiguration->getTelemetryRegistry();
-        if ($telemetryRegistry != null) {
+        if ($telemetryRegistry !== null) {
             $telemetryRegistry->addWebapp($webapp);
             return true;
         }
@@ -593,7 +593,7 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
     public function addApplicationServerInfoToTelemetry(string $appServerInfo): void
     {
         $telemetryRegistry = $this->processEngineConfiguration->getTelemetryRegistry();
-        if ($telemetryRegistry != null) {
+        if ($telemetryRegistry !== null) {
             $telemetryRegistry->setApplicationServer($appServerInfo);
         }
     }
@@ -608,7 +608,7 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
     public function setLicenseKeyForTelemetry(LicenseKeyDataImpl $licenseKeyData): void
     {
         $telemetryRegistry = $this->processEngineConfiguration->getTelemetryRegistry();
-        if ($telemetryRegistry != null) {
+        if ($telemetryRegistry !== null) {
             $telemetryRegistry->setLicenseKey($licenseKeyData);
         }
     }
@@ -616,7 +616,7 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
     public function getLicenseKeyFromTelemetry(): LicenseKeyDataImpl
     {
         $telemetryRegistry = $this->processEngineConfiguration->getTelemetryRegistry();
-        if ($telemetryRegistry != null) {
+        if ($telemetryRegistry !== null) {
             return $telemetryRegistry->getLicenseKey();
         }
         return null;
@@ -625,11 +625,11 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
     public function clearTelemetryData(): void
     {
         $telemetryRegistry = $this->processEngineConfiguration->getTelemetryRegistry();
-        if ($telemetryRegistry != null) {
+        if ($telemetryRegistry !== null) {
             $telemetryRegistry->clear();
         }
         $metricsRegistry = $this->processEngineConfiguration->getMetricsRegistry();
-        if ($metricsRegistry != null) {
+        if ($metricsRegistry !== null) {
             $metricsRegistry->clearTelemetryMetrics();
         }
         $this->deleteMetrics(null);

@@ -302,7 +302,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
 
     public function taskDelegationState(string $delegationState): TaskQueryInterface
     {
-        if ($delegationState == null) {
+        if ($delegationState === null) {
             $this->noDelegationState = true;
         } else {
             $this->delegationState = $delegationState;
@@ -314,7 +314,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
     {
         EnsureUtil::ensureNotNull("Candidate user", "candidateUser", $candidateUser);
         if (!$this->isOrQueryActive) {
-            if ($this->candidateGroup != null || array_key_exists("taskCandidateGroup", $this->expressions)) {
+            if ($this->candidateGroup !== null || array_key_exists("taskCandidateGroup", $this->expressions)) {
                 throw new ProcessEngineException("Invalid query usage: cannot set both candidateUser and candidateGroup");
             }
             if (!empty($this->candidateGroups) || array_key_exists("taskCandidateGroupIn", $this->expressions)) {
@@ -330,7 +330,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
     {
         EnsureUtil::ensureNotNull("Candidate user expression", "candidateUserExpression", $candidateUserExpression);
 
-        if ($this->candidateGroup != null || array_key_exists("taskCandidateGroup", $this->expressions)) {
+        if ($this->candidateGroup !== null || array_key_exists("taskCandidateGroup", $this->expressions)) {
             throw new ProcessEngineException("Invalid query usage: cannot set both candidateUser and candidateGroup");
         }
         if (!empty($this->candidateGroups) || array_key_exists("taskCandidateGroupIn", $this->expressions)) {
@@ -399,7 +399,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         EnsureUtil::ensureNotNull("Candidate group", "candidateGroup", $candidateGroup);
 
         if (!$this->isOrQueryActive) {
-            if ($this->candidateUser != null || array_key_exists("taskCandidateUser", $this->expressions)) {
+            if ($this->candidateUser !== null || array_key_exists("taskCandidateUser", $this->expressions)) {
                 throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroup and candidateUser");
             }
         }
@@ -414,7 +414,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         EnsureUtil::ensureNotNull("Candidate group expression", "candidateGroupExpression", $candidateGroupExpression);
 
         if (!$this->isOrQueryActive) {
-            if ($this->candidateUser != null || array_key_exists("taskCandidateUser", $this->expressions)) {
+            if ($this->candidateUser !== null || array_key_exists("taskCandidateUser", $this->expressions)) {
                 throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroup and candidateUser");
             }
         }
@@ -428,7 +428,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         EnsureUtil::ensureNotEmpty("Candidate group list", "candidateGroups", $candidateGroups);
 
         if (!$this->isOrQueryActive) {
-            if ($this->candidateUser != null || array_key_exists("taskCandidateUser", $this->expressions)) {
+            if ($this->candidateUser !== null || array_key_exists("taskCandidateUser", $this->expressions)) {
                 throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroupIn and candidateUser");
             }
         }
@@ -443,7 +443,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         EnsureUtil::ensureNotEmpty("Candidate group list expression", "candidateGroupsExpression", $candidateGroupsExpression);
 
         if (!$this->isOrQueryActive) {
-            if ($this->candidateUser != null || array_key_exists("taskCandidateUser", $this->expressions)) {
+            if ($this->candidateUser !== null || array_key_exists("taskCandidateUser", $this->expressions)) {
                 throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroupIn and candidateUser");
             }
         }
@@ -455,9 +455,9 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
     public function includeAssignedTasks(): TaskQueryInterface
     {
         if (
-            $this->candidateUser == null &&
-            $this->candidateGroup == null &&
-            $this->candidateGroups == null &&
+            $this->candidateUser === null &&
+            $this->candidateGroup === null &&
+            $this->candidateGroups === null &&
             !$this->isWithCandidateGroups() &&
             !$this->isWithoutCandidateGroups() &&
             !$this->isWithCandidateUsers() &&
@@ -940,9 +940,9 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         // the withoutDueDate filter. They can be combined in an OR query
         if (!$this->isOrQueryActive) {
             if (
-                $this->dueAfter != null ||
-                $this->dueBefore != null ||
-                $this->dueDate != null ||
+                $this->dueAfter !== null ||
+                $this->dueBefore !== null ||
+                $this->dueDate !== null ||
                 array_key_exists("dueDate", $this->expressions) ||
                 array_key_exists("dueBefore", $this->expressions) ||
                 array_key_exists("dueAfter", $this->expressions)
@@ -1068,7 +1068,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
             return $this->cachedCandidateGroups;
         }
 
-        if ($this->candidateGroup != null && !empty($this->candidateGroups)) {
+        if ($this->candidateGroup !== null && !empty($this->candidateGroups)) {
             $this->cachedCandidateGroups = $this->candidateGroups;
             if (!$this->isOrQueryActive) {
                 // get intersection of candidateGroups and candidateGroup
@@ -1079,13 +1079,13 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
                     $this->cachedCandidateGroups[] = $this->candidateGroup;
                 }
             }
-        } elseif ($this->candidateGroup != null) {
+        } elseif ($this->candidateGroup !== null) {
             $this->cachedCandidateGroups = [$this->candidateGroup];
         } elseif (!empty($this->candidateGroups)) {
             $this->cachedCandidateGroups = $candidateGroups;
         }
 
-        if ($this->candidateUser != null) {
+        if ($this->candidateUser !== null) {
             $groupsForCandidateUser = $this->getGroupsForCandidateUser($this->candidateUser);
 
             if (empty($this->cachedCandidateGroups)) {
@@ -1104,7 +1104,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
 
     public function isWithCandidateGroups(): bool
     {
-        if ($this->withCandidateGroups == null) {
+        if ($this->withCandidateGroups === null) {
             return false;
         } else {
             return $this->withCandidateGroups;
@@ -1113,7 +1113,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
 
     public function isWithCandidateUsers(): bool
     {
-        if ($this->withCandidateUsers == null) {
+        if ($this->withCandidateUsers === null) {
             return false;
         } else {
             return $this->withCandidateUsers;
@@ -1127,7 +1127,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
 
     public function isWithoutCandidateGroups(): bool
     {
-        if ($this->withoutCandidateGroups == null) {
+        if ($this->withoutCandidateGroups === null) {
             return false;
         } else {
             return $this->withoutCandidateGroups;
@@ -1136,7 +1136,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
 
     public function isWithoutCandidateUsers(): bool
     {
-        if ($this->withoutCandidateUsers == null) {
+        if ($this->withoutCandidateUsers === null) {
             return false;
         } else {
             return $this->withoutCandidateUsers;
@@ -1179,7 +1179,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
     protected function getCachedUserGroups(): array
     {
         // store and retrieve cached user groups always from the first query
-        if ($this->queries[0]->cachedUserGroups == null) {
+        if ($this->queries[0]->cachedUserGroups === null) {
             $this->queries[0]->cachedUserGroups = [];
         }
         return $this->queries[0]->cachedUserGroups;
@@ -1225,7 +1225,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         } else {
             EnsureUtil::ensureNotNull("name", "name", $name);
 
-            if ($value == null || $this->isBoolean($value)) {
+            if ($value === null || $this->isBoolean($value)) {
                 // Null-values and booleans can only be used in EQUALS and NOT_EQUALS
                 switch ($operator) {
                     case QueryOperator::GREATER_THAN:
@@ -1245,14 +1245,14 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
                 }
             }
 
-            $shouldMatchVariableValuesIgnoreCase = $variableValuesIgnoreCase == true && $value != null && is_string($value);
+            $shouldMatchVariableValuesIgnoreCase = $variableValuesIgnoreCase == true && $value !== null && is_string($value);
             $this->addVariable(new TaskQueryVariableValue($name, $value, $operator, $isTaskVariable, $isProcessInstanceVariable, $variableNamesIgnoreCase == true, $shouldMatchVariableValuesIgnoreCase));
         }
     }
 
     private function isBoolean($value = null): bool
     {
-        if ($value == null) {
+        if ($value === null) {
             return false;
         }
         return is_bool($value) || strtolower($value) == "true" || strtolower($value) == "false";
@@ -1463,7 +1463,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         $this->resetCachedCandidateGroups();
 
         //check if candidateGroup and candidateGroups intersect
-        if ($this->getCandidateGroup() != null && $this->getCandidateGroupsInternal() != null && empty($this->getCandidateGroups())) {
+        if ($this->getCandidateGroup() !== null && $this->getCandidateGroupsInternal() !== null && empty($this->getCandidateGroups())) {
             return [];
         }
 
@@ -1492,7 +1492,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         $this->resetCachedCandidateGroups();
 
         //check if candidateGroup and candidateGroups intersect
-        if ($this->getCandidateGroup() != null && $this->getCandidateGroupsInternal() != null && empty($this->getCandidateGroups())) {
+        if ($this->getCandidateGroup() !== null && $this->getCandidateGroupsInternal() !== null && empty($this->getCandidateGroups())) {
             return 0;
         }
 
@@ -1572,7 +1572,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
 
     public function isAssigned(): bool
     {
-        if ($this->assigned == null) {
+        if ($this->assigned === null) {
             return false;
         } else {
             return $this->assigned;
@@ -1586,7 +1586,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
 
     public function isUnassigned(): bool
     {
-        if ($this->unassigned == null) {
+        if ($this->unassigned === null) {
             return false;
         } else {
             return $this->unassigned;
@@ -1917,62 +1917,62 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         // query and should therefore be executed before extending the query
         $extendedQuery->validators = $this->validators;
 
-        if ($extendingQuery->getName() != null) {
+        if ($extendingQuery->getName() !== null) {
             $extendedQuery->taskName($extendingQuery->getName());
-        } elseif ($this->getName() != null) {
+        } elseif ($this->getName() !== null) {
             $extendedQuery->taskName($this->getName());
         }
 
-        if ($extendingQuery->getNameLike() != null) {
+        if ($extendingQuery->getNameLike() !== null) {
             $extendedQuery->taskNameLike($extendingQuery->getNameLike());
-        } elseif ($this->getNameLike() != null) {
+        } elseif ($this->getNameLike() !== null) {
             $extendedQuery->taskNameLike($this->getNameLike());
         }
 
-        if ($extendingQuery->getNameNotEqual() != null) {
+        if ($extendingQuery->getNameNotEqual() !== null) {
             $extendedQuery->taskNameNotEqual($extendingQuery->getNameNotEqual());
-        } elseif ($this->getNameNotEqual() != null) {
+        } elseif ($this->getNameNotEqual() !== null) {
             $extendedQuery->taskNameNotEqual($this->getNameNotEqual());
         }
 
-        if ($extendingQuery->getNameNotLike() != null) {
+        if ($extendingQuery->getNameNotLike() !== null) {
             $extendedQuery->taskNameNotLike($extendingQuery->getNameNotLike());
-        } elseif ($this->getNameNotLike() != null) {
+        } elseif ($this->getNameNotLike() !== null) {
             $extendedQuery->taskNameNotLike($this->getNameNotLike());
         }
 
-        if ($extendingQuery->getAssignee() != null) {
+        if ($extendingQuery->getAssignee() !== null) {
             $extendedQuery->taskAssignee($extendingQuery->getAssignee());
-        } elseif ($this->getAssignee() != null) {
+        } elseif ($this->getAssignee() !== null) {
             $extendedQuery->taskAssignee($this->getAssignee());
         }
 
-        if ($extendingQuery->getAssigneeLike() != null) {
+        if ($extendingQuery->getAssigneeLike() !== null) {
             $extendedQuery->taskAssigneeLike($extendingQuery->getAssigneeLike());
-        } elseif ($this->getAssigneeLike() != null) {
+        } elseif ($this->getAssigneeLike() !== null) {
             $extendedQuery->taskAssigneeLike($this->getAssigneeLike());
         }
 
-        if ($extendingQuery->getAssigneeIn() != null) {
+        if ($extendingQuery->getAssigneeIn() !== null) {
             $extendedQuery->taskAssigneeIn($extendingQuery->getAssigneeIn());
-        } elseif ($this->getAssigneeIn() != null) {
+        } elseif ($this->getAssigneeIn() !== null) {
             $extendedQuery->taskAssigneeIn($this->getAssigneeIn());
         }
-        if ($extendingQuery->getAssigneeNotIn() != null) {
+        if ($extendingQuery->getAssigneeNotIn() !== null) {
             $extendedQuery->taskAssigneeNotIn($extendingQuery->getAssigneeNotIn());
-        } elseif ($this->getAssigneeNotIn() != null) {
+        } elseif ($this->getAssigneeNotIn() !== null) {
             $extendedQuery->taskAssigneeNotIn($this->getAssigneeNotIn());
         }
 
-        if ($extendingQuery->getInvolvedUser() != null) {
+        if ($extendingQuery->getInvolvedUser() !== null) {
             $extendedQuery->taskInvolvedUser($extendingQuery->getInvolvedUser());
-        } elseif ($this->getInvolvedUser() != null) {
+        } elseif ($this->getInvolvedUser() !== null) {
             $extendedQuery->taskInvolvedUser($this->getInvolvedUser());
         }
 
-        if ($extendingQuery->getOwner() != null) {
+        if ($extendingQuery->getOwner() !== null) {
             $extendedQuery->taskOwner($extendingQuery->getOwner());
-        } elseif ($this->getOwner() != null) {
+        } elseif ($this->getOwner() !== null) {
             $extendedQuery->taskOwner($this->getOwner());
         }
 
@@ -1984,21 +1984,21 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
             $extendedQuery->taskUnassigned();
         }
 
-        if ($extendingQuery->getDelegationState() != null) {
+        if ($extendingQuery->getDelegationState() !== null) {
             $extendedQuery->taskDelegationState($extendingQuery->getDelegationState());
-        } elseif ($this->getDelegationState() != null) {
+        } elseif ($this->getDelegationState() !== null) {
             $extendedQuery->taskDelegationState($this->getDelegationState());
         }
 
-        if ($extendingQuery->getCandidateUser() != null) {
+        if ($extendingQuery->getCandidateUser() !== null) {
             $extendedQuery->taskCandidateUser($extendingQuery->getCandidateUser());
-        } elseif ($this->getCandidateUser() != null) {
+        } elseif ($this->getCandidateUser() !== null) {
             $extendedQuery->taskCandidateUser($this->getCandidateUser());
         }
 
-        if ($extendingQuery->getCandidateGroup() != null) {
+        if ($extendingQuery->getCandidateGroup() !== null) {
             $extendedQuery->taskCandidateGroup($extendingQuery->getCandidateGroup());
-        } elseif ($this->getCandidateGroup() != null) {
+        } elseif ($this->getCandidateGroup() !== null) {
             $extendedQuery->taskCandidateGroup($this->getCandidateGroup());
         }
 
@@ -2018,177 +2018,177 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
             $extendedQuery->withoutCandidateUsers();
         }
 
-        if ($extendingQuery->getCandidateGroupsInternal() != null) {
+        if ($extendingQuery->getCandidateGroupsInternal() !== null) {
             $extendedQuery->taskCandidateGroupIn($extendingQuery->getCandidateGroupsInternal());
-        } elseif ($this->getCandidateGroupsInternal() != null) {
+        } elseif ($this->getCandidateGroupsInternal() !== null) {
             $extendedQuery->taskCandidateGroupIn($this->getCandidateGroupsInternal());
         }
 
-        if ($extendingQuery->getProcessInstanceId() != null) {
+        if ($extendingQuery->getProcessInstanceId() !== null) {
             $extendedQuery->processInstanceId($extendingQuery->getProcessInstanceId());
-        } elseif ($this->getProcessInstanceId() != null) {
+        } elseif ($this->getProcessInstanceId() !== null) {
             $extendedQuery->processInstanceId($this->getProcessInstanceId());
         }
 
-        if ($extendingQuery->getProcessInstanceIdIn() != null) {
+        if ($extendingQuery->getProcessInstanceIdIn() !== null) {
             $extendedQuery->processInstanceIdIn($extendingQuery->getProcessInstanceIdIn());
-        } elseif ($this->processInstanceIdIn() != null) {
+        } elseif ($this->processInstanceIdIn() !== null) {
             $extendedQuery->processInstanceIdIn($this->getProcessInstanceIdIn());
         }
 
-        if ($extendingQuery->getExecutionId() != null) {
+        if ($extendingQuery->getExecutionId() !== null) {
             $extendedQuery->executionId($extendingQuery->getExecutionId());
-        } elseif ($this->getExecutionId() != null) {
+        } elseif ($this->getExecutionId() !== null) {
             $extendedQuery->executionId($this->getExecutionId());
         }
 
-        if ($extendingQuery->getActivityInstanceIdIn() != null) {
+        if ($extendingQuery->getActivityInstanceIdIn() !== null) {
             $extendedQuery->activityInstanceIdIn($extendingQuery->getActivityInstanceIdIn());
-        } elseif ($this->getActivityInstanceIdIn() != null) {
+        } elseif ($this->getActivityInstanceIdIn() !== null) {
             $extendedQuery->activityInstanceIdIn($this->getActivityInstanceIdIn());
         }
 
-        if ($extendingQuery->getTaskId() != null) {
+        if ($extendingQuery->getTaskId() !== null) {
             $extendedQuery->taskId($extendingQuery->getTaskId());
-        } elseif ($this->getTaskId() != null) {
+        } elseif ($this->getTaskId() !== null) {
             $extendedQuery->taskId($this->getTaskId());
         }
 
-        if ($extendingQuery->getTaskIdIn() != null) {
+        if ($extendingQuery->getTaskIdIn() !== null) {
             $extendedQuery->taskIdIn($extendingQuery->getTaskIdIn());
-        } elseif ($this->getTaskIdIn() != null) {
+        } elseif ($this->getTaskIdIn() !== null) {
             $extendedQuery->taskIdIn($this->getTaskIdIn());
         }
 
-        if ($extendingQuery->getDescription() != null) {
+        if ($extendingQuery->getDescription() !== null) {
             $extendedQuery->taskDescription($extendingQuery->getDescription());
-        } elseif ($this->getDescription() != null) {
+        } elseif ($this->getDescription() !== null) {
             $extendedQuery->taskDescription($this->getDescription());
         }
 
-        if ($extendingQuery->getDescriptionLike() != null) {
+        if ($extendingQuery->getDescriptionLike() !== null) {
             $extendedQuery->taskDescriptionLike($extendingQuery->getDescriptionLike());
-        } elseif ($this->getDescriptionLike() != null) {
+        } elseif ($this->getDescriptionLike() !== null) {
             $extendedQuery->taskDescriptionLike($this->getDescriptionLike());
         }
 
-        if ($extendingQuery->getPriority() != null) {
+        if ($extendingQuery->getPriority() !== null) {
             $extendedQuery->taskPriority($extendingQuery->getPriority());
-        } elseif ($this->getPriority() != null) {
+        } elseif ($this->getPriority() !== null) {
             $extendedQuery->taskPriority($this->getPriority());
         }
 
-        if ($extendingQuery->getMinPriority() != null) {
+        if ($extendingQuery->getMinPriority() !== null) {
             $extendedQuery->taskMinPriority($extendingQuery->getMinPriority());
-        } elseif ($this->getMinPriority() != null) {
+        } elseif ($this->getMinPriority() !== null) {
             $extendedQuery->taskMinPriority($this->getMinPriority());
         }
 
-        if ($extendingQuery->getMaxPriority() != null) {
+        if ($extendingQuery->getMaxPriority() !== null) {
             $extendedQuery->taskMaxPriority($extendingQuery->getMaxPriority());
-        } elseif ($this->getMaxPriority() != null) {
+        } elseif ($this->getMaxPriority() !== null) {
             $extendedQuery->taskMaxPriority($this->getMaxPriority());
         }
 
-        if ($extendingQuery->getCreateTime() != null) {
+        if ($extendingQuery->getCreateTime() !== null) {
             $extendedQuery->taskCreatedOn($extendingQuery->getCreateTime());
-        } elseif ($this->getCreateTime() != null) {
+        } elseif ($this->getCreateTime() !== null) {
             $extendedQuery->taskCreatedOn($this->getCreateTime());
         }
 
-        if ($extendingQuery->getCreateTimeBefore() != null) {
+        if ($extendingQuery->getCreateTimeBefore() !== null) {
             $extendedQuery->taskCreatedBefore($extendingQuery->getCreateTimeBefore());
-        } elseif ($this->getCreateTimeBefore() != null) {
+        } elseif ($this->getCreateTimeBefore() !== null) {
             $extendedQuery->taskCreatedBefore($this->getCreateTimeBefore());
         }
 
-        if ($extendingQuery->getCreateTimeAfter() != null) {
+        if ($extendingQuery->getCreateTimeAfter() !== null) {
             $extendedQuery->taskCreatedAfter($extendingQuery->getCreateTimeAfter());
-        } elseif ($this->getCreateTimeAfter() != null) {
+        } elseif ($this->getCreateTimeAfter() !== null) {
             $extendedQuery->taskCreatedAfter($this->getCreateTimeAfter());
         }
 
-        if ($extendingQuery->getKey() != null) {
+        if ($extendingQuery->getKey() !== null) {
             $extendedQuery->taskDefinitionKey($extendingQuery->getKey());
-        } elseif ($this->getKey() != null) {
+        } elseif ($this->getKey() !== null) {
             $extendedQuery->taskDefinitionKey($this->getKey());
         }
 
-        if ($extendingQuery->getKeyLike() != null) {
+        if ($extendingQuery->getKeyLike() !== null) {
             $extendedQuery->taskDefinitionKeyLike($extendingQuery->getKeyLike());
-        } elseif ($this->getKeyLike() != null) {
+        } elseif ($this->getKeyLike() !== null) {
             $extendedQuery->taskDefinitionKeyLike($this->getKeyLike());
         }
 
-        if ($extendingQuery->getKeys() != null) {
+        if ($extendingQuery->getKeys() !== null) {
             $extendedQuery->taskDefinitionKeyIn($extendingQuery->getKeys());
-        } elseif ($this->getKeys() != null) {
+        } elseif ($this->getKeys() !== null) {
             $extendedQuery->taskDefinitionKeyIn($this->getKeys());
         }
 
-        if ($extendingQuery->getParentTaskId() != null) {
+        if ($extendingQuery->getParentTaskId() !== null) {
             $extendedQuery->taskParentTaskId($extendingQuery->getParentTaskId());
-        } elseif ($this->getParentTaskId() != null) {
+        } elseif ($this->getParentTaskId() !== null) {
             $extendedQuery->taskParentTaskId($this->getParentTaskId());
         }
 
-        if ($extendingQuery->getProcessDefinitionKey() != null) {
+        if ($extendingQuery->getProcessDefinitionKey() !== null) {
             $extendedQuery->processDefinitionKey($extendingQuery->getProcessDefinitionKey());
-        } elseif ($this->getProcessDefinitionKey() != null) {
+        } elseif ($this->getProcessDefinitionKey() !== null) {
             $extendedQuery->processDefinitionKey($this->getProcessDefinitionKey());
         }
 
-        if ($extendingQuery->getProcessDefinitionKeys() != null) {
+        if ($extendingQuery->getProcessDefinitionKeys() !== null) {
             $extendedQuery->processDefinitionKeyIn($extendingQuery->getProcessDefinitionKeys());
-        } elseif ($this->getProcessDefinitionKeys() != null) {
+        } elseif ($this->getProcessDefinitionKeys() !== null) {
             $extendedQuery->processDefinitionKeyIn($this->getProcessDefinitionKeys());
         }
 
-        if ($extendingQuery->getProcessDefinitionId() != null) {
+        if ($extendingQuery->getProcessDefinitionId() !== null) {
             $extendedQuery->processDefinitionId($extendingQuery->getProcessDefinitionId());
-        } elseif ($this->getProcessDefinitionId() != null) {
+        } elseif ($this->getProcessDefinitionId() !== null) {
             $extendedQuery->processDefinitionId($this->getProcessDefinitionId());
         }
 
-        if ($extendingQuery->getProcessDefinitionName() != null) {
+        if ($extendingQuery->getProcessDefinitionName() !== null) {
             $extendedQuery->processDefinitionName($extendingQuery->getProcessDefinitionName());
-        } elseif ($this->getProcessDefinitionName() != null) {
+        } elseif ($this->getProcessDefinitionName() !== null) {
             $extendedQuery->processDefinitionName($this->getProcessDefinitionName());
         }
 
-        if ($extendingQuery->getProcessDefinitionNameLike() != null) {
+        if ($extendingQuery->getProcessDefinitionNameLike() !== null) {
             $extendedQuery->processDefinitionNameLike($extendingQuery->getProcessDefinitionNameLike());
-        } elseif ($this->getProcessDefinitionNameLike() != null) {
+        } elseif ($this->getProcessDefinitionNameLike() !== null) {
             $extendedQuery->processDefinitionNameLike($this->getProcessDefinitionNameLike());
         }
 
-        if ($extendingQuery->getProcessInstanceBusinessKey() != null) {
+        if ($extendingQuery->getProcessInstanceBusinessKey() !== null) {
             $extendedQuery->processInstanceBusinessKey($extendingQuery->getProcessInstanceBusinessKey());
-        } elseif ($this->getProcessInstanceBusinessKey() != null) {
+        } elseif ($this->getProcessInstanceBusinessKey() !== null) {
             $extendedQuery->processInstanceBusinessKey($this->getProcessInstanceBusinessKey());
         }
 
-        if ($extendingQuery->getProcessInstanceBusinessKeyLike() != null) {
+        if ($extendingQuery->getProcessInstanceBusinessKeyLike() !== null) {
             $extendedQuery->processInstanceBusinessKeyLike($extendingQuery->getProcessInstanceBusinessKeyLike());
-        } elseif ($this->getProcessInstanceBusinessKeyLike() != null) {
+        } elseif ($this->getProcessInstanceBusinessKeyLike() !== null) {
             $extendedQuery->processInstanceBusinessKeyLike($this->getProcessInstanceBusinessKeyLike());
         }
 
-        if ($extendingQuery->getDueDate() != null) {
+        if ($extendingQuery->getDueDate() !== null) {
             $extendedQuery->dueDate($extendingQuery->getDueDate());
-        } elseif ($this->getDueDate() != null) {
+        } elseif ($this->getDueDate() !== null) {
             $extendedQuery->dueDate($this->getDueDate());
         }
 
-        if ($extendingQuery->getDueBefore() != null) {
+        if ($extendingQuery->getDueBefore() !== null) {
             $extendedQuery->dueBefore($extendingQuery->getDueBefore());
-        } elseif ($this->getDueBefore() != null) {
+        } elseif ($this->getDueBefore() !== null) {
             $extendedQuery->dueBefore($this->getDueBefore());
         }
 
-        if ($extendingQuery->getDueAfter() != null) {
+        if ($extendingQuery->getDueAfter() !== null) {
             $extendedQuery->dueAfter($extendingQuery->getDueAfter());
-        } elseif ($this->getDueAfter() != null) {
+        } elseif ($this->getDueAfter() !== null) {
             $extendedQuery->dueAfter($this->getDueAfter());
         }
 
@@ -2196,21 +2196,21 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
             $extendedQuery->withoutDueDate();
         }
 
-        if ($extendingQuery->getFollowUpDate() != null) {
+        if ($extendingQuery->getFollowUpDate() !== null) {
             $extendedQuery->followUpDate($extendingQuery->getFollowUpDate());
-        } elseif ($this->getFollowUpDate() != null) {
+        } elseif ($this->getFollowUpDate() !== null) {
             $extendedQuery->followUpDate($this->getFollowUpDate());
         }
 
-        if ($extendingQuery->getFollowUpBefore() != null) {
+        if ($extendingQuery->getFollowUpBefore() !== null) {
             $extendedQuery->followUpBefore($extendingQuery->getFollowUpBefore());
-        } elseif ($this->getFollowUpBefore() != null) {
+        } elseif ($this->getFollowUpBefore() !== null) {
             $extendedQuery->followUpBefore($this->getFollowUpBefore());
         }
 
-        if ($extendingQuery->getFollowUpAfter() != null) {
+        if ($extendingQuery->getFollowUpAfter() !== null) {
             $extendedQuery->followUpAfter($extendingQuery->getFollowUpAfter());
-        } elseif ($this->getFollowUpAfter() != null) {
+        } elseif ($this->getFollowUpAfter() !== null) {
             $extendedQuery->followUpAfter($this->getFollowUpAfter());
         }
 
@@ -2222,13 +2222,13 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
             $extendedQuery->excludeSubtasks();
         }
 
-        if ($extendingQuery->getSuspensionState() != null) {
+        if ($extendingQuery->getSuspensionState() !== null) {
             if ($extendingQuery->getSuspensionState() == SuspensionState::active()) {
                 $extendedQuery->active();
             } elseif ($extendingQuery->getSuspensionState() == SuspensionState::suspended()) {
                 $extendedQuery->suspended();
             }
-        } elseif ($this->getSuspensionState() != null) {
+        } elseif ($this->getSuspensionState() !== null) {
             if ($this->getSuspensionState() == SuspensionState::active()) {
                 $extendedQuery->active();
             } elseif ($this->getSuspensionState() == SuspensionState::suspended()) {
@@ -2236,59 +2236,59 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
             }
         }
 
-        /*if ($extendingQuery->getCaseInstanceId() != null) {
+        /*if ($extendingQuery->getCaseInstanceId() !== null) {
           $extendedQuery.caseInstanceId($extendingQuery->getCaseInstanceId());
         }
-        elseif ($this->getCaseInstanceId() != null) {
+        elseif ($this->getCaseInstanceId() !== null) {
           $extendedQuery.caseInstanceId($this->getCaseInstanceId());
         }
 
-        if ($extendingQuery->getCaseInstanceBusinessKey() != null) {
+        if ($extendingQuery->getCaseInstanceBusinessKey() !== null) {
           $extendedQuery.caseInstanceBusinessKey($extendingQuery->getCaseInstanceBusinessKey());
         }
-        elseif ($this->getCaseInstanceBusinessKey() != null) {
+        elseif ($this->getCaseInstanceBusinessKey() !== null) {
           $extendedQuery.caseInstanceBusinessKey($this->getCaseInstanceBusinessKey());
         }
 
-        if (extendingQuery->getCaseInstanceBusinessKeyLike() != null) {
+        if (extendingQuery->getCaseInstanceBusinessKeyLike() !== null) {
           extendedQuery.caseInstanceBusinessKeyLike(extendingQuery->getCaseInstanceBusinessKeyLike());
         }
-        elseif ($this->getCaseInstanceBusinessKeyLike() != null) {
+        elseif ($this->getCaseInstanceBusinessKeyLike() !== null) {
           extendedQuery.caseInstanceBusinessKeyLike($this->getCaseInstanceBusinessKeyLike());
         }
 
-        if (extendingQuery->getCaseExecutionId() != null) {
+        if (extendingQuery->getCaseExecutionId() !== null) {
           extendedQuery.caseExecutionId(extendingQuery->getCaseExecutionId());
         }
-        elseif ($this->getCaseExecutionId() != null) {
+        elseif ($this->getCaseExecutionId() !== null) {
           extendedQuery.caseExecutionId($this->getCaseExecutionId());
         }
 
-        if (extendingQuery->getCaseDefinitionId() != null) {
+        if (extendingQuery->getCaseDefinitionId() !== null) {
           extendedQuery.caseDefinitionId(extendingQuery->getCaseDefinitionId());
         }
-        elseif ($this->getCaseDefinitionId() != null) {
+        elseif ($this->getCaseDefinitionId() !== null) {
           extendedQuery.caseDefinitionId($this->getCaseDefinitionId());
         }
 
-        if (extendingQuery->getCaseDefinitionKey() != null) {
+        if (extendingQuery->getCaseDefinitionKey() !== null) {
           extendedQuery.caseDefinitionKey(extendingQuery->getCaseDefinitionKey());
         }
-        elseif ($this->getCaseDefinitionKey() != null) {
+        elseif ($this->getCaseDefinitionKey() !== null) {
           extendedQuery.caseDefinitionKey($this->getCaseDefinitionKey());
         }
 
-        if (extendingQuery->getCaseDefinitionName() != null) {
+        if (extendingQuery->getCaseDefinitionName() !== null) {
           extendedQuery.caseDefinitionName(extendingQuery->getCaseDefinitionName());
         }
-        elseif ($this->getCaseDefinitionName() != null) {
+        elseif ($this->getCaseDefinitionName() !== null) {
           extendedQuery.caseDefinitionName($this->getCaseDefinitionName());
         }
 
-        if (extendingQuery->getCaseDefinitionNameLike() != null) {
+        if (extendingQuery->getCaseDefinitionNameLike() !== null) {
           extendedQuery.caseDefinitionNameLike(extendingQuery->getCaseDefinitionNameLike());
         }
-        elseif ($this->getCaseDefinitionNameLike() != null) {
+        elseif ($this->getCaseDefinitionNameLike() !== null) {
           extendedQuery.caseDefinitionNameLike($this->getCaseDefinitionNameLike());
         }*/
 
@@ -2300,9 +2300,9 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
             $extendedQuery->taskNameCaseInsensitive();
         }
 
-        if ($extendingQuery->getTenantIds() != null) {
+        if ($extendingQuery->getTenantIds() !== null) {
             $extendedQuery->tenantIdIn($extendingQuery->getTenantIds());
-        } elseif ($this->getTenantIds() != null) {
+        } elseif ($this->getTenantIds() !== null) {
             $extendedQuery->tenantIdIn($this->getTenantIds());
         }
 

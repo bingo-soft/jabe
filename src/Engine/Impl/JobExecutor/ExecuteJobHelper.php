@@ -25,7 +25,7 @@ class ExecuteJobHelper
 
     private static function ensureLoggingHandlerInitialized(): void
     {
-        if (self::$LOGGING_HANDLER == null) {
+        if (self::$LOGGING_HANDLER === null) {
             self::$LOGGING_HANDLER = new class () implements ExceptionLoggingHandlerInterface {
                 public function exceptionWhileExecutingJob(string $jobId, \Throwable $exception): void
                 {
@@ -49,10 +49,10 @@ class ExecuteJobHelper
         ?CommandInterface $cmd = null,
         ?ProcessEngineConfigurationImpl $configuration
     ): void {
-        if ($jobFailureCollector == null) {
+        if ($jobFailureCollector === null) {
             $jobFailureCollector = new JobFailureCollector($nextJobId);
         }
-        if ($cmd == null) {
+        if ($cmd === null) {
             $cmd = new ExecuteJobsCmd($nextJobId, $jobFailureCollector);
         }
 
@@ -66,7 +66,7 @@ class ExecuteJobHelper
         } finally {
             // preserve MDC properties before listener invocation and clear MDC for job listener
             $processDataContext = null;
-            if ($configuration != null) {
+            if ($configuration !== null) {
                 $processDataContext = new ProcessDataContext($configuration, true);
                 $processDataContext->clearMdc();
             }
@@ -77,7 +77,7 @@ class ExecuteJobHelper
             * in case of an exception in the listener the logging context
             * of the listener is preserved and used from here on
             */
-            if ($processDataContext != null) {
+            if ($processDataContext !== null) {
                 $processDataContext->updateMdcFromCurrentValues();
             }
         }
@@ -85,13 +85,13 @@ class ExecuteJobHelper
 
     protected static function invokeJobListener(CommandExecutorInterface $commandExecutor, JobFailureCollector $jobFailureCollector): void
     {
-        if ($jobFailureCollector->getJobId() != null) {
-            if ($jobFailureCollector->getFailure() != null) {
+        if ($jobFailureCollector->getJobId() !== null) {
+            if ($jobFailureCollector->getFailure() !== null) {
                 //the failed job listener is responsible for decrementing the retries and logging the exception to the DB.
                 $failedJobListener = $this->createFailedJobListener($commandExecutor, $jobFailureCollector);
 
                 $exception = $this->callFailedJobListenerWithRetries($commandExecutor, $failedJobListener);
-                if ($exception != null) {
+                if ($exception !== null) {
                     throw $exception;
                 }
             } else {

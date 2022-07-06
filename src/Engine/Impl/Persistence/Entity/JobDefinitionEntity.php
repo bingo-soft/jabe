@@ -45,7 +45,7 @@ class JobDefinitionEntity implements JobDefinitionInterface, HasDbRevisionInterf
 
     public function __construct(?JobDeclarationInterface $jobDeclaration = null)
     {
-        if ($jobDeclaration != null) {
+        if ($jobDeclaration !== null) {
             $this->activityId = $jobDeclaration->getActivityId();
             $this->jobConfiguration = $jobDeclaration->getJobConfiguration();
             $this->jobType = $jobDeclaration->getJobHandlerType();

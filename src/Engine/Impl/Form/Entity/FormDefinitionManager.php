@@ -42,7 +42,7 @@ class FormDefinitionManager extends AbstractManager implements AbstractResourceD
         $parameters["formDefinitionKey"] = $definitionKey;
         $parameters["tenantId"] = $tenantId;
 
-        if ($tenantId == null) {
+        if ($tenantId === null) {
             return $this->getDbEntityManager()
                 ->selectOne("selectLatestFormDefinitionByKeyWithoutTenantId", $parameters);
         } else {
@@ -57,7 +57,7 @@ class FormDefinitionManager extends AbstractManager implements AbstractResourceD
         $parameters["formDefinitionVersion"] = $definitionVersion;
         $parameters["formDefinitionKey"] = $definitionKey;
         $parameters["tenantId"] = $tenantId;
-        if ($tenantId == null) {
+        if ($tenantId === null) {
             return $this->getDbEntityManager()
                 ->selectOne("selectFormDefinitionByKeyVersionWithoutTenantId", $parameters);
         } else {

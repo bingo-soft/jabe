@@ -16,7 +16,7 @@ class HistoryEvent implements \Serializable, DbEntityInterface, HistoricEntityIn
 
     public static function identityLinkAdd(): string
     {
-        if (self::$IDENTITY_LINK_ADD == null) {
+        if (self::$IDENTITY_LINK_ADD === null) {
             self::$IDENTITY_LINK_ADD = HistoryEventTypes::identityLinkAdd()->getEventName();
         }
         return self::$IDENTITY_LINK_ADD;
@@ -24,7 +24,7 @@ class HistoryEvent implements \Serializable, DbEntityInterface, HistoricEntityIn
 
     public static function identityLinkDelete(): string
     {
-        if (self::$IDENTITY_LINK_DELETE == null) {
+        if (self::$IDENTITY_LINK_DELETE === null) {
             self::$IDENTITY_LINK_DELETE = HistoryEventTypes::identityLinkDelete()->getEventName();
         }
         return self::$IDENTITY_LINK_DELETE;

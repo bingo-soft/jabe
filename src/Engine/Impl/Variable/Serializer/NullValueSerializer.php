@@ -42,6 +42,6 @@ class NullValueSerializer extends PrimitiveValueSerializer
 
     protected function canWriteValue(?TypedValueInterface $value): bool
     {
-        return $value->getValue() == null;
+        return $value->getValue() === null;
     }
 }

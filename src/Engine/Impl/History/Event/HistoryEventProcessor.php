@@ -22,7 +22,7 @@ class HistoryEventProcessor
         $historyEventHandler = Context::getProcessEngineConfiguration()->getHistoryEventHandler();
 
         $singleEvent = $creator->createHistoryEvent($historyEventProducer);
-        if ($singleEvent != null) {
+        if ($singleEvent !== null) {
             $historyEventHandler->handleEvent($singleEvent);
             $creator->postHandleSingleHistoryEventCreated($singleEvent);
         }

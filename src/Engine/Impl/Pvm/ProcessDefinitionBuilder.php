@@ -71,7 +71,7 @@ class ProcessDefinitionBuilder
 
     public function startTransition(string $destinationActivityId, ?string $transitionId = null): ProcessDefinitionBuilder
     {
-        if ($destinationActivityId == null) {
+        if ($destinationActivityId === null) {
             throw new PvmException("destinationActivityId is null");
         }
         $activity = $this->getActivity();
@@ -114,7 +114,7 @@ class ProcessDefinitionBuilder
             $transition = $unresolvedTransition[0];
             $destinationActivityName = $unresolvedTransition[1];
             $destination = $processDefinition->findActivity($destinationActivityName);
-            if ($destination == null) {
+            if ($destination === null) {
                 throw new \Exception("destination '" . $destinationActivityName . "' not found.  (referenced from transition in '" . $transition->getSource()->getId() . "')");
             }
             $transition->setDestination($destination);
@@ -135,14 +135,14 @@ class ProcessDefinitionBuilder
 
     public function executionListener(?string $eventName, ExecutionListenerInterface $executionListener): ProcessDefinitionBuilder
     {
-        if ($eventName != null) {
-            if ($this->transition == null) {
+        if ($eventName !== null) {
+            if ($this->transition === null) {
                 $this->scopeStack[0]->addExecutionListener($eventName, $executionListener);
             } else {
                 $this->transition->addExecutionListener($executionListener);
             }
         } else {
-            if ($this->transition != null) {
+            if ($this->transition !== null) {
                 $this->transition->addExecutionListener($executionListener);
             } else {
                 throw new PvmException("not in a transition scope");

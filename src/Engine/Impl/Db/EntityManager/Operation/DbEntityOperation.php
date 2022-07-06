@@ -63,14 +63,14 @@ class DbEntityOperation extends DbOperation
         if ($this == $obj) {
             return true;
         }
-        if ($obj == null) {
+        if ($obj === null) {
             return false;
         }
         if (get_class($this) != get_class($obj)) {
             return false;
         }
-        if ($this->entity == null) {
-            if ($obj->entity != null) {
+        if ($this->entity === null) {
+            if ($obj->entity !== null) {
                 return false;
             }
         } elseif ($this->entity != $obj->entity) {

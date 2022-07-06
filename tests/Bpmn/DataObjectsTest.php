@@ -36,7 +36,7 @@ class DataObjectsTest extends TestCase
     {
         $dataObject = $this->modelInstance->getModelElementById("_21");
         $itemDefinition = $this->modelInstance->getModelElementById("_100");
-        $this->assertFalse($dataObject == null);
+        $this->assertFalse($dataObject === null);
         $this->assertEquals("DataObject _21", $dataObject->getName());
         $this->assertFalse($dataObject->isCollection());
         $this->assertTrue($dataObject->getItemSubject()->equals($itemDefinition));
@@ -46,7 +46,7 @@ class DataObjectsTest extends TestCase
     {
         $dataObjectReference = $this->modelInstance->getModelElementById("_dataRef_7");
         $dataObject = $this->modelInstance->getModelElementById("_7");
-        $this->assertFalse($dataObjectReference == null);
+        $this->assertFalse($dataObjectReference === null);
         $this->assertNull($dataObjectReference->getName());
         $this->assertTrue($dataObjectReference->getDataObject()->equals($dataObject));
     }

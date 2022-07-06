@@ -33,7 +33,7 @@ class ActivityExecutionHierarchyWalker extends SingleReferenceWalker
                 }
             }
             return null;
-        } elseif ($flowScope != null) {
+        } elseif ($flowScope !== null) {
             // walk to parent scope
             foreach ($this->activityExecutionMapping as $pair) {
                 if ($pair[0] == $flowScope) {
@@ -50,7 +50,7 @@ class ActivityExecutionHierarchyWalker extends SingleReferenceWalker
             }
             $superExecution = $currentExecution->getSuperExecution();
 
-            if ($superExecution != null) {
+            if ($superExecution !== null) {
                 // walk to parent process instance
                 $this->activityExecutionMapping = $superExecution->createActivityExecutionMapping();
                 return self::createTuple($superExecution);
@@ -70,7 +70,7 @@ class ActivityExecutionHierarchyWalker extends SingleReferenceWalker
     protected static function getCurrentFlowScope(ActivityExecutionInterface $execution): ?PvmScopeInterface
     {
         $scope = null;
-        if ($execution->getTransition() != null) {
+        if ($execution->getTransition() !== null) {
             $scope = $execution->getTransition()->getDestination()->getFlowScope();
         } else {
             $scope = $execution->getActivity();

@@ -22,21 +22,21 @@ class PrimitiveTypeValueImpl extends AbstractTypedValue implements PrimitiveValu
         if ($this == $obj) {
             return true;
         }
-        if ($obj == null) {
+        if ($obj === null) {
             return false;
         }
         if (get_class($this) != get_class($obj)) {
             return false;
         }
-        if ($this->type == null) {
-            if ($obj->type != null) {
+        if ($this->type === null) {
+            if ($obj->type !== null) {
                 return false;
             }
         } elseif (!$this->type->equals($obj->type)) {
             return false;
         }
-        if ($this->value == null) {
-            if ($obj->value != null) {
+        if ($this->value === null) {
+            if ($obj->value !== null) {
                 return false;
             }
         } elseif ($this->value != $obj->value) {

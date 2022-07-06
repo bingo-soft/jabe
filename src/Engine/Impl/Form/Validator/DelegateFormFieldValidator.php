@@ -25,7 +25,7 @@ class DelegateFormFieldValidator implements FormFieldValidatorInterface
 
     public function __construct($data = null)
     {
-        if ($data != null) {
+        if ($data !== null) {
             if ($data instanceof ExpressionInterface) {
                 $this->delegateExpression = $expression;
             } elseif (is_string($data)) {
@@ -50,11 +50,11 @@ class DelegateFormFieldValidator implements FormFieldValidatorInterface
 
     protected function shouldPerformPaContextSwitch(?DelegateExecutionInterface $execution): bool
     {
-        if ($execution == null) {
+        if ($execution === null) {
             return false;
         } else {
             $targetPa = ProcessApplicationContextUtil::getTargetProcessApplication($execution);
-            return $targetPa != null && $targetPa != Context::getCurrentProcessApplication();
+            return $targetPa !== null && $targetPa != Context::getCurrentProcessApplication();
         }
     }
 
@@ -62,7 +62,7 @@ class DelegateFormFieldValidator implements FormFieldValidatorInterface
     {
         $validator = null;
 
-        if ($this->clazz != null) {
+        if ($this->clazz !== null) {
             // resolve validator using Fully Qualified Classname
             $validatorObject = ReflectUtil::instantiate($clazz);
             if ($validatorObject instanceof FormFieldValidatorInterface) {

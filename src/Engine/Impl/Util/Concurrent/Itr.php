@@ -52,7 +52,7 @@ class Itr extends \ArrayIterator
             $this->lastRet = $this->nextIndex;
             while (
                 ($this->remaining -= 1) > 0 && // skip over nulls
-                ($this->nextItem = $this->collection->itemAt($this->nextIndex = $this->collection->inc($this->nextIndex))) == null
+                ($this->nextItem = $this->collection->itemAt($this->nextIndex = $this->collection->inc($this->nextIndex))) === null
             ) {
             }
         } finally {

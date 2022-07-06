@@ -114,7 +114,7 @@ class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopicBuilder
 
     protected function submitCurrentInstruction(): void
     {
-        if ($this->currentInstruction != null) {
+        if ($this->currentInstruction !== null) {
             $this->instructions[$this->currentInstruction->getTopicName()] = $this->currentInstruction;
         }
     }

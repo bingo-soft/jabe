@@ -26,11 +26,11 @@ class PvmAtomicOperationActivityInitStackNotifyListenerReturn extends PvmAtomicO
     {
         $activity = $execution->getActivity();
 
-        if ($activity != null) {
+        if ($activity !== null) {
             return $activity;
         } else {
             $parent = $execution->getParent();
-            if ($parent != null) {
+            if ($parent !== null) {
                 return $this->getScope($execution->getParent());
             }
             return $execution->getProcessDefinition();

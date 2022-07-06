@@ -32,7 +32,7 @@ class DeleteJobsCmd implements CommandInterface
             ->getJobManager()
             ->findJobById($jobId);
 
-            if ($jobToDelete != null) {
+            if ($jobToDelete !== null) {
                 // When given job doesn't exist, ignore
                 $jobToDelete->delete();
 

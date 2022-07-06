@@ -12,7 +12,7 @@ class DueDateBusinessCalendar implements BusinessCalendarInterface
     public function resolveDuedate(string $duedateDescription, $startDate = null, ?TaskInterface $task = null, ?int $repeatOffset = 0): ?\DateTime
     {
         try {
-            if ($startDate == null) {
+            if ($startDate === null) {
                 $start = ClockUtil::getCurrentTime();
             } else {
                 if (is_string($startDate)) {

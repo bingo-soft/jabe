@@ -29,7 +29,7 @@ class DoctrineJoinHelper
     public static function tableAlias(?string $relation, int $index): string
     {
         self::init();
-        if ($relation == null) {
+        if ($relation === null) {
             return "RES";
         } else {
             $mapping = self::getTableMapping($relation);
@@ -56,7 +56,7 @@ class DoctrineJoinHelper
 
         $sb = "";
 
-        if ($queryProperty->getFunction() != null) {
+        if ($queryProperty->getFunction() !== null) {
             $sb .= $queryProperty->getFunction();
             $sb .= "(";
         }
@@ -65,7 +65,7 @@ class DoctrineJoinHelper
         $sb .= ".";
         $sb .= $queryProperty->getName();
 
-        if ($queryProperty->getFunction() != null) {
+        if ($queryProperty->getFunction() !== null) {
             $sb .= ")";
         }
 

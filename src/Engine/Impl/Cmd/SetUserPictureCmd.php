@@ -47,9 +47,9 @@ class SetUserPictureCmd implements CommandInterface, \Serializable
         $pictureInfo = $commandContext->getIdentityInfoManager()
             ->findUserInfoByUserIdAndKey($this->userId, "picture");
 
-        if ($pictureInfo != null) {
+        if ($pictureInfo !== null) {
             $byteArrayId = $pictureInfo->getValue();
-            if ($byteArrayId != null) {
+            if ($byteArrayId !== null) {
                 $commandContext->getByteArrayManager()
                     ->deleteByteArrayById($byteArrayId);
             }

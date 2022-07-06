@@ -25,9 +25,9 @@ class DeleteUserPictureCmd implements CommandInterface
         $infoEntity = $commandContext->getIdentityInfoManager()
             ->findUserInfoByUserIdAndKey($this->userId, "picture");
 
-        if ($infoEntity != null) {
+        if ($infoEntity !== null) {
             $byteArrayId = $infoEntity->getValue();
-            if ($byteArrayId != null) {
+            if ($byteArrayId !== null) {
                 $commandContext->getByteArrayManager()
                     ->deleteByteArrayById($byteArrayId);
             }

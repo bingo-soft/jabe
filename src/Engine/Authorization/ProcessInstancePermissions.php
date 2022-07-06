@@ -15,7 +15,7 @@ class ProcessInstancePermissions implements PermissionInterface
 
     public static function none(): PermissionInterface
     {
-        if (self::$NONE == null) {
+        if (self::$NONE === null) {
             self::$NONE = new ProcessDefinitionPermissions("NONE", 0);
         }
         return self::$NONE;
@@ -25,7 +25,7 @@ class ProcessInstancePermissions implements PermissionInterface
 
     public static function all(): PermissionInterface
     {
-        if (self::$ALL == null) {
+        if (self::$ALL === null) {
             self::$ALL = new ProcessDefinitionPermissions("ALL", PHP_INT_MAX);
         }
         return self::$ALL;
@@ -35,7 +35,7 @@ class ProcessInstancePermissions implements PermissionInterface
 
     public static function read(): PermissionInterface
     {
-        if (self::$READ == null) {
+        if (self::$READ === null) {
             self::$READ = new ProcessDefinitionPermissions("READ", 2);
         }
         return self::$READ;
@@ -45,7 +45,7 @@ class ProcessInstancePermissions implements PermissionInterface
 
     public static function update(): PermissionInterface
     {
-        if (self::$UPDATE == null) {
+        if (self::$UPDATE === null) {
             self::$UPDATE = new ProcessDefinitionPermissions("UPDATE", 4);
         }
         return self::$UPDATE;
@@ -55,7 +55,7 @@ class ProcessInstancePermissions implements PermissionInterface
 
     public static function create(): PermissionInterface
     {
-        if (self::$CREATE == null) {
+        if (self::$CREATE === null) {
             self::$CREATE = new ProcessDefinitionPermissions("CREATE", 8);
         }
         return self::$CREATE;
@@ -65,7 +65,7 @@ class ProcessInstancePermissions implements PermissionInterface
 
     public static function delete(): PermissionInterface
     {
-        if (self::$DELETE == null) {
+        if (self::$DELETE === null) {
             self::$DELETE = new ProcessDefinitionPermissions("DELETE", 16);
         }
         return self::$DELETE;
@@ -75,7 +75,7 @@ class ProcessInstancePermissions implements PermissionInterface
 
     public static function retryJob(): PermissionInterface
     {
-        if (self::$RETRY_JOB == null) {
+        if (self::$RETRY_JOB === null) {
             self::$RETRY_JOB = new ProcessDefinitionPermissions("RETRY_JOB", 32);
         }
         return self::$RETRY_JOB;
@@ -85,7 +85,7 @@ class ProcessInstancePermissions implements PermissionInterface
 
     public static function suspend(): PermissionInterface
     {
-        if (self::$SUSPEND == null) {
+        if (self::$SUSPEND === null) {
             self::$SUSPEND = new ProcessDefinitionPermissions("SUSPEND", 64);
         }
         return self::$SUSPEND;
@@ -95,7 +95,7 @@ class ProcessInstancePermissions implements PermissionInterface
 
     public static function updateVariable(): PermissionInterface
     {
-        if (self::$UPDATE_VARIABLE == null) {
+        if (self::$UPDATE_VARIABLE === null) {
             self::$UPDATE_VARIABLE = new ProcessDefinitionPermissions("UPDATE_VARIABLE", 128);
         }
         return self::$UPDATE_VARIABLE;
@@ -105,7 +105,7 @@ class ProcessInstancePermissions implements PermissionInterface
 
     public static function resources(): array
     {
-        if (self::$RESOURCES == null) {
+        if (self::$RESOURCES === null) {
             self::$RESOURCES = [ Resources::processInstance() ];
         }
         return self::$RESOURCES;

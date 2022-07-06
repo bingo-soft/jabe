@@ -27,7 +27,7 @@ class DefaultDelegateInterceptor implements DelegateInterceptorInterface
     {
         $processApplication = $this->getProcessApplicationForInvocation($invocation);
         $scope = $this;
-        if ($processApplication != null && ProcessApplicationContextUtil::requiresContextSwitch($processApplication)) {
+        if ($processApplication !== null && ProcessApplicationContextUtil::requiresContextSwitch($processApplication)) {
             Context::executeWithinProcessApplication(
                 function () use ($scope) {
                     $scope->handleInvocation($invocation);
@@ -62,7 +62,7 @@ class DefaultDelegateInterceptor implements DelegateInterceptorInterface
                 $commandContext->disableUserOperationLog();
 
                 try {
-                    if ($contextExecution != null && !$this->isCurrentContextExecution($contextExecution)) {
+                    if ($contextExecution !== null && !$this->isCurrentContextExecution($contextExecution)) {
                         $popExecutionContext = $this->setExecutionContext($contextExecution);
                     }
                     $invocation->proceed();
@@ -101,7 +101,7 @@ class DefaultDelegateInterceptor implements DelegateInterceptorInterface
     protected function isCurrentContextExecution(BaseDelegateExecutionInterface $execution): bool
     {
         $coreExecutionContext = Context::getCoreExecutionContext();
-        return $coreExecutionContext != null && $coreExecutionContext->getExecution() == $execution;
+        return $coreExecutionContext !== null && $coreExecutionContext->getExecution() == $execution;
     }
 
     protected function getProcessApplicationForInvocation(DelegateInvocation $invocation): ProcessApplicationReferenceInterface
@@ -109,9 +109,9 @@ class DefaultDelegateInterceptor implements DelegateInterceptorInterface
         $contextExecution = $invocation->getContextExecution();
         $contextResource = $invocation->getContextResource();
 
-        if ($contextExecution != null) {
+        if ($contextExecution !== null) {
             return ProcessApplicationContextUtil::getTargetProcessApplication($contextExecution);
-        } elseif ($contextResource != null) {
+        } elseif ($contextResource !== null) {
             return ProcessApplicationContextUtil::getTargetProcessApplication($contextResource);
         } else {
             return null;

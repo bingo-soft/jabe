@@ -4,7 +4,7 @@ namespace Jabe\Engine\Impl;
 
 use Jabe\Engine\Query\QueryPropertyInterface;
 
-class QueryEntityRelationCondition
+class QueryEntityRelationCondition implements \Serializable
 {
     protected $property;
     protected $comparisonProperty;
@@ -14,13 +14,30 @@ class QueryEntityRelationCondition
     {
         $this->property = $queryProperty;
         if ($propOrValue instanceof QueryPropertyInterface) {
-            $this->comparisonProperty = $comparisonProperty;
+            $this->comparisonProperty = $propOrValue;
         } else {
             $this->scalarValue = $propOrValue;
         }
-        if ($scalarValue != null) {
+        if ($scalarValue !== null) {
             $this->scalarValue = $scalarValue;
         }
+    }
+
+    public function serialize()
+    {
+        return json_encode([
+            'property' => serialize($this->property),
+            'comparisonProperty' => serialize($this->comparisonProperty),
+            'scalarValue' => $this->scalarValue
+        ]);
+    }
+
+    public function unserialize($data)
+    {
+        $json = json_decode($data);
+        $this->property = unserialize($json->property);
+        $this->comparisonProperty = unserialize($json->comparisonProperty);
+        $this->scalarValue = $json->scalarValue;
     }
 
     public function getProperty(): QueryPropertyInterface
@@ -44,7 +61,7 @@ class QueryEntityRelationCondition
      */
     public function isPropertyComparison(): bool
     {
-        return $this->comparisonProperty != null;
+        return $this->comparisonProperty !== null;
     }
 
     public function __toString()

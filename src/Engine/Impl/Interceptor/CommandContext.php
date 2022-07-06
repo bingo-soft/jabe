@@ -105,7 +105,7 @@ class CommandContext
 
     public function __construct(ProcessEngineConfigurationImpl $processEngineConfiguration, ?TransactionContextFactory $transactionContextFactory = null)
     {
-        if ($transactionContextFactory == null) {
+        if ($transactionContextFactory === null) {
             $transactionContextFactory = $processEngineConfiguration->getTransactionContextFactory();
         }
         $this->processEngineConfiguration = $processEngineConfiguration;
@@ -160,7 +160,7 @@ class CommandContext
         try {
             try {
                 try {
-                    if ($commandInvocationContext->getThrowable() == null) {
+                    if ($commandInvocationContext->getThrowable() === null) {
                         $this->fireCommandContextClose();
                         $this->flushSessions();
                     }
@@ -168,7 +168,7 @@ class CommandContext
                     $commandInvocationContext->trySetThrowable($exception);
                 } finally {
                     try {
-                        if ($commandInvocationContext->getThrowable() == null) {
+                        if ($commandInvocationContext->getThrowable() === null) {
                             $this->transactionContext->commit();
                         }
                     } catch (\Throwable $exception) {
@@ -178,7 +178,7 @@ class CommandContext
                         $commandInvocationContext->trySetThrowable($exception);
                     }
 
-                    if ($commandInvocationContext->getThrowable() != null) {
+                    if ($commandInvocationContext->getThrowable() !== null) {
                         // fire command failed (must not fail itself)
                         $this->fireCommandFailed($commandInvocationContext->getThrowable());
 
@@ -267,7 +267,7 @@ class CommandContext
         if (array_key_exists($sessionClass, $this->sessions)) {
             $session = $this->sessions[$sessionClass];
         }
-        if ($session == null) {
+        if ($session === null) {
             $sessionFactory = null;
             if (array_key_exists($sessionClass, $this->sessionFactories)) {
                 $sessionFactory = $this->sessionFactories[$sessionClass];
@@ -592,7 +592,7 @@ class CommandContext
     public function runWithoutAuthorization($command, ?CommandContext $commandContext = null)
     {
         if (is_callable($command)) {
-            if ($commandContext == null) {
+            if ($commandContext === null) {
                 $commandContext = Context::getCommandContext();
             }
             $authorizationEnabled = $commandContext->isAuthorizationCheckEnabled();
@@ -621,7 +621,7 @@ class CommandContext
     {
         $identityService = $this->processEngineConfiguration->getIdentityService();
         $currentAuthentication = $identityService->getCurrentAuthentication();
-        if ($currentAuthentication == null) {
+        if ($currentAuthentication === null) {
             return null;
         } else {
             return $currentAuthentication->getUserId();
@@ -632,7 +632,7 @@ class CommandContext
     {
         $identityService = $this->processEngineConfiguration->getIdentityService();
         $currentAuthentication = $identityService->getCurrentAuthentication();
-        if ($currentAuthentication == null) {
+        if ($currentAuthentication === null) {
             return [];
         } else {
             return $currentAuthentication->getGroupIds();
@@ -724,7 +724,7 @@ class CommandContext
         if (!$this->getOperationLogManager()->isUserOperationLogEnabled()) {
             return null;
         }
-        if ($this->operationId == null) {
+        if ($this->operationId === null) {
             $this->operationId = Context::getProcessEngineConfiguration()->getIdGenerator()->getNextId();
         }
         return $this->operationId;

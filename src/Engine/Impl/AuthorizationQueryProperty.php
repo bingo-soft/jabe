@@ -11,7 +11,7 @@ class AuthorizationQueryProperty
 
     public static function resourceType(): QueryPropertyInterface
     {
-        if (self::$RESOURCE_TYPE == null) {
+        if (self::$RESOURCE_TYPE === null) {
             self::$RESOURCE_TYPE = new QueryPropertyImpl("RESOURCE_TYPE_");
         }
         return self::$RESOURCE_TYPE;
@@ -19,7 +19,7 @@ class AuthorizationQueryProperty
 
     public static function resourceId(): QueryPropertyInterface
     {
-        if (self::$RESOURCE_ID == null) {
+        if (self::$RESOURCE_ID === null) {
             self::$RESOURCE_ID = new QueryPropertyImpl("RESOURCE_ID_");
         }
         return self::$RESOURCE_ID;

@@ -15,7 +15,7 @@ class Permissions implements PermissionInterface
 
     public static function none(): PermissionInterface
     {
-        if (self::$NONE == null) {
+        if (self::$NONE === null) {
             self::$NONE = new Permissions(
                 "NONE",
                 0,
@@ -50,7 +50,7 @@ class Permissions implements PermissionInterface
 
     public static function all(): PermissionInterface
     {
-        if (self::$ALL == null) {
+        if (self::$ALL === null) {
             self::$ALL = new Permissions(
                 "ALL",
                 PHP_INT_MAX,
@@ -85,7 +85,7 @@ class Permissions implements PermissionInterface
 
     public static function read(): PermissionInterface
     {
-        if (self::$READ == null) {
+        if (self::$READ === null) {
             self::$READ = new Permissions(
                 "READ",
                 2,
@@ -113,7 +113,7 @@ class Permissions implements PermissionInterface
 
     public static function update(): PermissionInterface
     {
-        if (self::$UPDATE == null) {
+        if (self::$UPDATE === null) {
             self::$UPDATE = new Permissions(
                 "UPDATE",
                 4,
@@ -139,7 +139,7 @@ class Permissions implements PermissionInterface
 
     public static function create(): PermissionInterface
     {
-        if (self::$CREATE == null) {
+        if (self::$CREATE === null) {
             self::$CREATE = new Permissions(
                 "CREATE",
                 8,
@@ -166,7 +166,7 @@ class Permissions implements PermissionInterface
 
     public static function delete(): PermissionInterface
     {
-        if (self::$DELETE == null) {
+        if (self::$DELETE === null) {
             self::$DELETE = new Permissions(
                 "DELETE",
                 16,
@@ -194,7 +194,7 @@ class Permissions implements PermissionInterface
 
     public static function access(): PermissionInterface
     {
-        if (self::$ACCESS == null) {
+        if (self::$ACCESS === null) {
             self::$ACCESS = new Permissions(
                 "ACCESS",
                 32,
@@ -210,7 +210,7 @@ class Permissions implements PermissionInterface
 
     public static function readTask(): PermissionInterface
     {
-        if (self::$READ_TASK == null) {
+        if (self::$READ_TASK === null) {
             self::$READ_TASK = new Permissions(
                 "READ_TASK",
                 64,
@@ -226,7 +226,7 @@ class Permissions implements PermissionInterface
 
     public static function updateTask(): PermissionInterface
     {
-        if (self::$UPDATE_TASK == null) {
+        if (self::$UPDATE_TASK === null) {
             self::$UPDATE_TASK = new Permissions(
                 "UPDATE_TASK",
                 128,
@@ -242,7 +242,7 @@ class Permissions implements PermissionInterface
 
     public static function createInstance(): PermissionInterface
     {
-        if (self::$CREATE_INSTANCE == null) {
+        if (self::$CREATE_INSTANCE === null) {
             self::$CREATE_INSTANCE = new Permissions(
                 "CREATE_INSTANCE",
                 256,
@@ -259,7 +259,7 @@ class Permissions implements PermissionInterface
 
     public static function readInstance(): PermissionInterface
     {
-        if (self::$READ_INSTANCE == null) {
+        if (self::$READ_INSTANCE === null) {
             self::$READ_INSTANCE = new Permissions(
                 "READ_INSTANCE",
                 512,
@@ -275,7 +275,7 @@ class Permissions implements PermissionInterface
 
     public static function updateInstance(): PermissionInterface
     {
-        if (self::$UPDATE_INSTANCE == null) {
+        if (self::$UPDATE_INSTANCE === null) {
             self::$UPDATE_INSTANCE = new Permissions(
                 "UPDATE_INSTANCE",
                 1024,
@@ -291,7 +291,7 @@ class Permissions implements PermissionInterface
 
     public static function deleteInstance(): PermissionInterface
     {
-        if (self::$DELETE_INSTANCE == null) {
+        if (self::$DELETE_INSTANCE === null) {
             self::$DELETE_INSTANCE = new Permissions(
                 "DELETE_INSTANCE",
                 2048,
@@ -307,7 +307,7 @@ class Permissions implements PermissionInterface
 
     public static function readHistory(): PermissionInterface
     {
-        if (self::$READ_HISTORY == null) {
+        if (self::$READ_HISTORY === null) {
             self::$READ_HISTORY = new Permissions(
                 "READ_HISTORY",
                 4096,
@@ -326,7 +326,7 @@ class Permissions implements PermissionInterface
 
     public static function deleteHistory(): PermissionInterface
     {
-        if (self::$DELETE_HISTORY == null) {
+        if (self::$DELETE_HISTORY === null) {
             self::$DELETE_HISTORY = new Permissions(
                 "DELETE_HISTORY",
                 8192,
@@ -344,7 +344,7 @@ class Permissions implements PermissionInterface
 
     public static function taskWork(): PermissionInterface
     {
-        if (self::$TASK_WORK == null) {
+        if (self::$TASK_WORK === null) {
             self::$TASK_WORK = new Permissions(
                 "TASK_WORK",
                 16384,
@@ -361,7 +361,7 @@ class Permissions implements PermissionInterface
 
     public static function taskAssign(): PermissionInterface
     {
-        if (self::$TASK_ASSIGN == null) {
+        if (self::$TASK_ASSIGN === null) {
             self::$TASK_ASSIGN = new Permissions(
                 "TASK_ASSIGN",
                 32768,
@@ -378,7 +378,7 @@ class Permissions implements PermissionInterface
 
     public static function migrateInstance(): PermissionInterface
     {
-        if (self::$MIGRATE_INSTANCE == null) {
+        if (self::$MIGRATE_INSTANCE === null) {
             self::$MIGRATE_INSTANCE = new Permissions(
                 "MIGRATE_INSTANCE",
                 65536,
@@ -396,7 +396,7 @@ class Permissions implements PermissionInterface
     {
         $this->name = $name;
         $this->id = $id;
-        if ($resourceTypes != null) {
+        if ($resourceTypes !== null) {
             $this->resourceTypes = $resourceTypes;
         }
     }

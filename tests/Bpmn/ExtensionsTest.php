@@ -729,7 +729,7 @@ class ExtensionsTest extends TestCase
         $timeout = $timeouts[0];
         $this->assertNull($timeout->getTimeCycle());
         $this->assertNull($timeout->getTimeDate());
-        $this->assertFalse($timeout->getTimeDuration() == null);
+        $this->assertFalse($timeout->getTimeDuration() === null);
         $this->assertEquals("PT1H", $timeout->getTimeDuration()->getRawTextContent());
     }
 
@@ -758,7 +758,7 @@ class ExtensionsTest extends TestCase
     {
         $properties = $this->endEvent->getExtensionElements()->getElementsQuery()
                       ->filterByType(PropertiesInterface::class)->singleResult();
-        $this->assertFalse($properties == null);
+        $this->assertFalse($properties === null);
         $this->assertCount(2, $properties->getProperties());
 
         foreach ($properties->getProperties() as $property) {
@@ -821,10 +821,10 @@ class ExtensionsTest extends TestCase
     {
         $connector = $this->serviceTask->getExtensionElements()->getElementsQuery()
                      ->filterByType(ConnectorInterface::class)->singleResult();
-        $this->assertFalse($connector == null);
+        $this->assertFalse($connector === null);
 
         $connectorId = $connector->getConnectorId();
-        $this->assertFalse($connectorId == null);
+        $this->assertFalse($connectorId === null);
         $this->assertEquals("soap-http-connector", $connectorId->getTextContent());
 
         $inputOutput = $connector->getInputOutput();
@@ -849,7 +849,7 @@ class ExtensionsTest extends TestCase
         $inputOutput = $this->serviceTask->getExtensionElements()->getElementsQuery()
                        ->filterByType(InputOutputInterface::class)
                        ->singleResult();
-        $this->assertFalse($inputOutput == null);
+        $this->assertFalse($inputOutput === null);
         $this->assertCount(6, $inputOutput->getInputParameters());
         $this->assertCount(1, $inputOutput->getOutputParameters());
     }
@@ -905,7 +905,7 @@ class ExtensionsTest extends TestCase
         $inputParameter = $this->findInputParameterByName($this->serviceTask, "shouldBeList");
         $this->assertEquals("shouldBeList", $inputParameter->getName());
         $this->assertFalse(empty($inputParameter->getTextContent()));
-        $this->assertFalse($inputParameter->getUniqueChildElementByNameNs(BpmnModelConstants::EXTENSION_NS, "list") == null);
+        $this->assertFalse($inputParameter->getUniqueChildElementByNameNs(BpmnModelConstants::EXTENSION_NS, "list") === null);
 
         $list = $inputParameter->getValue();
         $this->assertCount(3, $list->getValues());
@@ -964,7 +964,7 @@ class ExtensionsTest extends TestCase
         $inputParameter = $this->findInputParameterByName($this->serviceTask, "shouldBeMap");
         $this->assertEquals("shouldBeMap", $inputParameter->getName());
         $this->assertFalse(empty($inputParameter->getTextContent()));
-        $this->assertFalse($inputParameter->getUniqueChildElementByNameNs(BpmnModelConstants::EXTENSION_NS, "map") == null);
+        $this->assertFalse($inputParameter->getUniqueChildElementByNameNs(BpmnModelConstants::EXTENSION_NS, "map") === null);
 
         $map = $inputParameter->getValue();
         $this->assertCount(2, $map->getEntries());
@@ -999,8 +999,8 @@ class ExtensionsTest extends TestCase
         $inputParameter = $this->findInputParameterByName($this->serviceTask, "shouldBeScript");
         $this->assertEquals("shouldBeScript", $inputParameter->getName());
         $this->assertFalse(empty($inputParameter->getTextContent()));
-        $this->assertFalse($inputParameter->getUniqueChildElementByNameNs(BpmnModelConstants::EXTENSION_NS, "script") == null);
-        $this->assertFalse($inputParameter->getUniqueChildElementByType(ScriptInterface::class) == null);
+        $this->assertFalse($inputParameter->getUniqueChildElementByNameNs(BpmnModelConstants::EXTENSION_NS, "script") === null);
+        $this->assertFalse($inputParameter->getUniqueChildElementByType(ScriptInterface::class) === null);
 
         $script = $inputParameter->getValue();
         $this->assertEquals("groovy", $script->getScriptFormat());
@@ -1028,17 +1028,17 @@ class ExtensionsTest extends TestCase
                            ->filterByType(InputOutputInterface::class)
                            ->singleResult()->getOutputParameters()[0];
 
-        $this->assertFalse($outputParameter == null);
+        $this->assertFalse($outputParameter === null);
         $this->assertEquals("nested", $outputParameter->getName());
         $list = $outputParameter->getValue();
-        $this->assertFalse($list == null);
+        $this->assertFalse($list === null);
         $this->assertCount(2, $list->getValues());
 
         $values = $list->getValues();
 
         // nested list
         $nestedList = $values[0]->getUniqueChildElementByType(ListInterface::class);
-        $this->assertFalse($nestedList == null);
+        $this->assertFalse($nestedList === null);
         $this->assertCount(2, $nestedList->getValues());
         foreach ($nestedList->getValues() as $value) {
             $this->assertEquals("list", $value->getTextContent());
@@ -1046,14 +1046,14 @@ class ExtensionsTest extends TestCase
 
         // nested map
         $nestedMap = $values[1]->getUniqueChildElementByType(MapInterface::class);
-        $this->assertFalse($nestedMap == null);
+        $this->assertFalse($nestedMap === null);
         $this->assertCount(2, $nestedMap->getEntries());
 
         $entries = $nestedMap->getEntries();
 
         // nested list in nested map
         $nestedListEntry = $entries[0];
-        $this->assertFalse($nestedListEntry == null);
+        $this->assertFalse($nestedListEntry === null);
         $this->assertEquals("list", $nestedListEntry->getKey());
         $nestedNestedList = $nestedListEntry->getValue();
         foreach ($nestedNestedList->getValues() as $value) {
@@ -1062,7 +1062,7 @@ class ExtensionsTest extends TestCase
 
         // nested map in nested map
         $nestedMapEntry = $entries[1];
-        $this->assertFalse($nestedMapEntry == null);
+        $this->assertFalse($nestedMapEntry === null);
         $this->assertEquals("map", $nestedMapEntry->getKey());
         $nestedNestedMap = $nestedMapEntry->getValue();
         $entry = $nestedNestedMap->getEntries()[0];

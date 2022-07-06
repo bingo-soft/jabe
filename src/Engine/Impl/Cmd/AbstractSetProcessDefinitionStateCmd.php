@@ -45,7 +45,7 @@ abstract class AbstractSetProcessDefinitionStateCmd extends AbstractSetStateCmd
     protected function checkParameters(CommandContext $commandContext): void
     {
         // Validation of input parameters
-        if ($this->processDefinitionId == null && $this->processDefinitionKey == null) {
+        if ($this->processDefinitionId === null && $this->processDefinitionKey === null) {
             throw new ProcessEngineException("Process definition id / key cannot be null");
         }
     }
@@ -53,12 +53,12 @@ abstract class AbstractSetProcessDefinitionStateCmd extends AbstractSetStateCmd
     protected function checkAuthorization(CommandContext $commandContext): void
     {
         foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
-            if ($this->processDefinitionId != null) {
+            if ($this->processDefinitionId !== null) {
                 $checker->checkUpdateProcessDefinitionSuspensionStateById($this->processDefinitionId);
                 if ($this->includeSubResources) {
                     $checker->checkUpdateProcessInstanceSuspensionStateByProcessDefinitionId($this->processDefinitionId);
                 }
-            } elseif ($this->processDefinitionKey != null) {
+            } elseif ($this->processDefinitionKey !== null) {
                 $checker->checkUpdateProcessDefinitionSuspensionStateByKey($this->processDefinitionKey);
 
                 if ($this->includeSubResources) {
@@ -72,7 +72,7 @@ abstract class AbstractSetProcessDefinitionStateCmd extends AbstractSetStateCmd
     {
         $processDefinitionManager = $commandContext->getProcessDefinitionManager();
 
-        if ($this->processDefinitionId != null) {
+        if ($this->processDefinitionId !== null) {
             $processDefinitionManager->updateProcessDefinitionSuspensionStateById($this->processDefinitionId, $suspensionState);
         } else if ($this->isTenantIdSet) {
             $processDefinitionManager->updateProcessDefinitionSuspensionStateByKeyAndTenantId($this->processDefinitionKey, $this->tenantId, $suspensionState);
@@ -93,11 +93,11 @@ abstract class AbstractSetProcessDefinitionStateCmd extends AbstractSetStateCmd
     protected function createJobDefinitionCommandBuilder(): UpdateJobDefinitionSuspensionStateBuilderImpl
     {
         $jobDefinitionBuilder = new UpdateJobDefinitionSuspensionStateBuilderImpl();
-        if ($this->processDefinitionId != null) {
+        if ($this->processDefinitionId !== null) {
             $jobDefinitionBuilder->byProcessDefinitionId($this->processDefinitionId);
-        } elseif ($this->processDefinitionKey != null) {
+        } elseif ($this->processDefinitionKey !== null) {
             $jobDefinitionBuilder->byProcessDefinitionKey($this->processDefinitionKey);
-            if ($this->isTenantIdSet && $this->tenantId != null) {
+            if ($this->isTenantIdSet && $this->tenantId !== null) {
                 $jobDefinitionBuilder->processDefinitionTenantId($this->tenantId);
             } elseif ($this->isTenantIdSet) { //@TODO. May be !$this->isTenantIdSet
                 $jobDefinitionBuilder->processDefinitionWithoutTenantId();
@@ -109,11 +109,11 @@ abstract class AbstractSetProcessDefinitionStateCmd extends AbstractSetStateCmd
     protected function createProcessInstanceCommandBuilder(): UpdateProcessInstanceSuspensionStateBuilderImpl
     {
         $processInstanceBuilder = new UpdateProcessInstanceSuspensionStateBuilderImpl();
-        if ($this->processDefinitionId != null) {
+        if ($this->processDefinitionId !== null) {
             $processInstanceBuilder->byProcessDefinitionId($this->processDefinitionId);
-        } elseif ($this->processDefinitionKey != null) {
+        } elseif ($this->processDefinitionKey !== null) {
             $processInstanceBuilder->byProcessDefinitionKey($this->processDefinitionKey);
-            if ($this->isTenantIdSet && $this->tenantId != null) {
+            if ($this->isTenantIdSet && $this->tenantId !== null) {
                 $processInstanceBuilder->processDefinitionTenantId($this->tenantId);
             } elseif ($this->isTenantIdSet) { //@TODO. May be !$this->isTenantIdSet
                 $processInstanceBuilder->processDefinitionWithoutTenantId();
@@ -124,7 +124,7 @@ abstract class AbstractSetProcessDefinitionStateCmd extends AbstractSetStateCmd
 
     protected function getJobHandlerConfiguration(): ?JobHandlerConfigurationInterface
     {
-        if ($this->processDefinitionId != null) {
+        if ($this->processDefinitionId !== null) {
             return ProcessDefinitionSuspensionStateConfiguration::byProcessDefinitionId($this->processDefinitionId, isIncludeSubResources());
         } elseif ($this->isTenantIdSet) {
             return ProcessDefinitionSuspensionStateConfiguration::byProcessDefinitionKeyAndTenantId($this->processDefinitionKey, $this->tenantId, $this->isIncludeSubResources());
@@ -163,7 +163,7 @@ abstract class AbstractSetProcessDefinitionStateCmd extends AbstractSetStateCmd
 
     protected function getNextCommand($processInstanceCommandBuilder = null)
     {
-        if ($processInstanceCommandBuilder == null) {
+        if ($processInstanceCommandBuilder === null) {
             $processInstanceCommandBuilder = $this->createProcessInstanceCommandBuilder();
             return $this->getNextCommand($processInstanceCommandBuilder);
         }
@@ -172,9 +172,9 @@ abstract class AbstractSetProcessDefinitionStateCmd extends AbstractSetStateCmd
 
     protected function getDeploymentId(CommandContext $commandContext): ?string
     {
-        if ($this->processDefinitionId != null) {
+        if ($this->processDefinitionId !== null) {
             return $this->getDeploymentIdByProcessDefinition($commandContext, $this->processDefinitionId);
-        } elseif ($this->processDefinitionKey != null) {
+        } elseif ($this->processDefinitionKey !== null) {
             return $this->getDeploymentIdByProcessDefinitionKey($commandContext, $this->processDefinitionKey, $this->isTenantIdSet, $this->tenantId);
         }
         return null;

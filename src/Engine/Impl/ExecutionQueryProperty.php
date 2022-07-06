@@ -12,7 +12,7 @@ class ExecutionQueryProperty
 
     public static function processInstanceId(): QueryPropertyImpl
     {
-        if (self::$PROCESS_INSTANCE_ID == null) {
+        if (self::$PROCESS_INSTANCE_ID === null) {
             self::$PROCESS_INSTANCE_ID = new QueryPropertyImpl("PROC_INST_ID_");
         }
         return self::$PROCESS_INSTANCE_ID;
@@ -20,7 +20,7 @@ class ExecutionQueryProperty
 
     public static function processDefinitionKey(): QueryPropertyImpl
     {
-        if (self::$PROCESS_DEFINITION_KEY == null) {
+        if (self::$PROCESS_DEFINITION_KEY === null) {
             self::$PROCESS_DEFINITION_KEY = new QueryPropertyImpl("KEY_");
         }
         return self::$PROCESS_DEFINITION_KEY;
@@ -28,7 +28,7 @@ class ExecutionQueryProperty
 
     public static function processDefinitionId(): QueryPropertyImpl
     {
-        if (self::$PROCESS_DEFINITION_ID == null) {
+        if (self::$PROCESS_DEFINITION_ID === null) {
             self::$PROCESS_DEFINITION_ID = new QueryPropertyImpl("ID_");
         }
         return self::$PROCESS_DEFINITION_ID;
@@ -36,7 +36,7 @@ class ExecutionQueryProperty
 
     public static function sequenceCounter(): QueryPropertyImpl
     {
-        if (self::$SEQUENCE_COUNTER == null) {
+        if (self::$SEQUENCE_COUNTER === null) {
             self::$SEQUENCE_COUNTER = new QueryPropertyImpl("SEQUENCE_COUNTER_");
         }
         return self::$SEQUENCE_COUNTER;
@@ -44,7 +44,7 @@ class ExecutionQueryProperty
 
     public function tenantId(): QueryPropertyImpl
     {
-        if (self::$TENANT_ID == null) {
+        if (self::$TENANT_ID === null) {
             self::$TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
         }
         return self::$TENANT_ID;

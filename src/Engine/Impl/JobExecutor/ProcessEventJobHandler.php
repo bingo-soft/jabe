@@ -26,7 +26,7 @@ class ProcessEventJobHandler implements JobHandlerInterface
             ->findEventSubscriptionById($eventSubscriptionId);
 
         // if event subscription is null, ignore
-        if ($eventSubscription != null) {
+        if ($eventSubscription !== null) {
             $eventSubscription->eventReceived(null, false);
         }
     }

@@ -22,7 +22,7 @@ class KndResponseModelInstanceImpl
 
     public static function getModel(): ModelInterface
     {
-        if (self::$model == null) {
+        if (self::$model === null) {
             $modelBuilder = self::getModelBuilder();
 
             CodeImpl::registerType($modelBuilder);
@@ -40,7 +40,7 @@ class KndResponseModelInstanceImpl
 
     public static function getModelBuilder(): ModelBuilder
     {
-        if (self::$modelBuilder == null) {
+        if (self::$modelBuilder === null) {
             self::$modelBuilder = ModelBuilder::createInstance(KndResponseModelConstants::MODEL_NAME);
         }
         return self::$modelBuilder;

@@ -18,7 +18,7 @@ class PropertyChange
 
     public static function emptyChange(): PropertyChange
     {
-        if (self::$EMPTY_CHANGE == null) {
+        if (self::$EMPTY_CHANGE === null) {
             self::$EMPTY_CHANGE = new PropertyChange(null, null, null);
         }
         return self::$EMPTY_CHANGE;
@@ -73,7 +73,7 @@ class PropertyChange
 
     protected function valueAsString($value)
     {
-        if ($value == null) {
+        if ($value === null) {
             return null;
         } else {
             return strval($value);

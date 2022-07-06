@@ -20,7 +20,7 @@ class HistoricVariableInstanceManager extends AbstractHistoricManager
     {
         if ($this->isHistoryEnabled()) {
             $historicVariableInstance = $this->findHistoricVariableInstanceByVariableInstanceId($historicVariableInstanceId);
-            if ($historicVariableInstance != null) {
+            if ($historicVariableInstance !== null) {
                 $historicVariableInstance->delete();
             }
         }
@@ -64,7 +64,7 @@ class HistoricVariableInstanceManager extends AbstractHistoricManager
 
             // delete entries in DB
             List<HistoricVariableInstance> historicVariableInstances;
-            if ($historicProcessInstanceId != null) {
+            if ($historicProcessInstanceId !== null) {
              historicVariableInstances = $this->findHistoricVariableInstancesByProcessInstanceId($historicProcessInstanceId);
             } else {
                 historicVariableInstances = $this->findHistoricVariableInstancesByCaseInstanceId($historicCaseInstanceId);
@@ -78,8 +78,8 @@ class HistoricVariableInstanceManager extends AbstractHistoricManager
             List <HistoricVariableInstanceEntity> cachedHistoricVariableInstances = getDbEntityManager().getCachedEntitiesByType(HistoricVariableInstanceEntity.class);
             for (HistoricVariableInstanceEntity historicVariableInstance : cachedHistoricVariableInstances) {
                 // make sure we only delete the right ones (as we cannot make a proper query in the cache)
-                if (($historicProcessInstanceId != null && historicProcessInstanceId.equals($historicVariableInstance.getProcessInstanceId()))
-                    || ($historicCaseInstanceId != null && historicCaseInstanceId.equals($historicVariableInstance.getCaseInstanceId()))) {
+                if (($historicProcessInstanceId !== null && historicProcessInstanceId.equals($historicVariableInstance.getProcessInstanceId()))
+                    || ($historicCaseInstanceId !== null && historicCaseInstanceId.equals($historicVariableInstance.getCaseInstanceId()))) {
                     historicVariableInstance.delete();
                 }
             }

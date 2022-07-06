@@ -229,10 +229,10 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
 
     public function rootProcessInstances(): HistoricProcessInstanceQueryInterface
     {
-        if ($this->superProcessInstanceId != null) {
+        if ($this->superProcessInstanceId !== null) {
             throw new BadUserRequestException("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId");
         }
-        /*if (superCaseInstanceId != null) {
+        /*if (superCaseInstanceId !== null) {
             throw new BadUserRequestException("Invalid query usage: cannot set both rootProcessInstances and superCaseInstanceId");
         }*/
         $this->isRootProcessInstances = true;

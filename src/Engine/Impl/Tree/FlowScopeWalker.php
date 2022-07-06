@@ -18,7 +18,7 @@ class FlowScopeWalker extends SingleReferenceWalker
     protected function nextElement()
     {
         $currentElement = $this->getCurrentElement();
-        if ($currentElement != null && is_a($currentElement, ActivityImpl::class)) {
+        if ($currentElement !== null && is_a($currentElement, ActivityImpl::class)) {
             return $currentElement->getFlowScope();
         }
         return null;

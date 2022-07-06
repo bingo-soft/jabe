@@ -14,7 +14,7 @@ class ExternalTaskQueryProperty
 
     public static function id(): QueryPropertyImpl
     {
-        if (self::$ID == null) {
+        if (self::$ID === null) {
             self::$ID = new QueryPropertyImpl("ID_");
         }
         return self::$ID;
@@ -22,7 +22,7 @@ class ExternalTaskQueryProperty
 
     public static function lockExpirationTime(): QueryPropertyImpl
     {
-        if (self::$LOCK_EXPIRATION_TIME == null) {
+        if (self::$LOCK_EXPIRATION_TIME === null) {
             self::$LOCK_EXPIRATION_TIME = new QueryPropertyImpl("LOCK_EXP_TIME_");
         }
         return self::$LOCK_EXPIRATION_TIME;
@@ -30,7 +30,7 @@ class ExternalTaskQueryProperty
 
     public static function processInstanceId(): QueryPropertyImpl
     {
-        if (self::$PROCESS_INSTANCE_ID == null) {
+        if (self::$PROCESS_INSTANCE_ID === null) {
             self::$PROCESS_INSTANCE_ID = new QueryPropertyImpl("PROC_INST_ID_");
         }
         return self::$PROCESS_INSTANCE_ID;
@@ -38,7 +38,7 @@ class ExternalTaskQueryProperty
 
     public static function processDefinitionId(): QueryPropertyImpl
     {
-        if (self::$PROCESS_DEFINITION_ID == null) {
+        if (self::$PROCESS_DEFINITION_ID === null) {
             self::$PROCESS_DEFINITION_ID = new QueryPropertyImpl("PROC_DEF_ID_");
         }
         return self::$PROCESS_DEFINITION_ID;
@@ -46,7 +46,7 @@ class ExternalTaskQueryProperty
 
     public static function processDefinitionKey(): QueryPropertyImpl
     {
-        if (self::$PROCESS_DEFINITION_KEY == null) {
+        if (self::$PROCESS_DEFINITION_KEY === null) {
             self::$PROCESS_DEFINITION_KEY = new QueryPropertyImpl("PROC_DEF_KEY_");
         }
         return self::$PROCESS_DEFINITION_KEY;
@@ -54,7 +54,7 @@ class ExternalTaskQueryProperty
 
     public static function tenantId(): QueryPropertyImpl
     {
-        if (self::$TENANT_ID == null) {
+        if (self::$TENANT_ID === null) {
             self::$TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
         }
         return self::$TENANT_ID;
@@ -62,7 +62,7 @@ class ExternalTaskQueryProperty
 
     public static function priority(): QueryPropertyImpl
     {
-        if (self::$PRIORITY == null) {
+        if (self::$PRIORITY === null) {
             self::$PRIORITY = new QueryPropertyImpl("PRIORITY_");
         }
         return self::$PRIORITY;

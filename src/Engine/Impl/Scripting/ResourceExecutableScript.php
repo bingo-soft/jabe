@@ -23,7 +23,7 @@ class ResourceExecutableScript extends SourceExecutableScript
 
     public function evaluate(ScriptEngineInterface $engine, VariableScopeInterface $variableScope, BindingsInterface $bindings)
     {
-        if ($this->scriptSource == null) {
+        if ($this->scriptSource === null) {
             $this->loadScriptSource();
         }
         return parent::evaluate($engine, $variableScope, $bindings);
@@ -31,7 +31,7 @@ class ResourceExecutableScript extends SourceExecutableScript
 
     protected function loadScriptSource(): void
     {
-        if ($this->getScriptSource() == null) {
+        if ($this->getScriptSource() === null) {
             $deployment = Context::getCoreExecutionContext()->getDeployment();
             $source = ResourceUtil::loadResourceContent($this->scriptResource, $deployment);
             $this->setScriptSource($source);

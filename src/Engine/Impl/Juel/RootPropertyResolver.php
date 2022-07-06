@@ -26,7 +26,7 @@ class RootPropertyResolver extends ELResolver
 
     private function isResolvable($base): bool
     {
-        return $base == null;
+        return $base === null;
     }
 
     private function resolve(?ELContext $context, $base, $property): bool

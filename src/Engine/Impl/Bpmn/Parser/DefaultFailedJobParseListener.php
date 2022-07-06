@@ -31,7 +31,7 @@ class DefaultFailedJobParseListener extends AbstractBpmnParseListener
 
     public function __construct()
     {
-        if (self::$FAILED_JOB_CONFIGURATION == null) {
+        if (self::$FAILED_JOB_CONFIGURATION === null) {
             self::$FAILED_JOB_CONFIGURATION = new PropertyKey("FAILED_JOB_CONFIGURATION");
         }
     }
@@ -39,7 +39,7 @@ class DefaultFailedJobParseListener extends AbstractBpmnParseListener
     public function parseStartEvent(Element $startEventElement, ScopeImpl $scope, ActivityImpl $startEventActivity): void
     {
         $type = $startEventActivity->getProperties()->get(BpmnProperties::type());
-        if ($type != null && $type == self::START_TIMER_EVENT || $this->isAsync($startEventActivity)) {
+        if ($type !== null && $type == self::START_TIMER_EVENT || $this->isAsync($startEventActivity)) {
             $this->setFailedJobRetryTimeCycleValue($startEventElement, $startEventActivity);
         }
     }
@@ -47,7 +47,7 @@ class DefaultFailedJobParseListener extends AbstractBpmnParseListener
     public function parseBoundaryEvent(Element $boundaryEventElement, ScopeImpl $scopeElement, ActivityImpl $nestedActivity): void
     {
         $type = $nestedActivity->getProperties()->get(BpmnProperties::type());
-        if (($type != null && $type == self::BOUNDARY_TIMER) || $this->isAsync($nestedActivity)) {
+        if (($type !== null && $type == self::BOUNDARY_TIMER) || $this->isAsync($nestedActivity)) {
             $this->setFailedJobRetryTimeCycleValue($boundaryEventElement, $nestedActivity);
         }
     }
@@ -55,7 +55,7 @@ class DefaultFailedJobParseListener extends AbstractBpmnParseListener
     public function parseIntermediateThrowEvent(Element $intermediateEventElement, ScopeImpl $scope, ActivityImpl $activity): void
     {
         $type = $startEventActivity->getProperties()->get(BpmnProperties::type());
-        if ($type != null) {
+        if ($type !== null) {
             $this->setFailedJobRetryTimeCycleValue($intermediateEventElement, $activity);
         }
     }
@@ -63,7 +63,7 @@ class DefaultFailedJobParseListener extends AbstractBpmnParseListener
     public function parseIntermediateCatchEvent(Element $intermediateEventElement, ScopeImpl $scope, ActivityImpl $activity): void
     {
         $type = $startEventActivity->getProperties()->get(BpmnProperties::type());
-        if ($type != null && $type == self::INTERMEDIATE_TIMER || $this->isAsync($activity)) {
+        if ($type !== null && $type == self::INTERMEDIATE_TIMER || $this->isAsync($activity)) {
             $this->setFailedJobRetryTimeCycleValue($intermediateEventElement, $activity);
         }
     }
@@ -174,7 +174,7 @@ class DefaultFailedJobParseListener extends AbstractBpmnParseListener
         $extensionElements = $element->element(self::EXTENSION_ELEMENTS);
         if (!empty($extensionElements)) {
             $failedJobRetryTimeCycleElement = $extensionElements->elementNS(self::ENGINE_NS, self::FAILED_JOB_RETRY_TIME_CYCLE);
-            if ($failedJobRetryTimeCycleElement == null) {
+            if ($failedJobRetryTimeCycleElement === null) {
                 // try to get it from the activiti namespace
                 $failedJobRetryTimeCycleElement = $extensionElements->elementNS(BpmnParse::BPMN_EXTENSIONS_NS_PREFIX, self::FAILED_JOB_RETRY_TIME_CYCLE);
             }
@@ -188,7 +188,7 @@ class DefaultFailedJobParseListener extends AbstractBpmnParseListener
             $failedJobRetryTimeCycleConfiguration = Context::getProcessEngineConfiguration()->getFailedJobRetryTimeCycle();
         }
 
-        if ($failedJobRetryTimeCycleConfiguration != null) {
+        if ($failedJobRetryTimeCycleConfiguration !== null) {
             $configuration = ParseUtil::parseRetryIntervals($failedJobRetryTimeCycleConfiguration);
             $activity->getProperties()->set(self::FAILED_JOB_CONFIGURATION, $configuration);
         }
@@ -198,6 +198,6 @@ class DefaultFailedJobParseListener extends AbstractBpmnParseListener
     {
         // #isMultiInstance() don't work since the property is not set yet
         $parent = $activity->getParentFlowScopeActivity();
-        return $parent != null && $parent->getActivityBehavior() instanceof MultiInstanceActivityBehavior;
+        return $parent !== null && $parent->getActivityBehavior() instanceof MultiInstanceActivityBehavior;
     }
 }

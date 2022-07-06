@@ -15,7 +15,7 @@ class DiGeneratorForSequenceFlowsTest extends TestCase
 
     protected function tearDown(): void
     {
-        if ($this->instance != null) {
+        if ($this->instance !== null) {
             Bpmn::getInstance()->validateModel($this->instance);
         }
     }
@@ -151,6 +151,6 @@ class DiGeneratorForSequenceFlowsTest extends TestCase
     protected function assertBpmnEdgeExists(string $id): void
     {
         $edge = $this->findBpmnEdge($id);
-        $this->assertFalse($edge == null);
+        $this->assertFalse($edge === null);
     }
 }

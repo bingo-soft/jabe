@@ -30,7 +30,7 @@ class HtmlElementWriter
 
     public function writeContent(HtmlWriteContext $context): void
     {
-        if ($this->textContent != null) {
+        if ($this->textContent !== null) {
             $this->writeLeadingWhitespace($context);
             $this->writeTextContent($context);
             $this->writeEndLine($context);
@@ -74,7 +74,7 @@ class HtmlElementWriter
         foreach ($attributes as $key => $attribute) {
             $writer->write(" ");
             $writer->write($key);
-            if ($attribute != null) {
+            if ($attribute !== null) {
                 $writer->write("=\"");
                 $attributeValue = $this->escapeQuotes($attribute->getValue());
                 $writer->write($attributeValue);

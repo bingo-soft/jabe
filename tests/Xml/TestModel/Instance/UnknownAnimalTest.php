@@ -32,12 +32,12 @@ class UnknownAnimalTest extends TestModelTest
 
     public function testGetUnknownAnimalById(): void
     {
-        $this->assertFalse($this->wanda == null);
+        $this->assertFalse($this->wanda === null);
         $this->assertEquals("wanda", $this->wanda->getAttributeValue("id"));
         $this->assertEquals("Female", $this->wanda->getAttributeValue("gender"));
         $this->assertEquals("fish", $this->wanda->getAttributeValue("species"));
 
-        $this->assertFalse($this->flipper == null);
+        $this->assertFalse($this->flipper === null);
         $this->assertEquals("flipper", $this->flipper->getAttributeValue("id"));
         $this->assertEquals("Male", $this->flipper->getAttributeValue("gender"));
         $this->assertEquals("dolphin", $this->flipper->getAttributeValue("species"));
@@ -67,7 +67,7 @@ class UnknownAnimalTest extends TestModelTest
         $animalType = $this->modelInstance->getModel()->getType(Animal::class);
 
         $unknownAnimal = $this->modelInstance->newInstance($unknownAnimalType);
-        $this->assertFalse($unknownAnimal == null);
+        $this->assertFalse($unknownAnimal === null);
         $unknownAnimal->setAttributeValue("id", "new-animal", true);
         $unknownAnimal->setAttributeValue("gender", "Unknown");
         $unknownAnimal->setAttributeValue("species", "unknown");

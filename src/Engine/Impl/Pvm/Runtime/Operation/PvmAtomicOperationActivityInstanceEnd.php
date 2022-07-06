@@ -29,8 +29,8 @@ abstract class PvmAtomicOperationActivityInstanceEnd extends AbstractPvmEventAto
         $parent = $execution->getParent();
         $activity = $execution->getActivity();
         if (
-            $parent != null && $execution->isScope() &&
-            $activity != null && $activity->isScope() &&
+            $parent !== null && $execution->isScope() &&
+            $activity !== null && $activity->isScope() &&
             ($activity->getActivityBehavior() instanceof CompositeActivityBehaviorInterface ||
             (CompensationBehavior::isCompensationThrowing($execution)) &&
             !LegacyBehavior::isCompensationThrowing($execution))
@@ -56,6 +56,6 @@ abstract class PvmAtomicOperationActivityInstanceEnd extends AbstractPvmEventAto
         // listeners are skipped if this execution is not part of an activity instance.
         // or if the end listeners for this activity instance were triggered before already and failed.
         return $execution->hasFailedOnEndListeners() ||
-            $execution->getActivityInstanceId() == null;
+            $execution->getActivityInstanceId() === null;
     }
 }

@@ -17,7 +17,7 @@ class BpmnInterface
 
     public function __construct(string $id = null, string $name = null)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->setId($id);
             $this->setName($name);
         }

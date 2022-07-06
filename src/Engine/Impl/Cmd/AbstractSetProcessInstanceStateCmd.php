@@ -41,7 +41,7 @@ abstract class AbstractSetProcessInstanceStateCmd extends AbstractSetStateCmd
 
     protected function checkParameters(CommandContext $commandContext): void
     {
-        if ($this->processInstanceId == null && $this->processDefinitionId == null && $this->processDefinitionKey == null) {
+        if ($this->processInstanceId === null && $this->processDefinitionId === null && $this->processDefinitionKey === null) {
             throw new ProcessEngineException("ProcessInstanceId, ProcessDefinitionId nor ProcessDefinitionKey cannot be null.");
         }
     }
@@ -49,11 +49,11 @@ abstract class AbstractSetProcessInstanceStateCmd extends AbstractSetStateCmd
     protected function checkAuthorization(CommandContext $commandContext): void
     {
         foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
-            if ($this->processInstanceId != null) {
+            if ($this->processInstanceId !== null) {
                 $checker->checkUpdateProcessInstanceSuspensionStateById($this->processInstanceId);
-            } elseif ($this->processDefinitionId != null) {
+            } elseif ($this->processDefinitionId !== null) {
                 $checker->checkUpdateProcessInstanceSuspensionStateByProcessDefinitionId($this->processDefinitionId);
-            } elseif ($this->processDefinitionKey != null) {
+            } elseif ($this->processDefinitionKey !== null) {
                 $checker->checkUpdateProcessInstanceSuspensionStateByProcessDefinitionKey($this->processDefinitionKey);
             }
         }
@@ -65,11 +65,11 @@ abstract class AbstractSetProcessInstanceStateCmd extends AbstractSetStateCmd
         $taskManager = $commandContext->getTaskManager();
         $externalTaskManager = $commandContext->getExternalTaskManager();
 
-        if ($this->processInstanceId != null) {
+        if ($this->processInstanceId !== null) {
             $executionManager->updateExecutionSuspensionStateByProcessInstanceId($this->processInstanceId, $suspensionState);
             $taskManager->updateTaskSuspensionStateByProcessInstanceId($this->processInstanceId, $suspensionState);
             $externalTaskManager->updateExternalTaskSuspensionStateByProcessInstanceId($this->processInstanceId, $suspensionState);
-        } elseif ($this->processDefinitionId != null) {
+        } elseif ($this->processDefinitionId !== null) {
             $executionManager->updateExecutionSuspensionStateByProcessDefinitionId($this->processDefinitionId, $suspensionState);
             $taskManager->updateTaskSuspensionStateByProcessDefinitionId($this->processDefinitionId, $suspensionState);
             $externalTaskManager->updateExternalTaskSuspensionStateByProcessDefinitionId($this->processDefinitionId, $suspensionState);
@@ -89,7 +89,7 @@ abstract class AbstractSetProcessInstanceStateCmd extends AbstractSetStateCmd
         $historyLevel = $commandContext->getProcessEngineConfiguration()->getHistoryLevel();
         $updatedProcessInstances = $this->obtainProcessInstances($commandContext);
         //suspension state is not updated synchronously
-        if ($this->getNewSuspensionState() != null && !empty($updatedProcessInstances)) {
+        if ($this->getNewSuspensionState() !== null && !empty($updatedProcessInstances)) {
             foreach ($updatedProcessInstances as $processInstance) {
                 if ($historyLevel->isHistoryEventProduced(HistoryEventTypes::processInstanceUpdate(), $processInstance)) {
                     $scope = $this;
@@ -122,13 +122,13 @@ abstract class AbstractSetProcessInstanceStateCmd extends AbstractSetStateCmd
     protected function obtainProcessInstances(CommandContext $commandContext): array
     {
         $query = new ProcessInstanceQueryImpl();
-        if ($this->processInstanceId != null) {
+        if ($this->processInstanceId !== null) {
             $query->processInstanceId($this->processInstanceId);
-        } elseif ($this->processDefinitionId != null) {
+        } elseif ($this->processDefinitionId !== null) {
             $query->processDefinitionId($this->processDefinitionId);
         } elseif ($this->isProcessDefinitionTenantIdSet) {
             $query->processDefinitionKey($this->processDefinitionKey);
-            if ($this->processDefinitionTenantId != null) {
+            if ($this->processDefinitionTenantId !== null) {
                 $query->tenantIdIn($this->processDefinitionTenantId);
             } else {
                 $query->withoutTenantId();
@@ -157,14 +157,14 @@ abstract class AbstractSetProcessInstanceStateCmd extends AbstractSetStateCmd
     {
         $builder = new UpdateJobSuspensionStateBuilderImpl();
 
-        if ($this->processInstanceId != null) {
+        if ($this->processInstanceId !== null) {
             $builder->byProcessInstanceId($this->processInstanceId);
-        } elseif ($this->processDefinitionId != null) {
+        } elseif ($this->processDefinitionId !== null) {
             $builder->byProcessDefinitionId($this->processDefinitionId);
-        } elseif ($this->processDefinitionKey != null) {
+        } elseif ($this->processDefinitionKey !== null) {
             $builder->byProcessDefinitionKey($this->processDefinitionKey);
 
-            if ($this->isProcessDefinitionTenantIdSet && $this->processDefinitionTenantId != null) {
+            if ($this->isProcessDefinitionTenantIdSet && $this->processDefinitionTenantId !== null) {
                 return $builder->processDefinitionTenantId($this->processDefinitionTenantId);
             } elseif ($this->isProcessDefinitionTenantIdSet) {
                 return $builder->processDefinitionWithoutTenantId();
@@ -175,7 +175,7 @@ abstract class AbstractSetProcessInstanceStateCmd extends AbstractSetStateCmd
 
     protected function getNextCommand($jobCommandBuilder = null)
     {
-        if ($jobCommandBuilder == null) {
+        if ($jobCommandBuilder === null) {
             $jobCommandBuilder = $this->createJobCommandBuilder();
             return $this->getNextCommand($jobCommandBuilder);
         }

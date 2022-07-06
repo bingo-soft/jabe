@@ -19,12 +19,12 @@ abstract class CoreActivity extends CoreModelElement
     public function findActivity(string $activityId): ?CoreActivity
     {
         $localActivity = $this->getChildActivity($activityId);
-        if ($localActivity != null) {
+        if ($localActivity !== null) {
             return $localActivity;
         }
         foreach ($this->getActivities() as $activity) {
             $nestedActivity = $activity->findActivity($activityId);
-            if ($nestedActivity != null) {
+            if ($nestedActivity !== null) {
                 return $nestedActivity;
             }
         }

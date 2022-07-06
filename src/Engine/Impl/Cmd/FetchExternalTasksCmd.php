@@ -67,7 +67,7 @@ class FetchExternalTasksCmd implements CommandInterface
             // retrieve the execution first to detect concurrent modifications @https://jira.camunda.com/browse/CAM-10750
             $execution = $entity->getExecution(false);
 
-            if ($execution != null) {
+            if ($execution !== null) {
                 $entity->lock($this->workerId, $fetchInstruction->getLockDuration());
                 $resultTask = LockedExternalTaskImpl::fromEntity(
                     $entity,

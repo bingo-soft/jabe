@@ -16,7 +16,7 @@ abstract class AbstractQueue extends AbstractCollection
     public function remove($el = null)
     {
         $x = $this->poll();
-        if ($x != null) {
+        if ($x !== null) {
             return $x;
         } else {
             throw new \Exception("No such element");
@@ -26,7 +26,7 @@ abstract class AbstractQueue extends AbstractCollection
     public function element()
     {
         $x = $this->peek();
-        if ($x != null) {
+        if ($x !== null) {
             return $x;
         } else {
             throw new \Exception("No such element");
@@ -35,13 +35,13 @@ abstract class AbstractQueue extends AbstractCollection
 
     public function clear(): void
     {
-        while ($this->poll() != null) {
+        while ($this->poll() !== null) {
         }
     }
 
     public function addAll($c = null): bool
     {
-        if ($c == null) {
+        if ($c === null) {
             throw new \Exception("nothing to add");
         }
         if ($c == $this) {

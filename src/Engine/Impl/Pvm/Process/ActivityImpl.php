@@ -44,7 +44,7 @@ class ActivityImpl extends ScopeImpl implements PvmActivityInterface, HasDIBound
         $transition->setSource($this);
         $this->outgoingTransitions[] = $transition;
 
-        if ($transitionId != null) {
+        if ($transitionId !== null) {
             if (array_key_exists($transitionId, $this->namedOutgoingTransitions)) {
                 throw new PvmException("activity '" . $this->id . " has duplicate transition '" . $transitionId . "'");
             }
@@ -132,7 +132,7 @@ class ActivityImpl extends ScopeImpl implements PvmActivityInterface, HasDIBound
 
     public function setAsyncBefore(bool $isAsyncBefore, ?bool $exclusive = true): void
     {
-        if ($this->delegateAsyncBeforeUpdate != null) {
+        if ($this->delegateAsyncBeforeUpdate !== null) {
             $this->delegateAsyncBeforeUpdate->updateAsyncBefore($isAsyncBefore, $exclusive);
         }
         $this->isAsyncBefore = $isAsyncBefore;
@@ -145,7 +145,7 @@ class ActivityImpl extends ScopeImpl implements PvmActivityInterface, HasDIBound
 
     public function setAsyncAfter(bool $isAsyncAfter, ?bool $exclusive = true): void
     {
-        if ($this->delegateAsyncAfterUpdate != null) {
+        if ($this->delegateAsyncAfterUpdate !== null) {
             $this->delegateAsyncAfterUpdate->updateAsyncAfter($isAsyncAfter, $exclusive);
         }
         $this->isAsyncAfter = $isAsyncAfter;
@@ -168,7 +168,7 @@ class ActivityImpl extends ScopeImpl implements PvmActivityInterface, HasDIBound
 
     public function setEventScope(ScopeImpl $eventScope): void
     {
-        if ($this->eventScope != null) {
+        if ($this->eventScope !== null) {
             foreach ($this->eventScope->eventActivities as $key => $activity) {
                 if ($activity == $this) {
                     unset($this->eventScope->eventActivities[$key]);
@@ -178,7 +178,7 @@ class ActivityImpl extends ScopeImpl implements PvmActivityInterface, HasDIBound
 
         $this->eventScope = $eventScope;
 
-        if ($eventScope != null) {
+        if ($eventScope !== null) {
             $this->eventScope->eventActivities[] = $this;
         }
     }
@@ -268,7 +268,7 @@ class ActivityImpl extends ScopeImpl implements PvmActivityInterface, HasDIBound
     public function findCompensationHandler(): ?ActivityImpl
     {
         $compensationHandlerId = $this->getProperty(BpmnParse::PROPERTYNAME_COMPENSATION_HANDLER_ID);
-        if ($compensationHandlerId != null) {
+        if ($compensationHandlerId !== null) {
             return $this->getProcessDefinition()->findActivity($compensationHandlerId);
         }
         return null;

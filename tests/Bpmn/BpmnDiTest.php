@@ -55,7 +55,7 @@ class BpmnDiTest extends TestCase
         $diagrams = $this->modelInstance->getModelElementsByType(BpmnDiagramInterface::class);
         $this->assertCount(1, $diagrams);
         $diagram = $diagrams[0];
-        $this->assertFalse($diagram->getBpmnPlane() == null);
+        $this->assertFalse($diagram->getBpmnPlane() === null);
         $this->assertTrue($diagram->getBpmnPlane()->getBpmnElement()->equals($this->collaboration));
         $this->assertCount(1, $diagram->getBpmnLabelStyles());
     }

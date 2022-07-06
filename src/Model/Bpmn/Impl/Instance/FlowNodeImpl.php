@@ -106,7 +106,7 @@ abstract class FlowNodeImpl extends FlowElementImpl implements FlowNodeInterface
             foreach ($reference->findReferenceSourceElements($this) as $sourceElement) {
                 $referenceIdentifier = $reference->getReferenceIdentifier($sourceElement);
                 if (
-                    $referenceIdentifier != null &&
+                    $referenceIdentifier !== null &&
                     $referenceIdentifier == $this->getId() &&
                     $reference instanceof AttributeReferenceInterface
                 ) {

@@ -45,7 +45,7 @@ class AttributeReferenceImpl extends ReferenceImpl implements AttributeReference
         string $newIdentifier
     ): void {
         $referencingAttributeValue = $this->getReferenceIdentifier($referenceSourceElement);
-        if ($oldIdentifier != null && $oldIdentifier == $referencingAttributeValue) {
+        if ($oldIdentifier !== null && $oldIdentifier == $referencingAttributeValue) {
             $this->setReferenceIdentifier($referenceSourceElement, $newIdentifier);
         }
     }

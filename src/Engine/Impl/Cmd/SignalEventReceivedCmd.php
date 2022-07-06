@@ -29,7 +29,7 @@ class SignalEventReceivedCmd implements CommandInterface
         $signalName = $this->builder->getSignalName();
         $executionId = $this->builder->getExecutionId();
 
-        if ($executionId == null) {
+        if ($executionId === null) {
             $this->sendSignal($commandContext, $signalName);
         } else {
             $this->sendSignalToExecution($commandContext, $signalName, $executionId);
@@ -78,7 +78,7 @@ class SignalEventReceivedCmd implements CommandInterface
             );
 
             $processDefinition = $deploymentCache->findDeployedProcessDefinitionById($processDefinitionId);
-            if ($processDefinition != null && !$processDefinition->isSuspended()) {
+            if ($processDefinition !== null && !$processDefinition->isSuspended()) {
                 $processDefinitions[$eventSubscription->getId()] = $processDefinition;
             }
         }
@@ -163,7 +163,7 @@ class SignalEventReceivedCmd implements CommandInterface
         $result = [];
 
         foreach ($subscriptions as $subscription) {
-            if ($subscription->getExecutionId() != null) {
+            if ($subscription->getExecutionId() !== null) {
                 $result[] = $subscription;
             }
         }
@@ -176,7 +176,7 @@ class SignalEventReceivedCmd implements CommandInterface
         $result = [];
 
         foreach ($subscriptions as $subscription) {
-            if ($subscription->getExecutionId() == null) {
+            if ($subscription->getExecutionId() === null) {
                 $result[] = $subscription;
             }
         }

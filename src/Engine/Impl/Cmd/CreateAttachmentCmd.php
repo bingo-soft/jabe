@@ -38,7 +38,7 @@ class CreateAttachmentCmd implements CommandInterface
     private $task;
     protected $processInstance;
 
-    public function __construct(string $attachmentType, string $taskId, string $processInstanceId, string $attachmentName, string $attachmentDescription, $content, string $url)
+    public function __construct(string $attachmentType, string $taskId, string $processInstanceId, string $attachmentName, string $attachmentDescription, $content = null, string $url = null)
     {
         $this->attachmentType = $attachmentType;
         $this->taskId = $taskId;
@@ -51,7 +51,7 @@ class CreateAttachmentCmd implements CommandInterface
 
     public function execute(CommandContext $commandContext)
     {
-        if ($this->taskId != null) {
+        if ($this->taskId !== null) {
             $this->task = $commandContext
                 ->getTaskManager()
                 ->findTaskById($this->taskId);
@@ -70,23 +70,23 @@ class CreateAttachmentCmd implements CommandInterface
         $attachment->setUrl($this->url);
         $attachment->setCreateTime(ClockUtil::getCurrentTime()->format('c'));
 
-        if ($this->task != null) {
+        if ($this->task !== null) {
             $execution = $this->task->getExecution();
-            if ($execution != null) {
+            if ($execution !== null) {
                 $attachment->setRootProcessInstanceId($execution->getRootProcessInstanceId());
             }
-        } elseif ($this->processInstance != null) {
+        } elseif ($this->processInstance !== null) {
             $attachment->setRootProcessInstanceId($this->processInstance->getRootProcessInstanceId());
         }
 
         if ($this->isHistoryRemovalTimeStrategyStart()) {
-            provideRemovalTime($attachment);
+            $this->provideRemovalTime($attachment);
         }
 
         $dbEntityManger = $commandContext->getDbEntityManager();
         $dbEntityManger->insert($attachment);
 
-        if ($content != null) {
+        if ($content !== null) {
             $bytes = IoUtil::readInputStream($content, $attachmentName);
             $byteArray = new ByteArrayEntity($bytes, ResourceTypes::history());
 
@@ -99,11 +99,11 @@ class CreateAttachmentCmd implements CommandInterface
 
         $propertyChange = new PropertyChange("name", null, $this->attachmentName);
 
-        if ($this->task != null) {
+        if ($this->task !== null) {
             $commandContext->getOperationLogManager()
                 ->logAttachmentOperation(UserOperationLogEntryInterface::OPERATION_TYPE_ADD_ATTACHMENT, $this->task, $propertyChange);
             $this->task->triggerUpdateEvent();
-        } elseif ($this->processInstance != null) {
+        } elseif ($this->processInstance !== null) {
             $commandContext->getOperationLogManager()
                 ->logAttachmentOperation(UserOperationLogEntryInterface::OPERATION_TYPE_ADD_ATTACHMENT, $this->processInstance, $propertyChange);
         }
@@ -131,9 +131,9 @@ class CreateAttachmentCmd implements CommandInterface
     protected function provideRemovalTime(AttachmentEntity $attachment): void
     {
         $rootProcessInstanceId = $attachment->getRootProcessInstanceId();
-        if ($rootProcessInstanceId != null) {
+        if ($rootProcessInstanceId !== null) {
             $historicRootProcessInstance = $this->getHistoricRootProcessInstance($rootProcessInstanceId);
-            if ($historicRootProcessInstance != null) {
+            if ($historicRootProcessInstance !== null) {
                 $removalTime = $historicRootProcessInstance->getRemovalTime();
                 $attachment->setRemovalTime($removalTime);
             }

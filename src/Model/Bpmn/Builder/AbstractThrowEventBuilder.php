@@ -28,7 +28,7 @@ abstract class AbstractThrowEventBuilder extends AbstractEventBuilder
     public function messageEventDefinition(?string $id = null): MessageEventDefinitionBuilder
     {
         $messageEventDefinition = $this->createEmptyMessageEventDefinition();
-        if ($id != null) {
+        if ($id !== null) {
             $messageEventDefinition->setId($id);
         }
         $this->element->addEventDefinition($messageEventDefinition);
@@ -59,7 +59,7 @@ abstract class AbstractThrowEventBuilder extends AbstractEventBuilder
     public function compensateEventDefinition(?string $id = null): CompensateEventDefinitionBuilder
     {
         $eventDefinition = $this->createInstance(CompensateEventDefinitionInterface::class);
-        if ($id != null) {
+        if ($id !== null) {
             $eventDefinition->setId($id);
         }
         $this->element->addEventDefinition($eventDefinition);

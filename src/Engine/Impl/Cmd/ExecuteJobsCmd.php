@@ -61,8 +61,8 @@ class ExecuteJobsCmd implements CommandInterface, \Serializable
 
         $jobExecutorContext = Context::getJobExecutorContext();
 
-        if ($job == null) {
-            if ($jobExecutorContext != null) {
+        if ($job === null) {
+            if ($jobExecutorContext !== null) {
                 // CAM-1842
                 // Job was acquired but does not exist anymore. This is not a problem.
                 // It usually means that the job has been deleted after it was acquired which can happen if the
@@ -77,7 +77,7 @@ class ExecuteJobsCmd implements CommandInterface, \Serializable
 
         $this->jobFailureCollector->setJob($job);
 
-        if ($jobExecutorContext == null) { // if null, then we are not called by the job executor
+        if ($jobExecutorContext === null) { // if null, then we are not called by the job executor
             foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
                 $checker->checkUpdateJob($job);
             }
@@ -97,7 +97,7 @@ class ExecuteJobsCmd implements CommandInterface, \Serializable
             // if the job is called by the job executor then set the tenant id of the job
             // as authenticated tenant to enable tenant checks
             $tenantId = $job->getTenantId();
-            if ($tenantId != null) {
+            if ($tenantId !== null) {
                 $identityService->setAuthentication(null, null, [$tenantId]);
             }
         }
@@ -115,7 +115,7 @@ class ExecuteJobsCmd implements CommandInterface, \Serializable
             $this->jobFailureCollector->setFailedActivityId($failedActivityId);
             throw $t;
         } finally {
-            if ($jobExecutorContext != null) {
+            if ($jobExecutorContext !== null) {
                 $jobExecutorContext->setCurrentJob(null);
                 $identityService->clearAuthentication();
             }

@@ -13,12 +13,12 @@ class RowBounds
 
     public function __construct(int $offset = null, int $limit = null)
     {
-        if ($offset != null) {
+        if ($offset !== null) {
             $this->offset = $offset;
         } else {
             $this->offset = self::NO_ROW_OFFSET;
         }
-        if ($limit != null) {
+        if ($limit !== null) {
             $this->limit = $limit;
         } else {
             $this->limit = self::NO_ROW_LIMIT;
@@ -27,7 +27,7 @@ class RowBounds
 
     public static function default(): RowBounds
     {
-        if (self::$DEFAULT == null) {
+        if (self::$DEFAULT === null) {
             self::$DEFAULT = new RowBounds();
         }
         return self::$DEFAULT;

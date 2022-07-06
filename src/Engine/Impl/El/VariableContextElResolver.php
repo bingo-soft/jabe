@@ -31,15 +31,15 @@ class VariableContextElResolver extends ELResolver
 
     public function getValue(?ELContext $context, $base, $property)
     {
-        if ($base == null) {
+        if ($base === null) {
             $variableContext = $context->getContext(VariableContextInterface::class);
-            if ($variableContext != null) {
+            if ($variableContext !== null) {
                 if (self::$VAR_CTX_KEY == $property) {
                     $context->setPropertyResolved(true);
                     return $variableContext;
                 }
                 $typedValue = $variableContext->resolve(strval($property));
-                if ($typedValue != null) {
+                if ($typedValue !== null) {
                     $context->setPropertyResolved(true);
                     return $this->unpack($typedValue);
                 }
@@ -59,7 +59,7 @@ class VariableContextElResolver extends ELResolver
 
     protected function unpack(TypedValueInterface $typedValue)
     {
-        if ($typedValue != null) {
+        if ($typedValue !== null) {
             return $typedValue->getValue();
         }
         return null;

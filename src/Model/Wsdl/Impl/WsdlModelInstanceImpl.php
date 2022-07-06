@@ -30,7 +30,7 @@ class WsdlModelInstanceImpl
 
     public static function getModel(): ModelInterface
     {
-        if (self::$model == null) {
+        if (self::$model === null) {
             $modelBuilder = self::getModelBuilder();
             AddressImpl::registerType($modelBuilder);
             BaseElementImpl::registerType($modelBuilder);
@@ -54,7 +54,7 @@ class WsdlModelInstanceImpl
 
     public static function getModelBuilder(): ModelBuilder
     {
-        if (self::$modelBuilder == null) {
+        if (self::$modelBuilder === null) {
             self::$modelBuilder = ModelBuilder::createInstance(WsdlModelConstants::MODEL_NAME);
         }
         return self::$modelBuilder;

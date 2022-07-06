@@ -43,7 +43,7 @@ class ByteArrayField
     public function getByteArrayValue(): ?string
     {
         $this->getByteArrayEntity();
-        if ($this->byteArrayValue != null) {
+        if ($this->byteArrayValue !== null) {
             return $this->byteArrayValue->getBytes();
         } else {
             return null;
@@ -52,9 +52,9 @@ class ByteArrayField
 
     protected function getByteArrayEntity(): ?ByteArrayEntity
     {
-        if ($this->byteArrayValue == null && $this->byteArrayId != null) {
+        if ($this->byteArrayValue === null && $this->byteArrayId !== null) {
             // no lazy fetching outside of command context
-            if (Context::getCommandContext() != null) {
+            if (Context::getCommandContext() !== null) {
                 $this->byteArrayValue = Context::getCommandContext()
                     ->getDbEntityManager()
                     ->selectById(ByteArrayEntity::class, $this->byteArrayId);
@@ -69,11 +69,11 @@ class ByteArrayField
         if ($bytes instanceof ByteArrayEntity) {
             $this->byteArrayValue = $byteArrayValue;
         } else {
-            if ($bytes != null) {
+            if ($bytes !== null) {
                 // note: there can be cases where byteArrayId is not null
                 //   but the corresponding byte array entity has been removed in parallel;
                 //   thus we also need to check if the actual byte array entity still exists
-                if ($this->byteArrayId != null && $this->getByteArrayEntity() != null) {
+                if ($this->byteArrayId !== null && $this->getByteArrayEntity() !== null) {
                     $this->byteArrayValue->setBytes($bytes);
                 } else {
                     $this->deleteByteArrayValue();
@@ -96,12 +96,12 @@ class ByteArrayField
 
     public function deleteByteArrayValue(): void
     {
-        if ($this->byteArrayId != null) {
+        if ($this->byteArrayId !== null) {
             // the next apparently useless line is probably to ensure consistency in the DbSqlSession cache,
             // but should be checked and docked here (or removed if it turns out to be unnecessary)
             $this->getByteArrayEntity();
 
-            if ($this->byteArrayValue != null) {
+            if ($this->byteArrayValue !== null) {
                 Context::getCommandContext()
                         ->getDbEntityManager()
                         ->delete($byteArrayValue);

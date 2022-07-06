@@ -134,7 +134,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
         int $rowsAffected,
         \Exception $failure = null
     ): void {
-        if ($failure != null) {
+        if ($failure !== null) {
             $this->configureFailedDbEntityOperation($operation, $failure);
         } else {
             $dbEntity = $operation->getEntity();
@@ -176,7 +176,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
         int $rowsAffected,
         \Exception $failure = null
     ): void {
-        if ($failure != null) {
+        if ($failure !== null) {
             $operation->setFailure($failure);
             $failedState = DbOperationState::FAILED_ERROR;
             /*if (isCrdbConcurrencyConflict(failure)) {
@@ -194,7 +194,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
         int $rowsAffected,
         \Exception $failure = null
     ): void {
-        if ($failure != null) {
+        if ($failure !== null) {
             $this->configureFailedDbEntityOperation($operation, $failure);
         } else {
             $operation->setRowsAffected($rowsAffected);
@@ -226,8 +226,8 @@ abstract class DbSqlSession extends AbstractPersistenceSession
             $failedState = DbOperationState::FAILED_CONCURRENT_MODIFICATION;
         } elseif (
             DbOperationType::DELETE == $perationType
-            && $dependencyOperation != null
-            && $dependencyOperation->getState() != null
+            && $dependencyOperation !== null
+            && $dependencyOperation->getState() !== null
             && $dependencyOperation->getState() != DbOperationState::APPLIED
         ) {
             // the owning operation was not successful, so the prerequisite for this operation was not given
@@ -258,7 +258,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
             $entity = $failedOperation->getEntity();
             foreach ($entity->getReferencedEntitiesIdAndClass() as $key => $value) {
                 $referencedEntity = $this->selectById($value, $key);
-                if ($referencedEntity == null) {
+                if ($referencedEntity === null) {
                     return true;
                 }
             }
@@ -351,7 +351,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
     ): void {
         $entity = $operation->getEntity();
 
-        if ($failure != null) {
+        if ($failure !== null) {
             $this->configureFailedDbEntityOperation($operation, $failure);
         } else {
             // set revision of our copy to 1
@@ -654,7 +654,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
         InputStream inputStream = null;
         try {
             inputStream = ReflectUtil.getResourceAsStream(resourceName);
-            if (inputStream == null) {
+            if (inputStream === null) {
             if (isOptional) {
                 LOG.missingSchemaResource(resourceName, operation);
             } else {
@@ -694,7 +694,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
 
             List<String> logLines = new ArrayList<>();
 
-            while (line != null) {
+            while (line !== null) {
                 if (line.startsWith("# ")) {
                     logLines.add(line.substring(2));
                 } else if (line.startsWith("-- ")) {
@@ -709,7 +709,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
                             jdbcStatement.execute(sqlStatement);
                             jdbcStatement.close();
                         } catch (Exception e) {
-                            if (exception == null) {
+                            if (exception === null) {
                                 exception = e;
                                 exceptionSqlStatement = sqlStatement;
                             }
@@ -726,7 +726,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
             LOG.performingDatabaseOperation(operation, component, resourceName);
             LOG.executingDDL(logLines);
 
-            if (exception != null) {
+            if (exception !== null) {
             throw exception;
             }
 
@@ -755,9 +755,9 @@ abstract class DbSqlSession extends AbstractPersistenceSession
     protected function isMissingTablesException(\Exception $e): bool
     {
         $cause = method_exists($e, "getCause") ? $e->getCause() : null;
-        if ($cause != null) {
+        if ($cause !== null) {
             $exceptionMessage = $cause->getMessage();
-            if ($exceptionMessage != null) {
+            if ($exceptionMessage !== null) {
                 // Matches message returned from H2
                 /*if (str_contains($exceptionMessage, "Table") && (exceptionMessage.contains("not found"))) {
                     return true;

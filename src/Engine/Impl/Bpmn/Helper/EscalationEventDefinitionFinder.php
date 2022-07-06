@@ -41,7 +41,7 @@ class EscalationEventDefinitionFinder implements TreeVisitorInterface
     protected function isMatchingEscalationCode(EscalationEventDefinition $escalationEventDefinition): bool
     {
         $escalationCode = $escalationEventDefinition->getEscalationCode();
-        return $escalationCode == null || $escalationCode == $this->escalationCode;
+        return $escalationCode === null || $escalationCode == $this->escalationCode;
     }
 
     protected function isReThrowingEscalationEventSubprocess(EscalationEventDefinition $escalationEventDefinition): bool

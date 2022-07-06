@@ -40,7 +40,7 @@ class HistoryCleanupCmd implements CommandInterface
 
     public function execute(CommandContext $commandContext)
     {
-        if (self::$HISTORY_CLEANUP_JOB_DECLARATION == null) {
+        if (self::$HISTORY_CLEANUP_JOB_DECLARATION === null) {
             self::$HISTORY_CLEANUP_JOB_DECLARATION = new HistoryCleanupJobDeclaration();
         }
         if (!$this->isHistoryCleanupEnabled($commandContext)) {

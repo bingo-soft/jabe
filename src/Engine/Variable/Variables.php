@@ -187,7 +187,7 @@ class Variables
     public static function untypedValue($value, ?bool $isTransient = null): TypedValueInterface
     {
         $isTransient = $isTransient ?? false;
-        if ($value == null) {
+        if ($value === null) {
             return self::untypedNullValue($isTransient);
         }
         if ($value instanceof TypedValueInterface) {

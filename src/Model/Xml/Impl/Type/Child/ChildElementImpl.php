@@ -31,7 +31,7 @@ class ChildElementImpl extends ChildElementCollectionImpl implements ChildElemen
     public function getChild(ModelElementInstanceInterface $elementInstanceImpl): ?ModelElementInstanceInterface
     {
         $childElement = $elementInstanceImpl->getUniqueChildElementByType($this->childElementTypeClass);
-        if ($childElement != null) {
+        if ($childElement !== null) {
             ModelUtil::ensureInstanceOf($childElement, $this->childElementTypeClass);
             return $childElement;
         } else {

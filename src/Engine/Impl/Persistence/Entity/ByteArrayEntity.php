@@ -31,12 +31,12 @@ class ByteArrayEntity implements \Serializable, DbEntityInterface, HasDbRevision
         ?string $rootProcessInstanceId = null,
         ?string $removalTime = null
     ) {
-        if (self::$PERSISTENTSTATE_NULL == null) {
+        if (self::$PERSISTENTSTATE_NULL === null) {
             self::$PERSISTENTSTATE_NULL = new \stdClass();
         }
         $this->name = $name;
         $this->bytes = $bytes;
-        if ($type != null) {
+        if ($type !== null) {
             $this->type = $type->getValue();
         }
         $this->rootProcessInstanceId = $rootProcessInstanceId;

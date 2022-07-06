@@ -190,7 +190,7 @@ class DeployCmd implements CommandInterface
 
         if ($this->deploymentBuilder->isDuplicateFilterEnabled()) {
             $source = $candidateDeployment->getSource();
-            if ($source == null || empty($source)) {
+            if ($source === null || empty($source)) {
                 $source = ProcessApplicationDeploymentInterface::PROCESS_APPLICATION_DEPLOYMENT_SOURCE;
             }
 
@@ -211,7 +211,7 @@ class DeployCmd implements CommandInterface
                 }
 
                 if (
-                    $existingResource == null
+                    $existingResource === null
                     || $existingResource->isGenerated()
                     || $this->deploymentHandler->shouldDeployResource($deployedResource, $existingResource)
                 ) {
@@ -243,7 +243,7 @@ class DeployCmd implements CommandInterface
         DeploymentWithDefinitionsInterface $deployment
     ): void {
 
-        if ($deploymentBuilder->getProcessDefinitionsActivationDate() != null) {
+        if ($deploymentBuilder->getProcessDefinitionsActivationDate() !== null) {
             $repositoryService = $commandContext->getProcessEngineConfiguration()
                 ->getRepositoryService();
 

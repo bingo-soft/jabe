@@ -23,7 +23,7 @@ class PasswordPolicyUserDataRuleImpl implements PasswordPolicyRuleInterface
 
     public function execute(string $candidatePassword, ?UserInterface $user = null): bool
     {
-        if (empty($candidatePassword) || $user == null) {
+        if (empty($candidatePassword) || $user === null) {
             return true;
         } else {
             $candidatePassword = $this->upperCase($candidatePassword);
@@ -42,7 +42,7 @@ class PasswordPolicyUserDataRuleImpl implements PasswordPolicyRuleInterface
 
     public function upperCase(?string $string): ?string
     {
-        return $string == null ? null : strtoupper($string);
+        return $string === null ? null : strtoupper($string);
     }
 
     public function isNotBlank(?string $value): bool

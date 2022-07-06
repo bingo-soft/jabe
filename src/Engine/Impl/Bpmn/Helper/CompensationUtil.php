@@ -41,7 +41,7 @@ class CompensationUtil
             // where the compensating execution is created when leaving the subprocess
             // and holds snapshot data).
             $compensatingExecution = self::getCompensatingExecution($eventSubscription);
-            if ($compensatingExecution != null) {
+            if ($compensatingExecution !== null) {
                 if ($compensatingExecution->getParent() != $execution) {
                     // move the compensating execution under this execution if this is not the case yet
                     $compensatingExecution->setParent($execution);
@@ -130,7 +130,7 @@ class CompensationUtil
     protected static function hasCompensationEventSubprocess(ActivityImpl $activity): bool
     {
         $compensationHandler = $activity->findCompensationHandler();
-        return $compensationHandler != null && $compensationHandler->isSubProcessScope() && $compensationHandler->isTriggeredByEvent();
+        return $compensationHandler !== null && $compensationHandler->isSubProcessScope() && $compensationHandler->isTriggeredByEvent();
     }
 
     /**
@@ -144,7 +144,7 @@ class CompensationUtil
         $activity = $execution->getActivity();
 
         $compensationHandler = $activity->findCompensationHandler();
-        if ($compensationHandler != null && $compensationHandler->isSubProcessScope()) {
+        if ($compensationHandler !== null && $compensationHandler->isSubProcessScope()) {
             // subprocess with inner compensation event subprocess
             return $compensationHandler;
         } else {
@@ -221,7 +221,7 @@ class CompensationUtil
     public static function getCompensatingExecution(EventSubscriptionEntity $eventSubscription): ?ExecutionEntity
     {
         $configuration = $eventSubscription->getConfiguration();
-        if ($configuration != null) {
+        if ($configuration !== null) {
             return Context::getCommandContext()->getExecutionManager()->findExecutionById($configuration);
         } else {
             return null;
@@ -237,7 +237,7 @@ class CompensationUtil
             return $flowScope->getActivityId();
         } else {
             $compensationHandler = $activityToCompensate->findCompensationHandler();
-            if ($compensationHandler != null) {
+            if ($compensationHandler !== null) {
                 return $compensationHandler->getActivityId();
             } else {
                 // if activityRef = subprocess and subprocess has no compensation handler

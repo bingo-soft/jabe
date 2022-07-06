@@ -15,7 +15,7 @@ class SimpleVariableInstanceFactory implements VariableInstanceFactoryInterface
 
     public static function getInstance(): SimpleVariableInstanceFactory
     {
-        if (self::$INSTANCE == null) {
+        if (self::$INSTANCE === null) {
             self::$INSTANCE = new SimpleVariableInstanceFactory();
         }
         return self::$INSTANCE;

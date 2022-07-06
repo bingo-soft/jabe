@@ -60,7 +60,7 @@ class GetStaticCalledProcessDefinitionCmd implements CommandInterface
                 $tenantId
             );
 
-            if ($calledProcess != null) {
+            if ($calledProcess !== null) {
                 if (!array_key_exists($calledProcess->getId(), $calledProcessDefinitionsById)) {
                     try {
                         foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {

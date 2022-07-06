@@ -15,7 +15,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function processInstanceStart(): HistoryEventTypeInterface
     {
-        if (self::$PROCESS_INSTANCE_START == null) {
+        if (self::$PROCESS_INSTANCE_START === null) {
             self::$PROCESS_INSTANCE_START = new HistoryEventTypes("process-instance", "start");
         }
         return self::$PROCESS_INSTANCE_START;
@@ -23,7 +23,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function processInstanceUpdate(): HistoryEventTypeInterface
     {
-        if (self::$PROCESS_INSTANCE_UPDATE == null) {
+        if (self::$PROCESS_INSTANCE_UPDATE === null) {
             self::$PROCESS_INSTANCE_UPDATE = new HistoryEventTypes("process-instance-update", "update");
         }
         return self::$PROCESS_INSTANCE_UPDATE;
@@ -31,7 +31,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function processInstanceMigrate(): HistoryEventTypeInterface
     {
-        if (self::$PROCESS_INSTANCE_MIGRATE == null) {
+        if (self::$PROCESS_INSTANCE_MIGRATE === null) {
             self::$PROCESS_INSTANCE_MIGRATE = new HistoryEventTypes("process-instance", "migrate");
         }
         return self::$PROCESS_INSTANCE_MIGRATE;
@@ -39,7 +39,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function processInstanceEnd(): HistoryEventTypeInterface
     {
-        if (self::$PROCESS_INSTANCE_END == null) {
+        if (self::$PROCESS_INSTANCE_END === null) {
             self::$PROCESS_INSTANCE_END = new HistoryEventTypes("process-instance", "end");
         }
         return self::$PROCESS_INSTANCE_END;
@@ -56,7 +56,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function activityInstanceStart(): HistoryEventTypeInterface
     {
-        if (self::$ACTIVITY_INSTANCE_START == null) {
+        if (self::$ACTIVITY_INSTANCE_START === null) {
             self::$ACTIVITY_INSTANCE_START = new HistoryEventTypes("activity-instance", "start");
         }
         return self::$ACTIVITY_INSTANCE_START;
@@ -64,7 +64,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function activityInstanceUpdate(): HistoryEventTypeInterface
     {
-        if (self::$ACTIVITY_INSTANCE_UPDATE == null) {
+        if (self::$ACTIVITY_INSTANCE_UPDATE === null) {
             self::$ACTIVITY_INSTANCE_UPDATE = new HistoryEventTypes("activity-instance", "update");
         }
         return self::$ACTIVITY_INSTANCE_UPDATE;
@@ -72,7 +72,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function activityInstanceMigrate(): HistoryEventTypeInterface
     {
-        if (self::$ACTIVITY_INSTANCE_MIGRATE == null) {
+        if (self::$ACTIVITY_INSTANCE_MIGRATE === null) {
             self::$ACTIVITY_INSTANCE_MIGRATE = new HistoryEventTypes("activity-instance", "migrate");
         }
         return self::$ACTIVITY_INSTANCE_MIGRATE;
@@ -80,7 +80,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function activityInstanceEnd(): HistoryEventTypeInterface
     {
-        if (self::$ACTIVITY_INSTANCE_END == null) {
+        if (self::$ACTIVITY_INSTANCE_END === null) {
             self::$ACTIVITY_INSTANCE_END = new HistoryEventTypes("activity-instance", "end");
         }
         return self::$ACTIVITY_INSTANCE_END;
@@ -99,7 +99,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function taskInstanceCreate(): HistoryEventTypeInterface
     {
-        if (self::$TASK_INSTANCE_CREATE == null) {
+        if (self::$TASK_INSTANCE_CREATE === null) {
             self::$TASK_INSTANCE_CREATE = new HistoryEventTypes("task-instance", "create");
         }
         return self::$TASK_INSTANCE_CREATE;
@@ -107,7 +107,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function taskInstanceUpdate(): HistoryEventTypeInterface
     {
-        if (self::$TASK_INSTANCE_UPDATE == null) {
+        if (self::$TASK_INSTANCE_UPDATE === null) {
             self::$TASK_INSTANCE_UPDATE = new HistoryEventTypes("task-instance", "update");
         }
         return self::$TASK_INSTANCE_UPDATE;
@@ -115,7 +115,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function taskInstanceMigrate(): HistoryEventTypeInterface
     {
-        if (self::$TASK_INSTANCE_MIGRATE == null) {
+        if (self::$TASK_INSTANCE_MIGRATE === null) {
             self::$TASK_INSTANCE_MIGRATE = new HistoryEventTypes("task-instance", "migrate");
         }
         return self::$TASK_INSTANCE_MIGRATE;
@@ -123,7 +123,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function taskInstanceComplete(): HistoryEventTypeInterface
     {
-        if (self::$TASK_INSTANCE_COMPLETE == null) {
+        if (self::$TASK_INSTANCE_COMPLETE === null) {
             self::$TASK_INSTANCE_COMPLETE = new HistoryEventTypes("task-instance", "complete");
         }
         return self::$TASK_INSTANCE_COMPLETE;
@@ -131,7 +131,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function taskInstanceDelete(): HistoryEventTypeInterface
     {
-        if (self::$TASK_INSTANCE_DELETE == null) {
+        if (self::$TASK_INSTANCE_DELETE === null) {
             self::$TASK_INSTANCE_DELETE = new HistoryEventTypes("task-instance", "delete");
         }
         return self::$TASK_INSTANCE_DELETE;
@@ -150,7 +150,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function variableInstanceCreate(): HistoryEventTypeInterface
     {
-        if (self::$VARIABLE_INSTANCE_CREATE == null) {
+        if (self::$VARIABLE_INSTANCE_CREATE === null) {
             self::$VARIABLE_INSTANCE_CREATE = new HistoryEventTypes("variable-instance", "create");
         }
         return self::$VARIABLE_INSTANCE_CREATE;
@@ -158,7 +158,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function variableInstanceUpdate(): HistoryEventTypeInterface
     {
-        if (self::$VARIABLE_INSTANCE_UPDATE == null) {
+        if (self::$VARIABLE_INSTANCE_UPDATE === null) {
             self::$VARIABLE_INSTANCE_UPDATE = new HistoryEventTypes("variable-instance", "update");
         }
         return self::$VARIABLE_INSTANCE_UPDATE;
@@ -166,7 +166,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function variableInstanceMigrate(): HistoryEventTypeInterface
     {
-        if (self::$VARIABLE_INSTANCE_MIGRATE == null) {
+        if (self::$VARIABLE_INSTANCE_MIGRATE === null) {
             self::$VARIABLE_INSTANCE_MIGRATE = new HistoryEventTypes("variable-instance", "migrate");
         }
         return self::$VARIABLE_INSTANCE_MIGRATE;
@@ -174,7 +174,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function variableInstanceUpdateDetail(): HistoryEventTypeInterface
     {
-        if (self::$VARIABLE_INSTANCE_UPDATE_DETAIL == null) {
+        if (self::$VARIABLE_INSTANCE_UPDATE_DETAIL === null) {
             self::$VARIABLE_INSTANCE_UPDATE_DETAIL = new HistoryEventTypes("variable-instance", "update-detail");
         }
         return self::$VARIABLE_INSTANCE_UPDATE_DETAIL;
@@ -182,7 +182,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function variableInstanceDelete(): HistoryEventTypeInterface
     {
-        if (self::$VARIABLE_INSTANCE_DELETE == null) {
+        if (self::$VARIABLE_INSTANCE_DELETE === null) {
             self::$VARIABLE_INSTANCE_DELETE = new HistoryEventTypes("variable-instance", "delete");
         }
         return self::$VARIABLE_INSTANCE_DELETE;
@@ -193,7 +193,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function formPropertyUpdate(): HistoryEventTypeInterface
     {
-        if (self::$FORM_PROPERTY_UPDATE == null) {
+        if (self::$FORM_PROPERTY_UPDATE === null) {
             self::$FORM_PROPERTY_UPDATE = new HistoryEventTypes("form-property", "form-property-update");
         }
         return self::$FORM_PROPERTY_UPDATE;
@@ -212,7 +212,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function incidentCreate(): HistoryEventTypeInterface
     {
-        if (self::$INCIDENT_CREATE == null) {
+        if (self::$INCIDENT_CREATE === null) {
             self::$INCIDENT_CREATE = new HistoryEventTypes("incident", "create");
         }
         return self::$INCIDENT_CREATE;
@@ -220,7 +220,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function incidentMigrate(): HistoryEventTypeInterface
     {
-        if (self::$INCIDENT_MIGRATE == null) {
+        if (self::$INCIDENT_MIGRATE === null) {
             self::$INCIDENT_MIGRATE = new HistoryEventTypes("incident", "migrate");
         }
         return self::$INCIDENT_MIGRATE;
@@ -228,7 +228,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function incidentDelete(): HistoryEventTypeInterface
     {
-        if (self::$INCIDENT_DELETE == null) {
+        if (self::$INCIDENT_DELETE === null) {
             self::$INCIDENT_DELETE = new HistoryEventTypes("incident", "delete");
         }
         return self::$INCIDENT_DELETE;
@@ -236,7 +236,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function incidentResolve(): HistoryEventTypeInterface
     {
-        if (self::$INCIDENT_RESOLVE == null) {
+        if (self::$INCIDENT_RESOLVE === null) {
             self::$INCIDENT_RESOLVE = new HistoryEventTypes("incident", "resolve");
         }
         return self::$INCIDENT_RESOLVE;
@@ -244,7 +244,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function incidentUpdate(): HistoryEventTypeInterface
     {
-        if (self::$INCIDENT_UPDATE == null) {
+        if (self::$INCIDENT_UPDATE === null) {
             self::$INCIDENT_UPDATE = new HistoryEventTypes("incident", "update");
         }
         return self::$INCIDENT_UPDATE;
@@ -265,7 +265,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function caseInstanceCreate(): HistoryEventTypeInterface
     {
-        if (self::$CASE_INSTANCE_CREATE == null) {
+        if (self::$CASE_INSTANCE_CREATE === null) {
             self::$CASE_INSTANCE_CREATE = new HistoryEventTypes("case-instance", "create");
         }
         return self::$CASE_INSTANCE_CREATE;
@@ -273,7 +273,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function caseInstanceUpdate(): HistoryEventTypeInterface
     {
-        if (self::$CASE_INSTANCE_UPDATE == null) {
+        if (self::$CASE_INSTANCE_UPDATE === null) {
             self::$CASE_INSTANCE_UPDATE = new HistoryEventTypes("case-instance", "update");
         }
         return self::$CASE_INSTANCE_UPDATE;
@@ -281,7 +281,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function caseInstanceClose(): HistoryEventTypeInterface
     {
-        if (self::$CASE_INSTANCE_CLOSE == null) {
+        if (self::$CASE_INSTANCE_CLOSE === null) {
             self::$CASE_INSTANCE_CLOSE = new HistoryEventTypes("case-instance", "close");
         }
         return self::$CASE_INSTANCE_CLOSE;
@@ -289,7 +289,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function caseActivityInstanceCreate(): HistoryEventTypeInterface
     {
-        if (self::$CASE_ACTIVITY_INSTANCE_CREATE == null) {
+        if (self::$CASE_ACTIVITY_INSTANCE_CREATE === null) {
             self::$CASE_ACTIVITY_INSTANCE_CREATE = new HistoryEventTypes("case-activity-instance", "create");
         }
         return self::$CASE_ACTIVITY_INSTANCE_CREATE;
@@ -297,7 +297,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function caseActivityInstanceUpdate(): HistoryEventTypeInterface
     {
-        if (self::$CASE_ACTIVITY_INSTANCE_UPDATE == null) {
+        if (self::$CASE_ACTIVITY_INSTANCE_UPDATE === null) {
             self::$CASE_ACTIVITY_INSTANCE_UPDATE = new HistoryEventTypes("case-activity-instance", "update");
         }
         return self::$CASE_ACTIVITY_INSTANCE_UPDATE;
@@ -305,7 +305,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function caseActivityInstanceEnd(): HistoryEventTypeInterface
     {
-        if (self::$CASE_ACTIVITY_INSTANCE_END == null) {
+        if (self::$CASE_ACTIVITY_INSTANCE_END === null) {
             self::$CASE_ACTIVITY_INSTANCE_END = new HistoryEventTypes("case-activity-instance", "end");
         }
         return self::$CASE_ACTIVITY_INSTANCE_END;
@@ -330,7 +330,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function jobCreate(): HistoryEventTypeInterface
     {
-        if (self::$JOB_CREATE == null) {
+        if (self::$JOB_CREATE === null) {
             self::$JOB_CREATE = new HistoryEventTypes("job", "create");
         }
         return self::$JOB_CREATE;
@@ -338,7 +338,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function jobFail(): HistoryEventTypeInterface
     {
-        if (self::$JOB_FAIL == null) {
+        if (self::$JOB_FAIL === null) {
             self::$JOB_FAIL = new HistoryEventTypes("job", "fail");
         }
         return self::$JOB_FAIL;
@@ -346,7 +346,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function jobSuccess(): HistoryEventTypeInterface
     {
-        if (self::$JOB_SUCCESS == null) {
+        if (self::$JOB_SUCCESS === null) {
             self::$JOB_SUCCESS = new HistoryEventTypes("job", "success");
         }
         return self::$JOB_SUCCESS;
@@ -354,7 +354,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function jobDelete(): HistoryEventTypeInterface
     {
-        if (self::$JOB_DELETE == null) {
+        if (self::$JOB_DELETE === null) {
             self::$JOB_DELETE = new HistoryEventTypes("job", "delete");
         }
         return self::$JOB_DELETE;
@@ -367,7 +367,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function dmnDecisionEvaluate(): HistoryEventTypeInterface
     {
-        if (self::$DMN_DECISION_EVALUATE == null) {
+        if (self::$DMN_DECISION_EVALUATE === null) {
             self::$DMN_DECISION_EVALUATE = new HistoryEventTypes("decision", "evaluate");
         }
         return self::$DMN_DECISION_EVALUATE;
@@ -384,7 +384,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function batchStart(): HistoryEventTypeInterface
     {
-        if (self::$BATCH_START == null) {
+        if (self::$BATCH_START === null) {
             self::$BATCH_START = new HistoryEventTypes("batch", "start");
         }
         return self::$BATCH_START;
@@ -392,7 +392,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function batchEnd(): HistoryEventTypeInterface
     {
-        if (self::$BATCH_END == null) {
+        if (self::$BATCH_END === null) {
             self::$BATCH_END = new HistoryEventTypes("batch", "end");
         }
         return self::$BATCH_END;
@@ -409,7 +409,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function identityLinkAdd(): HistoryEventTypeInterface
     {
-        if (self::$IDENTITY_LINK_ADD == null) {
+        if (self::$IDENTITY_LINK_ADD === null) {
             self::$IDENTITY_LINK_ADD = new HistoryEventTypes("identity-link-add", "add-identity-link");
         }
         return self::$IDENTITY_LINK_ADD;
@@ -417,7 +417,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function identityLinkDelete(): HistoryEventTypeInterface
     {
-        if (self::$IDENTITY_LINK_DELETE == null) {
+        if (self::$IDENTITY_LINK_DELETE === null) {
             self::$IDENTITY_LINK_DELETE = new HistoryEventTypes("identity-link-delete", "delete-identity-link");
         }
         return self::$IDENTITY_LINK_DELETE;
@@ -442,7 +442,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function externalTaskCreate(): HistoryEventTypeInterface
     {
-        if (self::$EXTERNAL_TASK_CREATE == null) {
+        if (self::$EXTERNAL_TASK_CREATE === null) {
             self::$EXTERNAL_TASK_CREATE = new HistoryEventTypes("external-task", "create");
         }
         return self::$EXTERNAL_TASK_CREATE;
@@ -450,7 +450,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function externalTaskFail(): HistoryEventTypeInterface
     {
-        if (self::$EXTERNAL_TASK_FAIL == null) {
+        if (self::$EXTERNAL_TASK_FAIL === null) {
             self::$EXTERNAL_TASK_FAIL = new HistoryEventTypes("external-task", "fail");
         }
         return self::$EXTERNAL_TASK_FAIL;
@@ -458,7 +458,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function externalTaskSuccess(): HistoryEventTypeInterface
     {
-        if (self::$EXTERNAL_TASK_SUCCESS == null) {
+        if (self::$EXTERNAL_TASK_SUCCESS === null) {
             self::$EXTERNAL_TASK_SUCCESS = new HistoryEventTypes("external-task", "success");
         }
         return self::$EXTERNAL_TASK_SUCCESS;
@@ -466,7 +466,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function externalTaskDelete(): HistoryEventTypeInterface
     {
-        if (self::$EXTERNAL_TASK_DELETE == null) {
+        if (self::$EXTERNAL_TASK_DELETE === null) {
             self::$EXTERNAL_TASK_DELETE = new HistoryEventTypes("external-task", "delete");
         }
         return self::$EXTERNAL_TASK_DELETE;
@@ -479,7 +479,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
 
     public static function userOperationLog(): HistoryEventTypeInterface
     {
-        if (self::$USER_OPERATION_LOG == null) {
+        if (self::$USER_OPERATION_LOG === null) {
             self::$USER_OPERATION_LOG = new HistoryEventTypes("user-operation-log", "create");
         }
         return self::$USER_OPERATION_LOG;

@@ -14,7 +14,7 @@ abstract class AbstractElResolverDelegate extends ELResolver
     public function getCommonPropertyType(?ELContext $context, $base): ?string
     {
         $delegate = $this->getElResolverDelegate();
-        if ($delegate == null) {
+        if ($delegate === null) {
             return null;
         } else {
             return $delegate->getCommonPropertyType($context, $base);
@@ -24,7 +24,7 @@ abstract class AbstractElResolverDelegate extends ELResolver
     public function getFeatureDescriptors(?ELContext $context, $base): ?array
     {
         $delegate = $this->getElResolverDelegate();
-        if ($delegate == null) {
+        if ($delegate === null) {
             return [];
         } else {
             return $delegate->getFeatureDescriptors($context, $base);
@@ -35,7 +35,7 @@ abstract class AbstractElResolverDelegate extends ELResolver
     {
         $context->setPropertyResolved(false);
         $delegate = $this->getElResolverDelegate();
-        if ($delegate == null) {
+        if ($delegate === null) {
             return null;
         } else {
             return $delegate->getType($context, $base, $property);
@@ -46,7 +46,7 @@ abstract class AbstractElResolverDelegate extends ELResolver
     {
         $context->setPropertyResolved(false);
         $delegate = $this->getElResolverDelegate();
-        if ($delegate == null) {
+        if ($delegate === null) {
             return null;
         } else {
             return $delegate->getValue($context, $base, $property);
@@ -57,7 +57,7 @@ abstract class AbstractElResolverDelegate extends ELResolver
     {
         $context->setPropertyResolved(false);
         $delegate = $this->getElResolverDelegate();
-        if ($delegate == null) {
+        if ($delegate === null) {
             return null;
         } else {
             return $delegate->isReadOnly($context, $base, $property);
@@ -68,7 +68,7 @@ abstract class AbstractElResolverDelegate extends ELResolver
     {
         $context->setPropertyResolved(false);
         $delegate = $this->getElResolverDelegate();
-        if ($delegate != null) {
+        if ($delegate !== null) {
             $delegate->setValue($context, $base, $property, $value);
         }
     }
@@ -77,7 +77,7 @@ abstract class AbstractElResolverDelegate extends ELResolver
     {
         $context->setPropertyResolved(false);
         $delegate = $this->getElResolverDelegate();
-        if ($delegate == null) {
+        if ($delegate === null) {
             return null;
         } else {
             return $delegate->invoke($context, $base, $method, $paramTypes, $params);

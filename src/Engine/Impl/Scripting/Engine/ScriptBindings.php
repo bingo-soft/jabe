@@ -53,7 +53,7 @@ class ScriptBindings implements BindingsInterface
     protected function isAutoStoreScriptVariablesEnabled(): bool
     {
         $processEngineConfiguration = Context::getProcessEngineConfiguration();
-        if ($processEngineConfiguration != null) {
+        if ($processEngineConfiguration !== null) {
             return $processEngineConfiguration->isAutoStoreScriptVariables();
         }
         return false;

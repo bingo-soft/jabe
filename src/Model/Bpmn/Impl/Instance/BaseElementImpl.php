@@ -78,7 +78,7 @@ abstract class BaseElementImpl extends BpmnModelElementInstanceImpl implements B
         foreach ($incomingReferences as $reference) {
             foreach ($reference->findReferenceSourceElements($this) as $sourceElement) {
                 $referenceIdentifier = $reference->getReferenceIdentifier($sourceElement);
-                if ($referenceIdentifier != null && $referenceIdentifier == $this->getId()) {
+                if ($referenceIdentifier !== null && $referenceIdentifier == $this->getId()) {
                     return $sourceElement;
                 }
             }

@@ -12,7 +12,7 @@ abstract class AstNode implements ExpressionNode
     public function getValue(Bindings $bindings, ELContext $context, string $type)
     {
         $value = $this->eval($bindings, $context);
-        if ($type != null) {
+        if ($type !== null) {
             $value = $bindings->convert($value, $type);
         }
         return $value;

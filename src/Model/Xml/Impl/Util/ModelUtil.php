@@ -26,30 +26,30 @@ class ModelUtil
         ?ModelElementTypeImpl $modelType = null,
         ?string $namespaceUri = null
     ) {
-        if ($modelType == null && $namespaceUri == null) {
+        if ($modelType === null && $namespaceUri === null) {
             $modelElement = $domElement->getModelElementInstance();
 
-            if ($modelElement == null) {
+            if ($modelElement === null) {
                 $modelType = self::getModelElement($domElement, $modelInstance, null, $domElement->getNamespaceURI());
                 $modelElement = $modelType->newInstance($modelInstance, $domElement);
                 $domElement->setModelElementInstance($modelElement);
             }
             return $modelElement;
-        } elseif ($modelType != null) {
+        } elseif ($modelType !== null) {
             $modelElement = $domElement->getModelElementInstance();
 
-            if ($modelElement == null) {
+            if ($modelElement === null) {
                 $modelElement = $modelType->newInstance($modelInstance, $domElement);
                 $domElement->setModelElementInstance($modelElement);
             }
             return $modelElement;
-        } elseif ($namespaceUri != null) {
+        } elseif ($namespaceUri !== null) {
             $localName = $domElement->getLocalName();
             $modelType = $modelInstance->getModel()->getTypeForName($namespaceUri, $localName);
-            if ($modelType == null) {
+            if ($modelType === null) {
                 $model = $modelInstance->getModel();
                 $actualNamespaceUri = $model->getActualNamespace($namespaceUri);
-                if ($actualNamespaceUri != null) {
+                if ($actualNamespaceUri !== null) {
                     $modelType = self::getModelElement($domElement, $modelInstance, null, $actualNamespaceUri);
                 } else {
                     $modelType = $modelInstance->registerGenericType($namespaceUri, $localName);
@@ -171,7 +171,7 @@ class ModelUtil
         bool $withReferenceUpdate
     ): void {
         $id = $type->getAttribute(self::ID_ATTRIBUTE_NAME);
-        if ($id != null && $id instanceof StringAttribute && $id->isIdAttribute()) {
+        if ($id !== null && $id instanceof StringAttribute && $id->isIdAttribute()) {
             $id->setValue($modelElementInstance, $newId, $withReferenceUpdate);
         }
     }

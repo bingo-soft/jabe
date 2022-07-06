@@ -31,7 +31,7 @@ class CxfWSDLImporter implements XMLImporterInterface
     public function importFrom($data): void
     {
         if ($data instanceof Element) {
-            $this->namespace = $data->attribute("namespace") == null ? "" : $data->attribute("namespace") . ":";
+            $this->namespace = $data->attribute("namespace") === null ? "" : $data->attribute("namespace") . ":";
             $this->importFrom($data->attribute("location"));
         } elseif (is_string($data)) {
             $url = $data;
@@ -51,7 +51,7 @@ class CxfWSDLImporter implements XMLImporterInterface
                 $this->wsServices[$this->namespace . $wsService->getName()] = $wsService;
             }
 
-            if ($def != null && $def->getTypes() != null) {
+            if ($def !== null && $def->getTypes() !== null) {
                 $this->importTypes($def->getTypes());
             }
         }

@@ -59,7 +59,7 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
     public function getValue()
     {
         $typedValue = $this->getTypedValue(false);
-        if ($typedValue != null) {
+        if ($typedValue !== null) {
             return $typedValue->getValue();
         } else {
             return null;
@@ -69,10 +69,10 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
     public function getTypedValue(?bool $deserializeValue, bool $asTransientValue): TypedValueInterface
     {
         $deserializeValue = $deserializeValue ?? true;
-        if (Context::getCommandContext() != null) {
+        if (Context::getCommandContext() !== null) {
             // in some circumstances we must invalidate the cached value instead of returning it
 
-            if ($this->cachedValue != null && $this->cachedValue instanceof SerializableValue) {
+            if ($this->cachedValue !== null && $this->cachedValue instanceof SerializableValue) {
                 $serializableValue = $this->cachedValue;
                 if ($deserializeValue && !$serializableValue->isDeserialized()) {
                     // clear cached value in case it is not deserialized and user requests deserialized value
@@ -80,13 +80,13 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
                 }
             }
 
-            if ($this->cachedValue != null && ($asTransientValue ^ $this->cachedValue->isTransient())) {
+            if ($this->cachedValue !== null && ($asTransientValue ^ $this->cachedValue->isTransient())) {
                 // clear cached value if the value is not transient, but a transient value is requested
                 $this->cachedValue = null;
             }
         }
 
-        if ($this->cachedValue == null && $this->errorMessage == null) {
+        if ($this->cachedValue === null && $this->errorMessage === null) {
             try {
                 $this->cachedValue = $this->getSerializer()->readValue($this->valueFields, $deserializeValue, $asTransientValue);
 
@@ -143,7 +143,7 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
 
     protected function isValuedImplicitlyUpdated(): bool
     {
-        if ($this->cachedValue != null && $this->isMutableValue($this->cachedValue)) {
+        if ($this->cachedValue !== null && $this->isMutableValue($this->cachedValue)) {
             $byteArray = $this->valueFields->getByteArrayValue();
 
             $tempValueFields = new ValueFieldsImpl();
@@ -188,14 +188,14 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
 
     protected function ensureSerializerInitialized(): void
     {
-        if ($this->serializerName != null && $this->serializer == null) {
+        if ($this->serializerName !== null && $this->serializer === null) {
             $this->serializer = $this->getSerializers()->getSerializerByName($this->serializerName);
 
-            if ($this->serializer == null) {
+            if ($this->serializer === null) {
                 $this->serializer = $this->getFallbackSerializer($this->serializerName);
             }
 
-            if ($this->serializer == null) {
+            if ($this->serializer === null) {
                 //throw LOG.serializerNotDefinedException(this);
                 throw new \Exception("serializerNotDefinedException");
             }
@@ -204,11 +204,11 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
 
     public static function getSerializers(): ?VariableSerializersInterface
     {
-        if (Context::getCommandContext() != null) {
+        if (Context::getCommandContext() !== null) {
             $variableSerializers = Context::getProcessEngineConfiguration()->getVariableSerializers();
             $paSerializers = $this->getCurrentPaSerializers();
 
-            if ($paSerializers != null) {
+            if ($paSerializers !== null) {
                 return $variableSerializers->join($paSerializers);
             } else {
                 return $variableSerializers;
@@ -221,9 +221,9 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
 
     public static function getFallbackSerializer(string $serializerName): ?TypedValueSerializerInterface
     {
-        if (Context::getProcessEngineConfiguration() != null) {
+        if (Context::getProcessEngineConfiguration() !== null) {
             $fallbackSerializerFactory = Context::getProcessEngineConfiguration()->getFallbackSerializerFactory();
-            if ($fallbackSerializerFactory != null) {
+            if ($fallbackSerializerFactory !== null) {
                 return $fallbackSerializerFactory->getSerializer($serializerName);
             } else {
                 return null;
@@ -236,7 +236,7 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
 
     protected static function getCurrentPaSerializers(): ?VariableSerializersInterface
     {
-        if (Context::getCurrentProcessApplication() != null) {
+        if (Context::getCurrentProcessApplication() !== null) {
             $processApplicationReference = Context::getCurrentProcessApplication();
             try {
                 $processApplicationInterface = $processApplicationReference->getProcessApplication();
@@ -276,7 +276,7 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
      */
     public function getTypeName(): string
     {
-        if ($this->serializerName == null) {
+        if ($this->serializerName === null) {
             return ValueType::null()->getName();
         } else {
             return $this->getSerializer()->getType()->getName();

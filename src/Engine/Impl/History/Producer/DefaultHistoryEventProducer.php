@@ -90,7 +90,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         HistoryEventTypeInterface $eventType
     ): void {
         $eventSource = $instance->getActivity();
-        if ($eventSource == null) {
+        if ($eventSource === null) {
             $eventSource = $instance->getEventSource();
         }
         $activityInstanceId = $instance->getActivityInstanceId();
@@ -98,7 +98,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         $parentActivityInstanceId = null;
         $parentExecution = $instance->getParent();
 
-        if ($parentExecution != null && CompensationBehavior::isCompensationThrowing($parentExecution) && $instance->getActivity() != null) {
+        if ($parentExecution !== null && CompensationBehavior::isCompensationThrowing($parentExecution) && $instance->getActivity() !== null) {
             $parentActivityInstanceId = CompensationBehavior::getParentActivityInstanceId($instance);
         } else {
             $parentActivityInstanceId = $instance->getParentActivityInstanceId();
@@ -124,7 +124,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
 
         $parentInstance = $migratingActivityInstance->getParent();
         $parentActivityInstanceId = null;
-        if ($parentInstance != null) {
+        if ($parentInstance !== null) {
             $parentActivityInstanceId = $parentInstance->getActivityInstanceId();
         }
 
@@ -164,7 +164,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         }
 
         $definition = $execution->getProcessDefinition();
-        if ($definition != null) {
+        if ($definition !== null) {
             $evt->setProcessDefinitionKey($definition->getKey());
         }
 
@@ -174,13 +174,13 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
 
         // update sub process reference
         $subProcessInstance = $execution->getSubProcessInstance();
-        if ($subProcessInstance != null) {
+        if ($subProcessInstance !== null) {
             $evt->setCalledProcessInstanceId($subProcessInstance->getId());
         }
 
         // update sub case reference
         /*CaseExecutionEntity subCaseInstance = $execution->getSubCaseInstance();
-        if (subCaseInstance != null) {
+        if (subCaseInstance !== null) {
             $evt->setCalledCaseInstanceId(subCaseInstance->getId());
         }*/
     }
@@ -199,7 +199,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
 
         $definition = $execution->getProcessDefinition();
         $processDefinitionKey = null;
-        if ($definition != null) {
+        if ($definition !== null) {
             $processDefinitionKey = $definition->getKey();
         }
 
@@ -214,10 +214,10 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         $evt->setTenantId($tenantId);
         $evt->setRootProcessInstanceId($execution->getRootProcessInstanceId());
 
-        /*if ($execution->getSuperCaseExecution() != null) {
+        /*if ($execution->getSuperCaseExecution() !== null) {
             $evt->setSuperCaseInstanceId($execution->getSuperCaseExecution()->getCaseInstanceId());
         }*/
-        if ($execution->getSuperExecution() != null) {
+        if ($execution->getSuperExecution() !== null) {
             $evt->setSuperProcessInstanceId($execution->getSuperExecution()->getProcessInstanceId());
         }
     }
@@ -229,7 +229,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
     ): void {
         $processDefinitionKey = null;
         $definition = $taskEntity->getProcessDefinition();
-        if ($definition != null) {
+        if ($definition !== null) {
             $processDefinitionKey = $definition->getKey();
         }
 
@@ -239,7 +239,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
 
         /*String caseDefinitionKey = null;
         CaseDefinitionEntity caseDefinition = $taskEntity->getCaseDefinition();
-        if (caseDefinition != null) {
+        if (caseDefinition !== null) {
             caseDefinitionKey = caseDefinition->getKey();
         }
 
@@ -274,7 +274,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         $evt->setTenantId($tenantId);
 
         $execution = $taskEntity->getExecution();
-        if ($execution != null) {
+        if ($execution !== null) {
             $evt->setActivityInstanceId($execution->getActivityInstanceId());
             $evt->setRootProcessInstanceId($execution->getRootProcessInstanceId());
 
@@ -306,9 +306,9 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         $evt->setUserOperationId(Context::getCommandContext()->getOperationId());
 
         $execution = $variableInstance->getExecution();
-        if ($execution != null) {
+        if ($execution !== null) {
             $definition = $execution->getProcessDefinition();
-            if ($definition != null) {
+            if ($definition !== null) {
                 $evt->setProcessDefinitionId($definition->getId());
                 $evt->setProcessDefinitionKey($definition->getKey());
             }
@@ -320,9 +320,9 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         }
 
         /*CaseExecutionEntity caseExecution = variableInstance->getCaseExecution();
-        if (caseExecution != null) {
+        if (caseExecution !== null) {
             CaseDefinitionEntity definition = (CaseDefinitionEntity) caseExecution->getCaseDefinition();
-            if (definition != null) {
+            if (definition !== null) {
             $evt->setCaseDefinitionId(definition->getId());
             $evt->setCaseDefinitionKey(definition->getKey());
             }
@@ -333,7 +333,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         $evt->setTextValue2($variableInstance->getTextValue2());
         $evt->setDoubleValue($variableInstance->getDoubleValue());
         $evt->setLongValue($variableInstance->getLongValue());
-        if ($variableInstance->getByteArrayValueId() != null) {
+        if ($variableInstance->getByteArrayValueId() !== null) {
             $evt->setByteValue($variableInstance->getByteArrayValue());
         }
     }
@@ -401,21 +401,21 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         $evt->setAnnotation($incident->getAnnotation());
 
         $jobId = $incident->getConfiguration();
-        if ($jobId != null && $this->isHistoryRemovalTimeStrategyStart()) {
+        if ($jobId !== null && $this->isHistoryRemovalTimeStrategyStart()) {
             $historicBatch = $this->getHistoricBatchByJobId($jobId);
-            if ($historicBatch != null) {
+            if ($historicBatch !== null) {
                 $evt->setRemovalTime($historicBatch->getRemovalTime());
             }
         }
 
         $incidentEntity = $incident;
         $definition = $incidentEntity->getProcessDefinition();
-        if ($definition != null) {
+        if ($definition !== null) {
             $evt->setProcessDefinitionKey($definition->getKey());
         }
 
         $execution = $incidentEntity->getExecution();
-        if ($execution != null) {
+        if ($execution !== null) {
             $evt->setRootProcessInstanceId($execution->getRootProcessInstanceId());
 
             if ($this->isHistoryRemovalTimeStrategyStart()) {
@@ -444,20 +444,20 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         $scopeActivityInstanceId = null;
         $sourceActivityInstanceId = null;
 
-        if ($variableInstance->getExecutionId() != null) {
+        if ($variableInstance->getExecutionId() !== null) {
             $scopeExecution = Context::getCommandContext()
             ->getDbEntityManager()
             ->selectById(ExecutionEntity::class, $variableInstance->getExecutionId());
 
             if (
-                $variableInstance->getTaskId() == null
+                $variableInstance->getTaskId() === null
                 && !$variableInstance->isConcurrentLocal()
             ) {
                 $scopeActivityInstanceId = $scopeExecution->getParentActivityInstanceId();
             } else {
                 $scopeActivityInstanceId = $scopeExecution->getActivityInstanceId();
             }
-        } elseif ($variableInstance->getCaseExecutionId() != null) {
+        } elseif ($variableInstance->getCaseExecutionId() !== null) {
             $scopeActivityInstanceId = $variableInstance->getCaseExecutionId();
         }
 
@@ -468,11 +468,11 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
             $sourceActivityInstanceId = $sourceExecution->getActivityInstanceId();
         } elseif ($sourceVariableScope instanceof TaskEntity) {
             $sourceExecution = $sourceVariableScope->getExecution();
-            if ($sourceExecution != null) {
+            if ($sourceExecution !== null) {
                 $sourceActivityInstanceId = $sourceExecution->getActivityInstanceId();
             }/* else {
                 sourceCaseExecution = ((TaskEntity) sourceVariableScope)->getCaseExecution();
-                if (sourceCaseExecution != null) {
+                if (sourceCaseExecution !== null) {
                     sourceActivityInstanceId = sourceCaseExecution->getId();
                 }
             }*/
@@ -496,7 +496,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
 
         // mark initial variables on process start
         if (
-            $sourceExecution != null
+            $sourceExecution !== null
             && $sourceExecution->isProcessInstanceStarting()
             && HistoryEventTypes::variabelInstanceCreate()->equals($eventType)
         ) {
@@ -504,7 +504,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
                 $evt->setInitial(true);
             }
 
-            if ($sourceActivityInstanceId == null && $sourceExecution->getActivity() != null && $sourceExecution->getTransition() == null) {
+            if ($sourceActivityInstanceId === null && $sourceExecution->getActivity() !== null && $sourceExecution->getTransition() === null) {
                 $evt->setActivityInstanceId($sourceExecution->getProcessInstanceId());
             }
         }
@@ -596,7 +596,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
 
         // set super process instance id
         $superExecution = $executionEntity->getSuperExecution();
-        if ($superExecution != null) {
+        if ($superExecution !== null) {
             $evt->setSuperProcessInstanceId($superExecution->getProcessInstanceId());
         }
 
@@ -672,7 +672,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         $evt->setEndActivityId($executionEntity->getActivityId());
         $evt->setEndTime(ClockUtil::getCurrentTime()->format('c'));
 
-        if ($evt->getStartTime() != null) {
+        if ($evt->getStartTime() !== null) {
             $et = new \DateTime($evt->getEndTime());
             $endTimeUt = $et->getTimestamp();
 
@@ -685,7 +685,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         if ($this->isRootProcessInstance($evt) && $this->isHistoryRemovalTimeStrategyEnd()) {
             $removalTime = $this->calculateRemovalTime($evt);
 
-            if ($removalTime != null) {
+            if ($removalTime !== null) {
                 $this->addRemovalTimeToHistoricProcessInstances($evt->getRootProcessInstanceId(), $removalTime);
                 /*if ($this->isDmnEnabled()) {
                     $this->addRemovalTimeToHistoricDecisions($evt->getRootProcessInstanceId(), $removalTime);
@@ -694,7 +694,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         }
 
         // set delete reason (if applicable).
-        if ($executionEntity->getDeleteReason() != null) {
+        if ($executionEntity->getDeleteReason() !== null) {
             $evt->setDeleteReason($executionEntity->getDeleteReason());
         }
 
@@ -724,7 +724,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
     protected function determineEndState(ExecutionEntity $executionEntity, HistoricProcessInstanceEventEntity $evt): void
     {
         //determine state
-        if ($executionEntity->getActivity() != null) {
+        if ($executionEntity->getActivity() !== null) {
             $evt->setState(HistoricProcessInstanceInterface::STATE_COMPLETED);
         } else {
             if ($executionEntity->isExternallyTerminated()) {
@@ -764,7 +764,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         $this->initActivityInstanceEvent($evt, $executionEntity, HistoryEventTypes::activityInstanceUpdate());
 
         // update task assignment
-        if ($task != null) {
+        if ($task !== null) {
             $evt->setTaskId($task->getId());
             $evt->setTaskAssignee($task->getAssignee());
         }
@@ -796,7 +796,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         $this->initActivityInstanceEvent($evt, $execution, HistoryEventTypes::activityInstanceEnd());
 
         $evt->setEndTime(ClockUtil::getCurrentTime()->format('c'));
-        if ($evt->getStartTime() != null) {
+        if ($evt->getStartTime() !== null) {
             $evt->setDurationInMillis((new \DateTime($evt->getEndTime()))->getTimestamp() * 1000 - (new \DateTime($evt->getStartTime()))->getTimestamp() * 1000);
         }
 
@@ -850,7 +850,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
 
         // set end time
         $evt->setEndTime(ClockUtil::getCurrentTime()->format('c'));
-        if ($evt->getStartTime() != null) {
+        if ($evt->getStartTime() !== null) {
             $evt->setDurationInMillis((new \DateTime($evt->getEndTime()))->getTimestamp() * 1000 - (new \DateTime($evt->getStartTime()))->getTimestamp() * 1000);
         }
 
@@ -930,7 +930,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         }
 
         $definition = $execution->getProcessDefinition();
-        if ($definition != null) {
+        if ($definition !== null) {
             $historicFormPropertyEntity->setProcessDefinitionKey($definition->getKey());
         }
 
@@ -1015,19 +1015,19 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
 
     protected function initHistoricIdentityLinkEvent(HistoricIdentityLinkLogEventEntity $evt, IdentityLinkInterface $identityLink, HistoryEventTypeInterface $eventType): void
     {
-        if ($identityLink->getTaskId() != null) {
+        if ($identityLink->getTaskId() !== null) {
             $task = Context::getCommandContext()
                 ->getTaskManager()
                 ->findTaskById($identityLink->getTaskId());
 
             $evt->setProcessDefinitionId($task->getProcessDefinitionId());
 
-            if ($task->getProcessDefinition() != null) {
+            if ($task->getProcessDefinition() !== null) {
                 $evt->setProcessDefinitionKey($task->getProcessDefinition()->getKey());
             }
 
             $execution = $task->getExecution();
-            if ($execution != null) {
+            if ($execution !== null) {
                 $evt->setRootProcessInstanceId($execution->getRootProcessInstanceId());
 
                 if ($this->isHistoryRemovalTimeStrategyStart()) {
@@ -1036,7 +1036,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
             }
         }
 
-        if ($identityLink->getProcessDefId() != null) {
+        if ($identityLink->getProcessDefId() !== null) {
             $evt->setProcessDefinitionId($identityLink->getProcessDefId());
 
             $definition = Context::getProcessEngineConfiguration()
@@ -1131,7 +1131,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
     {
         $event = $this->createHistoricJobLogEvt($job, HistoryEventTypes::jobFail());
 
-        if ($exception != null) {
+        if ($exception !== null) {
             // exception message
             $event->setJobExceptionMessage($exception->getMessage());
 
@@ -1185,7 +1185,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
 
         if (HistoryCleanupJobHandler::TYPE == $jobEntity->getJobHandlerType()) {
             $timeToLive = Context::getProcessEngineConfiguration()->getHistoryCleanupJobLogTimeToLive();
-            if ($timeToLive != null) {
+            if ($timeToLive !== null) {
                 try {
                     $timeToLiveDays = ParseUtil::parseHistoryTimeToLive($timeToLive);
                     $removalTime = DefaultHistoryRemovalTimeProvider::determineRemovalTime($currentTime, $timeToLiveDays);
@@ -1199,15 +1199,15 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         }
 
         $jobDefinition = $jobEntity->getJobDefinition();
-        if ($jobDefinition != null) {
+        if ($jobDefinition !== null) {
             $evt->setJobDefinitionId($jobDefinition->getId());
             $evt->setJobDefinitionType($jobDefinition->getJobType());
             $evt->setJobDefinitionConfiguration($jobDefinition->getJobConfiguration());
 
             $historicBatchId = $jobDefinition->getJobConfiguration();
-            if ($historicBatchId != null && $this->isHistoryRemovalTimeStrategyStart()) {
+            if ($historicBatchId !== null && $this->isHistoryRemovalTimeStrategyStart()) {
                 $historicBatch = $this->getHistoricBatchById($historicBatchId);
-                if ($historicBatch != null) {
+                if ($historicBatch !== null) {
                     $evt->setRemovalTime($historicBatch->getRemovalTime());
                 }
             }
@@ -1227,7 +1227,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         $evt->setTenantId($jobEntity->getTenantId());
 
         $execution = $jobEntity->getExecution();
-        if ($execution != null) {
+        if ($execution !== null) {
             $evt->setRootProcessInstanceId($execution->getRootProcessInstanceId());
 
             if ($this->isHistoryRemovalTimeStrategyStart()) {
@@ -1261,7 +1261,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         $event = $this->initHistoricExternalTaskLog($task, ExternalTaskStateImpl::failed());
         $event->setErrorMessage($task->getErrorMessage());
         $errorDetails = $task->getErrorDetails();
-        if ($errorDetails != null) {
+        if ($errorDetails !== null) {
             $event->setErrorDetails($errorDetails);
         }
         return $event;
@@ -1299,7 +1299,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         $event->setState($state->getStateCode());
 
         $execution = $entity->getExecution();
-        if ($execution != null) {
+        if ($execution !== null) {
             $event->setRootProcessInstanceId($execution->getRootProcessInstanceId());
 
             if ($this->isHistoryRemovalTimeStrategyStart()) {
@@ -1352,17 +1352,17 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
     {
         if ($event instanceof HistoryEvent) {
             $rootProcessInstanceId = $historyEvent->getRootProcessInstanceId();
-            if ($rootProcessInstanceId != null) {
+            if ($rootProcessInstanceId !== null) {
                 $historicRootProcessInstance = $this->getHistoricRootProcessInstance($rootProcessInstanceId);
 
-                if ($historicRootProcessInstance != null) {
+                if ($historicRootProcessInstance !== null) {
                     $removalTime = $historicRootProcessInstance->getRemovalTime();
                     $event->setRemovalTime($removalTime);
                 }
             }
         } elseif ($event instanceof HistoricBatchEntity) {
             $removalTime = $this->calculateRemovalTime($event);
-            if ($removalTime != null) {
+            if ($removalTime !== null) {
                 $event->setRemovalTime($removalTime);
             }
         }
@@ -1400,7 +1400,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
     protected function addRemovalTimeToHistoricJobLog(HistoricBatchEntity $historicBatch): void
     {
         $removalTime = $historicBatch->getRemovalTime();
-        if ($removalTime != null) {
+        if ($removalTime !== null) {
             Context::getCommandContext()
             ->getHistoricJobLogManager()
             ->addRemovalTimeToJobLogByBatchId($historicBatch->getId(), $removalTime);
@@ -1410,7 +1410,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
     protected function addRemovalTimeToHistoricIncidents(HistoricBatchEntity $historicBatch): void
     {
         $removalTime = $historicBatch->getRemovalTime();
-        if ($removalTime != null) {
+        if ($removalTime !== null) {
             Context::getCommandContext()
             ->getHistoricIncidentManager()
             ->addRemovalTimeToHistoricIncidentsByBatchId($historicBatch->getId(), $removalTime);

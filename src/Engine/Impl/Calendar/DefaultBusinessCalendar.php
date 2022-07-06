@@ -12,7 +12,7 @@ class DefaultBusinessCalendar implements BusinessCalendarInterface
         if (is_string($startDate)) {
             $startDate = new \DateTime($startDate);
         }
-        $resolvedDuedate = $startDate == null ? ClockUtil::getCurrentTime() : $startDate;
+        $resolvedDuedate = $startDate === null ? ClockUtil::getCurrentTime() : $startDate;
         $period = \DateInterval::createFromDateString($duedateDescription);
         return $resolvedDuedate->add($period);
     }

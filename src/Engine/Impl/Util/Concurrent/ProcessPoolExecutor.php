@@ -284,7 +284,7 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
                 $rs >= self::SHUTDOWN &&
                 ! (
                     $rs == self::SHUTDOWN &&
-                    $firstTask == null &&
+                    $firstTask === null &&
                     $this->queueSize->get() != 0
                 )
             ) {
@@ -322,9 +322,9 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
             $rs = self::runStateOf($c);
 
             if (
-                $t == null ||
+                $t === null ||
                 ($rs >= self::SHUTDOWN &&
-                 !($rs == self::SHUTDOWN && $firstTask == null))
+                 !($rs == self::SHUTDOWN && $firstTask === null))
             ) {
                 $this->decrementWorkerCount();
                 $this->tryTerminate();
@@ -414,7 +414,7 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
                 $r = $timed ?
                     $this->workQueue->poll($this->keepAliveTime, TimeUnit::NANOSECONDS, $process) :
                     $this->workQueue->take($process);
-                if ($r != null) {
+                if ($r !== null) {
                     return unserialize($r);
                 }
                 $timedOut = true;
@@ -431,14 +431,14 @@ class ProcessPoolExecutor implements ExecutorServiceInterface
         $w->firstTask = null;
         $completedAbruptly = true;
         try {
-            while ($firstTask != null || ($queuedTask = $this->getTask($w->process)) != null) {
+            while ($firstTask !== null || ($queuedTask = $this->getTask($w->process)) !== null) {
                 $w->trylock();
                 try {
                     $thrown = null;
                     try {
-                        if ($firstTask != null) {
+                        if ($firstTask !== null) {
                             $firstTask->run();
-                        } elseif ($queuedTask != null) {
+                        } elseif ($queuedTask !== null) {
                             //take care
                             $this->compareAndDecrementQueueSize($this->queueSize->get());
                             $queuedTask->run();

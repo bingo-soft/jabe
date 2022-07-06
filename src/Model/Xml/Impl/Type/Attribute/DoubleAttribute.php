@@ -17,7 +17,7 @@ class DoubleAttribute extends AttributeImpl
      */
     protected function convertXmlValueToModelValue(?string $rawValue)
     {
-        if ($rawValue != null) {
+        if ($rawValue !== null) {
             if (is_numeric($rawValue)) {
                 return floatval($rawValue);
             } else {

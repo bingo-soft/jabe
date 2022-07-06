@@ -181,7 +181,7 @@ class SimpleBindings implements BindingsInterface
 
     private function checkKey($key = null)
     {
-        if ($key == null) {
+        if ($key === null) {
             throw new \Exception("key can not be null");
         }
         if (!(is_string($key))) {

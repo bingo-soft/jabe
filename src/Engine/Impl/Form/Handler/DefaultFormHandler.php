@@ -75,7 +75,7 @@ class DefaultFormHandler implements FormHandlerInterface
             ->getExpressionManager();
 
         $extensionElement = $activityElement->element("extensionElements");
-        if ($extensionElement != null) {
+        if ($extensionElement !== null) {
             // provide support for deprecated form properties
             $this->parseFormProperties($bpmnParse, $expressionManager, $extensionElement);
 
@@ -87,7 +87,7 @@ class DefaultFormHandler implements FormHandlerInterface
     protected function parseFormData(BpmnParse $bpmnParse, ExpressionManager $expressionManager, Element $extensionElement): void
     {
         $formData = $extensionElement->elementNS(BpmnParse::BPMN_EXTENSIONS_NS_PREFIX, "formData");
-        if ($formData != null) {
+        if ($formData !== null) {
             $this->businessKeyFieldId = $formData->attribute(self::BUSINESS_KEY_ATTRIBUTE);
             $this->parseFormFields($formData, $bpmnParse, $expressionManager);
         }
@@ -120,7 +120,7 @@ class DefaultFormHandler implements FormHandlerInterface
 
         // parse name
         $name = $formField->attribute("label");
-        if ($name != null) {
+        if ($name !== null) {
             $nameExpression = $expressionManager->createExpression($name);
             $formFieldHandler->setLabel($nameExpression);
         }
@@ -138,7 +138,7 @@ class DefaultFormHandler implements FormHandlerInterface
 
         // parse default value
         $defaultValue = $formField->attribute("defaultValue");
-        if ($defaultValue != null) {
+        if ($defaultValue !== null) {
             $defaultValueExpression = $expressionManager->createExpression($defaultValue);
             $formFieldHandler->setDefaultValueExpression($defaultValueExpression);
         }
@@ -154,7 +154,7 @@ class DefaultFormHandler implements FormHandlerInterface
     ): void {
         $propertiesElement = $formField->elementNS(BpmnParse::BPMN_EXTENSIONS_NS_PREFIX, "properties");
 
-        if ($propertiesElement != null) {
+        if ($propertiesElement !== null) {
             $propertyElements = $propertiesElement->elementsNS(BpmnParse::BPMN_EXTENSIONS_NS_PREFIX, "property");
 
             // use linked hash map to preserve item ordering as provided in XML
@@ -173,7 +173,7 @@ class DefaultFormHandler implements FormHandlerInterface
     {
         $validationElement = $formField->elementNS(BpmnParse::BPMN_EXTENSIONS_NS_PREFIX, "validation");
 
-        if ($validationElement != null) {
+        if ($validationElement !== null) {
             $constraintElements = $validationElement->elementsNS(BpmnParse::BPMN_EXTENSIONS_NS_PREFIX, "constraint");
 
             foreach ($constraintElements as $property) {
@@ -184,7 +184,7 @@ class DefaultFormHandler implements FormHandlerInterface
                 $validatorName = $property->attribute("name");
                 $validatorConfig = $property->attribute("config");
 
-                if ($validator != null) {
+                if ($validator !== null) {
                     $handler = new FormFieldValidationConstraintHandler();
                     $handler->setName($validatorName);
                     $handler->setConfig($validatorConfig);
@@ -211,7 +211,7 @@ class DefaultFormHandler implements FormHandlerInterface
             $formPropertyHandler = new FormPropertyHandler();
 
             $id = $formPropertyElement->attribute("id");
-            if ($id == null) {
+            if ($id === null) {
                 $bpmnParse->addError("attribute 'id' is required", $formPropertyElement);
             }
             $formPropertyHandler->setId($id);
@@ -224,7 +224,7 @@ class DefaultFormHandler implements FormHandlerInterface
 
             $requiredText = $formPropertyElement->attribute("required", "false");
             $required = $bpmnParse->parseBooleanAttribute($requiredText);
-            if ($required != null) {
+            if ($required !== null) {
                 $formPropertyHandler->setRequired($required);
             } else {
                 $bpmnParse->addError("attribute 'required' must be one of {on|yes|true|enabled|active|off|no|false|disabled|inactive}", $formPropertyElement);
@@ -232,7 +232,7 @@ class DefaultFormHandler implements FormHandlerInterface
 
             $readableText = $formPropertyElement->attribute("readable", "true");
             $readable = $bpmnParse->parseBooleanAttribute($readableText);
-            if ($readable != null) {
+            if ($readable !== null) {
                 $formPropertyHandler->setReadable($readable);
             } else {
                 $bpmnParse->addError("attribute 'readable' must be one of {on|yes|true|enabled|active|off|no|false|disabled|inactive}", $formPropertyElement);
@@ -240,7 +240,7 @@ class DefaultFormHandler implements FormHandlerInterface
 
             $writableText = $formPropertyElement->attribute("writable", "true");
             $writable = $bpmnParse->parseBooleanAttribute($writableText);
-            if ($writable != null) {
+            if ($writable !== null) {
                 $formPropertyHandler->setWritable($writable);
             } else {
                 $bpmnParse->addError("attribute 'writable' must be one of {on|yes|true|enabled|active|off|no|false|disabled|inactive}", $formPropertyElement);
@@ -250,13 +250,13 @@ class DefaultFormHandler implements FormHandlerInterface
             $formPropertyHandler->setVariableName($variableName);
 
             $expressionText = $formPropertyElement->attribute("expression");
-            if ($expressionText != null) {
+            if ($expressionText !== null) {
                 $expression = $expressionManager->createExpression($expressionText);
                 $formPropertyHandler->setVariableExpression($expression);
             }
 
             $defaultExpressionText = $formPropertyElement->attribute("default");
-            if ($defaultExpressionText != null) {
+            if ($defaultExpressionText !== null) {
                 $defaultExpression = $expressionManager->createExpression($defaultExpressionText);
                 $formPropertyHandler->setDefaultExpression($defaultExpression);
             }
@@ -338,14 +338,14 @@ class DefaultFormHandler implements FormHandlerInterface
                 $taskId = null;
             }
 
-            if ($executionEntity != null) {
+            if ($executionEntity !== null) {
                 foreach (array_keys($properties) as $variableName) {
                     $value = $properties->getValueTyped($variableName);
 
                     // NOTE: SerializableValues are never stored as form properties
                     if (
                         !($value instanceof SerializableValueInterface)
-                        && $value->getValue() != null
+                        && $value->getValue() !== null
                         && is_string($value->getValue())
                     ) {
                         $stringValue = strval($value->getValue());

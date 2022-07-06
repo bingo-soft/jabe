@@ -10,7 +10,7 @@ class AsyncAfterMessageJobDeclaration extends MessageJobDeclaration
 
     public function __construct()
     {
-        if (self::$asyncAfterOperations == null) {
+        if (self::$asyncAfterOperations === null) {
             self::$asyncAfterOperations = [
                 AtomicOperation::transitionNotifyListenerTake()->getCanonicalName(),
                 AtomicOperation::activityEnd()->getCanonicalName(),

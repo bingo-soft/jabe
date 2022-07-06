@@ -34,7 +34,7 @@ class CompensationEventActivityBehavior extends FlowNodeActivityBehavior
     protected function collectEventSubscriptions(ActivityExecutionInterface $execution): array
     {
         $activityRef = $compensateEventDefinition->getActivityRef();
-        if ($activityRef != null) {
+        if ($activityRef !== null) {
             return CompensationUtil::collectCompensateEventSubscriptionsForActivity($execution, $activityRef);
         } else {
             return CompensationUtil::collectCompensateEventSubscriptionsForScope($execution);

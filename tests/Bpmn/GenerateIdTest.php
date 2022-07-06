@@ -35,15 +35,15 @@ class GenerateIdTest extends TestCase
     {
         $modelInstance = Bpmn::getInstance()->createEmptyModel();
         $definitions = $modelInstance->newInstance(DefinitionsInterface::class);
-        $this->assertFalse($definitions->getId() == null);
+        $this->assertFalse($definitions->getId() === null);
 
         $process = $modelInstance->newInstance(ProcessInterface::class);
-        $this->assertFalse($process->getId() == null);
+        $this->assertFalse($process->getId() === null);
 
         $startEvent = $modelInstance->newInstance(StartEventInterface::class);
-        $this->assertFalse($startEvent->getId() == null);
+        $this->assertFalse($startEvent->getId() === null);
 
         $userTask = $modelInstance->newInstance(UserTaskInterface::class);
-        $this->assertFalse($userTask->getId() == null);
+        $this->assertFalse($userTask->getId() === null);
     }
 }

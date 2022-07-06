@@ -238,7 +238,7 @@ abstract class AbstractPersistenceSession implements PersistenceSessionInterface
 
     protected function fireEntityLoaded($result = null): void
     {
-        if ($result != null && $result instanceof DbEntityInterface) {
+        if ($result !== null && $result instanceof DbEntityInterface) {
             $entity = $result;
             foreach ($this->listeners as $entityLoadListener) {
                 $entityLoadListener->onEntityLoaded($entity);

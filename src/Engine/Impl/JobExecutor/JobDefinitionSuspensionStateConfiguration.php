@@ -31,7 +31,7 @@ class JobDefinitionSuspensionStateConfiguration implements JobHandlerConfigurati
         $json[self::JOB_HANDLER_CFG_PROCESS_DEFINITION_ID] = $this->processDefinitionId;
 
         if ($this->isTenantIdSet) {
-            if ($this->tenantId != null) {
+            if ($this->tenantId !== null) {
                 $json[self::JOB_HANDLER_CFG_PROCESS_DEFINITION_TENANT_ID] = $this->tenantId;
             } else {
                 $json[self::JOB_HANDLER_CFG_PROCESS_DEFINITION_TENANT_ID] = null;
@@ -58,7 +58,7 @@ class JobDefinitionSuspensionStateConfiguration implements JobHandlerConfigurati
             $builder->byProcessDefinitionKey($this->processDefinitionKey);
 
             if ($this->isTenantIdSet) {
-                if ($this->tenantId != null) {
+                if ($this->tenantId !== null) {
                     $builder->processDefinitionTenantId($this->tenantId);
                 } else {
                     $builder->processDefinitionWithoutTenantId();

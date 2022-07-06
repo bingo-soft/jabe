@@ -9,7 +9,7 @@ class IdentityInfoManager extends AbstractManager
     public function deleteUserInfoByUserIdAndKey(string $userId, string $key): void
     {
         $identityInfoEntity = $this->findUserInfoByUserIdAndKey($userId, $key);
-        if ($identityInfoEntity != null) {
+        if ($identityInfoEntity !== null) {
             $this->deleteIdentityInfo($identityInfoEntity);
         }
     }
@@ -27,7 +27,7 @@ class IdentityInfoManager extends AbstractManager
     public function findUserAccountByUserIdAndKey(string $userId, string $userPassword, string $key): ?IdentityInfoEntity
     {
         $identityInfoEntity = $this->findUserInfoByUserIdAndKey($userId, $key);
-        if ($identityInfoEntity == null) {
+        if ($identityInfoEntity === null) {
             return null;
         }
 
@@ -39,7 +39,7 @@ class IdentityInfoManager extends AbstractManager
         }
         $identityInfoEntity->setDetails($details);
 
-        if ($identityInfoEntity->getPasswordBytes() != null) {
+        if ($identityInfoEntity->getPasswordBytes() !== null) {
             $password = $this->decryptPassword($identityInfoEntity->getPasswordBytes(), $userPassword);
             $identityInfoEntity->setPassword($password);
         }
@@ -55,17 +55,17 @@ class IdentityInfoManager extends AbstractManager
     public function setUserInfo(string $userId, string $userPassword, string $type, string $key, string $value, string $accountPassword, array $accountDetails): void
     {
         $storedPassword = null;
-        if ($accountPassword != null) {
+        if ($accountPassword !== null) {
             $storedPassword = $this->encryptPassword($accountPassword, $userPassword);
         }
 
         $identityInfoEntity = $this->findUserInfoByUserIdAndKey($userId, $key);
-        if ($identityInfoEntity != null) {
+        if ($identityInfoEntity !== null) {
             // update
             $identityInfoEntity->setValue($value);
             $identityInfoEntity->setPasswordBytes($storedPassword);
 
-            if ($accountDetails == null) {
+            if ($accountDetails === null) {
                 $accountDetails = [];
             }
 
@@ -82,7 +82,7 @@ class IdentityInfoManager extends AbstractManager
                 if (array_key_exists($detailKey, $accountDetails)) {
                     $newDetailValue = $accountDetails[$detailKey];
                 }
-                if ($newDetailValue == null) {
+                if ($newDetailValue === null) {
                     $this->deleteIdentityInfo($identityInfoDetail);
                 } else {
                     // update detail
@@ -99,7 +99,7 @@ class IdentityInfoManager extends AbstractManager
             $identityInfoEntity->setValue($value);
             $identityInfoEntity->setPasswordBytes($storedPassword);
             $this->getDbEntityManager()->insert($identityInfoEntity);
-            if ($accountDetails != null) {
+            if ($accountDetails !== null) {
                 $this->insertAccountDetails($identityInfoEntity, $accountDetails, array_keys($accountDetails));
             }
         }

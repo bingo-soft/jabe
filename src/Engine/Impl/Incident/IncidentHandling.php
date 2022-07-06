@@ -15,7 +15,7 @@ class IncidentHandling
         $handler = Context::getProcessEngineConfiguration()
             ->getIncidentHandler($incidentType);
 
-        if ($handler == null) {
+        if ($handler === null) {
             $handler = new DefaultIncidentHandler($incidentType);
         }
 
@@ -30,7 +30,7 @@ class IncidentHandling
         $handler = Context::getProcessEngineConfiguration()
             ->getIncidentHandler($incidentType);
 
-        if ($handler == null) {
+        if ($handler === null) {
             $handler = new DefaultIncidentHandler($incidentType);
         }
 

@@ -12,7 +12,7 @@ class HistoricFormPropertyEntity extends HistoricFormPropertyEventEntity impleme
 {
     public function getPropertyValue()
     {
-        if ($this->propertyValue != null) {
+        if ($this->propertyValue !== null) {
             return strval($this->propertyValue);
         } else {
             return null;

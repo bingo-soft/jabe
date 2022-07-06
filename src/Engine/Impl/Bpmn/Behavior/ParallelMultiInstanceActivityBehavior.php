@@ -82,7 +82,7 @@ class ParallelMultiInstanceActivityBehavior extends MultiInstanceActivityBehavio
             $childExecutions = $scopeExecution->getNonEventScopeExecutions();
             foreach ($childExecutions as $childExecution) {
                 // delete all not-ended instances; these are either active (for non-scope tasks) or inactive but have no activity id (for subprocesses, etc.)
-                if ($childExecution->isActive() || $childExecution->getActivity() == null) {
+                if ($childExecution->isActive() || $childExecution->getActivity() === null) {
                     $childExecution->deleteCascade("Multi instance completion condition satisfied.");
                 } else {
                     $childExecution->remove();

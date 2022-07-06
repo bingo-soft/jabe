@@ -22,7 +22,7 @@ class JobExecutorContext
 
     public function isExecutingExclusiveJob(): bool
     {
-        return $this->currentJob == null ? false : $this->currentJob->isExclusive();
+        return $this->currentJob === null ? false : $this->currentJob->isExclusive();
     }
 
     public function setCurrentJob(JobEntity $currentJob): void

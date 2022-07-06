@@ -49,7 +49,7 @@ class BootstrapEngineCommand implements ProcessEngineBootstrapCommandInterface
 
     protected function createHistoryCleanupJob(CommandContext $commandContext): void
     {
-        if (Context::getProcessEngineConfiguration()->getManagementService()->getTableMetaData("ACT_RU_JOB") != null) {
+        if (Context::getProcessEngineConfiguration()->getManagementService()->getTableMetaData("ACT_RU_JOB") !== null) {
             // CAM-9671: avoid transaction rollback due to the OLE being caught in CommandContext#close
             $commandContext->getDbEntityManager()->registerOptimisticLockingListener(new class () implements OptimisticLockingListenerInterface {
 
@@ -72,7 +72,7 @@ class BootstrapEngineCommand implements ProcessEngineBootstrapCommandInterface
     public function checkDeploymentLockExists(CommandContext $commandContext): void
     {
         $deploymentLockProperty = $commandContext->getPropertyManager()->findPropertyById("deployment.lock");
-        if ($deploymentLockProperty == null) {
+        if ($deploymentLockProperty === null) {
             //LOG.noDeploymentLockPropertyFound();
         }
     }
@@ -80,7 +80,7 @@ class BootstrapEngineCommand implements ProcessEngineBootstrapCommandInterface
     public function checkHistoryCleanupLockExists(CommandContext $commandContext): void
     {
         $historyCleanupLockProperty = $commandContext->getPropertyManager()->findPropertyById("history.cleanup.job.lock");
-        if ($historyCleanupLockProperty == null) {
+        if ($historyCleanupLockProperty === null) {
             //LOG.noHistoryCleanupLockPropertyFound();
         }
     }
@@ -124,7 +124,7 @@ class BootstrapEngineCommand implements ProcessEngineBootstrapCommandInterface
     {
         try {
             $installationIdProperty = $commandContext->getPropertyManager()->findPropertyById(self::INSTALLATION_PROPERTY_NAME);
-            return $installationIdProperty != null ? $installationIdProperty->getValue() : null;
+            return $installationIdProperty !== null ? $installationIdProperty->getValue() : null;
         } catch (\Exception $e) {
             //LOG.couldNotSelectInstallationId(e.getMessage());
             return null;
@@ -134,7 +134,7 @@ class BootstrapEngineCommand implements ProcessEngineBootstrapCommandInterface
     protected function checkInstallationIdLockExists(CommandContext $commandContext): void
     {
         $installationIdProperty = $commandContext->getPropertyManager()->findPropertyById("installationId.lock");
-        if ($installationIdProperty == null) {
+        if ($installationIdProperty === null) {
             //LOG.noInstallationIdLockPropertyFound();
         }
     }

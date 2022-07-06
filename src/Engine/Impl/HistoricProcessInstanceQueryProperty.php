@@ -17,7 +17,7 @@ class HistoricProcessInstanceQueryProperty
 
     public static function processInstanceId(): QueryPropertyImpl
     {
-        if (self::$PROCESS_INSTANCE_ID_ == null) {
+        if (self::$PROCESS_INSTANCE_ID_ === null) {
             self::$PROCESS_INSTANCE_ID_ = new QueryPropertyImpl("PROC_INST_ID_");
         }
         return self::$PROCESS_INSTANCE_ID_;
@@ -25,7 +25,7 @@ class HistoricProcessInstanceQueryProperty
 
     public static function processDefinitionId(): QueryPropertyImpl
     {
-        if (self::$PROCESS_DEFINITION_ID == null) {
+        if (self::$PROCESS_DEFINITION_ID === null) {
             self::$PROCESS_DEFINITION_ID = new QueryPropertyImpl("PROC_DEF_ID_");
         }
         return self::$PROCESS_DEFINITION_ID;
@@ -33,7 +33,7 @@ class HistoricProcessInstanceQueryProperty
 
     public static function processDefinitionKey(): QueryPropertyImpl
     {
-        if (self::$PROCESS_DEFINITION_KEY == null) {
+        if (self::$PROCESS_DEFINITION_KEY === null) {
             self::$PROCESS_DEFINITION_KEY = new QueryPropertyImpl("PROC_DEF_KEY_");
         }
         return self::$PROCESS_DEFINITION_KEY;
@@ -41,7 +41,7 @@ class HistoricProcessInstanceQueryProperty
 
     public static function processDefinitionName(): QueryPropertyImpl
     {
-        if (self::$PROCESS_DEFINITION_NAME == null) {
+        if (self::$PROCESS_DEFINITION_NAME === null) {
             self::$PROCESS_DEFINITION_NAME = new QueryPropertyImpl("NAME_");
         }
         return self::$PROCESS_DEFINITION_NAME;
@@ -49,7 +49,7 @@ class HistoricProcessInstanceQueryProperty
 
     public static function processDefinitionVersion(): QueryPropertyImpl
     {
-        if (self::$PROCESS_DEFINITION_VERSION == null) {
+        if (self::$PROCESS_DEFINITION_VERSION === null) {
             self::$PROCESS_DEFINITION_VERSION = new QueryPropertyImpl("VERSION_");
         }
         return self::$PROCESS_DEFINITION_VERSION;
@@ -57,7 +57,7 @@ class HistoricProcessInstanceQueryProperty
 
     public static function businessKey(): QueryPropertyImpl
     {
-        if (self::$BUSINESS_KEY == null) {
+        if (self::$BUSINESS_KEY === null) {
             self::$BUSINESS_KEY = new QueryPropertyImpl("BUSINESS_KEY_");
         }
         return self::$BUSINESS_KEY;
@@ -65,7 +65,7 @@ class HistoricProcessInstanceQueryProperty
 
     public static function startTime(): QueryPropertyImpl
     {
-        if (self::$START_TIME == null) {
+        if (self::$START_TIME === null) {
             self::$START_TIME = new QueryPropertyImpl("START_TIME_");
         }
         return self::$START_TIME;
@@ -73,7 +73,7 @@ class HistoricProcessInstanceQueryProperty
 
     public static function endTime(): QueryPropertyImpl
     {
-        if (self::$END_TIME == null) {
+        if (self::$END_TIME === null) {
             self::$END_TIME = new QueryPropertyImpl("END_TIME_");
         }
         return self::$END_TIME;
@@ -81,7 +81,7 @@ class HistoricProcessInstanceQueryProperty
 
     public static function duration(): QueryPropertyImpl
     {
-        if (self::$DURATION == null) {
+        if (self::$DURATION === null) {
             self::$DURATION = new QueryPropertyImpl("DURATION_");
         }
         return self::$DURATION;
@@ -89,7 +89,7 @@ class HistoricProcessInstanceQueryProperty
 
     public static function tenantId(): QueryPropertyImpl
     {
-        if (self::$TENANT_ID == null) {
+        if (self::$TENANT_ID === null) {
             self::$TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
         }
         return self::$TENANT_ID;

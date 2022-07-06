@@ -26,7 +26,7 @@ class ThrowEscalationEventActivityBehavior extends AbstractBpmnActivityBehavior
 
         $escalationEventDefinition = EscalationHandler::executeEscalation($execution, $escalation->getEscalationCode());
 
-        if ($escalationEventDefinition == null || !$escalationEventDefinition->isCancelActivity()) {
+        if ($escalationEventDefinition === null || !$escalationEventDefinition->isCancelActivity()) {
             $this->leaveExecution($execution, $currentActivity, $escalationEventDefinition);
         }
     }

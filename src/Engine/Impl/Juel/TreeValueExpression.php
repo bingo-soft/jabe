@@ -43,7 +43,7 @@ class TreeValueExpression extends ValueExpression
         $this->type = $type;
         $this->node = $tree->getRoot();
         $this->deferred = $tree->isDeferred();
-        if ($type == null) {
+        if ($type === null) {
             throw new \Exception(LocalMessages::get("error.value.notype"));
         }
     }
@@ -72,7 +72,7 @@ class TreeValueExpression extends ValueExpression
 
     private function getStructuralId(): string
     {
-        if ($this->structure == null) {
+        if ($this->structure === null) {
             $this->structure = $this->node->getStructuralId($this->bindings);
         }
         return $this->structure;
@@ -181,7 +181,7 @@ class TreeValueExpression extends ValueExpression
      */
     public function equals($obj): bool
     {
-        if ($obj != null && get_class($obj) == get_class($this)) {
+        if ($obj !== null && get_class($obj) == get_class($this)) {
             if ($this->builder != $obj->builder) {
                 return false;
             }

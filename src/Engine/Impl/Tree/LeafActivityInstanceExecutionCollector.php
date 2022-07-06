@@ -13,7 +13,7 @@ class LeafActivityInstanceExecutionCollector implements TreeVisitorInterface
 
     public function visit(/*PvmExecutionImpl */$obj): void
     {
-        if (empty($obj->getNonEventScopeExecutions()) || ($obj->getActivity() != null && !LegacyBehavior::hasInvalidIntermediaryActivityId($obj))) {
+        if (empty($obj->getNonEventScopeExecutions()) || ($obj->getActivity() !== null && !LegacyBehavior::hasInvalidIntermediaryActivityId($obj))) {
             $this->leaves[] = $obj;
         }
     }

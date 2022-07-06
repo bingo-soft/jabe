@@ -31,11 +31,11 @@ class SetJobsRetriesByProcessBatchCmd extends AbstractSetJobsRetriesBatchCmd
     {
         $collectedProcessInstanceIds = [];
 
-        if ($this->query != null) {
+        if ($this->query !== null) {
             $collectedProcessInstanceIds = array_merge($collectedProcessInstanceIds, $this->query->listIds());
         }
 
-        if ($this->historicProcessInstanceQuery != null) {
+        if ($this->historicProcessInstanceQuery !== null) {
             $collectedProcessInstanceIds = array_merge($collectedProcessInstanceIds, $this->historicProcessInstanceQuery->listIds());
         }
 

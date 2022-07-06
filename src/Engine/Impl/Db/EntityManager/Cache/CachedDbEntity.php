@@ -96,6 +96,6 @@ class CachedDbEntity implements RecyclableInterface
 
     public function getEntityType(): ?string
     {
-        return $this->dbEntity != null ? get_class($this->dbEntity) : null;
+        return $this->dbEntity !== null ? get_class($this->dbEntity) : null;
     }
 }

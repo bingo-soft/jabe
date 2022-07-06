@@ -61,12 +61,12 @@ abstract class DeleteIdentityLinkCmd implements CommandInterface, \Serializable
 
         // Special treatment for assignee and owner: group cannot be used and userId may be null
         if (IdentityLinkType::ASSIGNEE == $type || IdentityLinkType::OWNER == $type) {
-            if ($groupId != null) {
+            if ($groupId !== null) {
                 throw new ProcessEngineException("Incompatible usage: cannot use type '" . $type
                     . "' together with a groupId");
             }
         } else {
-            if ($userId == null && $groupId == null) {
+            if ($userId === null && $groupId === null) {
                 throw new ProcessEngineException("userId and groupId cannot both be null");
             }
         }

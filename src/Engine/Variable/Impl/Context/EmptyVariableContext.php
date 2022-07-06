@@ -11,7 +11,7 @@ class EmptyVariableContext implements VariableContextInterface
 
     public static function getInstance(): EmptyVariableContext
     {
-        if (self::$INSTANCE == null) {
+        if (self::$INSTANCE === null) {
             self::$INSTANCE = new EmptyVariableContext();
         }
         return self::$INSTANCE;

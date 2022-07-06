@@ -40,7 +40,7 @@ class DeleteProcessInstancesJobHandler extends AbstractBatchJobHandler
 
     public function getJobDeclaration(): JobDeclaration
     {
-        if (self::$JOB_DECLARATION == null) {
+        if (self::$JOB_DECLARATION === null) {
             self::$JOB_DECLARATION = new BatchJobDeclaration(BatchInterface::TYPE_PROCESS_INSTANCE_DELETION);
         }
         return self::$JOB_DECLARATION;
@@ -76,7 +76,7 @@ class DeleteProcessInstancesJobHandler extends AbstractBatchJobHandler
     protected function createJobEntities(BatchEntity $batch, DeleteProcessInstanceBatchConfiguration $configuration, ?string $deploymentId, array $processIds, int $invocationsPerBatchJob): void
     {
         // handle legacy batch entities (no up-front deployment mapping has been done)
-        if ($deploymentId == null && ($configuration->getIdMappings() == null || $configuration->getIdMappings()->isEmpty())) {
+        if ($deploymentId === null && ($configuration->getIdMappings() === null || $configuration->getIdMappings()->isEmpty())) {
             // create deployment mappings for the ids to process
             $elementConfiguration = new BatchElementConfiguration();
             $query = new ProcessInstanceQueryImpl();

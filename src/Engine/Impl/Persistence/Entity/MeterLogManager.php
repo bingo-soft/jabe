@@ -40,14 +40,14 @@ class MeterLogManager extends AbstractManager
     public function executeSelectSum(MetricsQueryImpl $query): int
     {
         $result = $this->getDbEntityManager()->selectOne(self::SELECT_METER_SUM, $query);
-        $result = $result != null ? $result : 0;
+        $result = $result !== null ? $result : 0;
 
         if ($this->shouldAddCurrentUnloggedCount($query)) {
             // add current unlogged count
             $meter = Context::getProcessEngineConfiguration()
             ->getMetricsRegistry()
             ->getDbMeterByName($query->getName());
-            if ($meter != null) {
+            if ($meter !== null) {
                 $result += $meter->get();
             }
         }
@@ -58,14 +58,14 @@ class MeterLogManager extends AbstractManager
     public function executeSelectInterval(MetricsQueryImpl $query): array
     {
         $intervalResult = $this->getDbEntityManager()->selectList(self::SELECT_METER_INTERVAL, $query);
-        $intervalResult = $intervalResult != null ? $intervalResult : [];
+        $intervalResult = $intervalResult !== null ? $intervalResult : [];
 
         $reporterId = Context::getProcessEngineConfiguration()->getDbMetricsReporter()->getMetricsCollectionTask()->getReporter();
-        if (!empty($intervalResult) && $this->isEndTimeAfterLastReportInterval($query) && $reporterId != null) {
+        if (!empty($intervalResult) && $this->isEndTimeAfterLastReportInterval($query) && $reporterId !== null) {
             $metrics = Context::getProcessEngineConfiguration()->getMetricsRegistry()->getDbMeters();
             $queryName = $query->getName();
             //we have to add all unlogged metrics to last interval
-            if ($queryName != null) {
+            if ($queryName !== null) {
                 $intervalEntity = $intervalResult[0];
                 $entityValue = $intervalEntity->getValue();
                 if (array_key_exists($queryName, $metrics)) {
@@ -95,13 +95,13 @@ class MeterLogManager extends AbstractManager
             ->getDbMetricsReporter()
             ->getReportingIntervalInSeconds();
 
-        return ($query->getEndDate() == null
+        return ($query->getEndDate() === null
             || $query->getEndDateMilliseconds() >= ClockUtil::getCurrentTime()->getTimestamp() * 1000 - (1000 * $reportingIntervalInSeconds));
     }
 
     protected function shouldAddCurrentUnloggedCount(MetricsQueryImpl $query): bool
     {
-        return $query->getName() != null
+        return $query->getName() !== null
             && $this->isEndTimeAfterLastReportInterval($query);
     }
 
@@ -113,7 +113,7 @@ class MeterLogManager extends AbstractManager
     public function deleteByTimestampAndReporter(?string $timestamp, string $reporter): void
     {
         $parameters = [];
-        if ($timestamp != null) {
+        if ($timestamp !== null) {
             $ut = (new \DateTime($timestamp))->getTimestamp();
             $parameters["milliseconds"] = $ut * 1000;
         }

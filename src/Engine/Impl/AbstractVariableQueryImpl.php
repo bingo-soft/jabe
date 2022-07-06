@@ -107,7 +107,7 @@ abstract class AbstractVariableQueryImpl extends AbstractQuery
     {
         $this->validateVariable($name, $value, $operator);
 
-        $shouldMatchVariableValuesIgnoreCase = $this->variableValuesIgnoreCase == true && $value != null && is_string($value);
+        $shouldMatchVariableValuesIgnoreCase = $this->variableValuesIgnoreCase == true && $value !== null && is_string($value);
         $shouldMatchVariableNamesIgnoreCase = $this->variableNamesIgnoreCase == true;
 
         return new QueryVariableValue($name, $value, $operator, $processInstanceScope, $shouldMatchVariableNamesIgnoreCase, $shouldMatchVariableValuesIgnoreCase);
@@ -116,7 +116,7 @@ abstract class AbstractVariableQueryImpl extends AbstractQuery
     protected function validateVariable(string $name, $value, string $operator): void
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "name", $name);
-        if ($value == null || $this->isBoolean($value)) {
+        if ($value === null || $this->isBoolean($value)) {
             // Null-values and booleans can only be used in EQUALS and NOT_EQUALS
             switch ($operator) {
                 case QueryOperator::GREATER_THAN:
@@ -139,7 +139,7 @@ abstract class AbstractVariableQueryImpl extends AbstractQuery
 
     private function isBoolean($value = null): bool
     {
-        if ($value == null) {
+        if ($value === null) {
             return false;
         }
         return is_bool($value);

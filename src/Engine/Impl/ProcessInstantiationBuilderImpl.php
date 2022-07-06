@@ -125,7 +125,7 @@ class ProcessInstantiationBuilderImpl implements ProcessInstantiationBuilderInte
     {
         EnsureUtil::ensureOnlyOneNotNull("either process definition id or key must be set", $this->processDefinitionId, $this->processDefinitionKey);
 
-        if ($this->isProcessDefinitionTenantIdSet && $this->processDefinitionId != null) {
+        if ($this->isProcessDefinitionTenantIdSet && $this->processDefinitionId !== null) {
             //throw LOG.exceptionStartProcessInstanceByIdAndTenantId();
             throw new \Exception("exceptionStartProcessInstanceByIdAndTenantId");
         }

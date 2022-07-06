@@ -47,16 +47,16 @@ class DbHistoryEventHandler implements HistoryEventHandlerInterface
         if ($this->isInitialEvent($historyEvent)) {
             $dbEntityManager->insert($historyEvent);
         } else {
-            if ($dbEntityManager->getCachedEntity(get_class($historyEvent), $historyEvent->getId()) == null) {
+            if ($dbEntityManager->getCachedEntity(get_class($historyEvent), $historyEvent->getId()) === null) {
                 if ($historyEvent instanceof HistoricScopeInstanceEvent) {
                     // if this is a scope, get start time from existing event in DB
                     $existingEvent = $dbEntityManager->selectById(get_class($historyEvent), $historyEvent->getId());
-                    if ($existingEvent != null) {
+                    if ($existingEvent !== null) {
                         $historicScopeInstanceEvent = $historyEvent;
                         $historicScopeInstanceEvent->setStartTime($existingEvent->getStartTime());
                     }
                 }
-                if ($historyEvent->getId() == null) {
+                if ($historyEvent->getId() === null) {
         //          dbSqlSession.insert(historyEvent);
                 } else {
                     $dbEntityManager->merge($historyEvent);
@@ -73,7 +73,7 @@ class DbHistoryEventHandler implements HistoryEventHandlerInterface
         if ($this->shouldWriteHistoricDetail($historyEvent)) {
             // insert byte array entity (if applicable)
             $byteValue = $historyEvent->getByteValue();
-            if ($byteValue != null) {
+            if ($byteValue !== null) {
                 $byteArrayEntity = new ByteArrayEntity($historyEvent->getVariableName(), $byteValue, ResourceTypes::history());
                 $byteArrayEntity->setRootProcessInstanceId($historyEvent->getRootProcessInstanceId());
                 $byteArrayEntity->setRemovalTime($historyEvent->getRemovalTime());
@@ -95,7 +95,7 @@ class DbHistoryEventHandler implements HistoryEventHandlerInterface
             || $historyEvent->isEventOfType(HistoryEventTypes::variableInstanceMigrate())
         ) {
             $historicVariableInstanceEntity = $dbEntityManager->selectById(HistoricVariableInstanceEntity::class, $historyEvent->getVariableInstanceId());
-            if ($historicVariableInstanceEntity != null) {
+            if ($historicVariableInstanceEntity !== null) {
                 $historicVariableInstanceEntity->updateFromEvent($historyEvent);
                 $historicVariableInstanceEntity->setState(HistoricVariableInstance::stateCreated());
             } else {
@@ -108,7 +108,7 @@ class DbHistoryEventHandler implements HistoryEventHandlerInterface
             }
         } elseif ($historyEvent->isEventOfType(HistoryEventTypes::variableInstanceDelete())) {
             $historicVariableInstanceEntity = $dbEntityManager->selectById(HistoricVariableInstanceEntity::class, $historyEvent->getVariableInstanceId());
-            if ($historicVariableInstanceEntity != null) {
+            if ($historicVariableInstanceEntity !== null) {
                 $historicVariableInstanceEntity->setState(HistoricVariableInstance::stateDeleted());
             }
         }
@@ -130,7 +130,7 @@ class DbHistoryEventHandler implements HistoryEventHandlerInterface
 
     protected function isInitialEvent(HistoryEvent $historyEvent): bool
     {
-        return $historyEvent->getEventType() == null
+        return $historyEvent->getEventType() === null
             || $historyEvent->isEventOfType(HistoryEventTypes::activityInstanceStart())
             || $historyEvent->isEventOfType(HistoryEventTypes::processInstanceStart())
             || $historyEvent->isEventOfType(HistoryEventTypes::taskInstanceCreate())

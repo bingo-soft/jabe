@@ -49,7 +49,7 @@ class TelemetryConfigureCmd implements CommandInterface
         $telemetryReporter = $processEngineConfiguration->getTelemetryReporter();
 
         // telemetry enabled or set for the first time
-        if ($currentValue == null || (!$currentValue->booleanValue() && $this->telemetryEnabled)) {
+        if ($currentValue === null || (!$currentValue->booleanValue() && $this->telemetryEnabled)) {
             if ($isReportedActivated) {
                 $telemetryReporter->reschedule();
             }

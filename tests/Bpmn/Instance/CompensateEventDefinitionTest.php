@@ -20,7 +20,7 @@ class CompensateEventDefinitionTest extends AbstractEventDefinitionTest
         $eventDefinition = $this->eventDefinitionQuery->filterByType(
             CompensateEventDefinitionInterface::class
         )->singleResult();
-        $this->assertFalse($eventDefinition == null);
+        $this->assertFalse($eventDefinition === null);
 
         $this->assertTrue($eventDefinition->isWaitForCompletion());
         $this->assertEquals("task", $eventDefinition->getActivity()->getId());

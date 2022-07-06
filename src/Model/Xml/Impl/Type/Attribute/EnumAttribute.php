@@ -19,7 +19,7 @@ class EnumAttribute extends AttributeImpl
      */
     protected function convertXmlValueToModelValue(?string $rawValue)
     {
-        if ($rawValue != null) {
+        if ($rawValue !== null) {
             $class = new \ReflectionClass($this->type);
             $constants = $class->getConstants();
             if (in_array($rawValue, $constants)) {

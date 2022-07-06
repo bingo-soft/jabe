@@ -21,7 +21,7 @@ class XmlNamespace
      */
     public function hasAlternativeUri(): bool
     {
-        return $this->alternativeUri != null;
+        return $this->alternativeUri !== null;
     }
 
     public function getNamespaceUri(): string
@@ -39,11 +39,11 @@ class XmlNamespace
         if ($this == $obj) {
             return true;
         }
-        if ($obj == null) {
+        if ($obj === null) {
             return false;
         }
-        if ($this->namespaceUri == null) {
-            if ($obj->namespaceUri != null) {
+        if ($this->namespaceUri === null) {
+            if ($obj->namespaceUri !== null) {
                 return false;
             }
         } elseif ($this->namespaceUri != $obj->namespaceUri) {

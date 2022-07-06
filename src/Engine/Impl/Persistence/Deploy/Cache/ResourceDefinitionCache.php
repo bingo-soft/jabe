@@ -30,7 +30,7 @@ abstract class ResourceDefinitionCache
     {
         $this->checkInvalidDefinitionId($definitionId);
         $definition = $this->getManager()->getCachedResourceDefinitionEntity($definitionId);
-        if ($definition == null) {
+        if ($definition === null) {
             $definition = $this->getManager()
                 ->findLatestDefinitionById($definitionId);
         }
@@ -97,9 +97,9 @@ abstract class ResourceDefinitionCache
         $definitionId = $definition->getId();
         $deploymentId = $definition->getDeploymentId();
         $cachedDefinition = $this->cache->get($definitionId);
-        if ($cachedDefinition == null) {
+        if ($cachedDefinition === null) {
             $cachedDefinition = $this->cache->get($definitionId);
-            if ($cachedDefinition == null) {
+            if ($cachedDefinition === null) {
                 $deployment = Context::getCommandContext()
                     ->getDeploymentManager()
                     ->findDeploymentById($deploymentId);
@@ -109,7 +109,7 @@ abstract class ResourceDefinitionCache
             }
             $this->checkInvalidDefinitionWasCached($deploymentId, $definitionId, $cachedDefinition);
         }
-        if ($cachedDefinition != null) {
+        if ($cachedDefinition !== null) {
             $cachedDefinition->updateModifiableFieldsFromEntity($definition);
         }
         return $cachedDefinition;

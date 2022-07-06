@@ -39,7 +39,7 @@ class AstFunction extends AstRightValue implements FunctionNode
         if (!empty($parameters)) {
             foreach ($parameters as $param) {
                 $type = $param->getType();
-                if ($type != null) {
+                if ($type !== null) {
                     $types[] = $type->getName();
                 } else {
                     $types[] = "undefined";
@@ -49,7 +49,7 @@ class AstFunction extends AstRightValue implements FunctionNode
         $params = [];
         for ($i = 0; $i < count($parameters); $i++) {
             $param = $this->getParam($i)->eval($bindings, $context);
-            if ($param != null && $types[$i] != "undefined") {
+            if ($param !== null && $types[$i] != "undefined") {
                 $params[$i] = $bindings->convert($param, $types[$i]);
             } else {
                 $params[$i] = $param;
@@ -75,7 +75,7 @@ class AstFunction extends AstRightValue implements FunctionNode
 
     public function appendStructure(string &$b, Bindings $bindings): void
     {
-        $b .= $bindings != null && $bindings->isFunctionBound($this->index) ? "<fn>" : $this->name;
+        $b .= $bindings !== null && $bindings->isFunctionBound($this->index) ? "<fn>" : $this->name;
         $this->params->appendStructure($b, $bindings);
     }
 

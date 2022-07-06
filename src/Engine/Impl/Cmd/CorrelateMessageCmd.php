@@ -68,7 +68,7 @@ class CorrelateMessageCmd extends AbstractCorrelateMessageCmd implements Command
                 return $correlationHandler->correlateMessage($commandContext, $scope->messageName, $correlationSet);
             });
 
-            if ($correlationResult == null) {
+            if ($correlationResult === null) {
                 throw new MismatchingMessageCorrelationException("No process definition or execution matches the parameters");
             }
         }

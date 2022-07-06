@@ -34,7 +34,7 @@ class ReadOnlyMapELResolver extends ELResolver
 
     public function getValue(?ELContext $context, $base, $property)
     {
-        if ($base == null) {
+        if ($base === null) {
             if (array_key_exists($property, $this->wrappedMap)) {
                 $context->setPropertyResolved(true);
                 return $this->wrappedMap[$property];
@@ -50,7 +50,7 @@ class ReadOnlyMapELResolver extends ELResolver
 
     public function setValue(?ELContext $context, $base, $property, $value): void
     {
-        if ($base == null) {
+        if ($base === null) {
             if (array_key_exists($property, $this->wrappedMap)) {
                 throw new ProcessEngineException("Cannot set value of '" . $property . "', it's readonly!");
             }

@@ -10,7 +10,7 @@ class BeanELResolver extends ELResolver
 
     private static function findPublicAccessibleMethod(?\ReflectionMethod $method): ?\ReflectionMethod
     {
-        if ($method != null && $method->isPublic()) {
+        if ($method !== null && $method->isPublic()) {
             return $method;
         }
         return null;
@@ -41,7 +41,7 @@ class BeanELResolver extends ELResolver
 
     public function getType(?ELContext $context, $base, $property)
     {
-        if ($context == null) {
+        if ($context === null) {
             throw new \Exception("Context is null");
         }
         $result = null;
@@ -54,7 +54,7 @@ class BeanELResolver extends ELResolver
 
     public function isReadOnly(?ELContext $context, $base, $property): bool
     {
-        if ($context == null) {
+        if ($context === null) {
             throw new \Exception("Context is null");
         }
         if ($this->isResolvable($base)) {
@@ -65,13 +65,13 @@ class BeanELResolver extends ELResolver
 
     public function getValue(?ELContext $context, $base, $property)
     {
-        if ($context == null) {
+        if ($context === null) {
             throw new \Exception("Context is null");
         }
         $result = null;
         if ($this->isResolvable($base)) {
             $prop = $this->toObjectProperty($base, $property);
-            if ($prop == null) {
+            if ($prop === null) {
                 throw new PropertyNotFoundException("Cannot read property " . $property);
             }
             try {
@@ -86,7 +86,7 @@ class BeanELResolver extends ELResolver
 
     public function setValue(?ELContext $context, $base, $property, $value): void
     {
-        if ($context == null) {
+        if ($context === null) {
             throw new \Exception("Context is null");
         }
         if ($this->isResolvable($base)) {
@@ -94,7 +94,7 @@ class BeanELResolver extends ELResolver
                 throw new PropertyNotWritableException("resolver is read-only");
             }
             $prop = $this->toObjectProperty($base, $property);
-            if ($prop == null) {
+            if ($prop === null) {
                 throw new PropertyNotFoundException("Cannot find property: " . $property);
             }
             try {
@@ -108,14 +108,14 @@ class BeanELResolver extends ELResolver
 
     public function invoke(?ELContext $context, $base, $method, ?array $paramTypes = [], ?array $params = [])
     {
-        if ($context == null) {
+        if ($context === null) {
             throw new NullPointerException();
         }
         $result = null;
         if ($this->isResolvable($base)) {
             $name = $method;
             $target = $this->findMethod($base, $name);
-            if ($target == null) {
+            if ($target === null) {
                 throw new MethodNotFoundException("Cannot find method " . $name . " in " . get_class($base));
             }
             $result = $target->invoke($base, ...($this->coerceParams($this->getExpressionFactory($context), $target, $params)));
@@ -142,7 +142,7 @@ class BeanELResolver extends ELResolver
         if ($obj instanceof ExpressionFactory) {
             return $obj;
         }
-        if ($this->defaultFactory == null) {
+        if ($this->defaultFactory === null) {
             $this->defaultFactory = ExpressionFactory::newInstance();
         }
         return $this->defaultFactory;
@@ -154,7 +154,7 @@ class BeanELResolver extends ELResolver
         if (!empty($parameters)) {
             foreach ($parameters as $param) {
                 $type = $param->getType();
-                if ($type != null) {
+                if ($type !== null) {
                     $types[] = $type->getName();
                 } else {
                     $types[] = "object";
@@ -174,7 +174,7 @@ class BeanELResolver extends ELResolver
 
     private function isResolvable($base): bool
     {
-        return $base != null;
+        return $base !== null;
     }
 
     private function toObjectProperty($base, $property): \ReflectionProperty
@@ -186,8 +186,8 @@ class BeanELResolver extends ELResolver
             $objectProperties = new BeanProperties(get_class($base));
             $this->cache[$key] = $objectProperties;
         }
-        $objectProperty = $property == null ? null : $objectProperties->getProperty($property);
-        if ($objectProperty == null) {
+        $objectProperty = $property === null ? null : $objectProperties->getProperty($property);
+        if ($objectProperty === null) {
             throw new PropertyNotFoundException("Could not find property " . $property . " in " . get_class($base));
         }
         return $objectProperty;

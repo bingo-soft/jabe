@@ -44,7 +44,7 @@ class NumberOperations
 
     public static function add(TypeConverter $converter, $o1 = null, $o2 = null)
     {
-        if ($o1 == null && $o2 == null) {
+        if ($o1 === null && $o2 === null) {
             return self::$LONG_ZERO;
         }
         if (gettype($o1) == "double" || gettype($o2) == "double") {
@@ -58,7 +58,7 @@ class NumberOperations
 
     public static function sub(TypeConverter $converter, $o1 = null, $o2 = null)
     {
-        if ($o1 == null && $o2 == null) {
+        if ($o1 === null && $o2 === null) {
             return self::$LONG_ZERO;
         }
         if (gettype($o1) == "double" || gettype($o2) == "double") {
@@ -72,7 +72,7 @@ class NumberOperations
 
     public static function mul(TypeConverter $converter, $o1 = null, $o2 = null)
     {
-        if ($o1 == null && $o2 == null) {
+        if ($o1 === null && $o2 === null) {
             return self::$LONG_ZERO;
         }
         if (gettype($o1) == "double" || gettype($o2) == "double") {
@@ -86,7 +86,7 @@ class NumberOperations
 
     public static function div(TypeConverter $converter, $o1 = null, $o2 = null)
     {
-        if ($o1 == null && $o2 == null) {
+        if ($o1 === null && $o2 === null) {
             return self::$LONG_ZERO;
         }
         return $converter->convert($o1, "double") / $converter->convert($o2, "double");
@@ -94,7 +94,7 @@ class NumberOperations
 
     public static function mod(TypeConverter $converter, $o1 = null, $o2 = null)
     {
-        if ($o1 == null && $o2 == null) {
+        if ($o1 === null && $o2 === null) {
             return self::$LONG_ZERO;
         }
         if (self::isBigDecimalOrFloatOrDoubleOrDotEe($o1) || self::isBigDecimalOrFloatOrDoubleOrDotEe(o2)) {
@@ -105,7 +105,7 @@ class NumberOperations
 
     public static function neg(TypeConverter $converter, $value)
     {
-        if ($value == null) {
+        if ($value === null) {
             return self::$LONG_ZERO;
         }
         if (gettype($value) == "double" || gettype($value) == "integer") {

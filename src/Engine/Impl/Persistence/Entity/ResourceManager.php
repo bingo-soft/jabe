@@ -75,6 +75,6 @@ class ResourceManager extends AbstractManager
     public function findLicenseKeyResource(): ?ResourceEntity
     {
         $licenseProperty = $this->getDbEntityManager()->selectOne("selectProperty", LicenseCmd::LICENSE_KEY_BYTE_ARRAY_ID);
-        return $licenseProperty == null ? null : $this->getDbEntityManager()->selectOne("selectResourceById", $licenseProperty->value);
+        return $licenseProperty === null ? null : $this->getDbEntityManager()->selectOne("selectResourceById", $licenseProperty->value);
     }
 }

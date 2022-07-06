@@ -56,7 +56,7 @@ class TransitionImpl extends CoreModelElement implements PvmTransitionInterface
 
     public function __toString()
     {
-        return "(" . $this->source->getId() . ")--" . ($this->id != null ? $this->id . "-->(" : ">(") . $this->destination->getId() . ")";
+        return "(" . $this->source->getId() . ")--" . ($this->id !== null ? $this->id . "-->(" : ">(") . $this->destination->getId() . ")";
     }
 
     // getters and setters //////////////////////////////////////////////////////

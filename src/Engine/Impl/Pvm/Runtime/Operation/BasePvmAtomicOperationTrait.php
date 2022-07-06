@@ -16,7 +16,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function processStart(): PvmAtomicOperationInterface
     {
-        if (self::$PROCESS_START == null) {
+        if (self::$PROCESS_START === null) {
             self::$PROCESS_START = new PvmAtomicOperationProcessStart();
         }
         return self::$PROCESS_START;
@@ -24,7 +24,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function fireProcessStart(): PvmAtomicOperationInterface
     {
-        if (self::$FIRE_PROCESS_START == null) {
+        if (self::$FIRE_PROCESS_START === null) {
             self::$FIRE_PROCESS_START = new PvmAtomicOperationFireProcessStart();
         }
         return self::$FIRE_PROCESS_START;
@@ -32,7 +32,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function processEnd(): PvmAtomicOperationInterface
     {
-        if (self::$PROCESS_END == null) {
+        if (self::$PROCESS_END === null) {
             self::$PROCESS_END = new PvmAtomicOperationProcessEnd();
         }
         return self::$PROCESS_END;
@@ -54,7 +54,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function activityStart(): PvmAtomicOperationInterface
     {
-        if (self::$ACTIVITY_START == null) {
+        if (self::$ACTIVITY_START === null) {
             self::$ACTIVITY_START = new PvmAtomicOperationActivityStart();
         }
         return self::$ACTIVITY_START;
@@ -62,7 +62,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function activityStartConcurrent(): PvmAtomicOperationInterface
     {
-        if (self::$ACTIVITY_START_CONCURRENT == null) {
+        if (self::$ACTIVITY_START_CONCURRENT === null) {
             self::$ACTIVITY_START_CONCURRENT = new PvmAtomicOperationActivityStartConcurrent();
         }
         return self::$ACTIVITY_START_CONCURRENT;
@@ -70,7 +70,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function activityStartCancelScope(): PvmAtomicOperationInterface
     {
-        if (self::$ACTIVITY_START_INTERRUPT_SCOPE == null) {
+        if (self::$ACTIVITY_START_INTERRUPT_SCOPE === null) {
             self::$ACTIVITY_START_INTERRUPT_SCOPE = new PvmAtomicOperationActivityStartInterruptEventScope();
         }
         return self::$ACTIVITY_START_INTERRUPT_SCOPE;
@@ -78,7 +78,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function activityStartInterruptScope(): PvmAtomicOperationInterface
     {
-        if (self::$ACTIVITY_START_CANCEL_SCOPE == null) {
+        if (self::$ACTIVITY_START_CANCEL_SCOPE === null) {
             self::$ACTIVITY_START_CANCEL_SCOPE = new PvmAtomicOperationActivityStartCancelScope();
         }
         return self::$ACTIVITY_START_CANCEL_SCOPE;
@@ -86,7 +86,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function activityStartCreateScope(): PvmAtomicOperationInterface
     {
-        if (self::$ACTIVITY_START_CREATE_SCOPE == null) {
+        if (self::$ACTIVITY_START_CREATE_SCOPE === null) {
             self::$ACTIVITY_START_CREATE_SCOPE = new PvmAtomicOperationActivityStartCreateScope();
         }
         return self::$ACTIVITY_START_CREATE_SCOPE;
@@ -94,7 +94,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function activityInitStackNotifyListenerStart(): PvmAtomicOperationInterface
     {
-        if (self::$ACTIVITY_INIT_STACK_NOTIFY_LISTENER_START == null) {
+        if (self::$ACTIVITY_INIT_STACK_NOTIFY_LISTENER_START === null) {
             self::$ACTIVITY_INIT_STACK_NOTIFY_LISTENER_START = new PvmAtomicOperationActivityInitStackNotifyListenerStart();
         }
         return self::$ACTIVITY_INIT_STACK_NOTIFY_LISTENER_START;
@@ -102,7 +102,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function activityInitStackNotifyListenerReturn(): PvmAtomicOperationInterface
     {
-        if (self::$ACTIVITY_INIT_STACK_NOTIFY_LISTENER_RETURN == null) {
+        if (self::$ACTIVITY_INIT_STACK_NOTIFY_LISTENER_RETURN === null) {
             self::$ACTIVITY_INIT_STACK_NOTIFY_LISTENER_RETURN = new PvmAtomicOperationActivityInitStackNotifyListenerReturn();
         }
         return self::$ACTIVITY_INIT_STACK_NOTIFY_LISTENER_RETURN;
@@ -110,7 +110,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function activityInitStack(): PvmAtomicOperationInterface
     {
-        if (self::$ACTIVITY_INIT_STACK == null) {
+        if (self::$ACTIVITY_INIT_STACK === null) {
             self::$ACTIVITY_INIT_STACK = new PvmAtomicOperationActivityInitStack(self::activityInitStackNotifyListenerStart());
         }
         return self::$ACTIVITY_INIT_STACK;
@@ -118,7 +118,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function activityInitStackAndReturn(): PvmAtomicOperationInterface
     {
-        if (self::$ACTIVITY_INIT_STACK_AND_RETURN == null) {
+        if (self::$ACTIVITY_INIT_STACK_AND_RETURN === null) {
             self::$ACTIVITY_INIT_STACK_AND_RETURN = new PvmAtomicOperationActivityInitStack(self::activityInitStackNotifyListenerReturn());
         }
         return self::$ACTIVITY_INIT_STACK_AND_RETURN;
@@ -126,7 +126,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function activityExecute(): PvmAtomicOperationInterface
     {
-        if (self::$ACTIVITY_EXECUTE == null) {
+        if (self::$ACTIVITY_EXECUTE === null) {
             self::$ACTIVITY_EXECUTE = new PvmAtomicOperationActivityExecute();
         }
         return self::$ACTIVITY_EXECUTE;
@@ -134,7 +134,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function activityNotifyListenerEnd(): PvmAtomicOperationInterface
     {
-        if (self::$ACTIVITY_NOTIFY_LISTENER_END == null) {
+        if (self::$ACTIVITY_NOTIFY_LISTENER_END === null) {
             self::$ACTIVITY_NOTIFY_LISTENER_END = new PvmAtomicOperationActivityNotifyListenerEnd();
         }
         return self::$ACTIVITY_NOTIFY_LISTENER_END;
@@ -142,7 +142,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function activityEnd(): PvmAtomicOperationInterface
     {
-        if (self::$ACTIVITY_END == null) {
+        if (self::$ACTIVITY_END === null) {
             self::$ACTIVITY_END = new PvmAtomicOperationActivityEnd();
         }
         return self::$ACTIVITY_END;
@@ -150,7 +150,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function fireActivityEnd(): PvmAtomicOperationInterface
     {
-        if (self::$FIRE_ACTIVITY_END == null) {
+        if (self::$FIRE_ACTIVITY_END === null) {
             self::$FIRE_ACTIVITY_END = new PvmAtomicOperationFireActivityEnd();
         }
         return self::$FIRE_ACTIVITY_END;
@@ -166,7 +166,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function transitionNotifyListenerEnd(): PvmAtomicOperationInterface
     {
-        if (self::$TRANSITION_NOTIFY_LISTENER_END == null) {
+        if (self::$TRANSITION_NOTIFY_LISTENER_END === null) {
             self::$TRANSITION_NOTIFY_LISTENER_END = new PvmAtomicOperationTransitionNotifyListenerEnd();
         }
         return self::$TRANSITION_NOTIFY_LISTENER_END;
@@ -174,7 +174,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function transitionDestroyScope(): PvmAtomicOperationInterface
     {
-        if (self::$TRANSITION_DESTROY_SCOPE == null) {
+        if (self::$TRANSITION_DESTROY_SCOPE === null) {
             self::$TRANSITION_DESTROY_SCOPE = new PvmAtomicOperationTransitionDestroyScope();
         }
         return self::$TRANSITION_DESTROY_SCOPE;
@@ -182,7 +182,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function transitionNotifyListenerTake(): PvmAtomicOperationInterface
     {
-        if (self::$TRANSITION_NOTIFY_LISTENER_TAKE == null) {
+        if (self::$TRANSITION_NOTIFY_LISTENER_TAKE === null) {
             self::$TRANSITION_NOTIFY_LISTENER_TAKE = new PvmAtomicOperationTransitionNotifyListenerTake();
         }
         return self::$TRANSITION_NOTIFY_LISTENER_TAKE;
@@ -190,7 +190,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function transitionStartNotifyListenerTake(): PvmAtomicOperationInterface
     {
-        if (self::$TRANSITION_START_NOTIFY_LISTENER_TAKE == null) {
+        if (self::$TRANSITION_START_NOTIFY_LISTENER_TAKE === null) {
             self::$TRANSITION_START_NOTIFY_LISTENER_TAKE = new PvmAtomicOperationStartTransitionNotifyListenerTake();
         }
         return self::$TRANSITION_START_NOTIFY_LISTENER_TAKE;
@@ -198,7 +198,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function transitionCreateScope(): PvmAtomicOperationInterface
     {
-        if (self::$TRANSITION_CREATE_SCOPE == null) {
+        if (self::$TRANSITION_CREATE_SCOPE === null) {
             self::$TRANSITION_CREATE_SCOPE = new PvmAtomicOperationTransitionCreateScope();
         }
         return self::$TRANSITION_CREATE_SCOPE;
@@ -206,7 +206,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function transitionInterruptFlowScope(): PvmAtomicOperationInterface
     {
-        if (self::$TRANSITION_INTERRUPT_FLOW_SCOPE == null) {
+        if (self::$TRANSITION_INTERRUPT_FLOW_SCOPE === null) {
             self::$TRANSITION_INTERRUPT_FLOW_SCOPE = new PvmAtomicOperationsTransitionInterruptFlowScope();
         }
         return self::$TRANSITION_INTERRUPT_FLOW_SCOPE;
@@ -214,7 +214,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function transitionNotifyListenerStart(): PvmAtomicOperationInterface
     {
-        if (self::$TRANSITION_NOTIFY_LISTENER_START == null) {
+        if (self::$TRANSITION_NOTIFY_LISTENER_START === null) {
             self::$TRANSITION_NOTIFY_LISTENER_START = new PvmAtomicOperationTransitionNotifyListenerStart();
         }
         return self::$TRANSITION_NOTIFY_LISTENER_START;
@@ -225,7 +225,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function deleteCascade(): PvmAtomicOperationInterface
     {
-        if (self::$DELETE_CASCADE == null) {
+        if (self::$DELETE_CASCADE === null) {
             self::$DELETE_CASCADE = new PvmAtomicOperationDeleteCascade();
         }
         return self::$DELETE_CASCADE;
@@ -233,7 +233,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function deleteCascadeFireActivityEnd(): PvmAtomicOperationInterface
     {
-        if (self::$DELETE_CASCADE_FIRE_ACTIVITY_END == null) {
+        if (self::$DELETE_CASCADE_FIRE_ACTIVITY_END === null) {
             self::$DELETE_CASCADE_FIRE_ACTIVITY_END = new PvmAtomicOperationDeleteCascadeFireActivityEnd();
         }
         return self::$DELETE_CASCADE_FIRE_ACTIVITY_END;
@@ -243,7 +243,7 @@ trait BasePvmAtomicOperationTrait
 
     public static function activityLeave(): PvmAtomicOperationInterface
     {
-        if (self::$ACTIVITY_LEAVE == null) {
+        if (self::$ACTIVITY_LEAVE === null) {
             self::$ACTIVITY_LEAVE = new PvmAtomicOperationActivityLeave();
         }
         return self::$ACTIVITY_LEAVE;

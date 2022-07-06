@@ -97,7 +97,7 @@ class StatisticsManager extends AbstractManager
     /*protected function checkReadProcessDefinition(ActivityStatisticsQueryImpl $query): void
     {
         $commandContext = $this->getCommandContext();
-        if ($this->isAuthorizationEnabled() && $this->getCurrentAuthentication() != null && $commandContext->isAuthorizationCheckEnabled()) {
+        if ($this->isAuthorizationEnabled() && $this->getCurrentAuthentication() !== null && $commandContext->isAuthorizationCheckEnabled()) {
             $processDefinitionId = $query->getProcessDefinitionId();
             $definition = $this->getProcessDefinitionManager()->findLatestProcessDefinitionById($processDefinitionId);
             EnsureUtil::ensureNotNull("no deployed process definition found with id '" . $processDefinitionId . "'", "processDefinition", $definition);
@@ -117,7 +117,7 @@ class StatisticsManager extends AbstractManager
 
     protected void checkReadDecisionRequirementsDefinition(HistoricDecisionInstanceStatisticsQueryImpl $query) {
       CommandContext commandContext = getCommandContext();
-      if (isAuthorizationEnabled() && getCurrentAuthentication() != null && commandContext.isAuthorizationCheckEnabled()) {
+      if (isAuthorizationEnabled() && getCurrentAuthentication() !== null && commandContext.isAuthorizationCheckEnabled()) {
         String decisionRequirementsDefinitionId = query.getDecisionRequirementsDefinitionId();
         DecisionRequirementsDefinition definition = getDecisionRequirementsDefinitionManager().findDecisionRequirementsDefinitionById(decisionRequirementsDefinitionId);
         ensureNotNull("no deployed decision requirements definition found with id '" + decisionRequirementsDefinitionId + "'", "decisionRequirementsDefinition", definition);

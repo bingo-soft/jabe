@@ -13,7 +13,7 @@ abstract class AbstractHistoryLevel implements HistoryLevelInterface
 
     public static function none(): AbstractHistoryLevel
     {
-        if (self::$HISTORY_LEVEL_NONE == null) {
+        if (self::$HISTORY_LEVEL_NONE === null) {
             self::$HISTORY_LEVEL_NONE = new HistoryLevelNone();
         }
         return self::$HISTORY_LEVEL_NONE;
@@ -21,7 +21,7 @@ abstract class AbstractHistoryLevel implements HistoryLevelInterface
 
     public static function activity(): AbstractHistoryLevel
     {
-        if (self::$HISTORY_LEVEL_ACTIVITY == null) {
+        if (self::$HISTORY_LEVEL_ACTIVITY === null) {
             self::$HISTORY_LEVEL_ACTIVITY = new HistoryLevelActivity();
         }
         return self::$HISTORY_LEVEL_ACTIVITY;
@@ -29,7 +29,7 @@ abstract class AbstractHistoryLevel implements HistoryLevelInterface
 
     public static function audit(): AbstractHistoryLevel
     {
-        if (self::$HISTORY_LEVEL_AUDIT == null) {
+        if (self::$HISTORY_LEVEL_AUDIT === null) {
             self::$HISTORY_LEVEL_AUDIT = new HistoryLevelAudit();
         }
         return self::$HISTORY_LEVEL_AUDIT;
@@ -37,7 +37,7 @@ abstract class AbstractHistoryLevel implements HistoryLevelInterface
 
     public static function full(): AbstractHistoryLevel
     {
-        if (self::$HISTORY_LEVEL_FULL == null) {
+        if (self::$HISTORY_LEVEL_FULL === null) {
             self::$HISTORY_LEVEL_FULL = new HistoryLevelFull();
         }
         return self::$HISTORY_LEVEL_FULL;

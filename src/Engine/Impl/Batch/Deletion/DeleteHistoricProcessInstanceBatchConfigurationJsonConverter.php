@@ -20,7 +20,7 @@ class DeleteHistoricProcessInstanceBatchConfigurationJsonConverter extends JsonO
 
     public static function instance(): DeleteHistoricProcessInstanceBatchConfigurationJsonConverter
     {
-        if (self::$INSTANCE == null) {
+        if (self::$INSTANCE === null) {
             self::$INSTANCE = new DeleteHistoricProcessInstanceBatchConfigurationJsonConverter();
         }
         return self::$INSTANCE;

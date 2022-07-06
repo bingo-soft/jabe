@@ -21,7 +21,7 @@ class VariableInstanceHistoryListener implements VariableInstanceLifecycleListen
 
     public static function instance(): VariableInstanceLifecycleListenerInterface
     {
-        if (self::$INSTANCE == null) {
+        if (self::$INSTANCE === null) {
             self::$INSTANCE = new VariableInstanceHistoryListener();
         }
         return self::$INSTANCE;

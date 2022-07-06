@@ -36,7 +36,7 @@ abstract class AbstractModificationCmd implements CommandInterface
         }
 
         $processInstanceQuery = $builder->getProcessInstanceQuery();
-        if ($processInstanceQuery != null) {
+        if ($processInstanceQuery !== null) {
             $collectedProcessInstanceIds = array_merge($collectedProcessInstanceIds, $processInstanceQuery->listIds());
         }
 

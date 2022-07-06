@@ -32,7 +32,7 @@ abstract class AbstractInstanceCancellationCmd extends AbstractProcessInstanceMo
 
         // if topmostCancellableExecution's scope execution has no other non-event-scope children,
         // we have reached the correct execution
-        while ($parentScopeExecution != null && (count($parentScopeExecution->getNonEventScopeExecutions()) <= 1)) {
+        while ($parentScopeExecution !== null && (count($parentScopeExecution->getNonEventScopeExecutions()) <= 1)) {
             $topmostCancellableExecution = $parentScopeExecution;
             $parentScopeExecution = $topmostCancellableExecution->getParentScopeExecution(false);
         }
@@ -54,7 +54,7 @@ abstract class AbstractInstanceCancellationCmd extends AbstractProcessInstanceMo
     protected function findSuperExecution(?ExecutionEntity $parentScopeExecution, ExecutionEntity $topmostCancellableExecution): ?ExecutionEntity
     {
         $superExecution = null;
-        if ($parentScopeExecution == null) {
+        if ($parentScopeExecution === null) {
             $superExecution = $topmostCancellableExecution->getSuperExecution();
         }
         return $superExecution;

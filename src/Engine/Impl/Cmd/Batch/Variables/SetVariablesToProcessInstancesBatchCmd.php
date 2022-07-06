@@ -132,13 +132,13 @@ class SetVariablesToProcessInstancesBatchCmd implements CommandInterface
         }
 
         $processInstanceQuery = $this->processInstanceQuery;
-        if ($processInstanceQuery != null) {
+        if ($processInstanceQuery !== null) {
             $mappings = $processInstanceQuery->listDeploymentIdMappings();
             $elementConfiguration->addDeploymentMappings($mappings);
         }
 
         $historicProcessInstanceQuery = $this->historicProcessInstanceQuery;
-        if ($historicProcessInstanceQuery != null) {
+        if ($historicProcessInstanceQuery !== null) {
             $historicProcessInstanceQuery->unfinished();
             $mappings = $historicProcessInstanceQuery->listDeploymentIdMappings();
             $elementConfiguration->addDeploymentMappings($mappings);

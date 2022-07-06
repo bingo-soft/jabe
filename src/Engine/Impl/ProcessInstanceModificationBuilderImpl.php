@@ -58,7 +58,7 @@ class ProcessInstanceModificationBuilderImpl implements ProcessInstanceModificat
         } elseif (is_string($contextOrExecutorOrProcessInstanceId)) {
             $this->processInstanceId = $contextOrExecutorOrProcessInstanceId;
         }
-        if ($modificationReason != null) {
+        if ($modificationReason !== null) {
             $this->modificationReason = $modificationReason;
         }
         $this->processVariables = new VariableMapImpl();
@@ -139,7 +139,7 @@ class ProcessInstanceModificationBuilderImpl implements ProcessInstanceModificat
         EnsureUtil::ensureNotNull("Variable name must not be null", "name", $name);
 
         $currentInstantiation = $this->getCurrentInstantiation();
-        if ($currentInstantiation != null) {
+        if ($currentInstantiation !== null) {
             $currentInstantiation->addVariable($name, $value);
         } else {
             $this->processVariables->put($name, $value);
@@ -153,7 +153,7 @@ class ProcessInstanceModificationBuilderImpl implements ProcessInstanceModificat
         EnsureUtil::ensureNotNull("Variable name must not be null", "name", $name);
 
         $currentInstantiation = $this->getCurrentInstantiation();
-        if ($currentInstantiation != null) {
+        if ($currentInstantiation !== null) {
             $currentInstantiation->addVariableLocal($name, $value);
         } else {
             $this->processVariables->put($name, $value);
@@ -167,7 +167,7 @@ class ProcessInstanceModificationBuilderImpl implements ProcessInstanceModificat
         EnsureUtil::ensureNotNull("Variable map must not be null", "variables", $variables);
 
         $currentInstantiation = $this->getCurrentInstantiation();
-        if ($currentInstantiation != null) {
+        if ($currentInstantiation !== null) {
             $currentInstantiation->addVariables($variables);
         } else {
             $this->processVariables->putAll($variables);
@@ -180,7 +180,7 @@ class ProcessInstanceModificationBuilderImpl implements ProcessInstanceModificat
         EnsureUtil::ensureNotNull("Variable map must not be null", "variablesLocal", $variables);
 
         $currentInstantiation = $this->getCurrentInstantiation();
-        if ($currentInstantiation != null) {
+        if ($currentInstantiation !== null) {
             $currentInstantiation->addVariablesLocal($variables);
         } else {
             $this->processVariables->putAll($variables);
@@ -201,7 +201,7 @@ class ProcessInstanceModificationBuilderImpl implements ProcessInstanceModificat
         $this->skipIoMappings = $skipIoMappings;
 
         $cmd = new ModifyProcessInstanceCmd($this, $writeUserOperationLog);
-        if ($this->commandExecutor != null) {
+        if ($this->commandExecutor !== null) {
             $this->commandExecutor->execute($cmd);
         } else {
             $cmd->execute($this->commandContext);

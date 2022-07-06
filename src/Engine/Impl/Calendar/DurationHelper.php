@@ -54,8 +54,8 @@ class DurationHelper
                 $this->period = (new \DateTime($expression[1]))->diff(new \DateTime($expression[0]));
             }
         }
-        if ($this->start == null && $this->end == null) {
-            if ($startDate == null) {
+        if ($this->start === null && $this->end === null) {
+            if ($startDate === null) {
                 $this->start = ClockUtil::getCurrentTime();
             } else {
                 if (is_string($startDate)) {
@@ -70,9 +70,9 @@ class DurationHelper
     public function getDateAfter($date = null): ?\DateTime
     {
         if ($this->isRepeat) {
-            return $this->getDateAfterRepeat($date == null ? ClockUtil::getCurrentTime() : $date);
+            return $this->getDateAfterRepeat($date === null ? ClockUtil::getCurrentTime() : $date);
         }
-        if ($this->end != null) {
+        if ($this->end !== null) {
             return $this->end;
         }
         return $this->start->add($this->period);
@@ -97,7 +97,7 @@ class DurationHelper
         }
         $dateWithoutOffset = new \DateTime();
         $dateWithoutOffset->setTimestamp($date->getTimestamp() - $this->repeatOffset);
-        if ($this->start != null) {
+        if ($this->start !== null) {
             $cur = $this->start;
             for ($i = 0; $i < $this->times && !($cur->getTimestamp() > $dateWithoutOffset->getTimestamp()); $i += 1) {
                 $cur = $cur->add($this->period);

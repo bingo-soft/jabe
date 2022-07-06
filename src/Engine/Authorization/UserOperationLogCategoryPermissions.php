@@ -15,7 +15,7 @@ class UserOperationLogCategoryPermissions implements PermissionInterface
 
     public static function none(): PermissionInterface
     {
-        if (self::$NONE == null) {
+        if (self::$NONE === null) {
             self::$NONE = new ProcessDefinitionPermissions("NONE", 0);
         }
         return self::$NONE;
@@ -25,7 +25,7 @@ class UserOperationLogCategoryPermissions implements PermissionInterface
 
     public static function all(): PermissionInterface
     {
-        if (self::$ALL == null) {
+        if (self::$ALL === null) {
             self::$ALL = new ProcessDefinitionPermissions("ALL", PHP_INT_MAX);
         }
         return self::$ALL;
@@ -35,7 +35,7 @@ class UserOperationLogCategoryPermissions implements PermissionInterface
 
     public static function read(): PermissionInterface
     {
-        if (self::$READ == null) {
+        if (self::$READ === null) {
             self::$READ = new ProcessDefinitionPermissions("READ", 2);
         }
         return self::$READ;
@@ -45,7 +45,7 @@ class UserOperationLogCategoryPermissions implements PermissionInterface
 
     public static function update(): PermissionInterface
     {
-        if (self::$UPDATE == null) {
+        if (self::$UPDATE === null) {
             self::$UPDATE = new ProcessDefinitionPermissions("UPDATE", 4);
         }
         return self::$UPDATE;
@@ -55,7 +55,7 @@ class UserOperationLogCategoryPermissions implements PermissionInterface
 
     public static function delete(): PermissionInterface
     {
-        if (self::$DELETE == null) {
+        if (self::$DELETE === null) {
             self::$DELETE = new ProcessDefinitionPermissions("DELETE", 16);
         }
         return self::$DELETE;
@@ -65,7 +65,7 @@ class UserOperationLogCategoryPermissions implements PermissionInterface
 
     public static function resources(): array
     {
-        if (self::$RESOURCES == null) {
+        if (self::$RESOURCES === null) {
             self::$RESOURCES = [ Resources::operationLogCategory() ];
         }
         return self::$RESOURCES;

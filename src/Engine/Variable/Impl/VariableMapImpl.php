@@ -35,7 +35,7 @@ class VariableMapImpl implements VariableMapInterface, \Serializable, VariableCo
     public function getValue(string $name, string $type)
     {
         $object = $this->get($name);
-        if ($object == null) {
+        if ($object === null) {
             return null;
         } elseif (is_a($object, $type)) {
             return $object;
@@ -72,7 +72,7 @@ class VariableMapImpl implements VariableMapInterface, \Serializable, VariableCo
         foreach ($this->variables as $varValue) {
             if ($value == $varValue->getValue()) {
                 return true;
-            } elseif ($value != null && method_exists($value, 'equals') && $value->equals($varValue->getValue())) {
+            } elseif ($value !== null && method_exists($value, 'equals') && $value->equals($varValue->getValue())) {
                 return true;
             }
         }
@@ -83,7 +83,7 @@ class VariableMapImpl implements VariableMapInterface, \Serializable, VariableCo
     {
         $typedValue = $this->variables[$key];
 
-        if ($typedValue != null) {
+        if ($typedValue !== null) {
             return $typedValue->getValue();
         }
         return null;
@@ -99,7 +99,7 @@ class VariableMapImpl implements VariableMapInterface, \Serializable, VariableCo
         }
         $this->variables[$key] = $typedValue;
 
-        if ($prevValue != null) {
+        if ($prevValue !== null) {
             return $prevValue->getValue();
         }
         return null;
@@ -113,7 +113,7 @@ class VariableMapImpl implements VariableMapInterface, \Serializable, VariableCo
             unset($this->variables[$key]);
         }
 
-        if ($prevValue != null) {
+        if ($prevValue !== null) {
             return $prevValue->getValue();
         }
         return null;
@@ -121,7 +121,7 @@ class VariableMapImpl implements VariableMapInterface, \Serializable, VariableCo
 
     public function putAll(array $m)
     {
-        if ($m != null) {
+        if ($m !== null) {
             if ($m instanceof VariableMapImpl) {
                 $this->variables = array_merge($this->variables, $m->variables);
             } else {

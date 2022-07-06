@@ -57,7 +57,7 @@ class ModifyProcessInstanceCmd implements CommandInterface
         $processInstance = $executionManager->findExecutionById($processInstanceId);
 
         if (!$processInstance->hasChildren() && !$processInstance->isCanceled() && !$processInstance->isRemoved()) {
-            if ($processInstance->getActivity() == null) {
+            if ($processInstance->getActivity() === null) {
                 // process instance was cancelled
                 $this->checkDeleteProcessInstance($processInstance, $commandContext);
                 $this->deletePropagate(
@@ -105,7 +105,7 @@ class ModifyProcessInstanceCmd implements CommandInterface
 
     protected function ensureProcessInstanceExist(string $processInstanceId, ?ExecutionEntity $processInstance): void
     {
-        if ($processInstance == null) {
+        if ($processInstance === null) {
             //throw LOG.processInstanceDoesNotExist(processInstanceId);
         }
     }
@@ -134,7 +134,7 @@ class ModifyProcessInstanceCmd implements CommandInterface
         $topmostDeletableExecution = $processInstance;
         $parentScopeExecution = $topmostDeletableExecution->getParentScopeExecution(true);
 
-        while ($parentScopeExecution != null && count($parentScopeExecution->getNonEventScopeExecutions()) <= 1) {
+        while ($parentScopeExecution !== null && count($parentScopeExecution->getNonEventScopeExecutions()) <= 1) {
             $topmostDeletableExecution = $parentScopeExecution;
             $parentScopeExecution = $topmostDeletableExecution->getParentScopeExecution(true);
         }

@@ -19,7 +19,7 @@ class AbstractSetJobRetriesCmd
         $job = $commandContext
             ->getJobManager()
             ->findJobById($jobId);
-        if ($job != null) {
+        if ($job !== null) {
             foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
                 $checker->checkUpdateRetriesJob($job);
             }

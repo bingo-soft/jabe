@@ -50,7 +50,7 @@ class ModelElementTypeImpl implements ModelElementTypeInterface
         ModelInstanceInterface $modelInstance,
         ?DomElementInterface $domElement = null
     ): ModelElementInstanceInterface {
-        if ($domElement != null) {
+        if ($domElement !== null) {
             $modelTypeInstanceContext = new ModelTypeInstanceContext($domElement, $modelInstance, $this);
             return $this->createModelElementInstance($modelTypeInstanceContext);
         } else {
@@ -130,7 +130,7 @@ class ModelElementTypeImpl implements ModelElementTypeInterface
 
     public function setBaseType(ModelElementTypeImpl $baseType): void
     {
-        if ($this->baseType == null) {
+        if ($this->baseType === null) {
             $this->baseType = $baseType;
         } elseif ($this->baseType != $baseType) {
             throw new ModelException(
@@ -184,7 +184,7 @@ class ModelElementTypeImpl implements ModelElementTypeInterface
 
     public function resolveBaseTypes(array &$baseTypes): void
     {
-        if ($this->baseType != null) {
+        if ($this->baseType !== null) {
             $baseTypes[] = $this->baseType;
             $this->baseType->resolveBaseTypes($baseTypes);
         }
@@ -208,7 +208,7 @@ class ModelElementTypeImpl implements ModelElementTypeInterface
     public function getAllChildElementTypes(): array
     {
         $allChildElementTypes = [];
-        if ($this->baseType != null) {
+        if ($this->baseType !== null) {
             $allChildElementTypes = array_merge($allChildElementTypes, $this->baseType->getAllChildElementTypes());
         }
         $allChildElementTypes = array_merge($allChildElementTypes, $this->childElementTypes);
@@ -223,7 +223,7 @@ class ModelElementTypeImpl implements ModelElementTypeInterface
     public function getAllChildElementCollections(): array
     {
         $allChildElementCollections = [];
-        if ($this->baseType != null) {
+        if ($this->baseType !== null) {
             $allChildElementCollections = array_merge(
                 $allChildElementCollections,
                 $this->baseType->getAllChildElementCollections()

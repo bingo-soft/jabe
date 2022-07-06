@@ -45,7 +45,7 @@ class JuelScriptEngine extends AbstractScriptEngine
 
     public function eval(string $script, ?ScriptContextInterface $scriptContext = null, ?BindingsInterface $bindings = null)
     {
-        if ($scriptContext == null && $bindings != null) {
+        if ($scriptContext === null && $bindings !== null) {
             $scriptContext = $this->getScriptContext($bindings);
         }
         $expr = $this->parse($script, $scriptContext);
@@ -54,7 +54,7 @@ class JuelScriptEngine extends AbstractScriptEngine
 
     public function getFactory(): ScriptEngineFactoryInterface
     {
-        if ($this->scriptEngineFactory == null) {
+        if ($this->scriptEngineFactory === null) {
             $this->scriptEngineFactory = new JuelScriptEngineFactory();
         }
         return $this->scriptEngineFactory;

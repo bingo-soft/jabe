@@ -21,7 +21,7 @@ class EscalationEventDefinitionTest extends AbstractEventDefinitionTest
         $eventDefinition = $this->eventDefinitionQuery->filterByType(
             EscalationEventDefinitionInterface::class
         )->singleResult();
-        $this->assertFalse($eventDefinition == null);
+        $this->assertFalse($eventDefinition === null);
 
         $this->assertEquals("escalation", $eventDefinition->getEscalation()->getName());
         $this->assertEquals("1337", $eventDefinition->getEscalation()->getEscalationCode());

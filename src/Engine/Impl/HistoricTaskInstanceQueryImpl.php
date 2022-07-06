@@ -458,7 +458,7 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
             $this->variables[] = $taskQueryVariableValue;
         } else {
             EnsureUtil::ensureNotNull("name", "name", $name);
-            if ($value == null || $this->isBoolean($value)) {
+            if ($value === null || $this->isBoolean($value)) {
                 // Null-values and booleans can only be used in EQUALS and NOT_EQUALS
                 switch ($operator) {
                     case QueryOperator::GREATER_THAN:
@@ -477,7 +477,7 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
                         break;
                 }
             }
-            $shouldMatchVariableValuesIgnoreCase = $variableValuesIgnoreCase && $value != null && is_string($value);
+            $shouldMatchVariableValuesIgnoreCase = $variableValuesIgnoreCase && $value !== null && is_string($value);
             $shouldMatchVariableNamesIgnoreCase = $variableNamesIgnoreCase;
             $this->addVariable(
                 new TaskQueryVariableValue($name, $value, $operator, $isTaskVariable, $isProcessInstanceVariable, $shouldMatchVariableNamesIgnoreCase, $shouldMatchVariableValuesIgnoreCase)
@@ -487,7 +487,7 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
 
     private function isBoolean($value): bool
     {
-        if ($value == null) {
+        if ($value === null) {
             return false;
         }
         return is_bool($value) || strtolower($value) === "true" || strtolower($value) === "false";
@@ -540,7 +540,7 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
         // The due date filters can't be used in an AND query with
         // the withoutTaskDueDate filter. They can be combined in an OR query
         if (!$this->isOrQueryActive) {
-            if ($this->dueAfter != null || $this->dueBefore != null || $this->dueDate != null) {
+            if ($this->dueAfter !== null || $this->dueBefore !== null || $this->dueDate !== null) {
                 throw new ProcessEngineException("Invalid query usage: cannot set both task due date (equal to, before, or after) and withoutTaskDueDate filters.");
             }
         }
