@@ -9,7 +9,7 @@ class HistoryEventCreator
      * {@link HistoryEventProducer}.
      *
      * @param producer the producer which is used for the creation
-     * @return the created {@link HistoryEvent}
+     * @return HistoryEvent the created {@link HistoryEvent}
      */
     public function createHistoryEvent(HistoryEventProducer $producer): ?HistoryEvent
     {

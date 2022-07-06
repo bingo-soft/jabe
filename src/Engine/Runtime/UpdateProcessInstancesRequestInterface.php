@@ -11,7 +11,7 @@ interface UpdateProcessInstancesRequestInterface
      *
      * @param processInstanceIds
      *          list of ids of the process instances
-     * @return the builder
+     * @return UpdateProcessInstancesSuspensionStateBuilderInterface the builder
      */
     public function byProcessInstanceIds(array $processInstanceIds): UpdateProcessInstancesSuspensionStateBuilderInterface;
 
@@ -20,16 +20,16 @@ interface UpdateProcessInstancesRequestInterface
      *
      * @param processInstanceQuery
      *          process instance query that discribes a list of the process instances
-     * @return the builder
+     * @return UpdateProcessInstancesSuspensionStateBuilderInterface the builder
      */
-    public function byProcessInstanceQuery(ProcessInstanceQueryInterface $processInstanceQuery): UpdateProcessInstancesSuspensionStateBuilder;
+    public function byProcessInstanceQuery(ProcessInstanceQueryInterface $processInstanceQuery): UpdateProcessInstancesSuspensionStateBuilderInterface;
 
     /**
      * Selects a list of process instances with the given a historical process instance query.
      *
      * @param historicProcessInstanceQuery
      *          historical process instance query that discribes a list of the process instances
-     * @return the builder
+     * @return UpdateProcessInstancesSuspensionStateBuilderInterface the builder
      */
     public function byHistoricProcessInstanceQuery(HistoricProcessInstanceQueryInterface $historicProcessInstanceQuery): UpdateProcessInstancesSuspensionStateBuilderInterface;
 }

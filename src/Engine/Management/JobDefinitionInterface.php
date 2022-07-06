@@ -5,24 +5,24 @@ namespace Jabe\Engine\Management;
 interface JobDefinitionInterface
 {
     /**
-     * @return the Id of the job definition.
+     * @return string the id of the job definition.
      */
     public function getId(): string;
 
     /**
-     * @return the id of the {@link ProcessDefinition} this job definition is associated with.
+     * @return string the id of the {@link ProcessDefinition} this job definition is associated with.
      */
     public function getProcessDefinitionId(): string;
 
     /**
-     * @return the key of the {@link ProcessDefinition} this job definition is associated with.
+     * @return string the key of the {@link ProcessDefinition} this job definition is associated with.
      */
     public function getProcessDefinitionKey(): string;
 
     /**
      * The Type of a job. Asynchronous continuation, timer, ...
      *
-     * @return the type of a Job.
+     * @return string the type of a Job.
      */
     public function getJobType(): string;
 
@@ -30,14 +30,14 @@ interface JobDefinitionInterface
      * The configuration of a job definition provides details about the jobs which will be created.
      * For timer jobs this method returns the timer configuration.
      *
-     * @return the configuration of this job definition.
+     * @return string the configuration of this job definition.
      */
     public function getJobConfiguration(): string;
 
     /**
      * The Id of the activity (from BPMN 2.0 Xml) this Job Definition is associated with.
      *
-     * @return the activity id for this Job Definition.
+     * @return string the activity id for this Job Definition.
      */
     public function getActivityId(): string;
 
@@ -55,7 +55,7 @@ interface JobDefinitionInterface
      * {@link ManagementService} API. When a job is assigned a priority, the job definition's overriding
      * priority (if set) is used instead of the values defined in the BPMN XML.</p>
      *
-     * @return the priority that overrides the default/BPMN XML priority or <code>null</code> if
+     * @return int the priority that overrides the default/BPMN XML priority or <code>null</code> if
      *   no overriding priority is set
      */
     public function getOverridingJobPriority(): int;

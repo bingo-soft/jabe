@@ -65,7 +65,7 @@ class BpmnExceptionHandler
      *
      * @param e
      *          the exception to check
-     * @return the BpmnError that was the cause of this exception or null if no
+     * @return BpmnError the BpmnError that was the cause of this exception or null if no
      *         BpmnError was found
      */
     protected static function checkIfCauseOfExceptionIsBpmnError(\Throwable $e): BpmnError

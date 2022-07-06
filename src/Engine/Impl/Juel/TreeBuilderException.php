@@ -21,7 +21,7 @@ class TreeBuilderException extends ELException
     }
 
     /**
-     * @return the expression string
+     * @return string the expression string
      */
     public function getExpression(): string
     {
@@ -29,7 +29,7 @@ class TreeBuilderException extends ELException
     }
 
     /**
-     * @return the error position
+     * @return int the error position
      */
     public function getPosition(): int
     {
@@ -37,7 +37,7 @@ class TreeBuilderException extends ELException
     }
 
     /**
-     * @return the substring (or description) that has been encountered
+     * @return string the substring (or description) that has been encountered
      */
     public function getEncountered(): string
     {
@@ -45,7 +45,7 @@ class TreeBuilderException extends ELException
     }
 
     /**
-     * @return the substring (or description) that was expected
+     * @return string the substring (or description) that was expected
      */
     public function getExpected(): string
     {

@@ -11,7 +11,7 @@ interface UpdateJobDefinitionSuspensionStateBuilderInterface
      * @param includeJobs
      *          if <code>true</code>, all related jobs will be activated /
      *          suspended too.
-     * @return the builder
+     * @return UpdateJobDefinitionSuspensionStateBuilderInterface the builder
      */
     public function includeJobs(bool $includeJobs): UpdateJobDefinitionSuspensionStateBuilderInterface;
 
@@ -24,7 +24,7 @@ interface UpdateJobDefinitionSuspensionStateBuilderInterface
      *          suspended. If <code>null</code>, the job definition is activated /
      *          suspended immediately.
      *
-     * @return the builder
+     * @return UpdateJobDefinitionSuspensionStateBuilderInterface the builder
      */
     public function executionDate(string $executionDate): UpdateJobDefinitionSuspensionStateBuilderInterface;
 

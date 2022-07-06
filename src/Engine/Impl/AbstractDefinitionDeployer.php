@@ -72,7 +72,7 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
     }
 
     /**
-     * @return the list of resource suffixes for this cacheDeployer
+     * @return array the list of resource suffixes for this cacheDeployer
      */
     abstract protected function getResourcesSuffixes(): array;
 
@@ -263,14 +263,14 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
      * Find a definition entity by deployment id and definition key.
      * @param deploymentId the deployment id
      * @param definitionKey the definition key
-     * @return the corresponding definition entity or null if non is found
+     * @return DefinitionEntity the corresponding definition entity or null if non is found
      */
     abstract protected function findDefinitionByDeploymentAndKey(string $deploymentId, string $definitionKey): DefinitionEntity;
 
     /**
      * Find the last deployed definition entity by definition key and tenant id.
      *
-     * @return the corresponding definition entity or null if non is found
+     * @return DefinitionEntity the corresponding definition entity or null if non is found
      */
     abstract protected function findLatestDefinitionByKeyAndTenantId(string $definitionKey, string $tenantId): DefinitionEntity;
 

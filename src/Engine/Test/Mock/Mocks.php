@@ -31,7 +31,7 @@ class Mocks
      *
      * @param key
      *          the key of the requested object
-     * @return the mock object registered under the provided key or null if there
+     * @return mixed the mock object registered under the provided key or null if there
      *         is no object for the provided key
      */
     public static function get(string $key)

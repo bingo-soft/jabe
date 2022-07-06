@@ -34,7 +34,7 @@ class EscalationHandler
 
     /**
      * Walks through the activity execution hierarchy, fetches and executes matching escalation catch event
-     * @return the escalation event definition if found matching escalation catch event
+     * @return EscalationEventDefinition the escalation event definition if found matching escalation catch event
      */
     public static function executeEscalation(ActivityExecutionInterface $execution, string $escalationCode): EscalationEventDefinition
     {

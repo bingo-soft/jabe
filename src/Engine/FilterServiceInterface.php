@@ -52,7 +52,7 @@ interface FilterServiceInterface
      * Returns the filter for the given filter id.
      *
      * @param filterId the id of the filter
-     * @return the filter
+     * @return FilterInterface the filter
      * @throws AuthorizationException if the user has no {@link Permissions#READ} permissions on {@link Resources#FILTER}.
      */
     public function getFilter(string $filterId): ?FilterInterface;
@@ -70,7 +70,7 @@ interface FilterServiceInterface
      *
      * @param filterId the id of the filter
      * @param extendingQuery additional query to extend the filter query
-     * @return the query result as list
+     * @return array the query result as list
      * @throws AuthorizationException if the user has no {@link Permissions#READ} permissions on {@link Resources#FILTER}.
      * @throws BadUserRequestException
      *   <ul><li>When the filter query uses expressions and expression evaluation is deactivated for stored queries.
@@ -92,7 +92,7 @@ interface FilterServiceInterface
      * @param filterId the id of the filter
      * @param firstResult first result to select
      * @param maxResults maximal number of results
-     * @return the query result as list
+     * @return array the query result as list
      * @throws AuthorizationException if the user has no {@link Permissions#READ} permissions on {@link Resources#FILTER}.
      * @throws BadUserRequestException
      *  <ul><li>When the filter query uses expressions and expression evaluation is deactivated for stored queries.
@@ -111,7 +111,7 @@ interface FilterServiceInterface
      *
      * @param filterId the the id of the filter
      * @param extendingQuery additional query to extend the filter query
-     * @return the single query result
+     * @return mixed the single query result
      * @throws AuthorizationException if the user has no {@link Permissions#READ} permissions on {@link Resources#FILTER}.
      * @throws BadUserRequestException
      *  <ul><li>When the filter query uses expressions and expression evaluation is deactivated for stored queries.
@@ -127,7 +127,7 @@ interface FilterServiceInterface
      *
      * @param filterId the the id of the filter
      * @param extendingQuery additional query to extend the filter query
-     * @return the result count
+     * @return int the result count
      * @throws AuthorizationException if the user has no {@link Permissions#READ} permissions on {@link Resources#FILTER}.
      * @throws BadUserRequestException
      *  <ul><li>When the filter query uses expressions and expression evaluation is deactivated for stored queries.

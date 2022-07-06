@@ -240,7 +240,7 @@ class Timer
      * <p>Note that it is permissible to call this method from within a
      * a task scheduled on this timer.
      *
-     * @return the number of tasks removed from the queue.
+     * @return int the number of tasks removed from the queue.
      * @since 1.5
      */
     public function purge(): int

@@ -7,7 +7,7 @@ interface DeleteProcessDefinitionsBuilderInterface
     /**
      * All process instances of the process definition as well as history data is deleted.
      *
-     * @return the builder
+     * @return DeleteProcessDefinitionsBuilderInterface the builder
      */
     public function cascade(): DeleteProcessDefinitionsBuilderInterface;
 
@@ -16,14 +16,14 @@ interface DeleteProcessDefinitionsBuilderInterface
      * ExecutionListener#EVENTNAME_END event.
      * Is only applied in conjunction with the cascade method.
      *
-     * @return the builder
+     * @return DeleteProcessDefinitionsBuilderInterface the builder
      */
     public function skipCustomListeners(): DeleteProcessDefinitionsBuilderInterface;
 
     /**
      * Specifies whether input/output mappings for tasks should be invoked
      *
-     * @return the builder
+     * @return DeleteProcessDefinitionsBuilderInterface the builder
      */
     public function skipIoMappings(): DeleteProcessDefinitionsBuilderInterface;
 

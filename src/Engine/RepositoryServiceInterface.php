@@ -74,7 +74,7 @@ interface RepositoryServiceInterface
     /**
      * Fluent builder to delete process definitions.
      *
-     * @return the builder to delete process definitions
+     * @return DeleteProcessDefinitionsSelectBuilderInterface the builder to delete process definitions
      */
     public function deleteProcessDefinitions(): DeleteProcessDefinitionsSelectBuilderInterface;
 
@@ -259,7 +259,7 @@ interface RepositoryServiceInterface
      * {@link UpdateProcessDefinitionSuspensionStateBuilder#activate()} or
      * {@link UpdateProcessDefinitionSuspensionStateBuilder#suspend()}.
      *
-     * @return the builder to update the suspension state
+     * @return UpdateProcessDefinitionSuspensionStateSelectBuilderInterface the builder to update the suspension state
      */
     public function updateProcessDefinitionSuspensionState(): UpdateProcessDefinitionSuspensionStateSelectBuilderInterface;
 
@@ -334,7 +334,7 @@ interface RepositoryServiceInterface
      * @param processDefinitionId the id of the Process Definition for which the {@link BpmnModelInstance}
      *  should be retrieved.
      *
-     * @return the {@link BpmnModelInstance}
+     * @return BpmnModelInstanceInterface the {@link BpmnModelInstance}
      *
      * @throws AuthorizationException
      *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.

@@ -52,7 +52,7 @@ interface RestartProcessInstanceBuilderInterface extends InstantiationBuilderInt
      * Executes the restart asynchronously as batch. The returned batch
      * can be used to track the progress of the restart.
      *
-     * @return the batch which executes the restart asynchronously.
+     * @return BatchInterface the batch which executes the restart asynchronously.
      *
      * @throws AuthorizationException
      *   if the user has not all of the following permissions

@@ -14,13 +14,13 @@ interface TypedValueSerializerInterface
     /**
      * The name of this serializer. The name is used when persisting the ValueFields populated by this serializer.
      *
-     * @return the name of this serializer.
+     * @return string the name of this serializer.
      */
     public function getName(): string;
 
     /**
      * The {@link ValueType VariableType} supported
-     * @return the VariableType supported
+     * @return ValueTypeInterface the VariableType supported
      */
     public function getType(): ValueTypeInterface;
 
@@ -38,7 +38,7 @@ interface TypedValueSerializerInterface
      * @param valueFields the {@link ValueFields} to retrieve the value from
      * @param deserializeValue indicates whether a {@link SerializableValue} should be deserialized.
      *
-     * @return the {@link TypedValue}
+     * @return TypedValueInterface the {@link TypedValue}
      */
     public function readValue(ValueFieldsInterface $valueFields, bool $isTransient, bool $deserializeValue = false): TypedValueInterface;
 
@@ -56,13 +56,13 @@ interface TypedValueSerializerInterface
      * value which is then detected to be handled by this {@link TypedValueSerializer} (by invocation of {@link #canHandle(TypedValue)}).
      *
      * @param untypedValue the untyped value
-     * @return the corresponding typed value
+     * @return TypedValueInterface the corresponding typed value
      */
     public function convertToTypedValue(UntypedValueImpl $untypedValue): TypedValueInterface;
 
     /**
      *
-     * @return the dataformat used by the serializer or null if this is not an object serializer
+     * @return string the dataformat used by the serializer or null if this is not an object serializer
      */
     public function getSerializationDataformat(): ?string;
 

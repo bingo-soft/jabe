@@ -198,7 +198,7 @@ interface ExternalTaskServiceInterface
      * is resolved.
      *
      *
-     * @return the batch
+     * @return BatchInterface the batch
      *
      * @param externalTaskIds the ids of the tasks to set the
      * @param retries

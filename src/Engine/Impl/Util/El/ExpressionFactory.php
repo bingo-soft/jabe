@@ -35,7 +35,7 @@ abstract class ExpressionFactory
      *            The object to coerce.
      * @param targetType
      *            The target type for the coercion.
-     * @return the coerced object
+     * @return mixed the coerced object
      * @throws ELException
      *             if an error results from applying the conversion rules.
      */
@@ -72,7 +72,7 @@ abstract class ExpressionFactory
      * @param expectedParamTypes
      *            The expected parameter types for the method to be found. Must be an array with no
      *            elements if there are no parameters expected. It is illegal to pass null.
-     * @return The parsed expression
+     * @return MethodExpression The parsed expression
      * @throws ELException
      *             Thrown if there are syntactical errors in the provided expression.
      * @throws NullPointerException
@@ -106,7 +106,7 @@ abstract class ExpressionFactory
      *            The expression to parse
      * @param expectedType
      *            The type the result of the expression will be coerced to after evaluation.
-     * @return The parsed expression
+     * @return ValueExpression The parsed expression
      * @throws ELException
      *             Thrown if there are syntactical errors in the provided expression.
      * @throws NullPointerException

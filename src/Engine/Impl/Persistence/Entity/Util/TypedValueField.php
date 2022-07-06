@@ -272,7 +272,7 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
     }
 
     /**
-     * @return the type name of the value
+     * @return string the type name of the value
      */
     public function getTypeName(): string
     {

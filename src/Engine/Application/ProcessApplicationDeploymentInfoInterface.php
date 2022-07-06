@@ -5,12 +5,12 @@ namespace Jabe\Engine\Application;
 interface ProcessApplicationDeploymentInfoInterface
 {
     /**
-     * @return the name of the process engine the deployment was made to
+     * @return string the name of the process engine the deployment was made to
      */
     public function getProcessEngineName(): string;
 
     /**
-     * @return the id of the deployment that was performed.
+     * @return string the id of the deployment that was performed.
      */
     public function getDeploymentId(): ?string;
 }

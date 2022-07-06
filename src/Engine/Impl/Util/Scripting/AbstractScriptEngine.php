@@ -38,7 +38,7 @@ abstract class AbstractScriptEngine implements ScriptEngineInterface
     /**
      * Returns the value of the protected <code>context</code> field.
      *
-     * @return The value of the protected <code>context</code> field.
+     * @return ScriptContextInterface The value of the protected <code>context</code> field.
      */
     public function getContext(): ScriptContextInterface
     {
@@ -51,7 +51,7 @@ abstract class AbstractScriptEngine implements ScriptEngineInterface
      *
      * @param scope The specified scope
      *
-     * @return The corresponding <code>Bindings</code>.
+     * @return BindingsInterface The corresponding <code>Bindings</code>.
      *
      * @throws IllegalArgumentException if the value of scope is
      * invalid for the type the protected <code>context</code> field.
@@ -113,7 +113,7 @@ abstract class AbstractScriptEngine implements ScriptEngineInterface
      * Gets the value for the specified key in the <code>ENGINE_SCOPE</code> of the
      * protected <code>context</code> field.
      *
-     * @return The value for the specified key.
+     * @return mixed The value for the specified key.
      *
      * @throws NullPointerException if key is null.
      * @throws IllegalArgumentException if key is empty.
@@ -149,7 +149,7 @@ abstract class AbstractScriptEngine implements ScriptEngineInterface
      * versions.
      *
      * @param nn Bindings to use for the <code>ENGINE_SCOPE</code>
-     * @return The <code>SimpleScriptContext</code>
+     * @return ScriptContextInterface The <code>SimpleScriptContext</code>
      */
     protected function getScriptContext(BindingsInterface $nn): ScriptContextInterface
     {

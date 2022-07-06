@@ -8,13 +8,13 @@ interface ScriptEngineFactoryInterface
      * Returns the full  name of the <code>ScriptEngine</code>.  For
      * instance an implementation based on the Mozilla Rhino Javascript engine
      * might return <i>Rhino Mozilla Javascript Engine</i>.
-     * @return The name of the engine implementation.
+     * @return string the name of the engine implementation.
      */
     public function getEngineName(): string;
 
     /**
      * Returns the version of the <code>ScriptEngine</code>.
-     * @return The <code>ScriptEngine</code> implementation version.
+     * @return string The <code>ScriptEngine</code> implementation version.
      */
     public function getEngineVersion(): string;
 
@@ -23,7 +23,7 @@ interface ScriptEngineFactoryInterface
      * written in the language supported by this <code>ScriptEngine</code>.
      * The array is used by the <code>ScriptEngineManager</code> to implement its
      * <code>getEngineByExtension</code> method.
-     * @return The list of extensions.
+     * @return array the list of extensions.
      */
     public function getExtensions(): array;
 
@@ -32,7 +32,7 @@ interface ScriptEngineFactoryInterface
      * can be executed by the engine.  The list is used by the
      * <code>ScriptEngineManager</code> class to implement its
      * <code>getEngineByMimetype</code> method.
-     * @return The list of mime types.
+     * @return array the list of mime types.
      */
     public function getMimeTypes(): array;
 
@@ -48,14 +48,14 @@ interface ScriptEngineFactoryInterface
     /**
      * Returns the name of the scripting language supported by this
      * <code>ScriptEngine</code>.
-     * @return The name of the supported language.
+     * @return string the name of the supported language.
      */
     public function getLanguageName(): string;
 
     /**
      * Returns the version of the scripting language supported by this
      * <code>ScriptEngine</code>.
-     * @return The version of the supported language.
+     * @return string the version of the supported language.
      */
     public function getLanguageVersion(): string;
 
@@ -96,7 +96,7 @@ interface ScriptEngineFactoryInterface
      * Implementations may define implementation-specific keys.
      *
      * @param key The name of the parameter
-     * @return The value for the given parameter. Returns <code>null</code> if no
+     * @return mixed The value for the given parameter. Returns <code>null</code> if no
      * value is assigned to the key.
      *
      */
@@ -134,7 +134,7 @@ interface ScriptEngineFactoryInterface
      * @param m The name of the method to invoke.
      * @param args names of the arguments in the method call.
      *
-     * @return The String used to invoke the method in the syntax of the scripting language.
+     * @return string The String used to invoke the method in the syntax of the scripting language.
      */
     public function getMethodCallSyntax(string $obj, string $m, ...$args): string;
 
@@ -150,7 +150,7 @@ interface ScriptEngineFactoryInterface
      * </code></pre>
      *
      * @param toDisplay The String to be displayed by the returned statement.
-     * @return The string used to display the String in the syntax of the scripting language.
+     * @return string The string used to display the String in the syntax of the scripting language.
      *
      *
      */
@@ -174,7 +174,7 @@ interface ScriptEngineFactoryInterface
      *
      *  @param statements The statements to be executed.  May be return values of
      *  calls to the <code>getMethodCallSyntax</code> and <code>getOutputStatement</code> methods.
-     *  @return The Program
+     *  @return string The Program
      */
 
     public function getProgram(...$statements): string;

@@ -41,7 +41,7 @@ class DbEntityCache
      *
      * @param type the type of the object
      * @param id the id of the object
-     * @return the object or 'null' if the object is not in the cache
+     * @return mixed the object or 'null' if the object is not in the cache
      * @throws ProcessEngineException if an object for the given id can be found but is of the wrong type.
      */
     public function get(string $type, string $id)
@@ -98,7 +98,7 @@ class DbEntityCache
      *
      * @param type the type of the object
      * @param id the id of the CachedEntity to lookup
-     * @return the cached entity or null if the entity does not exist.
+     * @return CachedDbEntity the cached entity or null if the entity does not exist.
      */
     public function getCachedEntity($typeOrEntity, string $id = null): ?CachedDbEntity
     {

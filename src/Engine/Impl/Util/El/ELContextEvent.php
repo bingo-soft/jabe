@@ -20,7 +20,7 @@ class ELContextEvent
     /**
      * Returns the ELContext that was created.
      *
-     * @return the ELContext that was created.
+     * @return ELContext the ELContext that was created.
      */
     public function getELContext(): ELContext
     {

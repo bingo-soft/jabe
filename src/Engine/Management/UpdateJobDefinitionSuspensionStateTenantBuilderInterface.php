@@ -7,7 +7,7 @@ interface UpdateJobDefinitionSuspensionStateTenantBuilderInterface
     /**
      * Specify that the process definition belongs to no tenant.
      *
-     * @return the builder
+     * @return UpdateJobDefinitionSuspensionStateBuilderInterface the builder
      */
     public function processDefinitionWithoutTenantId(): UpdateJobDefinitionSuspensionStateBuilderInterface;
 
@@ -16,7 +16,7 @@ interface UpdateJobDefinitionSuspensionStateTenantBuilderInterface
      *
      * @param tenantId
      *          the id of the tenant
-     * @return the builder
+     * @return UpdateJobDefinitionSuspensionStateBuilderInterface the builder
      */
     public function processDefinitionTenantId(string $tenantId): UpdateJobDefinitionSuspensionStateBuilderInterface;
 }

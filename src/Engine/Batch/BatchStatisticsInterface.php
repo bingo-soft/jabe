@@ -18,7 +18,7 @@ interface BatchStatisticsInterface extends BatchInterface
      *   {@link #getFailedJobs()} for the number of failed batch execution jobs.
      * </p>
      *
-     * @return the number of remaining batch execution jobs
+     * @return int the number of remaining batch execution jobs
      */
     public function getRemainingJobs(): int;
 
@@ -35,7 +35,7 @@ interface BatchStatisticsInterface extends BatchInterface
      *   {@link #getFailedJobs()} for the number of failed batch execution jobs.
      * </p>
      *
-     * @return the number of completed batch execution jobs
+     * @return int the number of completed batch execution jobs
      */
     public function getCompletedJobs(): int;
 
@@ -52,7 +52,7 @@ interface BatchStatisticsInterface extends BatchInterface
      *   {@link #getCompletedJobs()} ()} for the number of completed batch execution jobs.
      * </p>
      *
-     * @return the number of failed batch execution jobs
+     * @return int the number of failed batch execution jobs
      */
     public function getFailedJobs(): int;
 }

@@ -8,7 +8,7 @@ interface HistoricVariableInstanceQueryInterface extends QueryInterface
 {
     /** Only select the variable with the given Id
      * @param id of the variable to select
-     * @return the query object */
+     * @return HistoricVariableInstanceQueryInterface the query object */
     public function variableId(string $id): HistoricVariableInstanceQueryInterface;
 
     /** Only select historic process variables with the given process instance. */
@@ -80,7 +80,7 @@ interface HistoricVariableInstanceQueryInterface extends QueryInterface
      * By calling this method you can prevent the values of (potentially large) blob data chunks
      * to be fetched. The variables themselves are nonetheless included in the query result.
      *
-     * @return the query builder
+     * @return HistoricVariableInstanceQueryInterface the query builder
      */
     public function disableBinaryFetching(): HistoricVariableInstanceQueryInterface;
 

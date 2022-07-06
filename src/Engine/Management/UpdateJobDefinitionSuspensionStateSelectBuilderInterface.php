@@ -9,7 +9,7 @@ interface UpdateJobDefinitionSuspensionStateSelectBuilderInterface
      *
      * @param jobDefinitionId
      *          id of the job definition
-     * @return the builder
+     * @return UpdateJobDefinitionSuspensionStateBuilderInterface the builder
      */
     public function byJobDefinitionId(string $jobDefinitionId): UpdateJobDefinitionSuspensionStateBuilderInterface;
 
@@ -18,7 +18,7 @@ interface UpdateJobDefinitionSuspensionStateSelectBuilderInterface
      *
      * @param processDefinitionId
      *          id of the process definition
-     * @return the builder
+     * @return UpdateJobDefinitionSuspensionStateBuilderInterface the builder
      */
     public function byProcessDefinitionId(string $processDefinitionId): UpdateJobDefinitionSuspensionStateBuilderInterface;
 
@@ -27,7 +27,7 @@ interface UpdateJobDefinitionSuspensionStateSelectBuilderInterface
      *
      * @param processDefinitionKey
      *          key of the process definition
-     * @return the builder
+     * @return UpdateJobDefinitionSuspensionStateTenantBuilderInterface the builder
      */
     public function byProcessDefinitionKey(string $processDefinitionKey): UpdateJobDefinitionSuspensionStateTenantBuilderInterface;
 }

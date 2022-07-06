@@ -496,7 +496,7 @@ interface TaskServiceInterface
     * @param variableName the name of the variable to fetch
     * @param deserializeValue if false a, {@link SerializableValue} will not be deserialized.
     *
-    * @return the TypedValue for the variable or 'null' in case no such variable exists.
+    * @return TypedValueInterface the TypedValue for the variable or 'null' in case no such variable exists.
     *
     * @throws ClassCastException
     *          in case the value is not of the requested type
@@ -544,7 +544,7 @@ interface TaskServiceInterface
     * @param variableName the name of the variable to fetch
     * @param deserializeValue if false a, {@link SerializableValue} will not be deserialized.
     *
-    * @return the TypedValue for the variable or 'null' in case no such variable exists.
+    * @return TypedValueInterface the TypedValue for the variable or 'null' in case no such variable exists.
     *
     * @throws ClassCastException
     *          in case the value is not of the requested type

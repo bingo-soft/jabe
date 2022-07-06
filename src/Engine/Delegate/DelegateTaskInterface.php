@@ -141,7 +141,7 @@ interface DelegateTaskInterface extends VariableScopeInterface, BpmnModelExecuti
 
     /**
      * Provides access to the current {@link UserTask} Element from the Bpmn Model.
-     * @return the current {@link UserTask} Element from the Bpmn Model.
+     * @return UserTaskInterface the current {@link UserTask} Element from the Bpmn Model.
      */
     public function getBpmnModelElementInstance(): UserTaskInterface;
 

@@ -13,7 +13,7 @@ interface ProcessEngineServicesAwareInterface
      * Returns the {@link ProcessEngineServices} providing access to the
      * public API of the process engine.
      *
-     * @return the {@link ProcessEngineServices}.
+     * @return ProcessEngineServicesInterface the {@link ProcessEngineServices}.
      */
     public function getProcessEngineServices(): ProcessEngineServicesInterface;
 
@@ -21,7 +21,7 @@ interface ProcessEngineServicesAwareInterface
      * Returns the {@link ProcessEngine} providing access to the
      * public API of the process engine.
      *
-     * @return the {@link ProcessEngine}.
+     * @return ProcessEngineInterface the {@link ProcessEngine}.
      */
     public function getProcessEngine(): ProcessEngineInterface;
 }

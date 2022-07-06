@@ -64,7 +64,7 @@ abstract class CoreModelElement implements \Serializable
     /**
      * Returns the properties of the element.
      *
-     * @return the properties
+     * @return Properties the properties
      */
     public function getProperties(): Properties
     {

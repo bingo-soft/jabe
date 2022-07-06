@@ -17,7 +17,7 @@ interface SerializableValueInterface extends TypedValueInterface
     /**
      * Returns the value or null in case the value is null.
      *
-     * @return the value represented by this TypedValue.
+     * @return mixed the value represented by this TypedValue.
      * @throws IllegalStateException in case the value is not deserialized. See {@link #isDeserialized()}.
      */
     public function getValue(?string $type = null);
@@ -35,7 +35,7 @@ interface SerializableValueInterface extends TypedValueInterface
     /**
      * The serialization format used to serialize this value.
      *
-     * @return the serialization format used to serialize this variable.
+     * @return string the serialization format used to serialize this variable.
      */
     public function getSerializationDataFormat(): string;
 

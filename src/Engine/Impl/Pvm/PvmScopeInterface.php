@@ -38,7 +38,7 @@ interface PvmScopeInterface extends PvmProcessElementInterface
      *<p>
     * The event scope is always a {@link #isScope() scope}.
     *
-    * @return the event scope of the activity
+    * @return PvmScopeInterface the event scope of the activity
     */
     public function getEventScope(): ?PvmScopeInterface;
 
@@ -57,7 +57,7 @@ interface PvmScopeInterface extends PvmProcessElementInterface
      * mutli instance body but "at the same level of subprocess" as other activities which
      * are siblings to the mi-body.
      *
-     * @return the level of subprocess scope as defined in bpmn
+     * @return PvmScopeInterface the level of subprocess scope as defined in bpmn
      */
     public function getLevelOfSubprocessScope(): ?PvmScopeInterface;
 
@@ -65,7 +65,7 @@ interface PvmScopeInterface extends PvmProcessElementInterface
      * Returns the flow activities of this scope. This is the list of activities for which this scope is
      * the {@link PvmActivity#getFlowScope() flow scope}.
      *
-     * @return the list of flow activities for this scope.
+     * @return array the list of flow activities for this scope.
      */
     public function getActivities(): array;
 
@@ -73,7 +73,7 @@ interface PvmScopeInterface extends PvmProcessElementInterface
      * Recursively finds a flow activity. This is an activitiy which is in the hierarchy of flow activities.
      *
      * @param activityId the id of the activity to find.
-     * @return the activity or null
+     * @return PvmActivityInterface the activity or null
      */
     public function findActivity(string $activityId): PvmActivityInterface;
 
@@ -81,14 +81,14 @@ interface PvmScopeInterface extends PvmProcessElementInterface
      * Finds an activity at the same level of subprocess.
      *
      * @param activityId the id of the activity to find.
-     * @return the activity or null
+     * @return PvmActivityInterface the activity or null
      */
     public function findActivityAtLevelOfSubprocess(string $activityId): PvmActivityInterface;
 
     /**
      * Recursively finds a transition.
      * @param transitionId the transiton to find
-     * @return the transition or null
+     * @return TransitionImpl the transition or null
      */
     public function findTransition(string $transitionId): TransitionImpl;
 }

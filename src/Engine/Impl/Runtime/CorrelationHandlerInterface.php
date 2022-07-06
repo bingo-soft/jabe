@@ -13,7 +13,7 @@ interface CorrelationHandlerInterface
      * @param correlationSet
      *          any of its members may be <code>null</code>
      *
-     * @return the matched correlation target or <code>null</code> if the message
+     * @return CorrelationHandlerResult the matched correlation target or <code>null</code> if the message
      *         could not be correlated.
      */
     public function correlateMessage(CommandContext $commandContext, string $messageName, CorrelationSet $correlationSet): CorrelationHandlerResult;
@@ -37,7 +37,7 @@ interface CorrelationHandlerInterface
      * @param correlationSet
      *          any of its members may be <code>null</code>
      *
-     * @return the matched correlation targets or an empty list if the message
+     * @return array the matched correlation targets or an empty list if the message
      *         could not be correlated.
      */
     public function correlateStartMessages(CommandContext $commandContext, string $messageName, CorrelationSet $correlationSet): array;

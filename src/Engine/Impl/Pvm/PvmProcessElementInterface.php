@@ -8,7 +8,7 @@ interface PvmProcessElementInterface extends \Serializable
 {
     /**
      * The id of the element
-     * @return the id
+     * @return string the id
      */
     public function getId(): string;
 
@@ -23,7 +23,7 @@ interface PvmProcessElementInterface extends \Serializable
     /**
      * Returns the properties of the element.
      *
-     * @return the properties
+     * @return Properties the properties
      */
     public function getProperties(): Properties;
 }

@@ -19,7 +19,7 @@ interface ObjectValueInterface extends SerializableValueInterface
     /**
      * Returns the Object or null in case the value is null.
      *
-     * @return the object represented by this TypedValue.
+     * @return mixed the object represented by this TypedValue.
      * @throws IllegalStateException in case the object is not deserialized. See {@link #isDeserialized()}.
      */
     public function getValue(?string $type = null);
@@ -27,7 +27,7 @@ interface ObjectValueInterface extends SerializableValueInterface
     /**
      * Returns the Class this object is an instance of.
      *
-     * @return the Class this object is an instance of
+     * @return string the Class this object is an instance of
      * @throws IllegalStateException in case the object is not deserialized. See {@link #isDeserialized()}.
      */
     public function getObjectType(): ?string;
@@ -37,7 +37,7 @@ interface ObjectValueInterface extends SerializableValueInterface
     * Usually the canonical class name of the Java Class this object
     * is an instance of.
     *
-    * @return the Object's type name.
+    * @return string the Object's type name.
     */
     public function getObjectTypeName(): ?string;
 }

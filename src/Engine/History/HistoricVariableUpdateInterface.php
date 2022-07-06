@@ -16,14 +16,14 @@ interface HistoricVariableUpdateInterface
     /**
      * Returns the type name of the variable
      *
-     * @return the type name of the variable
+     * @return string the type name of the variable
      */
     public function getTypeName(): string;
 
     public function getValue();
 
     /**
-     * @return the {@link TypedValue} for this variable update
+     * @return TypedValueInterface the {@link TypedValue} for this variable update
      */
     public function getTypedValue(): TypedValueInterface;
 

@@ -38,7 +38,7 @@ class TablePage
     }
 
     /**
-     * @return the start index of this page
+     * @return int the start index of this page
      *         (ie the index of the first element in the page)
      */
     public function getFirstResult(): int
@@ -57,7 +57,7 @@ class TablePage
     }
 
     /**
-     * @return the actual table content.
+     * @return array the actual table content.
      */
     public function getRows(): array
     {
@@ -70,7 +70,7 @@ class TablePage
     }
 
     /**
-     * @return the total rowcount of the table from which this page is only a subset.
+     * @return int the total rowcount of the table from which this page is only a subset.
      */
     public function getTotal(): int
     {
@@ -78,7 +78,7 @@ class TablePage
     }
 
     /**
-     * @return the actual number of rows in this page.
+     * @return int the actual number of rows in this page.
      */
     public function getSize(): int
     {

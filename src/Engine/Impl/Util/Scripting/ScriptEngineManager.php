@@ -50,7 +50,7 @@ class ScriptEngineManager
      * ScriptEngineManager sets this <code>Bindings</code> as global bindings for
      * <code>ScriptEngine</code> objects created by it.
      *
-     * @return The globalScope field.
+     * @return BindingsInterface The globalScope field.
      */
     public function getBindings(): BindingsInterface
     {
@@ -72,7 +72,7 @@ class ScriptEngineManager
     /**
      * Gets the value for the specified key in the Global Scope
      * @param key The key whose value is to be returned.
-     * @return The value for the specified key.
+     * @return mixed The value for the specified key.
      */
     public function get(string $key)
     {
@@ -147,7 +147,7 @@ class ScriptEngineManager
      * by looking for a <code>ScriptEngineFactory</code> registered to handle the
      * given extension using <code>registerEngineExtension</code>.
      * @param extension The given extension
-     * @return The engine to handle scripts with this extension.  Returns <code>null</code>
+     * @return ScriptEngineInterface The engine to handle scripts with this extension.  Returns <code>null</code>
      * if not found.
      * @throws NullPointerException if extension is null.
      */

@@ -28,7 +28,7 @@ class MethodInfo
     /**
      * Returns the name of the method
      *
-     * @return the name of the method
+     * @return string the name of the method
      */
     public function getName(): string
     {
@@ -38,7 +38,7 @@ class MethodInfo
     /**
      * Returns the parameter types of the method
      *
-     * @return the parameter types of the method
+     * @return array the parameter types of the method
      */
     public function getParamTypes(): array
     {
@@ -48,7 +48,7 @@ class MethodInfo
     /**
      * Returns the return type of the method
      *
-     * @return the return type of the method
+     * @return string the return type of the method
      */
     public function getReturnType(): string
     {

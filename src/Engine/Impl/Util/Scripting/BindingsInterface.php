@@ -10,7 +10,7 @@ interface BindingsInterface
      * @param name The name associated with the value.
      * @param value The value associated with the name.
      *
-     * @return The value previously associated with the given name.
+     * @return mixed The value previously associated with the given name.
      * Returns null if no value was previously associated with the name.
      *
      * @throws NullPointerException if the name is null.
@@ -60,7 +60,7 @@ interface BindingsInterface
      * it returns <tt>null</tt>.  (There can be at most one such mapping.)
      *
      * @param key key whose associated value is to be returned.
-     * @return the value to which this map maps the specified key, or
+     * @return mixed the value to which this map maps the specified key, or
      *         <tt>null</tt> if the map contains no mapping for this key.
      *
      * @throws NullPointerException if key is null

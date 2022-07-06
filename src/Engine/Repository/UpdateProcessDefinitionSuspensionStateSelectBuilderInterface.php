@@ -9,7 +9,7 @@ interface UpdateProcessDefinitionSuspensionStateSelectBuilderInterface
      *
      * @param processDefinitionId
      *          id of the process definition
-     * @return the builder
+     * @return UpdateProcessDefinitionSuspensionStateBuilderInterface the builder
      */
     public function byProcessDefinitionId(string $processDefinitionId): UpdateProcessDefinitionSuspensionStateBuilderInterface;
 
@@ -18,7 +18,7 @@ interface UpdateProcessDefinitionSuspensionStateSelectBuilderInterface
      *
      * @param processDefinitionKey
      *          key of the process definition
-     * @return the builder
+     * @return UpdateProcessDefinitionSuspensionStateTenantBuilderInterface the builder
      */
     public function byProcessDefinitionKey(string $processDefinitionKey): UpdateProcessDefinitionSuspensionStateTenantBuilderInterface;
 }

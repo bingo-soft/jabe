@@ -8,7 +8,7 @@ interface VariableInstanceQueryInterface extends QueryInterface
 {
     /** Only select the variable with the given Id
      * @param the id of the variable to select
-     * @return the query object */
+     * @return VariableInstanceQueryInterface the query object */
     public function variableId(string $id): VariableInstanceQueryInterface;
 
     /** Only select variable instances which have the variable name. **/
@@ -145,7 +145,7 @@ interface VariableInstanceQueryInterface extends QueryInterface
      * By calling this method you can prevent the values of (potentially large) blob data chunks
      * to be fetched. The variables themselves are nonetheless included in the query result.
      *
-     * @return the query builder
+     * @return VariableInstanceQueryInterface the query builder
      */
     public function disableBinaryFetching(): VariableInstanceQueryInterface;
 

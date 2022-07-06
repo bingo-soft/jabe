@@ -222,7 +222,7 @@ abstract class ELResolver
      *            to be unknown.
      * @param params
      *            The parameters to pass to the method, or <code>null</code> if no parameters.
-     * @return The result of the method invocation (<code>null</code> if the method has a
+     * @return mixed The result of the method invocation (<code>null</code> if the method has a
      *         <code>void</code> return type).
      * @throws MethodNotFoundException
      *             if no suitable method can be found.

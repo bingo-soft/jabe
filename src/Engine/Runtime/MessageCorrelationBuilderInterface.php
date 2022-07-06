@@ -13,9 +13,9 @@ interface MessageCorrelationBuilderInterface
      *
      * @param businessKey
      *          the businessKey to correlate on.
-     * @return the builder
+     * @return MessageCorrelationBuilderInterface the builder
      */
-    public function processInstanceBusinessKey(string $businessKey): MessageCorrelationBuilder;
+    public function processInstanceBusinessKey(string $businessKey): MessageCorrelationBuilderInterface;
 
     /**
      * <p>Correlate the message such that the process instance has a
@@ -23,9 +23,9 @@ interface MessageCorrelationBuilderInterface
      *
      * @param variableName the name of the process instance variable to correlate on.
      * @param variableValue the value of the process instance variable to correlate on.
-     * @return the builder
+     * @return MessageCorrelationBuilderInterface the builder
      */
-    public function processInstanceVariableEquals(string $variableName, $variableValue): MessageCorrelationBuilder;
+    public function processInstanceVariableEquals(string $variableName, $variableValue): MessageCorrelationBuilderInterface;
 
     /**
      * <p>
@@ -33,43 +33,43 @@ interface MessageCorrelationBuilderInterface
      * </p>
      *
      * @param variables the variables of the process instance to correlate on.
-     * @return the builder
+     * @return MessageCorrelationBuilderInterface the builder
      */
-    public function processInstanceVariablesEqual(array $variables): MessageCorrelationBuilder;
+    public function processInstanceVariablesEqual(array $variables): MessageCorrelationBuilderInterface;
 
     /**
      * <p>Correlate the message such that the execution has a local variable with the given name and value.</p>
      *
      * @param variableName the name of the local variable to correlate on.
      * @param variableValue the value of the local variable to correlate on.
-     * @return the builder
+     * @return MessageCorrelationBuilderInterface the builder
      */
-    public function localVariableEquals(string $variableName, $variableValue): MessageCorrelationBuilder;
+    public function localVariableEquals(string $variableName, $variableValue): MessageCorrelationBuilderInterface;
     /**
      * <p>Correlate the message such that the execution has the given variables as local variables.
      * </p>
      *
      * @param variables the local variables of the execution to correlate on.
-     * @return the builder
+     * @return MessageCorrelationBuilderInterface the builder
      */
-    public function localVariablesEqual(array $variables): MessageCorrelationBuilder;
+    public function localVariablesEqual(array $variables): MessageCorrelationBuilderInterface;
 
     /**
      * <p>Correlate the message such that a process instance with the given id is selected.</p>
      *
      * @param id the id of the process instance to correlate on.
-     * @return the builder
+     * @return MessageCorrelationBuilderInterface the builder
      */
-    public function processInstanceId(string $id): MessageCorrelationBuilder;
+    public function processInstanceId(string $id): MessageCorrelationBuilderInterface;
 
     /**
      * <p>Correlate the message such that a process definition with the given id is selected.
      * Is only supported for {@link #correlateStartMessage()} or {@link #startMessageOnly()} flag.</p>
      *
      * @param processDefinitionId the id of the process definition to correlate on.
-     * @return the builder
+     * @return MessageCorrelationBuilderInterface the builder
      */
-    public function processDefinitionId(string $processDefinitionId): MessageCorrelationBuilder;
+    public function processDefinitionId(string $processDefinitionId): MessageCorrelationBuilderInterface;
 
     /**
      * <p>Pass a variable to the execution waiting on the message. Use this method for passing the
@@ -79,9 +79,9 @@ interface MessageCorrelationBuilderInterface
      *
      * @param variableName the name of the variable to set
      * @param variableValue the value of the variable to set
-     * @return the builder
+     * @return MessageCorrelationBuilderInterface the builder
      */
-    public function setVariable(string $variableName, $variableValue): MessageCorrelationBuilder;
+    public function setVariable(string $variableName, $variableValue): MessageCorrelationBuilderInterface;
 
     /**
      * <p>Pass a local variable to the execution waiting on the message. Use this method for passing the
@@ -91,27 +91,27 @@ interface MessageCorrelationBuilderInterface
      *
      * @param variableName the name of the variable to set
      * @param variableValue the value of the variable to set
-     * @return the builder
+     * @return MessageCorrelationBuilderInterface the builder
      */
-    public function setVariableLocal(string $variableName, $variableValue): MessageCorrelationBuilder;
+    public function setVariableLocal(string $variableName, $variableValue): MessageCorrelationBuilderInterface;
 
     /**
      * <p>Pass a map of variables to the execution waiting on the message. Use this method
      * for passing the message's payload</p>
      *
      * @param variables the map of variables
-     * @return the builder
+     * @return MessageCorrelationBuilderInterface the builder
      */
-    public function setVariables(array $variables): MessageCorrelationBuilder;
+    public function setVariables(array $variables): MessageCorrelationBuilderInterface;
 
     /**
      * <p>Pass a map of local variables to the execution waiting on the message. Use this method
      * for passing the message's payload</p>
      *
      * @param variables the map of local variables
-     * @return the builder
+     * @return MessageCorrelationBuilderInterface the builder
      */
-    public function setVariablesLocal(array $variables): MessageCorrelationBuilder;
+    public function setVariablesLocal(array $variables): MessageCorrelationBuilderInterface;
 
     /**
      * Specify a tenant to deliver the message to. The message can only be
@@ -121,25 +121,25 @@ interface MessageCorrelationBuilderInterface
      *
      * @param tenantId
      *          the id of the tenant
-     * @return the builder
+     * @return MessageCorrelationBuilderInterface the builder
      */
-    public function tenantId(string $tenantId): MessageCorrelationBuilder;
+    public function tenantId(string $tenantId): MessageCorrelationBuilderInterface;
 
     /**
      * Specify that the message can only be received on executions or process
      * definitions which belongs to no tenant. Cannot be used in combination with
      * {@link #processInstanceId(String)} or {@link #processDefinitionId(String)}.
      *
-     * @return the builder
+     * @return MessageCorrelationBuilderInterface the builder
      */
-    public function withoutTenantId(): MessageCorrelationBuilder;
+    public function withoutTenantId(): MessageCorrelationBuilderInterface;
 
     /**
      * Specify that only start message can be correlated.
      *
-     * @return the builder
+     * @return MessageCorrelationBuilderInterface the builder
      */
-    public function startMessageOnly(): MessageCorrelationBuilder;
+    public function startMessageOnly(): MessageCorrelationBuilderInterface;
 
     /**
      * Executes the message correlation.
@@ -173,7 +173,7 @@ interface MessageCorrelationBuilderInterface
      *          {@link Resources#PROCESS_INSTANCE} and no {@link Permissions#CREATE_INSTANCE} permission on
      *          {@link Resources#PROCESS_DEFINITION}.</li>
      *
-     * @return The result of the message correlation. Result contains either the execution id or the start event activity id and the process definition.
+     * @return MessageCorrelationResultInterface The result of the message correlation. Result contains either the execution id or the start event activity id and the process definition.
      */
     public function correlateWithResult(): MessageCorrelationResultInterface;
 
@@ -187,7 +187,7 @@ interface MessageCorrelationBuilderInterface
      *   will not be deserialized (unless they are passed into this method as a
      *   deserialized value or if the BPMN process triggers deserialization)
      *
-     * @return The result of the message correlation. Result contains either the
+     * @return MessageCorrelationResultWithVariablesInterface The result of the message correlation. Result contains either the
      *         execution id or the start event activity id, the process definition,
      *         and the process variables.
      */
@@ -242,7 +242,7 @@ interface MessageCorrelationBuilderInterface
      *          {@link Resources#PROCESS_INSTANCE} and no {@link Permissions#CREATE_INSTANCE} permission on
      *          {@link Resources#PROCESS_DEFINITION}.</li>
      *
-     * @return The result list of the message correlations. Each result contains
+     * @return array The result list of the message correlations. Each result contains
      * either the execution id or the start event activity id and the process definition.
      */
     public function correlateAllWithResult(): array;
@@ -257,7 +257,7 @@ interface MessageCorrelationBuilderInterface
      *   will not be deserialized (unless they are passed into this method as a
      *   deserialized value or if the BPMN process triggers deserialization)
      *
-     * @return The result list of the message correlations. Each result contains
+     * @return array The result list of the message correlations. Each result contains
      *         either the execution id or the start event activity id, the process
      *         definition, and the process variables.
      */
@@ -278,7 +278,7 @@ interface MessageCorrelationBuilderInterface
      * </ul>
      * </p>
      *
-     * @return the newly created process instance
+     * @return ProcessInstanceInterface the newly created process instance
      *
      * @throws MismatchingMessageCorrelationException
      *           if none or more than one process definition is matched by the correlation

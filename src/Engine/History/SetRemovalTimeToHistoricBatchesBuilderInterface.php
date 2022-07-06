@@ -11,7 +11,7 @@ interface SetRemovalTimeToHistoricBatchesBuilderInterface
     * Selects historic batches by the given query.
     *
     * @param historicBatchQuery to be evaluated.
-    * @return the builder.
+    * @return SetRemovalTimeToHistoricBatchesBuilderInterface the builder.
     */
     public function byQuery(HistoricBatchQueryInterface $historicBatchQuery): SetRemovalTimeToHistoricBatchesBuilderInterface;
 
@@ -19,7 +19,7 @@ interface SetRemovalTimeToHistoricBatchesBuilderInterface
     * Selects historic batches by the given ids.
     *
     * @param historicBatchIds supposed to be affected.
-    * @return the builder.
+    * @return SetRemovalTimeToHistoricBatchesBuilderInterface the builder.
     */
     public function byIds(array $historicBatchIds): SetRemovalTimeToHistoricBatchesBuilderInterface;
 
@@ -32,7 +32,7 @@ interface SetRemovalTimeToHistoricBatchesBuilderInterface
     * when no {@link BatchPermissions#CREATE_BATCH_SET_REMOVAL_TIME CREATE_BATCH_SET_REMOVAL_TIME}
     * or no permission {@link Permissions#CREATE CREATE} permission is granted on {@link Resources#BATCH}.
     *
-    * @return the batch which sets the removal time asynchronously.
+    * @return BatchInterface the batch which sets the removal time asynchronously.
     */
     public function executeAsync(): BatchInterface;
 }

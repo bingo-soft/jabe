@@ -48,7 +48,7 @@ class ClockUtil
      *
      * @param offsetInMillis
      *          the offset to move the clock by
-     * @return the new 'now'
+     * @return \DateTime the new 'now'
      */
     public static function offset(int $offsetInMillis): \DateTime
     {

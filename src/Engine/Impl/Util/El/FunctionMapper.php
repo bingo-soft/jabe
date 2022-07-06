@@ -13,7 +13,7 @@ abstract class FunctionMapper
      *            ${fn:method()}, or "" in ${method()}.
      * @param localName
      *            the short name of the function. For example, "method" in ${fn:method()}.
-     * @return the static method to invoke, or null if no match was found.
+     * @return \ReflectionMethod the static method to invoke, or null if no match was found.
      */
     abstract public function resolveFunction(string $prefix, string $localName): ?\ReflectionMethod;
 }

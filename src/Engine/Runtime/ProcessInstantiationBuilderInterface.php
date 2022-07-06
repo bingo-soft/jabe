@@ -37,7 +37,7 @@ interface ProcessInstantiationBuilderInterface extends ActivityInstantiationBuil
      *          specifies whether input/output mappings for tasks should be
      *          invoked throughout the transaction when executing the
      *          instructions. Only supported for instructions.
-     * @return the newly created process instance
+     * @return mixed the newly created process instance
      * @see also {@link #executeWithVariablesInReturn(boolean, boolean)}.
      */
     public function execute(bool $skipCustomListeners = false, bool $skipIoMappings = false);
@@ -55,7 +55,7 @@ interface ProcessInstantiationBuilderInterface extends ActivityInstantiationBuil
      *          specifies whether input/output mappings for tasks should be
      *          invoked throughout the transaction when executing the
      *          instructions. Only supported for instructions.
-     * @return the newly created process instance with the latest variables
+     * @return ProcessInstanceWithVariablesInterface the newly created process instance with the latest variables
      *
      * @throws AuthorizationException
      *           if the user has no {@link Permissions#CREATE} permission on

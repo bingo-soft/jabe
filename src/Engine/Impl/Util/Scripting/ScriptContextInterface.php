@@ -37,7 +37,7 @@ interface ScriptContextInterface
      * Gets the <code>Bindings</code>  associated with the given scope in this
      * <code>ScriptContext</code>.
      *
-     * @return The associated <code>Bindings</code>.  Returns <code>null</code> if it has not
+     * @return BindingsInterface The associated <code>Bindings</code>.  Returns <code>null</code> if it has not
      * been set.
      *
      * @param scope The scope
@@ -64,7 +64,7 @@ interface ScriptContextInterface
      *
      * @param name The name of the attribute to retrieve.
      * @param scope The scope in which to retrieve the attribute.
-     * @return The value of the attribute. Returns <code>null</code> is the name
+     * @return mixed The value of the attribute. Returns <code>null</code> is the name
      * does not exist in the given scope.
      *
      * @throws IllegalArgumentException
@@ -79,7 +79,7 @@ interface ScriptContextInterface
      * @param name The name of the attribute to remove
      * @param scope The scope in which to remove the attribute
      *
-     * @return The removed value.
+     * @return mixed The removed value.
      * @throws IllegalArgumentException
      *         if the name is empty or if the scope is invalid.
      * @throws NullPointerException if the name is null.
@@ -90,7 +90,7 @@ interface ScriptContextInterface
      * Get the lowest scope in which an attribute is defined.
      * @param name Name of the attribute
      * .
-     * @return The lowest scope.  Returns -1 if no attribute with the given
+     * @return mixed The lowest scope.  Returns -1 if no attribute with the given
      * name is defined in any scope.
      * @throws NullPointerException if name is null.
      * @throws IllegalArgumentException if name is empty.

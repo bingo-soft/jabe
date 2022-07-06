@@ -64,7 +64,7 @@ abstract class JobDeclaration implements \Serializable
 
     /**
      *
-     * @return the created Job instances
+     * @return JobEntity the created Job instances
      */
     public function createJobInstance($context = null): JobEntity
     {

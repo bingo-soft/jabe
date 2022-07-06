@@ -82,7 +82,7 @@ interface ManagementServiceInterface
     public function unregisterProcessApplication($deploymentIds, bool $removeProcessDefinitionsFromCache): void;
 
     /**
-     * @return the name of the process application that is currently registered for
+     * @return string the name of the process application that is currently registered for
      *         the given deployment or 'null' if no process application is
      *         currently registered.
      *
@@ -478,7 +478,7 @@ interface ManagementServiceInterface
     * suspension state call {@link UpdateJobSuspensionStateBuilder#activate()} or
     * {@link UpdateJobSuspensionStateBuilder#suspend()}.
     *
-    * @return the builder to update the suspension state
+    * @return UpdateJobSuspensionStateSelectBuilderInterface the builder to update the suspension state
     */
     public function updateJobSuspensionState(): UpdateJobSuspensionStateSelectBuilderInterface;
 
@@ -489,7 +489,7 @@ interface ManagementServiceInterface
     * {@link UpdateJobDefinitionSuspensionStateBuilder#activate()} or
     * {@link UpdateJobDefinitionSuspensionStateBuilder#suspend()}.
     *
-    * @return the builder to update the suspension state
+    * @return UpdateJobDefinitionSuspensionStateSelectBuilderInterface the builder to update the suspension state
     */
     public function updateJobDefinitionSuspensionState(): UpdateJobDefinitionSuspensionStateSelectBuilderInterface;
 
@@ -780,7 +780,7 @@ interface ManagementServiceInterface
     /**
     * Get the configured history level for the process engine.
     *
-    * @return the history level
+    * @return int the history level
     *
     * @throws AuthorizationException
     *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
@@ -820,7 +820,7 @@ interface ManagementServiceInterface
     *
     * @param startTime restrict to data collected after the given date (inclusive), can be <code>null</code>
     * @param endTime restrict to data collected before the given date (exclusive), can be <code>null</code>
-    * @return the aggregated number of unique task workers (may be restricted to a certain interval)
+    * @return int the aggregated number of unique task workers (may be restricted to a certain interval)
     */
     public function getUniqueTaskWorkerCount(?string $startTime = null, ?string $endTime = null): int;
 

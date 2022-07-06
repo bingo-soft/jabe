@@ -9,7 +9,7 @@ interface MetricIntervalValueInterface
      *
      * @see constants in {@link Metrics} for a list of names which can be returned here
      *
-     * @return the name of the metric
+     * @return string the name of the metric
      */
     public function getName(): string;
 
@@ -18,21 +18,21 @@ interface MetricIntervalValueInterface
      *        the reporter name of the metric, identifies the node which generates this metric.
      *        'null' when the metrics are aggregated by reporter.
      *
-     * @return the reporter name
+     * @return string the reporter name
      */
     public function getReporter(): string;
 
     /**
      * Returns the timestamp as date object, on which the metric was created.
      *
-     * @return the timestamp
+     * @return string the timestamp
      */
     public function getTimestamp(): string;
 
     /**
      * Returns the value of the metric.
      *
-     * @return the value
+     * @return int the value
      */
     public function getValue(): int;
 }

@@ -39,7 +39,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
     // select ///////////////////////////////////////////////////////////
 
     /**
-     * @return the latest version of the process definition with the given key (from any tenant)
+     * @return ProcessDefinitionEntity the latest version of the process definition with the given key (from any tenant)
      *
      * @throws ProcessEngineException if more than one tenant has a process definition with the given key
      *
@@ -60,7 +60,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
     }
 
     /**
-     * @return the latest versions of the process definition with the given key (from any tenant),
+     * @return array the latest versions of the process definition with the given key (from any tenant),
      *         contains multiple elements if more than one tenant has a process definition with
      *         the given key
      *
@@ -72,7 +72,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
     }
 
     /**
-     * @return the latest version of the process definition with the given key and tenant id
+     * @return ProcessDefinitionEntity the latest version of the process definition with the given key and tenant id
      *
      * @see #findLatestProcessDefinitionByKeyAndTenantId(String, String)
      */

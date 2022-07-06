@@ -17,7 +17,7 @@ interface BpmnModelExecutionContextInterface
      * for {@link ExecutionListener#EVENTNAME_START} and {@link ExecutionListener#EVENTNAME_END} and the corresponding
      * {@link SequenceFlow} for {@link ExecutionListener#EVENTNAME_TAKE}.</p>
      *
-     * @return the {@link FlowElement} corresponding to the current Bpmn Model Element
+     * @return FlowElementInterface the {@link FlowElement} corresponding to the current Bpmn Model Element
      */
     public function getBpmnModelElementInstance(): FlowElementInterface;
 }

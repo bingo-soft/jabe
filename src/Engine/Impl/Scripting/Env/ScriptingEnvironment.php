@@ -116,7 +116,7 @@ class ScriptingEnvironment
      * Initializes the env scripts for a given language.
      *
      * @param language the language
-     * @return the list of env scripts. Never null.
+     * @return array the list of env scripts. Never null.
      */
     protected function initEnvForLanguage(string $language): array
     {

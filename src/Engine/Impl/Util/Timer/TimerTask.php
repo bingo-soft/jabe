@@ -115,7 +115,7 @@ abstract class TimerTask extends \Threaded implements RunnableInterface
      * execution times are allowed to drift over time, and so are not terribly
      * significant.
      *
-     * @return the time at which the most recent execution of this task was
+     * @return int the time at which the most recent execution of this task was
      *         scheduled to occur, in the format returned by Date.getTime().
      *         The return value is undefined if the task has yet to commence
      *         its first execution.

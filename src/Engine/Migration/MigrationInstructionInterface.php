@@ -5,13 +5,13 @@ namespace Jabe\Engine\Migration;
 interface MigrationInstructionInterface
 {
     /**
-     * @return the id of the activity of the source process definition that this
+     * @return string the id of the activity of the source process definition that this
      * instruction maps instances from
      */
     public function getSourceActivityId(): string;
 
     /**
-     * @return the id of the activity of the target process definition that this
+     * @return string the id of the activity of the target process definition that this
      * instruction maps instances to
      */
     public function getTargetActivityId(): string;

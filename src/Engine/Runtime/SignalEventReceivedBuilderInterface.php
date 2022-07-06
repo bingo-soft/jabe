@@ -9,7 +9,7 @@ interface SignalEventReceivedBuilderInterface
      *
      * @param variables
      *          a map of variables added to the executions
-     * @return the builder
+     * @return SignalEventReceivedBuilderInterface the builder
      */
     public function setVariables(array $variables): SignalEventReceivedBuilderInterface;
 
@@ -19,7 +19,7 @@ interface SignalEventReceivedBuilderInterface
      * @param executionId
      *          the id of the process instance or the execution to deliver the
      *          signal to
-     * @return the builder
+     * @return SignalEventReceivedBuilderInterface the builder
      */
     public function executionId(string $executionId): SignalEventReceivedBuilderInterface;
 
@@ -30,7 +30,7 @@ interface SignalEventReceivedBuilderInterface
      *
      * @param tenantId
      *          the id of the tenant
-     * @return the builder
+     * @return SignalEventReceivedBuilderInterface the builder
      */
     public function tenantId(string $tenantId): SignalEventReceivedBuilderInterface;
 
@@ -39,7 +39,7 @@ interface SignalEventReceivedBuilderInterface
      * definitions which belongs to no tenant. Cannot be used in combination with
      * {@link #executionId(String)}.
      *
-     * @return the builder
+     * @return SignalEventReceivedBuilderInterface the builder
      */
     public function withoutTenantId(): SignalEventReceivedBuilderInterface;
 

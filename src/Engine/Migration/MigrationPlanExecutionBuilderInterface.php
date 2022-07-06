@@ -60,7 +60,7 @@ interface MigrationPlanExecutionBuilderInterface
      * Execute the migration asynchronously as batch. The returned batch
      * can be used to track the progress of the migration.
      *
-     * @return the batch which executes the migration asynchronously.
+     * @return BatchInterface the batch which executes the migration asynchronously.
      *
      * @throws AuthorizationException
      *   if the user has not all of the following permissions

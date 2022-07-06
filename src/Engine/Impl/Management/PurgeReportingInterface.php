@@ -15,14 +15,14 @@ interface PurgeReportingInterface
     /**
      * Returns the current purge report.
      *
-     * @return the purge report
+     * @return array the purge report
      */
     public function getPurgeReport(): array;
 
     /**
      * Transforms and returns the purge report to a string.
      *
-     * @return the purge report as string
+     * @return string the purge report as string
      */
     public function getPurgeReportAsString(): string;
 
@@ -30,7 +30,7 @@ interface PurgeReportingInterface
      * Returns the value for the given key.
      *
      * @param key the key which exist in the current report
-     * @return the corresponding value
+     * @return mixed the corresponding value
      */
     public function getReportValue(string $key);
 

@@ -41,7 +41,7 @@ abstract class ResourceDefinitionCache
     }
 
     /**
-     * @return the latest version of the definition with the given key (from any tenant)
+     * @return ResourceDefinitionEntityInterface the latest version of the definition with the given key (from any tenant)
      * @throws ProcessEngineException if more than one tenant has a definition with the given key
      */
     public function findDeployedLatestDefinitionByKey(string $definitionKey): ?ResourceDefinitionEntityInterface

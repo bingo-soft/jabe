@@ -8,7 +8,7 @@ interface CacheInterface
      * Gets an entry from the cache.
      *
      * @param key the key whose associated value is to be returned
-     * @return the element, or <code>null</code>, if it does not exist.
+     * @return mixed the element, or <code>null</code>, if it does not exist.
      */
     public function get($key);
 
@@ -39,7 +39,7 @@ interface CacheInterface
     public function keySet(): array;
 
     /**
-     * @return the current size of the cache
+     * @return int the current size of the cache
      */
     public function size(): int;
 

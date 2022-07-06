@@ -99,7 +99,7 @@ abstract class AbstractObjectValueSerializer extends AbstractSerializableValueSe
      * Returns the type name for the deserialized object.
      *
      * @param deserializedObject. Guaranteed not to be null
-     * @return the type name fot the object.
+     * @return string the type name fot the object.
      */
     abstract protected function getTypeNameForDeserialized($deserializedObject): string;
 
@@ -108,7 +108,7 @@ abstract class AbstractObjectValueSerializer extends AbstractSerializableValueSe
      * The object is guaranteed not to be null.
      *
      * @param deserializedObject the object to serialize
-     * @return the byte array value of the object
+     * @return string the byte array value of the object
      * @throws exception in case the object cannot be serialized
      */
     abstract protected function serializeToByteArray($deserializedObject): string;
@@ -118,7 +118,7 @@ abstract class AbstractObjectValueSerializer extends AbstractSerializableValueSe
      *
      * @param object the object to deserialize
      * @param objectTypeName the type name of the object to deserialize
-     * @return the deserialized object
+     * @return mixed the deserialized object
      * @throws exception in case the object cannot be deserialized
      */
     abstract protected function deserializeFromByteArray(string $object, string $objectTypeName);

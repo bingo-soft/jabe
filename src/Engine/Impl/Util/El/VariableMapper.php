@@ -9,7 +9,7 @@ abstract class VariableMapper
      *
      * @param variable
      *            The variable name
-     * @return the ValueExpression assigned to the variable, null if there is no previous assignment
+     * @return ValueExpression the ValueExpression assigned to the variable, null if there is no previous assignment
      *         to this variable.
      */
     abstract public function resolveVariable(string $variable): ?ValueExpression;
@@ -22,7 +22,7 @@ abstract class VariableMapper
      *            The variable name
      * @param expression
      *            The ValueExpression to be assigned to the variable.
-     * @return The previous ValueExpression assigned to this variable, null if there is no previous
+     * @return ValueExpression The previous ValueExpression assigned to this variable, null if there is no previous
      *         assignment to this variable.
      */
     abstract public function setVariable(string $variable, ValueExpression $expression): ValueExpression;

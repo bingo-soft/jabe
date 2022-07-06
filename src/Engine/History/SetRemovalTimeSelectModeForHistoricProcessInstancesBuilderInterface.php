@@ -8,7 +8,7 @@ interface SetRemovalTimeSelectModeForHistoricProcessInstancesBuilderInterface ex
      * Sets the removal time to an absolute date.
      *
      * @param removalTime supposed to be set to historic entities.
-     * @return the builder.
+     * @return SetRemovalTimeToHistoricProcessInstancesBuilderInterface the builder.
      */
     public function absoluteRemovalTime(string $removalTime): SetRemovalTimeToHistoricProcessInstancesBuilderInterface;
 
@@ -19,14 +19,14 @@ interface SetRemovalTimeSelectModeForHistoricProcessInstancesBuilderInterface ex
      * <p> In case {@link #hierarchical()} is enabled, the removal time is being calculated
      * based on the base time and time to live of the historic root process instance.
      *
-     * @return the builder.
+     * @return SetRemovalTimeToHistoricProcessInstancesBuilderInterface the builder.
      */
     public function calculatedRemovalTime(): SetRemovalTimeToHistoricProcessInstancesBuilderInterface;
 
     /**
      * <p> Sets the removal time to {@code null}.
      *
-     * @return the builder.
+     * @return SetRemovalTimeToHistoricProcessInstancesBuilderInterface the builder.
      */
     public function clearedRemovalTime(): SetRemovalTimeToHistoricProcessInstancesBuilderInterface;
 }

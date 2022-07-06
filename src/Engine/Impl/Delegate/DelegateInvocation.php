@@ -42,7 +42,7 @@ abstract class DelegateInvocation
     abstract protected function invoke();
 
     /**
-     * @return the result of the invocation (can be null if the invocation does
+     * @return mixed the result of the invocation (can be null if the invocation does
      *         not return a result)
      */
     public function getInvocationResult()

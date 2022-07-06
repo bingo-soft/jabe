@@ -10,7 +10,7 @@ interface CmmnModelExecutionContextInterface
     /**
      * Returns the {@link CmmnModelInstance} for the currently executed Cmmn Model
      *
-     * @return the current {@link CmmnModelInstance}
+     * @return CmmnModelInstanceInterface the current {@link CmmnModelInstance}
      */
     public function getCmmnModelInstance(): CmmnModelInstanceInterface;
 
@@ -18,7 +18,7 @@ interface CmmnModelExecutionContextInterface
      * <p>Returns the currently executed Element in the Cmmn Model. This method returns a {@link CmmnElement} which may be casted
      * to the concrete type of the Cmmn Model Element currently executed.</p>
      *
-     * @return the {@link CmmnElement} corresponding to the current Cmmn Model Element
+     * @return CmmnElementInterface the {@link CmmnElement} corresponding to the current Cmmn Model Element
      */
     public function getCmmnModelElementInstance(): CmmnElementInterface;
 }

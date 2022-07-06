@@ -112,7 +112,7 @@ abstract class AbstractSetStateCmd implements CommandInterface
     }
 
     /**
-     * @return the id of the associated deployment, only necessary if the command
+     * @return string the id of the associated deployment, only necessary if the command
      *         can potentially be executed in a scheduled way (i.e. if an
      *         {@link #executionDate} can be set) so the job executor responsible
      *         for that deployment can execute the resulting job

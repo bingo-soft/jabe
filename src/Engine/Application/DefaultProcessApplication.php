@@ -31,7 +31,7 @@ abstract class DefaultProcessApplication
      * of the classloader returned  by the {@link AbstractProcessApplication#getProcessApplicationClassloader()}
      * method provided by the process application.
      *
-     * @return the location of the <code>processes.xml</code> file.
+     * @return string the location of the <code>processes.xml</code> file.
      */
     public function deploymentDescriptors(): string
     {

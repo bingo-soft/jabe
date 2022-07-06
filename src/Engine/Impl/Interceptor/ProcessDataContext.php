@@ -163,7 +163,7 @@ class ProcessDataContext
     }
 
     /**
-     * @return the latest value of the activity id property if exists, <code>null</code>
+     * @return string the latest value of the activity id property if exists, <code>null</code>
      *         otherwise
      */
     public function getLatestActivityId(): ?string

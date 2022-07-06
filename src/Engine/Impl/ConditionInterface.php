@@ -14,7 +14,7 @@ interface ConditionInterface
      *
      * @param scope the variable scope which can differ of the execution
      * @param execution the execution which is used to evaluate the condition
-     * @return the result
+     * @return bool the result
      */
     public function evaluate(?VariableScopeInterface $scope, DelegateExecutionInterface $execution): bool;
 
@@ -24,7 +24,7 @@ interface ConditionInterface
      *
      * @param scope the variable scope which can differ of the execution
      * @param execution the execution which is used to evaluate the condition
-     * @return the result
+     * @return bool the result
      */
     public function tryEvaluate(?VariableScopeInterface $scope, DelegateExecutionInterface $execution): bool;
 }

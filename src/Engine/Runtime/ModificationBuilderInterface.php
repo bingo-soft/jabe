@@ -71,7 +71,7 @@ interface ModificationBuilderInterface
      * Execute the modification asynchronously as batch. The returned batch
      * can be used to track the progress of the modification.
      *
-     * @return the batch which executes the modification asynchronously.
+     * @return BatchInterface the batch which executes the modification asynchronously.
      *
      * @throws AuthorizationException
      *   if the user has not all of the following permissions

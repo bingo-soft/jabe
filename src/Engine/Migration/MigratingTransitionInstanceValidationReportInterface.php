@@ -5,17 +5,17 @@ namespace Jabe\Engine\Migration;
 interface MigratingTransitionInstanceValidationReportInterface
 {
     /**
-     * @return the id of the source scope of the migrating transition instance
+     * @return string the id of the source scope of the migrating transition instance
      */
     public function getSourceScopeId(): string;
 
     /**
-     * @return the transition instance id of this report
+     * @return string the transition instance id of this report
      */
     public function getTransitionInstanceId(): string;
 
     /**
-     * @return the migration instruction that cannot be applied
+     * @return MigrationInstructionInterface the migration instruction that cannot be applied
      */
     public function getMigrationInstruction(): MigrationInstructionInterface;
 
@@ -25,7 +25,7 @@ interface MigratingTransitionInstanceValidationReportInterface
     public function hasFailures(): bool;
 
     /**
-     * @return the list of failures
+     * @return array the list of failures
      */
     public function getFailures(): array;
 }

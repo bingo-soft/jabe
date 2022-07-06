@@ -18,7 +18,7 @@ interface HistoryRemovalTimeProviderInterface
      * @param mixed $historicRootInstance
      * @param mixed $definition
      *
-     * @return the removal time for historic process instances
+     * @return string the removal time for historic process instances
      */
     public function calculateRemovalTime($instance, $definition = null): string;
 }

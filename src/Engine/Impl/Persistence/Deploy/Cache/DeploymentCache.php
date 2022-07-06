@@ -59,7 +59,7 @@ class DeploymentCache
     }
 
     /**
-     * @return the latest version of the process definition with the given key (from any tenant)
+     * @return ProcessDefinitionEntity the latest version of the process definition with the given key (from any tenant)
      * @throws ProcessEngineException if more than one tenant has a process definition with the given key
      * @see #findDeployedLatestProcessDefinitionByKeyAndTenantId(String, String)
      */
@@ -69,7 +69,7 @@ class DeploymentCache
     }
 
     /**
-     * @return the latest version of the process definition with the given key and tenant id
+     * @return ProcessDefinitionEntity the latest version of the process definition with the given key and tenant id
      */
     public function findDeployedLatestProcessDefinitionByKeyAndTenantId(string $processDefinitionKey, string $tenantId): ?ProcessDefinitionEntity
     {
@@ -142,18 +142,10 @@ class DeploymentCache
         return caseDefinitionCache->findDeployedDefinitionById(caseDefinitionId);
     }*/
 
-    /**
-     * @return the latest version of the case definition with the given key (from any tenant)
-     * @throws ProcessEngineException if more than one tenant has a case definition with the given key
-     * @see #findDeployedLatestCaseDefinitionByKeyAndTenantId(String, String)
-     */
     /*public CaseDefinitionEntity findDeployedLatestCaseDefinitionByKey(String caseDefinitionKey) {
         return caseDefinitionCache->findDeployedLatestDefinitionByKey(caseDefinitionKey);
     }*/
 
-    /**
-     * @return the latest version of the case definition with the given key and tenant id
-     */
     /*public CaseDefinitionEntity findDeployedLatestCaseDefinitionByKeyAndTenantId(String caseDefinitionKey, String tenantId) {
         return caseDefinitionCache->findDeployedLatestDefinitionByKeyAndTenantId(caseDefinitionKey, tenantId);
     }

@@ -125,7 +125,7 @@ abstract class AbstractSerializableValueSerializer extends AbstractTypedValueSer
      * The object is guaranteed not to be null.
      *
      * @param deserializedObject the object to serialize
-     * @return the byte array value of the object
+     * @return string the byte array value of the object
      * @throws exception in case the object cannot be serialized
      */
     abstract protected function serializeToByteArray($deserializedObject): string;
@@ -135,7 +135,7 @@ abstract class AbstractSerializableValueSerializer extends AbstractTypedValueSer
      *
      * @param object the object to deserialize
      * @param valueFields the value fields
-     * @return the deserialized object
+     * @return mixed the deserialized object
      * @throws exception in case the object cannot be deserialized
      */
     abstract protected function deserializeFromByteArray(string $object, ValueFieldsInterface $valueFields);

@@ -10,7 +10,7 @@ interface HistoricVariableInstanceInterface
     public const STATE_DELETED = "DELETED";
 
     /**
-     * @return the Id of this variable instance
+     * @return string the id of this variable instance
      */
     public function getId(): string;
 
@@ -22,7 +22,7 @@ interface HistoricVariableInstanceInterface
     /**
      * Returns the name of the type of this variable instance
      *
-     * @return the type name of the variable
+     * @return string the type name of the variable
      */
     public function getTypeName(): string;
 

@@ -19,7 +19,7 @@ class Properties implements \Serializable
      *
      * @param property
      *          the property key whose associated value is to be returned
-     * @return the value to which the specified property key is mapped, or
+     * @return mixed the value to which the specified property key is mapped, or
      *         <code>null</code> if this properties contains no mapping for the property key
      */
     public function get($property)

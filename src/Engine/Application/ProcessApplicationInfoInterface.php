@@ -8,7 +8,7 @@ interface ProcessApplicationInfoInterface
     public const PROP_CONTEXT_PATH = "contextPath";
 
     /**
-     * @return the name of the process application
+     * @return string the name of the process application
      */
     public function getName(): string;
 

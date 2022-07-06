@@ -26,7 +26,7 @@ abstract class Expression implements \Serializable
      * string but different function mappings. Serialization should be used to save and restore the
      * state of an Expression.
      *
-     * @return The original expression String.
+     * @return string The original expression String.
      */
     abstract public function getExpressionString(): ?string;
 

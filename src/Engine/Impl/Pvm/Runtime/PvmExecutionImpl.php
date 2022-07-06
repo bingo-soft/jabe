@@ -1412,7 +1412,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
      * Can be invoked for scope and non scope executions.
      *
      * @param targetFlowScope mixed - scope activity or process definition for which the scope execution should be found
-     * @return the scope execution for the provided targetFlowScope
+     * @return PvmExecutionImpl the scope execution for the provided targetFlowScope
      */
     public function findExecutionForFlowScope($targetFlowScope): ?PvmExecutionImpl
     {
@@ -2299,7 +2299,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
      * Returns the activity instance id for the given execution.
      *
      * @param PvmExecutionImpl|null - targetScope the execution for which the activity instance id should be returned
-     * @return the activity instance id
+     * @return string the activity instance id
      */
     private function getActivityInstanceId(?PvmExecutionImpl $targetScope = null): ?string
     {

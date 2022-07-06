@@ -11,7 +11,7 @@ interface OptimisticLockingListenerInterface
      * If the implementation returns 'null', the listener is notified for all
      * entity types.
      *
-     * @return the entity type for which the listener should be notified.
+     * @return string the entity type for which the listener should be notified.
      */
     public function getEntityType(): string;
 

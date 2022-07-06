@@ -69,7 +69,7 @@ class SimpleScriptContext implements ScriptContextInterface
      * scope values first.)
      *
      * @param name The name of the the attribute to retrieve.
-     * @return The value of the attribute in the lowest scope for
+     * @return mixed The value of the attribute in the lowest scope for
      * which an attribute with the given name is defined.  Returns
      * null if no attribute with the name exists in any scope.
      * @throws NullPointerException if the name is null.
@@ -106,7 +106,7 @@ class SimpleScriptContext implements ScriptContextInterface
      * @param name The name of the attribute to remove
      * @param scope The scope in which to remove the attribute
      *
-     * @return The removed value.
+     * @return mixed The removed value.
      * @throws IllegalArgumentException
      *         if the name is empty or if the scope is invalid.
      * @throws NullPointerException if the name is null.
@@ -162,7 +162,7 @@ class SimpleScriptContext implements ScriptContextInterface
      * Get the lowest scope in which an attribute is defined.
      * @param name Name of the attribute
      * .
-     * @return The lowest scope.  Returns -1 if no attribute with the given
+     * @return int The lowest scope.  Returns -1 if no attribute with the given
      * name is defined in any scope.
      * @throws NullPointerException if name is null.
      * @throws IllegalArgumentException if name is empty.
@@ -185,7 +185,7 @@ class SimpleScriptContext implements ScriptContextInterface
      * <code>GLOBAL_SCOPE</code>.
      *
      * @param scope The specified scope
-     * @return The value of either the  <code>engineScope</code> or <code>globalScope</code> field.
+     * @return BindingsInterface The value of either the  <code>engineScope</code> or <code>globalScope</code> field.
      * @throws IllegalArgumentException if the value of scope is invalid.
      */
     public function getBindings(int $scope): BindingsInterface

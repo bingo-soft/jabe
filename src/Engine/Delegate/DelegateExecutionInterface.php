@@ -70,7 +70,7 @@ interface DelegateExecutionInterface extends BaseDelegateExecutionInterface, Bpm
      * and this process instance was started by a call activity, this method
      * returns the execution which executed the call activity in the super process instance.
      *
-     * @return the super execution or null.
+     * @return DelegateExecutionInterface the super execution or null.
      */
     public function getSuperExecution(): ?DelegateExecutionInterface;
 

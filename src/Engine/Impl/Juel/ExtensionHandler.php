@@ -12,7 +12,7 @@ abstract class ExtensionHandler
     }
 
     /**
-     * @return the extension point specifying where this syntax extension is active
+     * @return string the extension point specifying where this syntax extension is active
      */
     public function getExtensionPoint(): string
     {

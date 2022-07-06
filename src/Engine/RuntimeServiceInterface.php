@@ -130,7 +130,7 @@ interface RuntimeServiceInterface
      *          the 'payload' of the message. The variables are added as processes
      *          variables to the started process instance.
      *
-     * @return the {@link ProcessInstance} object representing the started process instance
+     * @return ProcessInstanceInterface the {@link ProcessInstance} object representing the started process instance
      *
      * @throws ProcessEngineException
      *          if no subscription to a message with the given name exists
@@ -157,7 +157,7 @@ interface RuntimeServiceInterface
      * @param businessKey
      *          the business key which is added to the started process instance
      *
-     * @return the {@link ProcessInstance} object representing the started process instance
+     * @return ProcessInstanceInterface the {@link ProcessInstance} object representing the started process instance
      *
      * @throws ProcessEngineException
      *          if no subscription to a message with the given name exists for the
@@ -363,7 +363,7 @@ interface RuntimeServiceInterface
      *
      * @param processInstanceId the id of the process instance for which the activity instance tree should be constructed.
      *
-     * @return the activity instance tree for a given process instance or null if no such process instance exists.
+     * @return ActivityInstanceInterface the activity instance tree for a given process instance or null if no such process instance exists.
      *
      * @throws ProcessEngineException
      *          if processInstanceId is 'null' or an internal error occurs.
@@ -400,7 +400,7 @@ interface RuntimeServiceInterface
      * @param executionId id of process instance or execution, cannot be null.
      * @param variableNames the collection of variable names that should be retrieved.
      *
-     * @return the variables or an empty map if no such variables are found.
+     * @return array the variables or an empty map if no such variables are found.
      *
      * @throws ProcessEngineException
      *          when no execution is found for the given executionId.
@@ -418,7 +418,7 @@ interface RuntimeServiceInterface
      * @param variableNames the collection of variable names that should be retrieved.
      * @param deserializeObjectValues if false, {@link SerializableValue}s will not be deserialized
      *
-     * @return the variables or an empty map if no such variables are found.
+     * @return VariableMapInterface the variables or an empty map if no such variables are found.
      *
      * @throws ProcessEngineException
      *          when no execution is found for the given executionId.
@@ -439,7 +439,7 @@ interface RuntimeServiceInterface
      * @param executionId id of execution, cannot be null.
      * @param variableNames the collection of variable names that should be retrieved.
      *
-     * @return the variables or an empty map if no such variables are found.
+     * @return array the variables or an empty map if no such variables are found.
      *
      * @throws ProcessEngineException
      *          when no execution is found for the given executionId.
@@ -457,7 +457,7 @@ interface RuntimeServiceInterface
      * @param variableNames the collection of variable names that should be retrieved.
      * @param deserializeObjectValues if false, {@link SerializableValue}s will not be deserialized
      *
-     * @return the variables or an empty map if no such variables are found.
+     * @return VariableMapInterface the variables or an empty map if no such variables are found.
      *
      * @throws ProcessEngineException
      *          when no execution is found for the given executionId.
@@ -479,7 +479,7 @@ interface RuntimeServiceInterface
      * @param executionId id of process instance or execution, cannot be null.
      * @param variableName name of variable, cannot be null.
      *
-     * @return the variable value or null if the variable is undefined or the value of the variable is null.
+     * @return mixed the variable value or null if the variable is undefined or the value of the variable is null.
      *
      * @throws ProcessEngineException
      *          when no execution is found for the given executionId.
@@ -499,7 +499,7 @@ interface RuntimeServiceInterface
      * @param variableName name of variable, cannot be null.
      * @param deserializeValue if false, a {@link SerializableValue} will not be deserialized
      *
-     * @return the variable value or null if the variable is undefined.
+     * @return TypedValueInterface the variable value or null if the variable is undefined.
      *
      * @throws ProcessEngineException
      *          when no execution is found for the given executionId.
@@ -521,7 +521,7 @@ interface RuntimeServiceInterface
      * @param executionId id of process instance or execution, cannot be null.
      * @param variableName name of variable, cannot be null.
      *
-     * @return the variable value or null if the variable is undefined or the value of the variable is null.
+     * @return mixed variable value or null if the variable is undefined or the value of the variable is null.
      *
      * @throws ProcessEngineException
      *          when no execution is found for the given executionId.
@@ -541,7 +541,7 @@ interface RuntimeServiceInterface
      * @param variableName name of variable, cannot be null.
      * @param deserializeValue if false, a {@link SerializableValue} will not be deserialized
      *
-     * @return the variable value or null if the variable is undefined.
+     * @return TypedValueInterface the variable value or null if the variable is undefined.
      *
      * @throws ProcessEngineException
      *          when no execution is found for the given executionId.
@@ -660,7 +660,7 @@ interface RuntimeServiceInterface
      * @throws AuthorizationException when the user has no {@link BatchPermissions#CREATE} or
      * {@link BatchPermissions#CREATE_BATCH_SET_VARIABLES} permission on {@link Resources#BATCH}.
      *
-     * @return the batch which sets the variables asynchronously.
+     * @return BatchInterface the batch which sets the variables asynchronously.
      */
     public function setVariablesAsync(
         array $processInstanceIds,
@@ -962,7 +962,7 @@ interface RuntimeServiceInterface
      * {@link UpdateProcessInstanceSuspensionStateBuilder#activate()} or
      * {@link UpdateProcessInstanceSuspensionStateBuilder#suspend()}.
      *
-     * @return the builder to update the suspension state
+     * @return UpdateProcessInstanceSuspensionStateSelectBuilderInterface the builder to update the suspension state
      */
     public function updateProcessInstanceSuspensionState(): UpdateProcessInstanceSuspensionStateSelectBuilderInterface;
 
@@ -999,7 +999,7 @@ interface RuntimeServiceInterface
      *
      * @param signalName
      *          the name of the signal event
-     * @return the fluent builder to send the signal
+     * @return SignalEventReceivedBuilderInterface the fluent builder to send the signal
      */
     public function createSignalEvent(string $signalName): SignalEventReceivedBuilderInterface;
 
@@ -1035,7 +1035,7 @@ interface RuntimeServiceInterface
      * of the message defined in BPMN 2.0 Xml.
      * Can be null to correlate by other criteria (businessKey, processInstanceId, correlationKeys) only.
      *
-     * @return the fluent builder for defining the message correlation.
+     * @return MessageCorrelationBuilderInterface the fluent builder for defining the message correlation.
      */
     public function createMessageCorrelation(string $messageName): MessageCorrelationBuilderInterface;
 
@@ -1237,7 +1237,7 @@ interface RuntimeServiceInterface
     /**
      * Define a complex condition evaluation using a fluent builder.
      *
-     * @return the fluent builder for defining the condition evaluation.
+     * @return ConditionEvaluationBuilderInterface the fluent builder for defining the condition evaluation.
      */
     public function createConditionEvaluation(): ConditionEvaluationBuilderInterface;
 }

@@ -7,7 +7,7 @@ abstract class ValueExpression extends Expression
     /**
      * Returns the type the result of the expression will be coerced to after evaluation.
      *
-     * @return the expectedType passed to the ExpressionFactory.createValueExpression method that
+     * @return string the expectedType passed to the ExpressionFactory.createValueExpression method that
      *         created this ValueExpression.
      */
     abstract public function getExpectedType(): string;
@@ -23,7 +23,7 @@ abstract class ValueExpression extends Expression
      *
      * @param context
      *            The context of this evaluation.
-     * @return the most general acceptable type; otherwise undefined.
+     * @return string the most general acceptable type; otherwise undefined.
      * @throws NullPointerException
      *             if context is null.
      * @throws PropertyNotFoundException
@@ -43,7 +43,7 @@ abstract class ValueExpression extends Expression
      *
      * @param context
      *            The context of this evaluation.
-     * @return The result of the expression evaluation.
+     * @return mixed The result of the expression evaluation.
      * @throws NullPointerException
      *             if context is null.
      * @throws PropertyNotFoundException
@@ -103,7 +103,7 @@ abstract class ValueExpression extends Expression
      *
      * @param context
      *            the context of this evaluation
-     * @return the <code>ValueReference</code> for this <code>ValueExpression</code>, or
+     * @return ValueReference the <code>ValueReference</code> for this <code>ValueExpression</code>, or
      *         <code>null</code> if this <code>ValueExpression</code> is not a reference to a base
      *         (null or non-null) and a property. If the base is null, and the property is a EL
      *         variable, return the <code>ValueReference</code> for the <code>ValueExpression</code>

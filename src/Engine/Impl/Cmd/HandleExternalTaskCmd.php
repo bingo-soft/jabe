@@ -45,7 +45,7 @@ abstract class HandleExternalTaskCmd extends ExternalTaskCmd
      * Returns the error message. Which is used to create an specific message
      *  for the BadUserRequestException if an worker has no rights to execute commands of the external task.
      *
-     * @return the specific error message
+     * @return string the specific error message
      */
     abstract public function getErrorMessageOnWrongWorkerAccess(): string;
 

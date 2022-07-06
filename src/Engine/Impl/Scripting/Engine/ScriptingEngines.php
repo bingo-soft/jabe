@@ -60,7 +60,7 @@ class ScriptingEngines implements DmnScriptEngineResolverInterface
      * Loads the given script engine by language name. Will throw an exception if no script engine can be loaded for the given language name.
      *
      * @param language the name of the script language to lookup an implementation for
-     * @return the script engine
+     * @return ScriptEngineInterface the script engine
      * @throws ProcessEngineException if no such engine can be found.
      */
     public function getScriptEngineForLanguage(string $language): ScriptEngineInterface

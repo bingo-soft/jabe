@@ -150,7 +150,7 @@ class ArrayBlockingQueue extends AbstractQueue implements BlockingQueueInterface
     /**
      * Returns the number of elements in this queue.
      *
-     * @return the number of elements in this queue
+     * @return int the number of elements in this queue
      */
     public function size(): int
     {

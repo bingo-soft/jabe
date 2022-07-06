@@ -253,7 +253,7 @@ class EventSubscriptionManager extends AbstractManager
     }
 
     /**
-     * @return the message start event subscriptions with the given message name (from any tenant)
+     * @return array the message start event subscriptions with the given message name (from any tenant)
      *
      * @see #findMessageStartEventSubscriptionByNameAndTenantId(String, String)
      */
@@ -263,7 +263,7 @@ class EventSubscriptionManager extends AbstractManager
     }
 
     /**
-     * @return the message start event subscription with the given message name and tenant id
+     * @return EventSubscriptionEntity the message start event subscription with the given message name and tenant id
      *
      * @see #findMessageStartEventSubscriptionByName(String)
      */
@@ -278,7 +278,7 @@ class EventSubscriptionManager extends AbstractManager
 
     /**
      * @param tenantId
-     * @return the conditional start event subscriptions with the given tenant id
+     * @return array the conditional start event subscriptions with the given tenant id
      *
      */
     public function findConditionalStartEventSubscriptionByTenantId(string $tenantId): array
@@ -291,7 +291,7 @@ class EventSubscriptionManager extends AbstractManager
     }
 
     /**
-     * @return the conditional start event subscriptions (from any tenant)
+     * @return array the conditional start event subscriptions (from any tenant)
      *
      */
     public function findConditionalStartEventSubscription(): array

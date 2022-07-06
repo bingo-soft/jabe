@@ -19,7 +19,7 @@ interface FileValueInterface extends TypedValueInterface
     public function getEncodingAsCharset(): ?string;
 
     /**
-     * @return the saved encoding or null if none has been saved
+     * @return string the saved encoding or null if none has been saved
      */
     public function getEncoding(): ?string;
 

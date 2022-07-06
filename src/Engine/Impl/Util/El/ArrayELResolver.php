@@ -245,7 +245,7 @@ class ArrayELResolver extends ELResolver
      *            The bean to analyze.
      * @param property
      *            The name of the property to analyze. Will be coerced to a String.
-     * @return The index of property in base.
+     * @return int The index of property in base.
      * @throws IllegalArgumentException
      *             if base property cannot be coerced to an integer or base is not an array.
      * @throws PropertyNotFoundException

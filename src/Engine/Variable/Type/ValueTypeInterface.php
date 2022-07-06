@@ -34,7 +34,7 @@ interface ValueTypeInterface extends \Serializable
     /**
      * Creates a new TypedValue using this type.
      * @param value the value
-     * @return the typed value for the value
+     * @return TypedValueInterface the typed value for the value
      */
     public function createValue($value, ?array $valueInfo = null): TypedValueInterface;
 

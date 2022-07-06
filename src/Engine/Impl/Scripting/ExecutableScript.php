@@ -27,7 +27,7 @@ abstract class ExecutableScript
 
     /**
      * The language in which the script is written.
-     * @return the language
+     * @return string the language
      */
     public function getLanguage(): string
     {
@@ -41,7 +41,7 @@ abstract class ExecutableScript
      * @param variableScope the variable scope of the execution
      * @param bindings the bindings to use for evaluating the script.
      * @throws ProcessEngineException in case the script cannot be evaluated.
-     * @return the result of the script evaluation
+     * @return mixed the result of the script evaluation
      */
     public function execute(ScriptEngineInterface $scriptEngine, VariableScopeInterface $variableScope, BindingsInterface $bindings)
     {

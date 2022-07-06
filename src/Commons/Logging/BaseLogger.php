@@ -21,7 +21,7 @@ abstract class BaseLogger
             $logger->delegateLogger = new ExtLogger($name);
             return $logger;
         } catch (\Exception $e) {
-            throw new RuntimeException(sprintf("Unable to instantiate logger '%s'", $loggerClass));
+            throw new \Exception(sprintf("Unable to instantiate logger '%s'", $loggerClass));
         }
     }
 
@@ -128,7 +128,7 @@ abstract class BaseLogger
      * @param id the id of the message
      * @param messageTemplate the message template to use
      *
-     * @return the formatted template
+     * @return string the formatted template
      */
     protected function formatMessageTemplate(string $id, string $messageTemplate): string
     {
@@ -142,7 +142,7 @@ abstract class BaseLogger
      * @param messageTemplate the message template to use
      * @param parameters the parameters for the message (optional)
      *
-     * @return the prepared exception message
+     * @return string the prepared exception message
      */
     protected function exceptionMessage(string $id, string $messageTemplate, ?array $parameters = null): string
     {

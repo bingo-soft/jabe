@@ -158,7 +158,7 @@ class Parser
 
     /**
      * consume current token ($this->get next token).
-     * @return the consumed token (which was the current token when calling this method)
+     * @return Token the consumed token (which was the current token when calling this method)
      */
     protected function consumeToken(?string $expected = null): ?Token
     {

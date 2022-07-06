@@ -10,7 +10,7 @@ abstract class MethodExpression extends Expression
      *
      * @param context
      *            The context of this evaluation.
-     * @return The context of this evaluation
+     * @return MethodInfo The context of this evaluation
      * @throws NullPointerException
      *             if context is null
      * @throws PropertyNotFoundException
@@ -38,7 +38,7 @@ abstract class MethodExpression extends Expression
      *            The context of this evaluation.
      * @param params
      *            The parameters to pass to the method, or null if no parameters.
-     * @return the result of the method invocation (null if the method has a void return type).
+     * @return mixed the result of the method invocation (null if the method has a void return type).
      * @throws NullPointerException
      *             if context is null
      * @throws PropertyNotFoundException

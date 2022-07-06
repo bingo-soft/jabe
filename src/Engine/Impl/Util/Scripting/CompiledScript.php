@@ -11,7 +11,7 @@ abstract class CompiledScript
      * the <code>ScriptContext</code> passed to the <code>eval</code> methods of
      * <code>ScriptEngine</code>.
      *
-     * @return The value returned by the script execution, if any.  Should return <code>null</code>
+     * @return mixed The value returned by the script execution, if any.  Should return <code>null</code>
      * if no value is returned by the script execution.
      *
      * @throws ScriptException if an error occurs.
@@ -31,7 +31,7 @@ abstract class CompiledScript
      *
      * @param bindings The bindings of attributes used for the <code>ENGINE_SCOPE</code>.
      *
-     * @return The return value from the script execution
+     * @return mixed The return value from the script execution
      *
      * @throws ScriptException if an error occurs.
      */
@@ -59,7 +59,7 @@ abstract class CompiledScript
      * Returns the <code>ScriptEngine</code> whose <code>compile</code> method created this <code>CompiledScript</code>.
      * The <code>CompiledScript</code> will execute in this engine.
      *
-     * @return The <code>ScriptEngine</code> that created this <code>CompiledScript</code>
+     * @return ScriptEngineInterface The <code>ScriptEngine</code> that created this <code>CompiledScript</code>
      */
     abstract public function getEngine(): ScriptEngineInterface;
 }

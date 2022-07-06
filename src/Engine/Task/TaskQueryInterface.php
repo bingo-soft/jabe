@@ -675,7 +675,7 @@ interface TaskQueryInterface extends QueryInterface
      * @throws ProcessEngineException
      *   When method has been executed within "or query". Method must be executed on the base query.
      *
-     * @return the query itself
+     * @return TaskQueryInterface the query itself
      */
     public function initializeFormKeys(): TaskQueryInterface;
 

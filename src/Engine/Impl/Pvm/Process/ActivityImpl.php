@@ -263,7 +263,7 @@ class ActivityImpl extends ScopeImpl implements PvmActivityInterface, HasDIBound
     /**
      * Find the compensation handler of this activity.
      *
-     * @return the compensation handler or <code>null</code>, if this activity has no compensation handler.
+     * @return ActivityImpl the compensation handler or <code>null</code>, if this activity has no compensation handler.
      */
     public function findCompensationHandler(): ?ActivityImpl
     {

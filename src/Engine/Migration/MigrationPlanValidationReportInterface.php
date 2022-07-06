@@ -5,7 +5,7 @@ namespace Jabe\Engine\Migration;
 interface MigrationPlanValidationReportInterface
 {
     /**
-     * @return the migration plan of the validation report
+     * @return MigrationPlanInterface the migration plan of the validation report
      */
     public function getMigrationPlan(): MigrationPlanInterface;
 

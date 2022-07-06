@@ -82,7 +82,7 @@ interface ExternalTaskQueryInterface extends QueryInterface
      * Only select external tasks with a priority that is higher than or equal to the given priority.
      *
      * @param priority the priority which is used for the query
-     * @return the builded external task query
+     * @return ExternalTaskQueryInterface the builded external task query
      */
     public function priorityHigherThanOrEquals(int $priority): ExternalTaskQueryInterface;
 
@@ -90,7 +90,7 @@ interface ExternalTaskQueryInterface extends QueryInterface
      * Only select external tasks with a priority that is lower than or equal to the given priority.
      *
      * @param priority the priority which is used for the query
-     * @return the builded external task query
+     * @return ExternalTaskQueryInterface the builded external task query
      */
     public function priorityLowerThanOrEquals(int $priority): ExternalTaskQueryInterface;
 

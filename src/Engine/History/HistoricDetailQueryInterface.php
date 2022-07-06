@@ -10,7 +10,7 @@ interface HistoricDetailQueryInterface extends QueryInterface
      * Only select the historic detail with the given id.
      *
      * @param id the historic detail to select
-     * @return the query builder
+     * @return HistoricDetailQueryInterface the query builder
      */
     public function detailId(string $id): HistoricDetailQueryInterface;
 
@@ -59,7 +59,7 @@ interface HistoricDetailQueryInterface extends QueryInterface
      * By calling this method you can prevent the values of (potentially large) blob data chunks to be fetched.
      *  The variables themselves are nonetheless included in the query result.
      *
-     * @return the query builder
+     * @return HistoricDetailQueryInterface the query builder
      */
     public function disableBinaryFetching(): HistoricDetailQueryInterface;
 

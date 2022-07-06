@@ -106,7 +106,7 @@ interface TaskInterface
      * {@link TaskQuery#initializeFormKeys()} method is called. If this method is called without a prior call to
      * {@link TaskQuery#initializeFormKeys()}, it will throw a {@link BadUserRequestException}.</p>
      *
-     * @return the form key for this task
+     * @return string the form key for this task
      * @throws BadUserRequestException in case the form key is not initialized.
      */
     public function getFormKey(): string;
@@ -114,7 +114,7 @@ interface TaskInterface
     /**
      * Returns the task's tenant id or null in case this task does not belong to a tenant.
      *
-     * @return the task's tenant id or null
+     * @return string the task's tenant id or null
      */
     public function getTenantId(): ?string;
 

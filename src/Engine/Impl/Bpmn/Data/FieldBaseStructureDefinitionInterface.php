@@ -7,7 +7,7 @@ interface FieldBaseStructureDefinitionInterface extends StructureDefinitionInter
     /**
      * Obtains the number of fields that this structure has
      *
-     * @return the number of fields that this structure has
+     * @return int the number of fields that this structure has
      */
     public function getFieldSize(): int;
 
@@ -16,7 +16,7 @@ interface FieldBaseStructureDefinitionInterface extends StructureDefinitionInter
      *
      * @param index
      *            the position of the field
-     * @return the name of the field
+     * @return string the name of the field
      */
     public function getFieldNameAt(int $index): ?string;
 
@@ -25,7 +25,7 @@ interface FieldBaseStructureDefinitionInterface extends StructureDefinitionInter
      *
      * @param index
      *            the position of the field
-     * @return the type of the field
+     * @return string the type of the field
      */
     public function getFieldTypeAt(int $index): ?string;
 
@@ -34,7 +34,7 @@ interface FieldBaseStructureDefinitionInterface extends StructureDefinitionInter
      *
      * @param index
      *            the position of the field
-     * @return the parameter type of the field, or {@code null} if the type is not a parameterized type
+     * @return string the parameter type of the field, or {@code null} if the type is not a parameterized type
      */
     public function getFieldParameterTypeAt(int $index): ?string;
 }

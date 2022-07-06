@@ -583,7 +583,7 @@ class BpmnParse extends Parse
     *
     * @param processElement
     *          The 'process' element.
-    * @return The parsed version of the XML: a {@link ProcessDefinitionImpl}
+    * @return ProcessDefinitionEntity The parsed version of the XML: a {@link ProcessDefinitionImpl}
     *         object.
     */
     public function parseProcess(Element $processElement): ProcessDefinitionEntity
@@ -2257,7 +2257,7 @@ class BpmnParse extends Parse
     *
     * @param scriptTaskElement
     *          the script task element
-    * @return the corresponding {@link ScriptTaskActivityBehavior}
+    * @return ScriptTaskActivityBehavior the corresponding {@link ScriptTaskActivityBehavior}
     */
     protected function parseScriptTaskElement(Element $scriptTaskElement): ?ScriptTaskActivityBehavior
     {
@@ -3090,7 +3090,7 @@ class BpmnParse extends Parse
     *
     * If somebody is smart enough to write a regex for this, please let us know.
     *
-    * @return the entries of the comma separated list, trimmed.
+    * @return array the entries of the comma separated list, trimmed.
     */
     protected function parseCommaSeparatedList(string $s): array
     {
@@ -3904,7 +3904,7 @@ class BpmnParse extends Parse
     * @param element the XML element which contains the conditional event information
     * @param interrupting indicates if the event is interrupting or not
     * @param conditionalActivity the conditional event activity
-    * @return the boundary conditional event behavior which contains the condition
+    * @return BoundaryConditionalEventActivityBehavior the boundary conditional event behavior which contains the condition
     */
     public function parseBoundaryConditionalEventDefinition(Element $element, bool $interrupting, ActivityImpl $conditionalActivity): ?BoundaryConditionalEventActivityBehavior
     {
@@ -3970,7 +3970,7 @@ class BpmnParse extends Parse
     *
     * @param element the XML element which contains the conditional event information
     * @param conditionalActivity the conditional event activity
-    * @return the conditional event definition which was parsed
+    * @return ConditionalEventDefinition the conditional event definition which was parsed
     */
     protected function parseConditionalEventDefinition(Element $element, ActivityImpl $conditionalActivity): ?ConditionalEventDefinition
     {

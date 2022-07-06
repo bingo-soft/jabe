@@ -87,7 +87,7 @@ abstract class ScopeImpl extends CoreActivity implements PvmScopeInterface
     /**
      * Returns the backlog error callback's.
      *
-     * @return the callback's
+     * @return array the callback's
      */
     public function getBacklogErrorCallbacks(): array
     {

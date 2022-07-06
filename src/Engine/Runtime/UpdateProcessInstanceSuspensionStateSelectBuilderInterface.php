@@ -9,7 +9,7 @@ interface UpdateProcessInstanceSuspensionStateSelectBuilderInterface extends Upd
      *
      * @param processInstanceId
      *          id of the process instance
-     * @return the builder
+     * @return UpdateProcessInstanceSuspensionStateBuilderInterface the builder
      */
     public function byProcessInstanceId(string $processInstanceId): UpdateProcessInstanceSuspensionStateBuilderInterface;
 
@@ -18,7 +18,7 @@ interface UpdateProcessInstanceSuspensionStateSelectBuilderInterface extends Upd
      *
      * @param processDefinitionId
      *          id of the process definition
-     * @return the builder
+     * @return UpdateProcessInstanceSuspensionStateBuilderInterface the builder
      */
     public function byProcessDefinitionId(string $processDefinitionId): UpdateProcessInstanceSuspensionStateBuilderInterface;
 
@@ -27,7 +27,7 @@ interface UpdateProcessInstanceSuspensionStateSelectBuilderInterface extends Upd
      *
      * @param processDefinitionKey
      *          key of the process definition
-     * @return the builder
+     * @return UpdateProcessInstanceSuspensionStateTenantBuilderInterface the builder
      */
     public function byProcessDefinitionKey(string $processDefinitionKey): UpdateProcessInstanceSuspensionStateTenantBuilderInterface;
 }

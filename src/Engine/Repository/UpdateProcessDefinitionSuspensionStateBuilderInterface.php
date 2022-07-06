@@ -11,7 +11,7 @@ interface UpdateProcessDefinitionSuspensionStateBuilderInterface
      * @param includeProcessInstances
      *          if <code>true</code>, all related process instances will be
      *          activated / suspended too.
-     * @return the builder
+     * @return UpdateProcessDefinitionSuspensionStateBuilderInterface the builder
      */
     public function includeProcessInstances(bool $includeProcessInstances): UpdateProcessDefinitionSuspensionStateBuilderInterface;
 
@@ -24,7 +24,7 @@ interface UpdateProcessDefinitionSuspensionStateBuilderInterface
      *          suspended. If <code>null</code>, the process definition is
      *          activated / suspended immediately.
      *
-     * @return the builder
+     * @return UpdateProcessDefinitionSuspensionStateBuilderInterface the builder
      */
     public function executionDate(string $executionDate): UpdateProcessDefinitionSuspensionStateBuilderInterface;
 

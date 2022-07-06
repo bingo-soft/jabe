@@ -7,7 +7,7 @@ use Jabe\Engine\Variable\Value\TypedValueInterface;
 interface VariableInstanceInterface
 {
     /**
-     * @return the Id of this variable instance
+     * @return string the id of this variable instance
      */
     public function getId(): string;
 
@@ -19,7 +19,7 @@ interface VariableInstanceInterface
     /**
      * Returns the name of the type of this variable instance
      *
-     * @return the type name of the variable
+     * @return string the type name of the variable
      */
     public function getTypeName(): string;
 

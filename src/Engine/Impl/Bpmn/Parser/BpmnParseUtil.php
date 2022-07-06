@@ -37,7 +37,7 @@ class BpmnParseUtil
      *
         * @param element the parent element of the extension element
     * @param extensionElementName the name of the extension element to find
-    * @return the extension element or null if not found
+    * @return Element the extension element or null if not found
     */
     public static function findExtensionElement(Element $element, string $extensionElementName): ?Element
     {
@@ -48,7 +48,7 @@ class BpmnParseUtil
      * Returns the {@link IoMapping} of an element.
      *
      * @param element the element to parse
-     * @return the input output mapping or null if non defined
+     * @return IoMapping the input output mapping or null if non defined
      * @throws BpmnParseException if a input/output parameter element is malformed
      */
     public static function parseInputOutput(Element $element): ?IoMapping
@@ -207,7 +207,7 @@ class BpmnParseUtil
      * Parses a script element.
      *
      * @param scriptElement the script element ot parse
-     * @return the generated executable script
+     * @return ExecutableScript the generated executable script
      * @throws BpmnParseException if the a attribute is missing or the script cannot be processed
      */
     public static function parseScript(Element $scriptElement): ExecutableScript

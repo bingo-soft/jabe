@@ -65,7 +65,7 @@ interface ScriptEngineInterface
      * script execution.
      *
      *
-     * @return The value returned from the execution of the script.
+     * @return mixed The value returned from the execution of the script.
      *
      * @throws ScriptException if an error occurs in script. ScriptEngines should create and throw
      * <code>ScriptException</code> wrappers for checked Exceptions thrown by underlying scripting
@@ -95,7 +95,7 @@ interface ScriptEngineInterface
      * as <code>getBindings(ScriptContext.ENGINE_SCOPE).get</code>
      *
      * @param key The key whose value is to be returned
-     * @return the value for the given key
+     * @return mixed the value for the given key
      *
      * @throws NullPointerException if key is null.
      * @throws IllegalArgumentException if key is empty.
@@ -126,7 +126,7 @@ interface ScriptEngineInterface
      * may define additional scopes.  If the default <code>ScriptContext</code> of the <code>ScriptEngine</code>
      * defines additional scopes, any of them can be passed to get the corresponding <code>Bindings</code>.
      *
-     * @return The <code>Bindings</code> with the specified scope.
+     * @return BindingsInterface The <code>Bindings</code> with the specified scope.
      *
      * @throws IllegalArgumentException if specified scope is invalid
      *
@@ -173,7 +173,7 @@ interface ScriptEngineInterface
      * Returns the default <code>ScriptContext</code> of the <code>ScriptEngine</code> whose Bindings, Reader
      * and Writers are used for script executions when no <code>ScriptContext</code> is specified.
      *
-     * @return The default <code>ScriptContext</code> of the <code>ScriptEngine</code>.
+     * @return ScriptContextInterface The default <code>ScriptContext</code> of the <code>ScriptEngine</code>.
      */
     public function getContext(): ScriptContextInterface;
 
@@ -190,7 +190,7 @@ interface ScriptEngineInterface
     /**
      * Returns a <code>ScriptEngineFactory</code> for the class to which this <code>ScriptEngine</code> belongs.
      *
-     * @return The <code>ScriptEngineFactory</code>
+     * @return ScriptEngineFactoryInterface The <code>ScriptEngineFactory</code>
      */
     public function getFactory(): ScriptEngineFactoryInterface;
 }

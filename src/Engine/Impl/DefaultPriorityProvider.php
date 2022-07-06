@@ -26,7 +26,7 @@ abstract class DefaultPriorityProvider implements PriorityProviderInterface
     /**
      * Returns the default priority.
      *
-     * @return the default priority
+     * @return int the default priority
      */
     public function getDefaultPriority(): int
     {
@@ -36,7 +36,7 @@ abstract class DefaultPriorityProvider implements PriorityProviderInterface
     /**
      * Returns the default priority in case of resolution failure.
      *
-     * @return the default priority
+     * @return int the default priority
      */
     public function getDefaultPriorityOnResolutionFailure(): int
     {
@@ -51,7 +51,7 @@ abstract class DefaultPriorityProvider implements PriorityProviderInterface
      * @param valueProvider the provider which contains the value
      * @param execution the execution entity
      * @param errorMessageHeading the heading which is used for the error message
-     * @return the valid priority value
+     * @return int the valid priority value
      */
     protected function evaluateValueProvider(ParameterValueProviderInterface $valueProvider, ExecutionEntity $execution, string $errorMessageHeading): int
     {
@@ -106,7 +106,7 @@ abstract class DefaultPriorityProvider implements PriorityProviderInterface
      * @param execution the current execution
      * @param param the generic param
      * @param jobDefinitionId the job definition id if related to a job
-     * @return the specific priority
+     * @return int the specific priority
      */
     abstract protected function getSpecificPriority(ExecutionEntity $execution, $param, string $jobDefinitionId): int;
 
@@ -116,7 +116,7 @@ abstract class DefaultPriorityProvider implements PriorityProviderInterface
      *
      * @param execution the current execution
      * @param param the generic param
-     * @return the priority defined in the process definition
+     * @return int the priority defined in the process definition
      */
     abstract protected function getProcessDefinitionPriority(ExecutionEntity $execution, $param): int;
 
@@ -129,7 +129,7 @@ abstract class DefaultPriorityProvider implements PriorityProviderInterface
      * @param propertyKey the key which identifies the property
      * @param execution the current execution
      * @param errorMsgHead the error message header which is used if the evaluation fails
-     * @return the priority defined in the given process
+     * @return int the priority defined in the given process
      */
     protected function getProcessDefinedPriority(ProcessDefinitionImpl $processDefinition, string $propertyKey, ExecutionEntity $execution, string $errorMsgHead): ?int
     {

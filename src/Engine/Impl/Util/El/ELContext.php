@@ -18,7 +18,7 @@ abstract class ELContext
      * @param key
      *            The unique identifier that was used to associate the context object with this
      *            ELContext.
-     * @return The context object associated with the given key, or null if no such context was
+     * @return mixed The context object associated with the given key, or null if no such context was
      *         found.
      * @throws NullPointerException
      *             if key is null.
@@ -38,7 +38,7 @@ abstract class ELContext
      * is constructed, the reference to the ELResolver associated with the context cannot be
      * changed.
      *
-     * @return The resolver to be consulted for variable and property resolution during expression
+     * @return ELResolver The resolver to be consulted for variable and property resolution during expression
      *         evaluation.
      */
     abstract public function getELResolver(): ?ELResolver;
@@ -46,7 +46,7 @@ abstract class ELContext
     /**
      * Retrieves the FunctionMapper associated with this ELContext.
      *
-     * @return The function mapper to be consulted for the resolution of EL functions.
+     * @return FunctionMapper The function mapper to be consulted for the resolution of EL functions.
      */
     abstract public function getFunctionMapper(): ?FunctionMapper;
 
@@ -55,7 +55,7 @@ abstract class ELContext
      * returns non null, this Locale must be used for all localization needs in the implementation.
      * The Locale must not be cached to allow for applications that change Locale dynamically.
      *
-     * @return The Locale in which this instance is operating. Used primarily for message
+     * @return string The Locale in which this instance is operating. Used primarily for message
      *         localization.
      */
     public function getLocale(): string
@@ -66,7 +66,7 @@ abstract class ELContext
     /**
      * Retrieves the VariableMapper associated with this ELContext.
      *
-     * @return The variable mapper to be consulted for the resolution of EL variables.
+     * @return VariableMapper The variable mapper to be consulted for the resolution of EL variables.
      */
     abstract public function getVariableMapper(): ?VariableMapper;
 
@@ -75,7 +75,7 @@ abstract class ELContext
      * pair. The {@link CompositeELResolver} checks this property to determine whether it should
      * consider or skip other component resolvers.
      *
-     * @return The variable mapper to be consulted for the resolution of EL variables.
+     * @return bool The variable mapper to be consulted for the resolution of EL variables.
      * @see CompositeELResolver
      */
     public function isPropertyResolved(): bool

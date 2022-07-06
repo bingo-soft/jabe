@@ -16,7 +16,7 @@ class FlushResult
     }
 
     /**
-     * @return the operation that could not be performed
+     * @return array the operation that could not be performed
      */
     public function getFailedOperations(): array
     {

@@ -19,7 +19,7 @@ interface SerializableValueTypeInterface extends ValueTypeInterface
     /**
      * Creates a new TypedValue using this type.
      * @param serializedValue the value in serialized form
-     * @return the typed value for the value
+     * @return SerializableValueInterface the typed value for the value
      */
     public function createValueFromSerialized(string $serializedValue, ?array $valueInfo = null): SerializableValueInterface;
 }

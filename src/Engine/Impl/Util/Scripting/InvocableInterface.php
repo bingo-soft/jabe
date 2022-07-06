@@ -18,7 +18,7 @@ interface InvocableInterface
      * @param args Arguments to pass to the procedure.  The rules for converting
      * the arguments to scripting variables are implementation-specific.
      *
-     * @return The value returned by the procedure.  The rules for converting the scripting
+     * @return mixed The value returned by the procedure.  The rules for converting the scripting
      * variable returned by the script method to a Java Object are implementation-specific.
      *
      * @throws ScriptException if an error occurs during invocation of the method.
@@ -34,7 +34,7 @@ interface InvocableInterface
      *
      * @param name of the procedure or function to call
      * @param args Arguments to pass to the procedure or function
-     * @return The value returned by the procedure or function
+     * @return mixed The value returned by the procedure or function
      *
      * @throws ScriptException if an error occurs during invocation of the method.
      * @throws NoSuchMethodException if method with given name or matching argument types cannot be found.

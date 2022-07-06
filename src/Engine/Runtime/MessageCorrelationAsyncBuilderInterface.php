@@ -20,7 +20,7 @@ interface MessageCorrelationAsyncBuilderInterface
      *          {@link #processInstanceQuery(ProcessInstanceQuery)}, or
      *          {@link #historicProcessInstanceQuery(HistoricProcessInstanceQuery)}
      *          has to be set.
-     * @return the builder
+     * @return MessageCorrelationAsyncBuilderInterface the builder
      * @throws NullValueException
      *           when <code>ids</code> is <code>null</code>
      */
@@ -38,7 +38,7 @@ interface MessageCorrelationAsyncBuilderInterface
      *          {@link #processInstanceQuery(ProcessInstanceQuery)}, or
      *          {@link #historicProcessInstanceQuery(HistoricProcessInstanceQuery)}
      *          has to be set.
-     * @return the builder
+     * @return MessageCorrelationAsyncBuilderInterface the builder
      * @throws NullValueException
      *           when <code>processInstanceQuery</code> is <code>null</code>
      */
@@ -56,7 +56,7 @@ interface MessageCorrelationAsyncBuilderInterface
      *          {@link #processInstanceQuery(ProcessInstanceQuery)}, or
      *          {@link #historicProcessInstanceQuery(HistoricProcessInstanceQuery)}
      *          has to be set.
-     * @return the builder
+     * @return MessageCorrelationAsyncBuilderInterface the builder
      * @throws NullValueException
      *           when <code>historicProcessInstanceQuery</code> is <code>null</code>
      */
@@ -76,7 +76,7 @@ interface MessageCorrelationAsyncBuilderInterface
      *          the name of the variable to set
      * @param variableValue
      *          the value of the variable to set
-     * @return the builder
+     * @return MessageCorrelationAsyncBuilderInterface the builder
      * @throws NullValueException
      *           when <code>variableName</code> is <code>null</code>
      */
@@ -90,7 +90,7 @@ interface MessageCorrelationAsyncBuilderInterface
      *
      * @param variables
      *          the map of variables
-     * @return the builder
+     * @return MessageCorrelationAsyncBuilderInterface the builder
      */
     public function setVariables(array $variables): MessageCorrelationAsyncBuilderInterface;
 
@@ -99,7 +99,7 @@ interface MessageCorrelationAsyncBuilderInterface
      * message based on the provided queries and list of process instance ids,
      * whereby query results and list of ids will be merged.
      *
-     * @return the batch which correlates the message asynchronously
+     * @return BatchInterface the batch which correlates the message asynchronously
      *
      * @throws NullValueException
      *           when neither {@link #processInstanceIds(List)},

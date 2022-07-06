@@ -25,7 +25,7 @@ interface ProcessApplicationInterface
     public function undeploy(): void;
 
     /**
-     * @return the name of this process application
+     * @return string the name of this process application
      */
     public function getName(): string;
 
@@ -49,7 +49,7 @@ interface ProcessApplicationInterface
      *
      * @param callable to be executed "within" the context of this process application.
      * @param context of the current invocation, can be <code>null</code>
-     * @return the result of the callback
+     * @return mixed the result of the callback
      */
     public function execute(callable $callable, ?InvocationContext $context = null);
 

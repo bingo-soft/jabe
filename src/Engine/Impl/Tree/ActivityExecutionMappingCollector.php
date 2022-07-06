@@ -41,7 +41,7 @@ class ActivityExecutionMappingCollector implements TreeVisitorInterface
     }
 
     /**
-     * @return the mapped execution for scope or <code>null</code>, if no mapping exists
+     * @return PvmExecutionImpl the mapped execution for scope or <code>null</code>, if no mapping exists
      */
     public function getExecutionForScope(PvmScopeInterface $scope): ?PvmExecutionImpl
     {

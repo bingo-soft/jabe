@@ -10,7 +10,7 @@ interface SetRemovalTimeToHistoricProcessInstancesBuilderInterface extends SetRe
      * Selects historic process instances by the given query.
      *
      * @param historicProcessInstanceQuery to be evaluated.
-     * @return the builder.
+     * @return SetRemovalTimeToHistoricProcessInstancesBuilderInterface the builder.
      */
     public function byQuery(HistoricProcessInstanceQueryInterface $historicProcessInstanceQuery): SetRemovalTimeToHistoricProcessInstancesBuilderInterface;
 
@@ -18,7 +18,7 @@ interface SetRemovalTimeToHistoricProcessInstancesBuilderInterface extends SetRe
      * Selects historic decision instances by the given ids.
      *
      * @param historicProcessInstanceIds supposed to be affected.
-     * @return the builder.
+     * @return SetRemovalTimeToHistoricProcessInstancesBuilderInterface the builder.
      */
     public function byIds(array $historicProcessInstanceIds): SetRemovalTimeToHistoricProcessInstancesBuilderInterface;
 
@@ -30,9 +30,9 @@ interface SetRemovalTimeToHistoricProcessInstancesBuilderInterface extends SetRe
      * the hierarchy is ignored. This is the case for instances that were started with a version
      * prior 7.10.
      *
-     * @return the builder.
+     * @return SetRemovalTimeToHistoricProcessInstancesBuilderInterface the builder.
      */
-    public function hierarchical(): SetRemovalTimeToHistoricProcessInstancesBuilder;
+    public function hierarchical(): SetRemovalTimeToHistoricProcessInstancesBuilderInterface;
 
     /**
      * Sets the removal time asynchronously as batch. The returned batch can be used to
@@ -43,7 +43,7 @@ interface SetRemovalTimeToHistoricProcessInstancesBuilderInterface extends SetRe
      * when no {@link BatchPermissions#CREATE_BATCH_SET_REMOVAL_TIME CREATE_BATCH_SET_REMOVAL_TIME}
      * or no permission {@link Permissions#CREATE CREATE} permission is granted on {@link Resources#BATCH}.
      *
-     * @return the batch which sets the removal time asynchronously.
+     * @return BatchInterface the batch which sets the removal time asynchronously.
      */
     public function executeAsync(): BatchInterface;
 }

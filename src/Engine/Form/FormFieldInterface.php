@@ -7,28 +7,28 @@ use Jabe\Engine\Variable\Value\TypedValueInterface;
 interface FormFieldInterface
 {
     /**
-     * @return the Id of a form property. Must be unique for a given form.
+     * @return string the id of a form property. Must be unique for a given form.
      * The id is used for mapping the form field to a process variable.
      */
     public function getId(): string;
 
     /**
-     * @return the human-readable display name of a form property.
+     * @return string the human-readable display name of a form property.
      */
     public function getLabel(): string;
 
     /**
-     * @return the type of this form field.
+     * @return FormTypeInterface the type of this form field.
      */
     public function getType(): FormTypeInterface;
 
     /**
-     * @return the name of the type of this form field
+     * @return string the name of the type of this form field
      */
     public function getTypeName(): string;
 
     /**
-     * @return the value for this form field
+     * @return TypedValueInterface the value for this form field
      */
     public function getValue(): TypedValueInterface;
 

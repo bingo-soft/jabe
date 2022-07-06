@@ -5,7 +5,7 @@ namespace Jabe\Engine\Migration;
 interface MigrationInstructionValidationReportInterface
 {
     /**
-     * @return the migration instruction of this report
+     * @return MigrationInstructionInterface the migration instruction of this report
      */
     public function getMigrationInstruction(): MigrationInstructionInterface;
 
@@ -15,7 +15,7 @@ interface MigrationInstructionValidationReportInterface
     public function hasFailures(): bool;
 
     /**
-     * @return the list of failure messages
+     * @return array the list of failure messages
      */
     public function getFailures(): array;
 }

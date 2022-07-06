@@ -7,7 +7,7 @@ interface HasDbReferencesInterface
     /**
      * <p>Scope: IN-MEMORY references
      *
-     * @return the ids of the entities that this entity references. Should
+     * @return string the ids of the entities that this entity references. Should
      *   only return ids for entities of the same type
      */
     public function getReferencedEntityIds(): array;

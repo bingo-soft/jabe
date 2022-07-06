@@ -31,7 +31,7 @@ interface MetricsQueryInterface
      * Sets the offset of the returned results.
      *
      * @param offset indicates after which row the result begins
-     * @return the adjusted MetricsQuery
+     * @return MetricsQueryInterface the adjusted MetricsQuery
      */
     public function offset(int $offset): MetricsQueryInterface;
 
@@ -40,14 +40,14 @@ interface MetricsQueryInterface
      * Can't be set larger than 200, since it is the maximum row count which should be returned.
      *
      * @param maxResults the new row limit of the result
-     * @return the adjusted MetricsQuery
+     * @return MetricsQueryInterface the adjusted MetricsQuery
      */
     public function limit(int $maxResults): MetricsQueryInterface;
 
     /**
      * Aggregate metrics by reporters
      *
-     * @return the adjusted MetricsQuery
+     * @return MetricsQueryInterface the adjusted MetricsQuery
      */
     public function aggregateByReporter(): MetricsQueryInterface;
 
@@ -57,12 +57,12 @@ interface MetricsQueryInterface
      * the maximum can be decreased with the MetricsQuery#limit method. Paging
      * is enabled with the help of the offset.
      *
-     * @return the aggregated metrics
+     * @return array the aggregated metrics
      */
     public function interval(?int $interval = null): array;
 
     /**
-     * @return the aggregated sum
+     * @return int the aggregated sum
      */
     public function sum(): int;
 }

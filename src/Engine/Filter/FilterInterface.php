@@ -7,17 +7,17 @@ use Jabe\Engine\Query\QueryInterface;
 interface FilterInterface
 {
     /**
-     * @return the id of the filer
+     * @return string the id of the filer
      */
     public function getId(): string;
 
     /**
-     * @return the resource type fo the filter
+     * @return string the resource type fo the filter
      */
     public function getResourceType(): string;
 
     /**
-     * @return the name of the filter
+     * @return string the name of the filter
      */
     public function getName(): string;
 
@@ -28,7 +28,7 @@ interface FilterInterface
     public function setName(string $name): FilterInterface;
 
     /**
-     * @return the owner of the filter
+     * @return string the owner of the filter
      */
     public function getOwner(): string;
 
@@ -39,7 +39,7 @@ interface FilterInterface
     public function setOwner(string $owner): FilterInterface;
 
     /**
-     * @return the saved query as query object
+     * @return QueryInterface the saved query as query object
      */
     public function getQuery(): QueryInterface;
 
@@ -59,7 +59,7 @@ interface FilterInterface
     public function extend(QueryInterface $extendingQuery): FilterInterface;
 
     /**
-     * @return the properties as map
+     * @return array the properties as map
      */
     public function getProperties(): array;
 
