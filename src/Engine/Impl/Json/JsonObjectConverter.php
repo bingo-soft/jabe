@@ -9,7 +9,7 @@ abstract class JsonObjectConverter
         return json_encode($this->toJsonObject($object));
     }
 
-    abstract public function toJsonObject($object): ?\stdClass;
+    abstract public function toJsonObject($object, bool $isOrQueryActive = false): ?\stdClass;
 
-    abstract public function toObject(\stdClass $jsonString);
+    abstract public function toObject(\stdClass $jsonString, bool $isOrQuery = false);
 }
