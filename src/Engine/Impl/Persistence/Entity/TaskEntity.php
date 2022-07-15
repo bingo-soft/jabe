@@ -1050,7 +1050,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
     }
 
     /**
-     * @return true if invoking the listener was successful;
+     * @return bool true if invoking the listener was successful;
      *   if not successful, either false is returned (case: BPMN error propagation)
      *   or an exception is thrown
      */
@@ -1094,7 +1094,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
     }
 
     /**
-     * @return true if the next listener can be invoked; false if not
+     * @return bool true if the next listener can be invoked; false if not
      */
     protected function invokeListener(?CoreExecution $currentExecution, string $eventName, TaskListenerInterface $taskListener): bool
     {
@@ -1219,7 +1219,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
     }
 
     /**
-     * @return true if invoking the listener was successful;
+     * @return bool true if invoking the listener was successful;
      *   if not successful, either false is returned (case: BPMN error propagation)
      *   or an exception is thrown
      */

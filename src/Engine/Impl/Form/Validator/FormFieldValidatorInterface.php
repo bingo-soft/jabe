@@ -12,7 +12,7 @@ interface FormFieldValidatorInterface
      * @param validatorContext
      *          object providing access to additional information useful wile
      *          validating the form
-     * @return true if the value is valid, false otherwise.
+     * @return bool true if the value is valid, false otherwise.
      */
     public function validate($submittedValue, FormFieldValidatorContextInterface $validatorContext): bool;
 }

@@ -5,6 +5,7 @@ namespace Jabe\Engine\Impl;
 use Jabe\Engine\Batch\BatchInterface;
 use Jabe\Engine\Impl\Batch\{
     AbstractBatchJobHandler,
+    BatchConfiguration,
     BatchJobConfiguration,
     BatchJobContext,
     BatchJobDeclaration
@@ -33,7 +34,7 @@ class RestartProcessInstancesJobHandler extends AbstractBatchJobHandler
         return BatchInterface::TYPE_PROCESS_INSTANCE_RESTART;
     }
 
-    protected function postProcessJob(RestartProcessInstancesBatchConfiguration $configuration, JobEntity $job, RestartProcessInstancesBatchConfiguration $jobConfiguration): void
+    protected function postProcessJob(BatchConfiguration $configuration, JobEntity $job, BatchConfiguration $jobConfiguration): void
     {
         if ($job->getDeploymentId() === null) {
             $commandContext = Context::getCommandContext();
@@ -43,7 +44,7 @@ class RestartProcessInstancesJobHandler extends AbstractBatchJobHandler
         }
     }
 
-    public function execute(BatchJobConfiguration $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId)
+    public function execute(BatchJobConfiguration $configuration, ExecutionEntity $execution, CommandContext $commandContext, string $tenantId = null)
     {
         $configurationEntity = $commandContext
             ->getDbEntityManager()
@@ -91,9 +92,9 @@ class RestartProcessInstancesJobHandler extends AbstractBatchJobHandler
     }
 
     protected function createJobConfiguration(
-        RestartProcessInstancesBatchConfiguration $configuration,
+        BatchConfiguration $configuration,
         array $processIdsForJob
-    ): RestartProcessInstancesBatchConfiguration {
+    ): BatchConfiguration {
         return new RestartProcessInstancesBatchConfiguration(
             $processIdsForJob,
             $configuration->getInstructions(),

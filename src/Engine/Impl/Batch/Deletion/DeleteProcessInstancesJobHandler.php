@@ -18,6 +18,7 @@ use Jabe\Engine\Impl\JobExecutor\{
     JobDeclaration,
     JobHandlerConfigurationInterface
 };
+use Jabe\Engine\Impl\Json\JsonObjectConverter;
 use Jabe\Engine\Impl\Persistence\Entity\{
     ByteArrayEntity,
     ExecutionEntity,
@@ -33,7 +34,7 @@ class DeleteProcessInstancesJobHandler extends AbstractBatchJobHandler
         return BatchInterface::TYPE_PROCESS_INSTANCE_DELETION;
     }
 
-    protected function getJsonConverterInstance(): DeleteProcessInstanceBatchConfigurationJsonConverter
+    protected function getJsonConverterInstance(): JsonObjectConverter
     {
         return DeleteProcessInstanceBatchConfigurationJsonConverter::instance();
     }
@@ -46,12 +47,12 @@ class DeleteProcessInstancesJobHandler extends AbstractBatchJobHandler
         return self::$JOB_DECLARATION;
     }
 
-    protected function createJobConfiguration(DeleteProcessInstanceBatchConfiguration $configuration, array $processIdsForJob): DeleteProcessInstanceBatchConfiguration
+    protected function createJobConfiguration(BatchConfiguration $configuration, array $processIdsForJob): BatchConfiguration
     {
         return new DeleteProcessInstanceBatchConfiguration($processIdsForJob, null, $configuration->getDeleteReason(), $configuration->isSkipCustomListeners(), $configuration->isSkipSubprocesses(), $configuration->isFailIfNotExists());
     }
 
-    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, string $tenantId = null): void
     {
         $configurationEntity = $commandContext
             ->getDbEntityManager()

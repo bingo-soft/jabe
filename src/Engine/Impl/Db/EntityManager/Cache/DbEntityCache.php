@@ -265,7 +265,7 @@ class DbEntityCache
      * Allows checking whether the provided entity is present in the cache
      *
      * @param dbEntity the entity to check
-     * @return true if the the provided entity is present in the cache
+     * @return bool true if the the provided entity is present in the cache
      */
     public function contains(DbEntityInterface $dbEntity): bool
     {
@@ -277,7 +277,7 @@ class DbEntityCache
      * and is {@link DbEntityState#PERSISTENT}.
      *
      * @param dbEntity the entity to check
-     * @return true if the provided entity is present in the cache and is
+     * @return bool true if the provided entity is present in the cache and is
      * {@link DbEntityState#PERSISTENT}.
      */
     public function isPersistent(DbEntityInterface $dbEntity): bool
@@ -295,7 +295,7 @@ class DbEntityCache
      * and is marked to be deleted.
      *
      * @param dbEntity the entity to check
-     * @return true if the provided entity is present in the cache and is
+     * @return bool true if the provided entity is present in the cache and is
      * marked to be deleted
      */
     public function isDeleted(DbEntityInterface $dbEntity): bool
@@ -315,7 +315,7 @@ class DbEntityCache
      * and is {@link DbEntityState#TRANSIENT}.
      *
      * @param dbEntity the entity to check
-     * @return true if the provided entity is present in the cache and is
+     * @return bool true if the provided entity is present in the cache and is
      * {@link DbEntityState#TRANSIENT}.
      */
     public function isTransient(DbEntityInterface $dbEntity): bool

@@ -11,8 +11,10 @@ use Jabe\Engine\Impl\Bpmn\Helper\BpmnProperties;
 use Jabe\Engine\Impl\Calendar\BusinessCalendarInterface;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\El\StartProcessVariableScope;
+use Jabe\Engine\Impl\JobExecutor\JobHandlerConfigurationInterface;
 use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
+    JobEntity,
     TimerEntity
 };
 use Jabe\Engine\Impl\Pvm\PvmScopeInterface;
@@ -62,7 +64,7 @@ class TimerDeclarationImpl extends JobDeclaration
         return $this->eventScopeActivityId;
     }
 
-    protected function newJobInstance($execution = null): TimerEntity
+    protected function newJobInstance($execution = null): JobEntity
     {
         $timer = new TimerEntity($this);
         if ($execution !== null) {
@@ -180,12 +182,12 @@ class TimerDeclarationImpl extends JobDeclaration
             ->schedule($timer);
     }
 
-    protected function resolveExecution(ExecutionEntity $context): ExecutionEntity
+    protected function resolveExecution(/*ExecutionEntity*/$context): ?ExecutionEntity
     {
         return $context;
     }
 
-    protected function resolveJobHandlerConfiguration(ExecutionEntity $context): JobHandlerConfigurationInterface
+    protected function resolveJobHandlerConfiguration(/*ExecutionEntity*/$context): JobHandlerConfigurationInterface
     {
         return $this->resolveJobHandler()->newConfiguration($this->rawJobHandlerConfiguration);
     }

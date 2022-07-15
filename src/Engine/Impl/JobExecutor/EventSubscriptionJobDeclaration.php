@@ -6,9 +6,11 @@ use Jabe\Engine\Impl\Bpmn\Parser\{
     BpmnParse,
     EventSubscriptionDeclaration
 };
+use Jabe\Engine\Impl\JobExecutor\JobHandlerConfigurationInterface;
 use Jabe\Engine\Impl\Persistence\Entity\{
     EventSubscriptionEntity,
     ExecutionEntity,
+    JobEntity,
     MessageEntity,
     ProcessDefinitionEntity
 };
@@ -26,7 +28,7 @@ class EventSubscriptionJobDeclaration extends JobDeclaration
         $this->eventSubscriptionDeclaration = $eventSubscriptionDeclaration;
     }
 
-    protected function newJobInstance($eventSubscription = null): MessageEntity
+    protected function newJobInstance($eventSubscription = null): JobEntity
     {
         $message = new MessageEntity();
 
@@ -65,12 +67,12 @@ class EventSubscriptionJobDeclaration extends JobDeclaration
         return $this->eventSubscriptionDeclaration->getActivityId();
     }
 
-    protected function resolveExecution(EventSubscriptionEntity $context): ExecutionEntity
+    protected function resolveExecution(/*EventSubscriptionEntity*/$context): ?ExecutionEntity
     {
         return $context->getExecution();
     }
 
-    protected function resolveJobHandlerConfiguration(EventSubscriptionEntity $context): JobHandlerConfigurationInterface
+    protected function resolveJobHandlerConfiguration(/*EventSubscriptionEntity*/$context): JobHandlerConfigurationInterface
     {
         return new EventSubscriptionJobConfiguration($context->getId());
     }

@@ -124,7 +124,7 @@ class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategyInterface
     }
 
     /**
-     * @return true, if all acquired jobs (spanning all engines) were rejected for execution
+     * @return bool true, if all acquired jobs (spanning all engines) were rejected for execution
      */
     protected function allSubmittedJobsRejected(JobAcquisitionContext $context): bool
     {

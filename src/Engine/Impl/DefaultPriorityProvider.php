@@ -160,7 +160,7 @@ abstract class DefaultPriorityProvider implements PriorityProviderInterface
     /**
      * Checks if the given number is a valid long value.
      * @param value the number which should be checked
-     * @return true if is a valid long value, false otherwise
+     * @return bool true if is a valid long value, false otherwise
      */
     protected function isValidLongValue($value): bool
     {

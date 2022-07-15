@@ -71,6 +71,28 @@ class JsonUtil
         }
     }
 
+    public static function asObject($data)
+    {
+        try {
+            if (is_object($data)) {
+                return $data;
+            }
+            if (is_string($data)) {
+                return json_decode($data);
+            }
+            if (is_array($data)) {
+                return (object) $data;
+            }
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    public static function asBytes(\stdClass $jsonObject): string
+    {
+        return json_encode($jsonObject);
+    }
+
     public static function asString(?array $properties = null): string
     {
         if (!empty($properties)) {

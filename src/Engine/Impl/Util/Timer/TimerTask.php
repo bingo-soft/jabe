@@ -71,7 +71,7 @@ abstract class TimerTask extends \Threaded implements RunnableInterface
      * <p>This method may be called repeatedly; the second and subsequent
      * calls have no effect.
      *
-     * @return true if this task is scheduled for one-time execution and has
+     * @return bool true if this task is scheduled for one-time execution and has
      *         not yet run, or this task is scheduled for repeated execution.
      *         Returns false if the task was scheduled for one-time execution
      *         and has already run, or if the task was never scheduled, or if

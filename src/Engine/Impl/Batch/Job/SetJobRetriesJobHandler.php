@@ -16,6 +16,7 @@ use Jabe\Engine\Impl\JobExecutor\{
     JobDeclaration,
     JobHandlerConfigurationInterface
 };
+use Jabe\Engine\Impl\Json\JsonObjectConverter;
 use Jabe\Engine\Impl\Persistence\Entity\{
     ByteArrayEntity,
     ExecutionEntity,
@@ -39,17 +40,17 @@ class SetJobRetriesJobHandler extends AbstractBatchJobHandler
         return self::$JOB_DECLARATION;
     }
 
-    protected function getJsonConverterInstance(): SetJobRetriesBatchConfigurationJsonConverter
+    protected function getJsonConverterInstance(): JsonObjectConverter
     {
         return SetJobRetriesBatchConfigurationJsonConverter::instance();
     }
 
-    protected function createJobConfiguration(SetRetriesBatchConfiguration $configuration, array $jobIds): SetRetriesBatchConfiguration
+    protected function createJobConfiguration(BatchConfiguration $configuration, array $jobIds): BatchConfiguration
     {
         return new SetRetriesBatchConfiguration($jobIds, $configuration->getRetries());
     }
 
-    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, string $tenantId = null): void
     {
         $configurationEntity = $commandContext
             ->getDbEntityManager()

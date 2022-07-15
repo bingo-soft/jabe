@@ -16,6 +16,7 @@ use Jabe\Engine\Impl\JobExecutor\{
     JobDeclaration,
     JobHandlerConfigurationInterface
 };
+use Jabe\Engine\Impl\Json\JsonObjectConverter;
 use Jabe\Engine\Impl\Persistence\Entity\{
     ByteArrayEntity,
     ExecutionEntity,
@@ -31,7 +32,7 @@ class DeleteHistoricProcessInstancesJobHandler extends AbstractBatchJobHandler
         return BatchInterface::TYPE_HISTORIC_PROCESS_INSTANCE_DELETION;
     }
 
-    protected function getJsonConverterInstance(): DeleteHistoricProcessInstanceBatchConfigurationJsonConverter
+    protected function getJsonConverterInstance(): JsonObjectConverter
     {
         return DeleteHistoricProcessInstanceBatchConfigurationJsonConverter::instance();
     }
@@ -49,7 +50,7 @@ class DeleteHistoricProcessInstancesJobHandler extends AbstractBatchJobHandler
         return new BatchConfiguration($processIdsForJob, $configuration->isFailIfNotExists());
     }
 
-    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, string $tenantId = null): void
     {
         $configurationEntity = $commandContext
             ->getDbEntityManager()

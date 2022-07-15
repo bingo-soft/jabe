@@ -13,7 +13,7 @@ use Jabe\Engine\Impl\Persistence\Entity\{
 
 abstract class TimerChangeJobDefinitionSuspensionStateJobHandler implements JobHandlerInterface
 {
-    public function execute(JobDefinitionSuspensionStateConfiguration $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, string $tenantId = null): void
     {
         $cmd = $this->getCommand($configuration);
         $cmd->disableLogUserOperation();
@@ -22,14 +22,14 @@ abstract class TimerChangeJobDefinitionSuspensionStateJobHandler implements JobH
 
     abstract protected function getCommand(JobDefinitionSuspensionStateConfiguration $configuration): AbstractSetJobDefinitionStateCmd;
 
-    public function newConfiguration(string $canonicalString): JobDefinitionSuspensionStateConfiguration
+    public function newConfiguration(string $canonicalString): JobHandlerConfigurationInterface
     {
         $jsonObject = json_decode($canonicalString);
 
         return JobDefinitionSuspensionStateConfiguration::fromJson($jsonObject);
     }
 
-    public function onDelete(JobDefinitionSuspensionStateConfiguration $configuration, JobEntity $jobEntity): void
+    public function onDelete(JobHandlerConfigurationInterface $configuration, JobEntity $jobEntity): void
     {
         // do nothing
     }

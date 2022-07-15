@@ -727,7 +727,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
     }
 
     /**
-     * @return true if execution tree prefetching is enabled
+     * @return bool true if execution tree prefetching is enabled
      */
     protected function isExecutionTreePrefetchEnabled(): bool
     {

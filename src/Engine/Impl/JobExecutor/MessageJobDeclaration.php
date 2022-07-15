@@ -3,8 +3,10 @@
 namespace Jabe\Engine\Impl\JobExecutor;
 
 use Jabe\Engine\Impl\Interceptor\AtomicOperationInvocation;
+use Jabe\Engine\Impl\JobExecutor\JobHandlerConfigurationInterface;
 use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
+    JobEntity,
     MessageEntity
 };
 use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
@@ -23,7 +25,7 @@ class MessageJobDeclaration extends JobDeclaration
         $this->operationIdentifier = $operationsIdentifier;
     }
 
-    protected function newJobInstance($context = null): MessageEntity
+    protected function newJobInstance($context = null): JobEntity
     {
         $message = new MessageEntity();
         $message->setExecution($context->getExecution());
@@ -40,12 +42,12 @@ class MessageJobDeclaration extends JobDeclaration
         return false;
     }
 
-    protected function resolveExecution(AtomicOperationInvocation $context): ExecutionEntity
+    protected function resolveExecution(/*AtomicOperationInvocation*/$context): ?ExecutionEntity
     {
         return $context->getExecution();
     }
 
-    protected function resolveJobHandlerConfiguration(AtomicOperationInvocation $context): JobHandlerConfiguration
+    protected function resolveJobHandlerConfiguration(/*AtomicOperationInvocation*/$context): JobHandlerConfigurationInterface
     {
         $configuration = new AsyncContinuationConfiguration();
 

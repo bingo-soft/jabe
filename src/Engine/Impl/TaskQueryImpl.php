@@ -2381,7 +2381,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
     }
 
     /**
-     * @return true if the query is not supposed to find CMMN or standalone tasks
+     * @return bool true if the query is not supposed to find CMMN or standalone tasks
      */
     public function isQueryForProcessTasksOnly(): bool
     {

@@ -41,7 +41,7 @@ class AsyncContinuationJobHandler implements JobHandlerInterface
         return self::TYPE;
     }
 
-    public function execute(AsyncContinuationConfiguration $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, string $tenantId = null): void
     {
         LegacyBehavior::repairMultiInstanceAsyncJob($execution);
 
@@ -78,7 +78,7 @@ class AsyncContinuationJobHandler implements JobHandlerInterface
         return array_key_exists($atomicOperation->getCanonicalName(), $this->supportedOperations);
     }
 
-    public function newConfiguration(string $canonicalString): AsyncContinuationConfiguration
+    public function newConfiguration(string $canonicalString): JobHandlerConfigurationInterface
     {
         $configParts = $this->tokenizeJobConfiguration($canonicalString);
 
@@ -114,7 +114,7 @@ class AsyncContinuationJobHandler implements JobHandlerInterface
         return $configuration;
     }
 
-    public function onDelete(AsyncContinuationConfiguration $configuration, JobEntity $jobEntity): void
+    public function onDelete(JobHandlerConfigurationInterface $configuration, JobEntity $jobEntity): void
     {
       // do nothing
     }

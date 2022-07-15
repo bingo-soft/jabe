@@ -84,7 +84,7 @@ class DefaultDelegateInterceptor implements DelegateInterceptorInterface
     }
 
     /**
-     * @return true if the execution context is modified by this invocation
+     * @return bool true if the execution context is modified by this invocation
      */
     protected function setExecutionContext(BaseDelegateExecutionInterface $execution): bool
     {

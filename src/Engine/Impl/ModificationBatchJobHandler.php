@@ -5,6 +5,7 @@ namespace Jabe\Engine\Impl;
 use Jabe\Engine\Batch\BatchInterface;
 use Jabe\Engine\Impl\Batch\{
     AbstractBatchJobHandler,
+    BatchConfiguration,
     BatchJobConfiguration,
     BatchJobContext,
     BatchJobDeclaration
@@ -13,6 +14,7 @@ use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\JobExecutor\JobDeclaration;
 use Jabe\Engine\Impl\Json\ModificationBatchConfigurationJsonConverter;
+use Jabe\Engine\Impl\Json\JsonObjectConverter;
 use Jabe\Engine\Impl\Persistence\Entity\{
     ByteArrayEntity,
     ExecutionEntity,
@@ -37,7 +39,7 @@ class ModificationBatchJobHandler extends AbstractBatchJobHandler
         return BatchInterface::TYPE_PROCESS_INSTANCE_MODIFICATION;
     }
 
-    protected function postProcessJob(ModificationBatchConfiguration $configuration, JobEntity $job, ModificationBatchConfiguration $jobConfiguration): void
+    protected function postProcessJob(BatchConfiguration $configuration, JobEntity $job, BatchConfiguration $jobConfiguration): void
     {
         if ($job->getDeploymentId() === null) {
             $commandContext = Context::getCommandContext();
@@ -47,7 +49,7 @@ class ModificationBatchJobHandler extends AbstractBatchJobHandler
         }
     }
 
-    public function execute(BatchJobConfiguration $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId)
+    public function execute(BatchJobConfiguration $configuration, ExecutionEntity $execution, CommandContext $commandContext, string $tenantId = null)
     {
         $configurationEntity = $commandContext
             ->getDbEntityManager()
@@ -79,7 +81,7 @@ class ModificationBatchJobHandler extends AbstractBatchJobHandler
         return self::$JOB_DECLARATION;
     }
 
-    protected function createJobConfiguration(ModificationBatchConfiguration $configuration, array $processIdsForJob): ModificationBatchConfiguration
+    protected function createJobConfiguration(BatchConfiguration $configuration, array $processIdsForJob): BatchConfiguration
     {
         return new ModificationBatchConfiguration(
             $processIdsForJob,
@@ -90,7 +92,7 @@ class ModificationBatchJobHandler extends AbstractBatchJobHandler
         );
     }
 
-    protected function getJsonConverterInstance(): ModificationBatchConfigurationJsonConverter
+    protected function getJsonConverterInstance(): JsonObjectConverter
     {
         return ModificationBatchConfigurationJsonConverter::instance();
     }

@@ -2036,7 +2036,7 @@ class BpmnParse extends Parse
     * @param msgJobdecl the message job declaration which is searched
     * @param procDefKey the corresponding process definition key
     * @param activityId the corresponding activity id
-    * @return true if the message job declaration exists, false otherwise
+    * @return bool true if the message job declaration exists, false otherwise
     */
     protected function exists(MessageJobDeclaration $msgJobdecl, string $procDefKey, string $activityId): bool
     {

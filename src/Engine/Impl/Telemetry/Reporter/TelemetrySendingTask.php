@@ -184,7 +184,7 @@ class TelemetrySendingTask extends TimerTask
     }
 
     /**
-     * @return true if status code is 2xx
+     * @return bool true if status code is 2xx
      */
     protected function isSuccessStatusCode(int $statusCode): bool
     {

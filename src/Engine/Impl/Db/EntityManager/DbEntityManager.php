@@ -432,7 +432,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
      * on a Historic entity can be ignored.
      *
      * @param dbOperation that failed
-     * @return true if the failure can be ignored
+     * @return bool true if the failure can be ignored
      */
     protected function canIgnoreHistoryModificationFailure(DbOperation $dbOperation): bool
     {

@@ -272,7 +272,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
      * <code>TransactionRetryException</code>.
      *
      * @param cause for which an operation failed
-     * @return true if the failure was due to a CRDB <code>TransactionRetryException</code>.
+     * @return bool true if the failure was due to a CRDB <code>TransactionRetryException</code>.
      *          Otherwise, it's false.
      */
     /*public static function isCrdbConcurrencyConflict(Throwable cause): bool
@@ -298,7 +298,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
      *
      * @param cause for which an operation failed
      * @param configuration of the Process Engine
-     * @return true if the failure was due to a CRDB <code>TransactionRetryException</code>.
+     * @return bool true if the failure was due to a CRDB <code>TransactionRetryException</code>.
      *          Otherwise, it's false.
      */
     /*public static boolean isCrdbConcurrencyConflictOnCommit(Throwable cause, ProcessEngineConfigurationImpl configuration) {

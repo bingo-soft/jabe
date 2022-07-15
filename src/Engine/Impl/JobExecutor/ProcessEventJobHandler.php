@@ -18,7 +18,7 @@ class ProcessEventJobHandler implements JobHandlerInterface
         return self::TYPE;
     }
 
-    public function execute(EventSubscriptionJobConfiguration $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, string $tenantId = null): void
     {
         // lookup subscription:
         $eventSubscriptionId = $configuration->getEventSubscriptionId();
@@ -31,12 +31,12 @@ class ProcessEventJobHandler implements JobHandlerInterface
         }
     }
 
-    public function newConfiguration(string $canonicalString): EventSubscriptionJobConfiguration
+    public function newConfiguration(string $canonicalString): JobHandlerConfigurationInterface
     {
         return new EventSubscriptionJobConfiguration($canonicalString);
     }
 
-    public function onDelete(EventSubscriptionJobConfiguration $configuration, JobEntity $jobEntity): void
+    public function onDelete(JobHandlerConfigurationInterface $configuration, JobEntity $jobEntity): void
     {
         // do nothing
     }

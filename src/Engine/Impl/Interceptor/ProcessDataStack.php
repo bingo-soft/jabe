@@ -40,7 +40,7 @@ class ProcessDataStack
     }
 
     /**
-     * @return true if a value was obtained from the mdc
+     * @return bool true if a value was obtained from the mdc
      *   and added to the stack
      */
     public function pushCurrentValueFromMdc(): bool

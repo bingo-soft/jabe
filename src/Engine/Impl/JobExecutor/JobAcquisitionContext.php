@@ -48,7 +48,7 @@ class JobAcquisitionContext
     }
 
     /**
-     * @return true, if for all engines there were less jobs acquired than requested
+     * @return bool true, if for all engines there were less jobs acquired than requested
      */
     public function areAllEnginesIdle(): bool
     {
