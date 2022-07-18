@@ -769,7 +769,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function caseInstanceVariableValueEquals(string $variableName, $variableValue): TaskQueryInterface
+    /*public function caseInstanceVariableValueEquals(string $variableName, $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::EQUALS, false, false);
         return $this;
@@ -815,7 +815,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::LESS_THAN_OR_EQUAL, false, false);
         return $this;
-    }
+    }*/
 
     public function processDefinitionKey(string $processDefinitionKey): TaskQueryInterface
     {
@@ -1315,14 +1315,14 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this->orderBy(TaskQueryProperty::processInstanceId());
     }
 
-    public function orderByCaseInstanceId(): TaskQueryInterface
+    /*public function orderByCaseInstanceId(): TaskQueryInterface
     {
         if ($this->isOrQueryActive) {
             throw new ProcessEngineException("Invalid query usage: cannot set orderByCaseInstanceId() within 'or' query");
         }
 
         return $this->orderBy(TaskQueryProperty::caseInstanceId());
-    }
+    }*/
 
     public function orderByExecutionId(): TaskQueryInterface
     {
@@ -1841,10 +1841,10 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return caseDefinitionName;
     }*/
 
-    public function getCaseDefinitionNameLike(): string
+    /*public function getCaseDefinitionNameLike(): string
     {
         return $this->caseDefinitionNameLike;
-    }
+    }*/
 
     public function isInitializeFormKeys(): bool
     {

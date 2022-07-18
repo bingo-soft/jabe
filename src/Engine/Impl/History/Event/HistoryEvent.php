@@ -152,37 +152,37 @@ class HistoryEvent implements \Serializable, DbEntityInterface, HistoricEntityIn
         $this->processDefinitionVersion = $processDefinitionVersion;
     }
 
-    public function getCaseDefinitionName(): string
+    /*public function getCaseDefinitionName(): string
     {
         return $this->caseDefinitionName;
-    }
+    }*/
 
-    public function setCaseDefinitionName(string $caseDefinitionName): void
+    /*public function setCaseDefinitionName(string $caseDefinitionName): void
     {
         $this->caseDefinitionName = $caseDefinitionName;
-    }
+    }*/
 
-    public function getCaseDefinitionKey(): string
+    /*public function getCaseDefinitionKey(): string
     {
         return $this->caseDefinitionKey;
-    }
+    }*/
 
-    public function setCaseDefinitionKey(string $caseDefinitionKey): void
+    /*public function setCaseDefinitionKey(string $caseDefinitionKey): void
     {
         $this->caseDefinitionKey = $caseDefinitionKey;
-    }
+    }*/
 
-    public function getCaseDefinitionId(): string
+    /*public function getCaseDefinitionId(): string
     {
         return $this->caseDefinitionId;
-    }
+    }*/
 
-    public function setCaseDefinitionId(string $caseDefinitionId): void
+    /*public function setCaseDefinitionId(string $caseDefinitionId): void
     {
         $this->caseDefinitionId = $caseDefinitionId;
-    }
+    }*/
 
-    public function getCaseInstanceId(): string
+    /*public function getCaseInstanceId(): string
     {
         return $this->caseInstanceId;
     }
@@ -200,7 +200,7 @@ class HistoryEvent implements \Serializable, DbEntityInterface, HistoricEntityIn
     public function setCaseExecutionId(string $caseExecutionId): void
     {
         $this->caseExecutionId = $caseExecutionId;
-    }
+    }*/
 
     public function setId(string $id): void
     {

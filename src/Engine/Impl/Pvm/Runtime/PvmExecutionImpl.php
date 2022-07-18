@@ -1197,7 +1197,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
     // case instance id /////////////////////////////////////////////////////////
 
-    public function getCaseInstanceId(): ?string
+    /*public function getCaseInstanceId(): ?string
     {
         return $this->caseInstanceId;
     }
@@ -1205,7 +1205,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
     public function setCaseInstanceId(string $caseInstanceId): void
     {
         $this->caseInstanceId = $caseInstanceId;
-    }
+    }*/
 
     // activity /////////////////////////////////////////////////////////////////
 

@@ -21,7 +21,7 @@ interface HistoricVariableInstanceQueryInterface extends QueryInterface
     public function processDefinitionKey(string $processDefinitionKey): HistoricVariableInstanceQueryInterface;
 
     /** Only select historic case variables with the given case instance. */
-    public function caseInstanceId(string $caseInstanceId): HistoricVariableInstanceQueryInterface;
+    //public function caseInstanceId(string $caseInstanceId): HistoricVariableInstanceQueryInterface;
 
     /** Only select historic process variables with the given variable name. */
     public function variableName(string $variableName): HistoricVariableInstanceQueryInterface;
@@ -55,10 +55,10 @@ interface HistoricVariableInstanceQueryInterface extends QueryInterface
     public function executionIdIn(array $executionIds): HistoricVariableInstanceQueryInterface;
 
     /** Only select historic variable instances which have one of the case executions ids. **/
-    public function caseExecutionIdIn(array $caseExecutionIds): HistoricVariableInstanceQueryInterface;
+    //public function caseExecutionIdIn(array $caseExecutionIds): HistoricVariableInstanceQueryInterface;
 
     /** Only select historic variable instances with one of the given case activity ids. **/
-    public function caseActivityIdIn(array $caseActivityIds): HistoricVariableInstanceQueryInterface;
+    //public function caseActivityIdIn(array $caseActivityIds): HistoricVariableInstanceQueryInterface;
 
     /** Only select historic variable instances which have one of the activity instance ids. **/
     public function activityInstanceIdIn(array $activityInstanceIds): HistoricVariableInstanceQueryInterface;

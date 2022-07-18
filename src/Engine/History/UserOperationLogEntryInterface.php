@@ -89,13 +89,13 @@ interface UserOperationLogEntryInterface
     public function getExecutionId(): string;
 
     /** Case definition reference. */
-    public function getCaseDefinitionId(): string;
+    //public function getCaseDefinitionId(): string;
 
     /** Case instance reference. */
-    public function getCaseInstanceId(): string;
+    //public function getCaseInstanceId(): string;
 
     /** Case execution reference. */
-    public function getCaseExecutionId(): string;
+    //public function getCaseExecutionId(): string;
 
     /** Task instance reference. */
     public function getTaskId(): string;

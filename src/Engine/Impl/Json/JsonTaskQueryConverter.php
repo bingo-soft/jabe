@@ -192,7 +192,7 @@ class JsonTaskQueryConverter extends JsonObjectConverter
         JsonUtil::addField($json, self::CASE_DEFINITION_ID, $query->getCaseDefinitionId());
         JsonUtil::addField($json, self::CASE_DEFINITION_NAME, $query->getCaseDefinitionName());
         JsonUtil::addField($json, self::CASE_DEFINITION_NAME_LIKE, $query->getCaseDefinitionNameLike());
-        JsonUtil::addField($json, self::CASE_INSTANCE_ID, $query->getCaseInstanceId());
+        //JsonUtil::addField($json, self::CASE_INSTANCE_ID, $query->getCaseInstanceId());
         JsonUtil::addField($json, self::CASE_INSTANCE_BUSINESS_KEY, $query->getCaseInstanceBusinessKey());
         JsonUtil::addField($json, self::CASE_INSTANCE_BUSINESS_KEY_LIKE, $query->getCaseInstanceBusinessKeyLike());
         JsonUtil::addField($json, self::CASE_EXECUTION_ID, $query->getCaseExecutionId());

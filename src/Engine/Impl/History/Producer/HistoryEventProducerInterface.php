@@ -30,7 +30,7 @@ interface HistoryEventProducerInterface
      * Creates the history event fired when a process instances is <strong>created</strong>.
      *
      * @param execution the current execution.
-     * @return HistoryEvent the history event
+     * @return the history event
      */
     public function createProcessInstanceStartEvt(DelegateExecutionInterface $execution): HistoryEvent;
 
@@ -38,7 +38,7 @@ interface HistoryEventProducerInterface
      * Creates the history event fired when a process instance is <strong>updated</strong>.
      *
      * @param execution the process instance
-     * @return HistoryEvent the created history event
+     * @return the created history event
      */
     public function createProcessInstanceUpdateEvt(DelegateExecutionInterface $execution): HistoryEvent;
 
@@ -46,7 +46,7 @@ interface HistoryEventProducerInterface
      * Creates the history event fired when a process instance is <strong>migrated</strong>.
      *
      * @param execution the process instance
-     * @return HistoryEvent the created history event
+     * @return the created history event
      */
     public function createProcessInstanceMigrateEvt(DelegateExecutionInterface $execution): HistoryEvent;
 
@@ -54,7 +54,7 @@ interface HistoryEventProducerInterface
      * Creates the history event fired when a process instance is <strong>ended</strong>.
      *
      * @param execution the current execution.
-     * @return HistoryEvent the history event
+     * @return the history event
      */
     public function createProcessInstanceEndEvt(DelegateExecutionInterface $execution): HistoryEvent;
 
@@ -64,7 +64,7 @@ interface HistoryEventProducerInterface
      * Creates the history event fired when an activity instance is <strong>started</strong>.
      *
      * @param execution the current execution.
-     * @return HistoryEvent the history event
+     * @return the history event
      */
     public function createActivityInstanceStartEvt(DelegateExecutionInterface $execution): HistoryEvent;
 
@@ -73,7 +73,7 @@ interface HistoryEventProducerInterface
      *
      * @param execution the current execution.
      * @param task the task association that is currently updated. (May be null in case there is not task associated.)
-     * @return HistoryEvent the history event
+     * @return the history event
      */
     public function createActivityInstanceUpdateEvt(DelegateExecutionInterface $execution, ?DelegateTaskInterface $task = null): HistoryEvent;
 
@@ -81,7 +81,7 @@ interface HistoryEventProducerInterface
      * Creates the history event which is fired when an activity instance is migrated.
      *
      * @param actInstance the migrated activity instance which contains the new id's
-     * @return HistoryEvent the created history event
+     * @return the created history event
      */
     public function createActivityInstanceMigrateEvt(MigratingActivityInstance $actInstance): HistoryEvent;
 
@@ -89,7 +89,7 @@ interface HistoryEventProducerInterface
      * Creates the history event fired when an activity instance is <strong>ended</strong>.
      *
      * @param execution the current execution.
-     * @return HistoryEvent the history event
+     * @return the history event
      */
     public function createActivityInstanceEndEvt(DelegateExecutionInterface $execution): HistoryEvent;
 
@@ -99,7 +99,7 @@ interface HistoryEventProducerInterface
      * Creates the history event fired when a task instance is <strong>created</strong>.
      *
      * @param task the task
-     * @return HistoryEvent the history event
+     * @return the history event
      */
     public function createTaskInstanceCreateEvt(DelegateTaskInterface $task): HistoryEvent;
 
@@ -107,7 +107,7 @@ interface HistoryEventProducerInterface
      * Creates the history event fired when a task instance is <strong>updated</strong>.
      *
      * @param task the task
-     * @return HistoryEvent the history event
+     * @return the history event
      */
     public function createTaskInstanceUpdateEvt(DelegateTaskInterface $task): HistoryEvent;
 
@@ -115,7 +115,7 @@ interface HistoryEventProducerInterface
      * Creates the history event fired when a task instance is <strong>migrated</strong>.
      *
      * @param task the task
-     * @return HistoryEvent the history event
+     * @return the history event
      */
     public function createTaskInstanceMigrateEvt(DelegateTaskInterface $task): HistoryEvent;
 
@@ -124,7 +124,7 @@ interface HistoryEventProducerInterface
      *
      * @param task the task
      * @param deleteReason
-     * @return HistoryEvent the history event
+     * @return the history event
      */
     public function createTaskInstanceCompleteEvt(DelegateTaskInterface $task, string $deleteReason): HistoryEvent;
 
@@ -147,7 +147,7 @@ interface HistoryEventProducerInterface
      *
      * @param variableInstance the runtime variable instance
      * @param the scope to which the variable is linked
-     * @return HistoryEvent the history event
+     * @return the history event
      */
     public function createHistoricVariableCreateEvt(VariableInstanceEntity $variableInstance, VariableScopeInterface $sourceVariableScope): HistoryEvent;
 
@@ -156,7 +156,7 @@ interface HistoryEventProducerInterface
      *
      * @param variableInstance the runtime variable instance
      * @param the scope to which the variable is linked
-     * @return HistoryEvent the history event
+     * @return the history event
      */
     public function createHistoricVariableUpdateEvt(VariableInstanceEntity $variableInstance, VariableScopeInterface $sourceVariableScope): HistoryEvent;
 
@@ -165,7 +165,7 @@ interface HistoryEventProducerInterface
      *
      * @param variableInstance the runtime variable instance
      * @param the scope to which the variable is linked
-     * @return HistoryEvent the history event
+     * @return the history event
      */
     public function createHistoricVariableMigrateEvt(VariableInstanceEntity $variableInstance): HistoryEvent;
 
@@ -174,7 +174,7 @@ interface HistoryEventProducerInterface
      *
      * @param variableInstance
      * @param variableScopeImpl
-     * @return HistoryEvent the history event
+     * @return the history event
      */
     public function createHistoricVariableDeleteEvt(VariableInstanceEntity $variableInstance, VariableScopeInterface $sourceVariableScope): HistoryEvent;
 
@@ -187,7 +187,7 @@ interface HistoryEventProducerInterface
      * @param propertyId the id of the form property
      * @param propertyValue the value of the form property
      * @param taskId
-     * @return HistoryEvent the history event
+     * @return the history event
      */
     public function createFormPropertyUpdateEvt(ExecutionEntity $execution, string $propertyId, string $propertyValue, string $taskId): HistoryEvent;
 

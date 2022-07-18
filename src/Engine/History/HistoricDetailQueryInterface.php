@@ -20,7 +20,7 @@ interface HistoricDetailQueryInterface extends QueryInterface
 
     /** Only select historic variable updates with the given case instance.
      * {@link CaseInstance} ids and {@link HistoricCaseInstance} ids match. */
-    public function caseInstanceId(string $caseInstanceId): HistoricDetailQueryInterface;
+    //public function caseInstanceId(string $caseInstanceId): HistoricDetailQueryInterface;
 
     /** Only select historic variable updates with the given execution.
      * Note that {@link Execution} ids are not stored in the history as first class citizen,
@@ -30,7 +30,7 @@ interface HistoricDetailQueryInterface extends QueryInterface
     /** Only select historic variable updates with the given case execution.
      * Note that {@link CaseExecution} ids are not stored in the history as first class citizen,
      * only case instances are.*/
-    public function caseExecutionId(string $caseExecutionId): HistoricDetailQueryInterface;
+    //public function caseExecutionId(string $caseExecutionId): HistoricDetailQueryInterface;
 
     /** Only select historic variable updates associated to the given {@link HistoricActivityInstance activity instance}.
      * @deprecated since 5.2, use {@link #activityInstanceId(String)} instead */

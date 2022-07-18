@@ -40,13 +40,13 @@ interface UserOperationLogQueryInterface extends QueryInterface
     public function executionId(string $executionId): UserOperationLogQueryInterface;
 
     /** Query entries which are existing for the given case definition id. */
-    public function caseDefinitionId(string $caseDefinitionId): UserOperationLogQueryInterface;
+    //public function caseDefinitionId(string $caseDefinitionId): UserOperationLogQueryInterface;
 
     /** Query entries which are existing for the given case instance. */
-    public function caseInstanceId(string $caseInstanceId): UserOperationLogQueryInterface;
+    //public function caseInstanceId(string $caseInstanceId): UserOperationLogQueryInterface;
 
     /** Query entries which are existing for the given case execution. */
-    public function caseExecutionId(string $caseExecutionId): UserOperationLogQueryInterface;
+    //public function caseExecutionId(string $caseExecutionId): UserOperationLogQueryInterface;
 
     /** Query entries which are existing for the task. */
     public function taskId(string $taskId): UserOperationLogQueryInterface;

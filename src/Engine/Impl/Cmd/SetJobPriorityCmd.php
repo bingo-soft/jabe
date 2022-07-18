@@ -40,12 +40,12 @@ class SetJobPriorityCmd implements CommandInterface
         $currentPriority = $job->getPriority();
         $job->setPriority($this->priority);
 
-        $this->createOpLogEntry($commandContext, $currentPriority, $job);
+        //$this->createOpLogEntry($commandContext, $currentPriority, $job);
 
         return null;
     }
 
-    protected function createOpLogEntry(CommandContext $commandContext, int $previousPriority, JobEntity $job): void
+    /*protected function createOpLogEntry(CommandContext $commandContext, int $previousPriority, JobEntity $job): void
     {
         $propertyChange = new PropertyChange(self::JOB_PRIORITY_PROPERTY, $previousPriority, $job->getPriority());
         $commandContext
@@ -59,5 +59,5 @@ class SetJobPriorityCmd implements CommandInterface
                 $job->getProcessDefinitionKey(),
                 [$propertyChange]
             );
-    }
+    }*/
 }

@@ -63,12 +63,12 @@ interface HistoricProcessInstanceInterface
     /**
      * The case instance id of a potential super case instance or null if no super case instance exists
      */
-    public function getSuperCaseInstanceId(): string;
+    //public function getSuperCaseInstanceId(): string;
 
     /**
      * The case instance id of a potential super case instance or null if no super case instance exists
      */
-    public function getCaseInstanceId(): string;
+    //public function getCaseInstanceId(): string;
 
     /**
      * The id of the tenant this historic process instance belongs to. Can be <code>null</code>

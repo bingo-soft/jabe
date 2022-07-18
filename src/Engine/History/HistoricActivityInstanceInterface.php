@@ -44,7 +44,7 @@ interface HistoricActivityInstanceInterface
     public function getCalledProcessInstanceId(): string;
 
     /** The called case instance in case of (case) call activity */
-    public function getCalledCaseInstanceId(): string;
+    //public function getCalledCaseInstanceId(): string;
 
     /** Assignee in case of user task activity */
     public function getAssignee(): string;

@@ -51,12 +51,12 @@ interface VariableInstanceInterface
     /**
      * Returns the corresponding case instance id.
      */
-    public function getCaseInstanceId(): string;
+    //public function getCaseInstanceId(): string;
 
     /**
      * Returns the corresponding case execution id.
      */
-    public function getCaseExecutionId(): string;
+    //public function getCaseExecutionId(): string;
 
     /**
      * Returns the corresponding task id.

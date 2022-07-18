@@ -381,7 +381,7 @@ interface HistoricTaskInstanceQueryInterface extends QueryInterface
     public function orderByCaseDefinitionId(): HistoricTaskInstanceQueryInterface;
 
     /** Order by case instance id (needs to be followed by {@link #asc()} or {@link #desc()}). */
-    public function orderByCaseInstanceId(): HistoricTaskInstanceQueryInterface;
+    //public function orderByCaseInstanceId(): HistoricTaskInstanceQueryInterface;
 
     /** Order by case execution id (needs to be followed by {@link #asc()} or {@link #desc()}). */
     public function orderByCaseExecutionId(): HistoricTaskInstanceQueryInterface;

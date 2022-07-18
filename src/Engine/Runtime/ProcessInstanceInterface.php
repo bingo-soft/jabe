@@ -22,7 +22,7 @@ interface ProcessInstanceInterface extends ExecutionInterface
     /**
      * The id of the case instance associated with this process instance.
      */
-    public function getCaseInstanceId(): string;
+    //public function getCaseInstanceId(): string;
 
     /**
      * returns true if the process instance is suspended

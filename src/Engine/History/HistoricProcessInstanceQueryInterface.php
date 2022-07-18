@@ -239,7 +239,7 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
 
     /** Only select historic process instances started by the given case
      * instance. */
-    public function superCaseInstanceId(string $superCaseInstanceId): HistoricProcessInstanceQueryInterface;
+    //public function superCaseInstanceId(string $superCaseInstanceId): HistoricProcessInstanceQueryInterface;
 
     /** Only select historic process instances having a sub case instance
      * with the given case instance id.
@@ -247,7 +247,7 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
      * Note that there will always be maximum only <b>one</b>
      * such process instance that can be the result of this query.
      */
-    public function subCaseInstanceId(string $subCaseInstanceId): HistoricProcessInstanceQueryInterface;
+    //public function subCaseInstanceId(string $subCaseInstanceId): HistoricProcessInstanceQueryInterface;
 
     /** Only select historic process instances with one of the given tenant ids. */
     public function tenantIdIn(array $tenantIds): HistoricProcessInstanceQueryInterface;

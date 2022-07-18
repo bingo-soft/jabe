@@ -30,10 +30,10 @@ interface VariableInstanceQueryInterface extends QueryInterface
     public function processInstanceIdIn(array $processInstanceIds): VariableInstanceQueryInterface;
 
     /** Only select variable instances which have one of the case execution ids. **/
-    public function caseExecutionIdIn(array $caseExecutionIds): VariableInstanceQueryInterface;
+    //public function caseExecutionIdIn(array $caseExecutionIds): VariableInstanceQueryInterface;
 
     /** Only select variable instances which have one of the case instance ids. **/
-    public function caseInstanceIdIn(array $caseInstanceIds): VariableInstanceQueryInterface;
+    //public function caseInstanceIdIn(array $caseInstanceIds): VariableInstanceQueryInterface;
 
     /** Only select variable instances which have one of the task ids. **/
     public function taskIdIn(array $taskIds): VariableInstanceQueryInterface;
