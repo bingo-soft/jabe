@@ -1091,7 +1091,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
             if (empty($this->cachedCandidateGroups)) {
                 $this->cachedCandidateGroups = $groupsForCandidateUser;
             } else {
-                foreach ($groupsForCandidateUser as $$group) {
+                foreach ($groupsForCandidateUser as $group) {
                     if (!in_array($group, $this->cachedCandidateGroups)) {
                         $this->cachedCandidateGroups[] = $group;
                     }

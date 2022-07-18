@@ -10,7 +10,7 @@ interface ProcessApplicationDeploymentBuilderInterface extends DeploymentBuilder
      * <p>If this method is called, additional registrations will be created for
      * previous versions of the deployment.</p>
      */
-    public function resumePreviousVersions(): ProcessApplicationDeploymentBuilderInterface;
+    public function resumePreviousVersions(): DeploymentBuilderInterface;
 
     /**
      * This method defines on what additional registrations will be based.
@@ -20,34 +20,34 @@ interface ProcessApplicationDeploymentBuilderInterface extends DeploymentBuilder
      * @see #resumePreviousVersions()
      * @param resumeByProcessDefinitionKey one of the constants from {@link ResumePreviousBy}
      */
-    public function resumePreviousVersionsBy(string $resumePreviousVersionsBy): ProcessApplicationDeploymentBuilderInterface;
+    public function resumePreviousVersionsBy(string $resumePreviousVersionsBy): DeploymentBuilderInterface;
 
     public function deploy(): ProcessApplicationDeploymentInterface;
 
     // overridden methods //////////////////////////////
-    public function addInputStream(string $resourceName, $inputStream): ProcessApplicationDeploymentBuilderInterface;
+    public function addInputStream(string $resourceName, $inputStream): DeploymentBuilderInterface;
 
-    public function addClasspathResource(string $resource): ProcessApplicationDeploymentBuilderInterface;
+    public function addClasspathResource(string $resource): DeploymentBuilderInterface;
 
-    public function addString(string $resourceName, string $text): ProcessApplicationDeploymentBuilderInterface;
+    public function addString(string $resourceName, string $text): DeploymentBuilderInterface;
 
-    public function addModelInstance(string $resourceName, BpmnModelInstanceInterface $modelInstance): ProcessApplicationDeploymentBuilderInterface;
+    public function addModelInstance(string $resourceName, BpmnModelInstanceInterface $modelInstance): DeploymentBuilderInterface;
 
-    public function addZipInputStream($zipInputStream): ProcessApplicationDeploymentBuilderInterface;
+    //public function addZipInputStream($zipInputStream): ProcessApplicationDeploymentBuilderInterface;
 
-    public function name(string $name): ProcessApplicationDeploymentBuilderInterface;
+    public function name(string $name): DeploymentBuilderInterface;
 
-    public function nameFromDeployment(string $deploymentId): ProcessApplicationDeploymentBuilderInterface;
+    public function nameFromDeployment(string $deploymentId): DeploymentBuilderInterface;
 
-    public function source(string $source): ProcessApplicationDeploymentBuilderInterface;
+    public function source(string $source): DeploymentBuilderInterface;
 
-    public function enableDuplicateFiltering(bool $deployChangedOnly): ProcessApplicationDeploymentBuilderInterface;
+    public function enableDuplicateFiltering(bool $deployChangedOnly = false): DeploymentBuilderInterface;
 
-    public function activateProcessDefinitionsOn(string $date): ProcessApplicationDeploymentBuilderInterface;
+    public function activateProcessDefinitionsOn(string $date): DeploymentBuilderInterface;
 
-    public function addDeploymentResources(string $deploymentId): ProcessApplicationDeploymentBuilderInterface;
+    public function addDeploymentResources(string $deploymentId): DeploymentBuilderInterface;
 
-    public function addDeploymentResourcesById(string $deploymentId, $resourceId): ProcessApplicationDeploymentBuilderInterface;
+    public function addDeploymentResourcesById(string $deploymentId, $resourceId): DeploymentBuilderInterface;
 
-    public function addDeploymentResourceByName(string $deploymentId, $resourceName): ProcessApplicationDeploymentBuilderInterface;
+    public function addDeploymentResourceByName(string $deploymentId, $resourceName): DeploymentBuilderInterface;
 }

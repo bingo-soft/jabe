@@ -35,7 +35,7 @@ class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler
         foreach ($batchConfiguration->getIds() as $instanceId) {
             $instance = $this->findProcessInstanceById($instanceId, $commandContext);
 
-            if ($instance != null) {
+            if ($instance !== null) {
                 if ($batchConfiguration->isHierarchical() && $this->hasHierarchy($instance)) {
                     $rootProcessInstanceId = $instance->getRootProcessInstanceId();
                     $rootInstance = $this->findProcessInstanceById($rootProcessInstanceId, $commandContext);
@@ -91,7 +91,7 @@ class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler
 
     protected function isEnded(HistoricProcessInstanceEntity $instance): bool
     {
-        return $instance->getEndTime() != null;
+        return $instance->getEndTime() !== null;
     }
 
     protected function isStrategyStart(CommandContext $commandContext): bool
@@ -106,7 +106,7 @@ class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler
 
     protected function hasHierarchy(HistoricProcessInstanceEntity $instance): bool
     {
-        return $instance->getRootProcessInstanceId() != null;
+        return $instance->getRootProcessInstanceId() !== null;
     }
 
     protected function getHistoryRemovalTimeStrategy(CommandContext $commandContext): string

@@ -88,7 +88,7 @@ class MessageCorrelationBatchJobHandler extends AbstractBatchJobHandler
     protected function setVariables(?string $batchId, MessageCorrelationBuilderInterface $correlationBuilder, CommandContext $commandContext): void
     {
         $variables = null;
-        if ($batchId != null) {
+        if ($batchId !== null) {
             $variables = VariableUtil::findBatchVariablesSerialized($batchId, $commandContext);
             if (!empty($variables)) {
                 $correlationBuilder->setVariables(new VariableMapImpl($variables));

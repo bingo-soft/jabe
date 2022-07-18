@@ -178,7 +178,7 @@ class CommandContext
                         $commandInvocationContext->trySetThrowable($exception);
                     }
 
-                    if ($commandInvocationContext->getThrowable() != null) {
+                    if ($commandInvocationContext->getThrowable() !== null) {
                         // fire command failed (must not fail itself)
                         $this->fireCommandFailed($commandInvocationContext->getThrowable());
 

@@ -34,7 +34,7 @@ class BatchSetRemovalTimeJobHandler extends AbstractBatchJobHandler
         foreach ($batchConfiguration->getIds() as $instanceId) {
             $instance = $this->findBatchById($instanceId, $commandContext);
 
-            if ($instance != null) {
+            if ($instance !== null) {
                 $removalTime = $this->getOrCalculateRemovalTime($batchConfiguration, $instance, $commandContext);
                 if ($removalTime != $instance->getRemovalTime()) {
                     $this->addRemovalTime($instanceId, $removalTime, $commandContext);
@@ -67,7 +67,7 @@ class BatchSetRemovalTimeJobHandler extends AbstractBatchJobHandler
 
     protected function isEnded(HistoricBatchEntity $instance): bool
     {
-        return $instance->getEndTime() != null;
+        return $instance->getEndTime() !== null;
     }
 
     protected function isStrategyStart(CommandContext $commandContext): bool

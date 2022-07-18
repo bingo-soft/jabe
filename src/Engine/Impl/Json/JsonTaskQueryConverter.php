@@ -125,7 +125,7 @@ class JsonTaskQueryConverter extends JsonObjectConverter
         JsonUtil::addField($json, self::MAX_PRIORITY, $query->getMaxPriority());
         JsonUtil::addField($json, self::ASSIGNEE, $query->getAssignee());
 
-        if ($query->getAssigneeIn() != null) {
+        if ($query->getAssigneeIn() !== null) {
             JsonUtil::addArrayField(
                 $json,
                 self::ASSIGNEE_IN,
@@ -133,7 +133,7 @@ class JsonTaskQueryConverter extends JsonObjectConverter
             );
         }
 
-        if ($query->getAssigneeNotIn() != null) {
+        if ($query->getAssigneeNotIn() !== null) {
             JsonUtil::addArrayField(
                 $json,
                 self::ASSIGNEE_NOT_IN,
@@ -156,7 +156,7 @@ class JsonTaskQueryConverter extends JsonObjectConverter
         JsonUtil::addDefaultField($json, self::WITHOUT_CANDIDATE_USERS, false, $query->isWithoutCandidateUsers());
         JsonUtil::addField($json, self::INCLUDE_ASSIGNED_TASKS, $query->isIncludeAssignedTasksInternal());
         JsonUtil::addField($json, self::PROCESS_INSTANCE_ID, $query->getProcessInstanceId());
-        if ($query->getProcessInstanceIdIn() != null) {
+        if ($query->getProcessInstanceIdIn() !== null) {
             JsonUtil::addArrayField($json, self::PROCESS_INSTANCE_ID_IN, $query->getProcessInstanceIdIn());
         }
         JsonUtil::addField($json, self::EXECUTION_ID, $query->getExecutionId());
@@ -202,14 +202,14 @@ class JsonTaskQueryConverter extends JsonObjectConverter
             $orQueries = JsonUtil::createArray();
 
             foreach ($query->getQueries() as $orQuery) {
-                if ($orQuery != null && $orQuery->isOrQueryActive()) {
+                if ($orQuery !== null && $orQuery->isOrQueryActive()) {
                     $orQueries[] = $this->toJsonObject($orQuery, true);
                 }
             }
             JsonUtil::addField($json, self::OR_QUERIES, $orQueries);
         }
 
-        if ($query->getOrderingProperties() != null && !empty($query->getOrderingProperties())) {
+        if ($query->getOrderingProperties() !== null && !empty($query->getOrderingProperties())) {
             JsonUtil::addField(
                 $json,
                 self::ORDERING_PROPERTIES,
@@ -226,7 +226,7 @@ class JsonTaskQueryConverter extends JsonObjectConverter
 
     protected function addSuspensionStateField($jsonObject, SuspensionState $suspensionState = null): void
     {
-        if ($suspensionState != null) {
+        if ($suspensionState !== null) {
             if ($suspensionState->equals(SuspensionState::active())) {
                 JsonUtil::addField($jsonObject, self::ACTIVE, true);
             } elseif ($suspensionState->equals(SuspensionState::suspended())) {
@@ -237,7 +237,7 @@ class JsonTaskQueryConverter extends JsonObjectConverter
 
     protected function addTenantIdFields($jsonObject, TaskQueryImpl $query): void
     {
-        if ($query->getTenantIds() != null) {
+        if ($query->getTenantIds() !== null) {
             JsonUtil::addArrayField($jsonObject, self::TENANT_IDS, $query->getTenantIds());
         }
         if ($query->isWithoutTenantId()) {

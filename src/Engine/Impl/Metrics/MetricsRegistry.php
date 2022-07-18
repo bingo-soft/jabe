@@ -68,6 +68,6 @@ class MetricsRegistry
     public function createDbMeter(string $name): void
     {
         $dbMeter = new Meter($name);
-        $$this->dbMeters[$name] = $dbMeter;
+        $this->dbMeters[$name] = $dbMeter;
     }
 }

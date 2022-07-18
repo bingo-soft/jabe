@@ -77,7 +77,7 @@ class UserOperationLogContextEntryBuilder
                 //$this->entry->setCaseInstanceId($processInstance->getCaseInstanceId());
 
                 $definition = $processInstance->getProcessDefinition();
-                if ($definition != null) {
+                if ($definition !== null) {
                     $this->entry->setProcessDefinitionKey($definition->getKey());
                     $this->entry->setDeploymentId($definition->getDeploymentId());
                 }
@@ -113,10 +113,10 @@ class UserOperationLogContextEntryBuilder
             $this->entry->setPropertyChanges($propertyChanges);
 
             $definition = $task->getProcessDefinition();
-            if ($definition != null) {
+            if ($definition !== null) {
                 $this->entry->setProcessDefinitionKey($definition->getKey());
                 $this->entry->setDeploymentId($definition->getDeploymentId());
-            }/* elseif (task.getCaseDefinitionId() != null) {
+            }/* elseif (task.getCaseDefinitionId() !== null) {
                 $this->entry->setDeploymentId(task.getCaseDefinition().getDeploymentId());
             }*/
 
@@ -129,7 +129,7 @@ class UserOperationLogContextEntryBuilder
             $this->entry->setTaskId($task->getId());
 
             $execution = $task->getExecution();
-            if ($execution != null) {
+            if ($execution !== null) {
                 $this->entry->setRootProcessInstanceId($execution->getRootProcessInstanceId());
             }
 
@@ -172,7 +172,7 @@ class UserOperationLogContextEntryBuilder
             $this->entry->setCaseInstanceId(historyEvent.getCaseInstanceId());
             $this->entry->setCaseExecutionId(historyEvent.getCaseExecutionId());*/
 
-            if ($definition != null) {
+            if ($definition !== null) {
                 if ($definition instanceof ProcessDefinitionEntity) {
                     $this->entry->setProcessDefinitionKey($definition->getKey());
                 }
@@ -199,7 +199,7 @@ class UserOperationLogContextEntryBuilder
             $this->entry->setCaseExecutionId(variable.getCaseExecutionId());*/
             $this->entry->setTaskId($variable->getTaskId());
 
-            if ($definition != null) {
+            if ($definition !== null) {
                 if ($definition instanceof ProcessDefinitionEntity) {
                     $this->entry->setProcessDefinitionKey($definition->getKey());
                 }

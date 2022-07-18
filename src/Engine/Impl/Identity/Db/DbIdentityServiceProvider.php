@@ -69,7 +69,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
     {
         $this->checkAuthorization(Permissions::delete(), Resources::user(), $userId);
         $user = $this->findUserById($userId);
-        if ($user != null) {
+        if ($user !== null) {
             $this->deleteMembershipsByUserId($userId);
             $this->deleteTenantMembershipsOfUser($userId);
 
@@ -156,7 +156,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
     {
         if (is_string($userOrUserId)) {
             $user = $this->findUserById($userOrUserId);
-            if ($user != null) {
+            if ($user !== null) {
                 return $this->unlockUser($user);
             }
             return new IdentityOperationResult(null, IdentityOperationResult::OPERATION_NONE);

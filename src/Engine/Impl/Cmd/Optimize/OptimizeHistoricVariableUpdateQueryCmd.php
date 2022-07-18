@@ -74,7 +74,7 @@ class OptimizeHistoricVariableUpdateQueryCmd implements CommandInterface
 
                 if ($this->shouldFetchValue($entity)) {
                     $byteArrayId = $entity->getByteArrayValueId();
-                    if ($byteArrayId != null) {
+                    if ($byteArrayId !== null) {
                         $byteArrayIds[] = $byteArrayId;
                     }
                 }

@@ -243,7 +243,7 @@ class DeployCmd implements CommandInterface
         DeploymentWithDefinitionsInterface $deployment
     ): void {
 
-        if ($deploymentBuilder->getProcessDefinitionsActivationDate() != null) {
+        if ($deploymentBuilder->getProcessDefinitionsActivationDate() !== null) {
             $repositoryService = $commandContext->getProcessEngineConfiguration()
                 ->getRepositoryService();
 

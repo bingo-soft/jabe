@@ -174,7 +174,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         $operationResult = $this->getOperationType($operation);
         $operation = $operationResult ?? $operation;
         if ($operation !== null && $this->isUserOperationLogEnabled()) {
-            $entityType = $tenantId === null ? EntityTypes::GROUP_MEMBERSHIP : EntityTypes::TENANT_MEMBERSHIP;
+            $entityType = $tenantId == null ? EntityTypes::GROUP_MEMBERSHIP : EntityTypes::TENANT_MEMBERSHIP;
             $context = new UserOperationLogContext();
             $entryBuilder =
                 UserOperationLogContextEntryBuilder::entry($operation, entityType)
@@ -693,16 +693,16 @@ class UserOperationLogManager extends AbstractHistoricManager
     {
         if ($this->isUserOperationLogEnabled()) {
             $propertyChanges = [];
-            $propertyChanges[] = new PropertyChange("permissionBits", $previousValues === null ? null : $previousValues->getPermissions(), $authorization->getPermissions());
-            $propertyChanges[] = new PropertyChange("permissions", $previousValues === null ? null : $this->getPermissionStringList($previousValues), $this->getPermissionStringList($authorization));
-            $propertyChanges[] = new PropertyChange("type", $previousValues === null ? null : $previousValues->getAuthorizationType(), $authorization->getAuthorizationType());
-            $propertyChanges[] = new PropertyChange("resource", $previousValues === null ? null : $this->getResourceName($previousValues->getResourceType()), $this->getResourceName($authorization->getResourceType()));
-            $propertyChanges[] = new PropertyChange("resourceId", $previousValues === null ? null : $previousValues->getResourceId(), $authorization->getResourceId());
+            $propertyChanges[] = new PropertyChange("permissionBits", $previousValues == null ? null : $previousValues->getPermissions(), $authorization->getPermissions());
+            $propertyChanges[] = new PropertyChange("permissions", $previousValues == null ? null : $this->getPermissionStringList($previousValues), $this->getPermissionStringList($authorization));
+            $propertyChanges[] = new PropertyChange("type", $previousValues == null ? null : $previousValues->getAuthorizationType(), $authorization->getAuthorizationType());
+            $propertyChanges[] = new PropertyChange("resource", $previousValues == null ? null : $this->getResourceName($previousValues->getResourceType()), $this->getResourceName($authorization->getResourceType()));
+            $propertyChanges[] = new PropertyChange("resourceId", $previousValues == null ? null : $previousValues->getResourceId(), $authorization->getResourceId());
             if ($authorization->getUserId() !== null || ($previousValues !== null && $previousValues->getUserId() !== null)) {
-                $propertyChanges[] = new PropertyChange("userId", $previousValues === null ? null : $previousValues->getUserId(), $authorization->getUserId());
+                $propertyChanges[] = new PropertyChange("userId", $previousValues == null ? null : $previousValues->getUserId(), $authorization->getUserId());
             }
             if ($authorization->getGroupId() !== null || ($previousValues !== null && $previousValues->getGroupId() !== null)) {
-                $propertyChanges[] = new PropertyChange("groupId", $previousValues === null ? null : $previousValues->getGroupId(), $authorization->getGroupId());
+                $propertyChanges[] = new PropertyChange("groupId", $previousValues == null ? null : $previousValues->getGroupId(), $authorization->getGroupId());
             }
 
             $context = new UserOperationLogContext();
@@ -758,7 +758,7 @@ class UserOperationLogManager extends AbstractHistoricManager
 
     protected function fireUserOperationLog(UserOperationLogContext $context): void
     {
-        if ($context->getUserId() === null) {
+        if ($context->getUserId() == null) {
             $context->setUserId($this->getAuthenticatedUserId());
         }
 

@@ -230,7 +230,7 @@ class BatchEntity implements BatchInterface, DbEntityInterface, HasDbReferencesI
 
     public function getSeedJobDefinition(): JobDefinitionEntity
     {
-        if ($this->seedJobDefinition == null && $this->seedJobDefinitionId != null) {
+        if ($this->seedJobDefinition == null && $this->seedJobDefinitionId !== null) {
             $this->seedJobDefinition = Context::getCommandContext()->getJobDefinitionManager()->findById($this->seedJobDefinitionId);
         }
         return $this->seedJobDefinition;
@@ -238,7 +238,7 @@ class BatchEntity implements BatchInterface, DbEntityInterface, HasDbReferencesI
 
     public function getMonitorJobDefinition(): JobDefinitionEntity
     {
-        if ($this->monitorJobDefinition == null && $this->monitorJobDefinitionId != null) {
+        if ($this->monitorJobDefinition == null && $this->monitorJobDefinitionId !== null) {
             $this->monitorJobDefinition = Context::getCommandContext()->getJobDefinitionManager()->findById($this->monitorJobDefinitionId);
         }
         return $this->monitorJobDefinition;
@@ -246,7 +246,7 @@ class BatchEntity implements BatchInterface, DbEntityInterface, HasDbReferencesI
 
     public function getBatchJobDefinition(): JobDefinitionEntity
     {
-        if ($this->batchJobDefinition == null && $this->batchJobDefinitionId != null) {
+        if ($this->batchJobDefinition == null && $this->batchJobDefinitionId !== null) {
             $this->batchJobDefinition = Context::getCommandContext()->getJobDefinitionManager()->findById($this->batchJobDefinitionId);
         }
 

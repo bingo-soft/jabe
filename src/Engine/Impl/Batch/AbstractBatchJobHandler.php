@@ -28,7 +28,7 @@ abstract class AbstractBatchJobHandler implements BatchJobHandlerInterface
         $deploymentId = null;
 
         $idMappings = $configuration->getIdMappings();
-        $deploymentAware = $idMappings != null && !empty($idMappings);
+        $deploymentAware = $idMappings !== null && !empty($idMappings);
 
         $ids = $configuration->getIds();
 
@@ -151,7 +151,7 @@ abstract class AbstractBatchJobHandler implements BatchJobHandlerInterface
     public function onDelete(JobHandlerConfigurationInterface $configuration, JobEntity $jobEntity): void
     {
         $byteArrayId = $configuration->getConfigurationByteArrayId();
-        if ($byteArrayId != null) {
+        if ($byteArrayId !== null) {
             Context::getCommandContext()->getByteArrayManager()
                 ->deleteByteArrayById($byteArrayId);
         }

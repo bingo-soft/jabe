@@ -30,7 +30,7 @@ interface DeploymentBuilderInterface
 
     public function name(string $name): DeploymentBuilderInterface;
 
-    public function enableDuplicateFiltering(bool $deployChangedOnly): DeploymentBuilderInterface;
+    public function enableDuplicateFiltering(bool $deployChangedOnly = false): DeploymentBuilderInterface;
 
     public function activateProcessDefinitionsOn(string $date): DeploymentBuilderInterface;
 

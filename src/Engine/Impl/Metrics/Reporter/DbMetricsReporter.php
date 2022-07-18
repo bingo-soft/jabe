@@ -95,7 +95,7 @@ class DbMetricsReporter
     public function setReporterId(string $reporterId): void
     {
         $this->reporterId = $reporterId;
-        if ($this->metricsCollectionTask != null) {
+        if ($this->metricsCollectionTask !== null) {
             $this->metricsCollectionTask->setReporter($reporterId);
         }
     }
