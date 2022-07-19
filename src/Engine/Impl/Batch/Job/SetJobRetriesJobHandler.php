@@ -50,7 +50,7 @@ class SetJobRetriesJobHandler extends AbstractBatchJobHandler
         return new SetRetriesBatchConfiguration($jobIds, $configuration->getRetries());
     }
 
-    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, string $tenantId = null): void
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
     {
         $configurationEntity = $commandContext
             ->getDbEntityManager()

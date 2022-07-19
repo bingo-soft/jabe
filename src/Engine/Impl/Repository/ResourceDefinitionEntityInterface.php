@@ -22,7 +22,7 @@ interface ResourceDefinitionEntityInterface extends ResourceDefinitionInterface
 
     public function setDiagramResourceName(string $diagramResourceName): void;
 
-    public function setTenantId(string $tenantId): void;
+    public function setTenantId(?string $tenantId): void;
 
     public function getPreviousDefinition(): ResourceDefinitionEntityInterface;
 

@@ -123,5 +123,5 @@ interface TaskInterface
      *
      * @param tenantId the tenant id to set
      */
-    public function setTenantId(string $tenantId): void;
+    public function setTenantId(?string $tenantId): void;
 }

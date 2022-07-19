@@ -65,7 +65,7 @@ class MessageCorrelationBatchJobHandler extends AbstractBatchJobHandler
         }
     }
 
-    public function execute(BatchJobConfiguration $configuration, ExecutionEntity $execution, CommandContext $commandContext, string $tenantId = null)
+    public function execute(BatchJobConfiguration $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId)
     {
         $configurationEntity = $commandContext
             ->getDbEntityManager()

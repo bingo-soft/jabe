@@ -171,7 +171,7 @@ class BatchEntity implements BatchInterface, DbEntityInterface, HasDbReferencesI
         return $this->tenantId;
     }
 
-    public function setTenantId(string $tenantId): void
+    public function setTenantId(?string $tenantId): void
     {
         $this->tenantId = $tenantId;
     }

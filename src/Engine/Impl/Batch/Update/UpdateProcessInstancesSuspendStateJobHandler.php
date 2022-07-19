@@ -50,7 +50,7 @@ class UpdateProcessInstancesSuspendStateJobHandler extends AbstractBatchJobHandl
         return new UpdateProcessInstancesSuspendStateBatchConfiguration($processIdsForJob, $configuration->getSuspended());
     }
 
-    public function execute(BatchJobConfiguration $configuration, ExecutionEntity $execution, CommandContext $commandContext, string $tenantId = null)
+    public function execute(BatchJobConfiguration $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId)
     {
         $configurationEntity = $commandContext
             ->getDbEntityManager()

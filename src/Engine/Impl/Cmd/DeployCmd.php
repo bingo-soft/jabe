@@ -509,7 +509,9 @@ class DeployCmd implements CommandInterface
         foreach ($resources as $resource) {
             if ($this->isBpmnResource($resource)) {
                 $byteStream = $resource->getBytes();
-                $model = Bpmn::readModelFromStream($byteStream);
+                $file = tmpfile();
+                fwrite($file, $byteStream);
+                $model = Bpmn::readModelFromStream($file);
                 foreach ($model->getDefinitions()->getChildElementsByType(ProcessInterface::class) as $process) {
                     $processDefinitionKeys[] = $process->getId();
                 }

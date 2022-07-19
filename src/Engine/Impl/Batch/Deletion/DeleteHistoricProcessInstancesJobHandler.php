@@ -50,7 +50,7 @@ class DeleteHistoricProcessInstancesJobHandler extends AbstractBatchJobHandler
         return new BatchConfiguration($processIdsForJob, $configuration->isFailIfNotExists());
     }
 
-    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, string $tenantId = null): void
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
     {
         $configurationEntity = $commandContext
             ->getDbEntityManager()

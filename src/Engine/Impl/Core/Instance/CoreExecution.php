@@ -111,7 +111,7 @@ abstract class CoreExecution extends AbstractVariableScope implements BaseDelega
         return $this->tenantId;
     }
 
-    public function setTenantId(string $tenantId): void
+    public function setTenantId(?string $tenantId): void
     {
         $this->tenantId = $tenantId;
     }

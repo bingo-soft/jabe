@@ -41,7 +41,7 @@ class AsyncContinuationJobHandler implements JobHandlerInterface
         return self::TYPE;
     }
 
-    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, string $tenantId = null): void
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
     {
         LegacyBehavior::repairMultiInstanceAsyncJob($execution);
 

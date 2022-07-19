@@ -461,7 +461,7 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         return $this->tenantId;
     }
 
-    public function setTenantId(string $tenantId): void
+    public function setTenantId(?string $tenantId): void
     {
         $this->tenantId = $tenantId;
     }

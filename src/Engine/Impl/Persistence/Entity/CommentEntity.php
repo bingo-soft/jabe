@@ -217,7 +217,7 @@ class CommentEntity implements CommentInterface, EventInterface, DbEntityInterfa
         return $this->tenantId;
     }
 
-    public function setTenantId(string $tenantId): void
+    public function setTenantId(?string $tenantId): void
     {
         $this->tenantId = $tenantId;
     }

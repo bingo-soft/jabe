@@ -163,7 +163,7 @@ class IdentityLinkEntity implements \Serializable, IdentityLinkInterface, DbEnti
         return $this->tenantId;
     }
 
-    public function setTenantId(string $tenantId): void
+    public function setTenantId(?string $tenantId): void
     {
         $this->tenantId = $tenantId;
     }

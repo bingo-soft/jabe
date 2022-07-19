@@ -230,7 +230,7 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
 
     protected function handlePersistedDefinition(
         DefinitionEntity $definition,
-        DefinitionEntity $persistedDefinition,
+        ?DefinitionEntity $persistedDefinition,
         DeploymentEntity $deployment,
         Properties $properties
     ): void {

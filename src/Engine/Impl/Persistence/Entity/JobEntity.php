@@ -570,7 +570,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         return $this->tenantId;
     }
 
-    public function setTenantId(string $tenantId): void
+    public function setTenantId(?string $tenantId): void
     {
         $this->tenantId = $tenantId;
     }

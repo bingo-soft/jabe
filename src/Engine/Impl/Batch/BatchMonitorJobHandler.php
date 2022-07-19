@@ -22,7 +22,7 @@ class BatchMonitorJobHandler implements JobHandlerInterface
         return self::TYPE;
     }
 
-    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, string $tenantId = null): void
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
     {
         $batchId = $configuration->getBatchId();
         $batch = $commandContext->getBatchManager()->findBatchById($configuration->getBatchId());
