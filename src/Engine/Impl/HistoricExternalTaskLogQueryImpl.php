@@ -82,8 +82,8 @@ class HistoricExternalTaskLogQueryImpl extends AbstractQuery implements Historic
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "activityIds", $activityIds);
         $activityIdList = CollectionUtil::asArrayList($activityIds);
-        EnsureUtil::ensureNotContainsNull("activityIds", "activityIds", $activityIdList);
-        EnsureUtil::ensureNotContainsEmptyString("activityIds", "activityIds", $activityIdList);
+        EnsureUtil::ensureNotContainsNull("activityIds cannot contain null", "activityIds", $activityIdList);
+        EnsureUtil::ensureNotContainsEmptyString("activityIds cannot contain empty string", "activityIds", $activityIdList);
         $this->activityIds = $activityIds;
         return $this;
     }
@@ -92,8 +92,8 @@ class HistoricExternalTaskLogQueryImpl extends AbstractQuery implements Historic
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "activityIds", $activityInstanceIds);
         $activityInstanceIdList = CollectionUtil::asArrayList($activityInstanceIds);
-        EnsureUtil::ensureNotContainsNull("activityInstanceIds", $activityInstanceIdList);
-        EnsureUtil::ensureNotContainsEmptyString("activityInstanceIds", $activityInstanceIdList);
+        EnsureUtil::ensureNotContainsNull("activityInstanceIds cannot contain null", "activityInstanceIds", $activityInstanceIdList);
+        EnsureUtil::ensureNotContainsEmptyString("activityInstanceIds cannot contain empty string", "activityInstanceIds", $activityInstanceIdList);
         $this->activityInstanceIds = $activityInstanceIds;
         return $this;
     }
@@ -102,8 +102,8 @@ class HistoricExternalTaskLogQueryImpl extends AbstractQuery implements Historic
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "activityIds", $executionIds);
         $executionIdList = CollectionUtil::asArrayList($executionIds);
-        EnsureUtil::ensureNotContainsNull("executionIds", "executionIds", $executionIdList);
-        EnsureUtil::ensureNotContainsEmptyString("executionIds", "executionIds", $executionIdList);
+        EnsureUtil::ensureNotContainsNull("executionIds cannot contain null", "executionIds", $executionIdList);
+        EnsureUtil::ensureNotContainsEmptyString("executionIds cannot contain empty string", "executionIds", $executionIdList);
         $this->executionIds = $executionIds;
         return $this;
     }

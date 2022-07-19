@@ -16,7 +16,7 @@ class SetJobsRetriesCmd extends AbstractSetJobRetriesCmd implements CommandInter
     public function __construct(array $jobIds, int $retries)
     {
         EnsureUtil::ensureNotEmpty("Job ID's", "jobIds", $jobIds);
-        EnsureUtil::ensureGreaterThanOrEqual("Retries count", $retries, 0);
+        EnsureUtil::ensureGreaterThanOrEqual("The number of retries cannot be negative", "Retries count", $retries, 0);
 
         $this->jobIds = $jobIds;
         $this->retries = $retries;

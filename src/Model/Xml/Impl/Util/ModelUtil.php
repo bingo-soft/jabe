@@ -74,7 +74,7 @@ class ModelUtil
     public static function ensureInstanceOf($instance, string $type): void
     {
         if (!($instance instanceof $type)) {
-            throw new ModelException(stringf("Object is not instance of type ", $type));
+            throw new ModelException(sprintf("Object is not instance of type %s", $type));
         }
     }
 

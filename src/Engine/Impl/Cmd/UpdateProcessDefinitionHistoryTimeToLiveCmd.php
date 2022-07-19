@@ -45,7 +45,7 @@ class UpdateProcessDefinitionHistoryTimeToLiveCmd implements CommandInterface, \
         $this->checkAuthorization($commandContext);
         EnsureUtil::ensureNotNull(BadUserRequestException::class, "processDefinitionId", $this->processDefinitionId);
         if ($this->historyTimeToLive !== null) {
-            EnsureUtil::ensureGreaterThanOrEqual("historyTimeToLive", $this->historyTimeToLive, 0);
+            EnsureUtil::ensureGreaterThanOrEqual("History time to live cannot be negative", "historyTimeToLive", $this->historyTimeToLive, 0);
         }
 
         $processDefinitionEntity = $commandContext->getProcessDefinitionManager()->findLatestProcessDefinitionById($this->processDefinitionId);

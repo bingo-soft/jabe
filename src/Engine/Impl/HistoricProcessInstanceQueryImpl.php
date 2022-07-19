@@ -195,8 +195,8 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
 
     public function processDefinitionKeyNotIn(array $processDefinitionKeys): HistoricProcessInstanceQueryInterface
     {
-        EnsureUtil::ensureNotContainsNull("processDefinitionKeys", "processDefinitionKeys", $processDefinitionKeys);
-        EnsureUtil::ensureNotContainsEmptyString("processDefinitionKeys", "processDefinitionKeys", $processDefinitionKeys);
+        EnsureUtil::ensureNotContainsNull("processDefinitionKeys cannot contain null", "processDefinitionKeys", $processDefinitionKeys);
+        EnsureUtil::ensureNotContainsEmptyString("processDefinitionKey cannot contain empty string", "processDefinitionKeys", $processDefinitionKeys);
         $this->processKeyNotIn = $processDefinitionKeys;
         return $this;
     }
@@ -800,7 +800,7 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
     public function executedActivityIdIn(array $ids): HistoricProcessInstanceQueryInterface
     {
         EnsureUtil::ensureNotNull("activity ids", "ids", $ids);
-        EnsureUtil::ensureNotContainsNull("activity ids", "ids", $ids);
+        EnsureUtil::ensureNotContainsNull("ids cannot contain null", "ids", $ids);
         $this->executedActivityIds = $ids;
         return $this;
     }
@@ -808,7 +808,7 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
     public function activeActivityIdIn(array $ids): HistoricProcessInstanceQueryInterface
     {
         EnsureUtil::ensureNotNull("activity ids", "ids", $ids);
-        EnsureUtil::ensureNotContainsNull("activity ids", "ids", $ids);
+        EnsureUtil::ensureNotContainsNull("ids cannot contain null", "ids", $ids);
         $this->activeActivityIds = $ids;
         return $this;
     }

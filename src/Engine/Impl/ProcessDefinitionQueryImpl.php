@@ -182,7 +182,7 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
     public function processDefinitionVersion(int $version): ProcessDefinitionQueryImpl
     {
         EnsureUtil::ensureNotNull("version", "version", $version);
-        EnsureUtil::ensurePositive("version", intval($version));
+        EnsureUtil::ensurePositive("The process definition version must be positive", "version", intval($version));
         $this->version = $version;
         return $this;
     }

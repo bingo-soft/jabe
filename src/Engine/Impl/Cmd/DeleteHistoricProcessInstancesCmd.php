@@ -44,7 +44,7 @@ class DeleteHistoricProcessInstancesCmd implements CommandInterface, \Serializab
     public function execute(CommandContext $commandContext)
     {
         EnsureUtil::ensureNotEmpty(BadUserRequestException::class, "processInstanceIds", $this->processInstanceIds);
-        EnsureUtil::ensureNotContainsNull(BadUserRequestException::class, "processInstanceId is null", "processInstanceIds", $this->processInstanceIds);
+        EnsureUtil::ensureNotContainsNull("processInstanceId is null", "processInstanceIds", $this->processInstanceIds);
 
         // Check if process instance is still running
         $processInstanceIds = $this->processInstanceIds;

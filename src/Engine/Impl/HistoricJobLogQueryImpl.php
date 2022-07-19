@@ -91,8 +91,8 @@ class HistoricJobLogQueryImpl extends AbstractQuery implements HistoricJobLogQue
     public function activityIdIn(array $activityIds): HistoricJobLogQueryInterface
     {
         $activityIdList = CollectionUtil::asArrayList($activityIds);
-        EnsureUtil::ensureNotContainsNull("activityIds", $activityIdList);
-        EnsureUtil::ensureNotContainsEmptyString("activityIds", $activityIdList);
+        EnsureUtil::ensureNotContainsNull("activityIds cannot contain null", "activityIds", $activityIdList);
+        EnsureUtil::ensureNotContainsEmptyString("activityIds cannot contain empty string", "activityIds", $activityIdList);
         $this->activityIds = $activityIds;
         return $this;
     }
@@ -100,8 +100,8 @@ class HistoricJobLogQueryImpl extends AbstractQuery implements HistoricJobLogQue
     public function failedActivityIdIn(array $activityIds): HistoricJobLogQueryInterface
     {
         $activityIdList = CollectionUtil::asArrayList($activityIds);
-        EnsureUtil::ensureNotContainsNull("activityIds", $activityIdList);
-        EnsureUtil::ensureNotContainsEmptyString("activityIds", $activityIdList);
+        EnsureUtil::ensureNotContainsNull("activityIds cannot contain null", "activityIds", $activityIdList);
+        EnsureUtil::ensureNotContainsEmptyString("activityIds cannot contain empty string", "activityIds", $activityIdList);
         $this->failedActivityIds = $activityIds;
         return $this;
     }
@@ -109,8 +109,8 @@ class HistoricJobLogQueryImpl extends AbstractQuery implements HistoricJobLogQue
     public function executionIdIn(array $executionIds): HistoricJobLogQueryInterface
     {
         $executionIdList = CollectionUtil::asArrayList($executionIds);
-        EnsureUtil::ensureNotContainsNull("executionIds", $executionIdList);
-        EnsureUtil::ensureNotContainsEmptyString("executionIds", $executionIdList);
+        EnsureUtil::ensureNotContainsNull("executionIds cannot contain null", "executionIds", $executionIdList);
+        EnsureUtil::ensureNotContainsEmptyString("executionIds cannot contain empty string", "executionIds", $executionIdList);
         $this->executionIds = $executionIds;
         return $this;
     }

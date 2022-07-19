@@ -51,8 +51,8 @@ class HandleExternalTaskFailureCmd extends HandleExternalTaskCmd
     protected function validateInput(): void
     {
         parent::validateInput();
-        EnsureUtil::ensureGreaterThanOrEqual("retries", $this->retries, 0);
-        EnsureUtil::ensureGreaterThanOrEqual("retryDuration", $this->retryDuration, 0);
+        EnsureUtil::ensureGreaterThanOrEqual("The number of retries cannot be negative", "retries", $this->retries, 0);
+        EnsureUtil::ensureGreaterThanOrEqual("Retry duration cannot be negative", "retryDuration", $this->retryDuration, 0);
     }
 
     public function getErrorMessageOnWrongWorkerAccess(): string

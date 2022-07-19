@@ -147,7 +147,7 @@ class FetchExternalTasksCmd implements CommandInterface
     protected function validateInput(): void
     {
         EnsureUtil::ensureNotNull("workerId", "workerId", $this->workerId);
-        EnsureUtil::ensureGreaterThanOrEqual("maxResults", $maxResults, 0);
+        EnsureUtil::ensureGreaterThanOrEqual("Max results cannot be negative", "maxResults", $maxResults, 0);
 
         foreach (array_values($this->fetchInstructions) as $instruction) {
             EnsureUtil::ensureNotNull("topicName", "topicName", $instruction->getTopicName());
