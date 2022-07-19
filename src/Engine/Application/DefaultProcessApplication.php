@@ -35,6 +35,6 @@ abstract class DefaultProcessApplication
      */
     public function deploymentDescriptors(): string
     {
-        self::DEFAULT_META_INF_PROCESSES_XML;
+        return self::DEFAULT_META_INF_PROCESSES_XML;
     }
 }
