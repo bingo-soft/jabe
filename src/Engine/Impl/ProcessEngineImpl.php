@@ -32,13 +32,13 @@ use Jabe\Engine\Impl\Interceptor\{
 use Jabe\Engine\Impl\JobExecutor\JobExecutor;
 use Jabe\Engine\Impl\Metrics\Reporter\DbMetricsReporter;
 use Jabe\Engine\Impl\Telemetry\Reporter\TelemetryReporter;
-use Jabe\Engine\Impl\Util\CompositeCondition;
+//use Jabe\Engine\Impl\Util\CompositeCondition;
 
 class ProcessEngineImpl implements ProcessEngineInterface
 {
 
     /** external task conditions used to signal long polling in rest API */
-    private static $EXT_TASK_CONDITIONS;// = new CompositeCondition();
+    //private static $EXT_TASK_CONDITIONS;
     //private final static ProcessEngineLogger LOG = ProcessEngineLogger.INSTANCE;
 
     protected $name;
@@ -68,6 +68,9 @@ class ProcessEngineImpl implements ProcessEngineInterface
 
     public function __construct(ProcessEngineConfigurationImpl $processEngineConfiguration)
     {
+        /*if (self::$EXT_TASK_CONDITIONS === null) {
+            self::$EXT_TASK_CONDITIONS = new CompositeCondition();
+        }*/
         $this->processEngineConfiguration = $processEngineConfiguration;
         $this->name = $processEngineConfiguration->getProcessEngineName();
 
