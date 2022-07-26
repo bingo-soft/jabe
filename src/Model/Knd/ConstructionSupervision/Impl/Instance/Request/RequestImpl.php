@@ -20,12 +20,13 @@ use Jabe\Model\Knd\ConstructionSupervision\Instance\Request\{
 
 class RequestImpl extends ModelElementInstanceImpl implements RequestInterface
 {
-    private $competentOrganization;
-    private $data;
-    private $goal;
-    private $methodGettingResults;
-    private $recipientPersonalData;
-    private $service;
+    private static $competentOrganization;
+    private static $data;
+    private static $delegateInfo;
+    private static $goal;
+    private static $methodGettingResults;
+    private static $recipientPersonalData;
+    private static $service;
 
     public static function registerType(ModelBuilder $modelBuilder): void
     {
@@ -44,9 +45,13 @@ class RequestImpl extends ModelElementInstanceImpl implements RequestInterface
             }
         );
 
+        $sequenceBuilder = $typeBuilder->sequence();
+
         self::$competentOrganization = $sequenceBuilder->element(CompetentOrganizationInterface::class)
         ->build();
         self::$data = $sequenceBuilder->element(DataInterface::class)
+        ->build();
+        self::$delegateInfo = $sequenceBuilder->element(DelegateInfoInterface::class)
         ->build();
         self::$goal = $sequenceBuilder->element(GoalInterface::class)
         ->build();
@@ -75,6 +80,11 @@ class RequestImpl extends ModelElementInstanceImpl implements RequestInterface
         return self::$data->getChild($this);
     }
 
+    public function getDelegateInfo(): DelegateInfoInterface
+    {
+        return self::$delegateInfo->getChild($this);
+    }
+
     public function getGoal(): GoalInterface
     {
         return self::$goal->getChild($this);
@@ -93,5 +103,18 @@ class RequestImpl extends ModelElementInstanceImpl implements RequestInterface
     public function getService(): ServiceInterface
     {
         return self::$service->getChild($this);
+    }
+
+    public function asArray(): array
+    {
+        return [
+            "Service" => self::$service->getChild($this)->asArray(),
+            "Goal" => self::$goal->getChild($this)->getTextContent(),
+            "DelegateInfo" => self::$delegateInfo->getChild($this)->getTextContent(),
+            "RecipientPersonalData" => self::$recipientPersonalData->getChild($this)->asArray(),
+            "CompetentOrganization" => self::$competentOrganization->getChild($this)->asArray(),
+            "Data" => self::$data->getChild($this)->asArray(),
+            "MethodGettingResults" => self::$methodGettingResults->getChild($this)->asArray()
+        ];
     }
 }

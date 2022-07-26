@@ -14,12 +14,12 @@ class RequestModelConstants
     public const ELEMENT_NAME_USER_TYPE = "userType";
     public const ELEMENT_NAME_ORDER_ID = "orderId";
     public const ELEMENT_NAME_ORDER_STATUS_CODE = "orderStatusCode";
-    public const ELEMENT_NAME_ORDER_TARGET_ID = "TargetId";
-    public const ELEMENT_NAME_ORDER_TARGET_NAME = "TargetName";
-    public const ELEMENT_NAME_ORDER_DEPARTMENT_ID = "DepartmentId";
-    public const ELEMENT_NAME_ORDER_DEPARTMENT_NAME = "DepartmentName";
-    public const ELEMENT_NAME_ORDER_OKATO = "okato";
-    public const ELEMENT_NAME_ORDER_GOAL = "Goal";
+    public const ELEMENT_NAME_TARGET_ID = "TargetId";
+    public const ELEMENT_NAME_TARGET_NAME = "TargetName";
+    public const ELEMENT_NAME_DEPARTMENT_ID = "DepartmentId";
+    public const ELEMENT_NAME_DEPARTMENT_NAME = "DepartmentName";
+    public const ELEMENT_NAME_OKATO = "okato";
+    public const ELEMENT_NAME_GOAL = "Goal";
     public const ELEMENT_NAME_DELEGATE_INFO = "DelegateInfo";
     public const ELEMENT_NAME_RECIPIENT_PERSONAL_DATA = "RecipientPersonalData";
     public const ELEMENT_NAME_FULLFIO = "fullfio";
@@ -62,4 +62,5 @@ class RequestModelConstants
     public const ELEMENT_NAME_LAND_PLOT_CADASTRAL_NUMBER = "LandPlotCadastralNumber";
     public const ELEMENT_NAME_METHOD_GETTING_RESULTS = "MethodGettingResults";
     public const ELEMENT_NAME_IS_PAPER_DOCUMENT_REQUIRED = "IsPaperDocumentRequired";
+    public const ELEMENT_NAME_STAGE_DESCRIPTION = "StageDescription";
 }

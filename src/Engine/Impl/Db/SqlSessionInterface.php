@@ -17,9 +17,9 @@ interface SqlSessionInterface
 
     public function select(string $statement, array $params = [], array $types = [], RowBounds $rowBounds = null, ResultHandlerInterface $handler = null);
 
-    public function insert(string $tableOrStatement, array $data = [], array $types = []);
+    public function insert(string $tableOrStatement, $data, array $types = []);
 
-    public function update(string $tableOrStatement, array $data = [], array $criteria = [], array $types = []);
+    public function update(string $tableOrStatement, $data, array $criteria = [], array $types = []);
 
     public function delete(string $tableOrStatement, array $criteria = [], array $types = []);
 

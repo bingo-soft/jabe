@@ -1,13 +1,13 @@
 <?php
 
-namespace Jabe\Model\Knd\ConstructionSupervisionsion\Impl\Instance\Request;
+namespace Jabe\Model\Knd\ConstructionSupervision\Impl\Instance\Request;
 
 use Jabe\Model\Xml\ModelBuilder;
 use Jabe\Model\Xml\Impl\Instance\ModelElementInstanceImpl;
 use Jabe\Model\Xml\Impl\Instance\ModelTypeInstanceContext;
 use Jabe\Model\Xml\Type\ModelTypeInstanceProviderInterface;
-use Jabe\Model\Knd\ConstructionSupervisionsion\Impl\RequestModelConstants;
-use Jabe\Model\Knd\ConstructionSupervisionsion\Instance\Request\OrganizationIDInterface;
+use Jabe\Model\Knd\ConstructionSupervision\Impl\RequestModelConstants;
+use Jabe\Model\Knd\ConstructionSupervision\Instance\Request\OrganizationIDInterface;
 
 class OrganizationIDImpl extends ModelElementInstanceImpl implements OrganizationIDInterface
 {

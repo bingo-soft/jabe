@@ -15,8 +15,8 @@ use Jabe\Model\Knd\ConstructionSupervision\Instance\Request\{
 
 class CompetentOrganizationImpl extends ModelElementInstanceImpl implements CompetentOrganizationInterface
 {
-    private $name;
-    private $organizationID;
+    private static $name;
+    private static $organizationID;
 
     public static function registerType(ModelBuilder $modelBuilder): void
     {
@@ -34,6 +34,8 @@ class CompetentOrganizationImpl extends ModelElementInstanceImpl implements Comp
                 }
             }
         );
+
+        $sequenceBuilder = $typeBuilder->sequence();
 
         self::$name = $sequenceBuilder->element(NameInterface::class)
         ->build();
@@ -56,5 +58,13 @@ class CompetentOrganizationImpl extends ModelElementInstanceImpl implements Comp
     public function getOrganizationID(): OrganizationIDInterface
     {
         return self::$organizationID->getChild($this);
+    }
+
+    public function asArray(): array
+    {
+        return [
+            "OrganizationID" => self::$organizationID->getChild($this)->getTextContent(),
+            "Name" => self::$name->getChild($this)->getTextContent(),
+        ];
     }
 }

@@ -14,7 +14,7 @@ use Jabe\Model\Knd\ConstructionSupervision\Instance\Request\{
 
 class MethodGettingResultsImpl extends ModelElementInstanceImpl implements MethodGettingResultsInterface
 {
-    private $isPaperDocumentRequired;
+    private static $isPaperDocumentRequired;
 
     public static function registerType(ModelBuilder $modelBuilder): void
     {
@@ -33,6 +33,8 @@ class MethodGettingResultsImpl extends ModelElementInstanceImpl implements Metho
             }
         );
 
+        $sequenceBuilder = $typeBuilder->sequence();
+
         self::$isPaperDocumentRequired = $sequenceBuilder->element(IsPaperDocumentRequiredInterface::class)
         ->build();
 
@@ -47,5 +49,12 @@ class MethodGettingResultsImpl extends ModelElementInstanceImpl implements Metho
     public function getIsPaperDocumentRequired(): IsPaperDocumentRequiredInterface
     {
         return self::$ssPaperDocumentRequired->getChild($this);
+    }
+
+    public function asArray(): array
+    {
+        return [
+            "IsPaperDocumentRequired" => self::$isPaperDocumentRequired->getChild($this)->getTextContent()
+        ];
     }
 }

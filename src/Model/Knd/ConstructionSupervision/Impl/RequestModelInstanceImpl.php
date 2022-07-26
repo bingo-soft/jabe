@@ -34,7 +34,7 @@ use Jabe\Model\Knd\ConstructionSupervision\Impl\Instance\Request\{
     IssueidPassportRFImpl,
     IssueorgImpl,
     IssuerImpl,
-    IssuerTypeImpl,
+    UserTypeImpl,
     LandPlotCadastralNumberBlockImpl,
     LandPlotCadastralNumberImpl,
     LastnameImpl,
@@ -100,7 +100,7 @@ class RequestModelInstanceImpl
             IssueidPassportRFImpl::registerType($modelBuilder);
             IssueorgImpl::registerType($modelBuilder);
             IssuerImpl::registerType($modelBuilder);
-            IssuerTypeImpl::registerType($modelBuilder);
+            UserTypeImpl::registerType($modelBuilder);
             LandPlotCadastralNumberBlockImpl::registerType($modelBuilder);
             LandPlotCadastralNumberImpl::registerType($modelBuilder);
             LastnameImpl::registerType($modelBuilder);

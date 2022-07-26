@@ -20,13 +20,13 @@ use Jabe\Model\Knd\ConstructionSupervision\Instance\Request\{
 
 class DocumentPersonalImpl extends ModelElementInstanceImpl implements DocumentPersonalInterface
 {
-    private $docnumber;
-    private $docseries;
-    private $issuedate;
-    private $issueidPassportRF;
-    private $issueorg;
-    private $nameDoc;
-    private $typeDoc;
+    private static $docnumber;
+    private static $docseries;
+    private static $issuedate;
+    private static $issueidPassportRF;
+    private static $issueorg;
+    private static $nameDoc;
+    private static $typeDoc;
 
     public static function registerType(ModelBuilder $modelBuilder): void
     {
@@ -44,6 +44,8 @@ class DocumentPersonalImpl extends ModelElementInstanceImpl implements DocumentP
                 }
             }
         );
+
+        $sequenceBuilder = $typeBuilder->sequence();
 
         self::$docnumber = $sequenceBuilder->element(DocnumberInterface::class)
         ->build();
@@ -101,5 +103,18 @@ class DocumentPersonalImpl extends ModelElementInstanceImpl implements DocumentP
     public function getTypeDoc(): TypeDocInterface
     {
         return self::$typeDoc->getChild($this);
+    }
+
+    public function asArray(): array
+    {
+        return [
+            "typeDoc" => self::$typeDoc->getChild($this)->getTextContent(),
+            "nameDoc" => self::$nameDoc->getChild($this)->getTextContent(),
+            "docseries" => self::$docseries->getChild($this)->getTextContent(),
+            "docnumber" => self::$docnumber->getChild($this)->getTextContent(),
+            "issuedate" => self::$issuedate->getChild($this)->getTextContent(),
+            "issueorg" => self::$issueorg->getChild($this)->getTextContent(),
+            "issueidPassportRF" => self::$issueidPassportRF->getChild($this)->getTextContent(),
+        ];
     }
 }

@@ -22,15 +22,15 @@ use Jabe\Model\Knd\ConstructionSupervision\Instance\Request\{
 
 class ServiceImpl extends ModelElementInstanceImpl implements ServiceInterface
 {
-    private $currentDate;
-    private $orderId;
-    private $orderStatus;
-    private $targetId;
-    private $targetName;
-    private $departmentId;
-    private $departmentName;
-    private $okato;
-    private $userType;
+    private static $currentDate;
+    private static $orderId;
+    private static $orderStatusCode;
+    private static $targetId;
+    private static $targetName;
+    private static $departmentId;
+    private static $departmentName;
+    private static $okato;
+    private static $userType;
 
     public static function registerType(ModelBuilder $modelBuilder): void
     {
@@ -55,7 +55,7 @@ class ServiceImpl extends ModelElementInstanceImpl implements ServiceInterface
         ->build();
         self::$orderId = $sequenceBuilder->element(OrderIdInterface::class)
         ->build();
-        self::$orderStatus = $sequenceBuilder->element(OrderStatusCodeInterface::class)
+        self::$orderStatusCode = $sequenceBuilder->element(OrderStatusCodeInterface::class)
         ->build();
         self::$targetId = $sequenceBuilder->element(TargetIdInterface::class)
         ->build();
@@ -88,9 +88,9 @@ class ServiceImpl extends ModelElementInstanceImpl implements ServiceInterface
         return self::$orderId->getChild($this);
     }
 
-    public function getOrderStatus(): OrderStatusCodeInterface
+    public function getOrderStatusCode(): OrderStatusCodeInterface
     {
-        return self::$orderStatus->getChild($this);
+        return self::$orderStatusCode->getChild($this);
     }
 
     public function getTargetId(): TargetIdInterface
@@ -121,5 +121,20 @@ class ServiceImpl extends ModelElementInstanceImpl implements ServiceInterface
     public function getUserType(): UserTypeInterface
     {
         return self::$userType->getChild($this);
+    }
+
+    public function asArray(): array
+    {
+        return [
+            "currentDate" => self::$currentDate->getChild($this)->getTextContent(),
+            "userType" => self::$userType->getChild($this)->getTextContent(),
+            "orderId" => self::$orderId->getChild($this)->getTextContent(),
+            "orderStatusCode" => self::$orderStatusCode->getChild($this)->getTextContent(),
+            "TargetId" => self::$targetId->getChild($this)->getTextContent(),
+            "TargetName" => self::$targetName->getChild($this)->getTextContent(),
+            "DepartmentId" => self::$departmentId->getChild($this)->getTextContent(),
+            "DepartmentName" => self::$departmentName->getChild($this)->getTextContent(),
+            "okato" => self::$okato->getChild($this)->getTextContent(),
+        ];
     }
 }

@@ -15,7 +15,7 @@ class OrderStatusCodeImpl extends ModelElementInstanceImpl implements OrderStatu
     {
         $typeBuilder = $modelBuilder->defineType(
             OrderStatusCodeInterface::class,
-            RequestModelConstants::ELEMENT_NAME_ORDER_STATUS
+            RequestModelConstants::ELEMENT_NAME_ORDER_STATUS_CODE
         )
         ->namespaceUri(RequestModelConstants::MODEL_NAMESPACE)
         ->instanceProvider(

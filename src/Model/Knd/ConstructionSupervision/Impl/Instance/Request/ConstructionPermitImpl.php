@@ -17,10 +17,10 @@ use Jabe\Model\Knd\ConstructionSupervision\Instance\Request\{
 
 class ConstructionPermitImpl extends ModelElementInstanceImpl implements ConstructionPermitInterface
 {
-    private $date;
-    private $issuer;
-    private $number;
-    private $term;
+    private static $date;
+    private static $issuer;
+    private static $number;
+    private static $term;
 
     public static function registerType(ModelBuilder $modelBuilder): void
     {
@@ -38,6 +38,8 @@ class ConstructionPermitImpl extends ModelElementInstanceImpl implements Constru
                 }
             }
         );
+
+        $sequenceBuilder = $typeBuilder->sequence();
 
         self::$date = $sequenceBuilder->element(DateInterface::class)
         ->build();
@@ -74,5 +76,15 @@ class ConstructionPermitImpl extends ModelElementInstanceImpl implements Constru
     public function getTerm(): TermInterface
     {
         return self::$term->getChild($this);
+    }
+
+    public function asArray(): array
+    {
+        return [
+            "Number" => self::$number->getChild($this)->getTextContent(),
+            "Date" => self::$date->getChild($this)->getTextContent(),
+            "Issuer" => self::$issuer->getChild($this)->getTextContent(),
+            "Term" => self::$term->getChild($this)->getTextContent(),
+        ];
     }
 }

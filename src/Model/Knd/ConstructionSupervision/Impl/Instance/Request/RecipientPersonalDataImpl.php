@@ -26,19 +26,19 @@ use Jabe\Model\Knd\ConstructionSupervision\Instance\Request\{
 
 class RecipientPersonalDataImpl extends ModelElementInstanceImpl implements RecipientPersonalDataInterface
 {
-    private $citizenship;
-    private $dateBirth;
-    private $documentPersonal;
-    private $email;
-    private $factAddress;
-    private $firstName;
-    private $fullfio;
-    private $gender;
-    private $lastname;
-    private $middlename;
-    private $phone;
-    private $regAddress;
-    private $snils;
+    private static $citizenship;
+    private static $dateBirth;
+    private static $documentPersonal;
+    private static $email;
+    private static $factAddress;
+    private static $firstname;
+    private static $fullfio;
+    private static $gender;
+    private static $lastname;
+    private static $middlename;
+    private static $phone;
+    private static $regAddress;
+    private static $snils;
 
     public static function registerType(ModelBuilder $modelBuilder): void
     {
@@ -69,7 +69,7 @@ class RecipientPersonalDataImpl extends ModelElementInstanceImpl implements Reci
         ->build();
         self::$factAddress = $sequenceBuilder->element(FactAddressInterface::class)
         ->build();
-        self::$firstName = $sequenceBuilder->element(FirstnameInterface::class)
+        self::$firstname = $sequenceBuilder->element(FirstnameInterface::class)
         ->build();
         self::$fullfio = $sequenceBuilder->element(FullfioInterface::class)
         ->build();
@@ -157,5 +157,24 @@ class RecipientPersonalDataImpl extends ModelElementInstanceImpl implements Reci
     public function getSnils(): SnilsInterface
     {
         return self::$snils->getChild($this);
+    }
+
+    public function asArray(): array
+    {
+        return [
+            "fullfio" => self::$fullfio->getChild($this)->getTextContent(),
+            "lastname" => self::$lastname->getChild($this)->getTextContent(),
+            "firstname" => self::$firstname->getChild($this)->getTextContent(),
+            "middlename" => self::$middlename->getChild($this)->getTextContent(),
+            "snils" => self::$snils->getChild($this)->getTextContent(),
+            "gender" => self::$gender->getChild($this)->getTextContent(),
+            "dateBirth" => self::$dateBirth->getChild($this)->getTextContent(),
+            "citizenship" => self::$citizenship->getChild($this)->getTextContent(),
+            "Phone" => self::$phone->getChild($this)->getTextContent(),
+            "Email" => self::$email->getChild($this)->getTextContent(),
+            "regAddress" => self::$regAddress->getChild($this)->getTextContent(),
+            "factAddress" => self::$factAddress->getChild($this)->getTextContent(),
+            "DocumentPersonal" => self::$documentPersonal->getChild($this)->asArray()
+        ];
     }
 }

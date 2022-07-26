@@ -14,7 +14,7 @@ use Jabe\Model\Knd\ConstructionSupervision\Instance\Request\{
 
 class LandPlotCadastralNumberBlockImpl extends ModelElementInstanceImpl implements LandPlotCadastralNumberBlockInterface
 {
-    private $landPlotCadastralNumber;
+    private static $landPlotCadastralNumber;
 
     public static function registerType(ModelBuilder $modelBuilder): void
     {
@@ -33,6 +33,8 @@ class LandPlotCadastralNumberBlockImpl extends ModelElementInstanceImpl implemen
             }
         );
 
+        $sequenceBuilder = $typeBuilder->sequence();
+
         self::$landPlotCadastralNumber = $sequenceBuilder->element(LandPlotCadastralNumberInterface::class)
         ->build();
 
@@ -47,5 +49,12 @@ class LandPlotCadastralNumberBlockImpl extends ModelElementInstanceImpl implemen
     public function getLandPlotCadastralNumber(): LandPlotCadastralNumberInterface
     {
         return self::$landPlotCadastralNumber->getChild($this);
+    }
+
+    public function asArray(): array
+    {
+        return [
+            "LandPlotCadastralNumber" => self::$landPlotCadastralNumber->getChild($this)->getTextContent(),
+        ];
     }
 }

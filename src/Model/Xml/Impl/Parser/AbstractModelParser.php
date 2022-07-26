@@ -44,11 +44,14 @@ abstract class AbstractModelParser
         }
     }
 
-    protected function getSchema(DomDocumentInterface $document): string
+    protected function getSchema(DomDocumentInterface $document): ?string
     {
         $rootElement = $document->getRootElement();
         $namespaceURI = $rootElement->getNamespaceURI();
-        return $this->schemas[$namespaceURI];
+        if (array_key_exists($namespaceURI, $this->schemas)) {
+            return $this->schemas[$namespaceURI];
+        }
+        return null;
     }
 
     protected function addSchema(string $namespaceURI, string $schema): void

@@ -14,7 +14,7 @@ class RequestParser extends AbstractModelParser
 
     public function __construct()
     {
-        $this->addSchema(self::KND_NS, self::SCHEMA_LOCATION);
+        //$this->addSchema(self::KND_NS, self::SCHEMA_LOCATION);
     }
 
     protected function createModelInstance(DomDocumentInterface $document): ModelInstanceInterface

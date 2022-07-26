@@ -22,15 +22,15 @@ use Jabe\Model\Knd\ConstructionSupervision\Instance\Request\{
 
 class DataImpl extends ModelElementInstanceImpl implements DataInterface
 {
-    private $constructionPermit;
-    private $endDate1;
-    private $fiasObjectAddress;
-    private $isAddressManuallyRequired;
-    private $landPlotCadastralNumberBlock;
-    private $objectName;
-    private $shortProjectParameters;
-    private $stageDescription;
-    private $startDate1;
+    private static $constructionPermit;
+    private static $endDate1;
+    private static $fiasObjectAddress;
+    private static $isAddressManuallyRequired;
+    private static $landPlotCadastralNumberBlock;
+    private static $objectName;
+    private static $shortProjectParameters;
+    private static $stageDescription;
+    private static $startDate1;
 
     public static function registerType(ModelBuilder $modelBuilder): void
     {
@@ -48,6 +48,8 @@ class DataImpl extends ModelElementInstanceImpl implements DataInterface
                 }
             }
         );
+
+        $sequenceBuilder = $typeBuilder->sequence();
 
         self::$constructionPermit = $sequenceBuilder->element(ConstructionPermitInterface::class)
         ->build();
@@ -119,5 +121,20 @@ class DataImpl extends ModelElementInstanceImpl implements DataInterface
     public function getStartDate1(): StartDate1Interface
     {
         return self::$startDate1->getChild($this);
+    }
+
+    public function asArray(): array
+    {
+        return [
+            "ObjectName" => self::$objectName->getChild($this)->getTextContent(),
+            "ShortProjectParameters" => self::$shortProjectParameters->getChild($this)->getTextContent(),
+            "StageDescription" => self::$stageDescription->getChild($this)->getTextContent(),
+            "IsAddressManuallyRequired" => self::$isAddressManuallyRequired->getChild($this)->getTextContent(),
+            "FIASObjectAddress" => self::$fiasObjectAddress->getChild($this)->getTextContent(),
+            "StartDate1" => self::$startDate1->getChild($this)->getTextContent(),
+            "EndDate1" => self::$endDate1->getChild($this)->getTextContent(),
+            "ConstructionPermit" => self::$constructionPermit->getChild($this)->asArray(),
+            "LandPlotCadastralNumberBlock" => self::$landPlotCadastralNumberBlock->getChild($this)->asArray()
+        ];
     }
 }
