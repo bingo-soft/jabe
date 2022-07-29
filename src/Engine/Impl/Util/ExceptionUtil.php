@@ -42,9 +42,9 @@ class ExceptionUtil
      *
      * used in Jobs and ExternalTasks
      *
-     * @param name - type\source of the exception
-     * @param byteArray - payload of the exception
-     * @param type - resource type of the exception
+     * @param name type\source of the exception
+     * @param byteArray payload of the exception
+     * @param type resource type of the exception
      * @return persisted entity
      */
     public static function createExceptionByteArray(string $name, ?string $byteArray, ResourceTypeInterface $type): ?ByteArrayEntity
@@ -266,10 +266,10 @@ class ExceptionUtil
 
     /**
      * Pass logic, which directly calls MyBatis API. In case a MyBatis exception is thrown, it is
-     * wrapped into a {@link ProcessEngineException} and never propagated directly to an Engine API
+     * wrapped into a ProcessEngineException and never propagated directly to an Engine API
      * call. In some cases, the top-level exception and its message are shown as a response body in
      * the REST API. Wrapping all MyBatis API calls in our codebase makes sure that the top-level
-     * exception is always a {@link ProcessEngineException} with a generic message. Like this, SQL
+     * exception is always a ProcessEngineException with a generic message. Like this, SQL
      * details are never disclosed to potential attackers.
      *
      * @param supplier which calls MyBatis API

@@ -7,11 +7,11 @@ use Jabe\Engine\Query\QueryInterface;
 interface HistoricProcessInstanceQueryInterface extends QueryInterface
 {
     /** Only select historic process instances with the given process instance.
-     * {@link ProcessInstance) ids and {@link HistoricProcessInstance} ids match. */
+     * {@link ProcessInstance) ids and HistoricProcessInstance ids match. */
     public function processInstanceId(string $processInstanceId): HistoricProcessInstanceQueryInterface;
 
     /** Only select historic process instances whose id is in the given set of ids.
-     * {@link ProcessInstance) ids and {@link HistoricProcessInstance} ids match. */
+     * {@link ProcessInstance) ids and HistoricProcessInstance ids match. */
     public function processInstanceIds(array $processInstanceIds): HistoricProcessInstanceQueryInterface;
 
     /** Only select historic process instances for the given process definition */
@@ -73,10 +73,10 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
     public function withRootIncidents(): HistoricProcessInstanceQueryInterface;
 
     /** Only select historic process instances with incident status either 'open' or 'resolved'.
-     * To get all process instances with incidents, use {@link HistoricProcessInstanceQuery#withIncidents()}.
+     * To get all process instances with incidents, use HistoricProcessInstanceQuery#withIncidents().
      *
      * @param status indicates the incident status, which is either 'open' or 'resolved'
-     * @return {@link HistoricProcessInstanceQuery}
+     * @return HistoricProcessInstanceQuery
      */
     public function incidentStatus(string $status): HistoricProcessInstanceQueryInterface;
 
@@ -117,10 +117,10 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
     /** Only select process instances which had a global variable with the given value
      * when they ended. Only select process instances which have a variable value
      * greater than the passed value. The type only applies to already ended
-     * process instances, otherwise use a {@link ProcessInstanceQuery} instead! of
+     * process instances, otherwise use a ProcessInstanceQuery instead! of
      * variable is determined based on the value, using types configured in
-     * {@link ProcessEngineConfiguration#getVariableSerializers()}. Byte-arrays and
-     * {@link Serializable} objects (which are not primitive type wrappers) are
+     * ProcessEngineConfiguration#getVariableSerializers(). Byte-arrays and
+     * Serializable objects (which are not primitive type wrappers) are
      * not supported.
      * @param name of the variable, cannot be null. */
     public function variableValueEquals(string $name, $value): HistoricProcessInstanceQueryInterface;
@@ -128,14 +128,14 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
     /** Only select process instances which had a global variable with the given name, but
      * with a different value than the passed value when they ended. Only select
      * process instances which have a variable value greater than the passed
-     * value. Byte-arrays and {@link Serializable} objects (which are not
+     * value. Byte-arrays and Serializable objects (which are not
      * primitive type wrappers) are not supported.
      * @param name of the variable, cannot be null. */
     public function variableValueNotEquals(string $name, $value): HistoricProcessInstanceQueryInterface;
 
     /** Only select process instances which had a global variable value greater than the
      * passed value when they ended. Booleans, Byte-arrays and
-     * {@link Serializable} objects (which are not primitive type wrappers) are
+     * Serializable objects (which are not primitive type wrappers) are
      * not supported. Only select process instances which have a variable value
      * greater than the passed value.
      * @param name cannot be null.
@@ -144,17 +144,17 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
 
     /** Only select process instances which had a global variable value greater than or
      * equal to the passed value when they ended. Booleans, Byte-arrays and
-     * {@link Serializable} objects (which are not primitive type wrappers) are
+     * Serializable objects (which are not primitive type wrappers) are
      * not supported. Only applies to already ended process instances, otherwise
-     * use a {@link ProcessInstanceQuery} instead!
+     * use a ProcessInstanceQuery instead!
      * @param name cannot be null.
      * @param value cannot be null. */
     public function variableValueGreaterThanOrEqual(string $name, $value): HistoricProcessInstanceQueryInterface;
 
     /** Only select process instances which had a global variable value less than the
      * passed value when the ended. Only applies to already ended process
-     * instances, otherwise use a {@link ProcessInstanceQuery} instead! Booleans,
-     * Byte-arrays and {@link Serializable} objects (which are not primitive type
+     * instances, otherwise use a ProcessInstanceQuery instead! Booleans,
+     * Byte-arrays and Serializable objects (which are not primitive type
      * wrappers) are not supported.
      * @param name cannot be null.
      * @param value cannot be null. */
@@ -162,8 +162,8 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
 
     /** Only select process instances which has a global variable value less than or equal
      * to the passed value when they ended. Only applies to already ended process
-     * instances, otherwise use a {@link ProcessInstanceQuery} instead! Booleans,
-     * Byte-arrays and {@link Serializable} objects (which are not primitive type
+     * instances, otherwise use a ProcessInstanceQuery instead! Booleans,
+     * Byte-arrays and Serializable objects (which are not primitive type
      * wrappers) are not supported.
      * @param name cannot be null.
      * @param value cannot be null. */
@@ -171,7 +171,7 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
 
     /** Only select process instances which had global variable value like the given value
      * when they ended. Only applies to already ended process instances, otherwise
-     * use a {@link ProcessInstanceQuery} instead! This can be used on string
+     * use a ProcessInstanceQuery instead! This can be used on string
      * variables only.
      * @param name cannot be null.
      * @param value cannot be null. The string can include the
@@ -225,7 +225,7 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
     public function rootProcessInstances(): HistoricProcessInstanceQueryInterface;
 
     /** Only select historic process instances started by the given process
-     * instance. {@link ProcessInstance) ids and {@link HistoricProcessInstance}
+     * instance. {@link ProcessInstance) ids and HistoricProcessInstance
      * ids match. */
     public function superProcessInstanceId(string $superProcessInstanceId): HistoricProcessInstanceQueryInterface;
 
@@ -299,7 +299,7 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
      * will be linked together with an OR expression until the OR query is terminated. To terminate the OR query right
      * after the last filter criterion was applied, {@link #endOr()} must be invoked.</p>
      *
-     * @return an object of the type {@link HistoricProcessInstanceQuery} on which an arbitrary amount of filter criteria could be applied.
+     * @return an object of the type HistoricProcessInstanceQuery on which an arbitrary amount of filter criteria could be applied.
      * The several filter criteria will be linked together by an OR expression.
      *
      * @throws ProcessEngineException when or() has been invoked directly after or() or after or() and trailing filter
@@ -313,7 +313,7 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
      * OR query which has been started by invoking {@link #or()}, endOr() must be invoked. Filter criteria which are
      * applied after calling endOr() are linked together by an AND expression.</p>
      *
-     * @return an object of the type {@link HistoricProcessInstanceQuery} on which an arbitrary amount of filter criteria could be applied.
+     * @return an object of the type HistoricProcessInstanceQuery on which an arbitrary amount of filter criteria could be applied.
      * The filter criteria will be linked together by an AND expression.
      *
      * @throws ProcessEngineException when endOr() has been invoked before {@link #or()} was invoked. To prevent throwing

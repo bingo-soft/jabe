@@ -117,7 +117,7 @@ class TreeValueExpression extends ValueExpression
    * will always fail.
    * @param context used to resolve properties (<code>base.property</code> and <code>base[property]</code>)
    * and to determine the result from the last base/property pair
-   * @return <code>true</code> if {@link #setValue(ELContext, Object)} always fails.
+   * @return bool true if {@link #setValue(ELContext, Object)} always fails.
    * @throws ELException if evaluation fails (e.g. property not found, type conversion failed, ...)
      */
     public function isReadOnly(ELContext $context): bool
@@ -137,7 +137,7 @@ class TreeValueExpression extends ValueExpression
     }
 
     /**
-     * @return <code>true</code> if this is a literal text expression
+     * @return bool true if this is a literal text expression
      */
     public function isLiteralText(): bool
     {

@@ -150,7 +150,7 @@ interface MessageCorrelationBuilderInterface
 
 
     /**
-     * Executes the message correlation and returns a {@link MessageCorrelationResult} object.
+     * Executes the message correlation and returns a MessageCorrelationResult object.
      *
      * <p>The call of this method will result in either:
      * <ul>
@@ -161,17 +161,17 @@ interface MessageCorrelationBuilderInterface
      *     correlation or that no execution and process definition matches the correlation.</li>
      * </ul>
      * </p>
-     * The result can be identified by calling the {@link MessageCorrelationResult#getResultType}.
+     * The result can be identified by calling the MessageCorrelationResult#getResultType.
      *
      * @throws MismatchingMessageCorrelationException
      *          if none or more than one execution or process definition is matched by the correlation
      * @throws AuthorizationException
-     *          <li>if one execution is matched and the user has no {@link Permissions#UPDATE} permission on
-     *          {@link Resources#PROCESS_INSTANCE} or no {@link Permissions#UPDATE_INSTANCE} permission on
-     *          {@link Resources#PROCESS_DEFINITION}.</li>
-     *          <li>if one process definition is matched and the user has no {@link Permissions#CREATE} permission on
-     *          {@link Resources#PROCESS_INSTANCE} and no {@link Permissions#CREATE_INSTANCE} permission on
-     *          {@link Resources#PROCESS_DEFINITION}.</li>
+     *          <li>if one execution is matched and the user has no Permissions#UPDATE permission on
+     *          Resources#PROCESS_INSTANCE or no Permissions#UPDATE_INSTANCE permission on
+     *          Resources#PROCESS_DEFINITION.</li>
+     *          <li>if one process definition is matched and the user has no Permissions#CREATE permission on
+     *          Resources#PROCESS_INSTANCE and no Permissions#CREATE_INSTANCE permission on
+     *          Resources#PROCESS_DEFINITION.</li>
      *
      * @return MessageCorrelationResultInterface The result of the message correlation. Result contains either the execution id or the start event activity id and the process definition.
      */
@@ -183,7 +183,7 @@ interface MessageCorrelationBuilderInterface
      *
      * @see {@link #correlateWithResult()}
      *
-     * @param deserializeValues if false, returned {@link SerializableValue}s
+     * @param deserializeValues if false, returned SerializableValues
      *   will not be deserialized (unless they are passed into this method as a
      *   deserialized value or if the BPMN process triggers deserialization)
      *
@@ -235,12 +235,12 @@ interface MessageCorrelationBuilderInterface
      * <p>Note that the message correlates to all tenants if no tenant is specified using {@link #tenantId(String)} or {@link #withoutTenantId()}.</p>
      *
      * @throws AuthorizationException
-     *          <li>if at least one execution is matched and the user has no {@link Permissions#UPDATE} permission on
-     *          {@link Resources#PROCESS_INSTANCE} or no {@link Permissions#UPDATE_INSTANCE} permission on
-     *          {@link Resources#PROCESS_DEFINITION}.</li>
-     *          <li>if one process definition is matched and the user has no {@link Permissions#CREATE} permission on
-     *          {@link Resources#PROCESS_INSTANCE} and no {@link Permissions#CREATE_INSTANCE} permission on
-     *          {@link Resources#PROCESS_DEFINITION}.</li>
+     *          <li>if at least one execution is matched and the user has no Permissions#UPDATE permission on
+     *          Resources#PROCESS_INSTANCE or no Permissions#UPDATE_INSTANCE permission on
+     *          Resources#PROCESS_DEFINITION.</li>
+     *          <li>if one process definition is matched and the user has no Permissions#CREATE permission on
+     *          Resources#PROCESS_INSTANCE and no Permissions#CREATE_INSTANCE permission on
+     *          Resources#PROCESS_DEFINITION.</li>
      *
      * @return array The result list of the message correlations. Each result contains
      * either the execution id or the start event activity id and the process definition.
@@ -253,7 +253,7 @@ interface MessageCorrelationBuilderInterface
      *
      * @see {@link #correlateAllWithResult()}
      *
-     * @param deserializeValues if false, returned {@link SerializableValue}s
+     * @param deserializeValues if false, returned SerializableValues
      *   will not be deserialized (unless they are passed into this method as a
      *   deserialized value or if the BPMN process triggers deserialization)
      *
@@ -284,10 +284,10 @@ interface MessageCorrelationBuilderInterface
      *           if none or more than one process definition is matched by the correlation
      * @throws AuthorizationException
      *           if one process definition is matched and the user has no
-     *           {@link Permissions#CREATE} permission on
-     *           {@link Resources#PROCESS_INSTANCE} and no
-     *           {@link Permissions#CREATE_INSTANCE} permission on
-     *           {@link Resources#PROCESS_DEFINITION}.
+     *           Permissions#CREATE permission on
+     *           Resources#PROCESS_INSTANCE and no
+     *           Permissions#CREATE_INSTANCE permission on
+     *           Resources#PROCESS_DEFINITION.
      */
     public function correlateStartMessage(): ProcessInstanceInterface;
 }

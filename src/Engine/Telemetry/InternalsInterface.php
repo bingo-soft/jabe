@@ -24,7 +24,7 @@ interface InternalsInterface
      * Information about the number of command executions performed by the Camunda
      * engine. If telemetry sending is enabled, the number of executions per
      * command resets on sending the data to Camunda. Retrieving the data through
-     * {@link ManagementService#getTelemetryData()} will not reset the count.
+     * ManagementService#getTelemetryData() will not reset the count.
      */
     public function getCommands(): array;
 
@@ -38,7 +38,7 @@ interface InternalsInterface
      *   <li>The number of executed decision elements.</li>
      * </ul>
      * The metrics reset on sending the data to Camunda. Retrieving the data
-     * through {@link ManagementService#getTelemetryData()} will not reset the
+     * through ManagementService#getTelemetryData() will not reset the
      * count.
      */
     public function getMetrics(): array;

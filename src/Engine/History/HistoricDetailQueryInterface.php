@@ -15,20 +15,20 @@ interface HistoricDetailQueryInterface extends QueryInterface
     public function detailId(string $id): HistoricDetailQueryInterface;
 
     /** Only select historic variable updates with the given process instance.
-     * {@link ProcessInstance} ids and {@link HistoricProcessInstance} ids match. */
+     * ProcessInstance ids and HistoricProcessInstance ids match. */
     public function processInstanceId(string $processInstanceId): HistoricDetailQueryInterface;
 
     /** Only select historic variable updates with the given case instance.
-     * {@link CaseInstance} ids and {@link HistoricCaseInstance} ids match. */
+     * CaseInstance ids and HistoricCaseInstance ids match. */
     //public function caseInstanceId(string $caseInstanceId): HistoricDetailQueryInterface;
 
     /** Only select historic variable updates with the given execution.
-     * Note that {@link Execution} ids are not stored in the history as first class citizen,
+     * Note that Execution ids are not stored in the history as first class citizen,
      * only process instances are.*/
     public function executionId(string $executionId): HistoricDetailQueryInterface;
 
     /** Only select historic variable updates with the given case execution.
-     * Note that {@link CaseExecution} ids are not stored in the history as first class citizen,
+     * Note that CaseExecution ids are not stored in the history as first class citizen,
      * only case instances are.*/
     //public function caseExecutionId(string $caseExecutionId): HistoricDetailQueryInterface;
 
@@ -48,10 +48,10 @@ interface HistoricDetailQueryInterface extends QueryInterface
     /** Only select historic process variables which match one of the given variable types. */
     public function variableTypeIn(array $variableTypes): HistoricDetailQueryInterface;
 
-    /** Only select {@link HistoricFormField}s. */
+    /** Only select HistoricFormFields. */
     public function formFields(): HistoricDetailQueryInterface;
 
-    /** Only select {@link HistoricVariableUpdate}s. */
+    /** Only select HistoricVariableUpdates. */
     public function variableUpdates(): HistoricDetailQueryInterface;
 
     /**
@@ -71,7 +71,7 @@ interface HistoricDetailQueryInterface extends QueryInterface
      */
     public function disableCustomObjectDeserialization(): HistoricDetailQueryInterface;
 
-    /** Exclude all task-related {@link HistoricDetail}s, so only items which have no
+    /** Exclude all task-related HistoricDetails, so only items which have no
      * task-id set will be selected. When used together with {@link #taskId(String)}, this
      * call is ignored task details are NOT excluded.
      */

@@ -14,7 +14,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
     // users /////////////////////////////////////////////////
 
     /**
-     * <p>Returns a new (transient) {@link User} object. The Object is not
+     * <p>Returns a new (transient) User object. The Object is not
      * yet persistent and must be saved using the {@link #saveUser(User)}
      * method.</p>
      *
@@ -27,7 +27,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
     public function createNewUser(string $userId): UserInterface;
 
     /**
-     * Allows saving or updates a {@link User} object
+     * Allows saving or updates a User object
      *
      * @param user a User object.
      * @return IdentityOperationResult the operation result object.
@@ -36,7 +36,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
     public function saveUser(UserInterface $user): IdentityOperationResult;
 
     /**
-     * Allows deleting a persistent {@link User} object.
+     * Allows deleting a persistent User object.
      *
      * @param UserId the id of the User object to delete.
      * @return IdentityOperationResult the operation result object.
@@ -45,7 +45,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
     public function deleteUser(string $userId): IdentityOperationResult;
 
     /**
-     * Allows unlocking a {@link User} object.
+     * Allows unlocking a User object.
      * @param userId the id of the User object to delete.
      * @return IdentityOperationResult the operation result object.
      * @throws AuthorizationException if the user is not CAMUNDA_ADMIN
@@ -55,7 +55,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
     // groups /////////////////////////////////////////////////
 
     /**
-     * <p>Returns a new (transient) {@link Group} object. The Object is not
+     * <p>Returns a new (transient) Group object. The Object is not
      * yet persistent and must be saved using the {@link #saveGroup(Group)}
      * method.</p>
      *
@@ -68,7 +68,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
     public function createNewGroup(string $groupId): GroupInterface;
 
     /**
-     * Allows saving a {@link Group} object which is not yet persistent.
+     * Allows saving a Group object which is not yet persistent.
      *
      * @param group a group object.
      * @return IdentityOperationResult the operation result object.
@@ -77,7 +77,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
     public function saveGroup(GroupInterface $group): IdentityOperationResult;
 
     /**
-     * Allows deleting a persistent {@link Group} object.
+     * Allows deleting a persistent Group object.
      *
      * @param groupId the id of the group object to delete.
      * @return IdentityOperationResult the operation result object.
@@ -87,7 +87,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
 
     /**
      * <p>
-     * Returns a new (transient) {@link Tenant} object. The Object is not yet
+     * Returns a new (transient) Tenant object. The Object is not yet
      * persistent and must be saved using the {@link #saveTenant(Tenant)} method.
      * </p>
      *
@@ -103,7 +103,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
     public function createNewTenant(string $tenantId): TenantInterface;
 
     /**
-     * Allows saving a {@link Tenant} object which is not yet persistent.
+     * Allows saving a Tenant object which is not yet persistent.
      *
      * @param tenant
      *          the tenant object to save.
@@ -114,7 +114,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
     public function saveTenant(TenantInterface $tenant): IdentityOperationResult;
 
     /**
-     * Allows deleting a persistent {@link Tenant} object.
+     * Allows deleting a persistent Tenant object.
      *
      * @param tenantId
      *          the id of the tenant object to delete.

@@ -20,7 +20,7 @@ interface TablePageQueryInterface
     public function orderDesc(string $column): TablePageQueryInterface;
 
     /**
-     * Executes the query and returns the {@link TablePage}
+     * Executes the query and returns the TablePage
      */
     public function listPage(int $firstResult, int $maxResults): TablePage;
 }

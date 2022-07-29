@@ -45,7 +45,7 @@ interface ProcessApplicationInterface
     public function getRawObject(): ProcessApplicationInterface;
 
     /**
-     * The default implementation simply modifies the Context {@link ClassLoader}
+     * The default implementation simply modifies the Context ClassLoader
      *
      * @param callable to be executed "within" the context of this process application.
      * @param context of the current invocation, can be <code>null</code>
@@ -56,7 +56,7 @@ interface ProcessApplicationInterface
     /**
      * <p>override this method in order to provide a map of properties.</p>
      *
-     * <p>The properties are made available globally through the {@link ProcessApplicationService}</p>
+     * <p>The properties are made available globally through the ProcessApplicationService</p>
      *
      * @see ProcessApplicationService
      * @see ProcessApplicationInfo#getProperties()
@@ -75,8 +75,8 @@ interface ProcessApplicationInterface
     public function getElResolver(): ?ELResolver;
 
     /**
-     * <p>Returns an instance of {@link BeanELResolver} that a process application caches.</p>
-     * <p>Has to be managed by the process application since {@link BeanELResolver} keeps
+     * <p>Returns an instance of BeanELResolver that a process application caches.</p>
+     * <p>Has to be managed by the process application since BeanELResolver keeps
      * hard references to classes in a cache.</p>
      */
     public function getObjectElResolver(): BeanELResolver;
@@ -88,32 +88,32 @@ interface ProcessApplicationInterface
      * <p>This method is invoked at deployment time once for each process archive
      * deployed by this process application.</p>
      *
-     * <p><strong>NOTE:</strong> this method must NOT call the {@link DeploymentBuilder#deploy()}
+     * <p><strong>NOTE:</strong> this method must NOT call the DeploymentBuilder#deploy()
      * method.</p>
      *
-     * @param deploymentBuilder the {@link DeploymentBuilder} used to construct the deployment.
+     * @param deploymentBuilder the DeploymentBuilder used to construct the deployment.
      * @param processArchiveName the name of the processArchive which is currently being deployed.
      */
     public function createDeployment(string $processArchiveName, DeploymentBuilderInterface $deploymentBuilder): void;
 
 
     /**
-     * <p>Allows the process application to provide an {@link ExecutionListener} which is notified about
+     * <p>Allows the process application to provide an ExecutionListener which is notified about
      * all execution events in all of the process instances deployed by this process application.</p>
      *
      * <p>If this method returns 'null', the process application is not notified about execution events.</p>
      *
-     * @return an {@link ExecutionListener} or null.
+     * @return an ExecutionListener or null.
      */
     public function getExecutionListener(): ?ExecutionListenerInterface;
 
     /**
-     * <p>Allows the process application to provide a {@link TaskListener} which is notified about
+     * <p>Allows the process application to provide a TaskListener which is notified about
      * all Task events in all of the process instances deployed by this process application.</p>
      *
      * <p>If this method returns 'null', the process application is not notified about Task events.</p>
      *
-     * @return a {@link TaskListener} or null.
+     * @return a TaskListener or null.
      */
     public function getTaskListener(): ?TaskListenerInterface;
 }

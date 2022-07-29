@@ -10,7 +10,7 @@ interface HistoricActivityInstanceQueryInterface extends QueryInterface
     public function activityInstanceId(string $activityInstanceId): HistoricActivityInstanceQueryInterface;
 
     /** Only select historic activity instances with the given process instance.
-     * {@link ProcessInstance ) ids and {@link HistoricProcessInstance} ids match. */
+     * {@link ProcessInstance ) ids and HistoricProcessInstance ids match. */
     public function processInstanceId(string $processInstanceId): HistoricActivityInstanceQueryInterface;
 
     /** Only select historic activity instances for the given process definition */

@@ -40,12 +40,12 @@ interface ExternalTaskServiceInterface
      *   permission out of all of the following groups for:
      *
      *   <ul>
-     *     <li>{@link Permissions#READ} on {@link Resources#PROCESS_INSTANCE}</li>
-     *     <li>{@link Permissions#READ_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
+     *     <li>Permissions#READ on Resources#PROCESS_INSTANCE</li>
+     *     <li>Permissions#READ_INSTANCE on Resources#PROCESS_DEFINITION</li>
      *   </ul>
      *   <ul>
-     *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_INSTANCE}</li>
-     *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
+     *     <li>Permissions#UPDATE on Resources#PROCESS_INSTANCE</li>
+     *     <li>Permissions#UPDATE_INSTANCE on Resources#PROCESS_DEFINITION</li>
      *   </ul>
      * </p>
      *
@@ -69,8 +69,8 @@ interface ExternalTaskServiceInterface
      * @throws BadUserRequestException if the task was already locked by a different worker
      * @throws AuthorizationException thrown if the current user does not possess any of the following permissions:
      *   <ul>
-     *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_INSTANCE}</li>
-     *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
+     *     <li>Permissions#UPDATE on Resources#PROCESS_INSTANCE</li>
+     *     <li>Permissions#UPDATE_INSTANCE on Resources#PROCESS_DEFINITION</li>
      *   </ul>
      */
     public function lock(string $externalTaskId, string $workerId, int $lockDuration): void;
@@ -89,8 +89,8 @@ interface ExternalTaskServiceInterface
      * @throws BadUserRequestException if the task is assigned to a different worker
      * @throws AuthorizationException thrown if the current user does not possess any of the following permissions:
      *   <ul>
-     *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_INSTANCE}</li>
-     *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
+     *     <li>Permissions#UPDATE on Resources#PROCESS_INSTANCE</li>
+     *     <li>Permissions#UPDATE_INSTANCE on Resources#PROCESS_DEFINITION</li>
      *   </ul>
      */
     public function complete(string $externalTaskId, string $workerId, array $variables = [], array $localVariables = []): void;
@@ -106,8 +106,8 @@ interface ExternalTaskServiceInterface
      * @throws BadUserRequestException if the task is assigned to a different worker
      * @throws AuthorizationException thrown if the current user does not possess any of the following permissions:
      *   <ul>
-     *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_INSTANCE}</li>
-     *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
+     *     <li>Permissions#UPDATE on Resources#PROCESS_INSTANCE</li>
+     *     <li>Permissions#UPDATE_INSTANCE on Resources#PROCESS_DEFINITION</li>
      *   </ul>
      */
     public function extendLock(string $externalTaskId, string $workerId, int $newLockDuration): void;
@@ -126,7 +126,7 @@ interface ExternalTaskServiceInterface
      * @param externalTaskId the id of the external task to report a failure for
      * @param workerId the id of the worker that reports the failure
      * @param errorMessage short error message related to this failure. This message can be retrieved via
-     *   {@link ExternalTask#getErrorMessage()} and is used as the incident message in case <code>retries</code> is <code>null</code>.
+     *   ExternalTask#getErrorMessage and is used as the incident message in case <code>retries</code> is <code>null</code>.
      *   May be <code>null</code>.
      * @param retries the number of retries left. External tasks with 0 retries cannot be fetched anymore unless
      *   the number of retries is increased via API. Must be >= 0.
@@ -136,8 +136,8 @@ interface ExternalTaskServiceInterface
      * @throws BadUserRequestException if the task is assigned to a different worker
      * @throws AuthorizationException thrown if the current user does not possess any of the following permissions:
      *   <ul>
-     *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_INSTANCE}</li>
-     *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
+     *     <li>Permissions#UPDATE on Resources#PROCESS_INSTANCE</li>
+     *     <li>Permissions#UPDATE_INSTANCE on Resources#PROCESS_DEFINITION</li>
      *   </ul>
      */
     public function handleFailure(string $externalTaskId, string $workerId, string $errorMessage, string $errorDetails, int $retries, int $retryDuration, array $variables = [], array $localVariables = []): void;
@@ -156,8 +156,8 @@ interface ExternalTaskServiceInterface
      * @throws BadUserRequestException if the task is assigned to a different worker
      * @throws AuthorizationException thrown if the current user does not possess any of the following permissions:
      *   <ul>
-     *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_INSTANCE}</li>
-     *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
+     *     <li>Permissions#UPDATE on Resources#PROCESS_INSTANCE</li>
+     *     <li>Permissions#UPDATE_INSTANCE on Resources#PROCESS_DEFINITION</li>
      *   </ul>
      */
     public function handleBpmnError(string $externalTaskId, string $workerId, string $errorCode, string $errorMessage = null, array $variables = []): void;
@@ -169,8 +169,8 @@ interface ExternalTaskServiceInterface
      * @throws NotFoundException if no external task with the given id exists
      * @throws AuthorizationException thrown if the current user does not possess any of the following permissions:
      *   <ul>
-     *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_INSTANCE}</li>
-     *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
+     *     <li>Permissions#UPDATE on Resources#PROCESS_INSTANCE</li>
+     *     <li>Permissions#UPDATE_INSTANCE on Resources#PROCESS_DEFINITION</li>
      *   </ul>
      */
     public function unlock(string $externalTaskId): void;
@@ -185,8 +185,8 @@ interface ExternalTaskServiceInterface
      * @throws NotFoundException if no external task with the given id exists
      * @throws AuthorizationException thrown if the current user does not possess any of the following permissions:
      *   <ul>
-     *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_INSTANCE}</li>
-     *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
+     *     <li>Permissions#UPDATE on Resources#PROCESS_INSTANCE</li>
+     *     <li>Permissions#UPDATE_INSTANCE on Resources#PROCESS_DEFINITION</li>
      *   </ul>
      */
     public function setRetries($externalTaskIdOrIds, int $retries, bool $writeUserOperationLog = true): void;
@@ -206,8 +206,8 @@ interface ExternalTaskServiceInterface
      * @throws NotFoundException if no external task with one of the given id exists
      * @throws BadUserRequestException if the ids are null or the number of retries is negative
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#CREATE} or
-     *          {@link BatchPermissions#CREATE_BATCH_SET_EXTERNAL_TASK_RETRIES} permission on {@link Resources#BATCH}.
+     *          If the user has no Permissions#CREATE or
+     *          BatchPermissions#CREATE_BATCH_SET_EXTERNAL_TASK_RETRIES permission on Resources#BATCH.
      */
     public function setRetriesAsync(array $externalTaskIds, ExternalTaskQueryInterface $externalTaskQuery, int $retries): BatchInterface;
 
@@ -216,8 +216,8 @@ interface ExternalTaskServiceInterface
      *
      * Specify the instances by calling one of the following methods, like
      * <i>externalTaskIds</i>. To set the retries call
-     * {@link UpdateExternalTaskRetriesBuilder#set(int)} or
-     * {@link UpdateExternalTaskRetriesBuilder#setAsync(int)}.
+     * UpdateExternalTaskRetriesBuilder#set(int) or
+     * UpdateExternalTaskRetriesBuilder#setAsync(int).
      */
     public function updateRetries(): UpdateExternalTaskRetriesSelectBuilderInterface;
 
@@ -229,8 +229,8 @@ interface ExternalTaskServiceInterface
      * @throws NotFoundException if no external task with the given id exists
      * @throws AuthorizationException thrown if the current user does not possess any of the following permissions:
      *   <ul>
-     *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_INSTANCE}</li>
-     *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
+     *     <li>Permissions#UPDATE on Resources#PROCESS_INSTANCE</li>
+     *     <li>Permissions#UPDATE_INSTANCE on Resources#PROCESS_DEFINITION</li>
      *   </ul>
      */
     public function setPriority(string $externalTaskId, int $priority): void;
@@ -241,12 +241,12 @@ interface ExternalTaskServiceInterface
      *   of the following permissions for:
      *
      *   <ul>
-     *     <li>{@link Permissions#READ} on {@link Resources#PROCESS_INSTANCE}</li>
-     *     <li>{@link Permissions#READ_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
+     *     <li>Permissions#READ on Resources#PROCESS_INSTANCE</li>
+     *     <li>Permissions#READ_INSTANCE on Resources#PROCESS_DEFINITION</li>
      *   </ul>
      * </p>
      *
-     * @return a new {@link ExternalTaskQuery} that can be used to dynamically
+     * @return a new ExternalTaskQuery that can be used to dynamically
      * query for external tasks.
      */
     public function createExternalTaskQuery(): ExternalTaskQueryInterface;
@@ -275,8 +275,8 @@ interface ExternalTaskServiceInterface
      * @throws ProcessEngineException
      *          When no external task exists with the given id.
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_INSTANCE}
-     *          or no {@link Permissions#READ_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          If the user has no Permissions#READ permission on Resources#PROCESS_INSTANCE
+     *          or no Permissions#READ_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
     public function getExternalTaskErrorDetails(string $externalTaskId): string;
 }

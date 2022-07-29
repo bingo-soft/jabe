@@ -17,7 +17,7 @@ use Jabe\Engine\Impl\Util\EnsureUtil;
 class ScriptUtil
 {
     /**
-     * Creates a new {@link ExecutableScript} from a source or resource. It excepts static and
+     * Creates a new ExecutableScript from a source or resource. It excepts static and
      * dynamic sources and resources. Dynamic means that the source or resource is an expression
      * which will be evaluated during execution.
      *
@@ -41,7 +41,7 @@ class ScriptUtil
     }
 
     /**
-     * Creates a new {@link ExecutableScript} from a source. It excepts static and dynamic sources.
+     * Creates a new ExecutableScript from a source. It excepts static and dynamic sources.
      * Dynamic means that the source is an expression which will be evaluated during execution.
      *
      * @param language the language of the script
@@ -66,7 +66,7 @@ class ScriptUtil
     }
 
     /**
-     * Creates a new {@link ExecutableScript} from a dynamic source. Dynamic means that the source
+     * Creates a new ExecutableScript from a dynamic source. Dynamic means that the source
      * is an expression which will be evaluated during execution.
      *
      * @param language the language of the script
@@ -83,7 +83,7 @@ class ScriptUtil
     }
 
     /**
-     * Creates a new {@link ExecutableScript} from a resource. It excepts static and dynamic resources.
+     * Creates a new ExecutableScript from a resource. It excepts static and dynamic resources.
      * Dynamic means that the resource is an expression which will be evaluated during execution.
      *
      * @param language the language of the script
@@ -108,7 +108,7 @@ class ScriptUtil
     }
 
     /**
-     * Creates a new {@link ExecutableScript} from a dynamic resource. Dynamic means that the source
+     * Creates a new ExecutableScript from a dynamic resource. Dynamic means that the source
      * is an expression which will be evaluated during execution.
      *
      * @param language the language of the script

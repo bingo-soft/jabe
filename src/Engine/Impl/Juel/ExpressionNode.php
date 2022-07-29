@@ -11,18 +11,18 @@ use Jabe\Engine\Impl\Util\El\{
 interface ExpressionNode extends Node
 {
     /**
-     * @return <code>true</code> if this node represents literal text
+     * @return bool true if this node represents literal text
      */
     public function isLiteralText(): bool;
 
     /**
-     * @return <code>true</code> if the subtree rooted at this node could be used as an lvalue
+     * @return bool true if the subtree rooted at this node could be used as an lvalue
      *         expression (identifier or property sequence with non-literal prefix).
      */
     public function isLeftValue(): bool;
 
     /**
-     * @return <code>true</code> if the subtree rooted at this node is a method invocation.
+     * @return bool true if the subtree rooted at this node is a method invocation.
      */
     public function isMethodInvocation(): bool;
 
@@ -67,7 +67,7 @@ interface ExpressionNode extends Node
      *            bindings containing variables and functions
      * @param context
      *            evaluation context
-     * @return <code>true</code> if this a read-only expression node
+     * @return bool true if this a read-only expression node
      */
     public function isReadOnly(Bindings $bindings, ELContext $context): bool;
 

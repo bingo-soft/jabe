@@ -731,7 +731,7 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
     }
 
     /**
-     * @return <code>true</code>, if the variable is transient. A transient
+     * @return bool true, if the variable is transient. A transient
      *         variable is not stored in the data base.
      */
     public function isTransient(): bool

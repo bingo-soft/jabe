@@ -57,12 +57,12 @@ interface ModificationBuilderInterface
      * @throws AuthorizationException
      *   if the user has not all of the following permissions
      *   <ul>
-     *      <li>if the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE} or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *      <li>if the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      *   </ul>
      * @throws BadUserRequestException
      *   When the affected instances count exceeds the maximum results limit. A maximum results
      *   limit can be specified with the process engine configuration property
-     *   <code>queryMaxResultsLimit</code> (default {@link Integer#MAX_VALUE}).
+     *   <code>queryMaxResultsLimit</code> (default Integer#MAX_VALUE).
      *   Please use the batch operation {@link #executeAsync()} instead.
      */
     public function execute(): void;
@@ -76,7 +76,7 @@ interface ModificationBuilderInterface
      * @throws AuthorizationException
      *   if the user has not all of the following permissions
      *   <ul>
-     *     <li>{@link Permissions#CREATE} or {@link BatchPermissions#CREATE_BATCH_MODIFY_PROCESS_INSTANCES} permission on {@link Resources#BATCH}</li>
+     *     <li>Permissions#CREATE or BatchPermissions#CREATE_BATCH_MODIFY_PROCESS_INSTANCES permission on Resources#BATCH</li>
      *   </ul>
      */
     public function executeAsync(): BatchInterface;

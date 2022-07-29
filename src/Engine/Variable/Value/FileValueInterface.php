@@ -11,7 +11,7 @@ interface FileValueInterface extends TypedValueInterface
     /**
      * Convenience method to save the transformation. This method will perform no
      * check if the saved encoding is known and therefore could throw
-     * every exception that {@link Charset#forName(String)} lists.
+     * every exception that Charset#forName(String) lists.
      * <p>
      * If no encoding has been saved it will return null.
      *

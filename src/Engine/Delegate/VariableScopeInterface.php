@@ -47,25 +47,25 @@ interface VariableScopeInterface
 
     /**
      * Removes the variable and creates a new
-     * {@link HistoricVariableUpdateEntity}.
+     * HistoricVariableUpdateEntity.
      */
     public function removeVariable(string $variableName): void;
 
     /**
      * Removes the local variable and creates a new
-     * {@link HistoricVariableUpdateEntity}.
+     * HistoricVariableUpdateEntity.
      */
     public function removeVariableLocal(string $variableName): void;
 
     /**
      * Removes the variables and creates a new
-     * {@link HistoricVariableUpdateEntity} for each of them.
+     * HistoricVariableUpdateEntity for each of them.
      */
     public function removeVariables(?array $variableNames = []): void;
 
     /**
      * Removes the local variables and creates a new
-     * {@link HistoricVariableUpdateEntity} for each of them.
+     * HistoricVariableUpdateEntity for each of them.
      */
     public function removeVariablesLocal(?array $variableNames = []): void;
 }

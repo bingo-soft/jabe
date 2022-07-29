@@ -24,7 +24,7 @@ class StartProcessVariableScope implements VariableScopeInterface
     }
 
     /**
-     * Since a {@link StartProcessVariableScope} has no state, it's safe to use the same
+     * Since a StartProcessVariableScope has no state, it's safe to use the same
      * instance to prevent too many useless instances created.
      */
     public static function getSharedInstance(): StartProcessVariableScope
@@ -132,7 +132,7 @@ class StartProcessVariableScope implements VariableScopeInterface
 
     /**
      * Removes the variable and creates a new
-     * {@link HistoricVariableUpdateEntity}.
+     * HistoricVariableUpdateEntity.
      */
     public function removeVariable(string $variableName): void
     {
@@ -141,7 +141,7 @@ class StartProcessVariableScope implements VariableScopeInterface
 
     /**
      * Removes the local variable and creates a new
-     * {@link HistoricVariableUpdateEntity}.
+     * HistoricVariableUpdateEntity.
      */
     public function removeVariableLocal(string $variableName): void
     {
@@ -150,7 +150,7 @@ class StartProcessVariableScope implements VariableScopeInterface
 
     /**
      * Removes the variables and creates a new
-     * {@link HistoricVariableUpdateEntity} for each of them.
+     * HistoricVariableUpdateEntity for each of them.
      */
     public function removeVariables(?array $variableNames = []): void
     {
@@ -159,7 +159,7 @@ class StartProcessVariableScope implements VariableScopeInterface
 
     /**
      * Removes the local variables and creates a new
-     * {@link HistoricVariableUpdateEntity} for each of them.
+     * HistoricVariableUpdateEntity for each of them.
      */
     public function removeVariablesLocal(?array $variableNames = []): void
     {

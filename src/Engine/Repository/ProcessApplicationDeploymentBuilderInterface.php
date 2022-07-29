@@ -18,7 +18,7 @@ interface ProcessApplicationDeploymentBuilderInterface extends DeploymentBuilder
      * <p>
      * @see ResumePreviousBy
      * @see #resumePreviousVersions()
-     * @param resumeByProcessDefinitionKey one of the constants from {@link ResumePreviousBy}
+     * @param resumeByProcessDefinitionKey one of the constants from ResumePreviousBy
      */
     public function resumePreviousVersionsBy(string $resumePreviousVersionsBy): DeploymentBuilderInterface;
 

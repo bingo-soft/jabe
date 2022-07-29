@@ -39,7 +39,7 @@ class ScriptTaskActivityBehavior extends TaskActivityBehavior
 
     /**
      * Searches recursively through the exception to see if the exception itself
-     * or one of its causes is a {@link BpmnError}.
+     * or one of its causes is a BpmnError.
      *
      * @param e
      *          the exception to check

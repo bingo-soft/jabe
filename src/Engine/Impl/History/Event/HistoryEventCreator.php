@@ -5,11 +5,11 @@ namespace Jabe\Engine\Impl\History\Event;
 class HistoryEventCreator
 {
     /**
-     * Creates the {@link HistoryEvent} with the help off the given
-     * {@link HistoryEventProducer}.
+     * Creates the HistoryEvent with the help off the given
+     * HistoryEventProducer.
      *
      * @param producer the producer which is used for the creation
-     * @return HistoryEvent the created {@link HistoryEvent}
+     * @return HistoryEvent the created HistoryEvent
      */
     public function createHistoryEvent(HistoryEventProducer $producer): ?HistoryEvent
     {

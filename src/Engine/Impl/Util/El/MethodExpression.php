@@ -66,7 +66,7 @@ abstract class MethodExpression extends Expression
      * using the expr-a.expr-b(...) syntax.
      * </p>
      *
-     * @return <code>true</code> if the MethodExpression was created with parameters,
+     * @return bool true if the MethodExpression was created with parameters,
      *         <code>false</code> otherwise.
      * @since 2.2
      */

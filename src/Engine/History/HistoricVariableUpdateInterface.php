@@ -23,7 +23,7 @@ interface HistoricVariableUpdateInterface
     public function getValue();
 
     /**
-     * @return TypedValueInterface the {@link TypedValue} for this variable update
+     * @return TypedValueInterface the TypedValue for this variable update
      */
     public function getTypedValue(): TypedValueInterface;
 

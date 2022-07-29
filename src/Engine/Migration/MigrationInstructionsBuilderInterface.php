@@ -6,7 +6,7 @@ interface MigrationInstructionsBuilderInterface extends MigrationPlanBuilderInte
 {
     /**
      * Toggle whether the instructions should include updating of the respective event triggers
-     * where appropriate. See {@link MigrationInstructionBuilder#updateEventTrigger()} for details
+     * where appropriate. See MigrationInstructionBuilder#updateEventTrigger() for details
      * what updating the event trigger means for a single instruction.
      *
      * @return this builder

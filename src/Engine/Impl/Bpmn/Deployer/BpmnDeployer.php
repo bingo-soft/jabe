@@ -93,9 +93,9 @@ class BpmnDeployer extends AbstractDefinitionDeployer
         $bpmnParse->execute();
 
         if (!$this->properties->contains(self::$JOB_DECLARATIONS_PROPERTY)) {
-            $this->propertie->set(self::$JOB_DECLARATIONS_PROPERTY, []);
+            $this->properties->set(self::$JOB_DECLARATIONS_PROPERTY, []);
         }
-        $this->propertie->set(self::$JOB_DECLARATIONS_PROPERTY, array_merge($this->properties->get(self::$JOB_DECLARATIONS_PROPERTY), $bpmnParse->getJobDeclarations()));
+        $this->properties->set(self::$JOB_DECLARATIONS_PROPERTY, array_merge($this->properties->get(self::$JOB_DECLARATIONS_PROPERTY), $bpmnParse->getJobDeclarations()));
 
         return $bpmnParse->getProcessDefinitions();
     }
@@ -149,7 +149,7 @@ class BpmnDeployer extends AbstractDefinitionDeployer
     {
         //check if persisted definition is not null, since the process definition can be deleted by the user
         //in such cases we don't want to handle them
-        //we can't do this in the parent method, since other siblings want to handle them like {@link DecisionDefinitionDeployer}
+        //we can't do this in the parent method, since other siblings want to handle them like DecisionDefinitionDeployer
         if ($persistedDefinition !== null) {
             parent::handlePersistedDefinition($definition, $persistedDefinition, $deployment, $properties);
         }

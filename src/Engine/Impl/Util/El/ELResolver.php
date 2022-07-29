@@ -21,7 +21,7 @@ abstract class ELResolver
      * base object. One use for this method is to assist tools in auto-completion. This assists
      * tools in auto-completion and also provides a way to express that the resolver accepts a
      * primitive value, such as an integer index into an array. For example, the
-     * {@link ArrayELResolver} will accept any int as a property, so the return value would be
+     * ArrayELResolver will accept any int as a property, so the return value would be
      * Integer.class.
      *
      * @param context
@@ -83,7 +83,7 @@ abstract class ELResolver
      * given (base, property) pair, the propertyResolved property of the ELContext object must be
      * set to true by the resolver, before returning. If this property is not true after this method
      * is called, the caller should ignore the return value. This is not always the same as
-     * getValue().getClass(). For example, in the case of an {@link ArrayELResolver}, the getType
+     * getValue().getClass(). For example, in the case of an ArrayELResolver, the getType
      * method will return the element type of the array, which might be a superclass of the type of
      * the actual element that is currently in the specified array element.
      *

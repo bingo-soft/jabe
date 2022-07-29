@@ -59,15 +59,15 @@ interface SignalEventReceivedBuilderInterface
      *           or has not subscribed to the signal
      * @throws AuthorizationException
      *           <li>if notify an execution and the user has no
-     *           {@link Permissions#UPDATE} permission on
-     *           {@link Resources#PROCESS_INSTANCE} or no
-     *           {@link Permissions#UPDATE_INSTANCE} permission on
-     *           {@link Resources#PROCESS_DEFINITION}.</li>
+     *           Permissions#UPDATE permission on
+     *           Resources#PROCESS_INSTANCE or no
+     *           Permissions#UPDATE_INSTANCE permission on
+     *           Resources#PROCESS_DEFINITION.</li>
      *           <li>if start a new process instance and the user has no
-     *           {@link Permissions#CREATE} permission on
-     *           {@link Resources#PROCESS_INSTANCE} and no
-     *           {@link Permissions#CREATE_INSTANCE} permission on
-     *           {@link Resources#PROCESS_DEFINITION}.</li>
+     *           Permissions#CREATE permission on
+     *           Resources#PROCESS_INSTANCE and no
+     *           Permissions#CREATE_INSTANCE permission on
+     *           Resources#PROCESS_DEFINITION.</li>
      */
     public function send(): void;
 }

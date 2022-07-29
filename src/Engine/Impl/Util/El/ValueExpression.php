@@ -99,7 +99,7 @@ abstract class ValueExpression extends Expression
     abstract public function setValue(ELContext $context, $value): void;
 
     /**
-     * Returns a {@link ValueReference} for this expression instance.
+     * Returns a ValueReference for this expression instance.
      *
      * @param context
      *            the context of this evaluation

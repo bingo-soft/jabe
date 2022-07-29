@@ -36,15 +36,15 @@ interface UpdateProcessDefinitionSuspensionStateBuilderInterface
      * @throws AuthorizationException
      *           <li>if the user has none of the following:</li>
      *           <ul>
-     *           <li>{@link ProcessDefinitionPermissions#SUSPEND} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *           <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *           <li>ProcessDefinitionPermissions#SUSPEND permission on Resources#PROCESS_DEFINITION</li>
+     *           <li>Permissions#UPDATE permission on Resources#PROCESS_DEFINITION</li>
      *           </ul>
      *           <li>if {@link #includeProcessInstances(boolean)} is set to <code>true</code> and the user has none of the following:</li>
      *           <ul>
-     *           <li>{@link ProcessInstancePermissions#SUSPEND} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *           <li>{@link ProcessDefinitionPermissions#SUSPEND_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *           <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *           <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *           <li>ProcessInstancePermissions#SUSPEND permission on Resources#PROCESS_INSTANCE</li>
+     *           <li>ProcessDefinitionPermissions#SUSPEND_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
+     *           <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *           <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      *           </ul>
      */
     public function activate(): void;
@@ -59,15 +59,15 @@ interface UpdateProcessDefinitionSuspensionStateBuilderInterface
      * @throws AuthorizationException
      *           <li>if the user has none of the following:</li>
      *           <ul>
-     *           <li>{@link ProcessDefinitionPermissions#SUSPEND} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *           <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *           <li>ProcessDefinitionPermissions#SUSPEND permission on Resources#PROCESS_DEFINITION</li>
+     *           <li>Permissions#UPDATE permission on Resources#PROCESS_DEFINITION</li>
      *           </ul>
      *           <li>if {@link #includeProcessInstances(boolean)} is set to <code>true</code> and the user has none of the following:</li>
      *           <ul>
-     *           <li>{@link ProcessInstancePermissions#SUSPEND} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *           <li>{@link ProcessDefinitionPermissions#SUSPEND_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *           <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *           <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *           <li>ProcessInstancePermissions#SUSPEND permission on Resources#PROCESS_INSTANCE</li>
+     *           <li>ProcessDefinitionPermissions#SUSPEND_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
+     *           <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *           <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      *           </ul>
      */
     public function suspend(): void;

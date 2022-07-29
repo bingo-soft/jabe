@@ -32,7 +32,7 @@ interface HistoricVariableInstanceInterface
     public function getValue();
 
     /**
-     * Returns the {@link TypedValue} of this variable instance.
+     * Returns the TypedValue of this variable instance.
      */
     public function getTypedValue(): TypedValueInterface;
 

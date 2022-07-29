@@ -81,7 +81,7 @@ interface BatchInterface
      * <p>
      * <p>
      * <strong>Note:</strong> It is still possible to manually suspend and activate
-     * jobs and job definitions using the {@link ManagementService}, which will
+     * jobs and job definitions using the ManagementService, which will
      * not change the suspension state of the batch.
      * </p>
      *

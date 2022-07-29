@@ -25,20 +25,20 @@ interface TypedValueSerializerInterface
     public function getType(): ValueTypeInterface;
 
     /**
-     * Serialize a {@link TypedValue} to the {@link ValueFields}.
+     * Serialize a TypedValue to the ValueFields.
      *
-     * @param value the {@link TypedValue} to persist
-     * @param valueFields the {@link ValueFields} to which the value should be persisted
+     * @param value the TypedValue to persist
+     * @param valueFields the ValueFields to which the value should be persisted
      */
     public function writeValue(TypedValueInterface $value, ValueFieldsInterface $valueFields): void;
 
     /**
-     * Retrieve a {@link TypedValue} from the provided {@link ValueFields}.
+     * Retrieve a TypedValue from the provided ValueFields.
      *
-     * @param valueFields the {@link ValueFields} to retrieve the value from
-     * @param deserializeValue indicates whether a {@link SerializableValue} should be deserialized.
+     * @param valueFields the ValueFields to retrieve the value from
+     * @param deserializeValue indicates whether a SerializableValue should be deserialized.
      *
-     * @return TypedValueInterface the {@link TypedValue}
+     * @return TypedValueInterface the TypedValue
      */
     public function readValue(ValueFieldsInterface $valueFields, bool $isTransient, bool $deserializeValue = false): TypedValueInterface;
 
@@ -47,13 +47,13 @@ interface TypedValueSerializerInterface
      * An implementation must return true if it is able to write values of the provided type.
      *
      * @param value the value
-     * @return bool - true if this {@link TypedValueSerializer} is able to handle the provided value
+     * @return bool - true if this TypedValueSerializer is able to handle the provided value
      */
     public function canHandle(TypedValueInterface $value): bool;
 
     /**
      * Returns a typed value for the provided untyped value. This is used on cases where the user sets an untyped
-     * value which is then detected to be handled by this {@link TypedValueSerializer} (by invocation of {@link #canHandle(TypedValue)}).
+     * value which is then detected to be handled by this TypedValueSerializer (by invocation of {@link #canHandle(TypedValue)}).
      *
      * @param untypedValue the untyped value
      * @return TypedValueInterface the corresponding typed value

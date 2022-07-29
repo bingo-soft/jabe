@@ -7,7 +7,7 @@ use Jabe\Engine\Variable\Value\TypedValueInterface;
 interface VariableSerializersInterface
 {
     /**
-     * Selects the {@link TypedValueSerializer} which should be used for persisting a VariableValue.
+     * Selects the TypedValueSerializer which should be used for persisting a VariableValue.
      *
      * @param value the value to persist
      * @param fallBackSerializerFactory a factory to build a fallback serializer in case no suiting serializer
@@ -32,7 +32,7 @@ interface VariableSerializersInterface
     public function getSerializerIndexByName(string $serializerName): ?int;
 
     /**
-    * Merges two {@link VariableSerializers} instances into one. Implementations may apply
+    * Merges two VariableSerializers instances into one. Implementations may apply
     * different merging strategies.
     */
     public function join(VariableSerializersInterface $other): VariableSerializersInterface;

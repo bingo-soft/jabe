@@ -47,11 +47,11 @@ interface TaskServiceInterface
      * @param task the task, cannot be null.
      *
     * @throws AuthorizationException
-    *          If the task is already present and the user has no {@link Permissions#UPDATE} permission
-    *          on {@link Resources#TASK} or no {@link Permissions#UPDATE_TASK} permission on
-    *          {@link Resources#PROCESS_DEFINITION}.
-    *          Or if the task is not present and the user has no {@link Permissions#CREATE} permission
-    *          on {@link Resources#TASK}.
+    *          If the task is already present and the user has no Permissions#UPDATE permission
+    *          on Resources#TASK or no Permissions#UPDATE_TASK permission on
+    *          Resources#PROCESS_DEFINITION.
+    *          Or if the task is not present and the user has no Permissions#CREATE permission
+    *          on Resources#TASK.
     */
     public function saveTask(TaskInterface $task): void;
 
@@ -67,7 +67,7 @@ interface TaskServiceInterface
     *          when an error occurs while deleting the task or in case the task is part
     *          of a running process or case instance.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#DELETE} permission on {@link Resources#TASK}.
+    *          If the user has no Permissions#DELETE permission on Resources#TASK.
     */
     public function deleteTask(string $taskId, $cascadeOrReason = false): void;
 
@@ -82,7 +82,7 @@ interface TaskServiceInterface
     *          when an error occurs while deleting the tasks or in case one of the tasks
     *          is part of a running process or case instance.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#DELETE} permission on {@link Resources#TASK}.
+    *          If the user has no Permissions#DELETE permission on Resources#TASK.
     */
     public function deleteTasks(array $taskIds, $cascadeOrReason = false): void;
 
@@ -100,8 +100,8 @@ interface TaskServiceInterface
     * @throws ProcessEngineException
     *          when the task doesn't exist or when the task is already claimed by another user.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#TASK}
-    *          or no {@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}
+    *          If the user has no Permissions#UPDATE permission on Resources#TASK
+    *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
     public function claim(string $taskId, string $userId): void;
@@ -111,10 +111,10 @@ interface TaskServiceInterface
     *
     * This means that the {@link Task#getAssignee() assignee} is set
     * and the {@link Task#getDelegationState() delegation state} is set to
-    * {@link DelegationState#PENDING}.
+    * DelegationState#PENDING.
     * If no owner is set on the task, the owner is set to the current
     * {@link Task#getAssignee() assignee} of the task.
-    * The new assignee must use {@link TaskService#resolveTask(String)}
+    * The new assignee must use TaskService#resolveTask(String)
     * to report back to the owner.
     * Only the owner can {@link TaskService#complete(String) complete} the task.
     *
@@ -124,8 +124,8 @@ interface TaskServiceInterface
     * @throws ProcessEngineException
     *          when no task exists with the given id.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#TASK}
-    *          or no {@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}
+    *          If the user has no Permissions#UPDATE permission on Resources#TASK
+    *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
     public function delegateTask(string $taskId, string $userId): void;
@@ -135,9 +135,9 @@ interface TaskServiceInterface
     * {@link TaskService#delegateTask(String, String) delegated}
     * to her and that it can be sent back to the {@link Task#getOwner() owner}
     * with the provided variables.
-    * Can only be called when this task is {@link DelegationState#PENDING} delegation.
+    * Can only be called when this task is DelegationState#PENDING delegation.
     * After this method returns, the {@link Task#getDelegationState() delegation state}
-    * is set to {@link DelegationState#RESOLVED} and the task can be
+    * is set to DelegationState#RESOLVED and the task can be
     * {@link TaskService#complete(String) completed}.
     *
     * @param taskId
@@ -146,8 +146,8 @@ interface TaskServiceInterface
     * @throws ProcessEngineException
     *          when no task exists with the given id.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#TASK}
-    *          or no {@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}
+    *          If the user has no Permissions#UPDATE permission on Resources#TASK
+    *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
     public function resolveTask(string $taskId, array $variables = []): void;
@@ -166,8 +166,8 @@ interface TaskServiceInterface
     * @throws ProcessEngineException
     *          when no task exists with the given id.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#TASK}
-    *          or no {@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}
+    *          If the user has no Permissions#UPDATE permission on Resources#TASK
+    *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
     public function complete(string $taskId, array $variables = []): void;
@@ -182,7 +182,7 @@ interface TaskServiceInterface
     *
     * @param taskId the id of the task to complete, cannot be null.
     * @param variables task parameters. May be null or empty.
-    * @param deserializeValues if false, returned {@link SerializableValue}s
+    * @param deserializeValues if false, returned SerializableValues
     *   will not be deserialized (unless they are passed into this method as a
     *   deserialized value or if the BPMN process triggers deserialization)
     *
@@ -191,8 +191,8 @@ interface TaskServiceInterface
     * @throws ProcessEngineException
     *          when no task exists with the given id.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#TASK}
-    *          or no {@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}
+    *          If the user has no Permissions#UPDATE permission on Resources#TASK
+    *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
     public function completeWithVariablesInReturn(string $taskId, array $variables = [], bool $deserializeValues = true): VariableMapInterface;
@@ -207,8 +207,8 @@ interface TaskServiceInterface
     * @throws ProcessEngineException
     *          when the task or user doesn't exist.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#TASK}
-    *          or no {@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}
+    *          If the user has no Permissions#UPDATE permission on Resources#TASK
+    *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
     public function setAssignee(string $taskId, string $userId): void;
@@ -223,28 +223,28 @@ interface TaskServiceInterface
     * @throws ProcessEngineException
     *          when the task or user doesn't exist.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#TASK}
-    *          or no {@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}
+    *          If the user has no Permissions#UPDATE permission on Resources#TASK
+    *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
     public function setOwner(string $taskId, string $userId): void;
 
     /**
-    * Retrieves the {@link IdentityLink}s associated with the given task.
-    * Such an {@link IdentityLink} informs how a certain identity (eg. group or user)
+    * Retrieves the IdentityLinks associated with the given task.
+    * Such an IdentityLink informs how a certain identity (eg. group or user)
     * is associated with a certain task (eg. as candidate, assignee, etc.)
     *
     * @throws ProcessEngineException
     *          when the task doesn't exist.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#READ} permission on {@link Resources#TASK}
-    *          or no {@link Permissions#READ_TASK} permission on {@link Resources#PROCESS_DEFINITION}
+    *          If the user has no Permissions#READ permission on Resources#TASK
+    *          or no Permissions#READ_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
     public function getIdentityLinksForTask(string $taskId): array;
 
     /**
-    * Convenience shorthand for {@link #addUserIdentityLink(String, String, String)}; with type {@link IdentityLinkType#CANDIDATE}
+    * Convenience shorthand for {@link #addUserIdentityLink(String, String, String)}; with type IdentityLinkType#CANDIDATE
     *
     * @param taskId id of the task, cannot be null.
     * @param userId id of the user to use as candidate, cannot be null.
@@ -252,14 +252,14 @@ interface TaskServiceInterface
     * @throws ProcessEngineException
     *          when the task or user doesn't exist.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#TASK}
-    *          or no {@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}
+    *          If the user has no Permissions#UPDATE permission on Resources#TASK
+    *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
     public function addCandidateUser(string $taskId, string $userId): void;
 
     /**
-    * Convenience shorthand for {@link #addGroupIdentityLink(String, String, String)}; with type {@link IdentityLinkType#CANDIDATE}
+    * Convenience shorthand for {@link #addGroupIdentityLink(String, String, String)}; with type IdentityLinkType#CANDIDATE
     *
     * @param taskId id of the task, cannot be null.
     * @param groupId id of the group to use as candidate, cannot be null.
@@ -267,8 +267,8 @@ interface TaskServiceInterface
     * @throws ProcessEngineException
     *          when the task or group doesn't exist.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#TASK}
-    *          or no {@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}
+    *          If the user has no Permissions#UPDATE permission on Resources#TASK
+    *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
     public function addCandidateGroup(string $taskId, string $groupId): void;
@@ -279,13 +279,13 @@ interface TaskServiceInterface
     *
     * @param taskId id of the task, cannot be null.
     * @param userId id of the user involve, cannot be null.
-    * @param identityLinkType type of identityLink, cannot be null (@see {@link IdentityLinkType}).
+    * @param identityLinkType type of identityLink, cannot be null (@see IdentityLinkType).
     *
     * @throws ProcessEngineException
     *          when the task or user doesn't exist.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#TASK}
-    *          or no {@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}
+    *          If the user has no Permissions#UPDATE permission on Resources#TASK
+    *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
     public function addUserIdentityLink(string $taskId, string $userId, string $identityLinkType): void;
@@ -296,19 +296,19 @@ interface TaskServiceInterface
     *
     * @param taskId id of the task, cannot be null.
     * @param groupId id of the group to involve, cannot be null.
-    * @param identityLinkType type of identity, cannot be null (@see {@link IdentityLinkType}).
+    * @param identityLinkType type of identity, cannot be null (@see IdentityLinkType).
     *
     * @throws ProcessEngineException
     *          when the task or group doesn't exist.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#TASK}
-    *          or no {@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}
+    *          If the user has no Permissions#UPDATE permission on Resources#TASK
+    *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
     public function addGroupIdentityLink(string $taskId, string $groupId, string $identityLinkType): void;
 
     /**
-    * Convenience shorthand for {@link #deleteUserIdentityLink(String, String, String)}; with type {@link IdentityLinkType#CANDIDATE}
+    * Convenience shorthand for {@link #deleteUserIdentityLink(String, String, String)}; with type IdentityLinkType#CANDIDATE
     *
     * @param taskId id of the task, cannot be null.
     * @param userId id of the user to use as candidate, cannot be null.
@@ -316,14 +316,14 @@ interface TaskServiceInterface
     * @throws ProcessEngineException
     *          when the task or user doesn't exist.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#TASK}
-    *          or no {@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}
+    *          If the user has no Permissions#UPDATE permission on Resources#TASK
+    *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
     public function deleteCandidateUser(string $taskId, string $userId): void;
 
     /**
-    * Convenience shorthand for {@link #deleteGroupIdentityLink(String, String, String)}; with type {@link IdentityLinkType#CANDIDATE}
+    * Convenience shorthand for {@link #deleteGroupIdentityLink(String, String, String)}; with type IdentityLinkType#CANDIDATE
     *
     * @param taskId id of the task, cannot be null.
     * @param groupId id of the group to use as candidate, cannot be null.
@@ -331,8 +331,8 @@ interface TaskServiceInterface
     * @throws ProcessEngineException
     *          when the task or group doesn't exist.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#TASK}
-    *          or no {@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}
+    *          If the user has no Permissions#UPDATE permission on Resources#TASK
+    *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
     public function deleteCandidateGroup(string $taskId, string $groupId): void;
@@ -342,13 +342,13 @@ interface TaskServiceInterface
     *
     * @param taskId id of the task, cannot be null.
     * @param userId id of the user involve, cannot be null.
-    * @param identityLinkType type of identityLink, cannot be null (@see {@link IdentityLinkType}).
+    * @param identityLinkType type of identityLink, cannot be null (@see IdentityLinkType).
     *
     * @throws ProcessEngineException
     *          when the task or user doesn't exist.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#TASK}
-    *          or no {@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}
+    *          If the user has no Permissions#UPDATE permission on Resources#TASK
+    *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
     public function deleteUserIdentityLink(string $taskId, string $userId, string $identityLinkType): void;
@@ -358,13 +358,13 @@ interface TaskServiceInterface
     *
     * @param taskId id of the task, cannot be null.
     * @param groupId id of the group to involve, cannot be null.
-    * @param identityLinkType type of identity, cannot be null (@see {@link IdentityLinkType}).
+    * @param identityLinkType type of identity, cannot be null (@see IdentityLinkType).
     *
     * @throws ProcessEngineException
     *          when the task or group doesn't exist.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#TASK}
-    *          or no {@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}
+    *          If the user has no Permissions#UPDATE permission on Resources#TASK
+    *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
     public function deleteGroupIdentityLink(string $taskId, string $groupId, string $identityLinkType): void;
@@ -380,14 +380,14 @@ interface TaskServiceInterface
     * @throws ProcessEngineException
     *          when the task doesn't exist.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#TASK}
-    *          or no {@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}
+    *          If the user has no Permissions#UPDATE permission on Resources#TASK
+    *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
     public function setPriority(string $taskId, int $priority): variant_mod;
 
     /**
-    * Returns a new {@link TaskQuery} that can be used to dynamically query tasks.
+    * Returns a new TaskQuery that can be used to dynamically query tasks.
     */
     public function createTaskQuery(): TaskQueryInterface;
 
@@ -405,12 +405,12 @@ interface TaskServiceInterface
     *          when the task doesn't exist.
     * @throws AuthorizationException
     *           If the user has none of the following:
-    *           <li>{@link TaskPermissions#UPDATE_VARIABLE} permission on {@link Resources#TASK}</li>
-    *           <li>{@link Permissions#UPDATE} permission on {@link Resources#TASK}</li>
+    *           <li>TaskPermissions#UPDATE_VARIABLE permission on Resources#TASK</li>
+    *           <li>Permissions#UPDATE permission on Resources#TASK</li>
     *           <li>or if the task is part of a running process instance:</li>
     *           <ul>
-    *           <li>{@link ProcessDefinitionPermissions#UPDATE_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-    *           <li>{@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}</li>
+    *           <li>ProcessDefinitionPermissions#UPDATE_TASK_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
+    *           <li>Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION</li>
     *           </ul>
     */
     public function setVariable(string $taskId, string $variableName, $value): void;
@@ -424,12 +424,12 @@ interface TaskServiceInterface
     *          when the task doesn't exist.
     * @throws AuthorizationException
     *           If the user has none of the following:
-    *           <li>{@link TaskPermissions#UPDATE_VARIABLE} permission on {@link Resources#TASK}</li>
-    *           <li>{@link Permissions#UPDATE} permission on {@link Resources#TASK}</li>
+    *           <li>TaskPermissions#UPDATE_VARIABLE permission on Resources#TASK</li>
+    *           <li>Permissions#UPDATE permission on Resources#TASK</li>
     *           <li>or if the task is part of a running process instance:</li>
     *           <ul>
-    *           <li>{@link ProcessDefinitionPermissions#UPDATE_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-    *           <li>{@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}</li>
+    *           <li>ProcessDefinitionPermissions#UPDATE_TASK_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
+    *           <li>Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION</li>
     *           </ul>
     */
     public function setVariables(string $taskId, array $variables, bool $local = false): void;
@@ -442,12 +442,12 @@ interface TaskServiceInterface
     *          when the task doesn't exist.
     * @throws AuthorizationException
     *           If the user has none of the following:
-    *           <li>{@link TaskPermissions#UPDATE_VARIABLE} permission on {@link Resources#TASK}</li>
-    *           <li>{@link Permissions#UPDATE} permission on {@link Resources#TASK}</li>
+    *           <li>TaskPermissions#UPDATE_VARIABLE permission on Resources#TASK</li>
+    *           <li>Permissions#UPDATE permission on Resources#TASK</li>
     *           <li>or if the task is part of a running process instance:</li>
     *           <ul>
-    *           <li>{@link ProcessDefinitionPermissions#UPDATE_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-    *           <li>{@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}</li>
+    *           <li>ProcessDefinitionPermissions#UPDATE_TASK_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
+    *           <li>Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION</li>
     *           </ul>
     */
     public function setVariableLocal(string $taskId, string $variableName, $value): void;
@@ -460,12 +460,12 @@ interface TaskServiceInterface
     *          when the task doesn't exist.
     * @throws AuthorizationException
     *           If the user has none of the following:
-    *           <li>{@link TaskPermissions#UPDATE_VARIABLE} permission on {@link Resources#TASK}</li>
-    *           <li>{@link Permissions#UPDATE} permission on {@link Resources#TASK}</li>
+    *           <li>TaskPermissions#UPDATE_VARIABLE permission on Resources#TASK</li>
+    *           <li>Permissions#UPDATE permission on Resources#TASK</li>
     *           <li>or if the task is part of a running process instance:</li>
     *           <ul>
-    *           <li>{@link ProcessDefinitionPermissions#UPDATE_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-    *           <li>{@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}</li>
+    *           <li>ProcessDefinitionPermissions#UPDATE_TASK_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
+    *           <li>Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION</li>
     *           </ul>
     */
     public function setVariablesLocal(string $taskId, array $variables): void;
@@ -477,15 +477,15 @@ interface TaskServiceInterface
     *          when the task doesn't exist.
     * @throws AuthorizationException
     *          <p>In case of standalone tasks:
-    *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#TASK} or</li>
+    *          <li>if the user has no Permissions#READ permission on Resources#TASK or</li>
     *          <li>if {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} configuration is enabled and
-    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK}</li></p>
+    *          the user has no TaskPermissions#READ_VARIABLE permission on Resources#TASK</li></p>
     *          <p>In case the task is part of a running process instance:</li>
-    *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#TASK} and
-    *           no {@link Permissions#READ_TASK} permission on {@link Resources#PROCESS_DEFINITION} </li>
+    *          <li>if the user has no Permissions#READ permission on Resources#TASK and
+    *           no Permissions#READ_TASK permission on Resources#PROCESS_DEFINITION </li>
     *          <li>in case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} configuration is enabled and
-    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
-    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
+    *          the user has no TaskPermissions#READ_VARIABLE permission on Resources#TASK and
+    *          no ProcessDefinitionPermissions#READ_TASK_VARIABLE permission on Resources#PROCESS_DEFINITION</li></p>
     */
     public function getVariable(string $taskId, string $variableName);
 
@@ -494,7 +494,7 @@ interface TaskServiceInterface
     *
     * @param taskId the id of the task
     * @param variableName the name of the variable to fetch
-    * @param deserializeValue if false a, {@link SerializableValue} will not be deserialized.
+    * @param deserializeValue if false a, SerializableValue will not be deserialized.
     *
     * @return TypedValueInterface the TypedValue for the variable or 'null' in case no such variable exists.
     *
@@ -504,15 +504,15 @@ interface TaskServiceInterface
     *          when the task doesn't exist.
     * @throws AuthorizationException
     *          <p>In case of standalone tasks:
-    *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#TASK} or</li>
+    *          <li>if the user has no Permissions#READ permission on Resources#TASK or</li>
     *          <li>if {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} configuration is enabled and
-    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK}</li></p>
+    *          the user has no TaskPermissions#READ_VARIABLE permission on Resources#TASK</li></p>
     *          <p>In case the task is part of a running process instance:</li>
-    *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#TASK} and
-    *           no {@link Permissions#READ_TASK} permission on {@link Resources#PROCESS_DEFINITION} </li>
+    *          <li>if the user has no Permissions#READ permission on Resources#TASK and
+    *           no Permissions#READ_TASK permission on Resources#PROCESS_DEFINITION </li>
     *          <li>in case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} configuration is enabled and
-    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
-    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
+    *          the user has no TaskPermissions#READ_VARIABLE permission on Resources#TASK and
+    *          no ProcessDefinitionPermissions#READ_TASK_VARIABLE permission on Resources#PROCESS_DEFINITION</li></p>
     *
     * @since 7.2
     */
@@ -525,15 +525,15 @@ interface TaskServiceInterface
     *          when the task doesn't exist.
     * @throws AuthorizationException
     *          <p>In case of standalone tasks:
-    *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#TASK} or</li>
+    *          <li>if the user has no Permissions#READ permission on Resources#TASK or</li>
     *          <li>if {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} configuration is enabled and
-    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK}</li></p>
+    *          the user has no TaskPermissions#READ_VARIABLE permission on Resources#TASK</li></p>
     *          <p>In case the task is part of a running process instance:</li>
-    *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#TASK} and
-    *           no {@link Permissions#READ_TASK} permission on {@link Resources#PROCESS_DEFINITION} </li>
+    *          <li>if the user has no Permissions#READ permission on Resources#TASK and
+    *           no Permissions#READ_TASK permission on Resources#PROCESS_DEFINITION </li>
     *          <li>in case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} configuration is enabled and
-    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
-    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
+    *          the user has no TaskPermissions#READ_VARIABLE permission on Resources#TASK and
+    *          no ProcessDefinitionPermissions#READ_TASK_VARIABLE permission on Resources#PROCESS_DEFINITION</li></p>
     */
     public function getVariableLocal(string $taskId, string $variableName);
 
@@ -542,7 +542,7 @@ interface TaskServiceInterface
     *
     * @param taskId the id of the task
     * @param variableName the name of the variable to fetch
-    * @param deserializeValue if false a, {@link SerializableValue} will not be deserialized.
+    * @param deserializeValue if false a, SerializableValue will not be deserialized.
     *
     * @return TypedValueInterface the TypedValue for the variable or 'null' in case no such variable exists.
     *
@@ -552,15 +552,15 @@ interface TaskServiceInterface
     *          when the task doesn't exist.
     * @throws AuthorizationException
     *          <p>In case of standalone tasks:
-    *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#TASK} or</li>
+    *          <li>if the user has no Permissions#READ permission on Resources#TASK or</li>
     *          <li>if {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} configuration is enabled and
-    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK}</li></p>
+    *          the user has no TaskPermissions#READ_VARIABLE permission on Resources#TASK</li></p>
     *          <p>In case the task is part of a running process instance:</li>
-    *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#TASK} and
-    *           no {@link Permissions#READ_TASK} permission on {@link Resources#PROCESS_DEFINITION} </li>
+    *          <li>if the user has no Permissions#READ permission on Resources#TASK and
+    *           no Permissions#READ_TASK permission on Resources#PROCESS_DEFINITION </li>
     *          <li>in case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} configuration is enabled and
-    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
-    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
+    *          the user has no TaskPermissions#READ_VARIABLE permission on Resources#TASK and
+    *          no ProcessDefinitionPermissions#READ_TASK_VARIABLE permission on Resources#PROCESS_DEFINITION</li></p>
     *
     * @since 7.2
     */
@@ -573,15 +573,15 @@ interface TaskServiceInterface
     *          when the task doesn't exist.
     * @throws AuthorizationException
     *          <p>In case of standalone tasks:
-    *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#TASK} or</li>
+    *          <li>if the user has no Permissions#READ permission on Resources#TASK or</li>
     *          <li>if {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} configuration is enabled and
-    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK}</li></p>
+    *          the user has no TaskPermissions#READ_VARIABLE permission on Resources#TASK</li></p>
     *          <p>In case the task is part of a running process instance:</li>
-    *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#TASK} and
-    *           no {@link Permissions#READ_TASK} permission on {@link Resources#PROCESS_DEFINITION} </li>
+    *          <li>if the user has no Permissions#READ permission on Resources#TASK and
+    *           no Permissions#READ_TASK permission on Resources#PROCESS_DEFINITION </li>
     *          <li>in case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} configuration is enabled and
-    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
-    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
+    *          the user has no TaskPermissions#READ_VARIABLE permission on Resources#TASK and
+    *          no ProcessDefinitionPermissions#READ_TASK_VARIABLE permission on Resources#PROCESS_DEFINITION</li></p>
     *
     */
     public function getVariables(string $taskId, array $variableNames = []): array;
@@ -597,15 +597,15 @@ interface TaskServiceInterface
     *          when the task doesn't exist.
     * @throws AuthorizationException
     *          <p>In case of standalone tasks:
-    *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#TASK} or</li>
+    *          <li>if the user has no Permissions#READ permission on Resources#TASK or</li>
     *          <li>if {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} configuration is enabled and
-    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK}</li></p>
+    *          the user has no TaskPermissions#READ_VARIABLE permission on Resources#TASK</li></p>
     *          <p>In case the task is part of a running process instance:</li>
-    *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#TASK} and
-    *           no {@link Permissions#READ_TASK} permission on {@link Resources#PROCESS_DEFINITION} </li>
+    *          <li>if the user has no Permissions#READ permission on Resources#TASK and
+    *           no Permissions#READ_TASK permission on Resources#PROCESS_DEFINITION </li>
     *          <li>in case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} configuration is enabled and
-    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
-    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
+    *          the user has no TaskPermissions#READ_VARIABLE permission on Resources#TASK and
+    *          no ProcessDefinitionPermissions#READ_TASK_VARIABLE permission on Resources#PROCESS_DEFINITION</li></p>
     *
     * @since 7.2
     * */
@@ -618,15 +618,15 @@ interface TaskServiceInterface
     *          when the task doesn't exist.
     * @throws AuthorizationException
     *          <p>In case of standalone tasks:
-    *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#TASK} or</li>
+    *          <li>if the user has no Permissions#READ permission on Resources#TASK or</li>
     *          <li>if {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} configuration is enabled and
-    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK}</li></p>
+    *          the user has no TaskPermissions#READ_VARIABLE permission on Resources#TASK</li></p>
     *          <p>In case the task is part of a running process instance:</li>
-    *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#TASK} and
-    *           no {@link Permissions#READ_TASK} permission on {@link Resources#PROCESS_DEFINITION} </li>
+    *          <li>if the user has no Permissions#READ permission on Resources#TASK and
+    *           no Permissions#READ_TASK permission on Resources#PROCESS_DEFINITION </li>
     *          <li>in case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} configuration is enabled and
-    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
-    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
+    *          the user has no TaskPermissions#READ_VARIABLE permission on Resources#TASK and
+    *          no ProcessDefinitionPermissions#READ_TASK_VARIABLE permission on Resources#PROCESS_DEFINITION</li></p>
     *
     */
     public function getVariablesLocal(string $taskId, array $variableNames = []): array;
@@ -642,15 +642,15 @@ interface TaskServiceInterface
     *          when the task doesn't exist.
     * @throws AuthorizationException
     *          <p>In case of standalone tasks:
-    *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#TASK} or</li>
+    *          <li>if the user has no Permissions#READ permission on Resources#TASK or</li>
     *          <li>if {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} configuration is enabled and
-    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK}</li></p>
+    *          the user has no TaskPermissions#READ_VARIABLE permission on Resources#TASK</li></p>
     *          <p>In case the task is part of a running process instance:</li>
-    *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#TASK} and
-    *           no {@link Permissions#READ_TASK} permission on {@link Resources#PROCESS_DEFINITION} </li>
+    *          <li>if the user has no Permissions#READ permission on Resources#TASK and
+    *           no Permissions#READ_TASK permission on Resources#PROCESS_DEFINITION </li>
     *          <li>in case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} configuration is enabled and
-    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
-    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
+    *          the user has no TaskPermissions#READ_VARIABLE permission on Resources#TASK and
+    *          no ProcessDefinitionPermissions#READ_TASK_VARIABLE permission on Resources#PROCESS_DEFINITION</li></p>
     *
     * @since 7.2
     */
@@ -664,12 +664,12 @@ interface TaskServiceInterface
     *          when the task doesn't exist.
     * @throws AuthorizationException
     *           If the user has none of the following:
-    *           <li>{@link TaskPermissions#UPDATE_VARIABLE} permission on {@link Resources#TASK}</li>
-    *           <li>{@link Permissions#UPDATE} permission on {@link Resources#TASK}</li>
+    *           <li>TaskPermissions#UPDATE_VARIABLE permission on Resources#TASK</li>
+    *           <li>Permissions#UPDATE permission on Resources#TASK</li>
     *           <li>or if the task is part of a running process instance:</li>
     *           <ul>
-    *           <li>{@link ProcessDefinitionPermissions#UPDATE_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-    *           <li>{@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}</li>
+    *           <li>ProcessDefinitionPermissions#UPDATE_TASK_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
+    *           <li>Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION</li>
     *           </ul>
     */
     public function removeVariable(string $taskId, string $variableName): void;
@@ -682,12 +682,12 @@ interface TaskServiceInterface
     *          when the task doesn't exist.
     * @throws AuthorizationException
     *           If the user has none of the following:
-    *           <li>{@link TaskPermissions#UPDATE_VARIABLE} permission on {@link Resources#TASK}</li>
-    *           <li>{@link Permissions#UPDATE} permission on {@link Resources#TASK}</li>
+    *           <li>TaskPermissions#UPDATE_VARIABLE permission on Resources#TASK</li>
+    *           <li>Permissions#UPDATE permission on Resources#TASK</li>
     *           <li>or if the task is part of a running process instance:</li>
     *           <ul>
-    *           <li>{@link ProcessDefinitionPermissions#UPDATE_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-    *           <li>{@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}</li>
+    *           <li>ProcessDefinitionPermissions#UPDATE_TASK_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
+    *           <li>Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION</li>
     *           </ul>
     */
     public function removeVariableLocal(string $taskId, string $variableName): void;
@@ -700,12 +700,12 @@ interface TaskServiceInterface
     *          when the task doesn't exist.
     * @throws AuthorizationException
     *           If the user has none of the following:
-    *           <li>{@link TaskPermissions#UPDATE_VARIABLE} permission on {@link Resources#TASK}</li>
-    *           <li>{@link Permissions#UPDATE} permission on {@link Resources#TASK}</li>
+    *           <li>TaskPermissions#UPDATE_VARIABLE permission on Resources#TASK</li>
+    *           <li>Permissions#UPDATE permission on Resources#TASK</li>
     *           <li>or if the task is part of a running process instance:</li>
     *           <ul>
-    *           <li>{@link ProcessDefinitionPermissions#UPDATE_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-    *           <li>{@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}</li>
+    *           <li>ProcessDefinitionPermissions#UPDATE_TASK_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
+    *           <li>Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION</li>
     *           </ul>
     */
     public function removeVariables(string $taskId, ?array $variableNames = []): void;
@@ -718,12 +718,12 @@ interface TaskServiceInterface
     *          when the task doesn't exist.
     * @throws AuthorizationException
     *           If the user has none of the following:
-    *           <li>{@link TaskPermissions#UPDATE_VARIABLE} permission on {@link Resources#TASK}</li>
-    *           <li>{@link Permissions#UPDATE} permission on {@link Resources#TASK}</li>
+    *           <li>TaskPermissions#UPDATE_VARIABLE permission on Resources#TASK</li>
+    *           <li>Permissions#UPDATE permission on Resources#TASK</li>
     *           <li>or if the task is part of a running process instance:</li>
     *           <ul>
-    *           <li>{@link ProcessDefinitionPermissions#UPDATE_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-    *           <li>{@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}</li>
+    *           <li>ProcessDefinitionPermissions#UPDATE_TASK_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
+    *           <li>Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION</li>
     *           </ul>
     */
     public function removeVariablesLocal(string $taskId, ?array $variableNames = []): void;
@@ -746,12 +746,12 @@ interface TaskServiceInterface
     *
     * Either taskId or processInstanceId has to be provided
     *
-    * @param taskId - task that should have an attachment
-    * @param processInstanceId - id of a process to use if task id is null
-    * @param attachmentType - name of the attachment, can be null
-    * @param attachmentName - name of the attachment, can be null
-    * @param attachmentDescription  - full text description, can be null
-    * @param content - byte array with content of attachment
+    * @param taskId task that should have an attachment
+    * @param processInstanceId id of a process to use if task id is null
+    * @param attachmentType name of the attachment, can be null
+    * @param attachmentName name of the attachment, can be null
+    * @param attachmentDescription  full text description, can be null
+    * @param content byte array with content of attachment
     *
     */
     public function createAttachment(string $attachmentType, string $taskId, string $processInstanceId, string $attachmentName, string $attachmentDescription, $content = null, string $url = null): AttachmentInterface;
@@ -810,10 +810,10 @@ interface TaskServiceInterface
     * @throws BadUserRequestException if task id or escalation code were null or empty
     * @throws SuspendedEntityInteractionException if the task is suspended
     * @throws AuthorizationException if the user has none of the following permissions:
-    * <li>{@link Permissions#TASK_WORK} permission on {@link Resources#TASK} or
-    *                                                    {@link Resources#PROCESS_DEFINITION} resource</li>
-    * <li>{@link Permissions#UPDATE} permission on {@link Resources#TASK} resource</li>
-    * <li>{@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION} resource</li>
+    * <li>Permissions#TASK_WORK permission on Resources#TASK or
+    *                                                    Resources#PROCESS_DEFINITION resource</li>
+    * <li>Permissions#UPDATE permission on Resources#TASK resource</li>
+    * <li>Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION resource</li>
     */
     public function handleEscalation(string $taskId, string $escalationCode, array $variables = []): void;
 }

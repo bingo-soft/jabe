@@ -90,7 +90,7 @@ interface DelegateTaskInterface extends VariableScopeInterface, BpmnModelExecuti
     /**
      * Involves a user with a task. The type of identity link is defined by the given identityLinkType.
      * @param userId id of the user involve, cannot be null.
-     * @param identityLinkType type of identityLink, cannot be null (@see {@link IdentityLinkType}).
+     * @param identityLinkType type of identityLink, cannot be null (@see IdentityLinkType).
      * @throws ProcessEngineException when the task or user doesn't exist.
      */
     public function addUserIdentityLink(string $userId, string $identityLinkType): void;
@@ -98,20 +98,20 @@ interface DelegateTaskInterface extends VariableScopeInterface, BpmnModelExecuti
     /**
      * Involves a group with group task. The type of identityLink is defined by the given identityLink.
      * @param groupId id of the group to involve, cannot be null.
-     * @param identityLinkType type of identity, cannot be null (@see {@link IdentityLinkType}).
+     * @param identityLinkType type of identity, cannot be null (@see IdentityLinkType).
      * @throws ProcessEngineException when the task or group doesn't exist.
      */
     public function addGroupIdentityLink(string $groupId, string $identityLinkType): void;
 
     /**
-     * Convenience shorthand for {@link #deleteUserIdentityLink(String, String)}; with type {@link IdentityLinkType#CANDIDATE}
+     * Convenience shorthand for {@link #deleteUserIdentityLink(String, String)}; with type IdentityLinkType#CANDIDATE
      * @param userId id of the user to use as candidate, cannot be null.
      * @throws ProcessEngineException when the task or user doesn't exist.
      */
     public function deleteCandidateUser(string $userId): void;
 
     /**
-     * Convenience shorthand for {@link #deleteGroupIdentityLink(String, String, String)}; with type {@link IdentityLinkType#CANDIDATE}
+     * Convenience shorthand for {@link #deleteGroupIdentityLink(String, String, String)}; with type IdentityLinkType#CANDIDATE
      * @param groupId id of the group to use as candidate, cannot be null.
      * @throws ProcessEngineException when the task or group doesn't exist.
      */
@@ -120,7 +120,7 @@ interface DelegateTaskInterface extends VariableScopeInterface, BpmnModelExecuti
     /**
      * Removes the association between a user and a task for the given identityLinkType.
      * @param userId id of the user involve, cannot be null.
-     * @param identityLinkType type of identityLink, cannot be null (@see {@link IdentityLinkType}).
+     * @param identityLinkType type of identityLink, cannot be null (@see IdentityLinkType).
      * @throws ProcessEngineException when the task or user doesn't exist.
      */
     public function deleteUserIdentityLink(string $userId, string $identityLinkType): void;
@@ -128,20 +128,20 @@ interface DelegateTaskInterface extends VariableScopeInterface, BpmnModelExecuti
     /**
      * Removes the association between a group and a task for the given identityLinkType.
      * @param groupId id of the group to involve, cannot be null.
-     * @param identityLinkType type of identity, cannot be null (@see {@link IdentityLinkType}).
+     * @param identityLinkType type of identity, cannot be null (@see IdentityLinkType).
      * @throws ProcessEngineException when the task or group doesn't exist.
      */
     public function deleteGroupIdentityLink(string $groupId, string $identityLinkType): void;
 
     /**
      * Retrieves the candidate users and groups associated with the task.
-     * @return set of {@link IdentityLink}s of type {@link IdentityLinkType#CANDIDATE}.
+     * @return set of IdentityLinks of type IdentityLinkType#CANDIDATE.
      */
     public function getCandidates(): array;
 
     /**
-     * Provides access to the current {@link UserTask} Element from the Bpmn Model.
-     * @return UserTaskInterface the current {@link UserTask} Element from the Bpmn Model.
+     * Provides access to the current UserTask Element from the Bpmn Model.
+     * @return UserTaskInterface the current UserTask Element from the Bpmn Model.
      */
     public function getBpmnModelElementInstance(): UserTaskInterface;
 

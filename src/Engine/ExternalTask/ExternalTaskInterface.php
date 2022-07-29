@@ -73,7 +73,7 @@ interface ExternalTaskInterface
      * @see ExternalTaskService#handleFailure(String, String,String, String, int, long)
      *
      * To get the full error details,
-     * use {@link ExternalTaskService#getExternalTaskErrorDetails(String)}
+     * use ExternalTaskService#getExternalTaskErrorDetails(String)
      */
     public function getErrorMessage(): string;
 

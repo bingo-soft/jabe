@@ -28,7 +28,7 @@ interface MigrationPlanBuilderInterface
      *
      * @throws MigrationPlanValidationException if the migration plan contains instructions that are not valid
      * @throws AuthorizationException
-     *         if the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}
+     *         if the user has no Permissions#READ permission on Resources#PROCESS_DEFINITION
      *         for both, source and target process definition.
      */
     public function build(): MigrationPlanInterface;

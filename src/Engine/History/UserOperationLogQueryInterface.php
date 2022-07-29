@@ -20,7 +20,7 @@ interface UserOperationLogQueryInterface extends QueryInterface
     /**
      * Query for operations of a given type only. Types of operations depend on the entity on which the operation
      * was performed. For Instance: Tasks may be delegated, claimed, completed ...
-     * Check the {@link UserOperationLogEntry} class for a list of constants of supported operations.
+     * Check the UserOperationLogEntry class for a list of constants of supported operations.
      */
     public function operationType(string $operationType): UserOperationLogQueryInterface;
 

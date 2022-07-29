@@ -30,7 +30,7 @@ interface AttachmentInterface
 
     /** the remote URL in case this is remote content.  If the attachment content was
      * {@link TaskService#createAttachment(String, String, String, String, String, java.io.InputStream) uploaded with an input stream},
-     * then this method returns null and the content can be fetched with {@link TaskService#getAttachmentContent(String)}. */
+     * then this method returns null and the content can be fetched with TaskService#getAttachmentContent(String). */
     public function getUrl(): string;
 
     /** The time when the attachment was created. */

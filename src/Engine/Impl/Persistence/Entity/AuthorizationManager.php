@@ -461,7 +461,7 @@ class AuthorizationManager extends AbstractManager
 
     /**
      * Checks if the current authentication contains the group
-     * {@link Groups#ADMIN}. The check is ignored if the authorization is
+     * Groups#ADMIN. The check is ignored if the authorization is
      * disabled or no authentication exists.
      *
      * @throws AuthorizationException
@@ -482,8 +482,8 @@ class AuthorizationManager extends AbstractManager
     /**
      * @param authentication
      *          authentication to check, cannot be <code>null</code>
-     * @return <code>true</code> if the given authentication contains the group
-     *         {@link Groups#CAMUNDA_ADMIN} or the user
+     * @return bool true if the given authentication contains the group
+     *         Groups#CAMUNDA_ADMIN or the user
      */
     public function isAdmin(Authentication $authentication): bool
     {

@@ -10,12 +10,12 @@ interface JobDefinitionInterface
     public function getId(): string;
 
     /**
-     * @return string the id of the {@link ProcessDefinition} this job definition is associated with.
+     * @return string the id of the ProcessDefinition this job definition is associated with.
      */
     public function getProcessDefinitionId(): string;
 
     /**
-     * @return string the key of the {@link ProcessDefinition} this job definition is associated with.
+     * @return string the key of the ProcessDefinition this job definition is associated with.
      */
     public function getProcessDefinitionKey(): string;
 
@@ -52,7 +52,7 @@ interface JobDefinitionInterface
 
     /**
      * <p>Returns the execution priority for jobs of this definition, if it was set using the
-     * {@link ManagementService} API. When a job is assigned a priority, the job definition's overriding
+     * ManagementService API. When a job is assigned a priority, the job definition's overriding
      * priority (if set) is used instead of the values defined in the BPMN XML.</p>
      *
      * @return int the priority that overrides the default/BPMN XML priority or <code>null</code> if

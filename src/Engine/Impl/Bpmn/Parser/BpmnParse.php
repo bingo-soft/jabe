@@ -583,7 +583,7 @@ class BpmnParse extends Parse
     *
     * @param processElement
     *          The 'process' element.
-    * @return ProcessDefinitionEntity The parsed version of the XML: a {@link ProcessDefinitionImpl}
+    * @return ProcessDefinitionEntity The parsed version of the XML: a ProcessDefinitionImpl
     *         object.
     */
     public function parseProcess(Element $processElement): ProcessDefinitionEntity
@@ -934,7 +934,7 @@ class BpmnParse extends Parse
     *          The 'parent' element that contains the start events (process,
     *          subprocess).
     * @param scope
-    *          The {@link ScopeImpl} to which the start events must be added.
+    *          The ScopeImpl to which the start events must be added.
     */
     public function parseStartEvents(Element $parentElement, ScopeImpl $scope): void
     {
@@ -1365,7 +1365,7 @@ class BpmnParse extends Parse
     * @param parentElement
     *          The 'parent' element that contains the activities (process, subprocess).
     * @param scopeElement
-    *          The {@link ScopeImpl} to which the activities must be added.
+    *          The ScopeImpl to which the activities must be added.
     */
     public function parseActivities(array $activityElements, Element $parentElement, ScopeImpl $scopeElement): void
     {
@@ -1934,7 +1934,7 @@ class BpmnParse extends Parse
 
     /**
     * Parses the generic information of an activity element ($id, name,
-    * documentation, etc.), and creates a new {@link ActivityImpl} on the given
+    * documentation, etc.), and creates a new ActivityImpl on the given
     * scope element.
     */
     public function createActivityOnScope(Element $activityElement, ScopeImpl $scopeElement): ActivityImpl
@@ -2252,12 +2252,12 @@ class BpmnParse extends Parse
     }
 
     /**
-    * Returns a {@link ScriptTaskActivityBehavior} for the script task element
+    * Returns a ScriptTaskActivityBehavior for the script task element
     * corresponding to the script source or resource specified.
     *
     * @param scriptTaskElement
     *          the script task element
-    * @return ScriptTaskActivityBehavior the corresponding {@link ScriptTaskActivityBehavior}
+    * @return ScriptTaskActivityBehavior the corresponding ScriptTaskActivityBehavior
     */
     protected function parseScriptTaskElement(Element $scriptTaskElement): ?ScriptTaskActivityBehavior
     {
@@ -3214,7 +3214,7 @@ class BpmnParse extends Parse
     *          The 'parent' element that contains the end events (process,
     *          subprocess).
     * @param scope
-    *          The {@link ScopeImpl} to which the end events must be added.
+    *          The ScopeImpl to which the end events must be added.
     */
     public function parseEndEvents(Element $parentElement, ScopeImpl $scope): void
     {
@@ -3345,7 +3345,7 @@ class BpmnParse extends Parse
     *          The 'parent' element that contains the activities (process,
     *          subprocess).
     * @param flowScope
-    *          The {@link ScopeImpl} to which the activities must be added.
+    *          The ScopeImpl to which the activities must be added.
     */
     public function parseBoundaryEvents(Element $parentElement, ScopeImpl $flowScope): void
     {
@@ -3488,7 +3488,7 @@ class BpmnParse extends Parse
 
     /**
     * Parses a boundary timer event. The end-result will be that the given nested
-    * activity will get the appropriate {@link ActivityBehavior}.
+    * activity will get the appropriate ActivityBehavior.
     *
     * @param timerEventDefinition
     *          The XML element corresponding with the timer event details
@@ -4647,7 +4647,7 @@ class BpmnParse extends Parse
     }
 
     /**
-    * Parses an {@link ExecutionListener} implementation for the given
+    * Parses an ExecutionListener implementation for the given
     * executionListener element.
     *
     * @param executionListenerElement

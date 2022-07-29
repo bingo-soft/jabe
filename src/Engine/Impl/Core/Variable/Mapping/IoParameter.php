@@ -10,7 +10,7 @@ abstract class IoParameter
 {
     /**
      * The name of the parameter. The name of the parameter is the
-     * variable name in the target {@link VariableScope}.
+     * variable name in the target VariableScope.
      */
     protected $name;
 

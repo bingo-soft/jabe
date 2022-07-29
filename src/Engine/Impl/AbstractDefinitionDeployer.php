@@ -328,7 +328,7 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
     }
 
     /**
-     * create an id for the definition. The default is to ask the {@link IdGenerator}
+     * create an id for the definition. The default is to ask the IdGenerator
      * and add the definition key and version if that does not exceed 64 characters.
      * You might want to hook in your own implementation here.
      */

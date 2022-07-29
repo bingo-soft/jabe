@@ -32,13 +32,13 @@ interface UpdateJobDefinitionSuspensionStateBuilderInterface
      * Activates the provided job definitions.
      *
      * @throws AuthorizationException
-     *           <li>if the current user has no {@link Permissions#UPDATE}
-     *           permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *           <li>if the current user has no Permissions#UPDATE
+     *           permission on Resources#PROCESS_DEFINITION</li>
      *           <li>If {@link #includeJobs(boolean)} is set to <code>true</code>
-     *           and the user have no {@link Permissions#UPDATE_INSTANCE}
-     *           permission on {@link Resources#PROCESS_DEFINITION}
-     *           {@link Permissions#UPDATE} permission on any
-     *           {@link Resources#PROCESS_INSTANCE}</li>
+     *           and the user have no Permissions#UPDATE_INSTANCE
+     *           permission on Resources#PROCESS_DEFINITION
+     *           Permissions#UPDATE permission on any
+     *           Resources#PROCESS_INSTANCE</li>
      */
     public function activate(): void;
 
@@ -47,13 +47,13 @@ interface UpdateJobDefinitionSuspensionStateBuilderInterface
      * suspended, it will be ignored by the job executor.
      *
      * @throws AuthorizationException
-     *           <li>if the current user has no {@link Permissions#UPDATE}
-     *           permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *           <li>if the current user has no Permissions#UPDATE
+     *           permission on Resources#PROCESS_DEFINITION</li>
      *           <li>If {@link #includeJobs(boolean)} is set to <code>true</code>
-     *           and the user have no {@link Permissions#UPDATE_INSTANCE}
-     *           permission on {@link Resources#PROCESS_DEFINITION}
-     *           {@link Permissions#UPDATE} permission on any
-     *           {@link Resources#PROCESS_INSTANCE}</li>
+     *           and the user have no Permissions#UPDATE_INSTANCE
+     *           permission on Resources#PROCESS_DEFINITION
+     *           Permissions#UPDATE permission on any
+     *           Resources#PROCESS_INSTANCE</li>
      */
     public function suspend(): void;
 }

@@ -14,7 +14,7 @@ use Jabe\Engine\Impl\Util\Xml\Element;
 
 class FormValidators
 {
-    /** the registry of configured validators. Populated through {@link ProcessEngineConfiguration}. */
+    /** the registry of configured validators. Populated through ProcessEngineConfiguration. */
     protected $validators = [];
 
     /**

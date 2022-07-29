@@ -7,7 +7,7 @@ interface MetricIntervalValueInterface
     /**
      * Returns the name of the metric.
      *
-     * @see constants in {@link Metrics} for a list of names which can be returned here
+     * @see constants in Metrics for a list of names which can be returned here
      *
      * @return string the name of the metric
      */

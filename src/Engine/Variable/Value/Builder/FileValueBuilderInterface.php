@@ -13,7 +13,7 @@ interface FileValueBuilderInterface extends TypedValueBuilderInterface
     public function mimeType(string $mimeType): FileValueBuilderInterface;
 
     /**
-     * Sets the value to the specified {@link File}.
+     * Sets the value to the specified File.
      */
     public function file($inputStream): FileValueBuilderInterface;
 

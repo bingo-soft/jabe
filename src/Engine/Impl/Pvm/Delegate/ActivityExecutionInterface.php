@@ -21,7 +21,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
     /* Process instance/activity/transition retrieval */
 
     /**
-     * returns the current {@link PvmActivity} of the execution.
+     * returns the current PvmActivity of the execution.
      */
     public function getActivity(): ?PvmActivityInterface;
 
@@ -50,7 +50,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
     /**
      * @see #createSubProcessInstance(PvmProcessDefinition)
      *
-     * @param processDefinition The {@link PvmProcessDefinition} of the subprocess.
+     * @param processDefinition The PvmProcessDefinition of the subprocess.
      * @param businessKey the business key of the process instance
      * @param caseInstanceId the case instance id of the process instance
      */
@@ -62,7 +62,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
      * <p><code>This</code> execution will be the super execution of the
      * created sub case instance.</p>
      *
-     * @param caseDefinition The {@link CmmnCaseDefinition} of the sub case instance.
+     * @param caseDefinition The CmmnCaseDefinition of the sub case instance.
      */
     //CmmnCaseInstance createSubCaseInstance(CmmnCaseDefinition caseDefinition);
 
@@ -72,7 +72,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
      * <p><code>This</code> execution will be the super execution of the
      * created sub case instance.</p>
      *
-     * @param caseDefinition The {@link CmmnCaseDefinition} of the sub case instance.
+     * @param caseDefinition The CmmnCaseDefinition of the sub case instance.
      * @param businessKey The businessKey to be set on sub case instance.
      */
     //CmmnCaseInstance createSubCaseInstance(CmmnCaseDefinition caseDefinition, String businessKey);
@@ -179,7 +179,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
     public function leaveActivityViaTransition($outgoingTransition, ?array $_recyclableExecutions = []): void;
 
     /**
-     * Executes the {@link ActivityBehavior} associated with the given activity.
+     * Executes the ActivityBehavior associated with the given activity.
      */
     public function executeActivity(PvmActivityInterface $activity): void;
 

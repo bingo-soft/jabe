@@ -44,7 +44,7 @@ interface HistoricExternalTaskLogInterface
      * Returns the message of the error that occurred by executing the associated external task.
      *
      * To get the full error details,
-     * use {@link HistoryService#getHistoricExternalTaskLogErrorDetails(String)}
+     * use HistoryService#getHistoricExternalTaskLogErrorDetails(String)
      */
     public function getErrorMessage(): string;
 

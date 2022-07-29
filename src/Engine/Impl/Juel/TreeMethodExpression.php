@@ -121,7 +121,7 @@ class TreeMethodExpression extends MethodExpression
     }
 
     /**
-     * @return <code>true</code> if this is a literal text expression
+     * @return bool true if this is a literal text expression
      */
     public function isLiteralText(): bool
     {
@@ -129,7 +129,7 @@ class TreeMethodExpression extends MethodExpression
     }
 
     /**
-     * @return <code>true</code> if this is a method invocation expression
+     * @return bool true if this is a method invocation expression
      */
     public function isParmetersProvided(): bool
     {

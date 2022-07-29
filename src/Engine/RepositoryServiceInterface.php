@@ -33,7 +33,7 @@ use Jabe\Engine\Task\IdentityLinkInterface;
 interface RepositoryServiceInterface
 {
     /**
-     * Starts creating a new {@link ProcessApplicationDeployment}.
+     * Starts creating a new ProcessApplicationDeployment.
      *
      * @see ProcessApplicationDeploymentBuilder
      */
@@ -47,7 +47,7 @@ interface RepositoryServiceInterface
      * @throws RuntimeException
      *          If there are still runtime or history process instances or jobs.
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#DELETE} permission on {@link Resources#DEPLOYMENT}.
+     *          If the user has no Permissions#DELETE permission on Resources#DEPLOYMENT.
      */
     public function deleteDeployment(string $deploymentId, bool $cascade = false, bool $skipCustomListeners = false, bool $skipIoMappings = false): void;
 
@@ -58,8 +58,8 @@ interface RepositoryServiceInterface
      *
      * @param processDefinitionId the id, which corresponds to the process definition
      * @param cascade if set to true, all process instances (including) history are deleted
-     * @param skipCustomListeners if true, only the built-in {@link ExecutionListener}s
-     *            are notified with the {@link ExecutionListener#EVENTNAME_END} event.
+     * @param skipCustomListeners if true, only the built-in ExecutionListeners
+     *            are notified with the ExecutionListener#EVENTNAME_END event.
      *            Is only used if cascade set to true.
      * @param skipIoMappings Specifies whether input/output mappings for tasks should be invoked
      *
@@ -67,7 +67,7 @@ interface RepositoryServiceInterface
      *          If the process definition does not exist
      *
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#DELETE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          If the user has no Permissions#DELETE permission on Resources#PROCESS_DEFINITION.
      */
     public function deleteProcessDefinition(string $processDefinitionId, bool $cascade = false, bool $skipCustomListeners = false, bool $skipIoMappings = false): void;
 
@@ -85,7 +85,7 @@ interface RepositoryServiceInterface
      * @param deploymentId id of the deployment, cannot be null.
      *
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#READ} permission on {@link Resources#DEPLOYMENT}.
+     *          If the user has no Permissions#READ permission on Resources#DEPLOYMENT.
      */
     public function getDeploymentResourceNames(string $deploymentId): array;
 
@@ -96,7 +96,7 @@ interface RepositoryServiceInterface
      * @param deploymentId id of the deployment, cannot be null.
      *
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#READ} permission on {@link Resources#DEPLOYMENT}.
+     *          If the user has no Permissions#READ permission on Resources#DEPLOYMENT.
      */
     public function getDeploymentResources(string $deploymentId): array;
 
@@ -110,7 +110,7 @@ interface RepositoryServiceInterface
      *          When the resource doesn't exist in the given deployment or when no deployment exists
      *          for the given deploymentId.
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#READ} permission on {@link Resources#DEPLOYMENT}.
+     *          If the user has no Permissions#READ permission on Resources#DEPLOYMENT.
      */
     public function getResourceAsStream(string $deploymentId, string $resourceName);
 
@@ -124,7 +124,7 @@ interface RepositoryServiceInterface
      *          When the resource doesn't exist in the given deployment or when no deployment exists
      *          for the given deploymentId.
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#READ} permission on {@link Resources#DEPLOYMENT}.
+     *          If the user has no Permissions#READ permission on Resources#DEPLOYMENT.
      */
     public function getResourceAsStreamById(string $deploymentId, string $resourceId);
 
@@ -155,13 +155,13 @@ interface RepositoryServiceInterface
      * @throws ProcessEngineException
      *          If no such processDefinition can be found.
      * @throws AuthorizationException
-     *           <li>If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_DEFINITION}.</li>
+     *           <li>If the user has no Permissions#UPDATE permission on Resources#PROCESS_DEFINITION.</li>
      *           <li>and if <code>suspendProcessInstances</code> is set to <code>true</code> and the user has none of the following:</li>
      *           <ul>
-     *           <li>{@link ProcessInstancePermissions#SUSPEND} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *           <li>{@link ProcessDefinitionPermissions#SUSPEND_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *           <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *           <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *           <li>ProcessInstancePermissions#SUSPEND permission on Resources#PROCESS_INSTANCE</li>
+     *           <li>ProcessDefinitionPermissions#SUSPEND_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
+     *           <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *           <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      *           </ul>
      *
      * @see RuntimeService#suspendProcessInstanceById(String)
@@ -185,13 +185,13 @@ interface RepositoryServiceInterface
      * @throws ProcessEngineException
      *          If no such processDefinition can be found.
      * @throws AuthorizationException
-     *           <li>If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_DEFINITION}.</li>
+     *           <li>If the user has no Permissions#UPDATE permission on Resources#PROCESS_DEFINITION.</li>
      *           <li>and if <code>suspendProcessInstances</code> is set to <code>true</code> and the user has none of the following:</li>
      *           <ul>
-     *           <li>{@link ProcessInstancePermissions#SUSPEND} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *           <li>{@link ProcessDefinitionPermissions#SUSPEND_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *           <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *           <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *           <li>ProcessInstancePermissions#SUSPEND permission on Resources#PROCESS_INSTANCE</li>
+     *           <li>ProcessDefinitionPermissions#SUSPEND_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
+     *           <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *           <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      *           </ul>
      *
      * @see RuntimeService#suspendProcessInstanceById(String)
@@ -212,13 +212,13 @@ interface RepositoryServiceInterface
      * @throws ProcessEngineException
      *          If no such processDefinition can be found.
      * @throws AuthorizationException
-     *           <li>If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_DEFINITION}.</li>
+     *           <li>If the user has no Permissions#UPDATE permission on Resources#PROCESS_DEFINITION.</li>
      *           <li>and if <code>suspendProcessInstances</code> is set to <code>true</code> and the user has none of the following:</li>
      *           <ul>
-     *           <li>{@link ProcessInstancePermissions#SUSPEND} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *           <li>{@link ProcessDefinitionPermissions#SUSPEND_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *           <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *           <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *           <li>ProcessInstancePermissions#SUSPEND permission on Resources#PROCESS_INSTANCE</li>
+     *           <li>ProcessDefinitionPermissions#SUSPEND_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
+     *           <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *           <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      *           </ul>
      *
      * @see RuntimeService#activateProcessInstanceById(String)
@@ -239,13 +239,13 @@ interface RepositoryServiceInterface
      * @throws ProcessEngineException
      *          If no such processDefinition can be found.
      * @throws AuthorizationException
-     *           <li>If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_DEFINITION}.</li>
+     *           <li>If the user has no Permissions#UPDATE permission on Resources#PROCESS_DEFINITION.</li>
      *           <li>and if <code>suspendProcessInstances</code> is set to <code>true</code> and the user has none of the following:</li>
      *           <ul>
-     *           <li>{@link ProcessInstancePermissions#SUSPEND} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *           <li>{@link ProcessDefinitionPermissions#SUSPEND_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *           <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *           <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *           <li>ProcessInstancePermissions#SUSPEND permission on Resources#PROCESS_INSTANCE</li>
+     *           <li>ProcessDefinitionPermissions#SUSPEND_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
+     *           <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *           <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      *           </ul>
      *
      * @see RuntimeService#activateProcessInstanceById(String)
@@ -256,8 +256,8 @@ interface RepositoryServiceInterface
      * Activate or suspend process definitions using a fluent builder. Specify the
      * definitions by calling one of the <i>by</i> methods, like
      * <i>byProcessDefinitionId</i>. To update the suspension state call
-     * {@link UpdateProcessDefinitionSuspensionStateBuilder#activate()} or
-     * {@link UpdateProcessDefinitionSuspensionStateBuilder#suspend()}.
+     * UpdateProcessDefinitionSuspensionStateBuilder#activate() or
+     * UpdateProcessDefinitionSuspensionStateBuilder#suspend().
      *
      * @return UpdateProcessDefinitionSuspensionStateSelectBuilderInterface the builder to update the suspension state
      */
@@ -268,7 +268,7 @@ interface RepositoryServiceInterface
      * @param processDefinitionId
      * @param historyTimeToLive
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_DEFINITION.
      */
     public function updateProcessDefinitionHistoryTimeToLive(string $processDefinitionId, int $historyTimeToLive): void;
 
@@ -277,12 +277,12 @@ interface RepositoryServiceInterface
      * through a stream of bytes.
      *
      * @param processDefinitionId
-     *          id of a {@link ProcessDefinition}, cannot be null.
+     *          id of a ProcessDefinition, cannot be null.
      *
      * @throws ProcessEngineException
      *           when the process model doesn't exist.
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          If the user has no Permissions#READ permission on Resources#PROCESS_DEFINITION.
      */
     public function getProcessModel(string $processDefinitionId);
 
@@ -291,32 +291,32 @@ interface RepositoryServiceInterface
      * stream of bytes.
      *
      * @param processDefinitionId
-     *          id of a {@link ProcessDefinition}, cannot be null.
-     * @return mixed null when the diagram resource name of a {@link ProcessDefinition} is null.
+     *          id of a ProcessDefinition, cannot be null.
+     * @return mixed null when the diagram resource name of a ProcessDefinition is null.
      *
      * @throws ProcessEngineException
      *           when the process diagram doesn't exist.
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          If the user has no Permissions#READ permission on Resources#PROCESS_DEFINITION.
      */
     public function getProcessDiagram(string $processDefinitionId);
 
     /**
-     * Returns the {@link ProcessDefinition} including all BPMN information like additional
+     * Returns the ProcessDefinition including all BPMN information like additional
      * Properties (e.g. documentation).
      *
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          If the user has no Permissions#READ permission on Resources#PROCESS_DEFINITION.
      */
     public function getProcessDefinition(string $processDefinitionId): ProcessDefinitionInterface;
 
     /**
      * Provides positions and dimensions of elements in a process diagram as
-     * provided by {@link RepositoryService#getProcessDiagram(String)}.
+     * provided by RepositoryService#getProcessDiagram(String).
      *
      * This method requires a process model and a diagram image to be deployed.
      *
-     * @param processDefinitionId id of a {@link ProcessDefinition}, cannot be null.
+     * @param processDefinitionId id of a ProcessDefinition, cannot be null.
      * @return Map with process element ids as keys and positions and dimensions as values.
      *
      * @return DiagramLayout null when the input stream of a process diagram is null.
@@ -324,20 +324,20 @@ interface RepositoryServiceInterface
      * @throws ProcessEngineException
      *          When the process model or diagram doesn't exist.
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          If the user has no Permissions#READ permission on Resources#PROCESS_DEFINITION.
      */
     public function getProcessDiagramLayout(string $processDefinitionId): ?DiagramLayout;
 
     /**
-     * Returns the {@link BpmnModelInstance} for the given processDefinitionId.
+     * Returns the BpmnModelInstance for the given processDefinitionId.
      *
-     * @param processDefinitionId the id of the Process Definition for which the {@link BpmnModelInstance}
+     * @param processDefinitionId the id of the Process Definition for which the BpmnModelInstance
      *  should be retrieved.
      *
-     * @return BpmnModelInstanceInterface the {@link BpmnModelInstance}
+     * @return BpmnModelInstanceInterface the BpmnModelInstance
      *
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          If the user has no Permissions#READ permission on Resources#PROCESS_DEFINITION.
      */
     public function getBpmnModelInstance(string $processDefinitionId): BpmnModelInstanceInterface;
 }

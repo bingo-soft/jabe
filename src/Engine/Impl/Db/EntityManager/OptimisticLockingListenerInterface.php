@@ -19,7 +19,7 @@ interface OptimisticLockingListenerInterface
      * Signifies that an operation failed due to optimistic locking.
      *
      * @param operation the failed operation.
-     * @return {@link OptimisticLockingResult} that instructs the caller how to handle
+     * @return OptimisticLockingResult that instructs the caller how to handle
      *            the result of the failed operation.
      */
     public function failedOperation(DbOperation $operation): string;

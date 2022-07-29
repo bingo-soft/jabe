@@ -20,9 +20,9 @@ use Jabe\Engine\Authorization\{
 class ResourceTypeUtil
 {
     /**
-     * A map containing all {@link Resources} as a key and
-     * the respective {@link Permission} Enum class for this resource.<p>
-     * NOTE: In case of new {@link Permission} Enum class, please adjust the map accordingly
+     * A map containing all Resources as a key and
+     * the respective Permission Enum class for this resource.<p>
+     * NOTE: In case of new Permission Enum class, please adjust the map accordingly
      */
     protected static $PERMISSION_ENUMS = [];
 
@@ -40,7 +40,7 @@ class ResourceTypeUtil
     }
 
     /**
-     * @return See {@link ResourceTypeUtil#PERMISSION_ENUMS}
+     * @return See ResourceTypeUtil#PERMISSION_ENUMS
      */
     public static function getPermissionEnums(): array
     {
@@ -74,7 +74,7 @@ class ResourceTypeUtil
     }
 
     /**
-     * Retrieves the {@link Permission} array based on the predifined {@link ResourceTypeUtil#PERMISSION_ENUMS PERMISSION_ENUMS}
+     * Retrieves the Permission array based on the predifined {@link ResourceTypeUtil#PERMISSION_ENUMS PERMISSION_ENUMS}
      */
     public static function getPermissionsByResourceType(int $givenResourceType): array
     {
@@ -90,7 +90,7 @@ class ResourceTypeUtil
 
     /**
      * Currently used only in the Rest API
-     * Returns a {@link Permission} based on the specified <code>permissionName</code> and <code>resourceType</code>
+     * Returns a Permission based on the specified <code>permissionName</code> and <code>resourceType</code>
      * @throws BadUserRequestException in case the permission is not valid for the specified resource type
      */
     public static function getPermissionByNameAndResourceType(string $permissionName, int $resourceType): PermissionInterface
@@ -106,7 +106,7 @@ class ResourceTypeUtil
     }
 
     /**
-     * Iterates over the {@link Resources} and
+     * Iterates over the Resources and
      * returns either the resource with specified <code>resourceType</code> or <code>null</code>.
      */
     public static function getResourceByType(int $resourceType): ?ResourceInterface

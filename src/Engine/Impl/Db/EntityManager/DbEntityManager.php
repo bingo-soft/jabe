@@ -370,7 +370,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
 
     /**
      * Decides if an operation that failed for concurrent modifications can be tolerated,
-     * or if {@link OptimisticLockingException} should be raised
+     * or if OptimisticLockingException should be raised
      *
      * @param dbOperation
      * @throws OptimisticLockingException if there is no handler for the failure
@@ -453,7 +453,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
 
     /**
      * Flushes the entity cache:
-     * Depending on the entity state, the required {@link DbOperation} is performed and the cache is updated.
+     * Depending on the entity state, the required DbOperation is performed and the cache is updated.
      */
     protected function flushEntityCache(): void
     {
@@ -552,7 +552,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
 
     /**
      * Several update operations added by this method will be executed preserving the order of method calls, no matter what entity type they refer to.
-     * They will though be executed after all "not-bulk" operations (e.g. {@link DbEntityManager#insert(DbEntity)} or {@link DbEntityManager#merge(DbEntity)})
+     * They will though be executed after all "not-bulk" operations (e.g. DbEntityManager#insert(DbEntity) or DbEntityManager#merge(DbEntity))
      * and after those updates added by {@link DbEntityManager#update(Class, String, Object)}.
      * @param entityType
      * @param statement
@@ -574,7 +574,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
 
     /**
      * Several delete operations added by this method will be executed preserving the order of method calls, no matter what entity type they refer to.
-     * They will though be executed after all "not-bulk" operations (e.g. {@link DbEntityManager#insert(DbEntity)} or {@link DbEntityManager#merge(DbEntity)})
+     * They will though be executed after all "not-bulk" operations (e.g. DbEntityManager#insert(DbEntity) or DbEntityManager#merge(DbEntity))
      * and after those deletes added by {@link DbEntityManager#delete(Class, String, Object)}.
      * @param entityType
      * @param statement

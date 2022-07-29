@@ -10,20 +10,20 @@ interface HistoricIdentityLinkLogInterface
     public function getId(): string;
     /**
      * Returns the type of link (Candidate or Assignee or Owner).
-     * See {@link IdentityLinkType} for the native supported types by the process engine.
+     * See IdentityLinkType for the native supported types by the process engine.
      *
      * */
     public function getType(): string;
 
     /**
      * If the identity link involves a user, then this will be a non-null id of a user.
-     * That userId can be used to query for user information through the {@link UserQuery} API.
+     * That userId can be used to query for user information through the UserQuery API.
      */
     public function getUserId(): string;
 
     /**
      * If the identity link involves a group, then this will be a non-null id of a group.
-     * That groupId can be used to query for user information through the {@link GroupQuery} API.
+     * That groupId can be used to query for user information through the GroupQuery API.
      */
     public function getGroupId(): string;
 

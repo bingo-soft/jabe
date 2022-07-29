@@ -10,7 +10,7 @@ use Jabe\Engine\Impl\Util\ClockUtil;
 class ByteArrayManager extends AbstractManager
 {
     /**
-     * Deletes the {@link ByteArrayEntity} with the given id from the database.
+     * Deletes the ByteArrayEntity with the given id from the database.
      * Important: this operation will NOT do any optimistic locking, to avoid loading the
      * bytes in memory. So use this method only in conjunction with an entity that has
      * optimistic locking!.

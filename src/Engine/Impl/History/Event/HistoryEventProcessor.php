@@ -10,11 +10,11 @@ use Jabe\Engine\Impl\History\Producer\HistoryEventProducerInterface;
 class HistoryEventProcessor
 {
     /**
-     * Process an {@link HistoryEvent} and handle them directly after creation.
-     * The {@link HistoryEvent} is created with the help of the given
-     * {@link HistoryEventCreator} implementation.
+     * Process an HistoryEvent and handle them directly after creation.
+     * The HistoryEvent is created with the help of the given
+     * HistoryEventCreator implementation.
      *
-     * @param creator the creator is used to create the {@link HistoryEvent} which should be thrown
+     * @param creator the creator is used to create the HistoryEvent which should be thrown
      */
     public static function processHistoryEvents(HistoryEventCreator $creator): void
     {

@@ -149,14 +149,14 @@ abstract class AbstractSetProcessDefinitionStateCmd extends AbstractSetStateCmd
     }
     // ABSTRACT METHODS ////////////////////////////////////////////////////////////////////
     /**
-     * Subclasses should return the type of the {@link JobHandler} here. it will be used when
+     * Subclasses should return the type of the JobHandler here. it will be used when
      * the user provides an execution date on which the actual state change will happen.
      */
     abstract protected function getDelayedExecutionJobHandlerType(): ?string;
 
     /**
-     * Subclasses should return the type of the {@link AbstractSetJobDefinitionStateCmd} here.
-     * It will be used to suspend or activate the {@link JobDefinition}s.
+     * Subclasses should return the type of the AbstractSetJobDefinitionStateCmd here.
+     * It will be used to suspend or activate the JobDefinitions.
      * @param jobDefinitionSuspensionStateBuilder
      */
     abstract protected function getSetJobDefinitionStateCmd(UpdateJobDefinitionSuspensionStateBuilderImpl $jobDefinitionSuspensionStateBuilder): AbstractSetJobDefinitionStateCmd;

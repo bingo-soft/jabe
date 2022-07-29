@@ -30,7 +30,7 @@ class HistoryEvent implements \Serializable, DbEntityInterface, HistoricEntityIn
         return self::$IDENTITY_LINK_DELETE;
     }
 
-    /** each {@link HistoryEvent} has a unique id */
+    /** each HistoryEvent has a unique id */
     protected $id;
 
     /** the root process instance in which the event has happened */

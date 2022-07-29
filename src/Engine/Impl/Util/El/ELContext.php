@@ -71,8 +71,8 @@ abstract class ELContext
     abstract public function getVariableMapper(): ?VariableMapper;
 
     /**
-     * Returns whether an {@link ELResolver} has successfully resolved a given (base, property)
-     * pair. The {@link CompositeELResolver} checks this property to determine whether it should
+     * Returns whether an ELResolver has successfully resolved a given (base, property)
+     * pair. The CompositeELResolver checks this property to determine whether it should
      * consider or skip other component resolvers.
      *
      * @return bool The variable mapper to be consulted for the resolution of EL variables.
@@ -91,7 +91,7 @@ abstract class ELContext
      * required and the key is used strictly as a unique identifier.
      *
      * @param key
-     *            The key used by an {@link ELResolver} to identify this context object.
+     *            The key used by an ELResolver to identify this context object.
      * @param contextObject
      *            The context object to add to the collection.
      * @throws NullPointerException
@@ -119,7 +119,7 @@ abstract class ELContext
 
     /**
      * Called to indicate that a ELResolver has successfully resolved a given (base, property) pair.
-     * The {@link CompositeELResolver} checks this property to determine whether it should consider
+     * The CompositeELResolver checks this property to determine whether it should consider
      * or skip other component resolvers.
      *
      * @param resolved

@@ -8,16 +8,16 @@ use Jabe\Engine\Impl\Util\EnsureUtil;
 class CompositeHistoryEventHandler implements HistoryEventHandlerInterface
 {
     /**
-     * The list of {@link HistoryEventHandler} which consume the event.
+     * The list of HistoryEventHandler which consume the event.
      */
     protected $historyEventHandlers = [];
 
     /**
-     * Constructor that takes a varargs parameter {@link HistoryEventHandler} that
+     * Constructor that takes a varargs parameter HistoryEventHandler that
      * consume the event.
      *
      * @param historyEventHandlers
-     *          the list of {@link HistoryEventHandler} that consume the event.
+     *          the list of HistoryEventHandler that consume the event.
      */
     public function __construct(?array $historyEventHandlers = [])
     {
@@ -41,11 +41,11 @@ class CompositeHistoryEventHandler implements HistoryEventHandlerInterface
     }
 
     /**
-     * Adds the {@link HistoryEventHandler} to the list of
-     * {@link HistoryEventHandler} that consume the event.
+     * Adds the HistoryEventHandler to the list of
+     * HistoryEventHandler that consume the event.
      *
      * @param historyEventHandler
-     *          the {@link HistoryEventHandlerInterface} that consume the event.
+     *          the HistoryEventHandlerInterface that consume the event.
      */
     public function add(HistoryEventHandlerInterface $historyEventHandler): void
     {

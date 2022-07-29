@@ -19,16 +19,16 @@ interface UpdateProcessInstanceSuspensionStateBuilderInterface
      *           If no such processDefinition can be found.
      * @throws AuthorizationException
      *           if the user has none of the following:
-     *           <li>{@link ProcessInstancePermissions#SUSPEND} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *           <li>{@link ProcessDefinitionPermissions#SUSPEND_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *           <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *           <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *           <li>ProcessInstancePermissions#SUSPEND permission on Resources#PROCESS_INSTANCE</li>
+     *           <li>ProcessDefinitionPermissions#SUSPEND_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
+     *           <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *           <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      * @throws BadUserRequestException
      *           When the affected instances count exceeds the maximum results limit. A maximum results
      *           limit can be specified with the process engine configuration property
-     *           <code>queryMaxResultsLimit</code> (default {@link Integer#MAX_VALUE}).
+     *           <code>queryMaxResultsLimit</code> (default Integer#MAX_VALUE).
      *           Please use the batch operation
-     *           {@link UpdateProcessInstancesSuspensionStateBuilder#activateAsync()} instead.
+     *           UpdateProcessInstancesSuspensionStateBuilder#activateAsync() instead.
      */
     public function activate(): void;
 
@@ -69,16 +69,16 @@ interface UpdateProcessInstanceSuspensionStateBuilderInterface
      *           If no such processDefinition can be found.
      * @throws AuthorizationException
      *            if the user has none of the following:
-     *           <li>{@link ProcessInstancePermissions#SUSPEND} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *           <li>{@link ProcessDefinitionPermissions#SUSPEND_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *           <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *           <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *           <li>ProcessInstancePermissions#SUSPEND permission on Resources#PROCESS_INSTANCE</li>
+     *           <li>ProcessDefinitionPermissions#SUSPEND_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
+     *           <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *           <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      * @throws BadUserRequestException
      *           When the affected instances count exceeds the maximum results limit. A maximum results
      *           limit can be specified with the process engine configuration property
-     *           <code>queryMaxResultsLimit</code> (default {@link Integer#MAX_VALUE}).
+     *           <code>queryMaxResultsLimit</code> (default Integer#MAX_VALUE).
      *           Please see the batch operation
-     *           {@link UpdateProcessInstancesSuspensionStateBuilder#suspendAsync()} instead.
+     *           UpdateProcessInstancesSuspensionStateBuilder#suspendAsync() instead.
      */
     public function suspend(): void;
 }

@@ -50,15 +50,15 @@ abstract class AbstractHistoryLevel implements HistoryLevelInterface
 
     /** An unique name identifying the history level.
      * The name of the history level can be used when configuring the process engine.
-     * @see {@link ProcessEngineConfiguration#setHistory(String)}
+     * @see ProcessEngineConfiguration#setHistory(String)
      */
     abstract public function getName(): string;
 
     /**
      * Returns true if a given history event should be produced.
      * @param eventType the type of the history event which is about to be produced
-     * @param entity the runtime structure used to produce the history event. Examples {@link ExecutionEntity},
-     * {@link TaskEntity}, {@link VariableInstanceEntity}, ... If a 'null' value is provided, the implementation
+     * @param entity the runtime structure used to produce the history event. Examples ExecutionEntity,
+     * TaskEntity, VariableInstanceEntity, ... If a 'null' value is provided, the implementation
      * should return true if events of this type should be produced "in general".
      */
     abstract public function isHistoryEventProduced(HistoryEventTypeInterface $eventType, $entity): bool;

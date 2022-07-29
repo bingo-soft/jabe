@@ -18,7 +18,7 @@ interface FormPropertyInterface
     public function getValue(): string;
 
     /** Is this property read to be displayed in the form and made accessible with the methods
-     * {@link FormService#getStartFormData(String)} and {@link FormService#getTaskFormData(String)}. */
+     * FormService#getStartFormData(String) and FormService#getTaskFormData(String). */
     public function isReadable(): bool;
 
     /** Is this property expected when a user submits the form? */

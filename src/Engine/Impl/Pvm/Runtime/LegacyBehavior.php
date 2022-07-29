@@ -213,7 +213,7 @@ class LegacyBehavior
     }
 
     /**
-     * This is relevant for {@link GetActivityInstanceCmd} where in case of legacy multi-instance execution trees, the default
+     * This is relevant for GetActivityInstanceCmd where in case of legacy multi-instance execution trees, the default
      * algorithm omits multi-instance activity instances.
      */
     public static function repairParentRelationships(array $values, string $processInstanceId): void

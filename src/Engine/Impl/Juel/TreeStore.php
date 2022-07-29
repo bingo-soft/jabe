@@ -24,7 +24,7 @@ class TreeStore
     }
 
     /**
-     * Get a {@link Tree}.
+     * Get a Tree.
      * If a tree for the given expression is present in the cache, it is
      * taken from there; otherwise, the expression string is parsed and
      * the resulting tree is added to the cache.

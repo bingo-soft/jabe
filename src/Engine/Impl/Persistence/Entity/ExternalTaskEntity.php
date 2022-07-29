@@ -39,7 +39,7 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
     private const EXCEPTION_NAME = "externalTask.exceptionByteArray";
 
     /**
-     * Note: {@link String#length()} counts Unicode supplementary
+     * Note: String#length() counts Unicode supplementary
      * characters twice, so for a String consisting only of those,
      * the limit is effectively MAX_EXCEPTION_MESSAGE_LENGTH / 2
      */
@@ -427,10 +427,10 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
      * process failed state, make sure that binary entity is created for the errorMessage, shortError
      * message does not exceed limit, handle properly retry counts and incidents
      *
-     * @param errorMessage - short error message text
-     * @param errorDetails - full error details
-     * @param retries - updated value of retries left
-     * @param retryDuration - used for lockExpirationTime calculation
+     * @param errorMessage short error message text
+     * @param errorDetails full error details
+     * @param retries updated value of retries left
+     * @param retryDuration used for lockExpirationTime calculation
      */
     public function failed(string $errorMessage, string $errorDetails, int $retries, int $retryDuration, array $variables, array $localVariables): void
     {

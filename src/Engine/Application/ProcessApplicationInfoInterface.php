@@ -13,7 +13,7 @@ interface ProcessApplicationInfoInterface
     public function getName(): string;
 
     /**
-     * @return a list of {@link ProcessApplicationDeploymentInfo} objects that
+     * @return a list of ProcessApplicationDeploymentInfo objects that
      *         provide information about the deployments made by the process
      *         application to the process engine(s).
      */

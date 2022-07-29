@@ -21,19 +21,19 @@ interface ReadOnlyIdentityProviderInterface extends SessionInterface
     // users ////////////////////////////////////////
 
     /**
-     * @return a {@link User} object for the given user id or null if no such user exists.
+     * @return a User object for the given user id or null if no such user exists.
      * @throws IdentityProviderException in case an error occurs
      */
     public function findUserById(string $userId): ?UserInterface;
 
     /**
-     * @return a {@link UserQuery} object which can be used for querying for users.
+     * @return a UserQuery object which can be used for querying for users.
      * @throws IdentityProviderException in case an error occurs
      */
     public function createUserQuery(?CommandContext $commandContext = null): UserQueryInterface;
 
     /**
-     * Creates a {@link NativeUserQuery} that allows to select users with native queries.
+     * Creates a NativeUserQuery that allows to select users with native queries.
      * @return NativeUserQuery
      */
     public function createNativeUserQuery(): NativeUserQueryInterface;
@@ -47,20 +47,20 @@ interface ReadOnlyIdentityProviderInterface extends SessionInterface
     // groups //////////////////////////////////////
 
     /**
-     * @return a {@link Group} object for the given group id or null if no such group exists.
+     * @return a Group object for the given group id or null if no such group exists.
      * @throws IdentityProviderException in case an error occurs
      */
     public function findGroupById(string $groupId): ?GroupInterface;
 
     /**
-     * @return a {@link GroupQuery} object which can be used for querying for groups.
+     * @return a GroupQuery object which can be used for querying for groups.
      * @throws IdentityProviderException in case an error occurs
      */
     public function createGroupQuery(?CommandContext $commandContext = null): GroupQueryInterface;
 
     // tenants //////////////////////////////////////
     /**
-     * @return a {@link Tenant} object for the given id or null if no such tenant
+     * @return a Tenant object for the given id or null if no such tenant
      *         exists.
      * @throws IdentityProviderException
      *           in case an error occurs
@@ -68,7 +68,7 @@ interface ReadOnlyIdentityProviderInterface extends SessionInterface
     public function findTenantById(string $tenantId): TenantInterface;
 
     /**
-     * @return a {@link TenantQuery} object which can be used for querying for
+     * @return a TenantQuery object which can be used for querying for
      *         tenants.
      * @throws IdentityProviderException
      *           in case an error occurs

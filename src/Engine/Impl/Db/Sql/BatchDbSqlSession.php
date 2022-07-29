@@ -111,7 +111,7 @@ class BatchDbSqlSession extends DbSqlSession
      * statements were executed after the first failed statement.
      * </ul>
      *
-     * <p>See {@link BatchUpdateException#getUpdateCounts()} for the specification
+     * <p>See BatchUpdateException#getUpdateCounts() for the specification
      * of cases 2 and 3.
      *
      * @return all failed operations

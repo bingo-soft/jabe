@@ -63,7 +63,7 @@ interface RuntimeServiceInterface
      * certain identifier that has a clear business meaning. For example in an
      * order process, the business key could be an order id. This business key can
      * then be used to easily look up that process instance , see
-     * {@link ProcessInstanceQuery#processInstanceBusinessKey(String)}. Providing such a business
+     * ProcessInstanceQuery#processInstanceBusinessKey(String). Providing such a business
      * key is definitely a best practice.
      *
      * Note that a business key MUST be unique for the given process definition WHEN you have added a
@@ -81,8 +81,8 @@ interface RuntimeServiceInterface
      * @throws ProcessEngineException
      *          when no process definition is deployed with the given key.
      * @throws AuthorizationException
-     *          if the user has no {@link Permissions#CREATE} permission on {@link Resources#PROCESS_INSTANCE}
-     *          and no {@link Permissions#CREATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          if the user has no Permissions#CREATE permission on Resources#PROCESS_INSTANCE
+     *          and no Permissions#CREATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
     public function startProcessInstanceByKey(string $processDefinitionKey, string $businessKey = null, array $variables = []): ProcessInstanceInterface;
 
@@ -93,7 +93,7 @@ interface RuntimeServiceInterface
      * certain identifier that has a clear business meaning. For example in an
      * order process, the business key could be an order id. This business key can
      * then be used to easily look up that process instance , see
-     * {@link ProcessInstanceQuery#processInstanceBusinessKey(String)}. Providing such a business
+     * ProcessInstanceQuery#processInstanceBusinessKey(String). Providing such a business
      * key is definitely a best practice.
      *
      * Note that a business key MUST be unique for the given process definition WHEN you have added
@@ -109,14 +109,14 @@ interface RuntimeServiceInterface
      * @throws ProcessEngineException
      *          when no process definition is deployed with the given key.
      * @throws AuthorizationException
-     *          if the user has no {@link Permissions#CREATE} permission on {@link Resources#PROCESS_INSTANCE}
-     *          and no {@link Permissions#CREATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          if the user has no Permissions#CREATE permission on Resources#PROCESS_INSTANCE
+     *          and no Permissions#CREATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
     public function startProcessInstanceById(string $processDefinitionId, string $businessKey = null, array $variables = []): ProcessInstanceInterface;
 
     /**
      * <p>Signals the process engine that a message is received and starts a new
-     * {@link ProcessInstance}.</p>
+     * ProcessInstance.</p>
      *
      * See {@link #startProcessInstanceByMessage(String, Map)}. In addition, this method allows
      * specifying a business key.
@@ -130,13 +130,13 @@ interface RuntimeServiceInterface
      *          the 'payload' of the message. The variables are added as processes
      *          variables to the started process instance.
      *
-     * @return ProcessInstanceInterface the {@link ProcessInstance} object representing the started process instance
+     * @return ProcessInstanceInterface the ProcessInstance object representing the started process instance
      *
      * @throws ProcessEngineException
      *          if no subscription to a message with the given name exists
      * @throws AuthorizationException
-     *          if the user has no {@link Permissions#CREATE} permission on {@link Resources#PROCESS_INSTANCE}
-     *          and no {@link Permissions#CREATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          if the user has no Permissions#CREATE permission on Resources#PROCESS_INSTANCE
+     *          and no Permissions#CREATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      *
      * @since 5.9
      */
@@ -144,7 +144,7 @@ interface RuntimeServiceInterface
 
     /**
      * <p>Signals the process engine that a message is received and starts a new
-     * {@link ProcessInstance}.</p>
+     * ProcessInstance.</p>
      *
      * See {@link #startProcessInstanceByMessage(String, String)}. In addition, this method allows
      * specifying the exactly version of the process definition with the given id.
@@ -157,14 +157,14 @@ interface RuntimeServiceInterface
      * @param businessKey
      *          the business key which is added to the started process instance
      *
-     * @return ProcessInstanceInterface the {@link ProcessInstance} object representing the started process instance
+     * @return ProcessInstanceInterface the ProcessInstance object representing the started process instance
      *
      * @throws ProcessEngineException
      *          if no subscription to a message with the given name exists for the
      *          specified version of process definition.
      * @throws AuthorizationException
-     *          if the user has no {@link Permissions#CREATE} permission on {@link Resources#PROCESS_INSTANCE}
-     *          and no {@link Permissions#CREATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          if the user has no Permissions#CREATE permission on Resources#PROCESS_INSTANCE
+     *          and no Permissions#CREATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      *
      * @since 7.3
      */
@@ -186,8 +186,8 @@ interface RuntimeServiceInterface
      * @throws BadUserRequestException
      *          when no process instance is found with the given queries or ids.
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#CREATE} or
-     *          {@link BatchPermissions#CREATE_BATCH_DELETE_RUNNING_PROCESS_INSTANCES} permission on {@link Resources#BATCH}.
+     *          If the user has no Permissions#CREATE or
+     *          BatchPermissions#CREATE_BATCH_DELETE_RUNNING_PROCESS_INSTANCES permission on Resources#BATCH.
      */
     public function deleteProcessInstancesAsync(
         array $processInstanceIds,
@@ -205,8 +205,8 @@ interface RuntimeServiceInterface
      *
      * @param processInstanceId id of process instance to delete, cannot be null.
      * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
-     * @param skipCustomListeners if true, only the built-in {@link ExecutionListener}s
-     * are notified with the {@link ExecutionListener#EVENTNAME_END} event.
+     * @param skipCustomListeners if true, only the built-in ExecutionListeners
+     * are notified with the ExecutionListener#EVENTNAME_END event.
      * @param externallyTerminated indicator if deletion triggered from external context, for instance
      *                             REST API call
      *
@@ -216,8 +216,8 @@ interface RuntimeServiceInterface
      * @throws NotFoundException
      *          when no process instance is found with the given processInstanceId.
      * @throws AuthorizationException
-     *          if the user has no {@link Permissions#DELETE} permission on {@link Resources#PROCESS_INSTANCE}
-     *          or no {@link Permissions#DELETE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          if the user has no Permissions#DELETE permission on Resources#PROCESS_INSTANCE
+     *          or no Permissions#DELETE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
     public function deleteProcessInstance(
         string $processInstanceId,
@@ -235,8 +235,8 @@ interface RuntimeServiceInterface
      *
      * @param processInstanceIds ids of process instance to delete, cannot be null.
      * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
-     * @param skipCustomListeners if true, only the built-in {@link ExecutionListener}s
-     * are notified with the {@link ExecutionListener#EVENTNAME_END} event.
+     * @param skipCustomListeners if true, only the built-in ExecutionListeners
+     * are notified with the ExecutionListener#EVENTNAME_END event.
      * @param externallyTerminated indicator if deletion triggered from external context, for instance
      *                             REST API call
      * @param skipSubprocesses specifies whether subprocesses should be deleted
@@ -247,8 +247,8 @@ interface RuntimeServiceInterface
      * @throws NotFoundException
      *          when no process instance is found with a given processInstanceId.
      * @throws AuthorizationException
-     *          if the user has no {@link Permissions#DELETE} permission on {@link Resources#PROCESS_INSTANCE}
-     *          or no {@link Permissions#DELETE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          if the user has no Permissions#DELETE permission on Resources#PROCESS_INSTANCE
+     *          or no Permissions#DELETE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
     public function deleteProcessInstances(
         array $processInstanceIds,
@@ -267,8 +267,8 @@ interface RuntimeServiceInterface
      *
      * @param processInstanceIds ids of process instance to delete, cannot be null.
      * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
-     * @param skipCustomListeners if true, only the built-in {@link ExecutionListener}s
-     * are notified with the {@link ExecutionListener#EVENTNAME_END} event.
+     * @param skipCustomListeners if true, only the built-in ExecutionListeners
+     * are notified with the ExecutionListener#EVENTNAME_END event.
      * @param externallyTerminated indicator if deletion triggered from external context, for instance
      *                             REST API call
      * @param skipSubprocesses specifies whether subprocesses should be deleted
@@ -277,8 +277,8 @@ interface RuntimeServiceInterface
      * @throws BadUserRequestException
      *          when a processInstanceId is null.
      * @throws AuthorizationException
-     *          if the user has no {@link Permissions#DELETE} permission on {@link Resources#PROCESS_INSTANCE}
-     *          or no {@link Permissions#DELETE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          if the user has no Permissions#DELETE permission on Resources#PROCESS_INSTANCE
+     *          or no Permissions#DELETE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
     public function deleteProcessInstancesIfExists(array $processInstanceIds, string $deleteReason = null, bool $skipCustomListeners = false, bool $externallyTerminated = false, bool $skipSubprocesses = false): void;
 
@@ -291,8 +291,8 @@ interface RuntimeServiceInterface
      *
      * @param processInstanceId id of process instance to delete, cannot be null.
      * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
-     * @param skipCustomListeners if true, only the built-in {@link ExecutionListener}s
-     * are notified with the {@link ExecutionListener#EVENTNAME_END} event.
+     * @param skipCustomListeners if true, only the built-in ExecutionListeners
+     * are notified with the ExecutionListener#EVENTNAME_END event.
      * @param externallyTerminated indicator if deletion triggered from external context, for instance
      *                             REST API call
      * @param skipIoMappings specifies whether input/output mappings for tasks should be invoked
@@ -302,8 +302,8 @@ interface RuntimeServiceInterface
      * @throws BadUserRequestException
      *          when processInstanceId is null.
      * @throws AuthorizationException
-     *          if the user has no {@link Permissions#DELETE} permission on {@link Resources#PROCESS_INSTANCE}
-     *          or no {@link Permissions#DELETE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          if the user has no Permissions#DELETE permission on Resources#PROCESS_INSTANCE
+     *          or no Permissions#DELETE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
     public function deleteProcessInstanceIfExists(string $processInstanceId, string $deleteReason = null, bool $skipCustomListeners = false, bool $externallyTerminated = false, bool $skipIoMappings = false, bool $skipSubprocesses = false): void;
 
@@ -318,8 +318,8 @@ interface RuntimeServiceInterface
      * @throws ProcessEngineException
      *          when no execution exists with the given executionId.
      * @throws AuthorizationException
-     *          if the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_INSTANCE}
-     *          or no {@link Permissions#READ_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          if the user has no Permissions#READ permission on Resources#PROCESS_INSTANCE
+     *          or no Permissions#READ_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
     public function getActiveActivityIds(string $executionId): array;
 
@@ -347,7 +347,7 @@ interface RuntimeServiceInterface
      * different executions assigned, see below)</p>
      *
      * <h2>Relation to Executions</h2>
-     * <p>The {@link Execution} concept in the process engine is not completely aligned with the activity
+     * <p>The Execution concept in the process engine is not completely aligned with the activity
      * instance concept because the execution tree is in general not aligned with the activity / scope concept in
      * BPMN. In general, there is a n-1 relationship between Executions and ActivityInstances, ie. at a given
      * point in time, an activity instance can be linked to multiple executions. In addition, it is not guaranteed
@@ -368,8 +368,8 @@ interface RuntimeServiceInterface
      * @throws ProcessEngineException
      *          if processInstanceId is 'null' or an internal error occurs.
      * @throws AuthorizationException
-     *          if the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_INSTANCE}
-     *          or no {@link Permissions#READ_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          if the user has no Permissions#READ permission on Resources#PROCESS_INSTANCE
+     *          or no Permissions#READ_INSTANCE permission on Resources#PROCESS_DEFINITION.
      *
      * @since 7.0
      */
@@ -389,8 +389,8 @@ interface RuntimeServiceInterface
      * @throws ProcessEngineException
      *          when no execution is found for the given executionId.
      * @throws AuthorizationException
-     *          if the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-     *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          if the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+     *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
     public function signal(string $executionId, string $signalName = null, $signalData = null, array $processVariables = []): void;
 
@@ -405,10 +405,10 @@ interface RuntimeServiceInterface
      * @throws ProcessEngineException
      *          when no execution is found for the given executionId.
      * @throws AuthorizationException
-     *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_INSTANCE} or
-     *          no {@link Permissions#READ_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>if the user has no Permissions#READ permission on Resources#PROCESS_INSTANCE or
+     *          no Permissions#READ_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
-     *          the user has no {@link ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          the user has no ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
      */
     public function getVariables(string $executionId, array $variableNames = []): array;
 
@@ -416,17 +416,17 @@ interface RuntimeServiceInterface
      * The variable values for all given variableNames, takes all variables into account which are visible from the given execution scope (including parent scopes).
      * @param executionId id of process instance or execution, cannot be null.
      * @param variableNames the collection of variable names that should be retrieved.
-     * @param deserializeObjectValues if false, {@link SerializableValue}s will not be deserialized
+     * @param deserializeObjectValues if false, SerializableValues will not be deserialized
      *
      * @return VariableMapInterface the variables or an empty map if no such variables are found.
      *
      * @throws ProcessEngineException
      *          when no execution is found for the given executionId.
      * @throws AuthorizationException
-     *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_INSTANCE} or
-     *          no {@link Permissions#READ_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>if the user has no Permissions#READ permission on Resources#PROCESS_INSTANCE or
+     *          no Permissions#READ_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
-     *          the user has no {@link ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          the user has no ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
      *
      * @since 7.2
      *
@@ -444,10 +444,10 @@ interface RuntimeServiceInterface
      * @throws ProcessEngineException
      *          when no execution is found for the given executionId.
      * @throws AuthorizationException
-     *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_INSTANCE} or
-     *          no {@link Permissions#READ_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>if the user has no Permissions#READ permission on Resources#PROCESS_INSTANCE or
+     *          no Permissions#READ_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
-     *          the user has no {@link ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          the user has no ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
      */
     public function getVariablesLocal(string $executionId, array $variableNames = []): array;
 
@@ -455,17 +455,17 @@ interface RuntimeServiceInterface
      * The variable values for the given variableNames only taking the given execution scope into account, not looking in outer scopes.
      * @param executionId id of execution, cannot be null.
      * @param variableNames the collection of variable names that should be retrieved.
-     * @param deserializeObjectValues if false, {@link SerializableValue}s will not be deserialized
+     * @param deserializeObjectValues if false, SerializableValues will not be deserialized
      *
      * @return VariableMapInterface the variables or an empty map if no such variables are found.
      *
      * @throws ProcessEngineException
      *          when no execution is found for the given executionId.
      * @throws AuthorizationException
-     *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_INSTANCE} or
-     *          no {@link Permissions#READ_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>if the user has no Permissions#READ permission on Resources#PROCESS_INSTANCE or
+     *          no Permissions#READ_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
-     *          the user has no {@link ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          the user has no ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
      *
      * @since 7.2
      *
@@ -484,30 +484,30 @@ interface RuntimeServiceInterface
      * @throws ProcessEngineException
      *          when no execution is found for the given executionId.
      * @throws AuthorizationException
-     *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_INSTANCE} or
-     *          no {@link Permissions#READ_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>if the user has no Permissions#READ permission on Resources#PROCESS_INSTANCE or
+     *          no Permissions#READ_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
-     *          the user has no {@link ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          the user has no ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
      */
     public function getVariable(string $executionId, string $variableName);
 
     /**
-     * Returns a {@link TypedValue} for the variable. Searching for the variable is done in all scopes that are visible
+     * Returns a TypedValue for the variable. Searching for the variable is done in all scopes that are visible
      * to the given execution (including parent scopes). Returns null when no variable value is found with the given name.
      *
      * @param executionId id of process instance or execution, cannot be null.
      * @param variableName name of variable, cannot be null.
-     * @param deserializeValue if false, a {@link SerializableValue} will not be deserialized
+     * @param deserializeValue if false, a SerializableValue will not be deserialized
      *
      * @return TypedValueInterface the variable value or null if the variable is undefined.
      *
      * @throws ProcessEngineException
      *          when no execution is found for the given executionId.
      * @throws AuthorizationException
-     *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_INSTANCE} or
-     *          no {@link Permissions#READ_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>if the user has no Permissions#READ permission on Resources#PROCESS_INSTANCE or
+     *          no Permissions#READ_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
-     *          the user has no {@link ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          the user has no ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
      *
      * @since 7.2
      *
@@ -526,30 +526,30 @@ interface RuntimeServiceInterface
      * @throws ProcessEngineException
      *          when no execution is found for the given executionId.
      * @throws AuthorizationException
-     *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_INSTANCE} or
-     *          no {@link Permissions#READ_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>if the user has no Permissions#READ permission on Resources#PROCESS_INSTANCE or
+     *          no Permissions#READ_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
-     *          the user has no {@link ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          the user has no ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
      */
     public function getVariableLocal(string $executionId, string $variableName);
 
     /**
-     * Returns a {@link TypedValue} for the variable. Searching for the variable is done in all scopes that are visible
+     * Returns a TypedValue for the variable. Searching for the variable is done in all scopes that are visible
      * to the given execution (and not searching parent scopes). Returns null when no variable value is found with the given name.
      *
      * @param executionId id of process instance or execution, cannot be null.
      * @param variableName name of variable, cannot be null.
-     * @param deserializeValue if false, a {@link SerializableValue} will not be deserialized
+     * @param deserializeValue if false, a SerializableValue will not be deserialized
      *
      * @return TypedValueInterface the variable value or null if the variable is undefined.
      *
      * @throws ProcessEngineException
      *          when no execution is found for the given executionId.
      * @throws AuthorizationException
-     *          <li>if the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_INSTANCE} or
-     *          no {@link Permissions#READ_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>if the user has no Permissions#READ permission on Resources#PROCESS_INSTANCE or
+     *          no Permissions#READ_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
-     *          the user has no {@link ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          the user has no ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
      *
      * @since 7.2
      *
@@ -570,10 +570,10 @@ interface RuntimeServiceInterface
      *          when no execution is found for the given executionId.
      * @throws AuthorizationException
      *          if the user has none of the following:
-     *          <li>{@link ProcessInstancePermissions#UPDATE_VARIABLE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link ProcessDefinitionPermissions#UPDATE_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *          <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>ProcessInstancePermissions#UPDATE_VARIABLE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>ProcessDefinitionPermissions#UPDATE_INSTANCE_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
+     *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
     public function setVariable(string $executionId, string $variableName, $value): void;
 
@@ -590,10 +590,10 @@ interface RuntimeServiceInterface
      *          when no execution is found for the given executionId.
      * @throws AuthorizationException
      *          if the user has none of the following:
-     *          <li>{@link ProcessInstancePermissions#UPDATE_VARIABLE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link ProcessDefinitionPermissions#UPDATE_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *          <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>ProcessInstancePermissions#UPDATE_VARIABLE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>ProcessDefinitionPermissions#UPDATE_INSTANCE_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
+     *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
     public function setVariableLocal(string $executionId, string $variableName, $value): void;
 
@@ -608,10 +608,10 @@ interface RuntimeServiceInterface
      *          when no execution is found for the given executionId.
      * @throws AuthorizationException
      *          if the user has none of the following:
-     *          <li>{@link ProcessInstancePermissions#UPDATE_VARIABLE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link ProcessDefinitionPermissions#UPDATE_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *          <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>ProcessInstancePermissions#UPDATE_VARIABLE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>ProcessDefinitionPermissions#UPDATE_INSTANCE_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
+     *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
     public function setVariables(string $executionId, array $variables = []): void;
 
@@ -625,10 +625,10 @@ interface RuntimeServiceInterface
      *          when no execution is found for the given executionId.
      * @throws AuthorizationException
      *          if the user has none of the following:
-     *          <li>{@link ProcessInstancePermissions#UPDATE_VARIABLE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link ProcessDefinitionPermissions#UPDATE_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *          <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>ProcessInstancePermissions#UPDATE_VARIABLE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>ProcessDefinitionPermissions#UPDATE_INSTANCE_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
+     *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
     public function setVariablesLocal(string $executionId, array $variables = []): void;
 
@@ -657,8 +657,8 @@ interface RuntimeServiceInterface
      *   <li>when a transient variable is set</li>
      * </ul>
      * @throws ProcessEngineException when the java serialization format is prohibited
-     * @throws AuthorizationException when the user has no {@link BatchPermissions#CREATE} or
-     * {@link BatchPermissions#CREATE_BATCH_SET_VARIABLES} permission on {@link Resources#BATCH}.
+     * @throws AuthorizationException when the user has no BatchPermissions#CREATE or
+     * BatchPermissions#CREATE_BATCH_SET_VARIABLES permission on Resources#BATCH.
      *
      * @return BatchInterface the batch which sets the variables asynchronously.
      */
@@ -679,10 +679,10 @@ interface RuntimeServiceInterface
      *          when no execution is found for the given executionId.
      * @throws AuthorizationException
      *          if the user has none of the following:
-     *          <li>{@link ProcessInstancePermissions#UPDATE_VARIABLE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link ProcessDefinitionPermissions#UPDATE_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *          <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>ProcessInstancePermissions#UPDATE_VARIABLE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>ProcessDefinitionPermissions#UPDATE_INSTANCE_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
+     *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
     public function removeVariable(string $executionId, string $variableName): void;
 
@@ -696,10 +696,10 @@ interface RuntimeServiceInterface
      *          when no execution is found for the given executionId.
      * @throws AuthorizationException
      *          if the user has none of the following:
-     *          <li>{@link ProcessInstancePermissions#UPDATE_VARIABLE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link ProcessDefinitionPermissions#UPDATE_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *          <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>ProcessInstancePermissions#UPDATE_VARIABLE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>ProcessDefinitionPermissions#UPDATE_INSTANCE_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
+     *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
     public function removeVariableLocal(string $executionId, string $variableName): void;
 
@@ -713,10 +713,10 @@ interface RuntimeServiceInterface
      *          when no execution is found for the given executionId.
      * @throws AuthorizationException
      *          if the user has none of the following:
-     *          <li>{@link ProcessInstancePermissions#UPDATE_VARIABLE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link ProcessDefinitionPermissions#UPDATE_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *          <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>ProcessInstancePermissions#UPDATE_VARIABLE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>ProcessDefinitionPermissions#UPDATE_INSTANCE_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
+     *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
     public function removeVariables(string $executionId, array $variableNames = []): void;
 
@@ -730,51 +730,51 @@ interface RuntimeServiceInterface
      *          when no execution is found for the given executionId.
      * @throws AuthorizationException
      *          if the user has none of the following:
-     *          <li>{@link ProcessInstancePermissions#UPDATE_VARIABLE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link ProcessDefinitionPermissions#UPDATE_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *          <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>ProcessInstancePermissions#UPDATE_VARIABLE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>ProcessDefinitionPermissions#UPDATE_INSTANCE_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
+     *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
     public function removeVariablesLocal(string $executionId, array $variableNames = []): void;
 
     // Queries ////////////////////////////////////////////////////////
 
-    /** Creates a new {@link ExecutionQuery} instance,
+    /** Creates a new ExecutionQuery instance,
      * that can be used to query the executions and process instances. */
     public function createExecutionQuery(): ExecutionQueryInterface;
 
     /**
-     * creates a new {@link NativeExecutionQuery} to query {@link Execution}s
+     * creates a new NativeExecutionQuery to query Executions
      * by SQL directly
      */
     public function createNativeExecutionQuery(): NativeExecutionQueryInterface;
 
     /**
-     * Creates a new {@link ProcessInstanceQuery} instance, that can be used
+     * Creates a new ProcessInstanceQuery instance, that can be used
      * to query process instances.
      */
     public function createProcessInstanceQuery(): ProcessInstanceQueryInterface;
 
     /**
-     * creates a new {@link NativeProcessInstanceQuery} to query {@link ProcessInstance}s
+     * creates a new NativeProcessInstanceQuery to query ProcessInstances
      * by SQL directly
      */
     public function createNativeProcessInstanceQuery(): NativeProcessInstanceQueryInterface;
 
     /**
-     * Creates a new {@link IncidentQuery} instance, that can be used
+     * Creates a new IncidentQuery instance, that can be used
      * to query incidents.
      */
     public function createIncidentQuery(): IncidentQueryInterface;
 
     /**
-     * Creates a new {@link EventSubscriptionQuery} instance, that can be used to query
+     * Creates a new EventSubscriptionQuery instance, that can be used to query
      * event subscriptions.
      */
     public function createEventSubscriptionQuery(): EventSubscriptionQueryInterface;
 
     /**
-     * Creates a new {@link VariableInstanceQuery} instance, that can be used to query
+     * Creates a new VariableInstanceQuery instance, that can be used to query
      * variable instances.
      */
     public function createVariableInstanceQuery(): VariableInstanceQueryInterface;
@@ -812,10 +812,10 @@ interface RuntimeServiceInterface
      *          if no such processInstance can be found.
      * @throws AuthorizationException
      *          if the user has none of the following:
-     *          <li>{@link ProcessInstancePermissions#SUSPEND} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link ProcessDefinitionPermissions#SUSPEND_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *          <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>ProcessInstancePermissions#SUSPEND permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>ProcessDefinitionPermissions#SUSPEND_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
+     *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
     public function suspendProcessInstanceById(string $processInstanceId): void;
 
@@ -850,10 +850,10 @@ interface RuntimeServiceInterface
      *          if no such processInstance can be found.
      * @throws AuthorizationException
      *          if the user has none of the following:
-     *          <li>{@link ProcessInstancePermissions#SUSPEND} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link ProcessDefinitionPermissions#SUSPEND_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *          <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>ProcessInstancePermissions#SUSPEND permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>ProcessDefinitionPermissions#SUSPEND_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
+     *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
     public function suspendProcessInstanceByProcessDefinitionId(string $processDefinitionId): void;
 
@@ -888,10 +888,10 @@ interface RuntimeServiceInterface
      *          if no such processInstance can be found.
      * @throws AuthorizationException
      *          if the user has none of the following:
-     *          <li>{@link ProcessInstancePermissions#SUSPEND} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link ProcessDefinitionPermissions#SUSPEND_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *          <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>ProcessInstancePermissions#SUSPEND permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>ProcessDefinitionPermissions#SUSPEND_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
+     *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
     public function suspendProcessInstanceByProcessDefinitionKey(string $processDefinitionKey): void;
 
@@ -908,10 +908,10 @@ interface RuntimeServiceInterface
      *          if no such processInstance can be found.
      * @throws AuthorizationException
      *          if the user has none of the following:
-     *          <li>{@link ProcessInstancePermissions#SUSPEND} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link ProcessDefinitionPermissions#SUSPEND_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *          <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>ProcessInstancePermissions#SUSPEND permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>ProcessDefinitionPermissions#SUSPEND_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
+     *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
     public function activateProcessInstanceById(string $processInstanceId): void;
 
@@ -928,10 +928,10 @@ interface RuntimeServiceInterface
      *          if the process definition id is null
      * @throws AuthorizationException
      *          if the user has none of the following:
-     *          <li>{@link ProcessInstancePermissions#SUSPEND} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link ProcessDefinitionPermissions#SUSPEND_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *          <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>ProcessInstancePermissions#SUSPEND permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>ProcessDefinitionPermissions#SUSPEND_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
+     *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
     public function activateProcessInstanceByProcessDefinitionId(string $processDefinitionId): void;
 
@@ -948,10 +948,10 @@ interface RuntimeServiceInterface
      *          if the process definition id is null
      * @throws AuthorizationException
      *          if the user has none of the following:
-     *          <li>{@link ProcessInstancePermissions#SUSPEND} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link ProcessDefinitionPermissions#SUSPEND_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *          <li>{@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *          <li>{@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *          <li>ProcessInstancePermissions#SUSPEND permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>ProcessDefinitionPermissions#SUSPEND_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
+     *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
+     *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
     public function activateProcessInstanceByProcessDefinitionKey(string $processDefinitionKey): void;
 
@@ -959,8 +959,8 @@ interface RuntimeServiceInterface
      * Activate or suspend process instances using a fluent builder. Specify the
      * instances by calling one of the <i>by</i> methods, like
      * <i>byProcessInstanceId</i>. To update the suspension state call
-     * {@link UpdateProcessInstanceSuspensionStateBuilder#activate()} or
-     * {@link UpdateProcessInstanceSuspensionStateBuilder#suspend()}.
+     * UpdateProcessInstanceSuspensionStateBuilder#activate() or
+     * UpdateProcessInstanceSuspensionStateBuilder#suspend().
      *
      * @return UpdateProcessInstanceSuspensionStateSelectBuilderInterface the builder to update the suspension state
      */
@@ -988,8 +988,8 @@ interface RuntimeServiceInterface
      *          if no such execution exists or if the execution
      *          has not subscribed to the signal
      * @throws AuthorizationException
-     *          if the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-     *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          if the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+     *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
     public function signalEventReceived(string $signalName, string $executionId = null, array $processVariables = []): void;
 
@@ -1023,8 +1023,8 @@ interface RuntimeServiceInterface
      *          if no such execution exists or if the execution
      *          has not subscribed to the signal
      * @throws AuthorizationException
-     *          if the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-     *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          if the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+     *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
     public function messageEventReceived(string $messageName, string $executionId, array $processVariables = []): void;
 
@@ -1069,8 +1069,8 @@ interface RuntimeServiceInterface
      * @throws ProcessEngineException
      *          if messageName is null and businessKey is null and correlationKeys is null
      * @throws AuthorizationException
-     *          if the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-     *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          if the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+     *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
     public function correlateMessage(string $messageName, string $businessKey = null, array $correlationKeys = null, array $processVariables = null): void;
 
@@ -1128,7 +1128,7 @@ interface RuntimeServiceInterface
      * blocks the caller until the migration was completed. The migration can only be
      * successfully completed if all process instances can be migrated.
      *
-     * If the migration is executed asynchronously a {@link Batch} is immediately returned.
+     * If the migration is executed asynchronously a Batch is immediately returned.
      * The migration is then executed as jobs from the process engine and the batch can
      * be used to track the progress of the migration. The Batch splits the migration
      * in smaller chunks which will be executed independently.
@@ -1148,7 +1148,7 @@ interface RuntimeServiceInterface
      * blocks the caller until the modification was completed. The modification can only be
      * successfully completed if all process instances can be modified.
      *
-     * If the modification is executed asynchronously a {@link Batch} is immediately returned.
+     * If the modification is executed asynchronously a Batch is immediately returned.
      * The modification is then executed as jobs from the process engine and the batch can
      * be used to track the progress of the modification. The Batch splits the modification
      * in smaller chunks which will be executed independently.
@@ -1169,9 +1169,9 @@ interface RuntimeServiceInterface
      * @throws AuthorizationException
      *          if the user has not all of the following permissions
      *     <ul>
-     *       <li>{@link Permissions#CREATE} permission on {@link Resources#PROCESS_INSTANCE}</li>
-     *       <li>{@link Permissions#CREATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
-     *       <li>{@link Permissions#READ_HISTORY} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *       <li>Permissions#CREATE permission on Resources#PROCESS_INSTANCE</li>
+     *       <li>Permissions#CREATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
+     *       <li>Permissions#READ_HISTORY permission on Resources#PROCESS_DEFINITION</li>
      *     </ul>
      */
     public function restartProcessInstances(string $processDefinitionId): RestartProcessInstanceBuilderInterface;
@@ -1187,8 +1187,8 @@ interface RuntimeServiceInterface
      * @return a new incident
      *
      * @throws AuthorizationException
-     *          if the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-     *          and no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          if the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+     *          and no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
     public function createIncident(string $incidentType, string $executionId, string $configuration, string $message = null): IncidentInterface;
 
@@ -1198,8 +1198,8 @@ interface RuntimeServiceInterface
      * @param incidentId the id of an incident to resolve
      *
      * @throws AuthorizationException
-     *          if the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-     *          and no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          if the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+     *          and no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
     public function resolveIncident(string $incidentId): void;
 
@@ -1209,8 +1209,8 @@ interface RuntimeServiceInterface
      * @throws NotValidException when incident id is {@code null}
      * @throws BadUserRequestException when no incident could be found
      * @throws AuthorizationException
-     *          if the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-     *          and no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          if the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+     *          and no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      *
      * @param incidentId of the incident that the annotation is updated at
      * @param annotation that is set to the incident
@@ -1225,8 +1225,8 @@ interface RuntimeServiceInterface
      * @throws NotValidException when incident id is {@code null}
      * @throws BadUserRequestException when no incident could be found
      * @throws AuthorizationException
-     *          if the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-     *          and no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          if the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+     *          and no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      *
      * @param incidentId of the incident that the annotation is cleared at
      *

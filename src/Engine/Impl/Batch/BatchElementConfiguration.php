@@ -61,7 +61,7 @@ class BatchElementConfiguration
     }
 
     /**
-     * @return DeploymentMappings the list of {@link DeploymentMapping}s
+     * @return DeploymentMappings the list of DeploymentMappings
      */
     public function getMappings(): DeploymentMappings
     {

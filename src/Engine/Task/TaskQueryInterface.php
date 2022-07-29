@@ -126,7 +126,7 @@ interface TaskQueryInterface extends QueryInterface
     /** Only select tasks which have an assignee. */
     public function taskAssigned(): TaskQueryInterface;
 
-    /** Only select tasks with the given {@link DelegationState}. */
+    /** Only select tasks with the given DelegationState. */
     public function taskDelegationState(string $delegationState): TaskQueryInterface;
 
     /**
@@ -180,11 +180,11 @@ interface TaskQueryInterface extends QueryInterface
      */
     public function taskCandidateUserExpression(string $candidateUserExpression): TaskQueryInterface;
 
-    /** Only select tasks for which there exist an {@link IdentityLink} with the given user */
+    /** Only select tasks for which there exist an IdentityLink with the given user */
     public function taskInvolvedUser(string $involvedUser): TaskQueryInterface;
 
     /**
-     * <p>Only select tasks for which there exist an {@link IdentityLink} with the
+     * <p>Only select tasks for which there exist an IdentityLink with the
      * described user by the given expression</p>
      *
      * @throws BadUserRequestException
@@ -414,7 +414,7 @@ interface TaskQueryInterface extends QueryInterface
     /**
      * Only select tasks which have a local task variable with the given name, but
      * with a different value than the passed value.
-     * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
+     * Byte-arrays and Serializable objects (which are not primitive type wrappers)
      * are not supported.
      */
     public function taskVariableValueNotEquals(string $variableName, $variableValue): TaskQueryInterface;
@@ -459,7 +459,7 @@ interface TaskQueryInterface extends QueryInterface
     /**
      * Only select tasks which have a variable with the given name, but
      * with a different value than the passed value.
-     * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
+     * Byte-arrays and Serializable objects (which are not primitive type wrappers)
      * are not supported.
      */
     public function processVariableValueNotEquals(string $variableName, $variableValue): TaskQueryInterface;
@@ -670,7 +670,7 @@ interface TaskQueryInterface extends QueryInterface
 
     /**
      * If called, the form keys of the fetched tasks are initialized and
-     * {@link Task#getFormKey()} will return a value (in case the task has a form key).
+     * Task#getFormKey() will return a value (in case the task has a form key).
      *
      * @throws ProcessEngineException
      *   When method has been executed within "or query". Method must be executed on the base query.
@@ -844,7 +844,7 @@ interface TaskQueryInterface extends QueryInterface
      * will be linked together with an OR expression until the OR query is terminated. To terminate the OR query right
      * after the last filter criterion was applied, {@link #endOr()} must be invoked.</p>
      *
-     * @return an object of the type {@link TaskQuery} on which an arbitrary amount of filter criteria could be applied.
+     * @return an object of the type TaskQuery on which an arbitrary amount of filter criteria could be applied.
      * The several filter criteria will be linked together by an OR expression.
      *
      * @throws ProcessEngineException when or() has been invoked directly after or() or after or() and trailing filter
@@ -858,7 +858,7 @@ interface TaskQueryInterface extends QueryInterface
      * OR query which has been started by invoking {@link #or()}, endOr() must be invoked. Filter criteria which are
      * applied after calling endOr() are linked together by an AND expression.</p>
      *
-     * @return an object of the type {@link TaskQuery} on which an arbitrary amount of filter criteria could be applied.
+     * @return an object of the type TaskQuery on which an arbitrary amount of filter criteria could be applied.
      * The filter criteria will be linked together by an AND expression.
      *
      * @throws ProcessEngineException when endOr() has been invoked before {@link #or()} was invoked. To prevent throwing

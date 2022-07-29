@@ -135,8 +135,8 @@ interface HistoryEventProducerInterface
      * used for logging actions such as creating a new Task, completing a task, canceling a
      * a process instance, ...
      *
-     * @param context the {@link UserOperationLogContext} providing the needed informations
-     * @return a {@link List} of {@link HistoryEvent}s
+     * @param context the UserOperationLogContext providing the needed informations
+     * @return a List of HistoryEvents
      */
     public function createUserOperationLogEvents(UserOperationLogContext $context): array;
 

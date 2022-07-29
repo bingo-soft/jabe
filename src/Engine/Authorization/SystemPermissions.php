@@ -58,6 +58,8 @@ class SystemPermissions implements PermissionInterface
         return self::$DELETE;
     }
 
+    private static $RESOURCES;
+
     public static function resources(): array
     {
         if (self::$RESOURCES === null) {

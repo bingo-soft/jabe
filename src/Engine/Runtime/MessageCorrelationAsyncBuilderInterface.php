@@ -109,9 +109,9 @@ interface MessageCorrelationAsyncBuilderInterface
      * @throws BadUserRequestException
      *           when no process instances are found with the given ids or queries
      * @throws AuthorizationException
-     *           when the user has no {@link BatchPermissions#CREATE} or
-     *           {@link BatchPermissions#CREATE_BATCH_SET_VARIABLES} permission on
-     *           {@link Resources#BATCH}
+     *           when the user has no BatchPermissions#CREATE or
+     *           BatchPermissions#CREATE_BATCH_SET_VARIABLES permission on
+     *           Resources#BATCH
      */
     public function correlateAllAsync(): BatchInterface;
 }

@@ -20,7 +20,7 @@ interface FunctionNode extends Node
     public function getParamCount(): int;
 
     /**
-     * @return <code>true</code> if this node supports varargs.
+     * @return bool true if this node supports varargs.
      */
     public function isVarArgs(): bool;
 }

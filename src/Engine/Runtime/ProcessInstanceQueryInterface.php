@@ -92,8 +92,8 @@ interface ProcessInstanceQueryInterface extends QueryInterface
     /**
      * Only select process instances which have a global variable with the given value. The type
      * of variable is determined based on the value, using types configured in
-     * {@link ProcessEngineConfiguration#getVariableSerializers()}.
-     * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
+     * ProcessEngineConfiguration#getVariableSerializers().
+     * Byte-arrays and Serializable objects (which are not primitive type wrappers)
      * are not supported.
      * @param name name of the variable, cannot be null.
      */
@@ -102,7 +102,7 @@ interface ProcessInstanceQueryInterface extends QueryInterface
     /**
      * Only select process instances which have a global variable with the given name, but
      * with a different value than the passed value.
-     * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
+     * Byte-arrays and Serializable objects (which are not primitive type wrappers)
      * are not supported.
      * @param name name of the variable, cannot be null.
      */
@@ -111,7 +111,7 @@ interface ProcessInstanceQueryInterface extends QueryInterface
 
     /**
      * Only select process instances which have a variable value greater than the passed value.
-     * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
+     * Booleans, Byte-arrays and Serializable objects (which are not primitive type wrappers)
      * are not supported.
      * @param name variable name, cannot be null.
      * @param value variable value, cannot be null.
@@ -120,7 +120,7 @@ interface ProcessInstanceQueryInterface extends QueryInterface
 
     /**
      * Only select process instances which have a global variable value greater than or equal to
-     * the passed value. Booleans, Byte-arrays and {@link Serializable} objects (which
+     * the passed value. Booleans, Byte-arrays and Serializable objects (which
      * are not primitive type wrappers) are not supported.
      * @param name variable name, cannot be null.
      * @param value variable value, cannot be null.
@@ -129,7 +129,7 @@ interface ProcessInstanceQueryInterface extends QueryInterface
 
     /**
      * Only select process instances which have a global variable value less than the passed value.
-     * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
+     * Booleans, Byte-arrays and Serializable objects (which are not primitive type wrappers)
      * are not supported.
      * @param name variable name, cannot be null.
      * @param value variable value, cannot be null.
@@ -138,7 +138,7 @@ interface ProcessInstanceQueryInterface extends QueryInterface
 
     /**
      * Only select process instances which have a global variable value less than or equal to the passed value.
-     * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
+     * Booleans, Byte-arrays and Serializable objects (which are not primitive type wrappers)
      * are not supported.
      * @param name variable name, cannot be null.
      * @param value variable value, cannot be null.
@@ -245,7 +245,7 @@ interface ProcessInstanceQueryInterface extends QueryInterface
      * will be linked together with an OR expression until the OR query is terminated. To terminate the OR query right
      * after the last filter criterion was applied, {@link #endOr()} must be invoked.</p>
      *
-     * @return and object of the type {@link ProcessInstanceQuery} on which an arbitrary amount of filter criteria could be applied.
+     * @return and object of the type ProcessInstanceQuery on which an arbitrary amount of filter criteria could be applied.
      * The several filter criteria will be linked together by an OR expression.
      *
      * @throws ProcessEngineException when or() has been invoked directly after or() or after or() and trailing filter
@@ -259,7 +259,7 @@ interface ProcessInstanceQueryInterface extends QueryInterface
      * OR query which has been started by invoking {@link #or()}, endOr() must be invoked. Filter criteria which are
      * applied after calling endOr() are linked together by an AND expression.</p>
      *
-     * @return and object of the type {@link ProcessInstanceQuery} on which an arbitrary amount of filter criteria could be applied.
+     * @return and object of the type ProcessInstanceQuery on which an arbitrary amount of filter criteria could be applied.
      * The filter criteria will be linked together by an AND expression.
      *
      * @throws ProcessEngineException when endOr() has been invoked before {@link #or()} was invoked. To prevent throwing

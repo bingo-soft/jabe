@@ -118,7 +118,7 @@ interface UserOperationLogEntryInterface
     /**
      * The unique identifier of this operation.
      *
-     * If an operation modifies multiple properties, multiple {@link UserOperationLogEntry} instances will be
+     * If an operation modifies multiple properties, multiple UserOperationLogEntry instances will be
      * created with a common operationId. This allows grouping multiple entries which are part of a composite operation.
      */
     public function getOperationId(): string;

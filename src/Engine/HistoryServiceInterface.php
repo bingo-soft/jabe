@@ -30,28 +30,28 @@ use Jabe\Engine\Batch\BatchInterface;
 interface HistoryServiceInterface
 {
     /**
-     * <p>Creates a new programmatic query to search for {@link HistoricProcessInstance}s.
+     * <p>Creates a new programmatic query to search for HistoricProcessInstances.
      *
      * <p>The result of the query is empty in the following cases:
      * <ul>
-     *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
-     *   {@link Resources#PROCESS_DEFINITION} OR
-     *   <li>The user has no {@link HistoricProcessInstancePermissions#READ} permission on
-     *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
-     *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
+     *   <li>The user has no Permissions#READ_HISTORY permission on
+     *   Resources#PROCESS_DEFINITION OR
+     *   <li>The user has no HistoricProcessInstancePermissions#READ permission on
+     *       Resources#HISTORIC_PROCESS_INSTANCE ({@code enableHistoricInstancePermissions} in
+     *       ProcessEngineConfigurationImpl must be set to {@code true})
      * */
     public function createHistoricProcessInstanceQuery(): HistoricProcessInstanceQueryInterface;
 
     /**
-     * <p>Creates a new programmatic query to search for {@link HistoricActivityInstance}s.
+     * <p>Creates a new programmatic query to search for HistoricActivityInstances.
      *
      * <p>The result of the query is empty in the following cases:
      * <ul>
-     *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
-     *   {@link Resources#PROCESS_DEFINITION} OR
-     *   <li>The user has no {@link HistoricProcessInstancePermissions#READ} permission on
-     *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
-     *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
+     *   <li>The user has no Permissions#READ_HISTORY permission on
+     *   Resources#PROCESS_DEFINITION OR
+     *   <li>The user has no HistoricProcessInstancePermissions#READ permission on
+     *       Resources#HISTORIC_PROCESS_INSTANCE ({@code enableHistoricInstancePermissions} in
+     *       ProcessEngineConfigurationImpl must be set to {@code true})
      *
      * */
     public function createHistoricActivityInstanceQuery(): HistoricActivityInstanceQueryInterface;
@@ -60,87 +60,87 @@ interface HistoryServiceInterface
      * <p>Query for the number of historic activity instances aggregated by activities of a single
      * process definition.
      *
-     * <p>The result of the query is empty when the user has no {@link Permissions#READ_HISTORY}
-     * permission on {@link Resources#PROCESS_DEFINITION}
+     * <p>The result of the query is empty when the user has no Permissions#READ_HISTORY
+     * permission on Resources#PROCESS_DEFINITION
      */
     public function createHistoricActivityStatisticsQuery(string $processDefinitionId): HistoricActivityStatisticsQueryInterface;
 
     /**
-     * <p>Creates a new programmatic query to search for {@link HistoricTaskInstance}s.
+     * <p>Creates a new programmatic query to search for HistoricTaskInstances.
      *
      * <p>The result of the query is empty in the following cases:
      * <ul>
-     *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
-     *   {@link Resources#PROCESS_DEFINITION} OR
-     *   <li>The user has no {@link HistoricProcessInstancePermissions#READ} permission on
-     *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
-     *       {@link ProcessEngineConfigurationImpl} must be set to {@code true}) OR
-     *   <li>The user has no {@link HistoricTaskPermissions#READ} permission on
-     *       {@link Resources#HISTORIC_TASK} ({@code enableHistoricInstancePermissions} in
-     *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
+     *   <li>The user has no Permissions#READ_HISTORY permission on
+     *   Resources#PROCESS_DEFINITION OR
+     *   <li>The user has no HistoricProcessInstancePermissions#READ permission on
+     *       Resources#HISTORIC_PROCESS_INSTANCE ({@code enableHistoricInstancePermissions} in
+     *       ProcessEngineConfigurationImpl must be set to {@code true}) OR
+     *   <li>The user has no HistoricTaskPermissions#READ permission on
+     *       Resources#HISTORIC_TASK ({@code enableHistoricInstancePermissions} in
+     *       ProcessEngineConfigurationImpl must be set to {@code true})
      * */
     public function createHistoricTaskInstanceQuery(): HistoricTaskInstanceQueryInterface;
 
     /**
-     * <p>Creates a new programmatic query to search for {@link HistoricDetail}s.
+     * <p>Creates a new programmatic query to search for HistoricDetails.
      *
      * <p>The result of the query is empty in the following cases:
      * <ul>
-     *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
-     *       {@link Resources#PROCESS_DEFINITION} OR
-     *   <li>The user has no {@link HistoricTaskPermissions#READ} permission on
-     *       {@link Resources#HISTORIC_TASK} ({@code enableHistoricInstancePermissions} in
-     *       {@link ProcessEngineConfigurationImpl} must be set to {@code true}) OR
-     *   <li>The user has no {@link HistoricProcessInstancePermissions#READ} permission on
-     *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
-     *       {@link ProcessEngineConfigurationImpl} must be set to {@code true}) OR
-     *   <li>The user has no {@link ProcessDefinitionPermissions#READ_HISTORY_VARIABLE} permission on
-     *       {@link Resources#PROCESS_DEFINITION}
-     *       ({@link ProcessEngineConfigurationImpl#enforceSpecificVariablePermission} must be set to
+     *   <li>The user has no Permissions#READ_HISTORY permission on
+     *       Resources#PROCESS_DEFINITION OR
+     *   <li>The user has no HistoricTaskPermissions#READ permission on
+     *       Resources#HISTORIC_TASK ({@code enableHistoricInstancePermissions} in
+     *       ProcessEngineConfigurationImpl must be set to {@code true}) OR
+     *   <li>The user has no HistoricProcessInstancePermissions#READ permission on
+     *       Resources#HISTORIC_PROCESS_INSTANCE ({@code enableHistoricInstancePermissions} in
+     *       ProcessEngineConfigurationImpl must be set to {@code true}) OR
+     *   <li>The user has no ProcessDefinitionPermissions#READ_HISTORY_VARIABLE permission on
+     *       Resources#PROCESS_DEFINITION
+     *       (ProcessEngineConfigurationImpl#enforceSpecificVariablePermission must be set to
      *       {@code true}) OR
-     *   <li>The user has no {@link HistoricTaskPermissions#READ_VARIABLE} permission on
-     *       {@link Resources#HISTORIC_TASK} ({@code enforceSpecificVariablePermission} and
+     *   <li>The user has no HistoricTaskPermissions#READ_VARIABLE permission on
+     *       Resources#HISTORIC_TASK ({@code enforceSpecificVariablePermission} and
      *       {@code enableHistoricInstancePermissions}
-     *       in {@link ProcessEngineConfigurationImpl} must be set to {@code true})
+     *       in ProcessEngineConfigurationImpl must be set to {@code true})
      * */
     public function createHistoricDetailQuery(): HistoricDetailQueryInterface;
 
     /**
-     * <p>Creates a new programmatic query to search for {@link HistoricVariableInstance}s.
+     * <p>Creates a new programmatic query to search for HistoricVariableInstances.
      *
      * <p>The result of the query is empty in the following cases:
      * <ul>
-     *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
-     *       {@link Resources#PROCESS_DEFINITION} OR
-     *   <li>The user has no {@link HistoricTaskPermissions#READ} permission on
-     *       {@link Resources#HISTORIC_TASK} ({@code enableHistoricInstancePermissions} in
-     *       {@link ProcessEngineConfigurationImpl} must be set to {@code true}) OR
-     *   <li>The user has no {@link HistoricProcessInstancePermissions#READ} permission on
-     *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
-     *       {@link ProcessEngineConfigurationImpl} must be set to {@code true}) OR
-     *   <li>The user has no {@link ProcessDefinitionPermissions#READ_HISTORY_VARIABLE} permission on
-     *       {@link Resources#PROCESS_DEFINITION}
-     *       ({@link ProcessEngineConfigurationImpl#enforceSpecificVariablePermission} must be set to
+     *   <li>The user has no Permissions#READ_HISTORY permission on
+     *       Resources#PROCESS_DEFINITION OR
+     *   <li>The user has no HistoricTaskPermissions#READ permission on
+     *       Resources#HISTORIC_TASK ({@code enableHistoricInstancePermissions} in
+     *       ProcessEngineConfigurationImpl must be set to {@code true}) OR
+     *   <li>The user has no HistoricProcessInstancePermissions#READ permission on
+     *       Resources#HISTORIC_PROCESS_INSTANCE ({@code enableHistoricInstancePermissions} in
+     *       ProcessEngineConfigurationImpl must be set to {@code true}) OR
+     *   <li>The user has no ProcessDefinitionPermissions#READ_HISTORY_VARIABLE permission on
+     *       Resources#PROCESS_DEFINITION
+     *       (ProcessEngineConfigurationImpl#enforceSpecificVariablePermission must be set to
      *       {@code true}) OR
-     *   <li>The user has no {@link HistoricTaskPermissions#READ_VARIABLE} permission on
-     *       {@link Resources#HISTORIC_TASK} ({@code enforceSpecificVariablePermission} and
+     *   <li>The user has no HistoricTaskPermissions#READ_VARIABLE permission on
+     *       Resources#HISTORIC_TASK ({@code enforceSpecificVariablePermission} and
      *       {@code enableHistoricInstancePermissions}
-     *       in {@link ProcessEngineConfigurationImpl} must be set to {@code true})
+     *       in ProcessEngineConfigurationImpl must be set to {@code true})
      * */
     public function createHistoricVariableInstanceQuery(): HistoricVariableInstanceQueryInterface;
 
-    /** <p>Creates a new programmatic query to search for {@link UserOperationLogEntry} instances.
+    /** <p>Creates a new programmatic query to search for UserOperationLogEntry instances.
      *
      * <p>The result of the query is empty in the following cases:
      * <ul>
-     *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
-     *   {@link Resources#PROCESS_DEFINITION} OR
-     *   <li>The user has no {@link HistoricProcessInstancePermissions#READ} permission on
-     *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
-     *       {@link ProcessEngineConfigurationImpl} must be set to {@code true}) OR
-     *   <li>The user has no {@link HistoricTaskPermissions#READ} permission on
-     *       {@link Resources#HISTORIC_TASK} ({@code enableHistoricInstancePermissions} in
-     *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
+     *   <li>The user has no Permissions#READ_HISTORY permission on
+     *   Resources#PROCESS_DEFINITION OR
+     *   <li>The user has no HistoricProcessInstancePermissions#READ permission on
+     *       Resources#HISTORIC_PROCESS_INSTANCE ({@code enableHistoricInstancePermissions} in
+     *       ProcessEngineConfigurationImpl must be set to {@code true}) OR
+     *   <li>The user has no HistoricTaskPermissions#READ permission on
+     *       Resources#HISTORIC_TASK ({@code enableHistoricInstancePermissions} in
+     *       ProcessEngineConfigurationImpl must be set to {@code true})
      *
      * */
     public function createUserOperationLogQuery(): UserOperationLogQueryInterface;
@@ -150,11 +150,11 @@ interface HistoryServiceInterface
      *
      * <p>The result of the query is empty in the following cases:
      * <ul>
-     *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
-     *   {@link Resources#PROCESS_DEFINITION} OR
-     *   <li>The user has no {@link HistoricProcessInstancePermissions#READ} permission on
-     *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
-     *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
+     *   <li>The user has no Permissions#READ_HISTORY permission on
+     *   Resources#PROCESS_DEFINITION OR
+     *   <li>The user has no HistoricProcessInstancePermissions#READ permission on
+     *       Resources#HISTORIC_PROCESS_INSTANCE ({@code enableHistoricInstancePermissions} in
+     *       ProcessEngineConfigurationImpl must be set to {@code true})
      * */
     public function createHistoricIncidentQuery(): HistoricIncidentQueryInterface;
 
@@ -164,11 +164,11 @@ interface HistoryServiceInterface
      *
      * <p>The result of the query is empty in the following cases:
      * <ul>
-     *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
-     *   {@link Resources#PROCESS_DEFINITION} OR
-     *   <li>The user has no {@link HistoricTaskPermissions#READ} permission on
-     *       {@link Resources#HISTORIC_TASK} ({@code enableHistoricInstancePermissions} in
-     *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
+     *   <li>The user has no Permissions#READ_HISTORY permission on
+     *   Resources#PROCESS_DEFINITION OR
+     *   <li>The user has no HistoricTaskPermissions#READ permission on
+     *       Resources#HISTORIC_TASK ({@code enableHistoricInstancePermissions} in
+     *       ProcessEngineConfigurationImpl must be set to {@code true})
      * */
     public function createHistoricIdentityLinkLogQuery(): HistoricIdentityLinkLogQueryInterface;
 
@@ -179,7 +179,7 @@ interface HistoryServiceInterface
      * method returns normal.
      *
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#DELETE_HISTORY} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          If the user has no Permissions#DELETE_HISTORY permission on Resources#PROCESS_DEFINITION.
      */
     public function deleteHistoricTaskInstance(string $taskId): void;
 
@@ -188,7 +188,7 @@ interface HistoryServiceInterface
      * historic details (variable updates, form properties) are deleted as well.
      *
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#DELETE_HISTORY} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          If the user has no Permissions#DELETE_HISTORY permission on Resources#PROCESS_DEFINITION.
      */
     public function deleteHistoricProcessInstance(string $processInstanceId): void;
 
@@ -198,7 +198,7 @@ interface HistoryServiceInterface
      * Does not fail if a process instance was not found.
      *
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#DELETE_HISTORY} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          If the user has no Permissions#DELETE_HISTORY permission on Resources#PROCESS_DEFINITION.
      */
     public function deleteHistoricProcessInstanceIfExists(string $processInstanceId): void;
 
@@ -209,7 +209,7 @@ interface HistoryServiceInterface
      * @throws BadUserRequestException
      *          when no process instances are found with the given ids or ids are null.
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#DELETE_HISTORY} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          If the user has no Permissions#DELETE_HISTORY permission on Resources#PROCESS_DEFINITION.
      */
     public function deleteHistoricProcessInstances(array $processInstanceIds): void;
 
@@ -219,7 +219,7 @@ interface HistoryServiceInterface
      * fail if a process instance was not found.
      *
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#DELETE_HISTORY} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          If the user has no Permissions#DELETE_HISTORY permission on Resources#PROCESS_DEFINITION.
      */
     public function deleteHistoricProcessInstancesIfExists(array $processInstanceIds): void;
 
@@ -232,18 +232,18 @@ interface HistoryServiceInterface
      * @throws BadUserRequestException
      *          when no process instances are found with the given ids or ids are null or when some of the process instances are not finished yet
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#DELETE_HISTORY} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          If the user has no Permissions#DELETE_HISTORY permission on Resources#PROCESS_DEFINITION.
      */
     public function deleteHistoricProcessInstancesBulk(array $processInstanceIds): void;
 
     /**
      * Schedules history cleanup job at batch window start time. The job will delete historic data for
-     * finished process, decision and case instances, and batch operations taking into account {@link ProcessDefinition#getHistoryTimeToLive()},
-     * {@link DecisionDefinition#getHistoryTimeToLive()}, {@link CaseDefinition#getHistoryTimeToLive()}, {@link ProcessEngineConfigurationImpl#getBatchOperationHistoryTimeToLive()}
-     * and {@link ProcessEngineConfigurationImpl#getBatchOperationsForHistoryCleanup()} values.
+     * finished process, decision and case instances, and batch operations taking into account ProcessDefinition#getHistoryTimeToLive(),
+     * DecisionDefinition#getHistoryTimeToLive(), CaseDefinition#getHistoryTimeToLive(), ProcessEngineConfigurationImpl#getBatchOperationHistoryTimeToLive()
+     * and ProcessEngineConfigurationImpl#getBatchOperationsForHistoryCleanup() values.
      *
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#DELETE_HISTORY} permission on {@link Resources#PROCESS_DEFINITION}
+     *          If the user has no Permissions#DELETE_HISTORY permission on Resources#PROCESS_DEFINITION
      * @return history cleanup job. NB! As of v. 7.9.0, method does not guarantee to return a job. Use {@link #findHistoryCleanupJobs()} instead.
      */
     public function cleanUpHistoryAsync(bool $immediatelyDue = false): JobInterface;
@@ -261,8 +261,8 @@ interface HistoryServiceInterface
      * @throws BadUserRequestException
      *          when no process instances is found with the given ids or ids are null.
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#CREATE} or
-     *          {@link BatchPermissions#CREATE_BATCH_DELETE_FINISHED_PROCESS_INSTANCES} permission on {@link Resources#BATCH}.
+     *          If the user has no Permissions#CREATE or
+     *          BatchPermissions#CREATE_BATCH_DELETE_FINISHED_PROCESS_INSTANCES permission on Resources#BATCH.
      */
     public function deleteHistoricProcessInstancesAsync(array $processInstanceIds, ?HistoricProcessInstanceQueryInterface $query, string $deleteReason): BatchInterface;
 
@@ -271,13 +271,13 @@ interface HistoryServiceInterface
      *
      * @throws AuthorizationException
      *           For entries related to process definition keys: If the user has
-     *           neither {@link Permissions#DELETE_HISTORY} permission on
-     *           {@link Resources#PROCESS_DEFINITION} nor
-     *           {@link UserOperationLogCategoryPermissions#DELETE} permission on
-     *           {@link Resources#OPERATION_LOG_CATEGORY}. For entries not related
+     *           neither Permissions#DELETE_HISTORY permission on
+     *           Resources#PROCESS_DEFINITION nor
+     *           UserOperationLogCategoryPermissions#DELETE permission on
+     *           Resources#OPERATION_LOG_CATEGORY. For entries not related
      *           to process definition keys: If the user has no
-     *           {@link UserOperationLogCategoryPermissions#DELETE} permission on
-     *           {@link Resources#OPERATION_LOG_CATEGORY}.
+     *           UserOperationLogCategoryPermissions#DELETE permission on
+     *           Resources#OPERATION_LOG_CATEGORY.
      */
     public function deleteUserOperationLogEntry(string $entryId): void;
 
@@ -292,8 +292,8 @@ interface HistoryServiceInterface
      *           or if id is null
      * @throws AuthorizationException
      *           If the variable instance has a process definition key and
-     *           the user has no {@link Permissions#DELETE_HISTORY} permission on
-     *           {@link Resources#PROCESS_DEFINITION}.
+     *           the user has no Permissions#DELETE_HISTORY permission on
+     *           Resources#PROCESS_DEFINITION.
      */
     public function deleteHistoricVariableInstance(string $variableInstanceId): void;
 
@@ -303,27 +303,27 @@ interface HistoryServiceInterface
      * @param processInstanceId
      *          the id of the process instance
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#DELETE_HISTORY} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          If the user has no Permissions#DELETE_HISTORY permission on Resources#PROCESS_DEFINITION.
      */
     public function deleteHistoricVariableInstancesByProcessInstanceId(string $processInstanceId): void;
 
     /**
-     * creates a native query to search for {@link HistoricProcessInstance}s via SQL
+     * creates a native query to search for HistoricProcessInstances via SQL
      */
     public function createNativeHistoricProcessInstanceQuery(): NativeHistoricProcessInstanceQueryInterface;
 
     /**
-     * creates a native query to search for {@link HistoricTaskInstance}s via SQL
+     * creates a native query to search for HistoricTaskInstances via SQL
      */
     public function createNativeHistoricTaskInstanceQuery(): NativeHistoricTaskInstanceQueryInterface;
 
     /**
-     * creates a native query to search for {@link HistoricActivityInstance}s via SQL
+     * creates a native query to search for HistoricActivityInstances via SQL
      */
     public function createNativeHistoricActivityInstanceQuery(): NativeHistoricActivityInstanceQueryInterface;
 
     /**
-     * creates a native query to search for {@link HistoricVariableInstance}s via SQL
+     * creates a native query to search for HistoricVariableInstances via SQL
      */
     public function createNativeHistoricVariableInstanceQuery(): NativeHistoricVariableInstanceQueryInterface;
 
@@ -332,11 +332,11 @@ interface HistoryServiceInterface
      *
      * <p>The result of the query is empty in the following cases:
      * <ul>
-     *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
-     *   {@link Resources#PROCESS_DEFINITION} OR
-     *   <li>The user has no {@link HistoricProcessInstancePermissions#READ} permission on
-     *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
-     *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
+     *   <li>The user has no Permissions#READ_HISTORY permission on
+     *   Resources#PROCESS_DEFINITION OR
+     *   <li>The user has no HistoricProcessInstancePermissions#READ permission on
+     *       Resources#HISTORIC_PROCESS_INSTANCE ({@code enableHistoricInstancePermissions} in
+     *       ProcessEngineConfigurationImpl must be set to {@code true})
      */
     public function createHistoricJobLogQuery(): HistoricJobLogQueryInterface;
 
@@ -349,7 +349,7 @@ interface HistoryServiceInterface
      * @throws ProcessEngineException when no historic job log exists with the given id.
      *
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#READ_HISTORY} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          If the user has no Permissions#READ_HISTORY permission on Resources#PROCESS_DEFINITION.
      */
     public function getHistoricJobLogExceptionStacktrace(string $historicJobLogId): string;
 
@@ -361,8 +361,8 @@ interface HistoryServiceInterface
     /**
      * <p>Creates a new programmatic query to create a historic task instance report.
      *
-     * <p>Subsequent builder methods throw {@link AuthorizationException} when the user has no
-     * {@link Permissions#READ_HISTORY} permission on any {@link Resources#PROCESS_DEFINITION}.
+     * <p>Subsequent builder methods throw AuthorizationException when the user has no
+     * Permissions#READ_HISTORY permission on any Resources#PROCESS_DEFINITION.
      */
     public function createHistoricTaskInstanceReport(): HistoricTaskInstanceReportInterface;
 
@@ -385,7 +385,7 @@ interface HistoryServiceInterface
      * Deletes a historic batch instance. All corresponding historic job logs are deleted as well;
      *
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#DELETE} permission on {@link Resources#BATCH}
+     *          If the user has no Permissions#DELETE permission on Resources#BATCH
      */
     public function deleteHistoricBatch(string $id): void;
 
@@ -393,7 +393,7 @@ interface HistoryServiceInterface
     /**
      * Query for the statistics of DRD evaluation.
      *
-     * @param decisionRequirementsDefinitionId - id of decision requirement definition
+     * @param decisionRequirementsDefinitionId id of decision requirement definition
      */
     public function createHistoricDecisionInstanceStatisticsQuery(string $decisionRequirementsDefinitionId): HistoricDecisionInstanceStatisticsQueryInterface;
 
@@ -403,11 +403,11 @@ interface HistoryServiceInterface
      *
      * <p>The result of the query is empty in the following cases:
      * <ul>
-     *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
-     *   {@link Resources#PROCESS_DEFINITION} OR
-     *   <li>The user has no {@link HistoricProcessInstancePermissions#READ} permission on
-     *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
-     *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
+     *   <li>The user has no Permissions#READ_HISTORY permission on
+     *   Resources#PROCESS_DEFINITION OR
+     *   <li>The user has no HistoricProcessInstancePermissions#READ permission on
+     *       Resources#HISTORIC_PROCESS_INSTANCE ({@code enableHistoricInstancePermissions} in
+     *       ProcessEngineConfigurationImpl must be set to {@code true})
      */
     public function createHistoricExternalTaskLogQuery(): HistoricExternalTaskLogQueryInterface;
 
@@ -420,7 +420,7 @@ interface HistoryServiceInterface
      * @throws ProcessEngineException when no historic external task log exists with the given id.
      *
      * @throws AuthorizationException
-     *          If the user has no {@link Permissions#READ_HISTORY} permission on {@link Resources#PROCESS_DEFINITION}.
+     *          If the user has no Permissions#READ_HISTORY permission on Resources#PROCESS_DEFINITION.
      */
     public function getHistoricExternalTaskLogErrorDetails(string $historicExternalTaskLogId): string;
 
@@ -429,22 +429,22 @@ interface HistoryServiceInterface
      * all associated historic entities using a fluent builder.
      *
      * <p>Historic process instances can be specified by passing a query to
-     * {@link SetRemovalTimeToHistoricProcessInstancesBuilder#byQuery(HistoricProcessInstanceQuery)}.
+     * SetRemovalTimeToHistoricProcessInstancesBuilder#byQuery(HistoricProcessInstanceQuery).
      *
      * <p>An absolute time can be specified via
      * {@link SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder#absoluteRemovalTime(string $)}.
      * Pass {@code null} to clear the removal time.
      *
      * <p>As an alternative, the removal time can also be calculated via
-     * {@link SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder#calculatedRemovalTime()}
+     * SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder#calculatedRemovalTime()
      * based on the configured time to live values.
      *
      * <p>To additionally take those historic process instances into account that are part of
      * a hierarchy, enable the flag
-     * {@link SetRemovalTimeToHistoricProcessInstancesBuilder#hierarchical()}
+     * SetRemovalTimeToHistoricProcessInstancesBuilder#hierarchical()
      *
      * <p>To create the batch and complete the configuration chain, call
-     * {@link SetRemovalTimeToHistoricProcessInstancesBuilder#executeAsync()}.
+     * SetRemovalTimeToHistoricProcessInstancesBuilder#executeAsync().
      */
     public function setRemovalTimeToHistoricProcessInstances(): SetRemovalTimeSelectModeForHistoricProcessInstancesBuilderInterface;
 
@@ -453,18 +453,18 @@ interface HistoryServiceInterface
      * associated historic entities using a fluent builder.
      *
      * <p>Historic batches can be specified by passing a query to
-     * {@link SetRemovalTimeToHistoricBatchesBuilder#byQuery(HistoricBatchQuery)}.
+     * SetRemovalTimeToHistoricBatchesBuilder#byQuery(HistoricBatchQuery).
      *
      * <p>An absolute time can be specified via
      * {@link SetRemovalTimeSelectModeForHistoricBatchesBuilder#absoluteRemovalTime(string $)}.
      * Pass {@code null} to clear the removal time.
      *
      * <p>As an alternative, the removal time can also be calculated via
-     * {@link SetRemovalTimeSelectModeForHistoricBatchesBuilder#calculatedRemovalTime()}
+     * SetRemovalTimeSelectModeForHistoricBatchesBuilder#calculatedRemovalTime()
      * based on the configured time to live values.
      *
      * <p>To create the batch and complete the configuration chain, call
-     * {@link SetRemovalTimeToHistoricBatchesBuilder#executeAsync()}.
+     * SetRemovalTimeToHistoricBatchesBuilder#executeAsync().
      */
     public function setRemovalTimeToHistoricBatches(): SetRemovalTimeSelectModeForHistoricBatchesBuilderInterface;
 
@@ -476,11 +476,11 @@ interface HistoryServiceInterface
      * @throws AuthorizationException
      * <ul>
      *   <li>
-     *     when no {@link ProcessDefinitionPermissions#UPDATE_HISTORY} permission
-     *     is granted on {@link Resources#PROCESS_DEFINITION}</li>
+     *     when no ProcessDefinitionPermissions#UPDATE_HISTORY permission
+     *     is granted on Resources#PROCESS_DEFINITION</li>
      *   <li>
-     *     or when no {@link UserOperationLogCategoryPermissions#UPDATE} permission
-     *     is granted on {@link Resources#OPERATION_LOG_CATEGORY}
+     *     or when no UserOperationLogCategoryPermissions#UPDATE permission
+     *     is granted on Resources#OPERATION_LOG_CATEGORY
      *   </li>
      * </ul>
      *
@@ -497,11 +497,11 @@ interface HistoryServiceInterface
      * @throws AuthorizationException
      * <ul>
      *   <li>
-     *     when no {@link ProcessDefinitionPermissions#UPDATE_HISTORY} permission
-     *     is granted on {@link Resources#PROCESS_DEFINITION}</li>
+     *     when no ProcessDefinitionPermissions#UPDATE_HISTORY permission
+     *     is granted on Resources#PROCESS_DEFINITION</li>
      *   <li>
-     *     or when no {@link UserOperationLogCategoryPermissions#UPDATE} permission
-     *     is granted on {@link Resources#OPERATION_LOG_CATEGORY}
+     *     or when no UserOperationLogCategoryPermissions#UPDATE permission
+     *     is granted on Resources#OPERATION_LOG_CATEGORY
      *   </li>
      * </ul>
      *

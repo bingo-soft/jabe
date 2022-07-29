@@ -140,7 +140,7 @@ class Properties implements \Serializable
      *
      * @param property
      *            the property key whose presence is to be tested
-     * @return <code>true</code> if this properties contains a mapping for the specified property key
+     * @return bool true if this properties contains a mapping for the specified property key
      */
     public function contains($property): bool
     {

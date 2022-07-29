@@ -148,7 +148,7 @@ abstract class AbstractSetJobDefinitionStateCmd extends AbstractSetStateCmd
     }
 
     /**
-     * Subclasses should return the type of the {@link JobHandler} here. it will be used when
+     * Subclasses should return the type of the JobHandler here. it will be used when
      * the user provides an execution date on which the actual state change will happen.
      */
     abstract protected function getDelayedExecutionJobHandlerType(): ?string;

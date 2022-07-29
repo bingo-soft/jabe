@@ -53,10 +53,10 @@ interface TaskInterface
      * {@link TaskService#delegateTask(String, String) delegated}. */
     public function setAssignee(string $assignee): void;
 
-    /** The current {@link DelegationState} for this task. */
+    /** The current DelegationState for this task. */
     public function getDelegationState(): string;
 
-    /** The current {@link DelegationState} for this task. */
+    /** The current DelegationState for this task. */
     public function setDelegationState(string $delegationState): void;
 
     /** Reference to the process instance or null if it is not related to a process instance. */
@@ -86,7 +86,7 @@ interface TaskInterface
     /** Change follow-up date of the task. */
     public function setFollowUpDate(string $followUpDate): void;
 
-    /** delegates this task to the given user and sets the {@link #getDelegationState() delegationState} to {@link DelegationState#PENDING}.
+    /** delegates this task to the given user and sets the {@link #getDelegationState() delegationState} to DelegationState#PENDING.
       * If no owner is set on the task, the owner is set to the current assignee of the task. */
     public function delegate(string $userId): void;
 
@@ -103,8 +103,8 @@ interface TaskInterface
      * Provides the form key for the task.
      *
      * <p><strong>NOTE:</strong> If the task instance us obtained through a query, this property is only populated in case the
-     * {@link TaskQuery#initializeFormKeys()} method is called. If this method is called without a prior call to
-     * {@link TaskQuery#initializeFormKeys()}, it will throw a {@link BadUserRequestException}.</p>
+     * TaskQuery#initializeFormKeys() method is called. If this method is called without a prior call to
+     * TaskQuery#initializeFormKeys(), it will throw a BadUserRequestException.</p>
      *
      * @return string the form key for this task
      * @throws BadUserRequestException in case the form key is not initialized.

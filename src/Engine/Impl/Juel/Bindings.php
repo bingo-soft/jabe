@@ -39,7 +39,7 @@ class Bindings extends TypeConverter implements \Serializable
      * Test if given index is bound to a function.
      * This method performs an index check.
      * @param index identifier index
-     * @return <code>true</code> if the given index is bound to a function
+     * @return bool true if the given index is bound to a function
      */
     public function isFunctionBound(int $index): bool
     {
@@ -63,7 +63,7 @@ class Bindings extends TypeConverter implements \Serializable
      * Test if given index is bound to a variable.
      * This method performs an index check.
      * @param index identifier index
-     * @return <code>true</code> if the given index is bound to a variable
+     * @return bool true if the given index is bound to a variable
      */
     public function isVariableBound(int $index): bool
     {

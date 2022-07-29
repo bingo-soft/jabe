@@ -205,7 +205,7 @@ interface HistoricTaskInstanceQueryInterface extends QueryInterface
     /**
      * Only select historic task instances which are part of a process instance which have a variable
      * with the given name set to the given value. The last variable value in the variable updates
-     * ({@link HistoricDetail}) will be used, so make sure history-level is configured
+     * (HistoricDetail) will be used, so make sure history-level is configured
      * >= AUDIT when this feature is used.
      */
     public function processVariableValueEquals(string $variableName, $variableValue): HistoricTaskInstanceQueryInterface;
@@ -213,7 +213,7 @@ interface HistoricTaskInstanceQueryInterface extends QueryInterface
     /**
      * Only select historic task instances which have a variable with the given name, but
      * with a different value than the passed value.
-     * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
+     * Byte-arrays and Serializable objects (which are not primitive type wrappers)
      * are not supported.
      */
     public function processVariableValueNotEquals(string $variableName, $variableValue): HistoricTaskInstanceQueryInterface;
@@ -391,7 +391,7 @@ interface HistoricTaskInstanceQueryInterface extends QueryInterface
      * will be linked together with an OR expression until the OR query is terminated. To terminate the OR query right
      * after the last filter criterion was applied, {@link #endOr()} must be invoked.</p>
      *
-     * @return an object of the type {@link HistoricTaskInstanceQuery} on which an arbitrary amount of filter criteria could be applied.
+     * @return an object of the type HistoricTaskInstanceQuery on which an arbitrary amount of filter criteria could be applied.
      * The several filter criteria will be linked together by an OR expression.
      *
      * @throws ProcessEngineException when or() has been invoked directly after or() or after or() and trailing filter
@@ -405,7 +405,7 @@ interface HistoricTaskInstanceQueryInterface extends QueryInterface
      * OR query which has been started by invoking {@link #or()}, endOr() must be invoked. Filter criteria which are
      * applied after calling endOr() are linked together by an AND expression.</p>
      *
-     * @return an object of the type {@link HistoricTaskInstanceQuery} on which an arbitrary amount of filter criteria could be applied.
+     * @return an object of the type HistoricTaskInstanceQuery on which an arbitrary amount of filter criteria could be applied.
      * The filter criteria will be linked together by an AND expression.
      *
      * @throws ProcessEngineException when endOr() has been invoked before {@link #or()} was invoked. To prevent throwing

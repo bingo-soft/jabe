@@ -39,7 +39,7 @@ interface HistoricJobLogInterface
      * Returns the message of the exception that occurred by executing the associated job.
      *
      * To get the full exception stacktrace,
-     * use {@link HistoryService#getHistoricJobLogExceptionStacktrace(String)}
+     * use HistoryService#getHistoricJobLogExceptionStacktrace(String)
      */
     public function getJobExceptionMessage(): string;
 

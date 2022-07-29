@@ -23,7 +23,7 @@ class AbstractBpmnActivityBehavior extends FlowNodeActivityBehavior
     //protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
     /**
      * Subclasses that call leave() will first pass through this method, before
-     * the regular {@link FlowNodeActivityBehavior#leave(ActivityExecution)} is
+     * the regular FlowNodeActivityBehavior#leave(ActivityExecution) is
      * called.
      */
     public function doLeave(ActivityExecutionInterface $execution): void
@@ -53,7 +53,7 @@ class AbstractBpmnActivityBehavior extends FlowNodeActivityBehavior
     }
 
     /**
-     * Takes an {@link ActivityExecution} and an {@link Callable} and wraps
+     * Takes an ActivityExecution and an Callable and wraps
      * the call to the Callable with the proper error propagation. This method
      * also makes sure that exceptions not caught by following activities in the
      * process will be thrown and not propagated.

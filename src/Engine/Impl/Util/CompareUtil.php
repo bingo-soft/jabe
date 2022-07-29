@@ -5,7 +5,7 @@ namespace Jabe\Engine\Impl\Util;
 class CompareUtil
 {
     /**
-     * Checks if any of the values are not in an ascending order. The check is done based on the {@link Comparable#compareTo(Object)} method.
+     * Checks if any of the values are not in an ascending order. The check is done based on the Comparable#compareTo(Object) method.
      *
      * E.g. if we have {@code minPriority = 10}, {@code priority = 13} and {@code maxPriority = 5} and
      * {@code Integer[] values = {minPriority, priority, maxPriority}}. Then a call to {@link CompareUtil#areNotInAscendingOrder(Comparable[] values)}

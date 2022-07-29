@@ -10,18 +10,18 @@ use Jabe\Engine\{
 interface ProcessEngineServicesAwareInterface
 {
     /**
-     * Returns the {@link ProcessEngineServices} providing access to the
+     * Returns the ProcessEngineServices providing access to the
      * public API of the process engine.
      *
-     * @return ProcessEngineServicesInterface the {@link ProcessEngineServices}.
+     * @return ProcessEngineServicesInterface the ProcessEngineServices.
      */
     public function getProcessEngineServices(): ProcessEngineServicesInterface;
 
     /**
-     * Returns the {@link ProcessEngine} providing access to the
+     * Returns the ProcessEngine providing access to the
      * public API of the process engine.
      *
-     * @return ProcessEngineInterface the {@link ProcessEngine}.
+     * @return ProcessEngineInterface the ProcessEngine.
      */
     public function getProcessEngine(): ProcessEngineInterface;
 }

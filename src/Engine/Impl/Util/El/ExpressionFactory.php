@@ -29,7 +29,7 @@ abstract class ExpressionFactory
 
     /**
      * Coerces an object to a specific type according to the EL type conversion rules. An
-     * {@link ELException} is thrown if an error results from applying the conversion rules.
+     * ELException is thrown if an error results from applying the conversion rules.
      *
      * @param obj
      *            The object to coerce.
@@ -42,7 +42,7 @@ abstract class ExpressionFactory
     abstract public function coerceToType($obj, string $targetType);
 
     /**
-     * Parses an expression into a {@link MethodExpression} for later evaluation. Use this method
+     * Parses an expression into a MethodExpression for later evaluation. Use this method
      * for expressions that refer to methods. If the expression is a String literal, a
      * MethodExpression is created, which when invoked, returns the String literal, coerced to
      * expectedReturnType. An ELException is thrown if expectedReturnType is void or if the coercion
@@ -86,7 +86,7 @@ abstract class ExpressionFactory
     ): MethodExpression;
 
     /**
-     * Parses an expression into a {@link ValueExpression} for later evaluation. Use this method for
+     * Parses an expression into a ValueExpression for later evaluation. Use this method for
      * expressions that refer to values. This method should perform syntactic validation of the
      * expression. If in doing so it detects errors, it should raise an ELException.
      *

@@ -86,8 +86,8 @@ interface VariableInstanceQueryInterface extends QueryInterface
     /**
      * Only select variables instances which have the given name and value. The type
      * of variable is determined based on the value, using types configured in
-     * {@link ProcessEngineConfiguration#getVariableSerializers()}.
-     * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
+     * ProcessEngineConfiguration#getVariableSerializers().
+     * Byte-arrays and Serializable objects (which are not primitive type wrappers)
      * are not supported.
      * @param name name of the variable, cannot be null.
      * @param value variable value, can be null.
@@ -97,7 +97,7 @@ interface VariableInstanceQueryInterface extends QueryInterface
     /**
      * Only select variable instances which have the given name, but
      * with a different value than the passed value.
-     * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
+     * Byte-arrays and Serializable objects (which are not primitive type wrappers)
      * are not supported.
      * @param name name of the variable, cannot be null.
      * @param value variable value, can be null.
@@ -106,7 +106,7 @@ interface VariableInstanceQueryInterface extends QueryInterface
 
     /**
      * Only select variable instances which value is greater than the passed value.
-     * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
+     * Booleans, Byte-arrays and Serializable objects (which are not primitive type wrappers)
      * are not supported.
      * @param name variable name, cannot be null.
      * @param value variable value, cannot be null.
@@ -115,7 +115,7 @@ interface VariableInstanceQueryInterface extends QueryInterface
 
     /**
      * Only select variable instances which value is greater than or equal to
-     * the passed value. Booleans, Byte-arrays and {@link Serializable} objects (which
+     * the passed value. Booleans, Byte-arrays and Serializable objects (which
      * are not primitive type wrappers) are not supported.
      * @param name variable name, cannot be null.
      * @param value variable value, cannot be null.
@@ -124,7 +124,7 @@ interface VariableInstanceQueryInterface extends QueryInterface
 
     /**
      * Only select variable instances which value is less than the passed value.
-     * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
+     * Booleans, Byte-arrays and Serializable objects (which are not primitive type wrappers)
      * are not supported.
      * @param name variable name, cannot be null.
      * @param value variable value, cannot be null.
@@ -133,7 +133,7 @@ interface VariableInstanceQueryInterface extends QueryInterface
 
     /**
      * Only select variable instances which value is less than or equal to the passed value.
-     * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
+     * Booleans, Byte-arrays and Serializable objects (which are not primitive type wrappers)
      * are not supported.
      * @param name variable name, cannot be null.
      * @param value variable value, cannot be null.

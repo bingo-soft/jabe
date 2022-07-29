@@ -22,9 +22,9 @@ interface ValueTypeInterface extends \Serializable
     public function isPrimitiveValueType(): bool;
 
     /**
-     * Get the value info (meta data) for a {@link TypedValue}.
-     * The keys of the returned map for a {@link TypedValue} are available
-     * as constants in the value's {@link ValueType} interface.
+     * Get the value info (meta data) for a TypedValue.
+     * The keys of the returned map for a TypedValue are available
+     * as constants in the value's ValueType interface.
      *
      * @param typedValue
      * @return

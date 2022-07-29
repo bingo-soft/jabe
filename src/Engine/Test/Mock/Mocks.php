@@ -13,7 +13,7 @@ class Mocks
 
     /**
      * This method lets you register a mock object. Make sure to register the
-     * {@link MockExpressionManager} with your process engine configuration.
+     * MockExpressionManager with your process engine configuration.
      *
      * @param key
      *          the key under which the mock object will be registered

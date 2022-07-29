@@ -21,9 +21,9 @@ interface UpdateProcessInstancesSuspensionStateBuilderInterface extends UpdatePr
      *           If no process Instances are found
      *           If a process Instance is set to null
      * @throws AuthorizationException
-     *           if the user has no {@link Permissions#CREATE} or
-     *           {@link BatchPermissions#CREATE_BATCH_UPDATE_PROCESS_INSTANCES_SUSPEND} permission
-     *           on {@link Resources#BATCH}.
+     *           if the user has no Permissions#CREATE or
+     *           BatchPermissions#CREATE_BATCH_UPDATE_PROCESS_INSTANCES_SUSPEND permission
+     *           on Resources#BATCH.
      */
     public function activateAsync(): BatchInterface;
 
@@ -64,9 +64,9 @@ interface UpdateProcessInstancesSuspensionStateBuilderInterface extends UpdatePr
      *           If no process Instances are found
      *           If a process Instance is set to null
      * @throws AuthorizationException
-     *           if the user has no {@link Permissions#CREATE} or
-     *           {@link BatchPermissions#CREATE_BATCH_UPDATE_PROCESS_INSTANCES_SUSPEND} permission
-     *           on {@link Resources#BATCH}.
+     *           if the user has no Permissions#CREATE or
+     *           BatchPermissions#CREATE_BATCH_UPDATE_PROCESS_INSTANCES_SUSPEND permission
+     *           on Resources#BATCH.
      */
     public function suspendAsync(): BatchInterface;
 }

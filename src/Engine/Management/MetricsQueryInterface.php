@@ -5,7 +5,7 @@ namespace Jabe\Engine\Management;
 interface MetricsQueryInterface
 {
     /**
-     * @see constants in {@link Metrics} for a list of names which can be used here.
+     * @see constants in Metrics for a list of names which can be used here.
      *
      * @param name The name of the metrics to query for
      */

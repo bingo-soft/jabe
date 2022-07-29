@@ -34,7 +34,7 @@ class ProcessDiagramLayoutFactory
 
     /**
      * Provides positions and dimensions of elements in a process diagram as
-     * provided by {@link RepositoryService#getProcessDiagram(String)}.
+     * provided by RepositoryService#getProcessDiagram(String).
      *
      * Currently, it only supports BPMN 2.0 models.
      *
@@ -42,7 +42,7 @@ class ProcessDiagramLayoutFactory
      *          BPMN 2.0 XML file
      * @param imageStream
      *          BPMN 2.0 diagram in PNG format (JPEG and other formats supported
-     *          by {@link ImageIO} may also work)
+     *          by ImageIO may also work)
      * @return Layout of the process diagram
      * @return DiagramLayout null when parameter imageStream is null
      */
@@ -54,13 +54,13 @@ class ProcessDiagramLayoutFactory
 
     /**
      * Provides positions and dimensions of elements in a BPMN process diagram as
-     * provided by {@link RepositoryService#getProcessDiagram(String)}.
+     * provided by RepositoryService#getProcessDiagram(String).
      *
      * @param bpmnModel
      *          BPMN 2.0 XML document
      * @param imageStream
      *          BPMN 2.0 diagram in PNG format (JPEG and other formats supported
-     *          by {@link ImageIO} may also work)
+     *          by ImageIO may also work)
      * @return Layout of the process diagram
      * @return DiagramLayout null when parameter imageStream is null
      */

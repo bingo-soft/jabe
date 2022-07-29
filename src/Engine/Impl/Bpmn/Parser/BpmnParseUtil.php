@@ -45,7 +45,7 @@ class BpmnParseUtil
     }
 
     /**
-     * Returns the {@link IoMapping} of an element.
+     * Returns the IoMapping of an element.
      *
      * @param element the element to parse
      * @return IoMapping the input output mapping or null if non defined
@@ -65,7 +65,7 @@ class BpmnParseUtil
 
     /**
      * Parses all input parameters of an input output element and adds them to
-     * the {@link IoMapping}.
+     * the IoMapping.
      *
      * @param inputOutputElement the input output element to process
      * @param ioMapping the input output mapping to add input parameters to
@@ -81,7 +81,7 @@ class BpmnParseUtil
 
     /**
      * Parses all output parameters of an input output element and adds them to
-     * the {@link IoMapping}.
+     * the IoMapping.
      *
      * @param inputOutputElement the input output element to process
      * @param ioMapping the input output mapping to add input parameters to
@@ -96,7 +96,7 @@ class BpmnParseUtil
     }
 
     /**
-     * Parses a input parameter and adds it to the {@link IoMapping}.
+     * Parses a input parameter and adds it to the IoMapping.
      *
      * @param inputParameterElement the input parameter element
      * @param ioMapping the mapping to add the element
@@ -116,7 +116,7 @@ class BpmnParseUtil
     }
 
     /**
-     * Parses a output parameter and adds it to the {@link IoMapping}.
+     * Parses a output parameter and adds it to the IoMapping.
      *
      * @param outputParameterElement the output parameter element
      * @param ioMapping the mapping to add the element

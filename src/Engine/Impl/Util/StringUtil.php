@@ -13,14 +13,14 @@ use Jabe\Engine\Runtime\ProcessElementInstanceInterface;
 class StringUtil
 {
     /**
-     * Note: {@link String#length()} counts Unicode supplementary
+     * Note: String#length() counts Unicode supplementary
      * characters twice, so for a String consisting only of those,
      * the limit is effectively MAX_LONG_STRING_LENGTH / 2
      */
     public const DB_MAX_STRING_LENGTH = 666;
 
     /**
-     * Checks whether a {@link String} seams to be an expression or not
+     * Checks whether a String seams to be an expression or not
      *
      * Note: In most cases you should check for composite expressions. See
      * {@link #isCompositeExpression(String, ExpressionManager)} for more information.
@@ -35,7 +35,7 @@ class StringUtil
     }
 
     /**
-     * Checks whether a {@link String} seams to be a composite expression or not. In contrast to an eval expression
+     * Checks whether a String seams to be a composite expression or not. In contrast to an eval expression
      * is the composite expression also allowed to consist of a combination of literal and eval expressions, e.g.,
      * "Welcome ${customer.name} to our site".
      *

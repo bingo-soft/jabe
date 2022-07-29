@@ -16,10 +16,10 @@ interface TransactionContextInterface
 
 
     /**
-     * Add a {@link TransactionListener} to the current transaction.
+     * Add a TransactionListener to the current transaction.
      *
-     * @param transactionState the transaction state for which the {@link TransactionListener} should be added.
-     * @param transactionListener the {@link TransactionListener} to add.
+     * @param transactionState the transaction state for which the TransactionListener should be added.
+     * @param transactionListener the TransactionListener to add.
      */
     public function addTransactionListener(string $transactionState, TransactionListenerInterface $transactionListener): void;
 

@@ -116,7 +116,7 @@ class DbEntityCache
     }
 
     /**
-     * Put a new, {@link DbEntityState#TRANSIENT} object into the cache.
+     * Put a new, DbEntityState#TRANSIENT object into the cache.
      *
      * @param e the object to put into the cache
      */
@@ -129,7 +129,7 @@ class DbEntityCache
     }
 
     /**
-     * Put a {@link DbEntityState#PERSISTENT} object into the cache.
+     * Put a DbEntityState#PERSISTENT object into the cache.
      *
      * @param e the object to put into the cache
      */
@@ -144,7 +144,7 @@ class DbEntityCache
     }
 
     /**
-     * Put a {@link DbEntityState#MERGED} object into the cache.
+     * Put a DbEntityState#MERGED object into the cache.
      *
      * @param e the object to put into the cache
      */
@@ -274,11 +274,11 @@ class DbEntityCache
 
     /**
      * Allows checking whether the provided entity is present in the cache
-     * and is {@link DbEntityState#PERSISTENT}.
+     * and is DbEntityState#PERSISTENT.
      *
      * @param dbEntity the entity to check
      * @return bool true if the provided entity is present in the cache and is
-     * {@link DbEntityState#PERSISTENT}.
+     * DbEntityState#PERSISTENT.
      */
     public function isPersistent(DbEntityInterface $dbEntity): bool
     {
@@ -312,11 +312,11 @@ class DbEntityCache
 
     /**
      * Allows checking whether the provided entity is present in the cache
-     * and is {@link DbEntityState#TRANSIENT}.
+     * and is DbEntityState#TRANSIENT.
      *
      * @param dbEntity the entity to check
      * @return bool true if the provided entity is present in the cache and is
-     * {@link DbEntityState#TRANSIENT}.
+     * DbEntityState#TRANSIENT.
      */
     public function isTransient(DbEntityInterface $dbEntity): bool
     {

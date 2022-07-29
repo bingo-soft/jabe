@@ -5,12 +5,12 @@ namespace Jabe\Engine\Impl\History\Handler;
 class CompositeDbHistoryEventHandler extends CompositeHistoryEventHandler
 {
     /**
-     * Constructor that takes a varargs parameter {@link HistoryEventHandler} that
-     * consume the event and adds {@link DbHistoryEventHandler} to the list of
-     * {@link HistoryEventHandler}.
+     * Constructor that takes a varargs parameter HistoryEventHandler that
+     * consume the event and adds DbHistoryEventHandler to the list of
+     * HistoryEventHandler.
      *
      * @param historyEventHandlers
-     *          the list of {@link HistoryEventHandler} that consume the event.
+     *          the list of HistoryEventHandler that consume the event.
      */
     public function __construct(?array $historyEventHandlers = [])
     {
@@ -19,8 +19,8 @@ class CompositeDbHistoryEventHandler extends CompositeHistoryEventHandler
     }
 
     /**
-     * Add {@link DbHistoryEventHandler} to the list of
-     * {@link HistoryEventHandler}.
+     * Add DbHistoryEventHandler to the list of
+     * HistoryEventHandler.
      */
     private function addDefaultDbHistoryEventHandler(): void
     {

@@ -20,7 +20,7 @@ class ResourceUtil
      *
      * @param resourcePath the path to the resource to load
      * @param deployment the deployment to load resources from
-     * @return the resource content as {@link String}
+     * @return the resource content as String
      */
     public static function loadResourceContent(string $resourcePath, DeploymentEntity $deployment): string
     {

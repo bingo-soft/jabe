@@ -12,7 +12,7 @@ interface ProcessApplicationReferenceInterface
     /**
      * Get the process application.
      *
-     * @return AbstractProcessApplication the {@link AbstractProcessApplication}
+     * @return AbstractProcessApplication the AbstractProcessApplication
      * @throws ProcessApplicationUnavailableException
      *           if the process application is unavailable
      */

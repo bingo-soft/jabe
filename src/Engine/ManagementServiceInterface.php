@@ -59,10 +59,10 @@ interface ManagementServiceInterface
      *          the Id of the deployment to activate
      * @param reference
      *          the reference to the process application
-     * @return a new {@link ProcessApplicationRegistration}
+     * @return a new ProcessApplicationRegistration
      *
      * @throws AuthorizationException
-     *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+     *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
      */
     public function registerProcessApplication(string $deploymentId, ProcessApplicationReferenceInterface $reference): ProcessApplicationRegistrationInterface;
 
@@ -77,7 +77,7 @@ interface ManagementServiceInterface
      *          indicates whether the process definitions should be removed from the deployment cache
      *
      * @throws AuthorizationException
-     *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+     *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
      */
     public function unregisterProcessApplication($deploymentIds, bool $removeProcessDefinitionsFromCache): void;
 
@@ -87,7 +87,7 @@ interface ManagementServiceInterface
      *         currently registered.
      *
      * @throws AuthorizationException
-     *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+     *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
      */
     public function getProcessApplicationForDeployment(string $deploymentId): string;
 
@@ -95,16 +95,16 @@ interface ManagementServiceInterface
      * Get the mapping containing {table name, row count} entries of the database schema.
      *
      * @throws AuthorizationException
-     *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+     *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
      */
     public function getTableCount(): array;
 
     /**
-     * Gets the table name (including any configured prefix) for an entity like {@link Task},
-     * {@link Execution} or the like.
+     * Gets the table name (including any configured prefix) for an entity like Task,
+     * Execution or the like.
      *
      * @throws AuthorizationException
-     *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+     *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
      */
     public function getTableName(string $entityClass): string;
 
@@ -113,16 +113,16 @@ interface ManagementServiceInterface
     * Returns null when no table exists with the given name.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
     public function getTableMetaData(string $tableName): TableMetaData;
 
     /**
-    * Creates a {@link TablePageQuery} that can be used to fetch {@link TablePage}
+    * Creates a TablePageQuery that can be used to fetch TablePage
     * containing specific sections of table row data.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
     public function createTablePageQuery(): TablePageQueryInterface;
 
@@ -133,7 +133,7 @@ interface ManagementServiceInterface
     public function createJobQuery(): JobQueryInterface;
 
     /**
-    * Returns a new {@link JobDefinitionQuery} implementation, that can be used
+    * Returns a new JobDefinitionQuery implementation, that can be used
     * to dynamically query the job definitions.
     */
     public function createJobDefinitionQuery(): JobDefinitionQueryInterface;
@@ -148,8 +148,8 @@ interface ManagementServiceInterface
     * @throws ProcessEngineException
     *          When there is no job with the given id.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+    *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+    *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
     public function executeJob(string $jobId): void;
 
@@ -161,34 +161,34 @@ interface ManagementServiceInterface
     * @throws ProcessEngineException
     *          When there is no job with the given id.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+    *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+    *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
     public function deleteJob(string $jobId): void;
 
     /**
-    * Activates the {@link JobDefinition} with the given id.
+    * Activates the JobDefinition with the given id.
     *
     * <p>Note: for more complex activate commands use {@link #updateJobDefinitionSuspensionState()}.</p>
     *
-    * @param activateJobs If true, all the {@link Job}s of the provided job definition
+    * @param activateJobs If true, all the Jobs of the provided job definition
     *                     will be activated too.
     *
     * @param activationDate The date on which the job definition will be activated. If null, the
     *                       job definition is activated immediately.
-    *                       Note: The {@link JobExecutor} needs to be active to use this!
+    *                       Note: The JobExecutor needs to be active to use this!
     *
     * @throws ProcessEngineException
     *          If the job definition id is equal null.
     * @throws AuthorizationException thrown if the current user does not possess
     *   <ul>
-    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
+    *     <li>Permissions#UPDATE on Resources#PROCESS_DEFINITION</li>
     *   </ul>
     *
     *   If <code>activateJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
     *   <ul>
-    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
-    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
+    *     <li>Permissions#UPDATE_INSTANCE on Resources#PROCESS_DEFINITION</li>
+    *     <li>Permissions#UPDATE on any Resources#PROCESS_INSTANCE</li>
     *   </ul>
     *
     * @see #activateJobById(String)
@@ -197,28 +197,28 @@ interface ManagementServiceInterface
     public function activateJobDefinitionById(string $jobDefinitionId, bool $activateJobs = false, string $activationDate = null): void;
 
     /**
-    * <p>Activates all {@link JobDefinition}s of the provided process definition id.</p>
+    * <p>Activates all JobDefinitions of the provided process definition id.</p>
     *
     * <p>Note: for more complex activate commands use {@link #updateJobDefinitionSuspensionState()}.</p>
     *
-    * @param activateJobs If true, all the {@link Job}s of the provided job definition
+    * @param activateJobs If true, all the Jobs of the provided job definition
     *                     will be activated too.
     *
     * @param activationDate The date on which the job definition will be activated. If null, the
     *                       job definition is activated immediately.
-    *                       Note: The {@link JobExecutor} needs to be active to use this!
+    *                       Note: The JobExecutor needs to be active to use this!
     *
     * @throws ProcessEngineException
     *          If the process definition id is equal null.
     * @throws AuthorizationException thrown if the current user does not possess
     *   <ul>
-    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
+    *     <li>Permissions#UPDATE on Resources#PROCESS_DEFINITION</li>
     *   </ul>
     *
     *   If <code>activateJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
     *   <ul>
-    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
-    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
+    *     <li>Permissions#UPDATE_INSTANCE on Resources#PROCESS_DEFINITION</li>
+    *     <li>Permissions#UPDATE on any Resources#PROCESS_INSTANCE</li>
     *   </ul>
     *
     * @see #activateJobByProcessDefinitionId(String)
@@ -226,28 +226,28 @@ interface ManagementServiceInterface
     public function activateJobDefinitionByProcessDefinitionId(string $processDefinitionId, bool $activateJobs = false, string $activationDate = null): void;
 
     /**
-    * <p>Activates all {@link JobDefinition}s of the provided process definition key.</p>
+    * <p>Activates all JobDefinitions of the provided process definition key.</p>
     *
     * <p>Note: for more complex activate commands use {@link #updateJobDefinitionSuspensionState()}.</p>
     *
-    * @param activateJobs If true, all the {@link Job}s of the provided job definition
+    * @param activateJobs If true, all the Jobs of the provided job definition
     *                     will be activated too.
     *
     * @param activationDate The date on which the job definition will be activated. If null, the
     *                       job definition is activated immediately.
-    *                       Note: The {@link JobExecutor} needs to be active to use this!
+    *                       Note: The JobExecutor needs to be active to use this!
     *
     * @throws ProcessEngineException
     *          If the process definition key is equal null.
     * @throws AuthorizationException thrown if the current user does not possess
     *   <ul>
-    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
+    *     <li>Permissions#UPDATE on Resources#PROCESS_DEFINITION</li>
     *   </ul>
     *
     *   If <code>activateJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
     *   <ul>
-    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
-    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
+    *     <li>Permissions#UPDATE_INSTANCE on Resources#PROCESS_DEFINITION</li>
+    *     <li>Permissions#UPDATE on any Resources#PROCESS_INSTANCE</li>
     *   </ul>
     *
     * @see #activateJobByProcessDefinitionKey(String)
@@ -255,28 +255,28 @@ interface ManagementServiceInterface
     public function activateJobDefinitionByProcessDefinitionKey(string $processDefinitionKey, bool $activateJobs = false, string $activationDate = null): void;
 
     /**
-    * Suspends the {@link JobDefinition} with the given id.
+    * Suspends the JobDefinition with the given id.
     *
     * <p>Note: for more complex suspend commands use {@link #updateJobDefinitionSuspensionState()}.</p>
     *
-    * @param suspendJobs If true, all the {@link Job}s of the provided job definition
+    * @param suspendJobs If true, all the Jobs of the provided job definition
     *                     will be suspended too.
     *
     * @param suspensionDate The date on which the job definition will be suspended. If null, the
     *                       job definition is suspended immediately.
-    *                       Note: The {@link JobExecutor} needs to be active to use this!
+    *                       Note: The JobExecutor needs to be active to use this!
     *
     * @throws ProcessEngineException
     *          If the job definition id is equal null.
     * @throws AuthorizationException thrown if the current user does not possess
     *   <ul>
-    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
+    *     <li>Permissions#UPDATE on Resources#PROCESS_DEFINITION</li>
     *   </ul>
     *
     *   If <code>suspendJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
     *   <ul>
-    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
-    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
+    *     <li>Permissions#UPDATE_INSTANCE on Resources#PROCESS_DEFINITION</li>
+    *     <li>Permissions#UPDATE on any Resources#PROCESS_INSTANCE</li>
     *   </ul>
     *
     * @see #suspendJobById(String)
@@ -285,28 +285,28 @@ interface ManagementServiceInterface
     public function suspendJobDefinitionById(string $jobDefinitionId, bool $suspendJobs = false, string $suspensionDate = null): void;
 
     /**
-    * Suspends all {@link JobDefinition}s of the provided process definition id.
+    * Suspends all JobDefinitions of the provided process definition id.
     *
     * <p>Note: for more complex suspend commands use {@link #updateJobDefinitionSuspensionState()}.</p>
     *
-    * @param suspendJobs If true, all the {@link Job}s of the provided job definition
+    * @param suspendJobs If true, all the Jobs of the provided job definition
     *                     will be suspended too.
     *
     * @param suspensionDate The date on which the job definition will be suspended. If null, the
     *                       job definition is suspended immediately.
-    *                       Note: The {@link JobExecutor} needs to be active to use this!
+    *                       Note: The JobExecutor needs to be active to use this!
     *
     * @throws ProcessEngineException
     *          If the process definition id is equal null.
     * @throws AuthorizationException thrown if the current user does not possess
     *   <ul>
-    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
+    *     <li>Permissions#UPDATE on Resources#PROCESS_DEFINITION</li>
     *   </ul>
     *
     *   If <code>suspendJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
     *   <ul>
-    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
-    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
+    *     <li>Permissions#UPDATE_INSTANCE on Resources#PROCESS_DEFINITION</li>
+    *     <li>Permissions#UPDATE on any Resources#PROCESS_INSTANCE</li>
     *   </ul>
     *
     * @see #suspendJobByProcessDefinitionId(String)
@@ -314,28 +314,28 @@ interface ManagementServiceInterface
     public function suspendJobDefinitionByProcessDefinitionId(string $processDefinitionId, bool $suspendJobs = false, string $suspensionDate = null): void;
 
     /**
-    * Suspends all {@link JobDefinition}s of the provided process definition key.
+    * Suspends all JobDefinitions of the provided process definition key.
     *
     * <p>Note: for more complex suspend commands use {@link #updateJobDefinitionSuspensionState()}.</p>
     *
-    * @param suspendJobs If true, all the {@link Job}s of the provided job definition
+    * @param suspendJobs If true, all the Jobs of the provided job definition
     *                     will be suspended too.
     *
     * @param suspensionDate The date on which the job definition will be suspended. If null, the
     *                       job definition is suspended immediately.
-    *                       Note: The {@link JobExecutor} needs to be active to use this!
+    *                       Note: The JobExecutor needs to be active to use this!
     *
     * @throws ProcessEngineException
     *          If the process definition key is equal null.
     * @throws AuthorizationException thrown if the current user does not possess
     *   <ul>
-    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
+    *     <li>Permissions#UPDATE on Resources#PROCESS_DEFINITION</li>
     *   </ul>
     *
     *   If <code>suspendJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
     *   <ul>
-    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
-    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
+    *     <li>Permissions#UPDATE_INSTANCE on Resources#PROCESS_DEFINITION</li>
+    *     <li>Permissions#UPDATE on any Resources#PROCESS_INSTANCE</li>
     *   </ul>
     *
     * @see #suspendJobByProcessDefinitionKey(String)
@@ -343,140 +343,140 @@ interface ManagementServiceInterface
     public function suspendJobDefinitionByProcessDefinitionKey(string $processDefinitionKey, bool $suspendJobs = false, string $suspensionDate = null): void;
 
     /**
-    * <p>Activates the {@link Job} with the given id.</p>
+    * <p>Activates the Job with the given id.</p>
     *
     * <p>Note: for more complex activate commands use {@link #updateJobSuspensionState()}.</p>
     *
     * @throws ProcessEngineException
     *          If the job id is equal null.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+    *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+    *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
     public function activateJobById(string $jobId): void;
 
     /**
-    * <p>Activates all {@link Job}s of the provided job definition id.</p>
+    * <p>Activates all Jobs of the provided job definition id.</p>
     *
     * <p>Note: for more complex activate commands use {@link #updateJobSuspensionState()}.</p>
     *
     * @throws ProcessEngineException
     *          If the job definition id is equal null.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+    *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+    *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
     public function activateJobByJobDefinitionId(string $jobDefinitionId): void;
 
     /**
-    * <p>Activates all {@link Job}s of the provided process instance id.</p>
+    * <p>Activates all Jobs of the provided process instance id.</p>
     *
     * <p>Note: for more complex activate commands use {@link #updateJobSuspensionState()}.</p>
     *
     * @throws ProcessEngineException
     *          If the process instance id is equal null.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+    *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+    *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
     public function activateJobByProcessInstanceId(string $processInstanceId): void;
 
     /**
-    * <p>Activates all {@link Job}s of the provided process definition id.</p>
+    * <p>Activates all Jobs of the provided process definition id.</p>
     *
     * <p>Note: for more complex activate commands use {@link #updateJobSuspensionState()}.</p>
     *
     * @throws ProcessEngineException
     *          If the process definition id is equal null.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+    *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+    *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
     public function activateJobByProcessDefinitionId(string $processDefinitionId): void;
 
     /**
-    * <p>Activates {@link Job}s of the provided process definition key.</p>
+    * <p>Activates Jobs of the provided process definition key.</p>
     *
     * <p>Note: for more complex activate commands use {@link #updateJobSuspensionState()}.</p>
     *
     * @throws ProcessEngineException
     *          If the process definition key is equal null.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+    *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+    *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
     public function activateJobByProcessDefinitionKey(string $processDefinitionKey): void;
 
     /**
-    * <p>Suspends the {@link Job} with the given id.</p>
+    * <p>Suspends the Job with the given id.</p>
     *
     * <p>Note: for more complex suspend commands use {@link #updateJobSuspensionState()}.</p>
     *
     * @throws ProcessEngineException
     *          If the job id is equal null.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+    *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+    *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
     public function suspendJobById(string $jobId): void;
 
     /**
-    * <p>Suspends all {@link Job}s of the provided job definition id.</p>
+    * <p>Suspends all Jobs of the provided job definition id.</p>
     *
     * <p>Note: for more complex suspend commands use {@link #updateJobSuspensionState()}.</p>
     *
     * @throws ProcessEngineException
     *          If the job definition id is equal null.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+    *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+    *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
     public function suspendJobByJobDefinitionId(string $jobDefinitionId): void;
 
     /**
-    * <p>Suspends all {@link Job}s of the provided process instance id.</p>
+    * <p>Suspends all Jobs of the provided process instance id.</p>
     *
     * <p>Note: for more complex suspend commands use {@link #updateJobSuspensionState()}.</p>
     *
     * @throws ProcessEngineException
     *          If the process instance id is equal null.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+    *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+    *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
     public function suspendJobByProcessInstanceId(string $processInstanceId): void;
 
     /**
-    * <p>Suspends all {@link Job}s of the provided process definition id.</p>
+    * <p>Suspends all Jobs of the provided process definition id.</p>
     *
     * <p>Note: for more complex suspend commands use {@link #updateJobSuspensionState()}.</p>
     *
     * @throws ProcessEngineException
     *          If the process definition id is equal null.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+    *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+    *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
     public function suspendJobByProcessDefinitionId(string $processDefinitionId): void;
 
     /**
-    * <p>Suspends {@link Job}s of the provided process definition key.</p>
+    * <p>Suspends Jobs of the provided process definition key.</p>
     *
     * <p>Note: for more complex suspend commands use {@link #updateJobSuspensionState()}.</p>
     *
     * @throws ProcessEngineException
     *          If the process definition key is equal null.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+    *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+    *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
     public function suspendJobByProcessDefinitionKey(string $processDefinitionKey): void;
 
     /**
     * Activate or suspend jobs using a fluent builder. Specify the jobs by
     * calling one of the <i>by</i> methods, like <i>byJobId</i>. To update the
-    * suspension state call {@link UpdateJobSuspensionStateBuilder#activate()} or
-    * {@link UpdateJobSuspensionStateBuilder#suspend()}.
+    * suspension state call UpdateJobSuspensionStateBuilder#activate() or
+    * UpdateJobSuspensionStateBuilder#suspend().
     *
     * @return UpdateJobSuspensionStateSelectBuilderInterface the builder to update the suspension state
     */
@@ -486,8 +486,8 @@ interface ManagementServiceInterface
     * Activate or suspend job definitions using a fluent builder. Specify the job
     * definitions by calling one of the <i>by</i> methods, like
     * <i>byJobDefinitionId</i>. To update the suspension state call
-    * {@link UpdateJobDefinitionSuspensionStateBuilder#activate()} or
-    * {@link UpdateJobDefinitionSuspensionStateBuilder#suspend()}.
+    * UpdateJobDefinitionSuspensionStateBuilder#activate() or
+    * UpdateJobDefinitionSuspensionStateBuilder#suspend().
     *
     * @return UpdateJobDefinitionSuspensionStateSelectBuilderInterface the builder to update the suspension state
     */
@@ -504,10 +504,10 @@ interface ManagementServiceInterface
     * @param retries number of retries.
     *
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-    *          and no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}
-    *          and no {@link ProcessInstancePermissions#RETRY_JOB} permission on {@link Resources#PROCESS_INSTANCE}
-    *          and no {@link ProcessDefinitionPermissions#RETRY_JOB} permission on {@link Resources#PROCESS_DEFINITION}.
+    *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+    *          and no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION
+    *          and no ProcessInstancePermissions#RETRY_JOB permission on Resources#PROCESS_INSTANCE
+    *          and no ProcessDefinitionPermissions#RETRY_JOB permission on Resources#PROCESS_DEFINITION.
     */
     public function setJobRetries($jobIds, int $retries): void;
 
@@ -527,8 +527,8 @@ interface ManagementServiceInterface
     *
     * @throws BadUserRequestException if neither jobIds, nor jobQuery is provided or result in empty list
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#CREATE} or
-    *          {@link BatchPermissions#CREATE_BATCH_SET_JOB_RETRIES} permission on {@link Resources#BATCH}.
+    *          If the user has no Permissions#CREATE or
+    *          BatchPermissions#CREATE_BATCH_SET_JOB_RETRIES permission on Resources#BATCH.
     */
     public function setJobRetriesAsync($ids, $queryOrRetries, $historicQueryOrRetries = null, $retries = null): BatchInterface;
 
@@ -555,10 +555,10 @@ interface ManagementServiceInterface
     * @param retries number of retries.
     *
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-    *          and no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}
-    *          and no {@link Permissions#RETRY_JOB} permission on {@link Resources#PROCESS_INSTANCE}
-    *          and no {@link Permissions#RETRY_JOB} permission on {@link Resources#PROCESS_DEFINITION}.
+    *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+    *          and no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION
+    *          and no Permissions#RETRY_JOB permission on Resources#PROCESS_INSTANCE
+    *          and no Permissions#RETRY_JOB permission on Resources#PROCESS_DEFINITION.
     */
     public function setJobRetriesByJobDefinitionId(string $jobDefinitionId, int $retries): void;
 
@@ -574,8 +574,8 @@ interface ManagementServiceInterface
     * @param cascade indicate whether follow-up jobs should be affected
     *
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+    *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+    *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
     public function setJobDuedate(string $jobId, string $newDuedate, bool $cascade = false): void;
 
@@ -588,10 +588,10 @@ interface ManagementServiceInterface
     *          creation date of the job or the current date
     *
     * @throws AuthorizationException
-    *           If the user has no {@link Permissions#UPDATE} permission on
-    *           {@link Resources#PROCESS_INSTANCE} or no
-    *           {@link Permissions#UPDATE_INSTANCE} permission on
-    *           {@link Resources#PROCESS_DEFINITION}.
+    *           If the user has no Permissions#UPDATE permission on
+    *           Resources#PROCESS_INSTANCE or no
+    *           Permissions#UPDATE_INSTANCE permission on
+    *           Resources#PROCESS_DEFINITION.
     */
     public function recalculateJobDuedate(string $jobId, bool $creationDateBased): void;
 
@@ -603,8 +603,8 @@ interface ManagementServiceInterface
     *
     * @throws AuthorizationException thrown if the current user does not possess any of the following permissions
     *   <ul>
-    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_INSTANCE}</li>
-    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
+    *     <li>Permissions#UPDATE on Resources#PROCESS_INSTANCE</li>
+    *     <li>Permissions#UPDATE_INSTANCE on Resources#PROCESS_DEFINITION</li>
     *   </ul>
     *
     * @since 7.4
@@ -625,7 +625,7 @@ interface ManagementServiceInterface
     *
     * @throws AuthorizationException thrown if the current user does not possess any of the following permissions
     *   <ul>
-    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
+    *     <li>Permissions#UPDATE on Resources#PROCESS_DEFINITION</li>
     *   </ul>
     *
     * @since 7.4
@@ -643,7 +643,7 @@ interface ManagementServiceInterface
     *
     * @throws AuthorizationException thrown if the current user does not possess any of the following permissions
     *   <ul>
-    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
+    *     <li>Permissions#UPDATE on Resources#PROCESS_DEFINITION</li>
     *   </ul>
     *
     * @since 7.4
@@ -660,8 +660,8 @@ interface ManagementServiceInterface
     * @throws ProcessEngineException
     *          When no job exists with the given id.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_INSTANCE}
-    *          or no {@link Permissions#READ_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+    *          If the user has no Permissions#READ permission on Resources#PROCESS_INSTANCE
+    *          or no Permissions#READ_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
     public function getJobExceptionStacktrace(string $jobId): string;
 
@@ -669,7 +669,7 @@ interface ManagementServiceInterface
     * @return a map of all properties.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
     public function getProperties(): array;
 
@@ -681,7 +681,7 @@ interface ManagementServiceInterface
     * @param value the new value for the property.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
     public function setProperty(string $name, string $value): void;
 
@@ -691,7 +691,7 @@ interface ManagementServiceInterface
     * @param name the name of the property to delete
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
     public function deleteProperty(string $name): void;
 
@@ -701,7 +701,7 @@ interface ManagementServiceInterface
     * @param licenseKey the license key string.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
     public function setLicenseKey(string $licenseKey): void;
 
@@ -709,7 +709,7 @@ interface ManagementServiceInterface
     * Get the stored license key string or <code>null</code> if no license is set.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
     public function getLicenseKey(): ?string;
 
@@ -717,7 +717,7 @@ interface ManagementServiceInterface
     * Deletes the stored license key. If no license key is set, the request is ignored.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
     public function deleteLicenseKey(): void;
 
@@ -726,7 +726,7 @@ interface ManagementServiceInterface
     *  Note: will always return an empty string
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
     public function databaseSchemaUpgrade(Connection $connection, string $catalog, string $schema): string;
 
@@ -744,7 +744,7 @@ interface ManagementServiceInterface
     * Query for the number of activity instances aggregated by activities of a single process definition.
     *
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.
+    *          If the user has no Permissions#READ permission on Resources#PROCESS_DEFINITION.
     */
     public function createActivityStatisticsQuery(string $processDefinitionId): ActivityStatisticsQueryInterface;
 
@@ -753,7 +753,7 @@ interface ManagementServiceInterface
     * This set is only relevant, if the engine configuration property <code>jobExecutorDeploymentAware</code> is set.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
     public function getRegisteredDeployments(): array;
 
@@ -763,7 +763,7 @@ interface ManagementServiceInterface
     * If set to false, the job executor will execute any job.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
     public function registerDeploymentForJobExecutor(string $deploymentId): void;
 
@@ -773,7 +773,7 @@ interface ManagementServiceInterface
     * jobs for the given deployment will no longer get acquired.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
     public function unregisterDeploymentForJobExecutor(string $deploymentId): void;
 
@@ -783,7 +783,7 @@ interface ManagementServiceInterface
     * @return int the history level
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
     public function getHistoryLevel(): int;
 
@@ -799,7 +799,7 @@ interface ManagementServiceInterface
     * are matched in that regard.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     *
     * @param timestamp or null
     * @param reporter or null
@@ -829,7 +829,7 @@ interface ManagementServiceInterface
     * If the timestamp is null, all metrics will be deleted
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     *
     * @param timestamp or <code>null</code>
     */
@@ -844,18 +844,18 @@ interface ManagementServiceInterface
 
     /**
     * <p>
-    *   Suspends the {@link Batch} with the given id immediately.
+    *   Suspends the Batch with the given id immediately.
     * </p>
     *
     * <p>
-    *   <strong>Note:</strong> All {@link JobDefinition}s and {@link Job}s
+    *   <strong>Note:</strong> All JobDefinitions and Jobs
     *   related to the provided batch will be suspended.
     * </p>
     *
     * @throws BadUserRequestException
     *          If no such batch can be found.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#BATCH}.
+    *          If the user has no Permissions#UPDATE permission on Resources#BATCH.
     *
     * @since 7.5
     */
@@ -863,18 +863,18 @@ interface ManagementServiceInterface
 
     /**
     * <p>
-    *   Activates the {@link Batch} with the given id immediately.
+    *   Activates the Batch with the given id immediately.
     * </p>
     *
     * <p>
-    *   <strong>Note:</strong> All {@link JobDefinition}s and {@link Job}s
+    *   <strong>Note:</strong> All JobDefinitions and Jobs
     *   related to the provided batch will be activated.
     * </p>
     *
     * @throws BadUserRequestException
     *          If no such batch can be found.
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#BATCH}.
+    *          If the user has no Permissions#UPDATE permission on Resources#BATCH.
     *
     * @since 7.5
     */
@@ -887,7 +887,7 @@ interface ManagementServiceInterface
     * historic jobs logs are also removed.
     *
     * @throws AuthorizationException
-    *          If the user has no {@link Permissions#DELETE} permission on {@link Resources#BATCH}
+    *          If the user has no Permissions#DELETE permission on Resources#BATCH
     *
     * @since 7.5
     */
@@ -911,7 +911,7 @@ interface ManagementServiceInterface
     * Enable/disable sending telemetry data to Camunda
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group {@link Groups#CAMUNDA_ADMIN}.
+    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
     public function toggleTelemetry(bool $enabled): void;
 

@@ -78,7 +78,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
     /**
      * true for process instances in the initial phase. Currently
      * this controls that historic variable updates created during this phase receive
-     * the <code>initial</code> flag (see {@link HistoricVariableUpdateEventEntity#isInitial}).
+     * the <code>initial</code> flag (see HistoricVariableUpdateEventEntity#isInitial).
      */
     protected $isStarting = false;
 
@@ -747,14 +747,14 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
      * Cannot be called for activities contained in normal flow.
      * <p>
      * First, the ActivityStartBehavior is evaluated.
-     * In case the start behavior is not {@link ActivityStartBehavior#DEFAULT}, the corresponding start
+     * In case the start behavior is not ActivityStartBehavior#DEFAULT, the corresponding start
      * behavior is executed before executing the activity.
      * <p>
      * For a given activity, the execution on which this method must be called depends on the type of the start behavior:
      * <ul>
-     * <li>CONCURRENT_IN_FLOW_SCOPE: scope execution for {@link PvmActivity#getFlowScope()}</li>
-     * <li>INTERRUPT_EVENT_SCOPE: scope execution for {@link PvmActivity#getEventScope()}</li>
-     * <li>CANCEL_EVENT_SCOPE: scope execution for {@link PvmActivity#getEventScope()}</li>
+     * <li>CONCURRENT_IN_FLOW_SCOPE: scope execution for PvmActivity#getFlowScope()</li>
+     * <li>INTERRUPT_EVENT_SCOPE: scope execution for PvmActivity#getEventScope()</li>
+     * <li>CANCEL_EVENT_SCOPE: scope execution for PvmActivity#getEventScope()</li>
      * </ul>
      *
      * @param activity the activity to start

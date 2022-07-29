@@ -30,7 +30,7 @@ interface SetRemovalTimeToHistoricBatchesBuilderInterface
     * @throws BadUserRequestException when no historic batches could be found.
     * @throws AuthorizationException
     * when no {@link BatchPermissions#CREATE_BATCH_SET_REMOVAL_TIME CREATE_BATCH_SET_REMOVAL_TIME}
-    * or no permission {@link Permissions#CREATE CREATE} permission is granted on {@link Resources#BATCH}.
+    * or no permission {@link Permissions#CREATE CREATE} permission is granted on Resources#BATCH.
     *
     * @return BatchInterface the batch which sets the removal time asynchronously.
     */

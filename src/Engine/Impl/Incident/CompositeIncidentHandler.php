@@ -12,11 +12,11 @@ class CompositeIncidentHandler implements IncidentHandlerInterface
     protected $incidentHandlers = [];
 
     /**
-     * Constructor that takes a varargs parameter {@link IncidentHandler} that
+     * Constructor that takes a varargs parameter IncidentHandler that
      * consume the incident.
      *
-     * @param mainIncidentHandler the main incident handler {@link IncidentHandler} that consume the incident and return result.
-     * @param incidentHandlers    the list of {@link IncidentHandler} that consume the incident.
+     * @param mainIncidentHandler the main incident handler IncidentHandler that consume the incident and return result.
+     * @param incidentHandlers    the list of IncidentHandler that consume the incident.
      */
     public function __construct(IncidentHandlerInterface $mainIncidentHandler, array $incidentHandlers)
     {
@@ -40,10 +40,10 @@ class CompositeIncidentHandler implements IncidentHandlerInterface
     }
 
     /**
-     * Adds the {@link IncidentHandler} to the list of
-     * {@link IncidentHandler} that consume the incident.
+     * Adds the IncidentHandler to the list of
+     * IncidentHandler that consume the incident.
      *
-     * @param incidentHandler the {@link IncidentHandler} that consume the incident.
+     * @param incidentHandler the IncidentHandler that consume the incident.
      */
     public function add(IncidentHandlerInterface $incidentHandler): void
     {

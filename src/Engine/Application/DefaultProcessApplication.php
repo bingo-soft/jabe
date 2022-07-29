@@ -27,8 +27,8 @@ abstract class DefaultProcessApplication
     /**
      * Returns the location(s) of the <code>processes.xml</code> deployment descriptors.
      * The default value is<code>{META-INF/processes.xml}</code>. The provided path(s)
-     * must be resolvable through the {@link ClassLoader#getResourceAsStream(String)}-Method
-     * of the classloader returned  by the {@link AbstractProcessApplication#getProcessApplicationClassloader()}
+     * must be resolvable through the ClassLoader#getResourceAsStream(String)-Method
+     * of the classloader returned  by the AbstractProcessApplication#getProcessApplicationClassloader()
      * method provided by the process application.
      *
      * @return string the location of the <code>processes.xml</code> file.

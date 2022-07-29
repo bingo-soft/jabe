@@ -17,7 +17,7 @@ use Jabe\Engine\Impl\Persistence\Entity\TaskEntity;
 abstract class ExecutableScript
 {
     /** The language of the script. Used to resolve the
-     * {@link ScriptEngine}. */
+     * ScriptEngine. */
     protected $language;
 
     public function __construct(string $language)

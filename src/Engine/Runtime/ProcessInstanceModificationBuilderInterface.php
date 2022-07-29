@@ -138,11 +138,11 @@ interface ProcessInstanceModificationBuilderInterface extends InstantiationBuild
      *   throughout the transaction when executing the instructions
      *
      * @throws AuthorizationException
-     *          if the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
-     *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
-     *          if the process instance will be delete and the user has no {@link Permissions#DELETE} permission
-     *          on {@link Resources#PROCESS_INSTANCE} or no {@link Permissions#DELETE_INSTANCE} permission on
-     *          {@link Resources#PROCESS_DEFINITION}.
+     *          if the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
+     *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
+     *          if the process instance will be delete and the user has no Permissions#DELETE permission
+     *          on Resources#PROCESS_INSTANCE or no Permissions#DELETE_INSTANCE permission on
+     *          Resources#PROCESS_DEFINITION.
      */
     public function execute(
         ?bool $skipCustomListeners,
@@ -156,8 +156,8 @@ interface ProcessInstanceModificationBuilderInterface extends InstantiationBuild
      *   throughout the transaction when executing the instructions
      *
      * @throws AuthorizationException
-     *               if the user has no {@link Permissions#CREATE} or
-     *               {@link BatchPermissions#CREATE_BATCH_MODIFY_PROCESS_INSTANCES} permission on {@link Resources#BATCH}.
+     *               if the user has no Permissions#CREATE or
+     *               BatchPermissions#CREATE_BATCH_MODIFY_PROCESS_INSTANCES permission on Resources#BATCH.
      *
      * @return a batch job to be executed by the executor
      */

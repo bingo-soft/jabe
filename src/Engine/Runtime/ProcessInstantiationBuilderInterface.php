@@ -58,10 +58,10 @@ interface ProcessInstantiationBuilderInterface extends ActivityInstantiationBuil
      * @return ProcessInstanceWithVariablesInterface the newly created process instance with the latest variables
      *
      * @throws AuthorizationException
-     *           if the user has no {@link Permissions#CREATE} permission on
-     *           {@link Resources#PROCESS_INSTANCE} and no
-     *           {@link Permissions#CREATE_INSTANCE} permission on
-     *           {@link Resources#PROCESS_DEFINITION}.
+     *           if the user has no Permissions#CREATE permission on
+     *           Resources#PROCESS_INSTANCE and no
+     *           Permissions#CREATE_INSTANCE permission on
+     *           Resources#PROCESS_DEFINITION.
      *
      * @throws ProcessEngineException
      *           if {@code skipCustomListeners} or {@code skipIoMappings} is set

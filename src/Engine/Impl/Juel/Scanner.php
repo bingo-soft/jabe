@@ -94,7 +94,7 @@ class Scanner
     }
 
     /**
-     * @return <code>true</code> iff the specified character is a digit
+     * @return bool true iff the specified character is a digit
      */
     protected function isDigit(string $c): bool
     {

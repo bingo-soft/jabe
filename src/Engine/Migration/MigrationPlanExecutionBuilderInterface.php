@@ -23,7 +23,7 @@ interface MigrationPlanExecutionBuilderInterface
 
     /**
      * @param processInstanceQuery a query which selects the process instances to migrate.
-     *   Query results are restricted to process instances for which the user has {@link Permissions#READ} permission.
+     *   Query results are restricted to process instances for which the user has Permissions#READ permission.
      */
     public function processInstanceQuery(ProcessInstanceQueryInterface $processInstanceQuery): MigrationPlanExecutionBuilderInterface;
 
@@ -45,13 +45,13 @@ interface MigrationPlanExecutionBuilderInterface
      * @throws AuthorizationException
      *   if the user has not all of the following permissions
      *   <ul>
-     *      <li>if the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE} or</li>
-     *      <li>no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}</li>
+     *      <li>if the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE or</li>
+     *      <li>no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      *   </ul>
      * @throws BadUserRequestException
      *   When the affected instances count exceeds the maximum results limit. A maximum results
      *   limit can be specified with the process engine configuration property
-     *   <code>queryMaxResultsLimit</code> (default {@link Integer#MAX_VALUE}).
+     *   <code>queryMaxResultsLimit</code> (default Integer#MAX_VALUE).
      *   Please use the batch operation {@link #executeAsync()} instead.
      */
     public function execute(): void;
@@ -65,8 +65,8 @@ interface MigrationPlanExecutionBuilderInterface
      * @throws AuthorizationException
      *   if the user has not all of the following permissions
      *   <ul>
-     *     <li>{@link Permissions#MIGRATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION} for source and target</li>
-     *     <li>{@link Permissions#CREATE} or {@link BatchPermissions#CREATE_BATCH_MIGRATE_PROCESS_INSTANCES} permission on {@link Resources#BATCH}</li>
+     *     <li>Permissions#MIGRATE_INSTANCE permission on Resources#PROCESS_DEFINITION for source and target</li>
+     *     <li>Permissions#CREATE or BatchPermissions#CREATE_BATCH_MIGRATE_PROCESS_INSTANCES permission on Resources#BATCH</li>
      *   </ul>
      */
     public function executeAsync(): BatchInterface;

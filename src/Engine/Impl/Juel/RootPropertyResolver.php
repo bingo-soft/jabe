@@ -117,7 +117,7 @@ class RootPropertyResolver extends ELResolver
      *
      * @param property
      *            property name
-     * @return <code>true</code> if the given property is associated with a value
+     * @return bool true if the given property is associated with a value
      */
     public function isProperty(string $property): bool
     {

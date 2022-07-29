@@ -29,7 +29,7 @@ class HistoricTaskPermissions implements PermissionInterface
         if (self::$ALL === null) {
             self::$ALL = new HistoricTaskPermissions(
                 "ALL",
-                INF
+                PHP_INT_MAX
             );
         }
         return self::$ALL;

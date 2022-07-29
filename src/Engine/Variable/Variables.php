@@ -56,7 +56,7 @@ class Variables
 
     /**
      * If the given map is not a variable map, adds all its entries as untyped
-     * values to a new {@link VariableMap}. If the given map is a {@link VariableMap},
+     * values to a new VariableMap. If the given map is a VariableMap,
      * it is returned as is.
      */
     public static function fromMap($map): VariableMapInterface
@@ -85,7 +85,7 @@ class Variables
     }
 
     /**
-     * Returns a builder to create a new {@link ObjectValue} that encapsulates
+     * Returns a builder to create a new ObjectValue that encapsulates
      * the given {@code value}.
      */
     public static function objectValue($value, ?bool $isTransient = null): ObjectValueBuilderInterface
@@ -97,7 +97,7 @@ class Variables
     }
 
     /**
-     * Returns a builder to create a new {@link ObjectValue} from a serialized
+     * Returns a builder to create a new ObjectValue from a serialized
      * object representation.
      */
     public static function serializedObjectValue(
@@ -115,7 +115,7 @@ class Variables
     }
 
     /**
-     * Creates a new {@link IntegerValue} that encapsulates the given <code>integer</code>
+     * Creates a new IntegerValue that encapsulates the given <code>integer</code>
      */
     public static function integerValue(?int $integer, ?bool $isTransient = null): IntegerValueInterface
     {
@@ -123,7 +123,7 @@ class Variables
     }
 
     /**
-     * Creates a new {@link StringValue} that encapsulates the given <code>stringValue</code>
+     * Creates a new StringValue that encapsulates the given <code>stringValue</code>
      */
     public static function stringValue(?string $stringValue, ?bool $isTransient = null): StringValueInterface
     {
@@ -131,7 +131,7 @@ class Variables
     }
 
     /**
-     * Creates a new {@link BooleanValue} that encapsulates the given <code>booleanValue</code>
+     * Creates a new BooleanValue that encapsulates the given <code>booleanValue</code>
      */
     public static function booleanValue(?bool $booleanValue, ?bool $isTransient = null): BooleanValueInterface
     {
@@ -139,7 +139,7 @@ class Variables
     }
 
     /**
-     * Creates a new {@link BytesValue} that encapsulates the given <code>bytes</code>
+     * Creates a new BytesValue that encapsulates the given <code>bytes</code>
      */
     public static function byteArrayValue(string $bytes, ?bool $isTransient = null): BytesValueInterface
     {
@@ -147,7 +147,7 @@ class Variables
     }
 
     /**
-     * Creates a new {@link DateValue} that encapsulates the given <code>date</code>
+     * Creates a new DateValue that encapsulates the given <code>date</code>
      */
     public static function dateValue(?string $date, ?bool $isTransient = null): DateValueInterface
     {
@@ -155,7 +155,7 @@ class Variables
     }
 
     /**
-     * Creates a new {@link DoubleValue} that encapsulates the given <code>doubleValue</code>
+     * Creates a new DoubleValue that encapsulates the given <code>doubleValue</code>
      */
     public static function doubleValue(?float $doubleValue, ?bool $isTransient = null): DoubleValueInterface
     {
@@ -164,7 +164,7 @@ class Variables
 
     /**
      * Creates an abstract Number value. Note that this value cannot be used to set variables.
-     * Use the specific methods {@link Variables#integerValue(Integer)}, {@link #shortValue(Short)},
+     * Use the specific methods Variables#integerValue(Integer), {@link #shortValue(Short)},
      * {@link #longValue(Long)} and {@link #doubleValue(Double)} instead.
      */
     public static function numberValue($numberValue, ?bool $isTransient): NumberValueInterface
@@ -173,7 +173,7 @@ class Variables
     }
 
     /**
-     * Creates a {@link TypedValue} with value {@code null} and type {@link ValueType#NULL}
+     * Creates a TypedValue with value {@code null} and type ValueType#NULL
      */
     public static function untypedNullValue(?bool $isTransient = null): TypedValueInterface
     {
@@ -181,7 +181,7 @@ class Variables
     }
 
     /**
-     * Creates an untyped value, i.e. {@link TypedValue#getType()} returns <code>null</code>
+     * Creates an untyped value, i.e. TypedValue#getType() returns <code>null</code>
      * for the returned instance.
      */
     public static function untypedValue($value, ?bool $isTransient = null): TypedValueInterface
@@ -208,7 +208,7 @@ class Variables
     }
 
     /**
-     * Returns a builder to create a new {@link FileValue} with the given
+     * Returns a builder to create a new FileValue with the given
      * {@code filename}.
      */
     public static function fileValue(string $filename, ?bool $isTransient = null): FileValueBuilderInterface
@@ -220,7 +220,7 @@ class Variables
     }
 
     /**
-     * @return an empty {@link VariableContext} (from which no variables can be resolved).
+     * @return an empty VariableContext (from which no variables can be resolved).
      */
     public static function emptyVariableContext(): VariableContextInterface
     {

@@ -20,7 +20,7 @@ class Builder implements TreeBuilder
     }
 
     /**
-     * @return <code>true</code> iff the specified feature is supported.
+     * @return bool true iff the specified feature is supported.
      */
     public function isEnabled(string $feature): bool
     {

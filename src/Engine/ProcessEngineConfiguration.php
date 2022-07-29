@@ -108,7 +108,7 @@ abstract class ProcessEngineConfiguration
 
     /**
      * Never checks for {@link Authorization#AUTH_TYPE_REVOKE revoke} authorizations. This mode
-     * has best performance effectively disables the use of {@link Authorization#AUTH_TYPE_REVOKE}.
+     * has best performance effectively disables the use of Authorization#AUTH_TYPE_REVOKE.
      * *Note*: It is strongly recommended to use this mode.
      */
     public const AUTHORIZATION_CHECK_REVOKE_NEVER = "never";
@@ -218,7 +218,7 @@ abstract class ProcessEngineConfiguration
      *
      * <p>If the value of the flag <code>authorizationEnabledForCustomCode</code>
      * is set <code>true</code> then an authorization check will be performed by
-     * executing commands inside custom code (e.g. inside {@link JavaDelegate}).</p>
+     * executing commands inside custom code (e.g. inside JavaDelegate).</p>
      *
      * <p>The default value is <code>false</code>.</p>
      *
@@ -277,7 +277,7 @@ abstract class ProcessEngineConfiguration
 
     /**
      * If the value of this flag is set <code>true</code> then the process engine
-     * throws {@link ProcessEngineException} when no catching boundary event was
+     * throws ProcessEngineException when no catching boundary event was
      * defined for an error event.
      *
      * <p>The default value is <code>false</code>.</p>
@@ -285,7 +285,7 @@ abstract class ProcessEngineConfiguration
     protected $enableExceptionsAfterUnhandledBpmnError = false;
 
     /**
-     * If the value of this flag is set to <code>false</code>, {@link OptimisticLockingException}s
+     * If the value of this flag is set to <code>false</code>, OptimisticLockingExceptions
      * are not skipped for UPDATE or DELETE operations applied to historic entities.
      *
      * <p>The default value is <code>true</code>.</p>

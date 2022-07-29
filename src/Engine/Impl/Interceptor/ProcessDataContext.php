@@ -89,7 +89,7 @@ class ProcessDataContext
      * @param execution
      *          the execution to retrieve the context data from
      *
-     * @return <code>true</code> if the section contains any updates and therefore
+     * @return bool true if the section contains any updates and therefore
      *         should be popped later by {@link #popSection()}
      */
     public function pushSection(ExecutionEntity $execution): bool
