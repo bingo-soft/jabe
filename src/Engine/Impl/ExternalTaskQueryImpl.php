@@ -11,8 +11,8 @@ use Jabe\Engine\Impl\Persistence\Entity\SuspensionState;
 use Jabe\Engine\Impl\Util\{
     ClockUtil,
     CompareUtil,
-    EnsureUtil,
-    ImmutablePair
+    EnsureUtil//,
+    //ImmutablePair
 };
 
 class ExternalTaskQueryImpl extends AbstractQuery implements ExternalTaskQueryInterface

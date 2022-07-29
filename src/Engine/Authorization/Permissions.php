@@ -410,4 +410,9 @@ class Permissions implements PermissionInterface
     {
         return $this->resourceTypes;
     }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }

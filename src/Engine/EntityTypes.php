@@ -41,4 +41,5 @@ class EntityTypes
     public const OPERATION_LOG_CATEGORY = "OperationLogCatgeory";
     public const OPTIMIZE = "Optimize";
     public const OPERATION_LOG = "OperationLog";
+    public const SYSTEM = "System";
 }

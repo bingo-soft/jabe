@@ -16,7 +16,7 @@ class HistoricProcessInstancePermissions implements PermissionInterface
     public static function none(): PermissionInterface
     {
         if (self::$NONE === null) {
-            self::$NONE = new ProcessDefinitionPermissions("NONE", 0);
+            self::$NONE = new HistoricProcessInstancePermissions("NONE", 0);
         }
         return self::$NONE;
     }
@@ -26,7 +26,7 @@ class HistoricProcessInstancePermissions implements PermissionInterface
     public static function all(): PermissionInterface
     {
         if (self::$ALL === null) {
-            self::$ALL = new ProcessDefinitionPermissions("ALL", PHP_INT_MAX);
+            self::$ALL = new HistoricProcessInstancePermissions("ALL", PHP_INT_MAX);
         }
         return self::$ALL;
     }
@@ -36,7 +36,7 @@ class HistoricProcessInstancePermissions implements PermissionInterface
     public static function read(): PermissionInterface
     {
         if (self::$READ === null) {
-            self::$READ = new ProcessDefinitionPermissions("READ", 2);
+            self::$READ = new HistoricProcessInstancePermissions("READ", 2);
         }
         return self::$READ;
     }

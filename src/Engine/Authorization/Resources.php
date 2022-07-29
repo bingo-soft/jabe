@@ -222,6 +222,16 @@ class Resources implements ResourceInterface
         return self::$HISTORIC_PROCESS_INSTANCE;
     }
 
+    public static $SYSTEM;
+
+    public static function system(): ResourceInterface
+    {
+        if (self::$SYSTEM === null) {
+            self::$SYSTEM = new Resources(EntityTypes::SYSTEM, 21);
+        }
+        return self::$SYSTEM;
+    }
+
     private $name;
     private $id;
 

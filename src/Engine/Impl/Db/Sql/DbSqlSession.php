@@ -243,7 +243,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
         DbOperation $failedOperation,
         \Exception $cause = null
     ): bool {
-        $isConstraintViolation = ExceptionUtil::checkForeignKeyConstraintViolation($cause);
+        $isConstraintViolation = ExceptionUtil::checkForeignKeyConstraintViolation($cause, true);
         $isVariableIntegrityViolation = ExceptionUtil::checkVariableIntegrityViolation($cause);
 
         if ($isVariableIntegrityViolation) {

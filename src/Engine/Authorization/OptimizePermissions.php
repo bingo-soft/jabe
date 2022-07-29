@@ -16,7 +16,7 @@ class OptimizePermissions implements PermissionInterface
     public static function none(): PermissionInterface
     {
         if (self::$NONE === null) {
-            self::$NONE = new ProcessDefinitionPermissions("NONE", 0);
+            self::$NONE = new OptimizePermissions("NONE", 0);
         }
         return self::$NONE;
     }
@@ -26,7 +26,7 @@ class OptimizePermissions implements PermissionInterface
     public static function all(): PermissionInterface
     {
         if (self::$ALL === null) {
-            self::$ALL = new ProcessDefinitionPermissions("ALL", PHP_INT_MAX);
+            self::$ALL = new OptimizePermissions("ALL", PHP_INT_MAX);
         }
         return self::$ALL;
     }
@@ -36,7 +36,7 @@ class OptimizePermissions implements PermissionInterface
     public static function edit(): PermissionInterface
     {
         if (self::$EDIT === null) {
-            self::$EDIT = new ProcessDefinitionPermissions("EDIT", 2);
+            self::$EDIT = new OptimizePermissions("EDIT", 2);
         }
         return self::$EDIT;
     }
@@ -46,7 +46,7 @@ class OptimizePermissions implements PermissionInterface
     public static function share(): PermissionInterface
     {
         if (self::$SHARE === null) {
-            self::$SHARE = new ProcessDefinitionPermissions("SHARE", 4);
+            self::$SHARE = new OptimizePermissions("SHARE", 4);
         }
         return self::$SHARE;
     }

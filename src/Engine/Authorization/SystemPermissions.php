@@ -4,10 +4,7 @@ namespace Jabe\Engine\Authorization;
 
 use Jabe\Engine\Authorization\Exception\PermissionNotFound;
 
-/**
- * The set of built-in Permissions for Resources::OPERATION_LOG_CATEGORY.
- */
-class UserOperationLogCategoryPermissions implements PermissionInterface
+class SystemPermissions implements PermissionInterface
 {
     use PermissionTrait;
 
@@ -16,7 +13,7 @@ class UserOperationLogCategoryPermissions implements PermissionInterface
     public static function none(): PermissionInterface
     {
         if (self::$NONE === null) {
-            self::$NONE = new UserOperationLogCategoryPermissions("NONE", 0);
+            self::$NONE = new ProcessDefinitionPermissions("NONE", 0);
         }
         return self::$NONE;
     }
@@ -26,7 +23,7 @@ class UserOperationLogCategoryPermissions implements PermissionInterface
     public static function all(): PermissionInterface
     {
         if (self::$ALL === null) {
-            self::$ALL = new UserOperationLogCategoryPermissions("ALL", PHP_INT_MAX);
+            self::$ALL = new SystemPermissions("ALL", PHP_INT_MAX);
         }
         return self::$ALL;
     }
@@ -36,19 +33,19 @@ class UserOperationLogCategoryPermissions implements PermissionInterface
     public static function read(): PermissionInterface
     {
         if (self::$READ === null) {
-            self::$READ = new UserOperationLogCategoryPermissions("READ", 2);
+            self::$READ = new SystemPermissions("READ", 2);
         }
         return self::$READ;
     }
 
-    private static $UPDATE;
+    private static $SET;
 
-    public static function update(): PermissionInterface
+    public static function set(): PermissionInterface
     {
-        if (self::$UPDATE === null) {
-            self::$UPDATE = new UserOperationLogCategoryPermissions("UPDATE", 4);
+        if (self::$SET === null) {
+            self::$SET = new SystemPermissions("SET", 4);
         }
-        return self::$UPDATE;
+        return self::$SET;
     }
 
     private static $DELETE;
@@ -56,29 +53,27 @@ class UserOperationLogCategoryPermissions implements PermissionInterface
     public static function delete(): PermissionInterface
     {
         if (self::$DELETE === null) {
-            self::$DELETE = new UserOperationLogCategoryPermissions("DELETE", 16);
+            self::$DELETE = new SystemPermissions("DELETE", 8);
         }
         return self::$DELETE;
     }
 
-    private static $RESOURCES;
-
     public static function resources(): array
     {
         if (self::$RESOURCES === null) {
-            self::$RESOURCES = [ Resources::operationLogCategory() ];
+            self::$RESOURCES = [ Resources::system() ];
         }
         return self::$RESOURCES;
+    }
+
+    public function getTypes(): array
+    {
+        return self::resources();
     }
 
     private function __construct(string $name, int $id)
     {
         $this->name = $name;
         $this->id = $id;
-    }
-
-    public function getTypes(): array
-    {
-        return self::resources();
     }
 }

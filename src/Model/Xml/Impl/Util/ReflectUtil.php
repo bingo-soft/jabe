@@ -19,10 +19,11 @@ abstract class ReflectUtil
      */
     public static function getResource(string $name, $classLoader = null): ?string
     {
-        if ($classLoader !== null && method_exists($classLoader, 'getResource')) {
+        /*if ($classLoader !== null && method_exists($classLoader, 'getResource')) {
             return $classLoader->getResource($name);
         }
-        return file_exists($name) ? file_get_contents($name) : null;
+        return file_exists($name) ? file_get_contents($name) : null;*/
+        return file_exists($name) ? $name : null;
     }
 
     /**
@@ -33,7 +34,7 @@ abstract class ReflectUtil
         if (file_exists($path)) {
             return fopen($path, 'r+');
         } else {
-             throw new ModelException(sprintf("Exception while loading resource file %s", $path));
+            throw new ModelException(sprintf("Exception while loading resource file %s", $path));
         }
     }
 

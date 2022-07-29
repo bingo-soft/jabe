@@ -29,4 +29,18 @@ trait PermissionTrait
 
         return self::$func();
     }
+
+    public static function values(): array
+    {
+        $reflection = new \ReflectionClass(__CLASS__);
+        $methods = $reflection->getMethods(\ReflectionMethod::IS_STATIC);
+        $arr = [];
+
+        foreach ($methods as $method) {
+            if ($method->getName() !== "values" && $method->getName() !== "forName" && $method->getName() !== "resources") {
+                $arr[] = $method->invoke(null);
+            }
+        }
+        return $arr;
+    }
 }

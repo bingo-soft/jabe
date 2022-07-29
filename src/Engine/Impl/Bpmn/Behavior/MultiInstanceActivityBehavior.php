@@ -172,7 +172,7 @@ abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivityBehavio
     protected function getLoopVariable(ActivityExecutionInterface $execution, string $variableName): int
     {
         $value = $execution->getVariableLocalTyped($variableName);
-        EnsureUtil::ensureNotNull("The variable \"" . $variableName . "\" could not be found in execution with id " + $execution->getId(), "value", $value);
+        EnsureUtil::ensureNotNull("The variable \"" . $variableName . "\" could not be found in execution with id " . $execution->getId(), "value", $value);
         return $value->getValue();
     }
 

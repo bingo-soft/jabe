@@ -24,8 +24,8 @@ use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\Persistence\AbstractHistoricManager;
 use Jabe\Engine\Impl\Util\{
     ClockUtil,
-    CollectionUtil,
-    ImmutablePair
+    CollectionUtil//,
+    //ImmutablePair
 };
 
 class HistoricProcessInstanceManager extends AbstractHistoricManager
