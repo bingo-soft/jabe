@@ -2,14 +2,12 @@
 
 namespace Jabe\Engine\Impl\Form\Engine;
 
-use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Delegate\VariableScopeInterface;
 use Jabe\Engine\Form\{
     FormDataInterface,
     StartFormDataInterface,
     TaskFormDataInterface
 };
-use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Delegate\ScriptInvocation;
 use Jabe\Engine\Impl\Persistence\Entity\{

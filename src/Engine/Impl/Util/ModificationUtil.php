@@ -8,7 +8,6 @@ use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ScopeImpl
 };
-use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
 
 class ModificationUtil
 {

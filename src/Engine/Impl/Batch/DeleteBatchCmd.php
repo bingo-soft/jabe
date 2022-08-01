@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Batch;
 
-use Jabe\Engine\BadUserRequestException;
 use Jabe\Engine\History\UserOperationLogEntryInterface;
 use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,

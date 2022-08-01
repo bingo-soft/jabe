@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Cmd;
 
-use Jabe\Engine\BadUserRequestException;
 use Jabe\Engine\Authorization\BatchPermissions;
 use Jabe\Engine\Batch\BatchInterface;
 use Jabe\Engine\Impl\UpdateProcessInstancesSuspensionStateBuilderImpl;

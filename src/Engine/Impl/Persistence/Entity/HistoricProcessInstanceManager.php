@@ -17,10 +17,8 @@ use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     ListQueryParameterObject
 };
-use Jabe\Engine\Impl\Db\EntityManager\Operation\DbOperation;
 use Jabe\Engine\Impl\Db\Sql\DbSqlSessionFactory;
 use Jabe\Engine\Impl\History\Event\HistoricProcessInstanceEventEntity;
-use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\Persistence\AbstractHistoricManager;
 use Jabe\Engine\Impl\Util\{
     ClockUtil,

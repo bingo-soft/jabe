@@ -12,7 +12,6 @@ use Jabe\Engine\Impl\Event\{
     EventHandlerInterface,
     EventType
 };
-use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\JobExecutor\EventSubscriptionJobDeclaration;
 use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,

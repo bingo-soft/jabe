@@ -64,14 +64,12 @@ use Jabe\Engine\Impl\Db\{
 };
 use Jabe\Engine\Impl\Db\EntityManager\Operation\DbOperation;
 use Jabe\Engine\Impl\Identity\Authentication;
-use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\Persistence\AbstractManager;
 use Jabe\Engine\Impl\Persistence\Entity\Util\{
     AuthManagerUtil,
     VariablePermissions
 };
 use Jabe\Engine\Impl\Util\ResourceTypeUtil;
-use Jabe\Engine\Query\QueryInterface;
 
 class AuthorizationManager extends AbstractManager
 {

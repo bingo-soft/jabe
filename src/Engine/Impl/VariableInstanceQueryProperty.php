@@ -4,19 +4,19 @@ namespace Jabe\Engine\Impl;
 
 class VariableInstanceQueryProperty
 {
-    private static $VARIABLE_NAME;//new QueryPropertyImpl("NAME_");
-    private static $VARIABLE_TYPE;//new QueryPropertyImpl("TYPE_");
-    private static $ACTIVITY_INSTANCE_ID;//new QueryPropertyImpl("ACT_INST_ID_");
-    private static $EXECUTION_ID;//new QueryPropertyImpl("EXECUTION_ID_");
-    private static $TASK_ID;//new QueryPropertyImpl("TASK_ID_");
-    private static $CASE_EXECUTION_ID;//new QueryPropertyImpl("CASE_EXECUTION_ID_");
-    private static $CASE_INSTANCE_ID;//new QueryPropertyImpl("CASE_INST_ID_");
-    private static $TENANT_ID;//new QueryPropertyImpl("TENANT_ID_");
+    private static $VARIABLE_NAME;
+    private static $VARIABLE_TYPE;
+    private static $ACTIVITY_INSTANCE_ID;
+    private static $EXECUTION_ID;
+    private static $TASK_ID;
+    private static $CASE_EXECUTION_ID;
+    private static $CASE_INSTANCE_ID;
+    private static $TENANT_ID;
 
-    private static $TEXT;//new QueryPropertyImpl("TEXT_");
-    private static $TEXT_AS_LOWER;//new QueryPropertyImpl("TEXT_", "LOWER");
-    private static $DOUBLE;//new QueryPropertyImpl("DOUBLE_");
-    private static $LONG;//new QueryPropertyImpl("LONG_");
+    private static $TEXT;
+    private static $TEXT_AS_LOWER;
+    private static $DOUBLE;
+    private static $LONG;
 
     public static function variableName(): QueryPropertyImpl
     {

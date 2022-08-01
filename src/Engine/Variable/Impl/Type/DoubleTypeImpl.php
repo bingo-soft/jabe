@@ -14,7 +14,7 @@ class DoubleTypeImpl extends PrimitiveValueTypeImpl
 {
     public function __construct()
     {
-        parent::__construct(null, "double");
+        parent::__construct(null, "float");
     }
 
     public function createValue($value, ?array $valueInfo = null): DoubleValueInterface

@@ -2,8 +2,6 @@
 
 namespace Jabe\Engine\Impl;
 
-use Jabe\Engine\Query\QueryPropertyInterface;
-use Jabe\Engine\Runtime\VariableInstanceInterface;
 use Jabe\Engine\Task\{
     TaskInterface,
     TaskQueryInterface

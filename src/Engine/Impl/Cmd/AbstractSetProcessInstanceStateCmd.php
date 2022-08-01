@@ -3,10 +3,8 @@
 namespace Jabe\Engine\Impl\Cmd;
 
 use Jabe\Engine\ProcessEngineException;
-use Jabe\Engine\Delegate\DelegateExecutionInterface;
 use Jabe\Engine\History\HistoricProcessInstanceInterface;
 use Jabe\Engine\Impl\ProcessInstanceQueryImpl;
-use Jabe\Engine\Impl\History\HistoryLevel;
 use Jabe\Engine\Impl\History\Event\{
     HistoricProcessInstanceEventEntity,
     HistoryEvent,
@@ -18,7 +16,6 @@ use Jabe\Engine\Impl\History\Producer\HistoryEventProducerInterface;
 use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\Management\UpdateJobSuspensionStateBuilderImpl;
 use Jabe\Engine\Impl\Runtime\UpdateProcessInstanceSuspensionStateBuilderImpl;
-use Jabe\Engine\Runtime\ProcessInstanceInterface;
 
 abstract class AbstractSetProcessInstanceStateCmd extends AbstractSetStateCmd
 {

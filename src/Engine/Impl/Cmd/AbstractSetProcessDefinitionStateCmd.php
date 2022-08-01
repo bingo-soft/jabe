@@ -17,7 +17,6 @@ use Jabe\Engine\Impl\Persistence\Entity\{
 };
 use Jabe\Engine\Impl\Repository\UpdateProcessDefinitionSuspensionStateBuilderImpl;
 use Jabe\Engine\Impl\Runtime\UpdateProcessInstanceSuspensionStateBuilderImpl;
-use Jabe\Engine\Management\JobDefinitionInterface;
 
 abstract class AbstractSetProcessDefinitionStateCmd extends AbstractSetStateCmd
 {

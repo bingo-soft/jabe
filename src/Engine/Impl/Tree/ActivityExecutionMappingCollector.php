@@ -4,7 +4,6 @@ namespace Jabe\Engine\Impl\Tree;
 
 use Jabe\Engine\Impl\Pvm\PvmScopeInterface;
 use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
-use Jabe\Engine\Impl\Pvm\Process\ScopeImpl;
 use Jabe\Engine\Impl\Pvm\Runtime\{
     LegacyBehavior,
     PvmExecutionImpl

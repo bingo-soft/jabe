@@ -2,14 +2,11 @@
 
 namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use Jabe\Engine\Delegate\ExpressionInterface;
 use Jabe\Engine\Impl\Migration\Instance\{
     MigratingActivityInstance,
     MigratingCalledProcessInstance
 };
 use Jabe\Engine\Impl\Migration\Instance\Parser\MigratingInstanceParseContext;
-use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use Jabe\Engine\Impl\Pvm\PvmProcessInstanceInterface;
 use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
     MigrationObserverBehaviorInterface
@@ -19,7 +16,6 @@ use Jabe\Engine\Impl\Pvm\Process\{
     ProcessDefinitionImpl
 };
 use Jabe\Engine\Variable\VariableMapInterface;
-use Jabe\Engine\Impl\Util\CallableElementUtil;
 
 class CallActivityBehavior extends CallableElementActivityBehavior implements MigrationObserverBehaviorInterface
 {

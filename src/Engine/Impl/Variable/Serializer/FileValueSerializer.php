@@ -12,7 +12,6 @@ use Jabe\Engine\Variable\Value\{
     FileValueInterface,
     TypedValueInterface
 };
-use Jabe\Engine\Variable\Value\FileValueBuiilderInterface;
 
 class FileValueSerializer extends PrimitiveValueSerializer
 {

@@ -17,7 +17,6 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     DeploymentEntity,
     ResourceEntity
 };
-use Jabe\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
 
 abstract class AbstractDefinitionDeployer implements DeployerInterface
 {
@@ -272,7 +271,7 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
      *
      * @return DefinitionEntity the corresponding definition entity or null if non is found
      */
-    abstract protected function findLatestDefinitionByKeyAndTenantId(string $definitionKey, string $tenantId): DefinitionEntity;
+    abstract protected function findLatestDefinitionByKeyAndTenantId(string $definitionKey, ?string $tenantId): DefinitionEntity;
 
     /**
      * Persist definition entity into the database.

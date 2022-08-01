@@ -7,7 +7,6 @@ use Jabe\Engine\Impl\Interceptor\{
     CommandContext,
     CommandExecutorInterface
 };
-use Jabe\Engine\Impl\Persistence\Entity\TimerEntity;
 
 class RepeatingFailedJobListener implements TransactionListenerInterface
 {

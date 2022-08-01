@@ -14,9 +14,7 @@ use Jabe\Engine\Impl\Core\Variable\Event\{
     VariableEvent,
     VariableEventDispatcherInterface
 };
-use Jabe\Engine\Impl\Db\EntityManager\DbEntityManager;
 use Jabe\Engine\Impl\Util\El\ELContext;
-use Jabe\Engine\Impl\Persistence\Entity\VariableInstanceEntity;
 use Jabe\Engine\Variable\Variables;
 use Jabe\Engine\Variable\Impl\VariableMapImpl;
 use Jabe\Engine\Variable\Value\TypedValueInterface;

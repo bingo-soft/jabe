@@ -7,7 +7,7 @@ use Jabe\Engine\Impl\Util\El\ELException;
 class BooleanOperations
 {
     private static $SIMPLE_INTEGER_TYPES = ["integer"];
-    private static $SIMPLE_FLOAT_TYPES = ["double"];
+    private static $SIMPLE_FLOAT_TYPES = ["float"];
 
     private static function compareTo($v1, $v2): int
     {
@@ -25,7 +25,7 @@ class BooleanOperations
         $t1 = gettype($o1);
         $t2 = gettype($o2);
         if (in_array($t1, self::$SIMPLE_FLOAT_TYPES) || in_array($t2, self::$SIMPLE_FLOAT_TYPES)) {
-            return $converter->convert($o1, "double") < $converter->convert($o2, "double");
+            return $converter->convert($o1, "float") < $converter->convert($o2, "float");
         }
         if (in_array($t1, self::$SIMPLE_INTEGER_TYPES) || in_array($t2, self::$SIMPLE_INTEGER_TYPES)) {
             return $converter->convert($o1, "integer") < $converter->convert($o2, "integer");
@@ -51,7 +51,7 @@ class BooleanOperations
         $t1 = gettype($o1);
         $t2 = gettype($o2);
         if (in_array($t1, self::$SIMPLE_FLOAT_TYPES) || in_array($t2, self::$SIMPLE_FLOAT_TYPES)) {
-            return $converter->convert($o1, "double") > $converter->convert($o2, "double");
+            return $converter->convert($o1, "float") > $converter->convert($o2, "float");
         }
         if (in_array($t1, self::$SIMPLE_INTEGER_TYPES) || in_array($t2, self::$SIMPLE_INTEGER_TYPES)) {
             return $converter->convert($o1, "integer") > $converter->convert($o2, "integer");
@@ -127,7 +127,7 @@ class BooleanOperations
         $t1 = gettype($o1);
         $t2 = gettype($o2);
         if (in_array($t1, self::$SIMPLE_FLOAT_TYPES) || in_array($t2, self::$SIMPLE_FLOAT_TYPES)) {
-            return $converter->convert($o1, "double") == $converter->convert($o2, "double");
+            return $converter->convert($o1, "float") == $converter->convert($o2, "float");
         }
         if (in_array($t1, self::$SIMPLE_INTEGER_TYPES) || in_array($t2, self::$SIMPLE_INTEGER_TYPES)) {
             return $converter->convert($o1, "integer") == $converter->convert($o2, "integer");

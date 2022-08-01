@@ -7,9 +7,6 @@ use Jabe\Engine\Impl\Bpmn\Helper\{
     BpmnProperties,
     CompensationUtil
 };
-use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
-use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
 use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
     CompositeActivityBehaviorInterface

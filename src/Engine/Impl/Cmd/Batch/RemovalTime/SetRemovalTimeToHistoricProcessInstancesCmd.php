@@ -32,7 +32,6 @@ use Jabe\Engine\Impl\Util\{
     CollectionUtil,
     EnsureUtil
 };
-use Jabe\Engine\Runtime\ProcessInstanceQueryInterface;
 
 class SetRemovalTimeToHistoricProcessInstancesCmd implements CommandInterface
 {

@@ -7,9 +7,7 @@ use Jabe\Engine\Delegate\{
     TaskListenerInterface
 };
 use Jabe\Engine\Impl\Context\Context;
-use Jabe\Engine\Impl\History\HistoryLevel;
 use Jabe\Engine\Impl\History\Event\HistoryEvent;
-use Jabe\Engine\Impl\History\Handler\HistoryEventHandlerInterface;
 use Jabe\Engine\Impl\History\Producer\HistoryEventProducerInterface;
 use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,

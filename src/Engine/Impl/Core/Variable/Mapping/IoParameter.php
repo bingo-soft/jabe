@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Core\Variable\Mapping;
 
-use Jabe\Engine\Delegate\VariableScopeInterface;
 use Jabe\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
 use Jabe\Engine\Impl\Core\Variable\Scope\AbstractVariableScope;
 

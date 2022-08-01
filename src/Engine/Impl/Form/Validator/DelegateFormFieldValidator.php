@@ -15,7 +15,6 @@ use Jabe\Engine\Impl\Context\{
     Context,
     ProcessApplicationContextUtil
 };
-use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
 use Jabe\Engine\Impl\Util\ReflectUtil;
 
 class DelegateFormFieldValidator implements FormFieldValidatorInterface

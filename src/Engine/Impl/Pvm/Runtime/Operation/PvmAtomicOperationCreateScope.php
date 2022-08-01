@@ -6,7 +6,6 @@ use Jabe\Engine\Impl\Pvm\{
     PvmActivityInterface,
     PvmLogger
 };
-use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
 use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
 
 abstract class PvmAtomicOperationCreateScope implements PvmAtomicOperationInterface

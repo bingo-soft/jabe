@@ -13,7 +13,6 @@ use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use Jabe\Engine\Impl\Persistence\Entity\AuthorizationManager;
 use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class AuthorizationCheckCmd implements CommandInterface

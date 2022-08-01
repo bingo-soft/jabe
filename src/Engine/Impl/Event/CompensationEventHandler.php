@@ -10,7 +10,6 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity
 };
 use Jabe\Engine\Impl\Pvm\Delegate\CompositeActivityBehaviorInterface;
-use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
 use Jabe\Engine\Impl\Pvm\Runtime\AtomicOperation;
 use Jabe\Engine\Impl\Util\EnsureUtil;
 

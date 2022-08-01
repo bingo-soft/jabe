@@ -4,7 +4,6 @@ namespace Jabe\Engine\Impl\Db;
 
 use Jabe\Engine\ProcessEngineInterface;
 use Jabe\Engine\Impl\ProcessEngineLogger;
-use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Db\EntityManager\Operation\{
     DbBulkOperation,

@@ -2,8 +2,6 @@
 
 namespace Jabe\Engine\Authorization;
 
-use Jabe\Engine\Authorization\Exception\PermissionNotFound;
-
 class SystemPermissions implements PermissionInterface
 {
     use PermissionTrait;

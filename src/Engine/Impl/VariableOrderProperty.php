@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl;
 
 use Jabe\Engine\ProcessEngineException;
-use Jabe\Engine\Query\QueryPropertyInterface;
 use Jabe\Engine\Variable\Type\{
     ValueType,
     ValueTypeInterface

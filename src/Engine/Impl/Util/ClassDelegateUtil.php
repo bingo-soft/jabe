@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Util;
 
-use Jabe\Engine\ArtifactFactoryInterface;
 use Jabe\Engine\Impl\ProcessEngineLogger;
 use Jabe\Engine\Impl\Bpmn\Parser\FieldDeclaration;
 use Jabe\Engine\Impl\Context\Context;

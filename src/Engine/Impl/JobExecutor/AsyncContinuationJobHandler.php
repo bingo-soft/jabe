@@ -9,8 +9,6 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     JobEntity
 };
-use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
-use Jabe\Engine\Impl\Pvm\Process\TransitionImpl;
 use Jabe\Engine\Impl\Pvm\Runtime\{
     AtomicOperation,
     LegacyBehavior

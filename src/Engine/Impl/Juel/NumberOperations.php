@@ -24,7 +24,7 @@ class NumberOperations
 
     private static function isFloatOrDouble($value): bool
     {
-        return gettype($value) == "double";
+        return gettype($value) == "float";
     }
 
     private static function isFloatOrDoubleOrDotEe($value): bool
@@ -47,11 +47,11 @@ class NumberOperations
         if ($o1 === null && $o2 === null) {
             return self::$LONG_ZERO;
         }
-        if (gettype($o1) == "double" || gettype($o2) == "double") {
-            return $converter->convert($o1, "double") + $converter->convert($o2, "double");
+        if (gettype($o1) == "float" || gettype($o2) == "float") {
+            return $converter->convert($o1, "float") + $converter->convert($o2, "float");
         }
         if (self::isFloatOrDoubleOrDotEe($o1) || self::isFloatOrDoubleOrDotEe($o2)) {
-            return $converter->convert($o1, "double") + $converter->convert($o2, "double");
+            return $converter->convert($o1, "float") + $converter->convert($o2, "float");
         }
         return $converter->convert($o1, "integer") + $converter->convert($o2, "integer");
     }
@@ -61,11 +61,11 @@ class NumberOperations
         if ($o1 === null && $o2 === null) {
             return self::$LONG_ZERO;
         }
-        if (gettype($o1) == "double" || gettype($o2) == "double") {
-            return $converter->convert($o1, "double") - $converter->convert($o2, "double");
+        if (gettype($o1) == "float" || gettype($o2) == "float") {
+            return $converter->convert($o1, "float") - $converter->convert($o2, "float");
         }
         if (self::isFloatOrDoubleOrDotEe($o1) || self::isFloatOrDoubleOrDotEe($o2)) {
-            return $converter->convert($o1, "double") - $converter->convert($o2, "double");
+            return $converter->convert($o1, "float") - $converter->convert($o2, "float");
         }
         return $converter->convert($o1, "integer") - $converter->convert($o2, "integer");
     }
@@ -75,11 +75,11 @@ class NumberOperations
         if ($o1 === null && $o2 === null) {
             return self::$LONG_ZERO;
         }
-        if (gettype($o1) == "double" || gettype($o2) == "double") {
-            return $converter->convert($o1, "double") * $converter->convert($o2, "double");
+        if (gettype($o1) == "float" || gettype($o2) == "float") {
+            return $converter->convert($o1, "float") * $converter->convert($o2, "float");
         }
         if (self::isFloatOrDoubleOrDotEe($o1) || self::isFloatOrDoubleOrDotEe($o2)) {
-            return $converter->convert($o1, "double") * $converter->convert($o2, "double");
+            return $converter->convert($o1, "float") * $converter->convert($o2, "float");
         }
         return $converter->convert($o1, "integer") * $converter->convert($o2, "integer");
     }
@@ -89,7 +89,7 @@ class NumberOperations
         if ($o1 === null && $o2 === null) {
             return self::$LONG_ZERO;
         }
-        return $converter->convert($o1, "double") / $converter->convert($o2, "double");
+        return $converter->convert($o1, "float") / $converter->convert($o2, "float");
     }
 
     public static function mod(TypeConverter $converter, $o1 = null, $o2 = null)
@@ -98,7 +98,7 @@ class NumberOperations
             return self::$LONG_ZERO;
         }
         if (self::isBigDecimalOrFloatOrDoubleOrDotEe($o1) || self::isBigDecimalOrFloatOrDoubleOrDotEe(o2)) {
-            return $converter->convert($o1, "double") % $converter->convert($o2, "double");
+            return $converter->convert($o1, "float") % $converter->convert($o2, "float");
         }
         return $converter->convert($o1, "integer") % $converter->convert($o2, "integer");
     }
@@ -108,12 +108,12 @@ class NumberOperations
         if ($value === null) {
             return self::$LONG_ZERO;
         }
-        if (gettype($value) == "double" || gettype($value) == "integer") {
+        if (gettype($value) == "float" || gettype($value) == "integer") {
             return -$value;
         }
         if (gettype($value) == "string") {
             if (self::isDotEe($value)) {
-                return -$converter->convert($value, "double");
+                return -$converter->convert($value, "float");
             }
             return -$converter->convert($value, "integer");
         }

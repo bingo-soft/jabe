@@ -7,7 +7,6 @@ use Jabe\Engine\Impl\Interceptor\{
     CommandContext
 };
 use Jabe\Engine\Impl\JobExecutor\HistoryCleanup\HistoryCleanupJobHandler;
-use Jabe\Engine\Runtime\JobInterface;
 
 class FindHistoryCleanupJobsCmd implements CommandInterface
 {

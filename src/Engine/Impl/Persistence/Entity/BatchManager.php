@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use Jabe\Engine\Batch\BatchInterface;
 use Jabe\Engine\Impl\Page;
 use Jabe\Engine\Impl\Batch\{
     BatchEntity,

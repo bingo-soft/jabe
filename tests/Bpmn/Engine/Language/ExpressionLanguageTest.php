@@ -22,8 +22,8 @@ class ExpressionLanguageTest extends TestCase
         $factory = new ExpressionFactoryImpl();
         $context = new SimpleContext();
 
-        $context->setVariable("e", $factory->createValueExpression(null, null, M_E, "double"));
-        $context->setVariable("pi", $factory->createValueExpression(null, null, M_PI, "double"));
+        $context->setVariable("e", $factory->createValueExpression(null, null, M_E, "float"));
+        $context->setVariable("pi", $factory->createValueExpression(null, null, M_PI, "float"));
 
         $vmapper = $context->getVariableMapper();
 
@@ -33,10 +33,10 @@ class ExpressionLanguageTest extends TestCase
         $expr = $factory->createValueExpression($context, '${e < pi}', null, "boolean");
         $this->assertTrue($expr->getValue($context));
 
-        $expr = $factory->createValueExpression($context, '${e + 1}', null, "double");
+        $expr = $factory->createValueExpression($context, '${e + 1}', null, "float");
         $this->assertEquals(M_E + 1, $expr->getValue($context));
 
-        $expr = $factory->createValueExpression($context, '${pi}', null, "double");
+        $expr = $factory->createValueExpression($context, '${pi}', null, "float");
         $this->assertEquals(M_PI, $expr->getValue($context));
 
         $context->setVariable("a", $factory->createValueExpression(null, null, 1, "integer"));
@@ -59,8 +59,8 @@ class ExpressionLanguageTest extends TestCase
 
         $wrapper =  new \ReflectionClass(SimpleClass::class);
 
-        $context->setVariable("e", $factory->createValueExpression(null, null, M_E, "double"));
-        $context->setVariable("pi", $factory->createValueExpression(null, null, M_PI, "double"));
+        $context->setVariable("e", $factory->createValueExpression(null, null, M_E, "float"));
+        $context->setVariable("pi", $factory->createValueExpression(null, null, M_PI, "float"));
         $context->setVariable("arr", $factory->createValueExpression(null, null, [1, 2, 3], "array"));
 
         $context->setFunction("", "sin", $wrapper->getMethod("sin"));
@@ -72,7 +72,7 @@ class ExpressionLanguageTest extends TestCase
         $this->assertEquals(1, $fmapper->resolveFunction("", "sin")->invoke(null, M_PI / 2));
         $this->assertEquals(0, $fmapper->resolveFunction("", "cos")->invoke(null, M_PI / 2));
 
-        $expr = $factory->createValueExpression($context, '${sin(pi / 2) + cos(pi / 4) * sin(pi / 3)}', null, "double");
+        $expr = $factory->createValueExpression($context, '${sin(pi / 2) + cos(pi / 4) * sin(pi / 3)}', null, "float");
         $this->assertEquals(sin(M_PI / 2) + cos(M_PI / 4) * sin(M_PI / 3), $expr->getValue($context));
 
         $expr = $factory->createValueExpression($context, '${in_array(2, arr)}', null, "boolean");

@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Authorization;
 
 use Jabe\Engine\EntityTypes;
-use Jabe\Engine\Authorization\Exception\ResourceNotFound;
 
 /**
  * The set of built-in Resource names.

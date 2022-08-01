@@ -46,7 +46,6 @@ use Jabe\Engine\Repository\{
     ProcessDefinitionQueryInterface,
     UpdateProcessDefinitionSuspensionStateSelectBuilderInterface
 };
-use Jabe\Engine\Task\IdentityLinkInterface;
 use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
 
 class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInterface

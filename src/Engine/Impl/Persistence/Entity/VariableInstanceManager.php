@@ -7,7 +7,6 @@ use Jabe\Engine\Impl\{
     VariableInstanceQueryImpl
 };
 use Jabe\Engine\Impl\Persistence\AbstractManager;
-use Jabe\Engine\Runtime\VariableInstanceInterface;
 
 class VariableInstanceManager extends AbstractManager
 {

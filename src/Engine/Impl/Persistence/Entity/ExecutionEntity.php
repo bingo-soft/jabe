@@ -18,8 +18,6 @@ use Jabe\Engine\Impl\Cfg\Multitenancy\{
     TenantIdProviderProcessInstanceContext
 };
 use Jabe\Engine\Impl\Context\Context;
-use Jabe\Engine\Impl\Core\Instance\CoreExecution;
-use Jabe\Engine\Impl\Core\Variable\CoreVariableInstanceInterface;
 use Jabe\Engine\Impl\Core\Variable\Event\VariableEvent;
 use Jabe\Engine\Impl\Core\Variable\Scope\{
     VariableCollectionProvider,
@@ -36,7 +34,6 @@ use Jabe\Engine\Impl\Db\{
     HasDbRevisionInterface,
 };
 use Jabe\Engine\Impl\Event\EventType;
-use Jabe\Engine\Impl\History\AbstractHistoryLevel;
 use Jabe\Engine\Impl\History\Event\{
     HistoricVariableUpdateEventEntity,
     HistoryEvent,
@@ -44,7 +41,6 @@ use Jabe\Engine\Impl\History\Event\{
     HistoryEventCreator,
     HistoryEventTypes
 };
-use Jabe\Engine\Impl\History\Producer\HistoryEventProducerInterface;
 use Jabe\Engine\Impl\Incident\{
     IncidentContext,
     IncidentHandling

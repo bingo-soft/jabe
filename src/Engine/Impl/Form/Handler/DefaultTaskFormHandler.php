@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Form\Handler;
 
-use Jabe\Engine\Delegate\ExpressionInterface;
 use Jabe\Engine\Form\TaskFormDataInterface;
 use Jabe\Engine\Impl\Form\{
     FormRefImpl,
@@ -10,7 +9,6 @@ use Jabe\Engine\Impl\Form\{
     TaskFormDataImpl
 };
 use Jabe\Engine\Impl\Persistence\Entity\TaskEntity;
-use Jabe\Engine\Impl\Task\TaskDefinition;
 
 class DefaultTaskFormHandler extends DefaultFormHandler implements TaskFormHandlerInterface
 {

@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Pvm\Runtime\Operation;
 
-use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
 use Jabe\Engine\Impl\Pvm\Runtime\{
     ScopeInstantiationContext,
     InstantiationStack,

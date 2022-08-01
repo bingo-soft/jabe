@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\Cmd;
 
 use Jabe\Engine\BadUserRequestException;
-use Jabe\Engine\Impl\Batch\BatchElementConfiguration;
 use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\Util\EnsureUtil;
 

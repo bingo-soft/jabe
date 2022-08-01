@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl;
 
-use Jabe\Engine\Exception\NotValidException;
 use Jabe\Engine\History\{
     HistoricVariableInstanceInterface,
     HistoricVariableInstanceQueryInterface

@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\History;
 
-use Jabe\Engine\Impl\Batch\History\HistoricBatchEntity;
 use Jabe\Engine\Impl\History\Event\{
     HistoricProcessInstanceEventEntity
 };

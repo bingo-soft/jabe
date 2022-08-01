@@ -7,9 +7,7 @@ use Jabe\Engine\Delegate\{
     ExecutionListenerInterface
 };
 use Jabe\Engine\Impl\Context\Context;
-use Jabe\Engine\Impl\History\HistoryLevel;
 use Jabe\Engine\Impl\History\Event\HistoryEvent;
-use Jabe\Engine\Impl\History\Handler\HistoryEventHandlerInterface;
 use Jabe\Engine\Impl\History\Producer\HistoryEventProducerInterface;
 
 abstract class HistoryExecutionListener implements ExecutionListenerInterface

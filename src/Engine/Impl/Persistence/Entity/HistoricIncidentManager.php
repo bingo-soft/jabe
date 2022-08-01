@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use Jabe\Engine\History\HistoricIncidentInterface;
 use Jabe\Engine\Impl\{
     HistoricIncidentQueryImpl,
     Page
@@ -10,7 +9,6 @@ use Jabe\Engine\Impl\{
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Db\ListQueryParameterObject;
 use Jabe\Engine\Impl\Db\EntityManager\Operation\DbOperation;
-use Jabe\Engine\Impl\History\HistoryLevel;
 use Jabe\Engine\Impl\History\Event\{
     HistoricIncidentEventEntity,
     HistoryEventTypes

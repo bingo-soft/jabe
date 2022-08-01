@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl;
 
 use Jabe\Engine\ProcessEngineException;
-use Jabe\Engine\Exception\NotValidException;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Db\ListQueryParameterObject;
 use Jabe\Engine\Impl\Interceptor\{

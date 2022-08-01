@@ -11,7 +11,6 @@ use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityBehaviorInterface,
     CompositeActivityBehaviorInterface
 };
-use Jabe\Engine\Impl\Pvm\Process\ScopeImpl;
 use Jabe\Engine\Impl\Pvm\Runtime\{
     LegacyBehavior,
     PvmExecutionImpl

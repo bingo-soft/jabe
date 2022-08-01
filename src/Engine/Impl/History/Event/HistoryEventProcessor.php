@@ -2,10 +2,7 @@
 
 namespace Jabe\Engine\Impl\History\Event;
 
-use Jabe\Engine\ProcessEngineConfiguration;
 use Jabe\Engine\Impl\Context\Context;
-use Jabe\Engine\Impl\History\Handler\HistoryEventHandlerInterface;
-use Jabe\Engine\Impl\History\Producer\HistoryEventProducerInterface;
 
 class HistoryEventProcessor
 {

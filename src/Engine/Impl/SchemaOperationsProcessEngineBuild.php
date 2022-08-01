@@ -13,7 +13,6 @@ use Jabe\Engine\Impl\Db\{
     PersistenceSessionInterface
 };
 use Jabe\Engine\Impl\Interceptor\CommandContext;
-use Jabe\Engine\Impl\Persistence\Entity\PropertyEntity;
 
 class SchemaOperationsProcessEngineBuild implements SchemaOperationsCommandInterface
 {

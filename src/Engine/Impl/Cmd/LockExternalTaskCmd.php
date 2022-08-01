@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Cmd;
 
-use Jabe\Engine\BadUserRequestException;
 use Jabe\Engine\Impl\Persistence\Entity\ExternalTaskEntity;
 use Jabe\Engine\Impl\Util\{
     ClockUtil,

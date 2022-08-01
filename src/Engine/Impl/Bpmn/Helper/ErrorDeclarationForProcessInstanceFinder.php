@@ -7,7 +7,6 @@ use Jabe\Engine\Impl\Pvm\{
     PvmActivityInterface,
     PvmScopeInterface
 };
-use Jabe\Engine\Impl\Pvm\Process\ScopeImpl;
 use Jabe\Engine\Impl\Tree\TreeVisitorInterface;
 
 class ErrorDeclarationForProcessInstanceFinder implements TreeVisitorInterface

@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\JobExecutor;
 
-use Composer\Autoload\ClassLoader;
 use Ramsey\Uuid\Uuid;
 use Jabe\Engine\Impl\{
     ProcessEngineImpl,
@@ -13,7 +12,6 @@ use Jabe\Engine\Impl\Interceptor\{
     CommandExecutorInterface
 };
 use Jabe\Engine\Management\Metrics;
-use Jabe\Engine\Runtime\JobInterface;
 use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 abstract class JobExecutor

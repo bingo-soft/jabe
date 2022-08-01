@@ -11,7 +11,6 @@ use Jabe\Engine\Impl\Db\{
     HasDbRevisionInterface,
     DbEntityInterface
 };
-use Jabe\Engine\Impl\Util\EncryptionUtil;
 use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class UserEntity implements UserInterface, \Serializable, DbEntityInterface, HasDbRevisionInterface

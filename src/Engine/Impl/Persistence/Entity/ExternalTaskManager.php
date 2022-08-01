@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use Jabe\Engine\ExternalTask\ExternalTaskInterface;
 use Jabe\Engine\Impl\{
     Direction,
     ExternalTaskQueryImpl,
@@ -16,9 +15,7 @@ use Jabe\Engine\Impl\Cfg\{
 };
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Db\ListQueryParameterObject;
-use Jabe\Engine\Impl\Db\EntityManager\DbEntityManager;
 use Jabe\Engine\Impl\Db\Sql\DbSqlSessionFactory;
-use Jabe\Engine\Impl\ExternalTask\TopicFetchInstruction;
 use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\Persistence\AbstractManager;
 use Jabe\Engine\Impl\Util\{

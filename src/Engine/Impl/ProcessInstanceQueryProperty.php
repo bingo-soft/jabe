@@ -4,11 +4,11 @@ namespace Jabe\Engine\Impl;
 
 class ProcessInstanceQueryProperty
 {
-    private static $PROCESS_INSTANCE_ID; //new QueryPropertyImpl("ID_");
-    private static $PROCESS_DEFINITION_KEY; //new QueryPropertyImpl("KEY_");
-    private static $PROCESS_DEFINITION_ID; //new QueryPropertyImpl("ID_");
-    private static $TENANT_ID; //new QueryPropertyImpl("TENANT_ID_");
-    private static $BUSINESS_KEY; //new QueryPropertyImpl("BUSINESS_KEY_");
+    private static $PROCESS_INSTANCE_ID;
+    private static $PROCESS_DEFINITION_KEY;
+    private static $PROCESS_DEFINITION_ID;
+    private static $TENANT_ID;
+    private static $BUSINESS_KEY;
 
     public static function processInstanceId(): QueryPropertyImpl
     {

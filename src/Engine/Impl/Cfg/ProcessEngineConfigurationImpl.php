@@ -15,7 +15,6 @@ use Doctrine\ORM\{
     EntityManager,
     Tools\Setup
 };
-use Happyr\DoctrineSpecification\EntitySpecificationRepository;
 use Jabe\Engine\{
     ArtifactFactoryInterface,
     AuthorizationServiceInterface,

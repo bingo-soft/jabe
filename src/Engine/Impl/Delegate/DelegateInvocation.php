@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\Delegate;
 
 use Jabe\Engine\Delegate\BaseDelegateExecutionInterface;
-use Jabe\Engine\Impl\Interceptor\DelegateInterceptorInterface;
 use Jabe\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
 
 abstract class DelegateInvocation

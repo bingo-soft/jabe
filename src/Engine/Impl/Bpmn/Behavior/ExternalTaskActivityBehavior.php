@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use Jabe\Engine\Impl\PriorityProviderInterface;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
 use Jabe\Engine\Impl\Migration\Instance\{

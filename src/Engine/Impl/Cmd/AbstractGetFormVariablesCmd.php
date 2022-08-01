@@ -5,7 +5,6 @@ namespace Jabe\Engine\Impl\Cmd;
 use Jabe\Engine\Delegate\VariableScopeInterface;
 use Jabe\Engine\Form\FormFieldInterface;
 use Jabe\Engine\Impl\Interceptor\CommandInterface;
-use Jabe\Engine\Variable\VariableMapInterface;
 use Jabe\Engine\Variable\Value\TypedValueInterface;
 
 abstract class AbstractGetFormVariablesCmd implements CommandInterface, \Serializable

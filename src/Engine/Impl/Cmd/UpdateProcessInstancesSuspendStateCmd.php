@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Cmd;
 
-use Jabe\Engine\BadUserRequestException;
 use Jabe\Engine\Impl\UpdateProcessInstancesSuspensionStateBuilderImpl;
 use Jabe\Engine\Impl\Interceptor\{
     CommandExecutorInterface,

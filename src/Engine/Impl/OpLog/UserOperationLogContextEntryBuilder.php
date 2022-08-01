@@ -18,7 +18,6 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     PropertyChange,
     TaskEntity
 };
-use Jabe\Engine\Impl\Repository\ResourceDefinitionEntity;
 
 class UserOperationLogContextEntryBuilder
 {

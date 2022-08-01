@@ -35,7 +35,6 @@ use Jabe\Engine\Impl\Util\{
     EnsureUtil//,
     //ImmutablePair
 };
-use Jabe\Engine\Runtime\JobInterface;
 
 class JobManager extends AbstractManager
 {

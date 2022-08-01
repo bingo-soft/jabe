@@ -2,8 +2,6 @@
 
 namespace Jabe\Engine\Impl\Core\Variable\Scope;
 
-use Jabe\Engine\Impl\Core\Variable\CoreVariableInstanceInterface;
-
 class VariableCollectionProvider implements VariablesProviderInterface
 {
     protected $variables = [];

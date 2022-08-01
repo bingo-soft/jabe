@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Pvm\Runtime\Operation;
 
-use Jabe\Engine\Impl\Core\Operation\CoreAtomicOperationInterface;
 use Jabe\Engine\Impl\Pvm\Runtime\{
     AtomicOperationInterface,
     PvmExecutionImpl

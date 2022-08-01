@@ -19,7 +19,6 @@ use Jabe\Engine\Batch\{
     BatchQueryInterface,
     BatchStatisticsQueryInterface
 };
-use Jabe\Engine\History\HistoricProcessInstanceQueryInterface;
 use Jabe\Engine\Management\{
     ActivityStatisticsQueryInterface,
     DeploymentStatisticsQueryInterface,
@@ -42,7 +41,6 @@ use Jabe\Engine\Runtime\{
     JobQueryInterface,
     ProcessInstanceQueryInterface
 };
-use Jabe\Engine\Task\TaskInterface;
 
 interface ManagementServiceInterface
 {

@@ -10,7 +10,6 @@ use Jabe\Engine\Impl\Core\Instance\CoreExecution;
 use Jabe\Engine\Impl\Core\Variable\Event\VariableEvent;
 use Jabe\Engine\Impl\Core\Variable\Scope\AbstractVariableScope;
 use Jabe\Engine\Impl\Form\FormPropertyHelper;
-use Jabe\Engine\Impl\History\HistoryLevelInterface;
 use Jabe\Engine\Impl\History\Event\{
     HistoryEvent,
     HistoryEventProcessor,

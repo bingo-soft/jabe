@@ -2,8 +2,6 @@
 
 namespace Jabe\Engine\Impl\Tree;
 
-use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
-
 class ExecutionTopDownWalker extends ReferenceWalker
 {
     public function __construct($initialElement)

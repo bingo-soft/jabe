@@ -4,7 +4,6 @@ namespace Jabe\Engine\Impl\Cmd;
 
 use Jabe\Engine\Exception\NotFoundException;
 use Jabe\Engine\Impl\Interceptor\CommandContext;
-use Jabe\Engine\Repository\ResourceDefinitionEntityInterface;
 use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class DeleteProcessDefinitionsByKeyCmd extends AbstractDeleteProcessDefinitionCmd

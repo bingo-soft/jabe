@@ -14,7 +14,6 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     TaskManager
 };
 use Jabe\Engine\Impl\Util\EnsureUtil;
-use Jabe\Engine\Variable\VariableMapInterface;
 
 class CompleteTaskCmd implements CommandInterface, \Serializable
 {

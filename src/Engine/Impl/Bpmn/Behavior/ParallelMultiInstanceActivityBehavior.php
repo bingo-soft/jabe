@@ -8,12 +8,10 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     VariableInstanceEntity
 };
-use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
 use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
     MigrationObserverBehavior
 };
-use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
 use Jabe\Engine\Impl\Pvm\Runtime\{
     CallbackInterface,
     PvmExecutionImpl

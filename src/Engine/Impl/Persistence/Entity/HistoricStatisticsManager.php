@@ -6,12 +6,10 @@ use Jabe\Engine\Authorization\{
     Permissions,
     Resources
 };
-use Jabe\Engine\History\HistoricActivityStatisticsInterface;
 use Jabe\Engine\Impl\{
     HistoricActivityStatisticsQueryImpl,
     Page
 };
-use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\Persistence\AbstractManager;
 
 class HistoricStatisticsManager extends AbstractManager

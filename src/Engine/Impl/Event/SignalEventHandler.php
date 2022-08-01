@@ -6,13 +6,10 @@ use Jabe\Engine\Impl\ProcessEngineLogger;
 use Jabe\Engine\Impl\Cmd\CommandLogger;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Interceptor\CommandContext;
-use Jabe\Engine\Impl\Persistence\Deploy\Cache\DeploymentCache;
 use Jabe\Engine\Impl\Persistence\Entity\{
     EventSubscriptionEntity,
     ProcessDefinitionEntity
 };
-use Jabe\Engine\Impl\Pvm\PvmProcessInstanceInterface;
-use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
 use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class SignalEventHandler extends EventHandlerImpl

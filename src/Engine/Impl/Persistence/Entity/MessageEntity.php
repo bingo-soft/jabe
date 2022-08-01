@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use Jabe\Engine\Impl\JobExecutor\MessageJobDeclaration;
 use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class MessageEntity extends JobEntity

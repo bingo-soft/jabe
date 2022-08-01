@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Pvm\Runtime;
 
-use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Impl\ProcessEngineLogger;
 use Jabe\Engine\Impl\Bpmn\Behavior\{
     BpmnBehaviorLogger,
@@ -17,7 +16,6 @@ use Jabe\Engine\Impl\Bpmn\Behavior\{
 };
 use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
 use Jabe\Engine\Impl\Cmd\GetActivityInstanceCmd;
-use Jabe\Engine\Impl\JobExecutor\AsyncContinuationJobHandler;
 use Jabe\Engine\Impl\Persistence\Entity\{
     ActivityInstanceImpl,
     EventSubscriptionEntity,

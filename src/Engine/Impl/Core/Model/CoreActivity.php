@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Core\Model;
 
-use Jabe\Engine\Delegate\BaseDelegateExecutionInterface;
 use Jabe\Engine\Impl\Core\Delegate\CoreActivityBehaviorInterface;
 use Jabe\Engine\Impl\Core\Variable\Mapping\IoMapping;
 

@@ -13,7 +13,6 @@ use Jabe\Engine\History\{
 };
 use Jabe\Engine\Impl\TaskReportImpl;
 use Jabe\Engine\Impl\Persistence\AbstractManager;
-use Jabe\Engine\Task\TaskCountByCandidateGroupResultInterface;
 
 class TaskReportManager extends AbstractManager
 {

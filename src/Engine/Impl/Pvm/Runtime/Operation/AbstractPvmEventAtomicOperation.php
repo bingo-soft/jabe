@@ -9,8 +9,6 @@ use Jabe\Engine\Impl\Bpmn\Helper\{
 use Jabe\Engine\Impl\Core\Model\CoreModelElement;
 use Jabe\Engine\Impl\Core\Instance\CoreExecution;
 use Jabe\Engine\Impl\Core\Operation\AbstractEventAtomicOperation;
-use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
-use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
 
 abstract class AbstractPvmEventAtomicOperation extends AbstractEventAtomicOperation implements PvmAtomicOperationInterface
 {

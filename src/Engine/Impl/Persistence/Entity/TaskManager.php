@@ -7,13 +7,10 @@ use Jabe\Engine\Impl\{
     Page,
     TaskQueryImpl
 };
-use Jabe\Engine\Impl\Cfg\Auth\ResourceAuthorizationProviderInterface;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Db\ListQueryParameterObject;
-use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\Persistence\AbstractManager;
 use Jabe\Engine\Impl\Util\EnsureUtil;
-use Jabe\Engine\Task\TaskInterface;
 
 class TaskManager extends AbstractManager
 {

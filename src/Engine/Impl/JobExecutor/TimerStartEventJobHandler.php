@@ -5,7 +5,6 @@ namespace Jabe\Engine\Impl\JobExecutor;
 use Jabe\Engine\Impl\ProcessEngineLogger;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Interceptor\CommandContext;
-use Jabe\Engine\Impl\Persistence\Deploy\Cache\DeploymentCache;
 use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
 use Jabe\Engine\Repository\ProcessDefinitionInterface;
 

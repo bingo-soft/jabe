@@ -11,7 +11,6 @@ use Jabe\Engine\Impl\Interceptor\{
 };
 use Jabe\Engine\Impl\JobExecutor\MessageAddedNotification;
 use Jabe\Engine\Impl\Persistence\Entity\JobEntity;
-use Jabe\Engine\Impl\Util\EnsureUtil;
 
 abstract class JobRetryCmd implements CommandInterface
 {

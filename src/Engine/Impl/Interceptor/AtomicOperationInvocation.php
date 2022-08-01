@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Interceptor;
 
-use Jabe\Engine\Application\ProcessApplicationReferenceInterface;
 use Jabe\Engine\Impl\ProcessEngineLogger;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;

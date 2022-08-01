@@ -10,7 +10,6 @@ use Jabe\Engine\Impl\Db\{
     HasDbReferencesInterface,
     HasDbRevisionInterface
 };
-use Jabe\Engine\Impl\History\HistoryLevel;
 use Jabe\Engine\Impl\History\Event\{
     HistoryEvent,
     HistoryEventCreator,

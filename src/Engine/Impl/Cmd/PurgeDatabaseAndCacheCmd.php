@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\Cmd;
 
 use Jabe\Engine\ProcessEngineException;
-use Jabe\Engine\Impl\Db\DbEntityInterface;
 use Jabe\Engine\Impl\Db\EntityManager\Operation\{
     DbBulkOperation,
     DbOperationType

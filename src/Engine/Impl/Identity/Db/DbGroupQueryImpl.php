@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Identity\Db;
 
-use Jabe\Engine\Identity\GroupInterface;
 use Jabe\Engine\Impl\{
     GroupQueryImpl,
     Page

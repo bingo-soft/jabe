@@ -7,7 +7,6 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     ByteArrayEntity,
     NameableInterface
 };
-use Jabe\Engine\Impl\Variable\Serializer\ValueFieldsInterface;
 use Jabe\Engine\Repository\ResourceTypeInterface;
 
 class ByteArrayField

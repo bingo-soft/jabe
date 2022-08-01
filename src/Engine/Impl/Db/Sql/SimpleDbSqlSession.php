@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\Db\Sql;
 
 use Doctrine\DBAL\Connection;
-use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     FlushResult

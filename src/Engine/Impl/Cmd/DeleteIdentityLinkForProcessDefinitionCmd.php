@@ -8,7 +8,6 @@ use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use Jabe\Engine\Impl\Persistence\Entity\ProcessDefinitionEntity;
 use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class DeleteIdentityLinkForProcessDefinitionCmd implements CommandInterface, \Serializable

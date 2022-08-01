@@ -3,9 +3,7 @@
 namespace Jabe\Engine\Impl\Cmd;
 
 use Jabe\Engine\ProcessEngineException;
-use Jabe\Engine\Exception\NotValidException;
 use Jabe\Engine\Impl\Core\Model\CoreModelElement;
-use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
 use Jabe\Engine\Impl\Pvm\Process\{
     ProcessDefinitionImpl,
     ScopeImpl,

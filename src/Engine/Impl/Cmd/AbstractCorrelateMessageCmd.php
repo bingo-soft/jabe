@@ -10,7 +10,6 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionVariableSnapshotObserver,
     ProcessDefinitionEntity
 };
-use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
 use Jabe\Engine\Impl\Runtime\{
     CorrelationHandlerResult,
     MessageCorrelationResultImpl

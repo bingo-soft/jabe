@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\Pvm\Runtime\Operation;
 
 use Jabe\Engine\Delegate\ExecutionListenerInterface;
-use Jabe\Engine\Impl\Pvm\Process\ScopeImpl;
 use Jabe\Engine\Impl\Pvm\Runtime\{
     CallbackInterface,
     PvmExecutionImpl

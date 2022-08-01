@@ -2,13 +2,9 @@
 
 namespace Jabe\Engine\Impl\Util;
 
-use Jabe\Engine\ProcessEngineInterface;
-use Jabe\Engine\Impl\ProcessEngineImpl;
 use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Engine\Impl\Context\Context;
-use Jabe\Engine\Impl\Db\DbEntityInterface;
 use Jabe\Engine\Impl\El\ExpressionManager;
-use Jabe\Engine\Runtime\ProcessElementInstanceInterface;
 
 class StringUtil
 {

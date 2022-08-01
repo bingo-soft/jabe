@@ -11,7 +11,6 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     ProcessDefinitionEntity
 };
-use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
 use Jabe\Engine\Impl\Runtime\{
     ConditionHandlerInterface,
     ConditionHandlerResult,

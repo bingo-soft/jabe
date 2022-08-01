@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use Jabe\Engine\History\ReportResultInterface;
 use Jabe\Engine\Impl\HistoricProcessInstanceReportImpl;
 use Jabe\Engine\Impl\Persistence\AbstractManager;
 

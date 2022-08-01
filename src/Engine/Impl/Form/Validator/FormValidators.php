@@ -6,7 +6,6 @@ use Jabe\Engine\{
     ProcessEngineConfiguration,
     ProcessEngineException
 };
-use Jabe\Engine\Delegate\ExpressionInterface;
 use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
 use Jabe\Engine\Impl\El\ExpressionManager;
 use Jabe\Engine\Impl\Util\StringUtil;

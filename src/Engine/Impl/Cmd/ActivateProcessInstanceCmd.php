@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\Cmd;
 
 use Jabe\Engine\History\UserOperationLogEntryInterface;
-use Jabe\Engine\Impl\Management\UpdateJobSuspensionStateBuilderImpl;
 use Jabe\Engine\Impl\Persistence\Entity\SuspensionState;
 use Jabe\Engine\Impl\Runtime\UpdateProcessInstanceSuspensionStateBuilderImpl;
 

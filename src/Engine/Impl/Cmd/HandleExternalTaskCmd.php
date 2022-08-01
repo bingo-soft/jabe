@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\Cmd;
 
 use Jabe\Engine\BadUserRequestException;
-use Jabe\Engine\Exception\NotFoundException;
 use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\Persistence\Entity\ExternalTaskEntity;
 use Jabe\Engine\Impl\Util\EnsureUtil;

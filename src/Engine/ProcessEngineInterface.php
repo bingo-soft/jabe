@@ -6,7 +6,7 @@ interface ProcessEngineInterface extends ProcessEngineServicesInterface
 {
 
     /** the version of the process engine library */
-    public const VERSION = "fox";
+    public const VERSION = "wolf";
 
     /** The name as specified in 'process-engine-name' in
      * configuration file.

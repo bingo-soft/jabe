@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Bpmn\Deployer;
 
-use Jabe\Engine\Delegate\ExpressionInterface;
 use Jabe\Engine\Impl\{
     AbstractDefinitionDeployer,
     ProcessEngineLogger
@@ -28,7 +27,6 @@ use Jabe\Engine\Impl\JobExecutor\{
     TimerDeclarationImpl,
     TimerStartEventJobHandler
 };
-use Jabe\Engine\Impl\Persistence\Deploy\DeployerInterface;
 use Jabe\Engine\Impl\Persistence\Deploy\Cache\DeploymentCache;
 use Jabe\Engine\Impl\Persistence\Entity\{
     DeploymentEntity,
@@ -44,7 +42,6 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     ResourceEntity
 };
 use Jabe\Engine\Impl\Pvm\Runtime\LegacyBehavior;
-use Jabe\Engine\Management\JobDefinitionInterface;
 use Jabe\Engine\Repository\ProcessDefinitionInterface;
 use Jabe\Engine\Task\IdentityLinkType;
 
@@ -105,7 +102,7 @@ class BpmnDeployer extends AbstractDefinitionDeployer
         return $this->getProcessDefinitionManager()->findProcessDefinitionByDeploymentAndKey($deploymentId, $definitionKey);
     }
 
-    protected function findLatestDefinitionByKeyAndTenantId(string $definitionKey, string $tenantId): ProcessDefinitionEntity
+    protected function findLatestDefinitionByKeyAndTenantId(string $definitionKey, ?string $tenantId): ProcessDefinitionEntity
     {
         return $this->getProcessDefinitionManager()->findLatestProcessDefinitionByKeyAndTenantId($definitionKey, $tenantId);
     }

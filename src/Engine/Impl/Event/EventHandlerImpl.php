@@ -5,8 +5,6 @@ namespace Jabe\Engine\Impl\Event;
 use Jabe\Engine\Impl\Bpmn\Behavior\EventSubProcessStartEventActivityBehavior;
 use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\Persistence\Entity\EventSubscriptionEntity;
-use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
-use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
 use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class EventHandlerImpl implements EventHandlerInterface

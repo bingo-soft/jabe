@@ -10,7 +10,6 @@ use Jabe\Engine\Impl\{
     ProcessEngineLogger,
     ProcessInstanceQueryImpl
 };
-use Jabe\Engine\Impl\Cfg\Auth\ResourceAuthorizationProviderInterface;
 use Jabe\Engine\Impl\Db\{
     EnginePersistenceLogger,
     ListQueryParameterObject

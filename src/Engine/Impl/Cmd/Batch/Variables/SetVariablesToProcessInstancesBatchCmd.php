@@ -22,7 +22,6 @@ use Jabe\Engine\Impl\Batch\Builder\{
     BatchBuilder,
     OperationLogInstanceCountHandlerInterface
 };
-use Jabe\Engine\Impl\Batch\Message\MessageCorrelationBatchConfiguration;
 use Jabe\Engine\Impl\Core\Variable\Util\VariableUtil;
 use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,

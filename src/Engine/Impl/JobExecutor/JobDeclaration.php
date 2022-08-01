@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\JobExecutor;
 
-use Jabe\Engine\ProcessEngineConfiguration;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
 use Jabe\Engine\Impl\Persistence\Entity\{

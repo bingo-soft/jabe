@@ -2,8 +2,6 @@
 
 namespace Jabe\Engine\Authorization;
 
-use Jabe\Engine\Authorization\Exception\PermissionNotFound;
-
 /**
  * The set of built-in Permissions for Resources::OPTIMIZE.
  */

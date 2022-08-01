@@ -13,10 +13,8 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     EventSubscriptionEntity,
     ExecutionEntity
 };
-use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
 use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
 use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
-use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
 
 class AbstractBpmnActivityBehavior extends FlowNodeActivityBehavior
 {

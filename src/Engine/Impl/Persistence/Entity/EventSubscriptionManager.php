@@ -14,7 +14,6 @@ use Jabe\Engine\Impl\Db\{
 use Jabe\Engine\Impl\Event\EventType;
 use Jabe\Engine\Impl\JobExecutor\ProcessEventJobHandler;
 use Jabe\Engine\Impl\Persistence\AbstractManager;
-use Jabe\Engine\Runtime\EventSubscriptionInterface;
 use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class EventSubscriptionManager extends AbstractManager

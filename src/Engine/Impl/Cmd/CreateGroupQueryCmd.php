@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Cmd;
 
-use Jabe\Engine\Identity\GroupQueryInterface;
 use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext

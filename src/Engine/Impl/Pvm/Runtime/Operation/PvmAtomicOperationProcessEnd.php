@@ -8,9 +8,6 @@ use Jabe\Engine\Impl\Pvm\{
     PvmActivityInterface,
     PvmLogger
 };
-use Jabe\Engine\Impl\Pvm\Delegate\SubProcessActivityBehaviorInterface;
-use Jabe\Engine\Impl\Pvm\Process\ScopeImpl;
-use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
 use Jabe\Engine\Impl\Core\Model\CoreModelElement;
 use Jabe\Engine\Impl\Core\Instance\CoreExecution;
 

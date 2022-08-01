@@ -6,7 +6,6 @@ use Jabe\Engine\Impl\JobExecutor\{
     JobDeclaration,
     JobHandlerInterface
 };
-use Jabe\Engine\Impl\Persistence\Entity\MessageEntity;
 
 interface BatchJobHandlerInterface extends JobHandlerInterface
 {

@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Scripting\Engine;
 
-use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Impl\El\ExpressionFactoryResolver;
 use Jabe\Engine\Impl\Util\El\{
     ArrayELResolver,
@@ -19,7 +18,6 @@ use Jabe\Engine\Impl\Util\El\{
     VariableMapper
 };
 use Jabe\Engine\Impl\Juel\SimpleResolver;
-use Jabe\Engine\Impl\Util\ReflectUtil;
 use Jabe\Engine\Impl\Util\Scripting\{
     AbstractScriptEngine,
     BindingsInterface,

@@ -2,13 +2,11 @@
 
 namespace Jabe\Engine\Impl\El;
 
-use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Delegate\{
     DelegateExecutionInterface,
     VariableScopeInterface
 };
 use Jabe\Engine\Impl\ConditionInterface;
-use Jabe\Engine\Impl\Util\El\PropertyNotFoundException;
 
 class UelExpressionCondition implements ConditionInterface
 {

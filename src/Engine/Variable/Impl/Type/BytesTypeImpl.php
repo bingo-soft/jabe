@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Variable\Impl\Type;
 
 use Jabe\Engine\Variable\Variables;
-use Jabe\Engine\Variable\Value\BytesValueInterface;
 
 class BytesTypeImpl extends AbstractValueTypeImpl
 {

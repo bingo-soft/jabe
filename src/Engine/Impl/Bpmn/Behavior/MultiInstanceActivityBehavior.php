@@ -7,7 +7,6 @@ use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Delegate\ExpressionInterface;
 use Jabe\Engine\Impl\ProcessEngineLogger;
 use Jabe\Engine\Impl\Bpmn\Helper\CompensationUtil;
-use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
 use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
 use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
@@ -15,7 +14,6 @@ use Jabe\Engine\Impl\Pvm\Delegate\{
     ModificationObserverBehaviorInterface
 };
 use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
-use Jabe\Engine\Variable\Value\IntegerValueInterface;
 
 abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivityBehavior implements CompositeActivityBehaviorInterface, ModificationObserverBehaviorInterface
 {

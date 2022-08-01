@@ -43,12 +43,12 @@ class TypeConverterImpl extends TypeConverter
         $this->throwException($value, "character");
     }
 
-    protected function coerceToDouble($value, string $shouldBe = "double"): float
+    protected function coerceToDouble($value, string $shouldBe = "float"): float
     {
         if ($value === null || $value == "") {
             return 0.0;
         }
-        if (gettype($value)  == "double") {
+        if (gettype($value)  == "float") {
             return $value;
         }
         if (is_numeric($value)) {
@@ -99,7 +99,7 @@ class TypeConverterImpl extends TypeConverter
             case "boolean":
             case "bool":
                 return $this->coerceToBoolean($value);
-            case "double":
+            case "float":
             case "float":
                 return $this->coerceToDouble($value);
             case "integer":

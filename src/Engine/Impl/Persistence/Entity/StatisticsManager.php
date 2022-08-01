@@ -6,7 +6,6 @@ use Jabe\Engine\Authorization\{
     Permissions,
     Resources
 };
-use Jabe\Engine\Batch\BatchStatisticsInterface;
 use Jabe\Engine\Impl\{
     ActivityStatisticsQueryImpl,
     //HistoricDecisionInstanceStatisticsQueryImp,

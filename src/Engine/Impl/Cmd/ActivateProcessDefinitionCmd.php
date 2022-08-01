@@ -7,7 +7,6 @@ use Jabe\Engine\Impl\JobExecutor\TimerActivateProcessDefinitionHandler;
 use Jabe\Engine\Impl\Management\UpdateJobDefinitionSuspensionStateBuilderImpl;
 use Jabe\Engine\Impl\Persistence\Entity\SuspensionState;
 use Jabe\Engine\Impl\Repository\UpdateProcessDefinitionSuspensionStateBuilderImpl;
-use Jabe\Engine\Impl\Runtime\UpdateProcessInstanceSuspensionStateBuilderImpl;
 
 class ActivateProcessDefinitionCmd extends AbstractSetProcessDefinitionStateCmd
 {

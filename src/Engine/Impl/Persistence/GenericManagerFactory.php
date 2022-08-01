@@ -8,7 +8,6 @@ use Jabe\Engine\Impl\Interceptor\{
     SessionInterface,
     SessionFactoryInterface
 };
-use Jabe\Engine\Impl\Util\ReflectUtil;
 
 class GenericManagerFactory implements SessionFactoryInterface
 {

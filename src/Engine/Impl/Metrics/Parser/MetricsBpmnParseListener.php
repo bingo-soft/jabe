@@ -14,7 +14,6 @@ use Jabe\Engine\Impl\Pvm\Process\{
 };
 use Jabe\Engine\Impl\Util\Xml\Element;
 use Jabe\Engine\Management\Metrics;
-use Jabe\Engine\Runtime\ExecutionInterface;
 
 class MetricsBpmnParseListener extends AbstractBpmnParseListener
 {

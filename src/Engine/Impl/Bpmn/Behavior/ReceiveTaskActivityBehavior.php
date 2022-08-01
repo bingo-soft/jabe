@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use Jabe\Engine\RuntimeServiceInterface;
 use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
 
 class ReceiveTaskActivityBehavior extends TaskActivityBehavior

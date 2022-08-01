@@ -40,7 +40,7 @@
           <element name="flightInstructor" type="IDREF" minOccurs="0" maxOccurs="1"/>
           <element name="flightPartnerRef" type="IDREF" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
-        <attribute name="wingspan" type="double" />
+        <attribute name="wingspan" type="float" />
      </extension>
     </complexContent>
   </complexType>

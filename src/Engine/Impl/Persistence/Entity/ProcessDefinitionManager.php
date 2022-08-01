@@ -9,7 +9,6 @@ use Jabe\Engine\Impl\{
     ProcessEngineLogger,
     ProcessInstanceQueryImpl
 };
-use Jabe\Engine\Impl\Cfg\Auth\ResourceAuthorizationProvider;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Db\{
     EnginePersistenceLogger,
@@ -22,7 +21,6 @@ use Jabe\Engine\Impl\Persistence\{
     AbstractResourceDefinitionManagerInterface
 };
 use Jabe\Engine\Repository\ProcessDefinitionInterface;
-use Jabe\Engine\Runtime\JobInterface;
 
 class ProcessDefinitionManager extends AbstractManager implements AbstractResourceDefinitionManagerInterface
 {

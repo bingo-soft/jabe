@@ -2,10 +2,8 @@
 
 namespace Jabe\Engine\Impl\Cmd;
 
-use Jabe\Engine\IdentityService;
 use Jabe\Engine\History\UserOperationLogEntryInterface;
 use Jabe\Engine\Impl\ProcessEngineLogger;
-use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,

@@ -29,7 +29,6 @@ use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Engine\Impl\Cfg\Auth\ResourceAuthorizationProviderInterface;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Core\Instance\CoreExecution;
-use Jabe\Engine\Impl\Core\Variable\CoreVariableInstanceInterface;
 use Jabe\Engine\Impl\Core\Variable\Event\VariableEvent;
 use Jabe\Engine\Impl\Core\Variable\Scope\{
     AbstractVariableScope,
@@ -44,7 +43,6 @@ use Jabe\Engine\Impl\Db\{
     HasDbReferencesInterface,
     HasDbRevisionInterface
 };
-use Jabe\Engine\Impl\Db\EntityManager\DbEntityManager;
 use Jabe\Engine\Impl\Form\FormRefImpl;
 use Jabe\Engine\Impl\Form\Handler\DefaultFormHandler;
 use Jabe\Engine\Impl\History\Event\HistoryEventTypes;
@@ -70,8 +68,6 @@ use Jabe\Engine\Task\{
 };
 use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
 use Jabe\Model\Bpmn\Instance\UserTaskInterface;
-use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
-use Jabe\Model\Xml\Type\ModelElementTypeInterface;
 
 class TaskEntity extends AbstractVariableScope implements TaskInterface, DelegateTaskInterface, \Serializable, DbEntityInterface, HasDbRevisionInterface, HasDbReferencesInterface, CommandContextListenerInterface, VariablesProviderInterface
 {

@@ -116,8 +116,6 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     JobEntity,
     ProcessDefinitionEntity
 };
-use Jabe\Engine\Impl\Pvm\PvmTransitionInterface;
-use Jabe\Engine\Impl\Pvm\Delegate\ActivityBehaviorInterface;
 use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ActivityStartBehavior,

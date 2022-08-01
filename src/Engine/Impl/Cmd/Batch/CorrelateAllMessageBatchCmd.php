@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Cmd\Batch;
 
-use Jabe\Engine\BadUserRequestException;
 use Jabe\Engine\Authorization\BatchPermissions;
 use Jabe\Engine\Batch\BatchInterface;
 use Jabe\Engine\History\{
@@ -33,7 +32,6 @@ use Jabe\Engine\Impl\Util\{
     CollectionUtil,
     EnsureUtil
 };
-use Jabe\Engine\Runtime\ProcessInstanceQueryInterface;
 
 class CorrelateAllMessageBatchCmd implements CommandInterface
 {

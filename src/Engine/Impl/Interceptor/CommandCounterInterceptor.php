@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\Interceptor;
 
 use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use Jabe\Engine\Impl\Telemetry\TelemetryRegistry;
 use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class CommandCounterInterceptor extends CommandInterceptor

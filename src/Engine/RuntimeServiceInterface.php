@@ -10,7 +10,6 @@ use Jabe\Engine\Authorization\{
     Resources
 };
 use Jabe\Engine\Batch\BatchInterface;
-use Jabe\Engine\Delegate\ExecutionListenerInterface;
 use Jabe\Engine\Exception\{
     NullValueException,
     NotFoundException,

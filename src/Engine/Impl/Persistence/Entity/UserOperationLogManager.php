@@ -18,7 +18,6 @@ use Jabe\Engine\Impl\{
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Db\ListQueryParameterObject;
 use Jabe\Engine\Impl\Db\EntityManager\Operation\DbOperation;
-use Jabe\Engine\Impl\History\HistoryLevel;
 use Jabe\Engine\Impl\History\Event\{
     HistoryEvent,
     HistoryEventCreator,
@@ -28,13 +27,11 @@ use Jabe\Engine\Impl\History\Event\{
 };
 use Jabe\Engine\Impl\History\Producer\HistoryEventProducerInterface;
 use Jabe\Engine\Impl\Identity\IdentityOperationResult;
-use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\OpLog\{
     UserOperationLogContext,
     UserOperationLogContextEntryBuilder
 };
 use Jabe\Engine\Impl\Persistence\AbstractHistoricManager;
-use Jabe\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
 use Jabe\Engine\Impl\Util\{
     PermissionConverter,
     StringUtil

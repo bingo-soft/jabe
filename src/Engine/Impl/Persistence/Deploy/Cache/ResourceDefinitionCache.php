@@ -4,9 +4,7 @@ namespace Jabe\Engine\Impl\Persistence\Deploy\Cache;
 
 use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Impl\Context\Context;
-use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\Persistence\AbstractResourceDefinitionManagerInterface;
-use Jabe\Engine\Impl\Persistence\Entity\DeploymentEntity;
 use Jabe\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
 use Jabe\Commons\Utils\Cache\CacheInterface;
 

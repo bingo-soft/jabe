@@ -6,8 +6,6 @@ use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
     SubProcessActivityBehaviorInterface
 };
-use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
-use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
 
 class OutputVariablesPropagator implements TreeVisitorInterface
 {

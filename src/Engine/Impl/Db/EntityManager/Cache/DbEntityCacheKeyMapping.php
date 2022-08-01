@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Db\EntityManager\Cache;
 
-use Jabe\Engine\Impl\Db\DbEntityInterface;
 use Jabe\Engine\Impl\History\Event\{
     HistoricDetailEventEntity,
     HistoricFormPropertyEventEntity,

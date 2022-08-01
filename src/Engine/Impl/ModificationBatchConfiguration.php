@@ -6,7 +6,6 @@ use Jabe\Engine\Impl\Batch\{
     BatchConfiguration,
     DeploymentMappings
 };
-use Jabe\Engine\Impl\Cmd\AbstractProcessInstanceModificationCommand;
 
 class ModificationBatchConfiguration extends BatchConfiguration
 {

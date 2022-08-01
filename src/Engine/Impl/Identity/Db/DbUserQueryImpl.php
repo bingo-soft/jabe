@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Identity\Db;
 
-use Jabe\Engine\Identity\UserInterface;
 use Jabe\Engine\Impl\{
     Page,
     UserQueryImpl

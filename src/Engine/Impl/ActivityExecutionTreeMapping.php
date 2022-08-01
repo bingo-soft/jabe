@@ -14,7 +14,6 @@ use Jabe\Engine\Impl\Pvm\Runtime\{
     PvmExecutionImpl
 };
 use Jabe\Engine\Impl\Util\EnsureUtil;
-use Jabe\Engine\Runtime\ActivityInstanceInterface;
 
 class ActivityExecutionTreeMapping
 {

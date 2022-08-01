@@ -4,7 +4,6 @@ namespace Jabe\Engine\Impl\Cmd;
 
 use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Impl\HistoryLevelSetupCommand;
-use Jabe\Engine\Impl\History\HistoryLevel;
 use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext

@@ -7,7 +7,6 @@ use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use Jabe\Engine\Impl\Persistence\Entity\JobEntity;
 
 class DeleteJobsCmd implements CommandInterface
 {

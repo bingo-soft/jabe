@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Util;
 
-use Jabe\Engine\Exception\NotFoundException;
 use Jabe\Engine\Impl\ProcessEngineLogger;
 use Jabe\Engine\Impl\Persistence\Entity\{
     DeploymentEntity,

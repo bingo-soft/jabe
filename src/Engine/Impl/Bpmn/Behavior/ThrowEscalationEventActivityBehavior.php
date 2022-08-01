@@ -7,7 +7,6 @@ use Jabe\Engine\Impl\Bpmn\Parser\{
     Escalation,
     EscalationEventDefinition
 };
-use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
 use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
 use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
 

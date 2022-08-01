@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\JobExecutor;
 
-use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Impl\Cmd\AbstractSetProcessDefinitionStateCmd;
 use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\Persistence\Entity\{

@@ -3,12 +3,10 @@
 namespace Jabe\Engine\Impl\JobExecutor;
 
 //use Jabe\Engine\Impl\Util\ClassLoaderUtil;
-use Jabe\Engine\ProcessEngineInterface;
 use Jabe\Engine\Impl\{
     ProcessEngineImpl,
     ProcessEngineLogger
 };
-use Jabe\Engine\Impl\Interceptor\CommandExecutorInterface;
 
 class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable
 {

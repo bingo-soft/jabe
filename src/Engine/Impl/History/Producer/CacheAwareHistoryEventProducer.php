@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\History\Handler;
 
-use Jabe\Engine\Delegate\DelegateTaskInterface;
 use Jabe\Engine\Impl\Batch\BatchEntity;
 use Jabe\Engine\Impl\Batch\History\HistoricBatchEntity;
 use Jabe\Engine\Impl\Context\Context;
@@ -11,8 +10,6 @@ use Jabe\Engine\Impl\History\Event\{
     HistoricProcessInstanceEventEntity,
     HistoricTaskInstanceEventEntity
 };
-use Jabe\Engine\Impl\Db\EntityManager\DbEntityManager;
-use Jabe\Engine\Impl\History\Handler\DbHistoryEventHandler;
 use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
 use Jabe\Engine\Runtime\IncidentInterface;
 

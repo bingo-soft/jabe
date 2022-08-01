@@ -6,7 +6,6 @@ use Jabe\Engine\History\HistoricProcessInstanceQueryInterface;
 use Jabe\Engine\Impl\Batch\BatchElementConfiguration;
 use Jabe\Engine\Impl\Cmd\AbstractSetJobsRetriesBatchCmd;
 use Jabe\Engine\Impl\Interceptor\CommandContext;
-use Jabe\Engine\Impl\Util\CollectionUtil;
 use Jabe\Engine\Runtime\ProcessInstanceQueryInterface;
 
 class SetJobsRetriesByProcessBatchCmd extends AbstractSetJobsRetriesBatchCmd

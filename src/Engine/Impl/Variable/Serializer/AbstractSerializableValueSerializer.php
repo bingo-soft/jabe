@@ -9,7 +9,6 @@ use Jabe\Engine\Variable\Value\{
     SerializableValueInterface,
     TypedValueInterface
 };
-use Jabe\Engine\Impl\Util\StringUtil;
 
 abstract class AbstractSerializableValueSerializer extends AbstractTypedValueSerializer
 {

@@ -18,7 +18,6 @@ use Jabe\Engine\Impl\Context\{
 };
 use Jabe\Engine\Impl\Core\Model\CallableElement;
 use Jabe\Engine\Impl\Delegate\DelegateInvocation;
-use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
 use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
     SubProcessActivityBehaviorInterface

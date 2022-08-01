@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use Jabe\Engine\History\HistoricDetailInterface;
 use Jabe\Engine\Impl\{
     HistoricDetailQueryImpl,
     Page

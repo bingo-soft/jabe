@@ -9,7 +9,6 @@ use Jabe\Engine\Delegate\{
     TaskListenerInterface,
     VariableScopeInterface
 };
-use Jabe\Engine\Impl\Bpmn\Parser\FieldDeclaration;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Task\Delegate\TaskListenerInvocation;
 

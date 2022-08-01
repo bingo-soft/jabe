@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\Persistence\Entity;
 
 use Jabe\Engine\ExternalTask\ExternalTaskInterface;
-use Jabe\Engine\History\HistoricExternalTaskLogInterface;
 use Jabe\Engine\Impl\{
     HistoricExternalTaskLogQueryImpl,
     Page
@@ -12,7 +11,6 @@ use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Db\ListQueryParameterObject;
 use Jabe\Engine\Impl\Db\EntityManager\Operation\DbOperation;
-use Jabe\Engine\Impl\History\HistoryLevel;
 use Jabe\Engine\Impl\History\Event\{
     HistoryEvent,
     HistoryEventCreator,

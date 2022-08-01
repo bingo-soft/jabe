@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Cmd;
 
-use Jabe\Engine\Impl\AbstractQuery;
 use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext

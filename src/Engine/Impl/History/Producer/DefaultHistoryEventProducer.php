@@ -69,7 +69,6 @@ use Jabe\Engine\Impl\Util\{
     ParseUtil,
     StringUtil
 };
-use Jabe\Engine\Management\JobDefinitionInterface;
 use Jabe\Engine\Repository\{
     ProcessDefinitionInterface,
     ResourceTypes

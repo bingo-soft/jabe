@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\Pvm\Runtime\Operation;
 
 use Jabe\Engine\Delegate\ExecutionListenerInterface;
-use Jabe\Engine\Impl\Pvm\PvmTransitionInterface;
 use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
     ModificationObserverBehaviorInterface

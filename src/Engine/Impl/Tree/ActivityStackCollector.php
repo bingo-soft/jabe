@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Tree;
 
-use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
 use Jabe\Engine\Impl\Pvm\Process\ScopeImpl;
 
 class ActivityStackCollector implements TreeVisitorInterface

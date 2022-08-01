@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Identity\Db;
 
-use Jabe\Engine\Identity\TenantInterface;
 use Jabe\Engine\Impl\{
     Page,
     TenantQueryImpl

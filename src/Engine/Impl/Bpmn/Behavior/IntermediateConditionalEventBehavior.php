@@ -4,11 +4,8 @@ namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
 use Jabe\Engine\Impl\Bpmn\Parser\ConditionalEventDefinition;
 use Jabe\Engine\Impl\Core\Variable\Event\VariableEvent;
-use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\Persistence\Entity\EventSubscriptionEntity;
 use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
-use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
-use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
 
 class IntermediateConditionalEventBehavior extends IntermediateCatchEventActivityBehavior implements ConditionalEventBehaviorInterface
 {

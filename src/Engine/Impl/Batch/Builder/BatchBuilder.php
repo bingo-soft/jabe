@@ -10,7 +10,6 @@ use Jabe\Engine\Impl\Batch\{
     BatchEntity,
     BatchJobHandlerInterface
 };
-use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Engine\Impl\Interceptor\CommandContext;
 
 class BatchBuilder

@@ -78,7 +78,6 @@ use Jabe\Engine\Impl\Metrics\{
     MetricsQueryImpl,
     MetricsRegistry
 };
-use Jabe\Engine\Impl\Telemetry\TelemetryRegistry;
 use Jabe\Engine\Impl\Telemetry\Dto\LicenseKeyDataImpl;
 use Jabe\Engine\Management\{
     ActivityStatisticsQueryInterface,

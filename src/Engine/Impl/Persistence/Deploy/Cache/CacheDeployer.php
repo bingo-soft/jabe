@@ -5,12 +5,10 @@ namespace Jabe\Engine\Impl\Persistence\Deploy\Cache;
 use Jabe\Engine\Impl\ProcessEngineLogger;
 use Jabe\Engine\Impl\Cmd\CommandLogger;
 use Jabe\Engine\Impl\Context\Context;
-use Jabe\Engine\Impl\Persistence\Deploy\DeployerInterface;
 use Jabe\Engine\Impl\Persistence\Entity\{
     DeploymentEntity,
     ResourceEntity
 };
-use Jabe\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
 
 class CacheDeployer
 {

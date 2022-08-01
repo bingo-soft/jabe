@@ -2,8 +2,6 @@
 
 namespace Jabe\Engine\Impl\Persistence\Deploy\Cache;
 
-use Jabe\Engine\Impl\Management\PurgeReportingInterface;
-
 class CachePurgeReport implements PurgeReporting
 {
     public const PROCESS_DEF_CACHE = "PROC_DEF_CACHE";

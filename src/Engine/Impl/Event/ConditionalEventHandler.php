@@ -5,8 +5,6 @@ namespace Jabe\Engine\Impl\Event;
 use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\Persistence\Entity\EventSubscriptionEntity;
-use Jabe\Engine\Impl\Pvm\Delegate\ActivityBehaviorInterface;
-use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
 use Jabe\Engine\Impl\Bpmn\Behavior\ConditionalEventBehaviorInterface;
 use Jabe\Engine\Impl\Core\Variable\Event\VariableEvent;
 

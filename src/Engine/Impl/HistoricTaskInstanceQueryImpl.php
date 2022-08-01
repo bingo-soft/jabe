@@ -18,7 +18,6 @@ use Jabe\Engine\Impl\Util\{
     CompareUtil,
     EnsureUtil
 };
-use Jabe\Engine\Impl\Variable\Serializer\VariableSerializersInterface;
 
 class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTaskInstanceQueryInterface
 {

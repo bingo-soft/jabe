@@ -4,21 +4,21 @@ namespace Jabe\Engine\Impl;
 
 class TaskQueryProperty
 {
-    private static $TASK_ID;// = new QueryPropertyImpl("ID_");
-    private static $NAME;// = new QueryPropertyImpl("NAME_");
-    private static $NAME_CASE_INSENSITIVE;// = new QueryPropertyImpl("NAME_", "LOWER");
-    private static $DESCRIPTION;// = new QueryPropertyImpl("DESCRIPTION_");
-    private static $PRIORITY;// = new QueryPropertyImpl("PRIORITY_");
-    private static $ASSIGNEE;// = new QueryPropertyImpl("ASSIGNEE_");
-    private static $CREATE_TIME;// = new QueryPropertyImpl("CREATE_TIME_");
-    private static $UPDATED_AFTER;// = new QueryPropertyImpl("LAST_UPDATED_");
-    private static $PROCESS_INSTANCE_ID;// = new QueryPropertyImpl("PROC_INST_ID_");
-    private static $CASE_INSTANCE_ID;// = new QueryPropertyImpl("CASE_INST_ID_");
-    private static $EXECUTION_ID;// = new QueryPropertyImpl("EXECUTION_ID_");
-    private static $CASE_EXECUTION_ID;// = new QueryPropertyImpl("CASE_EXECUTION_ID_");
-    private static $DUE_DATE;// = new QueryPropertyImpl("DUE_DATE_");
-    private static $FOLLOW_UP_DATE;// = new QueryPropertyImpl("FOLLOW_UP_DATE_");
-    private static $TENANT_ID;// = new QueryPropertyImpl("TENANT_ID_");
+    private static $TASK_ID;
+    private static $NAME;
+    private static $NAME_CASE_INSENSITIVE;
+    private static $DESCRIPTION;
+    private static $PRIORITY;
+    private static $ASSIGNEE;
+    private static $CREATE_TIME;
+    private static $UPDATED_AFTER;
+    private static $PROCESS_INSTANCE_ID;
+    private static $CASE_INSTANCE_ID;
+    private static $EXECUTION_ID;
+    private static $CASE_EXECUTION_ID;
+    private static $DUE_DATE;
+    private static $FOLLOW_UP_DATE;
+    private static $TENANT_ID;
 
     public static function taskId(): QueryPropertyImpl
     {

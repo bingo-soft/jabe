@@ -19,7 +19,6 @@ use Jabe\Engine\Task\{
     TaskQueryInterface
 };
 use Jabe\Engine\Variable\VariableMapInterface;
-use Jabe\Engine\Variable\Value\SerializableValueInterface;
 
 interface FormServiceInterface
 {

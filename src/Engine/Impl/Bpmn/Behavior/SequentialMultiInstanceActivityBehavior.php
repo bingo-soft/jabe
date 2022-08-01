@@ -3,9 +3,7 @@
 namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
 use Jabe\Engine\Impl\ProcessEngineLogger;
-use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
 use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
-use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
 
 class SequentialMultiInstanceActivityBehavior extends MultiInstanceActivityBehavior
 {

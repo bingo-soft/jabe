@@ -8,7 +8,6 @@ use Jabe\Engine\Application\{
     ProcessApplicationReferenceInterface,
     ProcessApplicationUnavailableException
 };
-use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Impl\ProcessEngineLogger;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Db\{

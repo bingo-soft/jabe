@@ -6,7 +6,6 @@ use Jabe\Engine\Identity\{
     GroupInterface,
     GroupQueryInterface
 };
-use Jabe\Engine\Impl\Interceptor\CommandExecutorInterface;
 use Jabe\Engine\Impl\Util\EnsureUtil;
 
 abstract class GroupQueryImpl extends AbstractQuery implements GroupQueryInterface

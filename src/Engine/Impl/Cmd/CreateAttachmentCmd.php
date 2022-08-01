@@ -4,7 +4,6 @@ namespace Jabe\Engine\Impl\Cmd;
 
 use Jabe\Engine\History\UserOperationLogEntryInterface;
 use Jabe\Engine\Impl\Context\Context;
-use Jabe\Engine\Impl\Db\EntityManager\DbEntityManager;
 use Jabe\Engine\Impl\History\Event\HistoricProcessInstanceEventEntity;
 use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
@@ -24,7 +23,6 @@ use Jabe\Engine\Impl\Util\{
 };
 use Jabe\Engine\ProcessEngineConfiguration;
 use Jabe\Engine\Repository\ResourceTypes;
-use Jabe\Engine\Task\AttachmentInterface;
 
 class CreateAttachmentCmd implements CommandInterface
 {

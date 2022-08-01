@@ -9,7 +9,6 @@ use Jabe\Engine\Impl\Interceptor\{
     CommandContext,
     CommandExecutorInterface
 };
-use Jabe\Engine\Impl\Variable\Serializer\VariableSerializersInterface;
 use Jabe\Engine\Impl\Util\EnsureUtil;
 use Jabe\Engine\Query\QueryInterface;
 

@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Batch;
 
-use Jabe\Engine\BadUserRequestException;
 use Jabe\Engine\BatchPermissions;
 use Jabe\Engine\Batch\BatchInterface;
 use Jabe\Engine\Impl\{

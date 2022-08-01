@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\Cmd;
 
 use Jabe\Engine\Impl\Page;
-use Jabe\Engine\Impl\Db\DbEntityInterface;
 use Jabe\Engine\Impl\Db\EntityManager\{
     OptimisticLockingListenerInterface,
     OptimisticLockingResult,

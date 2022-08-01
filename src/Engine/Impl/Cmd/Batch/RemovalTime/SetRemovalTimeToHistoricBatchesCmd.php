@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\Cmd\Batch\Variables;
 
 use Jabe\Engine\BadUserRequestException;
-use Jabe\Engine\Authorization\BatchPermissions;
 use Jabe\Engine\Batch\BatchInterface;
 use Jabe\Engine\Batch\History\{
     HistoricBatchInterface,

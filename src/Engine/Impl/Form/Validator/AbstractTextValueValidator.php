@@ -2,8 +2,6 @@
 
 namespace Jabe\Engine\Impl\Form\Validator;
 
-use Jabe\Engine\ProcessEngineException;
-
 abstract class AbstractTextValueValidator implements FormFieldValidatorInterface
 {
     public function validate($submittedValue, FormFieldValidatorContextInterface $validatorContext): bool

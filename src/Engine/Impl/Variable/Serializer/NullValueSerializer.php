@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Variable\Serializer;
 
-use Jabe\Engine\Variable\Variables;
 use Jabe\Engine\Variable\Impl\Value\{
     NullValueImpl,
     UntypedValueImpl

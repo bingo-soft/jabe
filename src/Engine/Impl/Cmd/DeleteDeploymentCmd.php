@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Cmd;
 
-use Jabe\Engine\Application\ProcessApplicationReferenceInterface;
 use Jabe\Engine\History\UserOperationLogEntryInterface;
 use Jabe\Engine\Impl\ProcessEngineLogger;
 use Jabe\Engine\Impl\Cfg\{

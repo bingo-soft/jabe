@@ -2,12 +2,10 @@
 
 namespace Jabe\Engine\Impl\JobExecutor;
 
-use Jabe\Engine\ProcessEngine;
 use Jabe\Engine\Impl\{
     ProcessEngineImpl,
     ProcessEngineLogger
 };
-use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Engine\Impl\Cmd\{
     ExecuteJobsCmd,
     UnlockJobCmd

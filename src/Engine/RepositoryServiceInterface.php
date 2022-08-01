@@ -3,14 +3,12 @@
 namespace Jabe\Engine;
 
 use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
-use Jabe\Engine\Application\ProcessApplicationReferenceInterface;
 use Jabe\Engine\Authorization\{
     Permissions,
     ProcessDefinitionPermissions,
     ProcessInstancePermissions,
     Resources
 };
-use Jabe\Engine\Delegate\ExecutionListenerInterface;
 use Jabe\Engine\Exception\{
     NotFoundException,
     NotValidException
@@ -28,7 +26,6 @@ use Jabe\Engine\Repository\{
     UpdateProcessDefinitionSuspensionStateBuilderInterface,
     UpdateProcessDefinitionSuspensionStateSelectBuilderInterface
 };
-use Jabe\Engine\Task\IdentityLinkInterface;
 
 interface RepositoryServiceInterface
 {

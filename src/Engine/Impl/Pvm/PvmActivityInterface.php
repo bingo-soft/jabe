@@ -2,8 +2,6 @@
 
 namespace Jabe\Engine\Impl\Pvm;
 
-use Jabe\Engine\Delegate\ExecutionListenerInterface;
-use Jabe\Engine\Impl\Core\Variable\Mapping\IoMapping;
 use Jabe\Engine\Impl\Pvm\Delegate\ActivityBehaviorInterface;
 
 interface PvmActivityInterface extends PvmScopeInterface

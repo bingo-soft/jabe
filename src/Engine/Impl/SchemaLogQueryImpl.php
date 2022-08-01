@@ -11,7 +11,6 @@ use Jabe\Engine\Management\{
     SchemaLogEntryInterface,
     SchemaLogQueryInterface
 };
-use Jabe\Engine\Query\QueryPropertyInterface;
 
 class SchemaLogQueryImpl extends AbstractQuery implements SchemaLogQueryInterface
 {

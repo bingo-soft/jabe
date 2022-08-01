@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Interceptor;
 
-use Jabe\Engine\Delegate\ProcessEngineServicesAwareInterface;
 use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Engine\Impl\Cmd\CommandLogger;
 use Jabe\Engine\Impl\Context\{

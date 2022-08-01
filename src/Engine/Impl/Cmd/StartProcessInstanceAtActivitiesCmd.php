@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Cmd;
 
-use Jabe\Engine\Exception\NotValidException;
 use Jabe\Engine\History\UserOperationLogEntryInterface;
 use Jabe\Engine\Impl\{
     ProcessEngineLogger,

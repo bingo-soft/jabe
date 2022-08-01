@@ -16,7 +16,6 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     HistoricProcessInstanceEntity,
     PropertyChange
 };
-use Jabe\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
 use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class DeleteHistoricVariableInstancesByProcessInstanceIdCmd implements CommandInterface, \Serializable

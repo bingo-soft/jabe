@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\Batch;
 
 use Jabe\Engine\Impl\Context\Context;
-use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\JobExecutor\{
     JobDeclaration,
     JobHandlerConfigurationInterface

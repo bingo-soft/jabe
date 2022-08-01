@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\Cmd;
 
 use Jabe\Engine\Impl\Interceptor\CommandContext;
-use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
 use Jabe\Engine\Impl\Pvm\Process\{
     ProcessDefinitionImpl,
     ScopeImpl

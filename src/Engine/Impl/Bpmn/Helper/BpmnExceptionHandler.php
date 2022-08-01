@@ -6,11 +6,8 @@ use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Delegate\BpmnError;
 use Jabe\Engine\Impl\ProcessEngineLogger;
 use Jabe\Engine\Impl\Bpmn\Behavior\BpmnBehaviorLogger;
-use Jabe\Engine\Impl\Bpmn\Parser\ErrorEventDefinition;
 use Jabe\Engine\Impl\Context\Context;
-use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
 use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
-use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
 use Jabe\Engine\Impl\Tree\{
     ActivityExecutionHierarchyWalker,
     ActivityExecutionMappingCollector,

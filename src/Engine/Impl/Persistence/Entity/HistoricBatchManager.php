@@ -2,8 +2,6 @@
 
 namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use Jabe\Engine\Batch\History\HistoricBatchInterface;
-use Jabe\Engine\History\CleanableHistoricBatchReportResultInterface;
 use Jabe\Engine\Impl\{
     CleanableHistoricBatchReportImpl,
     Direction,
@@ -20,7 +18,6 @@ use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Db\ListQueryParameterObject;
 use Jabe\Engine\Impl\Db\EntityManager\Operation\DbOperation;
-use Jabe\Engine\Impl\History\HistoryLevel;
 use Jabe\Engine\Impl\History\Event\{
     HistoryEvent,
     HistoryEventCreator,
@@ -28,7 +25,6 @@ use Jabe\Engine\Impl\History\Event\{
     HistoryEventTypes
 };
 use Jabe\Engine\Impl\History\Producer\HistoryEventProducerInterface;
-use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\Persistence\AbstractManager;
 use Jabe\Engine\Impl\Util\ClockUtil;
 

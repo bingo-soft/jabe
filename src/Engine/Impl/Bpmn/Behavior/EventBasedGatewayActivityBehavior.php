@@ -2,13 +2,10 @@
 
 namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use Jabe\Engine\Impl\Bpmn\Parser\ConditionalEventDefinition;
-use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
 use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityBehaviorInterface,
     ActivityExecutionInterface
 };
-use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
 
 class EventBasedGatewayActivityBehavior extends FlowNodeActivityBehavior
 {

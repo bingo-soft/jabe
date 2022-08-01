@@ -6,8 +6,6 @@ use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Delegate\ExecutionListenerInterface;
 use Jabe\Engine\Impl\Core\Model\CoreModelElement;
 use Jabe\Engine\Impl\Core\Instance\CoreExecution;
-use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
-use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
 use Jabe\Engine\Impl\Pvm\Process\ActivityStartBehavior;
 
 abstract class AbstractPvmAtomicOperationTransitionNotifyListenerTake extends AbstractPvmEventAtomicOperation

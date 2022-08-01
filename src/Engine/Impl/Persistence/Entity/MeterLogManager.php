@@ -16,7 +16,6 @@ use Jabe\Engine\Impl\Metrics\{
 };
 use Jabe\Engine\Impl\Persistence\AbstractManager;
 use Jabe\Engine\Impl\Util\ClockUtil;
-use Jabe\Engine\Management\MetricIntervalValueInterface;
 
 class MeterLogManager extends AbstractManager
 {

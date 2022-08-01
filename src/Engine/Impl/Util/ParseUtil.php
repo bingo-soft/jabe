@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Util;
 
-use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Exception\NotValidException;
 use Jabe\Engine\Impl\ProcessEngineLogger;
 use Jabe\Engine\Impl\Bpmn\Parser\FailedJobRetryConfiguration;

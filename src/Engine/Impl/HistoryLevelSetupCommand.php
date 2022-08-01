@@ -11,7 +11,6 @@ use Jabe\Engine\Impl\Cmd\DetermineHistoryLevelCmd;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Db\EnginePersistenceLogger;
 use Jabe\Engine\Impl\Db\EntityManager\DbEntityManager;
-use Jabe\Engine\Impl\Db\Sql\DbSqlSessionFactory;
 use Jabe\Engine\Impl\History\HistoryLevel;
 use Jabe\Engine\Impl\Interceptor\{
     CommandContext,
@@ -21,7 +20,6 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     PropertyEntity,
     PropertyManager
 };
-use Jabe\Engine\Impl\Util\DatabaseUtil;
 
 class HistoryLevelSetupCommand implements CommandInterface
 {

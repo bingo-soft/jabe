@@ -9,7 +9,6 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     JobEntity,
     MessageEntity
 };
-use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
 use Jabe\Engine\Impl\Pvm\Runtime\AtomicOperationInterface;
 
 class MessageJobDeclaration extends JobDeclaration

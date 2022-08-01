@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\Pvm;
 
 use Jabe\Engine\Delegate\ExecutionListenerInterface;
-use Jabe\Engine\Impl\Core\Model\CoreModelElement;
 use Jabe\Engine\Impl\Pvm\Delegate\ActivityBehaviorInterface;
 use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,

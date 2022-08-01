@@ -22,8 +22,6 @@ use Jabe\Engine\Impl\Incident\{
     IncidentContext,
     IncidentHandling
 };
-use Jabe\Engine\Impl\Interceptor\CommandContext;
-use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
 use Jabe\Engine\Impl\Util\{
     ClockUtil,
     EnsureUtil,

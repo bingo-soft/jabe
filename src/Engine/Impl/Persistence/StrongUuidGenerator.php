@@ -3,7 +3,7 @@
 namespace Jabe\Engine\Impl\Persistence;
 
 use Ramsey\Uuid\Uuid;
-use Jabe\Engine\Impl\Cfg\IdGenerator;
+use Jabe\Engine\Impl\Cfg\IdGeneratorInterface;
 
 class StrongUuidGenerator implements IdGeneratorInterface
 {

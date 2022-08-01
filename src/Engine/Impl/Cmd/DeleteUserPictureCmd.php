@@ -6,7 +6,6 @@ use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use Jabe\Engine\Impl\Persistence\Entity\IdentityInfoEntity;
 use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class DeleteUserPictureCmd implements CommandInterface

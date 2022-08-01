@@ -7,7 +7,6 @@ use Jabe\Engine\Exception\NotValidException;
 use Jabe\Engine\Impl\ActivityExecutionTreeMapping;
 use Jabe\Engine\Impl\Bpmn\Behavior\SequentialMultiInstanceActivityBehavior;
 use Jabe\Engine\Impl\Bpmn\Helper\BpmnProperties;
-use Jabe\Engine\Impl\Core\Delegate\CoreActivityBehaviorInterface;
 use Jabe\Engine\Impl\Core\Model\CoreModelElement;
 use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
@@ -30,7 +29,6 @@ use Jabe\Engine\Impl\Tree\{
     WalkConditionInterface
 };
 use Jabe\Engine\Impl\Util\EnsureUtil;
-use Jabe\Engine\Runtime\ActivityInstanceInterface;
 use Jabe\Engine\Variable\VariableMapInterface;
 use Jabe\Engine\Variable\Impl\VariableMapImpl;
 

@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\El;
 
 use Jabe\Engine\Delegate\VariableScopeInterface;
-use Jabe\Engine\Impl\Core\Variable\Mapping\IoParameter;
 use Jabe\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
 
 class ElValueProvider implements ParameterValueProviderInterface

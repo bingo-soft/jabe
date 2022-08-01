@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
 use Jabe\Engine\Impl\ProcessEngineLogger;
-use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
 use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
     SignallableActivityBehaviorInterface

@@ -27,9 +27,7 @@ use Jabe\Engine\Repository\{
     ProcessDefinitionInterface,
     ProcessDefinitionQueryInterface
 };
-use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
 use Jabe\Model\Bpmn\Instance\DocumentationInterface;
-use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
 
 class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinitionQueryInterface
 {

@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\History\Handler;
 
-use Jabe\Engine\History\HistoricVariableInstanceInterface;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Db\EntityManager\DbEntityManager;
 use Jabe\Engine\Impl\History\Event\{

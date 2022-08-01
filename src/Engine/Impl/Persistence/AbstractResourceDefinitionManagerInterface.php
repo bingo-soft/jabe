@@ -8,7 +8,7 @@ interface AbstractResourceDefinitionManagerInterface
 
     public function findLatestDefinitionById(string $id);
 
-    public function findLatestDefinitionByKeyAndTenantId(string $definitionKey, string $tenantId);
+    public function findLatestDefinitionByKeyAndTenantId(string $definitionKey, ?string $tenantId);
 
     public function findDefinitionByKeyVersionAndTenantId(string $definitionKey, int $definitionVersion, string $tenantId);
 

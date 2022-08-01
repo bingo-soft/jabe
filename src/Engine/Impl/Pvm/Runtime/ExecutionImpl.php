@@ -11,7 +11,6 @@ use Jabe\Engine\Delegate\{
     DelegateExecutionInterface,
     ProcessEngineServicesAwareInterface
 };
-use Jabe\Engine\Impl\Core\Variable\CoreVariableInstanceInterface;
 use Jabe\Engine\Impl\Core\Variable\Scope\{
     SimpleVariableInstanceFactory,
     VariableInstanceFactoryInterface,

@@ -5,7 +5,6 @@ namespace Jabe\Engine\Impl\Scripting;
 use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Delegate\VariableScopeInterface;
 use Jabe\Engine\Impl\Context\Context;
-use Jabe\Engine\Impl\Core\Variable\Mapping\IoParameter;
 use Jabe\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
 use Jabe\Engine\Impl\Delegate\ScriptInvocation;
 

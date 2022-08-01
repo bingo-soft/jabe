@@ -9,7 +9,6 @@ use Jabe\Engine\Impl\Db\{
     DbEntityLifecycleAwareInterface,
     EnginePersistenceLogger
 };
-use Jabe\Engine\Impl\Db\EntityManager\DbEntityManager;
 use Jabe\Engine\Impl\History\Event\HistoricVariableUpdateEventEntity;
 use Jabe\Engine\Impl\Persistence\Entity\Util\{
     ByteArrayField,

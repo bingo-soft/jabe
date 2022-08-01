@@ -2,10 +2,8 @@
 
 namespace Jabe\Engine\Impl\JobExecutor;
 
-use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Impl\Cmd\AbstractSetJobDefinitionStateCmd;
 use Jabe\Engine\Impl\Interceptor\CommandContext;
-use Jabe\Engine\Impl\Management\UpdateJobDefinitionSuspensionStateBuilderImpl;
 use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     JobEntity

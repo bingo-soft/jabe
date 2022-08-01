@@ -9,12 +9,10 @@ use Jabe\Engine\Impl\{
 };
 use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
 use Jabe\Engine\Impl\Context\Context;
-use Jabe\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
 use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity,
     JobDefinitionEntity
 };
-use Jabe\Engine\Impl\Pvm\Process\ProcessDefinitionImpl;
 
 class DefaultJobPriorityProvider extends DefaultPriorityProvider
 {

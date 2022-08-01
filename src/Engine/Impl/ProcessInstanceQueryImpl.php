@@ -14,7 +14,6 @@ use Jabe\Engine\Impl\Util\{
     EnsureUtil//,
     //ImmutablePair
 };
-use Jabe\Engine\Impl\Variable\Serializer\VariableSerializersInterface;
 use Jabe\Engine\Runtime\{
     ProcessInstanceInterface,
     ProcessInstanceQueryInterface

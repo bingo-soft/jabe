@@ -3,9 +3,7 @@
 namespace Jabe\Engine\Impl\Cmd;
 
 use Jabe\Engine\Filter\FilterInterface;
-use Jabe\Engine\Impl\AbstractQuery;
 use Jabe\Engine\Impl\Interceptor\CommandContext;
-use Jabe\Engine\Impl\Persistence\Entity\FilterEntity;
 use Jabe\Engine\Impl\Util\EnsureUtil;
 use Jabe\Engine\Query\QueryInterface;
 use Jabe\Engine\Task\TaskQueryInterface;

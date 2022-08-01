@@ -2,8 +2,6 @@
 
 namespace Jabe\Engine\Impl\Cmd;
 
-use Jabe\Engine\History\UserOperationLogEntryInterface;
-use Jabe\Engine\Impl\Identity\IdentityOperationResult;
 use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext

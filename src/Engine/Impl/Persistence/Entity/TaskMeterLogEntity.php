@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Impl\Db\{
     DbEntityInterface,
     HasDbReferencesInterface

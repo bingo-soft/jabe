@@ -23,8 +23,6 @@ use Jabe\Engine\Impl\Cmd\Optimize\{
     OptimizeRunningHistoricProcessInstanceQueryCmd,
     OptimizeRunningHistoricTaskInstanceQueryCmd
 };
-use Jabe\Engine\Impl\Persistence\Entity\HistoricIncidentEntity;
-use Jabe\Engine\Impl\Persistence\Entity\Optimize\OptimizeHistoricIdentityLinkLogEntity;
 
 class OptimizeService extends ServiceImpl
 {

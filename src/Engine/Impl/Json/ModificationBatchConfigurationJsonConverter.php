@@ -7,7 +7,6 @@ use Jabe\Engine\Impl\Batch\{
     DeploymentMappingJsonConverter,
     DeploymentMappings
 };
-use Jabe\Engine\Impl\Cmd\AbstractProcessInstanceModificationCommand;
 use Jabe\Engine\Impl\Util\JsonUtil;
 
 class ModificationBatchConfigurationJsonConverter extends JsonObjectConverter

@@ -13,7 +13,6 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     PropertyChange
 };
 use Jabe\Engine\Impl\Util\EnsureUtil;
-use Jabe\Engine\Runtime\IncidentInterface;
 
 class CreateIncidentCmd implements CommandInterface
 {

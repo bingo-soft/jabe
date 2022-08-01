@@ -6,9 +6,7 @@ use Jabe\Engine\Impl\{
     QueryOperator,
     QueryVariableValue
 };
-use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Engine\Impl\Context\Context;
-use Jabe\Engine\Impl\Variable\Serializer\VariableSerializersInterface;
 
 class TopicFetchInstruction implements \Serializable
 {

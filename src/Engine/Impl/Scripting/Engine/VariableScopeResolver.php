@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\Scripting\Engine;
 
 use Jabe\Engine\Delegate\VariableScopeInterface;
-use Jabe\Engine\Impl\Pvm\Runtime\ExecutionImpl;
 
 class VariableScopeResolver implements ResolverInterface
 {

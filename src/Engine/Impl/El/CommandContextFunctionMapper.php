@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\El;
 
 use Jabe\Engine\Impl\Context\Context;
-use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\Util\El\FunctionMapper;
 use Jabe\Engine\Impl\Util\ReflectUtil;
 

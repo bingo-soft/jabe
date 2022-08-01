@@ -25,7 +25,6 @@ use Jabe\Engine\Impl\Persistence\Entity\Util\{
     TypedValueField,
     TypedValueUpdateListenerInterface
 };
-use Jabe\Engine\Impl\Pvm\Runtime\LegacyBehavior;
 use Jabe\Engine\Impl\Variable\Serializer\{
     TypedValueSerializerInterface,
     ValueFieldsInterface

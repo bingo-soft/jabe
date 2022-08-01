@@ -5,7 +5,6 @@ namespace Jabe\Engine\Impl\Persistence\Entity;
 use Jabe\Engine\Impl\ProcessEngineLogger;
 use Jabe\Engine\Impl\Db\EnginePersistenceLogger;
 use Jabe\Engine\Impl\Interceptor\CommandContext;
-use Jabe\Engine\Impl\JobExecutor\JobHandlerInterface;
 use Jabe\Engine\Impl\Util\ClassNameUtil;
 
 class EverLivingJobEntity extends JobEntity

@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl;
 
 use Jabe\Engine\ProcessEngineException;
-use Jabe\Engine\Identity\GroupInterface;
 use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Interceptor\{
@@ -18,7 +17,6 @@ use Jabe\Engine\Impl\Util\{
     CompareUtil,
     EnsureUtil
 };
-use Jabe\Engine\Impl\Variable\Serializer\VariableSerializersInterface;
 use Jabe\Engine\Task\{
     DelegationState,
     TaskInterface,

@@ -14,7 +14,6 @@ use Jabe\Engine\Impl\Bpmn\Delegate\{
     ExecutionListenerInvocation,
     PhpDelegateInvocation
 };
-use Jabe\Engine\Impl\Bpmn\Parser\FieldDeclaration;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Util\ClassDelegateUtil;
 

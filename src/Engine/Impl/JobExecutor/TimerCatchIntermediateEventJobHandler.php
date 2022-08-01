@@ -5,7 +5,6 @@ namespace Jabe\Engine\Impl\JobExecutor;
 use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
 use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class TimerCatchIntermediateEventJobHandler extends TimerEventJobHandler

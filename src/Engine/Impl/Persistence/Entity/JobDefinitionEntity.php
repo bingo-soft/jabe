@@ -7,7 +7,6 @@ use Jabe\Engine\Impl\Db\{
     HasDbReferencesInterface,
     HasDbRevisionInterface
 };
-use Jabe\Engine\Impl\JobExecutor\JobDeclaration;
 use Jabe\Engine\Management\JobDefinitionInterface;
 
 class JobDefinitionEntity implements JobDefinitionInterface, HasDbRevisionInterface, HasDbReferencesInterface, DbEntityInterface, \Serializable

@@ -15,12 +15,10 @@ use Jabe\Engine\Impl\Bpmn\Delegate\{
     ActivityBehaviorInvocation,
     PhpDelegateInvocation
 };
-use Jabe\Engine\Impl\Bpmn\Parser\FieldDeclaration;
 use Jabe\Engine\Impl\Context\{
     Context,
     ProcessApplicationContextUtil
 };
-use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
 use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityBehaviorInterface,
     ActivityExecutionInterface,

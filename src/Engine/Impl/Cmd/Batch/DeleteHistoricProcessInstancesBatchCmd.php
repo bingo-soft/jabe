@@ -21,7 +21,6 @@ use Jabe\Engine\Impl\Batch\Builder\{
     BatchBuilder,
     OperationLogInstanceCountHandlerInterface
 };
-use Jabe\Engine\Impl\Batch\Deletion\DeleteProcessInstanceBatchConfiguration;
 use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext

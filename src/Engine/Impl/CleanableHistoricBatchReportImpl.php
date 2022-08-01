@@ -7,7 +7,6 @@ use Jabe\Engine\History\{
     CleanableHistoricBatchReportInterface,
     CleanableHistoricBatchReportResultInterface
 };
-use Jabe\Engine\Impl\Batch\BatchJobHandlerInterface;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Interceptor\{
     CommandContext,

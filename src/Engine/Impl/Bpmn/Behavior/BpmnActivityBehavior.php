@@ -2,15 +2,12 @@
 
 namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Impl\{
     ConditionInterface,
     ProcessEngineLogger
 };
 use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
-use Jabe\Engine\Impl\Pvm\PvmTransitionInterface;
 use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
-use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
 use Jabe\Engine\Impl\Pvm\Runtime\{
     CompensationBehavior,
     PvmExecutionImpl

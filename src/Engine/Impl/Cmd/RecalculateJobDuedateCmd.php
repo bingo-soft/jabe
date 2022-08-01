@@ -3,7 +3,6 @@
 namespace Jabe\Engine\Impl\Cmd;
 
 use Jabe\Engine\ProcessEngineException;
-use Jabe\Engine\Exception\NotFoundException;
 use Jabe\Engine\History\UserOperationLogEntryInterface;
 use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
 use Jabe\Engine\Impl\Context\ProcessApplicationContextUtil;

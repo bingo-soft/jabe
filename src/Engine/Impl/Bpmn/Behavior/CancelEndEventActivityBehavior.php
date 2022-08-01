@@ -9,7 +9,6 @@ use Jabe\Engine\Impl\Persistence\Entity\{
 };
 use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
 use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
-use Jabe\Engine\Impl\Pvm\Process\ScopeImpl;
 use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class CancelEndEventActivityBehavior extends AbstractBpmnActivityBehavior

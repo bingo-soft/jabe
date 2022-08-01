@@ -21,7 +21,6 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     PropertyChange,
     SuspensionState
 };
-use Jabe\Engine\Impl\Util\DatabaseUtil;
 
 class HistoryCleanupCmd implements CommandInterface
 {

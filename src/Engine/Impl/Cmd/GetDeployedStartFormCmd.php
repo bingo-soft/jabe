@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Cmd;
 
-use Jabe\Engine\BadUserRequestException;
 use Jabe\Engine\Form\FormDataInterface;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Util\EnsureUtil;

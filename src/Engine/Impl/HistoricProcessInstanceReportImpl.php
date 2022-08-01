@@ -15,7 +15,6 @@ use Jabe\Engine\Impl\Util\{
     CompareUtil,
     EnsureUtil
 };
-use Jabe\Engine\Repository\ProcessDefinitionInterface;
 
 class HistoricProcessInstanceReportImpl implements HistoricProcessInstanceReportInterface
 {

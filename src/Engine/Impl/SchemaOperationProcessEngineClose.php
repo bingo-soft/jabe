@@ -4,7 +4,6 @@ namespace Jabe\Engine\Impl;
 
 use Jabe\Engine\ProcessEngineConfiguration;
 use Jabe\Engine\Impl\Context\Context;
-use Jabe\Engine\Impl\Db\PersistenceSessionInterface;
 use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext

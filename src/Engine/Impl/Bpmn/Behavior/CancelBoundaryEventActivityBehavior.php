@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
 use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
 use Jabe\Engine\Impl\Pvm\Runtime\LegacyBehavior;
 

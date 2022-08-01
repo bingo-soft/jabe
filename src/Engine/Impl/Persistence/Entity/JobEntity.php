@@ -27,7 +27,6 @@ use Jabe\Engine\Impl\JobExecutor\{
     JobHandlerInterface,
     JobHandlerConfigurationInterface
 };
-use Jabe\Engine\Impl\Pvm\Process\ProcessDefinitionImpl;
 use Jabe\Engine\Management\JobDefinitionInterface;
 use Jabe\Engine\Repository\ResourceTypes;
 use Jabe\Engine\Runtime\{

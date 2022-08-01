@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Form\Handler;
 
-use Jabe\Engine\Delegate\ExpressionInterface;
 use Jabe\Engine\Form\StartFormDataInterface;
 use Jabe\Engine\Impl\Form\{
     FormRefImpl,

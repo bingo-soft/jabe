@@ -8,7 +8,6 @@ use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use Jabe\Engine\Impl\Persistence\Entity\TimerEntity;
 
 class GetUnlockedTimersByDuedateCmd implements CommandInterface
 {

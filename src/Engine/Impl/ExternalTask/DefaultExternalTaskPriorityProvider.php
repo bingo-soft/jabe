@@ -9,7 +9,6 @@ use Jabe\Engine\Impl\{
 };
 use Jabe\Engine\Impl\Bpmn\Behavior\ExternalTaskActivityBehavior;
 use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
-use Jabe\Engine\Impl\Core\Variable\Mapping\Value\ParameterValueProviderInterface;
 use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
 
 class DefaultExternalTaskPriorityProvider extends DefaultPriorityProvider

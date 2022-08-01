@@ -8,7 +8,6 @@ use Jabe\Engine\Impl\{
 };
 use Jabe\Engine\Impl\Db\ListQueryParameterObject;
 use Jabe\Engine\Impl\Persistence\AbstractManager;
-use Jabe\Engine\Management\JobDefinitionInterface;
 
 class JobDefinitionManager extends AbstractManager
 {

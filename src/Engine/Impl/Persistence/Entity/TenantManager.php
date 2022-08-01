@@ -7,7 +7,6 @@ use Jabe\Engine\Impl\Db\{
     ListQueryParameterObject,
     TenantCheck
 };
-use Jabe\Engine\Impl\Identity\Authentication;
 use Jabe\Engine\Impl\Persistence\AbstractManager;
 
 class TenantManager extends AbstractManager

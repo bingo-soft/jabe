@@ -11,7 +11,6 @@ use Jabe\Engine\Impl\Bpmn\Parser\{
 use Jabe\Engine\Impl\Cmd\CommandLogger;
 use Jabe\Engine\Impl\Event\EventType;
 use Jabe\Engine\Impl\Interceptor\CommandContext;
-use Jabe\Engine\Impl\Persistence\Deploy\Cache\DeploymentCache;
 use Jabe\Engine\Impl\Persistence\Entity\{
     EventSubscriptionEntity,
     EventSubscriptionManager,

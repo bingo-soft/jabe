@@ -21,7 +21,6 @@ use Jabe\Engine\Impl\Util\{
     EnsureUtil//,
     //ImmutablePair
 };
-use Jabe\Engine\Impl\Variable\Serializer\VariableSerializersInterface;
 
 class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements HistoricProcessInstanceQueryInterface
 {

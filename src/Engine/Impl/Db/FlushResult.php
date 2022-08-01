@@ -2,8 +2,6 @@
 
 namespace Jabe\Engine\Impl\Db;
 
-use Jabe\Engine\Impl\Db\EntityManager\Operation\DbOperation;
-
 class FlushResult
 {
     protected $failedOperations = [];

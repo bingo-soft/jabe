@@ -4,7 +4,6 @@ namespace Jabe\Engine\Impl;
 
 use Jabe\Engine\BadUserRequestException;
 use Jabe\Engine\Exception\NotValidException;
-use Jabe\Engine\History\UserOperationLogEntryInterface;
 use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext

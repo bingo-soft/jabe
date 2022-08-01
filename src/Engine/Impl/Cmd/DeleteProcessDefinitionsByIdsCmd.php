@@ -5,14 +5,11 @@ namespace Jabe\Engine\Impl\Cmd;
 use Jabe\Engine\Exception\NotFoundException;
 use Jabe\Engine\History\UserOperationLogEntryInterface;
 use Jabe\Engine\Impl\Bpmn\Deployer\BpmnDeployer;
-use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use Jabe\Engine\Impl\Persistence\Deploy\DeployerInterface;
-use Jabe\Engine\Impl\Persistence\Deploy\Cache\DeploymentCache;
 use Jabe\Engine\Impl\Persistence\Entity\{
     ProcessDefinitionEntity,
     ProcessDefinitionManager,

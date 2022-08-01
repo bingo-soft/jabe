@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Util;
 
-use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Impl\ProcessEngineLogger;
 
 class IoUtil

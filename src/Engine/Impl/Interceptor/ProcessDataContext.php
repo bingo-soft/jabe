@@ -2,11 +2,9 @@
 
 namespace Jabe\Engine\Impl\Interceptor;
 
-use Jabe\Engine\Application\ProcessApplicationReferenceInterface;
 use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use Jabe\Commons\Logging\MdcAccess;
 
 class ProcessDataContext
 {

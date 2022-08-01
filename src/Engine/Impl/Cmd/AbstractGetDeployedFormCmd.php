@@ -15,7 +15,6 @@ use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
     CommandContext
 };
-use Jabe\Engine\Repository\FormDefinitionInterface;
 
 abstract class AbstractGetDeployedFormCmd implements CommandInterface
 {

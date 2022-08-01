@@ -7,19 +7,16 @@ use Jabe\Engine\Application\{
     ProcessApplicationReferenceInterface
 };
 use Jabe\Engine\Delegate\BaseDelegateExecutionInterface;
-use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Engine\Impl\Context\{
     Context,
     CoreExecutionContext,
     ProcessApplicationContextUtil
 };
-use Jabe\Engine\Impl\Core\Instance\CoreExecution;
 use Jabe\Engine\Impl\Interceptor\{
     CommandContext,
     DelegateInterceptorInterface
 };
 use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use Jabe\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
 
 class DefaultDelegateInterceptor implements DelegateInterceptorInterface
 {

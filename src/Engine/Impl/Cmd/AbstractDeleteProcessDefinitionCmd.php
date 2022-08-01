@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Cmd;
 
-use Jabe\Engine\Exception\NotFoundException;
 use Jabe\Engine\History\UserOperationLogEntryInterface;
 use Jabe\Engine\Impl\Interceptor\{
     CommandInterface,
@@ -14,7 +13,6 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     UserOperationLogManager
 };
 use Jabe\Engine\Impl\Util\EnsureUtil;
-use Jabe\Engine\Repository\ProcessDefinitionInterface;
 
 abstract class AbstractDeleteProcessDefinitionCmd implements CommandInterface, \Serializable
 {

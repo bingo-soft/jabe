@@ -4,8 +4,6 @@ namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
 use Jabe\Engine\Impl\Bpmn\Parser\ConditionalEventDefinition;
 use Jabe\Engine\Impl\Core\Variable\Event\VariableEvent;
-use Jabe\Engine\Impl\Core\Variable\Scope\AbstractVariableScope;
-use Jabe\Engine\Impl\Interceptor\CommandContext;
 use Jabe\Engine\Impl\Persistence\Entity\{
     EventSubscriptionEntity,
     ExecutionEntity

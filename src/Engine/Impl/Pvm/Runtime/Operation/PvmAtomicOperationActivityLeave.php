@@ -8,8 +8,6 @@ use Jabe\Engine\Impl\Pvm\{
     PvmException,
     PvmLogger
 };
-use Jabe\Engine\Impl\Pvm\Delegate\ActivityBehaviorInterface;
-use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
 use Jabe\Engine\Impl\Pvm\Runtime\PvmExecutionImpl;
 
 class PvmAtomicOperationActivityLeave implements PvmAtomicOperationInterface

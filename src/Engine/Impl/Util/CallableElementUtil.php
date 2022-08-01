@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Util;
 
-use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Delegate\VariableScopeInterface;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Core\Model\BaseCallableElement;

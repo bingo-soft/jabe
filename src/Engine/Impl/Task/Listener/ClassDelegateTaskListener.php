@@ -7,7 +7,6 @@ use Jabe\Engine\Delegate\{
     DelegateTaskInterface,
     TaskListenerInterface
 };
-use Jabe\Engine\Impl\Bpmn\Parser\FieldDeclaration;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Delegate\ClassDelegate;
 use Jabe\Engine\Impl\Task\Delegate\TaskListenerInvocation;

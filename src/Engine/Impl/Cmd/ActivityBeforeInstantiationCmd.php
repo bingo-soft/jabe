@@ -5,8 +5,6 @@ namespace Jabe\Engine\Impl\Cmd;
 use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Impl\Core\Model\CoreModelElement;
 use Jabe\Engine\Impl\Interceptor\CommandContext;
-use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
-use Jabe\Engine\Impl\Pvm\PvmActivityInterface;
 use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ProcessDefinitionImpl,

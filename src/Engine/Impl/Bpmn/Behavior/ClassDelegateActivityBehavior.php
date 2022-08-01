@@ -2,19 +2,16 @@
 
 namespace Jabe\Engine\Impl\Bpmn\Behavior;
 
-use Jabe\Engine\Impl\Util\ClassDelegateUtil;
 use Jabe\Engine\Application\{
     InvocationContext,
     ProcessApplicationReferenceInterface
 };
 use Jabe\Engine\Delegate\PhpDelegateInterface;
 use Jabe\Engine\Impl\ProcessEngineLogger;
-use Jabe\Engine\Impl\Bpmn\Parser\FieldDeclaration;
 use Jabe\Engine\Impl\Context\{
     Context,
     ProcessApplicationContextUtil
 };
-use Jabe\Engine\Impl\Persistence\Entity\ExecutionEntity;
 use Jabe\Engine\Impl\Pvm\Delegate\{
     ActivityBehaviorInterface,
     ActivityExecutionInterface,

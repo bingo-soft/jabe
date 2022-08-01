@@ -2,13 +2,11 @@
 
 namespace Jabe\Engine\Impl;
 
-use Jabe\Engine\BadUserRequestException;
 use Jabe\Engine\Form\FormDataInterface;
 use Jabe\Engine\Impl\Cmd\{
     AbstractGetDeployedFormCmd,
     GetTaskFormCmd
 };
-use Jabe\Engine\Impl\Persistence\Entity\TaskEntity;
 use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class GetDeployedTaskFormCmd extends AbstractGetDeployedFormCmd

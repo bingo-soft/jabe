@@ -11,7 +11,6 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     ExecutionEntity
 };
 use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
-use Jabe\Engine\Variable\VariableMapInterface;
 
 class ThrowSignalEventActivityBehavior extends AbstractBpmnActivityBehavior
 {

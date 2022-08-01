@@ -6,5 +6,5 @@ use Jabe\Engine\Variable\VariableMapInterface;
 
 interface MessageCorrelationResultWithVariablesInterface extends MessageCorrelationResultInterface
 {
-    public function getVariables(): VariableMap;
+    public function getVariables(): VariableMapInterface;
 }

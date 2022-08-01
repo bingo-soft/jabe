@@ -2,7 +2,6 @@
 
 namespace Jabe\Engine\Impl\Persistence\Entity;
 
-use Jabe\Engine\Filter\FilterInterface;
 use Jabe\Engine\History\{
     HistoricActivityInstanceInterface,
     HistoricDetailInterface,
@@ -45,7 +44,6 @@ use Jabe\Engine\Runtime\{
     JobInterface,
     ProcessInstanceInterface
 };
-use Jabe\Engine\Task\TaskInterface;
 
 class TableDataManager extends AbstractManager
 {
