@@ -145,6 +145,7 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
             }
             $scopeExecution = $flowScopeExecutions[0];
         } else {
+            $processInstanceId = $this->processInstanceId;
             $tree = $commandContext->runWithoutAuthorization(function () use ($commandContext, $processInstanceId) {
                 $cmd = new GetActivityInstanceCmd($processInstanceId);
                 return $cmd->execute($commandContext);
@@ -183,7 +184,7 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
                 public function isFulfilled(ScopeImpl $element): bool
                 {
                     return (
-                        in_array($ancestorScopeExecution, $this->mapping->getExecutions($element))
+                        in_array($this->ancestorScopeExecution, $this->mapping->getExecutions($element))
                         && $element == $this->ancestorScope)
                         || $element == $this->processDefinition;
                 }

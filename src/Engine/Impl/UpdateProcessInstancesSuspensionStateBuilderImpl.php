@@ -25,7 +25,7 @@ class UpdateProcessInstancesSuspensionStateBuilderImpl implements UpdateProcessI
     public function __construct($executirOrInstances)
     {
         if (is_array($executirOrInstances)) {
-            $this->processInstanceIds = $processInstanceIds;
+            $this->processInstanceIds = $executirOrInstances;
         } elseif ($executirOrInstances instanceof CommandExecutorInterface) {
             $this->commandExecutor = $executirOrInstances;
         }

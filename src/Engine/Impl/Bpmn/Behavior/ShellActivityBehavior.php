@@ -112,7 +112,7 @@ class ShellActivityBehavior extends AbstractBpmnActivityBehavior
 
     protected function getStringFromField(?ExpressionInterface $expression, DelegateExecutionInterface $execution): ?string
     {
-        if ($arg2expression !== null) {
+        if ($expression !== null) {
             $value = $expression->getValue($execution);
             if ($value !== null) {
                 return $value;

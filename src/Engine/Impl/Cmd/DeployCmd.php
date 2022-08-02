@@ -243,7 +243,7 @@ class DeployCmd implements CommandInterface
         DeploymentWithDefinitionsInterface $deployment
     ): void {
 
-        if ($deploymentBuilder->getProcessDefinitionsActivationDate() !== null) {
+        if ($this->deploymentBuilder->getProcessDefinitionsActivationDate() !== null) {
             $repositoryService = $commandContext->getProcessEngineConfiguration()
                 ->getRepositoryService();
 
@@ -258,7 +258,7 @@ class DeployCmd implements CommandInterface
                 $repositoryService
                     ->updateProcessDefinitionSuspensionState()
                     ->byProcessDefinitionId($processDefinition->getId())
-                    ->executionDate($deploymentBuilder->getProcessDefinitionsActivationDate())
+                    ->executionDate($this->deploymentBuilder->getProcessDefinitionsActivationDate())
                     ->activate();
             }
         }
@@ -347,7 +347,7 @@ class DeployCmd implements CommandInterface
 
     protected function initDeployment(): DeploymentEntity
     {
-        $deployment = $deploymentBuilder->getDeployment();
+        $deployment = $this->deploymentBuilder->getDeployment();
         $deployment->setDeploymentTime(ClockUtil::getCurrentTime());
         return $deployment;
     }

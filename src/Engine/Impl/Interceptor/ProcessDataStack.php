@@ -46,7 +46,7 @@ class ProcessDataStack
     public function pushCurrentValueFromMdc(): bool
     {
         if ($this->isNotBlank($this->mdcName)) {
-            $mdcValue = MdcAccess::get($mdcName);
+            $mdcValue = MdcAccess::get($this->mdcName);
 
             array_unshift($this->deque, $mdcValue ?? self::NULL_VALUE);
             return true;
@@ -75,7 +75,7 @@ class ProcessDataStack
             $currentValue = $this->getCurrentValue();
 
             if ($currentValue === null || $currentValue == self::NULL_VALUE) {
-                MdcAccess::remove($mdcName);
+                MdcAccess::remove($this->mdcName);
             } else {
                 MdcAccess::put($this->mdcName, $currentValue);
             }

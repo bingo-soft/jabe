@@ -26,9 +26,9 @@ class TenantManager extends AbstractManager
     public function configureQuery($parameters)
     {
         if ($parameters instanceof ListQueryParameterObject) {
-            $tenantCheck = $query->getTenantCheck();
+            $tenantCheck = $parameters->getTenantCheck();
             $this->configureTenantCheck($tenantCheck);
-            return $query;
+            return $parameters;
         } else {
             $queryObject = new ListQueryParameterObject();
             $queryObject->setParameter($parameters);

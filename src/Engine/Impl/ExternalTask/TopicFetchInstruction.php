@@ -170,7 +170,7 @@ class TopicFetchInstruction implements \Serializable
 
     public function setFilterVariables(array $filterVariables): void
     {
-        foreach ($this->filterVariables as $key => $value) {
+        foreach ($filterVariables as $key => $value) {
             $variableValue = new QueryVariableValue($key, $value, null, false);
             $this->filterVariables[] = $variableValue;
         }
@@ -208,7 +208,7 @@ class TopicFetchInstruction implements \Serializable
             $processEngineConfiguration = Context::getProcessEngineConfiguration();
             $variableSerializers = $processEngineConfiguration->getVariableSerializers();
             $dbType = $processEngineConfiguration->getDatabaseType();
-            foreach ($filterVariables as $queryVariableValue) {
+            foreach ($this->filterVariables as $queryVariableValue) {
                 $queryVariableValue->initialize($variableSerializers, $dbType);
             }
         }

@@ -24,6 +24,6 @@ class ExecuteFilterListPageCmd extends AbstractExecuteFilterCmd implements Comma
     {
         $query = $this->getFilterQuery($commandContext);
         $query->enableMaxResultsLimit();
-        return $query->listPage($firstResult, $maxResults);
+        return $query->listPage($this->firstResult, $this->maxResults);
     }
 }

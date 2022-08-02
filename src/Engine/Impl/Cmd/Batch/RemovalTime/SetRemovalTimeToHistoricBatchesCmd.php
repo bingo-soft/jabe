@@ -54,7 +54,7 @@ class SetRemovalTimeToHistoricBatchesCmd implements CommandInterface
             $collectedInstanceIds = array_merge($collectedInstanceIds, $this->findHistoricInstanceIds($instanceIds, $commandContext));
         }
 
-        EnsureUtil::ensureNotNull(BadUserRequestException::class, "removalTime", $builder->getMode());
+        EnsureUtil::ensureNotNull(BadUserRequestException::class, "removalTime", $this->builder->getMode());
         EnsureUtil::ensureNotEmpty(BadUserRequestException::class, "historicBatches", $collectedInstanceIds);
 
         $scope = $this;

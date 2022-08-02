@@ -84,8 +84,8 @@ class ProcessApplicationContextUtil
 
     public static function doContextSwitch(RunnableInterface $runnable, ProcessDefinitionEntity $contextDefinition): void
     {
-        $processApplication = $this->getTargetProcessApplication($contextDefinition);
-        if ($this->requiresContextSwitch($processApplication)) {
+        $processApplication = self::getTargetProcessApplication($contextDefinition);
+        if (self::requiresContextSwitch($processApplication)) {
             Context::executeWithinProcessApplication(function () use ($runnable) {
                 $runnable->run();
                 return null;

@@ -75,7 +75,7 @@ class ClassDelegateActivityBehavior extends AbstractBpmnActivityBehavior
 
     protected function getActivityBehaviorInstance(ActivityExecutionInterface $execution): ActivityBehaviorInterface
     {
-        $delegateInstance = $this->instantiateDelegate($className, $fieldDeclarations);
+        $delegateInstance = $this->instantiateDelegate($className, $this->fieldDeclarations);
 
         if ($delegateInstance instanceof ActivityBehaviorInterface) {
             return new CustomActivityBehavior($delegateInstance);

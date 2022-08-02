@@ -254,7 +254,7 @@ class HistoricJobLogManager extends AbstractHistoricManager
 
                 public function createHistoryEvent(HistoryEventProducerInterface $producer): HistoryEvent
                 {
-                    return $producer->createHistoricJobLogDeleteEvt($job);
+                    return $producer->createHistoricJobLogDeleteEvt($this->job);
                 }
             });
         }

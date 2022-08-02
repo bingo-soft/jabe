@@ -86,7 +86,7 @@ class CorrelateAllMessageBatchCmd implements CommandInterface
             ->build();
 
         if (!empty($this->variables)) {
-            VariableUtil::setVariablesByBatchId($variables, $batch->getId());
+            VariableUtil::setVariablesByBatchId($this->variables, $batch->getId());
         }
 
         return $batch;

@@ -192,12 +192,12 @@ class RuntimeServiceImpl extends ServiceImpl implements RuntimeServiceInterface
 
     public function getVariablesLocalTyped(string $executionId, array $variableNames = [], bool $deserializeValues = true): VariableMapInterface
     {
-        return $this->commandExecutor->execute(new GetExecutionVariablesCmd($executionId, $variableNames, true, $deserializeObjectValues));
+        return $this->commandExecutor->execute(new GetExecutionVariablesCmd($executionId, $variableNames, true, $deserializeValues));
     }
 
     public function getVariablesTyped(string $executionId, array $variableNames = [], bool $deserializeValues = true): VariableMapInterface
     {
-        return $this->commandExecutor->execute(new GetExecutionVariablesCmd($executionId, $variableNames, false, $deserializeObjectValues));
+        return $this->commandExecutor->execute(new GetExecutionVariablesCmd($executionId, $variableNames, false, $deserializeValues));
     }
 
     public function getVariable(string $executionId, string $variableName)
@@ -207,12 +207,12 @@ class RuntimeServiceImpl extends ServiceImpl implements RuntimeServiceInterface
 
     public function getVariableTyped(string $executionId, string $variableName, bool $deserializeValue = true): ?TypedValueInterface
     {
-        return $this->commandExecutor->execute(new GetExecutionVariableTypedCmd($executionId, $variableName, false, $deserializeObjectValue));
+        return $this->commandExecutor->execute(new GetExecutionVariableTypedCmd($executionId, $variableName, false, $deserializeValue));
     }
 
     public function getVariableLocalTyped(string $executionId, string $variableName, bool $deserializeValue = true): ?TypedValueInterface
     {
-        return $this->commandExecutor->execute(new GetExecutionVariableTypedCmd($executionId, $variableName, true, $deserializeObjectValue));
+        return $this->commandExecutor->execute(new GetExecutionVariableTypedCmd($executionId, $variableName, true, $deserializeValue));
     }
 
     public function getVariableLocal(string $executionId, string $variableName)

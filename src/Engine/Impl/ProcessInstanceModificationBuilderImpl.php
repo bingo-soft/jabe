@@ -208,7 +208,7 @@ class ProcessInstanceModificationBuilderImpl implements ProcessInstanceModificat
         }
     }
 
-    public function executeAsync(bool $skipCustomListeners = false, bool $skipIoMapping = false): BatchInterface
+    public function executeAsync(bool $skipCustomListeners = false, bool $skipIoMappings = false): BatchInterface
     {
         $this->skipCustomListeners = $skipCustomListeners;
         $this->skipIoMappings = $skipIoMappings;

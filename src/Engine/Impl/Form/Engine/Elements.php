@@ -18,6 +18,6 @@ class Elements
 
     public function size(): int
     {
-        return count($elements);
+        return count($this->elements);
     }
 }

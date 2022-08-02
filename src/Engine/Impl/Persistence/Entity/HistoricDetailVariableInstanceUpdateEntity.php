@@ -43,7 +43,7 @@ class HistoricDetailVariableInstanceUpdateEntity extends HistoricVariableUpdateE
 
     public function getTypedValue(?bool $deserializeValue = false): TypedValueInterface
     {
-        return $typedValueField->getTypedValue($deserializeValue, false);
+        return $this->typedValueField->getTypedValue($deserializeValue, false);
     }
 
     public function delete(): void
@@ -53,7 +53,7 @@ class HistoricDetailVariableInstanceUpdateEntity extends HistoricVariableUpdateE
 
         $dbEntityManger->delete($this);
 
-        $byteArrayField->deleteByteArrayValue();
+        $this->byteArrayField->deleteByteArrayValue();
     }
 
     public function getSerializer(): TypedValueSerializerInterface

@@ -24,7 +24,7 @@ class GetFormDefinitionCmd implements CommandInterface
     public function execute(CommandContext $commandContext)
     {
         $binding = $this->formRef->getBinding();
-        $key = $formRef->getKey();
+        $key = $this->formRef->getKey();
         $definition = null;
         $manager = $commandContext->getFormDefinitionManager();
         if ($binding == DefaultFormHandler::FORM_REF_BINDING_DEPLOYMENT) {

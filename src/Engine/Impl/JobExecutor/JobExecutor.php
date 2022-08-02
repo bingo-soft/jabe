@@ -104,7 +104,7 @@ abstract class JobExecutor
         $this->processEngines[] = $processEngine;
 
         // when we register the first process engine, start the jobexecutor
-        if (count($processEngines) == 1 && $this->isAutoActivate) {
+        if (count($this->processEngines) == 1 && $this->isAutoActivate) {
             $this->start();
         }
     }

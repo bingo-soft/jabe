@@ -41,7 +41,7 @@ abstract class AbstractSetBatchStateCmd implements CommandInterface
         $this->setJobDefinitionState($commandContext, $batch->getMonitorJobDefinitionId());
         $this->setJobDefinitionState($commandContext, $batch->getBatchJobDefinitionId());
 
-        $batchManager->updateBatchSuspensionStateById($batchId, $this->getNewSuspensionState());
+        $batchManager->updateBatchSuspensionStateById($this->batchId, $this->getNewSuspensionState());
 
         $this->logUserOperation($commandContext);
 

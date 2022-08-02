@@ -87,7 +87,7 @@ class DeploymentEntity implements \Serializable, DeploymentWithDefinitionsInterf
         if (empty($this->resources) && $this->id !== null) {
             $resourcesList = Context::getCommandContext()
             ->getResourceManager()
-            ->findResourcesByDeploymentId($id);
+            ->findResourcesByDeploymentId($this->id);
             foreach ($resourcesList as $resource) {
                 $this->resources[$resource->getName()] = $resource;
             }

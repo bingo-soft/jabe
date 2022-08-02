@@ -59,7 +59,7 @@ class ExecuteJobHelper
         try {
             $commandExecutor->execute($cmd);
         } catch (\Exception $exception) {
-            $this->handleJobFailure($nextJobId, $jobFailureCollector, $exception);
+            self::handleJobFailure($nextJobId, $jobFailureCollector, $exception);
             // throw the original exception to indicate the ExecuteJobCmd failed
             //throw LOG.wrapJobExecutionFailure(jobFailureCollector, exception);
             throw $exception;
@@ -71,7 +71,7 @@ class ExecuteJobHelper
                 $processDataContext->clearMdc();
             }
             // invoke job listener
-            $this->invokeJobListener($commandExecutor, $jobFailureCollector);
+            self::invokeJobListener($commandExecutor, $jobFailureCollector);
             /*
             * reset MDC properties after successful listener invocation,
             * in case of an exception in the listener the logging context
@@ -88,14 +88,14 @@ class ExecuteJobHelper
         if ($jobFailureCollector->getJobId() !== null) {
             if ($jobFailureCollector->getFailure() !== null) {
                 //the failed job listener is responsible for decrementing the retries and logging the exception to the DB.
-                $failedJobListener = $this->createFailedJobListener($commandExecutor, $jobFailureCollector);
+                $failedJobListener = self::createFailedJobListener($commandExecutor, $jobFailureCollector);
 
-                $exception = $this->callFailedJobListenerWithRetries($commandExecutor, $failedJobListener);
+                $exception = self::callFailedJobListenerWithRetries($commandExecutor, $failedJobListener);
                 if ($exception !== null) {
                     throw $exception;
                 }
             } else {
-                $successListener = $this->createSuccessfulJobListener($commandExecutor);
+                $successListener = self::createSuccessfulJobListener($commandExecutor);
                 $commandExecutor->execute($successListener);
             }
         }
@@ -114,7 +114,7 @@ class ExecuteJobHelper
         } catch (\Exception $ex) {
             $failedJobListener->incrementCountRetries();
             if ($failedJobListener->getRetriesLeft() > 0) {
-                return $this->callFailedJobListenerWithRetries($commandExecutor, $failedJobListener);
+                return self::callFailedJobListenerWithRetries($commandExecutor, $failedJobListener);
             }
             return $ex;
         }

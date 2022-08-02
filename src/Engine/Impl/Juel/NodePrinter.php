@@ -20,7 +20,7 @@ class NodePrinter
             $parent = null;
             for ($i; $i >= 0; $i -= 1) {
                 $predecessor = $predecessors[$i];
-                if ($this->isLastSibling($predecessor, $parent)) {
+                if (self::isLastSibling($predecessor, $parent)) {
                     $result .= "   ";
                 } else {
                     $result .=  "|  ";

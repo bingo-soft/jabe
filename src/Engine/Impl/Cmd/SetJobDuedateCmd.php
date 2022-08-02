@@ -62,15 +62,15 @@ class SetJobDuedateCmd implements CommandInterface, \Serializable
                 $job->getProcessInstanceId(),
                 $job->getProcessDefinitionId(),
                 $job->getProcessDefinitionKey(),
-                [new PropertyChange("duedate", $job->getDuedate(), $newDuedate)]
+                [new PropertyChange("duedate", $job->getDuedate(), $this->newDuedate)]
             );
 
             // for timer jobs cascade due date changes
             if ($this->cascade && $this->newDuedate !== null && $job instanceof TimerEntity) {
-                $offset = (new \DateTime($newDuedate))->format('Uv') - (new \DateTime($job->getDuedate()))->format('Uv');
+                $offset = (new \DateTime($this->newDuedate))->format('Uv') - (new \DateTime($job->getDuedate()))->format('Uv');
                 $job->setRepeatOffset($job->getRepeatOffset() + $offset);
             }
-            $job->setDuedate($newDuedate);
+            $job->setDuedate($this->newDuedate);
         } else {
             throw new ProcessEngineException("No job found with id '" . $this->jobId . "'.");
         }

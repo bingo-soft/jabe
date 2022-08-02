@@ -183,12 +183,12 @@ class TaskServiceImpl extends ServiceImpl implements TaskService
 
     public function createTaskQuery(): TaskQueryInterface
     {
-        return new TaskQueryImpl($commandExecutor);
+        return new TaskQueryImpl($this->commandExecutor);
     }
 
     public function createNativeTaskQuery(): NativeTaskQueryInterface
     {
-        return new NativeTaskQueryImpl($commandExecutor);
+        return new NativeTaskQueryImpl($this->commandExecutor);
     }
 
     public function getVariables(string $taskId, array $variableNames = []): VariableMapInterface

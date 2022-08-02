@@ -49,9 +49,9 @@ class SaveAuthorizationCmd implements CommandInterface
             $authorizationManager->update($this->authorization);
             $operationType = UserOperationLogEntryInterface::OPERATION_TYPE_UPDATE;
         }
-        $commandContext->getOperationLogManager()->logAuthorizationOperation($operationType, $authorization, $previousValues);
+        $commandContext->getOperationLogManager()->logAuthorizationOperation($operationType, $this->authorization, $previousValues);
 
-        return $authorization;
+        return $this->authorization;
     }
 
     protected function provideRemovalTime($data = null): void
@@ -60,7 +60,7 @@ class SaveAuthorizationCmd implements CommandInterface
             $rootProcessInstanceId = $data->getRootProcessInstanceId();
             $this->authorization->setRootProcessInstanceId($rootProcessInstanceId);
             $removalTime = $data->getRemovalTime();
-            $authorization->setRemovalTime($removalTime);
+            $this->authorization->setRemovalTime($removalTime);
         } elseif ($data instanceof CommandContext) {
             foreach ($this->getHistoricInstanceResources($data) as $resourceEntry) {
                 $resource = $resourceEntry->getKey();

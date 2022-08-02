@@ -217,7 +217,7 @@ class HtmlFormEngine implements FormEngineInterface
         $documentBuilder->startElement($inputGroupDivElement);
 
         // input field
-        $nputField = $this->createInputField($formField);
+        $inputField = $this->createInputField($formField);
 
         if (!$isReadOnly) {
             $inputField

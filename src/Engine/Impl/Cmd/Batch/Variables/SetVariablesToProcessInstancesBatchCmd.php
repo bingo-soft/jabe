@@ -121,9 +121,9 @@ class SetVariablesToProcessInstancesBatchCmd implements CommandInterface
     {
         $elementConfiguration = new BatchElementConfiguration();
 
-        if (!CollectionUtil::isEmpty($processInstanceIds)) {
+        if (!CollectionUtil::isEmpty($this->processInstanceIds)) {
             $query = new ProcessInstanceQueryImpl();
-            $query->processInstanceIds($processInstanceIds);
+            $query->processInstanceIds($this->processInstanceIds);
             $mappings = $commandContext->runWithoutAuthorization(function () use ($query) {
                 return $query->listDeploymentIdMappings();
             });

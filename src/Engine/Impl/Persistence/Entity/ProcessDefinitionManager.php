@@ -273,7 +273,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
     {
         $timerStartJobs = $this->getJobManager()->findJobsByConfiguration(TimerStartEventJobHandler::TYPE, $processDefinition->getKey(), $processDefinition->getTenantId());
 
-        $atestVersion = $this->getProcessDefinitionManager()
+        $latestVersion = $this->getProcessDefinitionManager()
             ->findLatestProcessDefinitionByKeyAndTenantId($processDefinition->getKey(), $processDefinition->getTenantId());
 
         // delete timer start event jobs only if this is the latest version of the process definition.

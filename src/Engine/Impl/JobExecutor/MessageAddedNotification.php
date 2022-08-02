@@ -20,6 +20,6 @@ class MessageAddedNotification implements TransactionListenerInterface
     public function execute(CommandContext $commandContext)
     {
         //LOG.debugNotifyingJobExecutor("notifying job executor of new job");
-        $jobExecutor->jobWasAdded();
+        $this->jobExecutor->jobWasAdded();
     }
 }

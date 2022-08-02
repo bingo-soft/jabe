@@ -54,8 +54,8 @@ class ServiceTaskDelegateExpressionActivityBehavior extends TaskActivityBehavior
 
     public function doSignal(ActivityExecutionInterface $execution, string $signalName, $signalData): void
     {
-        $delegate = $expression->getValue($execution);
-        $this->applyFieldDeclaration($fieldDeclarations, $delegate);
+        $delegate = $this->expression->getValue($execution);
+        $this->applyFieldDeclaration($this->fieldDeclarations, $delegate);
         $activityBehaviorInstance = $this->getActivityBehaviorInstance($execution, $delegate);
 
         if ($activityBehaviorInstance instanceof CustomActivityBehavior) {

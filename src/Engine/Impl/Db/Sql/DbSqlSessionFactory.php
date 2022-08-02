@@ -288,7 +288,7 @@ class DbSqlSessionFactory implements SessionFactoryInterface
         if (empty($this->statementMappings)) {
             return $statement;
         }
-        $mappedStatement = array_key_exists($statement, $this->$statementMappings) ? $this->$statementMappings[$statement] : null;
+        $mappedStatement = array_key_exists($statement, $this->statementMappings) ? $this->statementMappings[$statement] : null;
         return $mappedStatement ?? $statement;
     }
 

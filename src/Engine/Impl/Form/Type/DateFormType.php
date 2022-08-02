@@ -28,7 +28,7 @@ class DateFormType extends AbstractFormFieldType
     public function getInformation(string $key)
     {
         if ("datePattern" == $key) {
-            return $datePattern;
+            return $this->datePattern;
         }
         return null;
     }

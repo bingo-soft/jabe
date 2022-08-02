@@ -94,7 +94,7 @@ class ModifyProcessInstanceCmd implements CommandInterface
                 $instruction instanceof ActivityCancellationCmd
                 && $instruction->cancelCurrentActiveActivityInstances
             ) {
-                $activityInstanceTree = $commandContext->runWithoutAuthorization(function () use ($commandContext, $instruction, $processInstanceId) {
+                $activityInstanceTree = $commandContext->runWithoutAuthorization(function () use ($commandContext, $instruction) {
                     $cmd = new GetActivityInstanceCmd($instruction->processInstanceId);
                     return $cmd->execute($commandContext);
                 });

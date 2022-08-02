@@ -38,7 +38,7 @@ class DefaultVariableSerializers implements VariableSerializersInterface
             throw new ProcessEngineException("Cannot serialize value of abstract type " . $type->getName());
         }
 
-        foreach ($serializerList as $serializer) {
+        foreach ($this->serializerList as $serializer) {
             if ($type === null || $serializer->getType() == $type) {
                 if ($serializer->canHandle($value)) {
                     $matchedSerializers[] = $serializer;

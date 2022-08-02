@@ -96,7 +96,7 @@ class ExternalTaskServiceImpl extends ServiceImpl implements ExternalTaskService
 
     public function updateRetries(): UpdateExternalTaskRetriesSelectBuilderInterface
     {
-        return new UpdateExternalTaskRetriesBuilderImpl($commandExecutor);
+        return new UpdateExternalTaskRetriesBuilderImpl($this->commandExecutor);
     }
 
     public function extendLock(string $externalTaskId, string $workerId, int $lockDuration): void

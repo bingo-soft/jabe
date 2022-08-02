@@ -23,7 +23,7 @@ class TransitionInstanceCancellationCmd extends AbstractInstanceCancellationCmd
 
     protected function determineSourceInstanceExecution(CommandContext $commandContext): ExecutionEntity
     {
-        $processInstanceId = $this->$processInstanceId;
+        $processInstanceId = $this->processInstanceId;
         $instance = $commandContext->runWithoutAuthorization(function () use ($commandContext, $processInstanceId) {
             $cmd = new GetActivityInstanceCmd($processInstanceId);
             return $cmd->execute($commandContext);

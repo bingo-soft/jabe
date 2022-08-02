@@ -199,7 +199,7 @@ class VariableInstanceQueryImpl extends AbstractVariableQueryImpl implements Var
 
     protected function hasExcludingConditions(): bool
     {
-        return parent::hasExcludingConditions() || CompareUtil::elementIsNotContainedInArray($variableName, $variableNames);
+        return parent::hasExcludingConditions() || CompareUtil::elementIsNotContainedInArray($this->variableName, $this->variableNames);
     }
 
     // results ////////////////////////////////////////////////////

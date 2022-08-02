@@ -54,7 +54,7 @@ class DefaultDeploymentHandler implements DeploymentHandlerInterface
 
     public function determineDeploymentsToResumeByDeploymentName(CandidateDeploymentInterface $candidateDeployment): array
     {
-        $previousDeployments = $processEngine->getRepositoryService()
+        $previousDeployments = $this->processEngine->getRepositoryService()
             ->createDeploymentQuery()
             ->deploymentName($candidateDeployment->getName())
             ->list();

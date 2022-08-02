@@ -48,16 +48,16 @@ class CommandContextInterceptor extends CommandInterceptor
         try {
             if ($openNew) {
                 //LOG.debugOpeningNewCommandContext();
-                $context = $commandContextFactory->createCommandContext();
+                $context = $this->commandContextFactory->createCommandContext();
             } else {
                 //LOG.debugReusingExistingCommandContext();
             }
 
             Context::setCommandContext($context);
-            Context::setProcessEngineConfiguration($processEngineConfiguration);
+            Context::setProcessEngineConfiguration($this->processEngineConfiguration);
 
             // delegate to next interceptor in chain
-            return $next->execute($command);
+            return $this->next->execute($command);
         } catch (\Throwable $t) {
             $commandInvocationContext->trySetThrowable($t);
         } finally {

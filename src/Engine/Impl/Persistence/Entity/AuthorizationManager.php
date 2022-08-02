@@ -229,14 +229,14 @@ class AuthorizationManager extends AbstractManager
                 return true;
             }
 
-            if (!$this->isResourceValidForPermission($permissionCheck)) {
+            if (!$this->isResourceValidForPermission($permission)) {
                 //throw LOG.invalidResourceForPermission(permissionCheck.getResource().resourceName(), permissionCheck.getPermission().getName());
             }
 
             $filteredGroupIds = $this->filterAuthenticatedGroupIds($groupIds);
 
             $isRevokeAuthorizationCheckEnabled = $this->isRevokeAuthCheckEnabled($userId, $groupIds);
-            $compositePermissionCheck = $this->createCompositePermissionCheck($permissionCheck);
+            $compositePermissionCheck = $this->createCompositePermissionCheck($permission);
             $authCheck = new AuthorizationCheck($userId, $filteredGroupIds, $compositePermissionCheck, $isRevokeAuthorizationCheckEnabled);
             return $this->getDbEntityManager()->selectBoolean("isUserAuthorizedForResource", $authCheck);
         } elseif ($permission instanceof CompositePermissionCheck) {
@@ -1092,9 +1092,9 @@ class AuthorizationManager extends AbstractManager
             return self::EMPTY_LIST;
         } else {
             if (empty($this->availableAuthorizedGroupIds)) {
-                $availableAuthorizedGroupIds = $this->getDbEntityManager()->selectList("selectAuthorizedGroupIds");
+                $this->availableAuthorizedGroupIds = $this->getDbEntityManager()->selectList("selectAuthorizedGroupIds");
             }
-            return $availableAuthorizedGroupIds;
+            return $this->availableAuthorizedGroupIds;
         }
     }
 

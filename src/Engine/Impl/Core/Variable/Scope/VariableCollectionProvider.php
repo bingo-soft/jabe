@@ -19,7 +19,7 @@ class VariableCollectionProvider implements VariablesProviderInterface
 
         $result = [];
         if (!empty($this->variables)) {
-            foreach ($variables as $variable) {
+            foreach ($this->variables as $variable) {
                 if (in_array($variable->getName(), $variablesNames)) {
                     $result[] = $variable;
                 }

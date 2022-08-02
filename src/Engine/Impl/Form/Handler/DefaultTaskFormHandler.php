@@ -43,7 +43,7 @@ class DefaultTaskFormHandler extends DefaultFormHandler implements TaskFormHandl
             }
         }
 
-        $taskFormData->setDeploymentId($deploymentId);
+        $taskFormData->setDeploymentId($this->deploymentId);
         $taskFormData->setTask($task);
         $this->initializeFormProperties($taskFormData, $task->getExecution());
         $this->initializeFormFields($taskFormData, $task->getExecution());

@@ -28,7 +28,7 @@ class SetTaskVariablesCmd extends AbstractSetVariableCmd implements VariableInst
     {
         EnsureUtil::ensureNotNull("taskId", "taskId", $this->entityId);
 
-        $task =  $commandContext
+        $task =  $this->commandContext
             ->getTaskManager()
             ->findTaskById($this->entityId);
 
@@ -62,7 +62,7 @@ class SetTaskVariablesCmd extends AbstractSetVariableCmd implements VariableInst
     protected function logVariableOperation(AbstractVariableScope $scope): void
     {
         $task = $scope;
-        $commandContext->getOperationLogManager()->logVariableOperation(
+        $this->commandContext->getOperationLogManager()->logVariableOperation(
             $this->getLogEntryOperation(),
             null,
             $task->getId(),
@@ -72,7 +72,7 @@ class SetTaskVariablesCmd extends AbstractSetVariableCmd implements VariableInst
 
     protected function checkSetTaskVariables(TaskEntity $task): void
     {
-        foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
+        foreach ($this->commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
             $checker->checkUpdateTaskVariable($task);
         }
     }

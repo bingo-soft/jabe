@@ -88,10 +88,10 @@ class AcquireJobsCmd implements CommandInterface, OptimisticLockingListenerInter
 
     protected function lockJob(AcquirableJobEntity $job): void
     {
-        $lockOwner = $jobExecutor->getLockOwner();
+        $lockOwner = $this->jobExecutor->getLockOwner();
         $job->setLockOwner($lockOwner);
 
-        $lockTimeInMillis = $jobExecutor->getLockTimeInMillis();
+        $lockTimeInMillis = $this->jobExecutor->getLockTimeInMillis();
 
         $date = new \DateTime(ClockUtil::getCurrentTime()->format('c'));
         $date->modify('+ ' . $lockTimeInMillis . ' milliseconds');

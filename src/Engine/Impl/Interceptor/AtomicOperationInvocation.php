@@ -43,7 +43,7 @@ class AtomicOperationInvocation
             && $this->operation != AtomicOperation::deleteCascade()
         ) {
             // execution might be replaced in the meantime:
-            $replacedBy = $execution->getReplacedBy();
+            $replacedBy = $this->execution->getReplacedBy();
             if ($replacedBy !== null) {
                 $this->execution = $replacedBy;
             }
@@ -75,19 +75,19 @@ class AtomicOperationInvocation
         if ($currentPa !== null) {
             $this->applicationContextName = $currentPa->getName();
         }
-        $this->activityId = $execution->getActivityId();
-        $this->activityName = $execution->getCurrentActivityName();
+        $this->activityId = $this->execution->getActivityId();
+        $this->activityName = $this->execution->getCurrentActivityName();
         $stackTrace->add($this);
 
-        $popProcessDataContextSection = $processDataContext->pushSection($execution);
+        $popProcessDataContextSection = $processDataContext->pushSection($this->execution);
 
         try {
-            Context::setExecutionContext($execution);
+            Context::setExecutionContext($this->execution);
             if (!$this->performAsync) {
                 //LOG.debugExecutingAtomicOperation(operation, execution);
-                $operation->execute($execution);
+                $this->operation->execute($this->execution);
             } else {
-                $execution->scheduleAtomicOperationAsync($this);
+                $this->execution->scheduleAtomicOperationAsync($this);
             }
             if ($popProcessDataContextSection) {
                 $processDataContext->popSection();

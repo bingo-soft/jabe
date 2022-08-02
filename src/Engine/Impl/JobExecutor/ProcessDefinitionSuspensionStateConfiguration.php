@@ -50,7 +50,7 @@ class ProcessDefinitionSuspensionStateConfiguration implements JobHandlerConfigu
 
         if ($this->by == self::JOB_HANDLER_CFG_PROCESS_DEFINITION_ID) {
             $builder->byProcessDefinitionId($this->processDefinitionId);
-        } elseif ($by == self::JOB_HANDLER_CFG_PROCESS_DEFINITION_KEY) {
+        } elseif ($this->by == self::JOB_HANDLER_CFG_PROCESS_DEFINITION_KEY) {
             $builder->byProcessDefinitionKey($this->processDefinitionKey);
 
             if ($this->isTenantIdSet) {

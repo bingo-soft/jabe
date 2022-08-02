@@ -96,7 +96,7 @@ class DeleteProcessDefinitionsByIdsCmd implements CommandInterface, \Serializabl
 
     protected function getSingleProcessDefinition(CommandContext $commandContext): ?ProcessDefinitionInterface
     {
-        $processDefinitionId = $processDefinitionIds[0];
+        $processDefinitionId = $this->processDefinitionIds[0];
         EnsureUtil::ensureNotNull("processDefinitionId", "processDefinitionId", $this->processDefinitionId);
         $processDefinition = $commandContext->getProcessDefinitionManager()->findLatestProcessDefinitionById($this->processDefinitionId);
         EnsureUtil::ensureNotNull("No process definition found with id '" . $this->processDefinitionId . "'", "processDefinition", $processDefinition);

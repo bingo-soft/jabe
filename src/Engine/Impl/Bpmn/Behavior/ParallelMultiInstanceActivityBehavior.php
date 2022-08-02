@@ -89,7 +89,7 @@ class ParallelMultiInstanceActivityBehavior extends MultiInstanceActivityBehavio
 
             $scopeExecution->setActivity($endedExecution->getActivity()->getFlowScope());
             $scopeExecution->setActive(true);
-            $this->leave($activityExecutionscopeExecution);
+            $this->leave($scopeExecution);
         } else {
             $scopeExecution->dispatchDelayedEventsAndPerformOperation(new class () implements CallbackInterface {
                 public function callback($execution)

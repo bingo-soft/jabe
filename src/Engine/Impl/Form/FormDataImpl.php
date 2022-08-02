@@ -49,7 +49,7 @@ class FormDataImpl implements FormDataInterface, \Serializable
         foreach ($json->formFields as $field) {
             $fields[] = unserialize($field);
         }
-        $this->formFields = $field;
+        $this->formFields = $fields;
     }
 
     public function getFormKey(): string

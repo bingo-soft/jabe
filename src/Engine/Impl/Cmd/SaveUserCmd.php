@@ -42,13 +42,13 @@ class SaveUserCmd extends AbstractWritableIdentityServiceCmd implements CommandI
         EnsureUtil::ensureNotNull("user", "user", $this->user);
         EnsureUtil::ensureWhitelistedResourceId($commandContext, "User", $this->user->getId());
 
-        if ($user instanceof UserEntity) {
+        if ($this->user instanceof UserEntity) {
             $this->validateUserEntity($commandContext);
         }
 
         $operationResult = $commandContext
             ->getWritableIdentityProvider()
-            ->saveUser($user);
+            ->saveUser($this->user);
 
         $commandContext->getOperationLogManager()->logUserOperation($operationResult, $this->user->getId());
 

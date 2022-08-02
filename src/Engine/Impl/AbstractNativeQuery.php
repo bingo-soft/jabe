@@ -30,9 +30,9 @@ abstract class AbstractNativeQuery implements CommandInterface, NativeQueryInter
     protected function __construct($command)
     {
         if ($command instanceof CommandExecutorInterface) {
-            $this->commandExecutor = $commandExecutor;
+            $this->commandExecutor = $command;
         } elseif ($command instanceof CommandContext) {
-            $this->commandContext = $commandContext;
+            $this->commandContext = $command;
         }
     }
 
@@ -107,13 +107,13 @@ abstract class AbstractNativeQuery implements CommandInterface, NativeQueryInter
             $parameterMap["firstRow"] = $firstRow;
             $lastRow = 0;
             if ($maxResults == PHP_INT_MAX) {
-                $lastRow = $maxResults;
+                $lastRow = $this->maxResults;
             } else {
-                $lastRow = $this->firstResult + $maxResults + 1;
+                $lastRow = $this->firstResult + $this->maxResults + 1;
             }
             $parameterMap["lastRow"] = $lastRow;
-            return $this->executeList($commandContext, $parameterMap, $firstResult, $maxResults);
-        } elseif ($resultType == self::RESULT_TYPES['SINGLE_RESULT']) {
+            return $this->executeList($commandContext, $parameterMap, $this->firstResult, $this->maxResults);
+        } elseif ($this->resultType == self::RESULT_TYPES['SINGLE_RESULT']) {
             return $this->executeSingleResult($commandContext);
         } else {
             return $this->executeCount($commandContext, $this->getParameterMap());

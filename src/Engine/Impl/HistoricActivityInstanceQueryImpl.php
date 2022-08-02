@@ -129,7 +129,7 @@ class HistoricActivityInstanceQueryImpl extends AbstractQuery implements Histori
     public function canceled(): HistoricActivityInstanceQueryImpl
     {
         if ($this->activityInstanceState !== null) {
-            throw new ProcessEngineException("Already querying for activity instance state <" . $activityInstanceState . ">");
+            throw new ProcessEngineException("Already querying for activity instance state <" . $this->activityInstanceState . ">");
         }
         $this->activityInstanceState = ActivityInstanceState::canceled();
         return $this;

@@ -20,7 +20,7 @@ class AstString extends AstLiteral
 
     public function __toString()
     {
-        return "\"" . $value . "\"";
+        return "\"" . $this->value . "\"";
     }
 
     public function appendStructure(string &$b, Bindings $bindings): void

@@ -60,7 +60,7 @@ class SetUserPictureCmd implements CommandInterface, \Serializable
             $commandContext->getDbEntityManager()->insert($pictureInfo);
         }
 
-        $byteArrayEntity = new ByteArrayEntity($picture->getMimeType(), $picture->getBytes(), ResourceTypes::repository());
+        $byteArrayEntity = new ByteArrayEntity($this->picture->getMimeType(), $this->picture->getBytes(), ResourceTypes::repository());
 
         $commandContext->getByteArrayManager()
             ->insertByteArray($byteArrayEntity);

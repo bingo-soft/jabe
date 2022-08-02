@@ -36,7 +36,7 @@ class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopicBuilder
     public function execute(): array
     {
         $this->submitCurrentInstruction();
-        return $this->commandExecutor->execute(new FetchExternalTasksCmd($workerId, $maxTasks, $instructions, $usePriority));
+        return $this->commandExecutor->execute(new FetchExternalTasksCmd($this->workerId, $this->maxTasks, $this->instructions, $this->usePriority));
     }
 
     public function topic(string $topicName, int $lockDuration): ExternalTaskQueryTopicBuilderInterface
@@ -59,7 +59,7 @@ class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopicBuilder
     public function processInstanceVariableEquals($one, $two = null): ExternalTaskQueryTopicBuilderInterface
     {
         if (is_array($one)) {
-            $this->currentInstruction->setFilterVariables($variables);
+            $this->currentInstruction->setFilterVariables($one);
         } elseif (is_string($one) && is_string($two)) {
             $this->currentInstruction->addFilterVariable($one, $two);
         }
@@ -75,7 +75,7 @@ class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopicBuilder
     public function processDefinitionId($processDefinitionId): ExternalTaskQueryTopicBuilderInterface
     {
         if (is_array($processDefinitionId)) {
-            $this->currentInstruction->setProcessDefinitionIds($processDefinitionIds);
+            $this->currentInstruction->setProcessDefinitionIds($processDefinitionId);
         } elseif (is_string($processDefinitionId)) {
             $this->currentInstruction->setProcessDefinitionId($processDefinitionId);
         }

@@ -57,7 +57,7 @@ class MessageEventReceivedCmd implements CommandInterface, \Serializable
                 EventType::MESSAGE->name(),
                 $this->messageName,
                 $this->executionId,
-                $exclusive
+                $this->exclusive
             );
         } else {
             $eventSubscriptions = $eventSubscriptionManager->findEventSubscriptionsByExecutionAndType(

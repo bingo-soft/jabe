@@ -37,7 +37,7 @@ abstract class AbstractUpdateProcessInstancesSuspendStateCmd implements CommandI
     {
         $elementConfiguration = new BatchElementConfiguration();
 
-        $processInstanceIds = $builder->getProcessInstanceIds();
+        $processInstanceIds = $this->builder->getProcessInstanceIds();
         EnsureUtil::ensureNotContainsNull(
             "Cannot be null.",
             "Process Instance ids",
@@ -54,12 +54,12 @@ abstract class AbstractUpdateProcessInstancesSuspendStateCmd implements CommandI
             );
         }
 
-        $processInstanceQuery = $builder->getProcessInstanceQuery();
+        $processInstanceQuery = $this->builder->getProcessInstanceQuery();
         if ($processInstanceQuery !== null) {
             $elementConfiguration->addDeploymentMappings($processInstanceQuery->listDeploymentIdMappings());
         }
 
-        $historicProcessInstanceQuery = $builder->getHistoricProcessInstanceQuery();
+        $historicProcessInstanceQuery = $this->builder->getHistoricProcessInstanceQuery();
         if ($historicProcessInstanceQuery !== null) {
             $elementConfiguration->addDeploymentMappings($historicProcessInstanceQuery->listDeploymentIdMappings());
         }

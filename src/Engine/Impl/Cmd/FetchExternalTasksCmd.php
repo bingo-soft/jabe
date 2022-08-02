@@ -61,7 +61,7 @@ class FetchExternalTasksCmd implements CommandInterface
         $result = [];
 
         foreach ($externalTasks as $entity) {
-            $fetchInstruction = $fetchInstructions[$entity->getTopicName()];
+            $fetchInstruction = $this->fetchInstructions[$entity->getTopicName()];
 
             // retrieve the execution first to detect concurrent modifications @https://jira.camunda.com/browse/CAM-10750
             $execution = $entity->getExecution(false);
@@ -146,7 +146,7 @@ class FetchExternalTasksCmd implements CommandInterface
     protected function validateInput(): void
     {
         EnsureUtil::ensureNotNull("workerId", "workerId", $this->workerId);
-        EnsureUtil::ensureGreaterThanOrEqual("Max results cannot be negative", "maxResults", $maxResults, 0);
+        EnsureUtil::ensureGreaterThanOrEqual("Max results cannot be negative", "maxResults", $this->maxResults, 0);
 
         foreach (array_values($this->fetchInstructions) as $instruction) {
             EnsureUtil::ensureNotNull("topicName", "topicName", $instruction->getTopicName());

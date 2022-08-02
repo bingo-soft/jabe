@@ -23,4 +23,9 @@ class ElValueProvider implements ParameterValueProviderInterface
     {
         return $this->expression;
     }
+
+    public function isDynamic(): bool
+    {
+        return !$this->expression->isLiteralText();
+    }
 }

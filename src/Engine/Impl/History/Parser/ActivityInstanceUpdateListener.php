@@ -20,8 +20,8 @@ class ActivityInstanceUpdateListener extends HistoryExecutionListener
     protected function createHistoryEvent(DelegateTaskInterface $task, ExecutionEntity $execution): ?HistoryEvent
     {
         $this->ensureHistoryLevelInitialized();
-        if ($historyLevel->isHistoryEventProduced(HistoryEventTypes::activityInstanceUpdate(), $execution)) {
-            return $eventProducer->createActivityInstanceUpdateEvt($execution, $task);
+        if ($this->historyLevel->isHistoryEventProduced(HistoryEventTypes::activityInstanceUpdate(), $execution)) {
+            return $this->eventProducer->createActivityInstanceUpdateEvt($execution, $task);
         } else {
             return null;
         }

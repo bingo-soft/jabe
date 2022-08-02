@@ -62,7 +62,7 @@ class AuthorizationQueryImpl extends AbstractQuery implements AuthorizationQuery
     public function resourceType($resource): ?AuthorizationQueryInterface
     {
         if (is_int($resource)) {
-            $this->resourceType = $resourceType;
+            $this->resourceType = $resource;
             $this->queryByResourceType = true;
             return $this;
         } elseif ($resource instanceof ResourceInterface) {

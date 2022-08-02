@@ -38,26 +38,26 @@ class FormFieldHandler
         $formField = new FormFieldImpl();
 
         // set id
-        $formField->setId($id);
+        $formField->setId($this->id);
 
         // set label (evaluate expression)
         $variableScope = $executionEntity !== null ? $executionEntity : StartProcessVariableScope::getSharedInstance();
-        if ($label !== null) {
-            $labelValueObject = $label->getValue($variableScope);
+        if ($this->label !== null) {
+            $labelValueObject = $this->label->getValue($variableScope);
             if ($labelValueObject !== null) {
                 $formField->setLabel(strval($labelValueObject));
             }
         }
 
-        $formField->setBusinessKey($businessKey);
+        $formField->setBusinessKey($this->businessKey);
 
         // set type
         $formField->setType($this->type);
 
         // set default value (evaluate expression)
         $defaultValue = null;
-        if ($defaultValueExpression !== null) {
-            $defaultValue = $defaultValueExpression->getValue($variableScope);
+        if ($this->defaultValueExpression !== null) {
+            $defaultValue = $this->defaultValueExpression->getValue($variableScope);
 
             if ($defaultValue !== null) {
                 $formField->setDefaultValue($this->type->convertFormValueToModelValue($defaultValue));
@@ -67,11 +67,11 @@ class FormFieldHandler
         }
 
         // value
-        $value = $variableScope->getVariableTyped($id);
+        $value = $variableScope->getVariableTyped($this->id);
         if ($value !== null) {
             $formValue = null;
             try {
-                $formValue = $type->convertToFormValue($value);
+                $formValue = $this->type->convertToFormValue($value);
             } catch (\Exception $exception) {
                 throw $exception;
             }
@@ -84,7 +84,7 @@ class FormFieldHandler
         }
 
         // properties
-        $formField->setProperties($properties);
+        $formField->setProperties($this->properties);
 
         // validation
         foreach ($this->validationHandlers as $validationHandler) {
@@ -121,8 +121,8 @@ class FormFieldHandler
             } else {
                 $modelValue = $submittedValue;
             }
-        } elseif ($defaultValueExpression !== null) {
-            $expressionValue = Variables::untypedValue($defaultValueExpression->getValue($variableScope));
+        } elseif ($this->defaultValueExpression !== null) {
+            $expressionValue = Variables::untypedValue($this->defaultValueExpression->getValue($variableScope));
             if ($this->type !== null) {
                 // first, need to convert to model value since the default value may be a String Constant specified in the model xml.
                 $modelValue = $this->type->convertToModelValue(Variables::untypedValue($expressionValue));
@@ -133,7 +133,7 @@ class FormFieldHandler
 
         if ($modelValue !== null) {
             if ($this->id !== null) {
-                $variableScope->setVariable($id, $modelValue);
+                $variableScope->setVariable($this->id, $modelValue);
             }
         }
     }

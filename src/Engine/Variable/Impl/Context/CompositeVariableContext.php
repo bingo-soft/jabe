@@ -16,7 +16,7 @@ class CompositeVariableContext implements VariableContextInterface
 
     public function resolve(string $variableName): ?TypedValueInterface
     {
-        foreach ($delegateContexts as $variableContext) {
+        foreach ($this->delegateContexts as $variableContext) {
             $resolvedValue = $variableContext->resolve($variableName);
             if ($resolvedValue !== null) {
                 return $resolvedValue;
@@ -28,7 +28,7 @@ class CompositeVariableContext implements VariableContextInterface
 
     public function containsVariable(string $name): bool
     {
-        foreach ($delegateContexts as $variableContext) {
+        foreach ($this->delegateContexts as $variableContext) {
             if ($variableContext->containsVariable($name)) {
                 return true;
             }
@@ -40,7 +40,7 @@ class CompositeVariableContext implements VariableContextInterface
     public function keySet(): array
     {
         $keySet = [];
-        foreach ($delegateContexts as $variableContext) {
+        foreach ($this->delegateContexts as $variableContext) {
             $keySet = array_merge($keySet, $variableContext->keySet());
         }
         return $keySet;

@@ -77,6 +77,6 @@ class FormPropertyAdapter implements FormFieldInterface
 
     public function getValue(): TypedValueInterface
     {
-        return Variables::stringValue($formProperty->getValue());
+        return Variables::stringValue($this->formProperty->getValue());
     }
 }

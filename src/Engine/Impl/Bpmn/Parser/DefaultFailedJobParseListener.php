@@ -54,7 +54,7 @@ class DefaultFailedJobParseListener extends AbstractBpmnParseListener
 
     public function parseIntermediateThrowEvent(Element $intermediateEventElement, ScopeImpl $scope, ActivityImpl $activity): void
     {
-        $type = $startEventActivity->getProperties()->get(BpmnProperties::type());
+        $type = $activity->getProperties()->get(BpmnProperties::type());
         if ($type !== null) {
             $this->setFailedJobRetryTimeCycleValue($intermediateEventElement, $activity);
         }
@@ -62,7 +62,7 @@ class DefaultFailedJobParseListener extends AbstractBpmnParseListener
 
     public function parseIntermediateCatchEvent(Element $intermediateEventElement, ScopeImpl $scope, ActivityImpl $activity): void
     {
-        $type = $startEventActivity->getProperties()->get(BpmnProperties::type());
+        $type = $activity->getProperties()->get(BpmnProperties::type());
         if ($type !== null && $type == self::INTERMEDIATE_TIMER || $this->isAsync($activity)) {
             $this->setFailedJobRetryTimeCycleValue($intermediateEventElement, $activity);
         }

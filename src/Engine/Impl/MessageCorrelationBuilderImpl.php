@@ -41,16 +41,16 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
     protected $startMessagesOnly = false;
     protected $executionsOnly = false;
 
-    public function __construct(CommandExecutor $commandOrMessage, string $messageName = null)
+    public function __construct(/*CommandExecutor*/$commandOrMessage, string $messageName = null)
     {
         if ($commandOrMessage instanceof CommandExecutorInterface) {
             $this->messageName = $messageName;
             EnsureUtil::ensureNotNull("commandExecutor", "ommandExecutor", $commandOrMessage);
-            $this->commandExecutor = $commandExecutor;
+            $this->commandExecutor = $commandOrMessage;
         } elseif ($commandOrMessage instanceof CommandContext) {
             $this->messageName = $messageName;
             EnsureUtil::ensureNotNull("commandContext", "commandContext", $commandOrMessage);
-            $this->commandContext = $commandContext;
+            $this->commandContext = $commandOrMessage;
         } elseif (is_string($commandOrMessage)) {
             $this->messageName = $commandOrMessage;
         }
@@ -195,14 +195,14 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
 
     public function startMessageOnly(): MessageCorrelationBuilderInterface
     {
-        EnsureUtil::ensureFalse("Either startMessageOnly or executionsOnly can be set", "executionsOnly", $executionsOnly);
+        EnsureUtil::ensureFalse("Either startMessageOnly or executionsOnly can be set", "executionsOnly", $this->executionsOnly);
         $this->startMessagesOnly = true;
         return $this;
     }
 
     public function executionsOnly(): MessageCorrelationBuilderInterface
     {
-        EnsureUtil::ensureFalse("Either startMessageOnly or executionsOnly can be set", "startMessagesOnly", $startMessagesOnly);
+        EnsureUtil::ensureFalse("Either startMessageOnly or executionsOnly can be set", "startMessagesOnly", $this->startMessagesOnly);
         $this->executionsOnly = true;
         return $this;
     }
@@ -268,7 +268,7 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
             $this->ensureCorrelationVariablesNotSet();
             $this->ensureProcessDefinitionAndTenantIdNotSet();
             // only one result can be expected
-            $result = $this->execute(new CorrelateMessageCmd($this, true, $deserializeValues, $startMessagesOnly));
+            $result = $this->execute(new CorrelateMessageCmd($this, true, $deserializeValues, $this->startMessagesOnly));
             return $result;
         } else {
             $this->ensureProcessDefinitionIdNotSet();
@@ -321,7 +321,7 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
         if ($this->commandExecutor !== null) {
             return $this->commandExecutor->execute($command);
         } else {
-            return $command->execute($commandContext);
+            return $command->execute($this->commandContext);
         }
     }
 

@@ -10,4 +10,9 @@ class NullValueProvider implements ParameterValueProviderInterface
     {
         return null;
     }
+
+    public function isDynamic(): bool
+    {
+        return false;
+    }
 }

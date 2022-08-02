@@ -36,6 +36,6 @@ class StringValueSerializer extends PrimitiveValueSerializer
         if ($textValue === null && self::EMPTY_STRING == $valueFields->getTextValue2()) {
             $textValue = "";
         }
-        return Variables::stringValue($textValue, $asTransientValue);
+        return Variables::stringValue($textValue, $isTransient);
     }
 }

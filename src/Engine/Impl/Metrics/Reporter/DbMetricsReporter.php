@@ -59,7 +59,7 @@ class DbMetricsReporter
 
     public function reportValueAtOnce(string $name, int $value): void
     {
-        $this->commandExecutor->execute(new ReportDbMetricsValueCmd($this->$reporterId, $name, $value));
+        $this->commandExecutor->execute(new ReportDbMetricsValueCmd($this->reporterId, $name, $value));
     }
 
     public function getReportingIntervalInSeconds(): int

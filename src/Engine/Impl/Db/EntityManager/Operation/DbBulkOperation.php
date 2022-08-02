@@ -62,7 +62,7 @@ class DbBulkOperation extends DbOperation
             if ($obj->parameter !== null) {
                 return false;
             }
-        } elseif ($this->parameter != $other->parameter) {
+        } elseif ($this->parameter != $obj->parameter) {
             return false;
         }
         if ($this->statement === null) {

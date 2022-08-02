@@ -34,11 +34,11 @@ class UserEntity implements UserInterface, \Serializable, DbEntityInterface, Has
     public function getPersistentState()
     {
         $persistentState = [];
-        $persistentState["firstName"] = $firstName;
-        $persistentState["lastName"] = $lastName;
-        $persistentState["email"] = $email;
-        $persistentState["password"] = $password;
-        $persistentState["salt"] = $salt;
+        $persistentState["firstName"] = $this->firstName;
+        $persistentState["lastName"] = $this->lastName;
+        $persistentState["email"] = $this->email;
+        $persistentState["password"] = $this->password;
+        $persistentState["salt"] = $this->salt;
         return $persistentState;
     }
 

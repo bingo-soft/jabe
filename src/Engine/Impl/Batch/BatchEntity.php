@@ -295,7 +295,7 @@ class BatchEntity implements BatchInterface, DbEntityInterface, HasDbReferencesI
     public function createMonitorJobDefinition(): JobDefinitionEntity
     {
         $this->monitorJobDefinition = new JobDefinitionEntity(self::$BATCH_MONITOR_JOB_DECLARATION);
-        $this->monitorJobDefinition->setJobConfiguration($id);
+        $this->monitorJobDefinition->setJobConfiguration($this->id);
         $this->monitorJobDefinition->setTenantId($this->tenantId);
 
         Context::getCommandContext()->getJobDefinitionManager()->insert($this->monitorJobDefinition);
@@ -308,7 +308,7 @@ class BatchEntity implements BatchInterface, DbEntityInterface, HasDbReferencesI
     public function createBatchJobDefinition(): JobDefinitionEntity
     {
         $this->batchJobDefinition = new JobDefinitionEntity($this->getBatchJobHandler()->getJobDeclaration());
-        $this->batchJobDefinition->setJobConfiguration($id);
+        $this->batchJobDefinition->setJobConfiguration($this->id);
         $this->batchJobDefinition->setTenantId($this->tenantId);
 
         Context::getCommandContext()->getJobDefinitionManager()->insert($this->batchJobDefinition);
@@ -396,7 +396,7 @@ class BatchEntity implements BatchInterface, DbEntityInterface, HasDbReferencesI
         $jobDefinitionManager->delete($this->getBatchJobDefinition());
 
         $commandContext->getBatchManager()->delete($this);
-        $configuration->deleteByteArrayValue();
+        $this->configuration->deleteByteArrayValue();
 
         $this->fireHistoricEndEvent();
 

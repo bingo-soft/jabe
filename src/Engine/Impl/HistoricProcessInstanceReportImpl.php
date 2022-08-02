@@ -71,7 +71,7 @@ class HistoricProcessInstanceReportImpl implements HistoricProcessInstanceReport
         $commandContext = Context::getCommandContext();
 
         if ($commandContext === null) {
-            return $commandExecutor->execute(new ExecuteDurationReportCmd($this));
+            return $this->commandExecutor->execute(new ExecuteDurationReportCmd($this));
         } else {
             return $this->executeDurationReport($commandContext);
         }
@@ -81,7 +81,7 @@ class HistoricProcessInstanceReportImpl implements HistoricProcessInstanceReport
     {
         $this->doAuthCheck($commandContext);
 
-        if (CompareUtil::areNotInAscendingOrder($startedAfter, $startedBefore)) {
+        if (CompareUtil::areNotInAscendingOrder($this->startedAfter, $this->startedBefore)) {
             return [];
         }
 

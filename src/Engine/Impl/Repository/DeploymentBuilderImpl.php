@@ -229,7 +229,7 @@ class DeploymentBuilderImpl implements DeploymentBuilderInterface, \Serializable
     public function name(string $name): DeploymentBuilderInterface
     {
         if (!empty($this->nameFromDeployment)) {
-            $message = sprintf("Cannot set the deployment name to '%s', because the property 'nameForDeployment' has been already set to '%s'.", $name, $nameFromDeployment);
+            $message = sprintf("Cannot set the deployment name to '%s', because the property 'nameForDeployment' has been already set to '%s'.", $name, $this->nameFromDeployment);
             throw new NotValidException($message);
         }
         $this->deployment->setName($name);

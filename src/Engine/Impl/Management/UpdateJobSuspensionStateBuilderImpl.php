@@ -119,7 +119,7 @@ class UpdateJobSuspensionStateBuilderImpl implements UpdateJobSuspensionStateBui
             throw new \Exception("exceptionUpdateSuspensionStateForTenantOnlyByProcessDefinitionKey");
         }
 
-        EnsureUtil::ensureNotNull("commandExecutor", "commandExecutor", $commandExecutor);
+        EnsureUtil::ensureNotNull("commandExecutor", "commandExecutor", $this->commandExecutor);
     }
 
     public function getProcessDefinitionKey(): string

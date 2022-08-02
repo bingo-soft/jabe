@@ -19,6 +19,6 @@ class MetricsQuerySumCmd implements CommandInterface
     public function execute(CommandContext $commandContext)
     {
         return $commandContext->getMeterLogManager()
-            ->executeSelectSum($metricsQuery);
+            ->executeSelectSum($this->metricsQuery);
     }
 }

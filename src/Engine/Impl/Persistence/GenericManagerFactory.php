@@ -28,6 +28,7 @@ class GenericManagerFactory implements SessionFactoryInterface
     public function openSession(): SessionInterface
     {
         try {
+            $managerImplementation = $this->managerImplementation;
             return new $managerImplementation();
         } catch (\Exception $e) {
             //throw LOG.instantiateSessionException(managerImplementation.getName(), e);

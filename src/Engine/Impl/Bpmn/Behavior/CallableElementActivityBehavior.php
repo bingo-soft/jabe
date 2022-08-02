@@ -48,9 +48,9 @@ abstract class CallableElementActivityBehavior extends AbstractBpmnActivityBehav
     public function __construct($prop = null)
     {
         if (is_string($prop)) {
-            $this->className = $className;
+            $this->className = $prop;
         } elseif ($prop instanceof ExpressionInterface) {
-            $this->expression = $expression;
+            $this->expression = $prop;
         }
     }
 
@@ -74,7 +74,7 @@ abstract class CallableElementActivityBehavior extends AbstractBpmnActivityBehav
     public function resolveDelegateClass(ActivityExecutionInterface $execution)
     {
         $targetProcessApplication = ProcessApplicationContextUtil::getTargetProcessApplication($execution);
-        if ($ProcessApplicationContextUtil::requiresContextSwitch($targetProcessApplication)) {
+        if (ProcessApplicationContextUtil::requiresContextSwitch($targetProcessApplication)) {
             $scope = $this;
             return Context::executeWithinProcessApplication(function () use ($scope, $execution) {
                 return $scope->resolveDelegateClass($execution);
@@ -88,9 +88,9 @@ abstract class CallableElementActivityBehavior extends AbstractBpmnActivityBehav
     {
         $delegate = null;
         if ($this->expression !== null) {
-            $delegate = $expression->getValue($execution);
+            $delegate = $this->expression->getValue($execution);
         } elseif ($this->className !== null) {
-            $delegate = ClassDelegateUtil::instantiateDelegate($className, null);
+            $delegate = ClassDelegateUtil::instantiateDelegate($this->className, null);
         }
         return $delegate;
     }

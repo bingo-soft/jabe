@@ -28,13 +28,13 @@ class QueryVariableValue implements \Serializable
 
     public function initialize(VariableSerializersInterface $serializers, string $dbType): void
     {
-        if ($value->getType() !== null && $value->getType()->isAbstract()) {
+        if ($this->value->getType() !== null && $this->value->getType()->isAbstract()) {
             $this->valueCondition = new CompositeQueryVariableValueCondition($this);
         } else {
             $this->valueCondition = new SingleQueryVariableValueCondition($this);
         }
 
-        $valueCondition->initializeValue($serializers, $dbType);
+        $this->valueCondition->initializeValue($serializers, $dbType);
     }
 
     public function getValueConditions(): array

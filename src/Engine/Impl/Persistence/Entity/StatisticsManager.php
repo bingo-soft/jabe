@@ -85,8 +85,8 @@ class StatisticsManager extends AbstractManager
             $this->getAuthorizationManager()->configureActivityStatisticsQuery($query);
             $this->getTenantManager()->configureQuery($query);
         } elseif ($query instanceof  BatchStatisticsQueryImpl) {
-            $this->getAuthorizationManager()->configureBatchStatisticsQuery($batchQuery);
-            $this->getTenantManager()->configureQuery($batchQuery);
+            $this->getAuthorizationManager()->configureBatchStatisticsQuery($query);
+            $this->getTenantManager()->configureQuery($query);
         } elseif ($query instanceof  DeploymentStatisticsQueryImpl) {
             $this->getAuthorizationManager()->configureDeploymentStatisticsQuery($query);
             $this->getTenantManager()->configureQuery($query);

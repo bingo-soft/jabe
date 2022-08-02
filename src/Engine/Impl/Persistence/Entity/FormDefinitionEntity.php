@@ -74,7 +74,7 @@ class FormDefinitionEntity implements FormDefinitionInterface, ResourceDefinitio
 
     public function getRevisionNext(): int
     {
-        return $revision + 1;
+        return $this->revision + 1;
     }
 
     public function getKey(): string

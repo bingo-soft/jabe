@@ -64,7 +64,7 @@ class SourceExecutableScript extends CompiledExecutableScript
         if ($processEngineConfiguration->isEnableScriptEngineCaching() && $processEngineConfiguration->isEnableScriptCompilation()) {
             if ($this->getCompiledScript() === null && $this->shouldBeCompiled) {
                 // try to compile script
-                $compiledScript = $this->compile($engine, $language, $scriptSource);
+                $compiledScript = $this->compile($engine, $this->language, $this->scriptSource);
 
                 // either the script was successfully compiled or it can't be
                 // compiled but we won't try it again
@@ -99,7 +99,7 @@ class SourceExecutableScript extends CompiledExecutableScript
     protected function evaluateScript(ScriptEngineInterface $engine, BindingsInterface $bindings)
     {
         //LOG.debugEvaluatingNonCompiledScript(scriptSource);
-        return $engine->eval($scriptSource, $bindings);
+        return $engine->eval($this->scriptSource, $bindings);
     }
 
     public function getScriptSource(): string

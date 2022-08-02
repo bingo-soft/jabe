@@ -19,6 +19,6 @@ class TaskCountByCandidateGroupCmd implements CommandInterface
 
     public function execute(CommandContext $commandContext)
     {
-        return $scope->createTaskCountByCandidateGroupReport($commandContext);
+        return $this->scope->createTaskCountByCandidateGroupReport($commandContext);
     }
 }

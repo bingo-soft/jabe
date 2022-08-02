@@ -10,7 +10,7 @@ class CommandContextFactory
 
     public function createCommandContext(): CommandContext
     {
-        return new CommandContext($processEngineConfiguration);
+        return new CommandContext($this->processEngineConfiguration);
     }
 
     public function getProcessEngineConfiguration(): ProcessEngineConfigurationImpl

@@ -63,7 +63,7 @@ class CompositePermissionCheck
     {
         $allChecks = [];
 
-        $allChecks = array_merge([], $atomicChecks);
+        $allChecks = array_merge([], $this->atomicChecks);
 
         foreach ($this->compositeChecks as $compositePermissionCheck) {
             $allChecks = array_merge($allChecks, $compositePermissionCheck->getAllPermissionChecks());

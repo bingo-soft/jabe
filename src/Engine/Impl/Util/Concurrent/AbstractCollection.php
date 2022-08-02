@@ -30,6 +30,7 @@ abstract class AbstractCollection implements CollectionInterface
     public function toArray(array &$c = null): array
     {
         $r = [];
+        $it = $this->iterator();
         while ($it->valid()) {
             $r[] = $it->current();
             $it->next();

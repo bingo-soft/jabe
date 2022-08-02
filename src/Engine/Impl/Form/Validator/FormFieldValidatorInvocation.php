@@ -20,7 +20,7 @@ class FormFieldValidatorInvocation extends DelegateInvocation
 
     protected function invoke(): void
     {
-        $this->invocationResult = $formFieldValidator->validate($this->submittedValue, $this->validatorContext);
+        $this->invocationResult = $this->formFieldValidator->validate($this->submittedValue, $this->validatorContext);
     }
 
     public function getInvocationResult(): bool

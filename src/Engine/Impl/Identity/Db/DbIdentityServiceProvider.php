@@ -74,6 +74,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
 
             $this->deleteAuthorizations(Resources::user(), $userId);
 
+            $scope = $this;
             Context::getCommandContext()->runWithoutAuthorization(function () use ($scope, $userId) {
                 $tenants = $scope->createTenantQuery()->userMember($userId)->list();
                 if (!empty($tenants)) {
@@ -160,11 +161,11 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
             }
             return new IdentityOperationResult(null, IdentityOperationResult::OPERATION_NONE);
         } elseif ($userOrUserId instanceof UserEntity) {
-            if ($user->getAttempts() > 0 || $user->getLockExpirationTime() !== null) {
-                $this->getIdentityInfoManager()->updateUserLock($user, 0, null);
-                return new IdentityOperationResult($user, IdentityOperationResult::OPERATION_UNLOCK);
+            if ($userOrUserId->getAttempts() > 0 || $userOrUserId->getLockExpirationTime() !== null) {
+                $this->getIdentityInfoManager()->updateUserLock($userOrUserId, 0, null);
+                return new IdentityOperationResult($userOrUserId, IdentityOperationResult::OPERATION_UNLOCK);
             }
-            return new IdentityOperationResult($user, IdentityOperationResult::OPERATION_NONE);
+            return new IdentityOperationResult($userOrUserId, IdentityOperationResult::OPERATION_NONE);
         }
     }
 

@@ -39,7 +39,7 @@ class CallableElementParameter
             $variables->putAll($allVariables);
         } else {
             $value = $this->getSource($variableScope);
-            $variables->put($target, $value);
+            $variables->put($this->target, $value);
         }
     }
 

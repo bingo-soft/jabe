@@ -29,7 +29,7 @@ class MetricsExecutionListener implements ExecutionListenerInterface
         if ($this->condition($execution)) {
             Context::getProcessEngineConfiguration()
                 ->getMetricsRegistry()
-                ->markOccurrence($metricsName);
+                ->markOccurrence($this->metricsName);
         }
     }
 }

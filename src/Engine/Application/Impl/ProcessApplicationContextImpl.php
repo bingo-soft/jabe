@@ -8,16 +8,16 @@ class ProcessApplicationContextImpl
 
     public static function get(): ?ProcessApplicationIdentifier
     {
-        return $this->currentProcessApplication;
+        return self::$currentProcessApplication;
     }
 
     public static function set(ProcessApplicationIdentifier $identifier): void
     {
-        $this->currentProcessApplication = $identifier;
+        self::$currentProcessApplication = $identifier;
     }
 
     public static function clear(): void
     {
-        $this->currentProcessApplication = null;
+        self::$currentProcessApplication = null;
     }
 }

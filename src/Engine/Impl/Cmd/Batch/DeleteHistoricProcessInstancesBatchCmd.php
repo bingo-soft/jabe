@@ -105,7 +105,7 @@ class DeleteHistoricProcessInstancesBatchCmd implements CommandInterface
         $propertyChanges = [];
         $propertyChanges[] = new PropertyChange("nrOfInstances", null, $numInstances);
         $propertyChanges[] = new PropertyChange("async", null, true);
-        $propertyChanges[] = new PropertyChange("deleteReason", null, $deleteReason);
+        $propertyChanges[] = new PropertyChange("deleteReason", null, $this->deleteReason);
 
         $commandContext->getOperationLogManager()
             ->logProcessInstanceOperation(

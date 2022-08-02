@@ -34,7 +34,7 @@ class CancelEndEventActivityBehavior extends AbstractBpmnActivityBehavior
         $eventScope = $this->cancelBoundaryEvent->getEventScope();
 
         $boundaryEventScopeExecution = $execution->findExecutionForFlowScope($eventScope);
-        $boundaryEventScopeExecution->executeActivity($cancelBoundaryEvent);
+        $boundaryEventScopeExecution->executeActivity($this->cancelBoundaryEvent);
     }
 
     public function signal(ActivityExecutionInterface $execution, string $signalName, $signalData): void

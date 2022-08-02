@@ -20,7 +20,7 @@ class RemoveTaskVariablesCmd extends AbstractRemoveVariableCmd
     {
         EnsureUtil::ensureNotNull("taskId", "taskId", $this->entityId);
 
-        $task = $commandContext
+        $task = $this->commandContext
             ->getTaskManager()
             ->findTaskById($this->entityId);
 
@@ -39,12 +39,12 @@ class RemoveTaskVariablesCmd extends AbstractRemoveVariableCmd
     protected function logVariableOperation(AbstractVariableScope $scope): void
     {
         $task = $scope;
-        $commandContext->getOperationLogManager()->logVariableOperation($this->getLogEntryOperation(), null, $task->getId(), PropertyChange::emptyChange());
+        $this->commandContext->getOperationLogManager()->logVariableOperation($this->getLogEntryOperation(), null, $task->getId(), PropertyChange::emptyChange());
     }
 
     protected function checkRemoveTaskVariables(TaskEntity $task): void
     {
-        foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
+        foreach ($this->commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
             $checker->checkUpdateTaskVariable($task);
         }
     }

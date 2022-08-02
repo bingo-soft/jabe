@@ -19,8 +19,8 @@ class ActivityInstanceEndListener extends HistoryExecutionListener
     protected function createHistoryEvent(DelegateExecutionInterface $execution): ?HistoryEvent
     {
         $this->ensureHistoryLevelInitialized();
-        if ($historyLevel->isHistoryEventProduced(HistoryEventTypes::activityInstanceEnd(), $execution)) {
-            return $eventProducer->createActivityInstanceEndEvt($execution);
+        if ($this->historyLevel->isHistoryEventProduced(HistoryEventTypes::activityInstanceEnd(), $execution)) {
+            return $this->eventProducer->createActivityInstanceEndEvt($execution);
         } else {
             return null;
         }

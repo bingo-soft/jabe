@@ -11,4 +11,6 @@ interface ParameterValueProviderInterface
      * @return mixed the value
      */
     public function getValue(VariableScopeInterface $variableScope);
+
+    public function isDynamic(): bool;
 }

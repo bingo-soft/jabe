@@ -32,7 +32,7 @@ class DbIdGenerator implements IdGeneratorInterface
     protected function getNewBlock(): void
     {
         // TODO http://jira.codehaus.org/browse/ACT-45 use a separate 'requiresNew' command executor
-        $idBlock = $this->commandExecutor->execute(new GetNextIdBlockCmd($idBlockSize));
+        $idBlock = $this->commandExecutor->execute(new GetNextIdBlockCmd($this->idBlockSize));
         $this->nextId = $idBlock->getNextId();
         $this->lastId = $idBlock->getLastId();
     }

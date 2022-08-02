@@ -18,8 +18,8 @@ class DelegateTaskFormHandler extends DelegateFormHandler implements TaskFormHan
 
     public function createTaskForm(TaskEntity $task): TaskFormDataInterface
     {
-        $scope = $this;
-        return $this->performContextSwitch(function () use ($scope, $task) {
+        $formHandler = $this->formHandler;
+        return $this->performContextSwitch(function () use ($formHandler, $task) {
             $invocation = new CreateTaskFormInvocation($formHandler, $task);
             Context::getProcessEngineConfiguration()
                 ->getDelegateInterceptor()

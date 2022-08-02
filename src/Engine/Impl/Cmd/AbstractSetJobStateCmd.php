@@ -56,7 +56,7 @@ abstract class AbstractSetJobStateCmd extends AbstractSetStateCmd
         foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
             if ($this->jobId !== null) {
                 $jobManager = $commandContext->getJobManager();
-                $job = $jobManager->findJobById($jobId);
+                $job = $jobManager->findJobById($this->jobId);
                 if ($job !== null) {
                     $processInstanceId = $job->getProcessInstanceId();
                     if ($processInstanceId !== null) {

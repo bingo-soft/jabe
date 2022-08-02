@@ -16,7 +16,7 @@ class ListValueProvider implements ParameterValueProviderInterface
     public function getValue(VariableScopeInterface $variableScope)
     {
         $valueList = [];
-        foreach ($providerList as $provider) {
+        foreach ($this->providerList as $provider) {
             $valueList[] = $provider->getValue($variableScope);
         }
         return $valueList;
@@ -30,5 +30,10 @@ class ListValueProvider implements ParameterValueProviderInterface
     public function setProviderList(array $providerList): void
     {
         $this->providerList = $providerList;
+    }
+
+    public function isDynamic(): bool
+    {
+        return true;
     }
 }

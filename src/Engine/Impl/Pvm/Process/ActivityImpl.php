@@ -40,7 +40,7 @@ class ActivityImpl extends ScopeImpl implements PvmActivityInterface, HasDIBound
 
     public function createOutgoingTransition(?string $transitionId = null): TransitionImpl
     {
-        $transition = new TransitionImpl($transitionId, $processDefinition);
+        $transition = new TransitionImpl($transitionId, $this->processDefinition);
         $transition->setSource($this);
         $this->outgoingTransitions[] = $transition;
 

@@ -128,7 +128,7 @@ class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface,
     public function getQueryInternal(): string
     {
         $converter = $this->getConverter();
-        return $converter->toJson($query);
+        return $converter->toJson($this->query);
     }
 
     public function setQuery(QueryInterface $query): FilterInterface
@@ -190,13 +190,13 @@ class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface,
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "extendingQuery", $extendingQuery);
 
-        if ($this->get_class($extendingQuery) != get_class($query)) {
+        if ($this->get_class($extendingQuery) != get_class($this->query)) {
             //throw LOG.queryExtensionException(query.getClass().getName(), extendingQuery.getClass().getName());
             throw new \Exception("Filter");
         }
 
         $copy = $this->copyFilter();
-        $copy->setQuery($query->extend($extendingQuery));
+        $copy->setQuery($this->query->extend($extendingQuery));
 
         return $copy;
     }
@@ -233,8 +233,8 @@ class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface,
 
     public function postLoad(): void
     {
-        if ($query !== null) {
-            $query->addValidator(StoredQueryValidator::get());
+        if ($this->query !== null) {
+            $this->query->addValidator(StoredQueryValidator::get());
         }
     }
 

@@ -1350,7 +1350,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
     protected function provideRemovalTime($event): void
     {
         if ($event instanceof HistoryEvent) {
-            $rootProcessInstanceId = $historyEvent->getRootProcessInstanceId();
+            $rootProcessInstanceId = $event->getRootProcessInstanceId();
             if ($rootProcessInstanceId !== null) {
                 $historicRootProcessInstance = $this->getHistoricRootProcessInstance($rootProcessInstanceId);
 
@@ -1421,7 +1421,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
     protected function initSequenceCounter($obj, HistoryEvent $event): void
     {
         if (is_int($obj)) {
-            $event->setSequenceCounter($sequenceCounter);
+            $event->setSequenceCounter($obj);
         } elseif (method_exists($obj, 'getSequenceCounter')) {
             $this->initSequenceCounter($obj->getSequenceCounter(), $event);
         }

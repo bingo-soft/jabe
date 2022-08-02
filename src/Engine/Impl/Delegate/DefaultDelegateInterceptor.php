@@ -26,7 +26,7 @@ class DefaultDelegateInterceptor implements DelegateInterceptorInterface
         $scope = $this;
         if ($processApplication !== null && ProcessApplicationContextUtil::requiresContextSwitch($processApplication)) {
             Context::executeWithinProcessApplication(
-                function () use ($scope) {
+                function () use ($scope, $invocation) {
                     $scope->handleInvocation($invocation);
                     return null;
                 },

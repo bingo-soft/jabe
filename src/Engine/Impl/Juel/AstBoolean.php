@@ -20,7 +20,7 @@ class AstBoolean extends AstLiteral
 
     public function __toString()
     {
-        return $value ? "true" : "false";
+        return $this->value ? "true" : "false";
     }
 
     public function appendStructure(string &$b, Bindings $bindings): void

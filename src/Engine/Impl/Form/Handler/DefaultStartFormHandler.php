@@ -36,7 +36,7 @@ class DefaultStartFormHandler extends DefaultFormHandler implements StartFormHan
             $startFormData->setFormRef($ref);
         }
 
-        $startFormData->setDeploymentId($deploymentId);
+        $startFormData->setDeploymentId($this->deploymentId);
         $startFormData->setProcessDefinition($processDefinition);
         $this->initializeFormProperties($startFormData, null);
         $this->initializeFormFields($startFormData, null);

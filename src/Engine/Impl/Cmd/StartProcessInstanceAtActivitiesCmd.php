@@ -60,8 +60,8 @@ class StartProcessInstanceAtActivitiesCmd implements CommandInterface
             $initialActivity
         );
 
-        if ($instantiationBuilder->getTenantId() !== null) {
-            $processInstance->setTenantId($instantiationBuilder->getTenantId());
+        if ($this->instantiationBuilder->getTenantId() !== null) {
+            $processInstance->setTenantId($this->instantiationBuilder->getTenantId());
         }
 
         $processInstance->setSkipCustomListeners($modificationBuilder->isSkipCustomListeners());

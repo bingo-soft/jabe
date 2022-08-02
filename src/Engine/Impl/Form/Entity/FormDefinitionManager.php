@@ -24,7 +24,7 @@ class FormDefinitionManager extends AbstractManager implements AbstractResourceD
         if (empty($formDefinitions)) {
             return null;
         } else if (count($formDefinitions) == 1) {
-            return $camundaFormDefinitions[0];
+            return $formDefinitions[0];
         } else {
             //throw LOG.multipleTenantsForCamundaFormDefinitionKeyException(key);
             throw new \Exception("multipleTenantsForFormDefinitionKeyException");
@@ -38,7 +38,7 @@ class FormDefinitionManager extends AbstractManager implements AbstractResourceD
 
     public function findLatestDefinitionByKeyAndTenantId(string $definitionKey, ?string $tenantId): ?FormDefinitionEntity
     {
-        $arameters = [];
+        $parameters = [];
         $parameters["formDefinitionKey"] = $definitionKey;
         $parameters["tenantId"] = $tenantId;
 

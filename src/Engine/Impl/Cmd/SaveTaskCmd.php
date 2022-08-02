@@ -45,10 +45,10 @@ class SaveTaskCmd implements CommandInterface, \Serializable
     public function execute(CommandContext $commandContext)
     {
         EnsureUtil::ensureNotNull("task", "task", $this->task);
-        $this->validateStandaloneTask($task, $commandContext);
+        $this->validateStandaloneTask($this->task, $commandContext);
 
         $operation = null;
-        if ($task->getRevision() == 0) {
+        if ($this->task->getRevision() == 0) {
             try {
                 $this->checkCreateTask($this->task, $commandContext);
                 $this->task->ensureParentTaskActive();
@@ -79,7 +79,7 @@ class SaveTaskCmd implements CommandInterface, \Serializable
     protected function validateStandaloneTask(TaskEntity $task, CommandContext $commandContext): void
     {
         $standaloneTasksEnabled = $commandContext->getProcessEngineConfiguration()->isStandaloneTasksEnabled();
-        if (!$standaloneTasksEnabled && $this->task->isStandaloneTask()) {
+        if (!$standaloneTasksEnabled && $task->isStandaloneTask()) {
             throw new NotAllowedException("Cannot save standalone task They are disabled in the process engine configuration.");
         }
     }

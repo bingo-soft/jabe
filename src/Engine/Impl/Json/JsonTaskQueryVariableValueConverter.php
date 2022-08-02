@@ -13,9 +13,9 @@ class JsonTaskQueryVariableValueConverter extends JsonObjectConverter
     public function toJsonObject(/*TaskQueryVariableValue*/$object, bool $isOrQueryActive = false): ?\stdClass
     {
         $jsonObject = JsonUtil::createObject();
-        JsonUtil::addField($jsonObject, "name", $variable->getName());
-        JsonUtil::addFieldRawValue($jsonObject, "value", $variable->getValue());
-        JsonUtil::addField($jsonObject, "operator", $variable->getOperator());
+        JsonUtil::addField($jsonObject, "name", $object->getName());
+        JsonUtil::addFieldRawValue($jsonObject, "value", $object->getValue());
+        JsonUtil::addField($jsonObject, "operator", $object->getOperator());
         return $jsonObject;
     }
 

@@ -25,7 +25,7 @@ class ParseUtil
         $timeToLive = null;
 
         if (!empty($historyTimeToLive)) {
-            preg_match_all('/^P(\d+)D$/', $message, $matches);
+            preg_match_all('/^P(\d+)D$/', $historyTimeToLive, $matches);
             if (!empty($matches[0])) {
                 $historyTimeToLive = $matches[0];
             }
@@ -76,7 +76,7 @@ class ParseUtil
             return self::parseProcessEngineVersion($trimSuffixEEOrVersion, $trimSuffixEE);
         } else {
             $edition = ProcessEngineDetails::EDITION_COMMUNITY;
-
+            $version = $trimSuffixEEOrVersion;
             if (strpos($trimSuffixEEOrVersion, "-ee") !== false) {
                 $edition = ProcessEngineDetails::EDITION_ENTERPRISE;
                 if ($trimSuffixEE) {

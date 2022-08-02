@@ -38,7 +38,7 @@ class GetRenderedTaskFormCmd implements CommandInterface, \Serializable
     public function execute(CommandContext $commandContext)
     {
         $taskManager = $commandContext->getTaskManager();
-        $task = $taskManager->findTaskById($taskId);
+        $task = $taskManager->findTaskById($this->taskId);
         EnsureUtil::ensureNotNull("Task '" . $this->taskId . "' not found", "task", $task);
 
         foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {

@@ -30,7 +30,7 @@ class GetStartFormVariablesCmd extends AbstractGetFormVariablesCmd
         $result = new VariableMapImpl();
 
         foreach ($startFormData->getFormFields() as $formField) {
-            if (empty($this->formVariableNames) || in_array($formField->getId(), $formVariableNames)) {
+            if (empty($this->formVariableNames) || in_array($formField->getId(), $this->formVariableNames)) {
                 $result->put($formField->getId(), $this->createVariable($formField, null));
             }
         }

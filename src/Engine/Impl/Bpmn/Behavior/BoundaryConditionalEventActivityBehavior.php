@@ -35,7 +35,7 @@ class BoundaryConditionalEventActivityBehavior extends BoundaryEventActivityBeha
             $execution !== null &&
             !$execution->isEnded() &&
             $execution->isScope() &&
-            $conditionalEvent->tryEvaluate($variableEvent, $execution)
+            $this->conditionalEvent->tryEvaluate($variableEvent, $execution)
         ) {
             $execution->executeEventHandlerActivity($eventSubscription->getActivity());
         }

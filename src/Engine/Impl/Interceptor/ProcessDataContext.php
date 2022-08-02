@@ -36,8 +36,8 @@ class ProcessDataContext
         // populate the Job#getFailedActivityId field. This is independent
         // of the logging configuration
         $this->activityIdStack = new ProcessDataStack(self::isNotBlank($this->mdcPropertyActivityId) ? $this->mdcPropertyActivityId : null);
-        if (self::isNotBlank($mdcPropertyActivityId)) {
-            $this->mdcDataStacks[$this->mdcPropertyActivityId] = $activityIdStack;
+        if (self::isNotBlank($this->mdcPropertyActivityId)) {
+            $this->mdcDataStacks[$this->mdcPropertyActivityId] = $this->activityIdStack;
         }
         $this->mdcPropertyApplicationName = $configuration->getLoggingContextApplicationName();
         if (self::isNotBlank($this->mdcPropertyApplicationName)) {

@@ -112,7 +112,7 @@ class HistoricActivityStatisticsQueryImpl extends AbstractQuery implements Histo
     protected function checkQueryOk(): void
     {
         parent::checkQueryOk();
-        EnsureUtil::ensureNotNull("No valid process definition id supplied", "processDefinitionId", $processDefinitionId);
+        EnsureUtil::ensureNotNull("No valid process definition id supplied", "processDefinitionId", $this->processDefinitionId);
     }
 
     // getters /////////////////////////////////////////////////

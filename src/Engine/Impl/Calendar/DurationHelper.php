@@ -117,7 +117,7 @@ class DurationHelper
         $cur = $this->end->sub($this->period);
         $next = $this->end;
 
-        for ($i = 0; $i < $times && ($cur->getTimestamp() > $date->getTimestamp()); $i += 1) {
+        for ($i = 0; $i < $this->times && ($cur->getTimestamp() > $date->getTimestamp()); $i += 1) {
             $next = $cur;
             $cur = $cur->sub($this->period);
         }

@@ -95,7 +95,7 @@ class ScriptingEnvironment
     protected function getEnvScripts($scriptOrLang, ?ScriptEngineInterface $scriptEngine = null): array
     {
         if ($scriptOrLang instanceof ExecutableScript) {
-            $envScripts = $this->getEnvScripts(strtolower($script->getLanguage()));
+            $envScripts = $this->getEnvScripts(strtolower($scriptOrLang->getLanguage()));
             if (empty($envScripts)) {
                 $envScripts = $this->getEnvScripts(strtolower($scriptEngine->getFactory()->getLanguageName()));
             }
@@ -121,11 +121,11 @@ class ScriptingEnvironment
     protected function initEnvForLanguage(string $language): array
     {
         $scripts = [];
-        foreach ($envResolvers as $resolver) {
+        foreach ($this->envResolvers as $resolver) {
             $resolvedScripts = $resolver->resolve($language);
             if ($resolvedScripts !== null) {
                 foreach ($resolvedScripts as $resolvedScript) {
-                    $scripts[] = $scriptFactory->createScriptFromSource($language, $resolvedScript);
+                    $scripts[] = $this->scriptFactory->createScriptFromSource($language, $resolvedScript);
                 }
             }
         }

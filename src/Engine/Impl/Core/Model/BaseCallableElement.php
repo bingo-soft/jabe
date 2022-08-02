@@ -122,13 +122,29 @@ class BaseCallableElement
         $this->deploymentId = $deploymentId;
     }
 
-    public function getDefinitionTenantId(VariableScopeInterface $variableScope): ?string
+    public function getDefinitionTenantId(VariableScopeInterface $variableScope, string $defaultTenantId = null): ?string
     {
-        return $this->tenantIdProvider->getValue($variableScope);
+        if ($this->tenantIdProvider !== null) {
+            return $this->tenantIdProvider->getValue($variableScope);
+        } else {
+            return $defaultTenantId;
+        }
     }
 
     public function getTenantIdProvider(): ParameterValueProviderInterface
     {
         return $this->tenantIdProvider;
+    }
+
+    /**
+     * @return bool true if any of the references that specify the callable element are non-literal and need to be resolved with
+     * potential side effects to determine the process or case definition that is to be called.
+     */
+    public function hasDynamicReferences(): bool
+    {
+        return ($this->tenantIdProvider !== null && $this->tenantIdProvider->isDynamic())
+            || $this->definitionKeyValueProvider->isDynamic()
+            || $this->versionValueProvider->isDynamic()
+            || $this->versionTagValueProvider->isDynamic();
     }
 }

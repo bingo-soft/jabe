@@ -29,13 +29,13 @@ class DeploymentCache
     public function __construct(CacheFactoryInterface $factory, int $cacheCapacity)
     {
         $this->cacheDeployer = new CacheDeployer();
-        $this->processDefinitionEntityCache = new ProcessDefinitionCache($factory, $cacheCapacity, $cacheDeployer);
+        $this->processDefinitionEntityCache = new ProcessDefinitionCache($factory, $cacheCapacity, $this->cacheDeployer);
         //caseDefinitionCache = new CaseDefinitionCache(factory, cacheCapacity, cacheDeployer);
         //decisionDefinitionCache = new DecisionDefinitionCache(factory, cacheCapacity, cacheDeployer);
         //decisionRequirementsDefinitionCache = new DecisionRequirementsDefinitionCache(factory, cacheCapacity, cacheDeployer);
-        $this->formDefinitionCache = new FormDefinitionCache($factory, $cacheCapacity, $cacheDeployer);
+        $this->formDefinitionCache = new FormDefinitionCache($factory, $cacheCapacity, $this->cacheDeployer);
 
-        $this->bpmnModelInstanceCache = new BpmnModelInstanceCache($factory, $cacheCapacity, $processDefinitionEntityCache);
+        $this->bpmnModelInstanceCache = new BpmnModelInstanceCache($factory, $cacheCapacity, $this->processDefinitionEntityCache);
         //cmmnModelInstanceCache = new CmmnModelInstanceCache(factory, cacheCapacity, caseDefinitionCache);
         //dmnModelInstanceCache = new DmnModelInstanceCache(factory, cacheCapacity, decisionDefinitionCache);
     }

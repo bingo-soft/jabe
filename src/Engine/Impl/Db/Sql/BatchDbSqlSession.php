@@ -249,7 +249,7 @@ class BatchDbSqlSession extends DbSqlSession
         $dbEntity = $operation->getEntity();
 
         // get statement
-        $deleteStatement = $thios->dbSqlSessionFactory->getDeleteStatement(get_class($dbEntity));
+        $deleteStatement = $this->dbSqlSessionFactory->getDeleteStatement(get_class($dbEntity));
         EnsureUtil::ensureNotNull("no delete statement for " . get_class($dbEntity) . " in the ibatis mapping files", "deleteStatement", $deleteStatement);
 
         //LOG.executeDatabaseOperation("DELETE", dbEntity);

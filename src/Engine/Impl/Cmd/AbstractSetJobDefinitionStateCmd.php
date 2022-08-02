@@ -48,7 +48,7 @@ abstract class AbstractSetJobDefinitionStateCmd extends AbstractSetStateCmd
 
     protected function checkParameters(CommandContext $commandContext): void
     {
-        if ($this->jobDefinitionId === null && $his->processDefinitionId === null && $this->processDefinitionKey === null) {
+        if ($this->jobDefinitionId === null && $this->processDefinitionId === null && $this->processDefinitionKey === null) {
             throw new ProcessEngineException("Job definition id, process definition id nor process definition key cannot be null");
         }
     }

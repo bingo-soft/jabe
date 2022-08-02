@@ -26,7 +26,7 @@ class DelegateFormFieldValidator implements FormFieldValidatorInterface
     {
         if ($data !== null) {
             if ($data instanceof ExpressionInterface) {
-                $this->delegateExpression = $expression;
+                $this->delegateExpression = $data;
             } elseif (is_string($data)) {
                 $this->clazz = $data;
             }
@@ -63,7 +63,7 @@ class DelegateFormFieldValidator implements FormFieldValidatorInterface
 
         if ($this->clazz !== null) {
             // resolve validator using Fully Qualified Classname
-            $validatorObject = ReflectUtil::instantiate($clazz);
+            $validatorObject = ReflectUtil::instantiate($this->clazz);
             if ($validatorObject instanceof FormFieldValidatorInterface) {
                 $validator = $validatorObject;
             } else {

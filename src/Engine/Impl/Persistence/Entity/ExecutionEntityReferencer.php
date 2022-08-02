@@ -15,7 +15,7 @@ class ExecutionEntityReferencer implements VariableStoreObserverInterface
 
     public function onAdd(VariableInstanceEntity $variable): void
     {
-        $variable->setExecution($execution);
+        $variable->setExecution($this->execution);
     }
 
     public function onRemove(VariableInstanceEntity $variable): void

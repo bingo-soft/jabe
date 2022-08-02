@@ -454,9 +454,9 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
     public function addVariable($nameOrValue, $value = null, string $operator = null, bool $isTaskVariable = null, bool $isProcessInstanceVariable = null): void
     {
         if ($nameOrValue instanceof TaskQueryVariableValue) {
-            $this->variables[] = $taskQueryVariableValue;
+            $this->variables[] = $nameOrValue;
         } else {
-            EnsureUtil::ensureNotNull("name", "name", $name);
+            EnsureUtil::ensureNotNull("name", "name", $nameOrValue);
             if ($value === null || $this->isBoolean($value)) {
                 // Null-values and booleans can only be used in EQUALS and NOT_EQUALS
                 switch ($operator) {
@@ -476,8 +476,8 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
                         break;
                 }
             }
-            $shouldMatchVariableValuesIgnoreCase = $variableValuesIgnoreCase && $value !== null && is_string($value);
-            $shouldMatchVariableNamesIgnoreCase = $variableNamesIgnoreCase;
+            $shouldMatchVariableValuesIgnoreCase = $this->variableValuesIgnoreCase && $value !== null && is_string($value);
+            $shouldMatchVariableNamesIgnoreCase = $this->variableNamesIgnoreCase;
             $this->addVariable(
                 new TaskQueryVariableValue($name, $value, $operator, $isTaskVariable, $isProcessInstanceVariable, $shouldMatchVariableNamesIgnoreCase, $shouldMatchVariableValuesIgnoreCase)
             );

@@ -97,7 +97,7 @@ class ScriptBindings implements BindingsInterface
             }
         }
 
-        return $this->wrappedBindings->put($name, $alue);
+        return $this->wrappedBindings->put($name, $value);
     }
 
     public function entrySet(): array

@@ -48,7 +48,7 @@ class PvmAtomicOperationActivityExecute implements PvmAtomicOperationInterface
 
             public function callback($execution)
             {
-                $activityBehavior = $op->getActivityBehavior($execution);
+                $activityBehavior = $this->op->getActivityBehavior($execution);
 
                 $activity = $execution->getActivity();
                 //LOG.debugExecutesActivity(execution, activity, activityBehavior.getClass().getName());

@@ -335,7 +335,7 @@ class JobQueryImpl extends AbstractQuery implements JobQueryInterface, \Serializ
             $dueDates[] = CompareUtil::min($this->duedateHigherThan, $this->duedateHigherThanOrEqual);
             $dueDates[] = CompareUtil::max($this->duedateHigherThan, $this->duedateHigherThanOrEqual);
         } elseif ($this->duedateHigherThan !== null) {
-            $dueDates[] = $duedateHigherThan;
+            $dueDates[] = $this->duedateHigherThan;
         } elseif ($this->duedateHigherThanOrEqual !== null) {
             $dueDates[] = $this->duedateHigherThanOrEqual;
         }

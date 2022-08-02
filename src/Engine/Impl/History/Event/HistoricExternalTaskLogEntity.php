@@ -131,8 +131,8 @@ class HistoricExternalTaskLogEntity extends HistoryEvent implements HistoricExte
 
         $exceptionBytes = $this->toByteArray($exception);
         $byteArray = $this->createExceptionByteArray(self::EXCEPTION_NAME, $exceptionBytes, ResourceTypes::history());
-        $byteArray->setRootProcessInstanceId($rootProcessInstanceId);
-        $byteArray->setRemovalTime($removalTime);
+        $byteArray->setRootProcessInstanceId($this->rootProcessInstanceId);
+        $byteArray->setRemovalTime($this->removalTime);
 
         $this->errorDetailsByteArrayId = $byteArray->getId();
     }
@@ -142,7 +142,7 @@ class HistoricExternalTaskLogEntity extends HistoryEvent implements HistoricExte
         if ($this->errorDetailsByteArrayId !== null) {
             return Context::getCommandContext()
                 ->getDbEntityManager()
-                ->selectById(ByteArrayEntity::class, $errorDetailsByteArrayId);
+                ->selectById(ByteArrayEntity::class, $this->errorDetailsByteArrayId);
         }
         return null;
     }

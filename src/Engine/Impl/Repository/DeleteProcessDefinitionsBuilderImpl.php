@@ -37,7 +37,7 @@ class DeleteProcessDefinitionsBuilderImpl implements DeleteProcessDefinitionsBui
 
     public function byIds(array $processDefinitionIds): DeleteProcessDefinitionsBuilderImpl
     {
-        if (!empty($processDefinitionId)) {
+        if (!empty($processDefinitionIds)) {
             $this->processDefinitionIds = array_merge($this->processDefinitionIds, $processDefinitionIds);
         }
         return $this;

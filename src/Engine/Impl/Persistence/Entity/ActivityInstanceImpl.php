@@ -181,7 +181,7 @@ class ActivityInstanceImpl extends ProcessElementInstanceImpl implements Activit
         if ($this->activityId == $activityId) {
             $instances[] = $this;
         } else {
-            foreach ($childActivityInstances as $childInstance) {
+            foreach ($this->childActivityInstances as $childInstance) {
                 $childInstance->collectActivityInstances($activityId, $instances);
             }
         }

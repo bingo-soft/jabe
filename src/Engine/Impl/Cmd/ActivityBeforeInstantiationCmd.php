@@ -26,10 +26,10 @@ class ActivityBeforeInstantiationCmd extends AbstractInstantiationCmd
 
     public function execute(CommandContext $commandContext)
     {
-        $processInstance = $commandContext->getExecutionManager()->findExecutionById($processInstanceId);
+        $processInstance = $commandContext->getExecutionManager()->findExecutionById($this->processInstanceId);
         $processDefinition = $processInstance->getProcessDefinition();
 
-        $activity = $processDefinition->findActivity($activityId);
+        $activity = $processDefinition->findActivity($this->activityId);
 
         // forbid instantiation of compensation boundary events
         if ($activity !== null && "compensationBoundaryCatch" == $activity->getProperty("type")) {
@@ -48,7 +48,7 @@ class ActivityBeforeInstantiationCmd extends AbstractInstantiationCmd
 
     protected function getTargetElement(ProcessDefinitionImpl $processDefinition): CoreModelElement
     {
-        $activity = $processDefinition->findActivity($activityId);
+        $activity = $processDefinition->findActivity($this->activityId);
         return $activity;
     }
 

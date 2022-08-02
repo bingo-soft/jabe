@@ -53,7 +53,7 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
         $this->eventType = $eventType !== null ? $eventType->name() : null;
 
         $this->setExecution($executionEntity);
-        $this->setActivity($execution->getActivity());
+        $this->setActivity($executionEntity->getActivity());
         $this->processInstanceId = $executionEntity->getProcessInstanceId();
         $this->tenantId = $executionEntity->getTenantId();
     }
@@ -70,8 +70,8 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
 
     protected function processEventSync($payload, $payloadLocal, ?string $businessKey): void
     {
-        $eventHandler = Context::getProcessEngineConfiguration()->getEventHandler($eventType);
-        EnsureUtil::ensureNotNull("Could not find eventhandler for event of type '" . $eventType . "'", "eventHandler", $eventHandler);
+        $eventHandler = Context::getProcessEngineConfiguration()->getEventHandler($this->eventType);
+        EnsureUtil::ensureNotNull("Could not find eventhandler for event of type '" . $this->eventType . "'", "eventHandler", $eventHandler);
         $eventHandler->handleEvent($this, $payload, $payloadLocal, $businessKey, Context::getCommandContext());
     }
 

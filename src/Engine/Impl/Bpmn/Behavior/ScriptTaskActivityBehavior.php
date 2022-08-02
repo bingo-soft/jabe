@@ -29,8 +29,8 @@ class ScriptTaskActivityBehavior extends TaskActivityBehavior
             $invocation = new ScriptInvocation($scope->script, $execution);
             Context::getProcessEngineConfiguration()->getDelegateInterceptor()->handleInvocation($invocation);
             $result = $invocation->getInvocationResult();
-            if ($result !== null && $resultVariable !== null) {
-                $execution->setVariable($resultVariable, $result);
+            if ($result !== null && $this->resultVariable !== null) {
+                $execution->setVariable($this->resultVariable, $result);
             }
             $scope->leave($execution);
             return null;

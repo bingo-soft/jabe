@@ -21,7 +21,7 @@ class CreateTaskCmd implements CommandInterface
     {
         $this->checkCreateTask($commandContext);
 
-        return new TaskEntity($taskId);
+        return new TaskEntity($this->taskId);
     }
 
     protected function checkCreateTask(CommandContext $commandContext): void

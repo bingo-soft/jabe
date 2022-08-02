@@ -20,7 +20,7 @@ class JsonUtil
 
     public static function addField(\stdClass $jsonObject, string $name, $converterOrValue = null, $value = null): void
     {
-        if ($converterOrValue !== null && $converterOrlist instanceof JsonObjectConverter) {
+        if ($converterOrValue !== null && $converterOrValue instanceof JsonObjectConverter) {
             $jsonObject->{$name} = $converterOrValue->toJsonObject($value);
         } elseif ($converterOrValue !== null) {
             $jsonObject->{$name} = $converterOrValue;

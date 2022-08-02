@@ -47,7 +47,7 @@ class HistoricTaskInstanceEventEntity extends HistoricScopeInstanceEvent
 
     public function getName(): string
     {
-        return $name;
+        return $this->name;
     }
 
     public function setName(string $name): void

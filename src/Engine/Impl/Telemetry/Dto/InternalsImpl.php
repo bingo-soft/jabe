@@ -26,7 +26,7 @@ class InternalsImpl implements InternalsInterface
 
     protected $telemetryEnabled;
 
-    public function __construct(/*DatabaseImpl|InternalsImpl*/$databaseOrOnternals, ApplicationServerInterface $server = null, LicenseKeyDataInterface $licenseKey = null)
+    public function __construct(/*DatabaseImpl|InternalsImpl*/$databaseOrInternals, ApplicationServerInterface $server = null, LicenseKeyDataInterface $licenseKey = null)
     {
         if ($databaseOrInternals instanceof DatabaseInterface) {
             $this->database = $databaseOrInternals;

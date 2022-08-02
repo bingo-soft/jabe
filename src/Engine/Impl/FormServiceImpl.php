@@ -84,7 +84,7 @@ class FormServiceImpl extends ServiceImpl implements FormServiceInterface
         return $this->commandExecutor->execute(new GetStartFormVariablesCmd($processDefinitionId, $formVariables, $deserializeObjectValues));
     }
 
-    public function getTaskFormVariables(string $processDefinitionId, array $formVariables = [], bool $deserializeObjectValues = true): VariableMapInterface
+    public function getTaskFormVariables(string $taskId, array $formVariables = [], bool $deserializeObjectValues = true): VariableMapInterface
     {
         return $this->commandExecutor->execute(new GetTaskFormVariablesCmd($taskId, $formVariables, $deserializeObjectValues));
     }

@@ -31,7 +31,7 @@ abstract class AbstractSetJobsRetriesBatchCmd implements CommandInterface
         $elementConfiguration = $this->collectJobIds($commandContext);
 
         EnsureUtil::ensureNotEmpty(BadUserRequestException::class, "jobIds", $elementConfiguration->getIds());
-        EnsureUtil::ensureGreaterThanOrEqual("Number of retries cannot be negative", "Retries count", $retries, 0);
+        EnsureUtil::ensureGreaterThanOrEqual("Number of retries cannot be negative", "Retries count", $this->retries, 0);
         $scope = new stdClass();
         $scope->write = function (CommandContext $commandContext, int $instanceCount) {
             $this->writeUserOperationLog($commandContext, $instanceCount);

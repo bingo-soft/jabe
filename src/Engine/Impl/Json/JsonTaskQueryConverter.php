@@ -111,7 +111,7 @@ class JsonTaskQueryConverter extends JsonObjectConverter
     public function toJsonObject(/*TaskQueryInterface*/$object, bool $isOrQueryActive = false): ?\stdClass
     {
         $json = JsonUtil::createObject();
-        $query = $taskQuery;
+        $query = $object;
         JsonUtil::addField($json, self::TASK_ID, $query->getTaskId());
         JsonUtil::addArrayField($json, self::TASK_ID_IN, $query->getTaskIdIn());
         JsonUtil::addField($json, self::NAME, $query->getName());
@@ -271,6 +271,7 @@ class JsonTaskQueryConverter extends JsonObjectConverter
         if ($isOrQuery) {
             $query->setOrQueryActive();
         }
+        $json = $jsonString;
         if (property_exists($json, self::OR_QUERIES)) {
             foreach (JsonUtil::getArray($json, self::OR_QUERIES) as $jsonElement) {
                 $query->addOrQuery($this->toObject(JsonUtil::getObject($jsonElement), true));

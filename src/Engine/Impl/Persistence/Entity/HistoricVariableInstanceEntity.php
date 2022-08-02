@@ -265,7 +265,7 @@ class HistoricVariableInstanceEntity implements ValueFieldsInterface, HistoricVa
 
     public function setByteArrayValue($bytes): void
     {
-        $this->byteArrayField->setByteArrayValue($byteArrayValue);
+        $this->byteArrayField->setByteArrayValue($bytes);
     }
 
     public function getId(): ?string

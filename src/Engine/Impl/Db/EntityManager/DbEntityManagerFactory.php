@@ -24,6 +24,6 @@ class DbEntityManagerFactory implements SessionFactoryInterface
     public function openSession(): DbEntityManager
     {
         $persistenceSession = Context::getCommandContext()->getSession(PersistenceSessionInterface::class);
-        return new DbEntityManager($idGenerator, $persistenceSession);
+        return new DbEntityManager($this->idGenerator, $persistenceSession);
     }
 }

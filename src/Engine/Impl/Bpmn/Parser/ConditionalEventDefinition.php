@@ -80,7 +80,7 @@ class ConditionalEventDefinition extends EventSubscriptionDeclaration
         return
         ($this->variableName === null || $event->getVariableInstance()->getName() == $this->variableName)
                                                 &&
-        (empty($this->variableEvents) || in_array($event->getEventName(), $variableEvents));
+        (empty($this->variableEvents) || in_array($event->getEventName(), $this->variableEvents));
     }
 
     public function evaluate(DelegateExecutionInterface $execution): bool

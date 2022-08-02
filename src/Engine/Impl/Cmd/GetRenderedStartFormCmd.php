@@ -19,7 +19,7 @@ class GetRenderedStartFormCmd implements CommandInterface, \Serializable
     public function __construct(string $processDefinitionId, ?string $engineName = null)
     {
         $this->processDefinitionId = $processDefinitionId;
-        $this->formEngineName = $formEngineName;
+        $this->formEngineName = $engineName;
     }
 
     public function serialize()

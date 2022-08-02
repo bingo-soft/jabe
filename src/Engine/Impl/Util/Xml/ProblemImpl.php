@@ -14,10 +14,10 @@ class ProblemImpl implements ProblemInterface
 
     public function __construct($e, Element $element = null, $elementIds = null)
     {
-        if ($error instanceof \Exception) {
+        if ($e instanceof \Exception) {
             $this->concatenateErrorMessages($e);
         } elseif (is_string($e)) {
-            $this->message = $errorMessage;
+            $this->message = $e;
         }
         if ($element !== null) {
             $this->extractElementDetails($element);
@@ -42,7 +42,7 @@ class ProblemImpl implements ProblemInterface
             if ($this->message === null) {
                 $this->message = $throwable->getMessage();
             } else {
-                $message .= ": " . $throwable->getMessage();
+                $this->message .= ": " . $throwable->getMessage();
             }
             if (method_exists($throwable, 'getCause')) {
                 $throwable = $throwable->getCause();

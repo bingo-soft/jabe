@@ -51,7 +51,7 @@ abstract class AbstractCorrelateMessageCmd
     protected function triggerExecution(CommandContext $commandContext, CorrelationHandlerResult $correlationResult): void
     {
         $executionId = $correlationResult->getExecutionEntity()->getId();
-        $command = new MessageEventReceivedCmd($this->messageName, $executionId, $this->builder->getPayloadProcessInstanceVariables(), $builder->getPayloadProcessInstanceVariablesLocal(), $this->builder->isExclusiveCorrelation());
+        $command = new MessageEventReceivedCmd($this->messageName, $executionId, $this->builder->getPayloadProcessInstanceVariables(), $this->builder->getPayloadProcessInstanceVariablesLocal(), $this->builder->isExclusiveCorrelation());
         $command->execute($commandContext);
     }
 
@@ -60,7 +60,7 @@ abstract class AbstractCorrelateMessageCmd
         $processDefinitionEntity = $correlationResult->getProcessDefinitionEntity();
 
         $messageStartEvent = $processDefinitionEntity->findActivity($correlationResult->getStartEventActivityId());
-        $processInstance = $processDefinitionEntity->createProcessInstance($builder->getBusinessKey(), $messageStartEvent);
+        $processInstance = $processDefinitionEntity->createProcessInstance($this->builder->getBusinessKey(), $messageStartEvent);
 
         if ($this->variablesEnabled) {
             $this->variablesListener = new ExecutionVariableSnapshotObserver($processInstance, false, $this->deserializeVariableValues);

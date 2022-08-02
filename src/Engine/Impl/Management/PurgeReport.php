@@ -31,6 +31,6 @@ class PurgeReport
 
     public function isEmpty(): bool
     {
-        return $cachePurgeReport->isEmpty() && $this->databasePurgeReport->isEmpty();
+        return $this->cachePurgeReport->isEmpty() && $this->databasePurgeReport->isEmpty();
     }
 }

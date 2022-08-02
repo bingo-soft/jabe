@@ -10,18 +10,18 @@ class PlatformTelemetryRegistry
 
     public static function getApplicationServer(): ApplicationServerImpl
     {
-        return $this->applicationServer;
+        return self::$applicationServer;
     }
 
     public static function setApplicationServer(string $applicationServerVersion): void
     {
-        if ($this->applicationServer === null) {
-            $this->applicationServer = new ApplicationServerImpl(null, $applicationServerVersion);
+        if (self::$applicationServer === null) {
+            self::$applicationServer = new ApplicationServerImpl(null, $applicationServerVersion);
         }
     }
 
     public static function clear(): void
     {
-        $this->applicationServer = null;
+        self::$applicationServer = null;
     }
 }

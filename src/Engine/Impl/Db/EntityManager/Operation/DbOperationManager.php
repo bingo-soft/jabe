@@ -27,8 +27,8 @@ class DbOperationManager
 
     public function addOperation(DbEntityOperation $newOperation): bool
     {
+        $clazz = get_class($newOperation);
         if ($newOperation instanceof DbEntityOperation) {
-            $clazz = get_class($newOperation);
             if ($newOperation->getOperationType() == DbOperationType::INSERT) {
                 if (!array_key_exists($clazz, $this->inserts)) {
                     $this->inserts[$clazz] = [];

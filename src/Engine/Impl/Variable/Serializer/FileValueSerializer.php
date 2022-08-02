@@ -73,7 +73,7 @@ class FileValueSerializer extends PrimitiveValueSerializer
             $builder->encoding($encoding);
         }
 
-        $builder->setTransient($asTransientValue);
+        $builder->setTransient($isTransient);
 
         return $builder->create();
     }

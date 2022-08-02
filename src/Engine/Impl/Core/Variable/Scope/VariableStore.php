@@ -17,7 +17,7 @@ class VariableStore
     public function __construct(?VariablesProviderInterface $provider = null, VariableStoreObserverInterface ...$observers)
     {
         if ($provider === null) {
-            $this->$variablesProvider = VariableCollectionProvider::emptyVariables();
+            $this->variablesProvider = VariableCollectionProvider::emptyVariables();
         }
         $this->observers = empty($observers) ? [] : $observers;
     }

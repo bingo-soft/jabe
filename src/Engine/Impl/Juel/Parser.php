@@ -501,7 +501,6 @@ class Parser
                 $v = $this->value();
         }
         if ($v === null && $required) {
-            var_dump($this->token);
             $this->fail(self::EXPR_FIRST);
         }
         return $v;

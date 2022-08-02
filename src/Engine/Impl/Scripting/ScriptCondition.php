@@ -28,7 +28,7 @@ class ScriptCondition implements ConditionInterface
         if ($scope === null) {
             $scope = $execution;
         }
-        $invocation = new ScriptInvocation($script, $scope, $execution);
+        $invocation = new ScriptInvocation($this->script, $scope, $execution);
         try {
             Context::getProcessEngineConfiguration()
             ->getDelegateInterceptor()

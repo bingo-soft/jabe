@@ -23,7 +23,7 @@ class ExclusiveJobAddedNotification implements TransactionListenerInterface
     public function execute(CommandContext $commandContext)
     {
         //LOG.debugAddingNewExclusiveJobToJobExecutorCOntext(jobId);
-        $this->jobExecutorContext->addCurrentProcessorJobToQueue($jobId);
+        $this->jobExecutorContext->addCurrentProcessorJobToQueue($this->jobId);
         $this->logExclusiveJobAdded($commandContext);
     }
 

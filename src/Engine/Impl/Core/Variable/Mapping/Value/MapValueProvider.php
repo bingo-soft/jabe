@@ -31,4 +31,9 @@ class MapValueProvider implements ParameterValueProviderInterface
     {
         $this->providerMap = $providerMap;
     }
+
+    public function isDynamic(): bool
+    {
+        return true;
+    }
 }

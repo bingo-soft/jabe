@@ -34,7 +34,7 @@ class MigrationInstructionJsonConverter extends JsonObjectConverter
         );
     }
 
-    protected function readSourceActivityId($son): string
+    protected function readSourceActivityId($json): string
     {
         return JsonUtil::getString(JsonUtil::getArray($json, self::SOURCE_ACTIVITY_IDS));
     }

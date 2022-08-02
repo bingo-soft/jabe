@@ -4,7 +4,7 @@ namespace Jabe\Engine\Test\Mock;
 
 use Jabe\Engine\Delegate\VariableScopeInterface;
 use Jabe\Engine\Impl\El\{
-    ExpressionManager,
+    JuelExpressionManager,
     VariableContextElResolver
 };
 use Jabe\Engine\Impl\Util\El\{
@@ -16,9 +16,9 @@ use Jabe\Engine\Impl\Util\El\{
     MapELResolver
 };
 
-class MockExpressionManager extends ExpressionManager
+class MockExpressionManager extends JuelExpressionManager
 {
-    protected function createElResolver(?VariableScopeInterface $scope = null): ELResolver
+    protected function createElResolver(VariableScopeInterface $scope = null): ELResolver
     {
         $compositeElResolver = new CompositeELResolver();
         $compositeElResolver->add(new VariableScopeElResolver());

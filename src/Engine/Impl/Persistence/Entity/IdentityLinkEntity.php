@@ -172,7 +172,7 @@ class IdentityLinkEntity implements \Serializable, IdentityLinkInterface, DbEnti
         if (($this->task === null) && ($this->taskId !== null)) {
             $this->task = Context::getCommandContext()
             ->getTaskManager()
-            ->findTaskById($taskId);
+            ->findTaskById($this->taskId);
         }
         return $this->task;
     }
@@ -188,7 +188,7 @@ class IdentityLinkEntity implements \Serializable, IdentityLinkInterface, DbEnti
         if (($this->processDef === null) && ($this->processDefId !== null)) {
             $this->processDef = Context::getCommandContext()
                     ->getProcessDefinitionManager()
-                    ->findLatestProcessDefinitionById($processDefId);
+                    ->findLatestProcessDefinitionById($this->processDefId);
         }
         return $this->processDef;
     }

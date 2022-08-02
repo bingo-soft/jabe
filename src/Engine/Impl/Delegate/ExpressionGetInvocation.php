@@ -23,6 +23,6 @@ class ExpressionGetInvocation extends DelegateInvocation
 
     protected function invoke(): void
     {
-        $this->invocationResult = $this->valueExpression->getValue($elContext);
+        $this->invocationResult = $this->valueExpression->getValue($this->elContext);
     }
 }

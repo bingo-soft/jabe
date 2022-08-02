@@ -42,7 +42,7 @@ class ValueTypeResolverImpl implements ValueTypeResolverInterface
         $validParents = [];
         $validParents[] = $type;
 
-        foreach ($knownTypes as $knownType) {
+        foreach ($this->knownTypes as $knownType) {
             if (in_array($knownType->getParent(), $validParents)) {
                 $validParents[] = $knownType;
 

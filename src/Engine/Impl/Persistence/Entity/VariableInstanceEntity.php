@@ -106,10 +106,10 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
         $this->byteArrayField = new ByteArrayField($this, ResourceTypes::runtime());
         $this->typedValueField = new TypedValueField($this, true);
 
-        $typedValueField->addImplicitUpdateListener($this);
+        $this->typedValueField->addImplicitUpdateListener($this);
         $this->name = $name;
         $this->isTransient = $isTransient;
-        $typedValueField->setValue($value);
+        $this->typedValueField->setValue($value);
     }
 
     public static function createAndInsert(string $name, TypedValueInterface $value): VariableInstanceEntity
@@ -153,7 +153,7 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
     {
         $persistentState = [];
         if ($this->typedValueField->getSerializerName() !== null) {
-            $persistentState["serializerName"] = $typedValueField->getSerializerName();
+            $persistentState["serializerName"] = $this->typedValueField->getSerializerName();
         }
         if ($this->longValue !== null) {
             $persistentState["longValue"] = $this->longValue;
@@ -249,7 +249,7 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
 
     public function setByteArrayValue(string $bytes): void
     {
-        $this->byteArrayField->setByteArrayValue($bytes, $isTransient);
+        $this->byteArrayField->setByteArrayValue($bytes, $this->isTransient);
     }
 
     protected function deleteByteArrayValue(): void
@@ -285,7 +285,7 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
         $this->textValue2 = null;
         $this->typedValueField->clear();
 
-        if ($byteArrayField->getByteArrayId() !== null) {
+        if ($this->byteArrayField->getByteArrayId() !== null) {
             $this->deleteByteArrayValue();
             $this->setByteArrayValueId(null);
         }

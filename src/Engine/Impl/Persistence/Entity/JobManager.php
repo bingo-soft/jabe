@@ -219,13 +219,13 @@ class JobManager extends AbstractManager
 
         $orderingProperties = [];
         if ($engineConfiguration->isJobExecutorAcquireByPriority()) {
-            $orderingProperties[] = $job_PRIORITY_ORDERING_PROPERTY;
+            $orderingProperties[] = self::$JOB_PRIORITY_ORDERING_PROPERTY;
         }
         if ($engineConfiguration->isJobExecutorPreferTimerJobs()) {
-            $orderingProperties[] = $job_TYPE_ORDERING_PROPERTY;
+            $orderingProperties[] = self::$JOB_TYPE_ORDERING_PROPERTY;
         }
         if ($engineConfiguration->isJobExecutorAcquireByDueDate()) {
-            $orderingProperties[] = $job_DUEDATE_ORDERING_PROPERTY;
+            $orderingProperties[] = self::$JOB_DUEDATE_ORDERING_PROPERTY;
         }
 
         $params["orderingProperties"] = $orderingProperties;
@@ -371,7 +371,7 @@ class JobManager extends AbstractManager
         $parameters["processDefinitionKey"] = $processDefinitionKey;
         $parameters["isProcessDefinitionTenantIdSet"] = true;
         $parameters["processDefinitionTenantId"] = $processDefinitionTenantId;
-        $parameter["suspensionState"] = $suspensionState->getStateCode();
+        $parameters["suspensionState"] = $suspensionState->getStateCode();
         $this->getDbEntityManager()->update(JobEntity::class, "updateJobSuspensionStateByParameters", $this->configureParameterizedQuery($parameters));
     }
 

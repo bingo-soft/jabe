@@ -172,8 +172,8 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
             $this->lifecycleState = TaskState::STATE_INIT;
             $this->setExecution($data);
             $this->skipCustomListeners = $data->isSkipCustomListeners();
-            $this->setTenantId($execution->getTenantId());
-            $execution->addTask($this);
+            $this->setTenantId($this->execution->getTenantId());
+            $this->execution->addTask($this);
         } elseif ($data === null) {
             $this->lifecycleState = TaskState::STATE_CREATED;
             $this->variableStore = new VariableStore($this, new TaskEntityReferencer($this));
@@ -863,7 +863,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
     public function getActivityInstanceVariables(): array
     {
         if ($this->execution !== null) {
-            return $execution->getVariables();
+            return $this->execution->getVariables();
         }
         return [];
     }
@@ -1261,7 +1261,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
             }
 
             if (array_key_exists(self::OWNER, $this->propertyChanges)) {
-                $assigneePropertyChange = $this->propertyChanges[self::OWNER];
+                $ownerPropertyChange = $this->propertyChanges[self::OWNER];
                 $oldOwner = $ownerPropertyChange->getOrgValueString();
                 $newOwner = $ownerPropertyChange->getNewValueString();
                 $this->fireOwnerAuthorizationProvider($oldOwner, $newOwner);
@@ -1348,6 +1348,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
 
     public function getTaskDefinition(): ?TaskDefinition
     {
+        $taskDefinition = null;
         if ($this->taskDefinition === null && $this->taskDefinitionKey !== null) {
             $taskDefinitions = null;
             if ($this->processDefinitionId !== null) {
@@ -1366,7 +1367,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
             }
 
             if ($taskDefinitions !== null) {
-                $taskDefinition = $taskDefinitions[$taskDefinitionKey];
+                $taskDefinition = $taskDefinitions[$this->taskDefinitionKey];
             }
         }
         return $taskDefinition;
@@ -1444,7 +1445,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         if ($this->processDefinitionId !== null) {
             return Context::getProcessEngineConfiguration()
                 ->getDeploymentCache()
-                ->findDeployedProcessDefinitionById($processDefinitionId);
+                ->findDeployedProcessDefinitionById($this->processDefinitionId);
         }
         return null;
     }
@@ -1747,10 +1748,10 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         }
         if (
             Metrics::UNIQUE_TASK_WORKERS == $metricsName && $processEngineConfiguration->isTaskMetricsEnabled() &&
-            $assignee !== null && array_key_exists(self::ASSIGNEE, $propertyChanges)
+            $this->assignee !== null && array_key_exists(self::ASSIGNEE, $this->propertyChanges)
         ) {
             // assignee has changed and is not null, so mark a new task worker
-            $commandContext->getMeterLogManager()->insert(new TaskMeterLogEntity($assignee, ClockUtil::getCurrentTime()->format('c')));
+            $commandContext->getMeterLogManager()->insert(new TaskMeterLogEntity($this->assignee, ClockUtil::getCurrentTime()->format('c')));
         }
     }
 

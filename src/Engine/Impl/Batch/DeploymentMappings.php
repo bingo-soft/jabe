@@ -22,10 +22,10 @@ class DeploymentMappings extends \ArrayObject
 
     public function get(int $mappingIndex)
     {
-        if (isset($this[$index])) {
-            return $this[$index];
+        if (isset($this[$mappingIndex])) {
+            return $this[$mappingIndex];
         } else {
-            throw new \Exception(sprintf("Undefined array key %d", $index));
+            throw new \Exception(sprintf("Undefined array key %d", $mappingIndex));
         }
     }
 

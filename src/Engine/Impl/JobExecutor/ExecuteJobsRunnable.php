@@ -75,7 +75,7 @@ class ExecuteJobsRunnable implements RunnableInterface
             // if there were only exclusive jobs then the job executor
             // does a backoff. In order to avoid too much waiting time
             // we need to tell him to check once more if there were any jobs added.
-            $jobExecutor->jobWasAdded();
+            $this->jobExecutor->jobWasAdded();
         } finally {
             Context::removeJobExecutorContext();
         }
@@ -83,7 +83,7 @@ class ExecuteJobsRunnable implements RunnableInterface
 
     protected function executeJob(string $nextJobId, CommandExecutorInterface $commandExecutor, JobFailureCollector $jobFailureCollector): void
     {
-        ExecuteJobHelper::executeJob($nextJobId, $commandExecutor, $jobFailureCollector, new ExecuteJobsCmd($nextJobId, $jobFailureCollector), $processEngine->getProcessEngineConfiguration());
+        ExecuteJobHelper::executeJob($nextJobId, $commandExecutor, $jobFailureCollector, new ExecuteJobsCmd($nextJobId, $jobFailureCollector), $this->processEngine->getProcessEngineConfiguration());
     }
 
     protected function unlockJob(string $nextJobId, CommandExecutorInterface $commandExecutor): void

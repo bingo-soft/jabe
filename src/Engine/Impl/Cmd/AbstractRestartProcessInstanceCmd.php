@@ -35,12 +35,12 @@ abstract class AbstractRestartProcessInstanceCmd implements CommandInterface
     {
         $collectedProcessInstanceIds = [];
 
-        $processInstanceIds = $builder->getProcessInstanceIds();
+        $processInstanceIds = $this->builder->getProcessInstanceIds();
         if (!empty($processInstanceIds)) {
             $collectedProcessInstanceIds = $processInstanceIds;
         }
 
-        $historicProcessInstanceQuery = $builder->getHistoricProcessInstanceQuery();
+        $historicProcessInstanceQuery = $this->builder->getHistoricProcessInstanceQuery();
         if ($historicProcessInstanceQuery !== null) {
             $collectedProcessInstanceIds = array_merge($collectedProcessInstanceIds, $historicProcessInstanceQuery->listIds());
         }

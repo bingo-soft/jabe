@@ -72,7 +72,7 @@ class SimpleDbSqlSession extends DbSqlSession
         $dbEntity = $operation->getEntity();
 
         // get statement
-        $deleteStatement = $dbSqlSessionFactory->getDeleteStatement(get_class($dbEntity));
+        $deleteStatement = $this->dbSqlSessionFactory->getDeleteStatement(get_class($dbEntity));
         EnsureUtil::ensureNotNull("no delete statement for " . get_class($dbEntity) . " in mapping files", "deleteStatement", $deleteStatement);
         //LOG.executeDatabaseOperation("DELETE", dbEntity);
         try {
@@ -103,7 +103,7 @@ class SimpleDbSqlSession extends DbSqlSession
     {
         $dbEntity = $operation->getEntity();
 
-        $updateStatement = $dbSqlSessionFactory->getUpdateStatement($dbEntity);
+        $updateStatement = $this->dbSqlSessionFactory->getUpdateStatement($dbEntity);
         EnsureUtil::ensureNotNull("no update statement for " . get_class($dbEntity) . " in mapping files", "updateStatement", $updateStatement);
 
         //LOG.executeDatabaseOperation("UPDATE", dbEntity);

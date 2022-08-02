@@ -77,7 +77,7 @@ abstract class AddIdentityLinkCmd implements CommandInterface, \Serializable
         EnsureUtil::ensureNotNull("taskId", $this->taskId);
 
         $taskManager = $commandContext->getTaskManager();
-        $task = $taskManager->findTaskById($taskId);
+        $task = $taskManager->findTaskById($this->taskId);
         EnsureUtil::ensureNotNull("Cannot find task with id " . $this->taskId, "task", $task);
 
         $this->checkAddIdentityLink($task, $commandContext);

@@ -12,7 +12,7 @@ class BatchConfiguration
     public function __construct(array $ids, $failIfNotExistsOrMappings = null, $failIfNotExistsOrBatchId = null)
     {
         $this->ids = $ids;
-        if ($failIfNotExistsOrMappings === null && $failIfNotExists == null) {
+        if ($failIfNotExistsOrMappings === null && $failIfNotExistsOrBatchId == null) {
             $this->failIfNotExists = true;
         } elseif (is_bool($failIfNotExistsOrMappings)) {
             $this->failIfNotExists = $failIfNotExistsOrMappings;

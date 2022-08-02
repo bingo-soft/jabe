@@ -412,8 +412,8 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
     {
         $handlingResult = OptimisticLockingResult::THROW;
 
-        if (!empty($optimisticLockingListeners)) {
-            foreach ($optimisticLockingListeners as $optimisticLockingListener) {
+        if (!empty($this->optimisticLockingListeners)) {
+            foreach ($this->optimisticLockingListeners as $optimisticLockingListener) {
                 if (
                     $optimisticLockingListener->getEntityType() === null
                     || is_a($optimisticLockingListener->getEntityType(), $dbOperation->getEntityType(), true)
@@ -456,7 +456,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
     protected function flushEntityCache(): void
     {
         $cachedEntities = $this->dbEntityCache->getCachedEntities();
-        foreach ($cachedEntities as $cachedDbEntityInterface) {
+        foreach ($cachedEntities as $cachedDbEntity) {
             $this->flushCachedEntity($cachedDbEntity);
         }
 
@@ -636,7 +636,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
     protected function ensureHasId(DbEntityInterface $dbEntity): void
     {
         if ($dbEntity->getId() === null) {
-            $nextId = $idGenerator->getNextId();
+            $nextId = $this->idGenerator->getNextId();
             $dbEntity->setId($nextId);
         }
     }

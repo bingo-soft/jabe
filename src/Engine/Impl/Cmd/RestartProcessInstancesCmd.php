@@ -71,6 +71,7 @@ class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCmd
 
             public function __construct($scope, $commandContext, $processInstanceIds, $processDefinition, $processDefinitionId, $instructions)
             {
+                $this->scope = $scope;
                 $this->commandContext = $commandContext;
                 $this->processInstanceIds = $processInstanceIds;
                 $this->processDefinition = $processDefinition;
@@ -81,7 +82,7 @@ class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCmd
             public function run(): void
             {
                 foreach ($this->processInstanceIds as $processInstanceId) {
-                    $historicProcessInstance = $scope->getHistoricProcessInstance($this->commandContext, $processInstanceId);
+                    $historicProcessInstance = $this->scope->getHistoricProcessInstance($this->commandContext, $processInstanceId);
 
                     EnsureUtil::ensureNotNull(
                         "Historic process instance cannot be found",
@@ -89,17 +90,17 @@ class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCmd
                         $historicProcessInstance
                     );
 
-                    $scope->ensureHistoricProcessInstanceNotActive($historicProcessInstance);
-                    $scope->ensureSameProcessDefinition($historicProcessInstance, $this->processDefinitionId);
+                    $this->scope->ensureHistoricProcessInstanceNotActive($historicProcessInstance);
+                    $this->scope->ensureSameProcessDefinition($historicProcessInstance, $this->processDefinitionId);
 
-                    $instantiationBuilder = $scope->getProcessInstantiationBuilder($commandExecutor, $this->processDefinitionId);
-                    $scope->applyProperties($instantiationBuilder, $this->processDefinition, $historicProcessInstance);
+                    $instantiationBuilder = $this->scope->getProcessInstantiationBuilder($this->scope->commandExecutor, $this->processDefinitionId);
+                    $this->scope->applyProperties($instantiationBuilder, $this->processDefinition, $historicProcessInstance);
 
                     $modificationBuilder = $instantiationBuilder->getModificationBuilder();
 
                     $instantiationBuilder->setModificationOperations($this->instructions);
 
-                    $variables = $this->collectVariables($commandContext, $historicProcessInstance);
+                    $variables = $this->collectVariables($this->commandContext, $historicProcessInstance);
                     $instantiationBuilder->setVariables($variables);
 
                     $instantiationBuilder->execute($this->builder->isSkipCustomListeners(), $this->builder->isSkipIoMappings());

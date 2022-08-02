@@ -58,6 +58,6 @@ class VariableListenerInvocationListener implements VariableInstanceLifecycleLis
         // ignore events of variables that are not set in an execution
         $sourceExecution = $sourceScope;
         $scopeExecution = $sourceExecution->isScope() ? $sourceExecution : $sourceExecution->getParent();
-        $scopeExecution->delayEvent($targetScope, $event);
+        $scopeExecution->delayEvent($this->targetScope, $event);
     }
 }

@@ -76,7 +76,7 @@ class ProcessDefinitionBuilder
         $activity = $this->getActivity();
         $this->transition = $activity->createOutgoingTransition($transitionId);
 
-        $this->unresolvedTransitions[] = [$transition, $destinationActivityId];
+        $this->unresolvedTransitions[] = [$this->transition, $destinationActivityId];
         $this->processElement = $this->transition;
         return $this;
     }
@@ -112,7 +112,7 @@ class ProcessDefinitionBuilder
         foreach ($this->unresolvedTransitions as $unresolvedTransition) {
             $transition = $unresolvedTransition[0];
             $destinationActivityName = $unresolvedTransition[1];
-            $destination = $processDefinition->findActivity($destinationActivityName);
+            $destination = $this->processDefinition->findActivity($destinationActivityName);
             if ($destination === null) {
                 throw new \Exception("destination '" . $destinationActivityName . "' not found.  (referenced from transition in '" . $transition->getSource()->getId() . "')");
             }

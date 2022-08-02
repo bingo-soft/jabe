@@ -84,8 +84,8 @@ class CreateAttachmentCmd implements CommandInterface
         $dbEntityManger = $commandContext->getDbEntityManager();
         $dbEntityManger->insert($attachment);
 
-        if ($content !== null) {
-            $bytes = IoUtil::readInputStream($content, $attachmentName);
+        if ($this->content !== null) {
+            $bytes = IoUtil::readInputStream($this->content, $this->attachmentName);
             $byteArray = new ByteArrayEntity($bytes, ResourceTypes::history());
 
             $byteArray->setRootProcessInstanceId($attachment->getRootProcessInstanceId());

@@ -20,8 +20,8 @@ class TelemetryDataImpl implements TelemetryDataInterface
             $this->installation = $installationOrOther;
             $this->product = $product;
         } elseif ($installationOrOther instanceof TelemetryDataInterface) {
-            $this->installation = $other->installation;
-            $this->product = new ProductImpl($other->product);
+            $this->installation = $installationOrOther->installation;
+            $this->product = new ProductImpl($installationOrOther->product);
         }
     }
 

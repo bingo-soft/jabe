@@ -27,8 +27,10 @@ class MessageCorrelationAsyncBuilderImpl implements MessageCorrelationAsyncBuild
     {
         if ($commandExecutorOrName instanceof CommandExecutorInterface) {
             $this->messageName = $messageName;
-            EnsureUtil::ensureNotNull("commandExecutor", "commandExecutor", $commandExecutor);
-            $this->commandExecutor = $commandExecutor;
+            EnsureUtil::ensureNotNull("commandExecutor", "commandExecutor", $commandExecutorOrName);
+            $this->commandExecutor = $commandExecutorOrName;
+        } elseif (is_string($commandExecutorOrName)) {
+            $this->messageName = $commandExecutorOrName;
         }
     }
 

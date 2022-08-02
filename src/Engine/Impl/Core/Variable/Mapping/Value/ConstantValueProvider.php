@@ -22,4 +22,9 @@ class ConstantValueProvider implements ParameterValueProviderInterface
     {
         $this->value = $value;
     }
+
+    public function isDynamic(): bool
+    {
+        return false;
+    }
 }

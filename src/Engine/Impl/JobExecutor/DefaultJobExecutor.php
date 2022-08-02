@@ -21,7 +21,7 @@ class DefaultJobExecutor extends ThreadPoolJobExecutor
     {
         if ($this->threadPoolExecutor === null || $this->threadPoolExecutor->isShutdown()) {
             $threadPoolQueue = new ArrayBlockingQueue($this->queueSize);
-            $this->threadPoolExecutor = new ProcessPoolExecutor($corePoolSize, 0, TimeUnit::MILLISECONDS, $threadPoolQueue);
+            $this->threadPoolExecutor = new ProcessPoolExecutor($this->corePoolSize, 0, TimeUnit::MILLISECONDS, $threadPoolQueue);
             //$this->threadPoolExecutor->setRejectedExecutionHandler(...);
         }
 
@@ -36,7 +36,7 @@ class DefaultJobExecutor extends ThreadPoolJobExecutor
 
         // Waits for 1 minute to finish all currently executing jobs
         try {
-            if (!$threadPoolExecutor->awaitTermination(60, TimeUnit::SECONDS)) {
+            if (!$this->threadPoolExecutor->awaitTermination(60, TimeUnit::SECONDS)) {
                 //LOG.timeoutDuringShutdown();
             }
         } catch (\Exception $e) {

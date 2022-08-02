@@ -34,7 +34,7 @@ class CompensationUtil
     public static function throwCompensationEvent(array $eventSubscriptions, ActivityExecutionInterface $execution, bool $async): void
     {
         // first spawn the compensating executions
-        foreach ($this->eventSubscriptions as $eventSubscription) {
+        foreach ($eventSubscriptions as $eventSubscription) {
             // check whether compensating execution is already created
             // (which is the case when compensating an embedded subprocess,
             // where the compensating execution is created when leaving the subprocess
@@ -54,9 +54,7 @@ class CompensationUtil
             $compensatingExecution->setConcurrent(true);
         }
 
-        usort($this->eventSubscriptions, function (EventSubscriptionEntity $o1, EventSubscriptionEntity $o2) use ($order) {
-            $pos_a = array_search($a['id'], $order);
-            $pos_b = array_search($b['id'], $order);
+        usort($this->eventSubscriptions, function (EventSubscriptionEntity $o1, EventSubscriptionEntity $o2) {
             return $o2->getCreated() < $o1->getCreated();
         });
 
@@ -95,7 +93,7 @@ class CompensationUtil
             // the eventScopeExecution references a 'snapshot' of the local variables
             $variables = $execution->getVariablesLocal();
             foreach ($variables as $key => $value) {
-                $eventScopeExecution->setVariableLocal($variable->getKey(), $variable->getValue());
+                $eventScopeExecution->setVariableLocal($key, $value);
             }
 
             // set event subscriptions to the event scope execution:

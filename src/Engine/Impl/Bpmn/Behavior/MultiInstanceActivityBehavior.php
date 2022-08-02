@@ -60,12 +60,12 @@ abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivityBehavio
             $collection = null;
             if ($this->collectionExpression !== null) {
                 $collection = $this->collectionExpression->getValue($execution);
-            } elseif ($collectionVariable !== null) {
-                $collection = $execution->getVariable($collectionVariable);
+            } elseif ($this->collectionVariable !== null) {
+                $collection = $execution->getVariable($this->collectionVariable);
             }
 
             $value = $this->getElementAtIndex($loopCounter, $collection);
-            $this->setLoopVariable($execution, $collectionElementVariable, $value);
+            $this->setLoopVariable($execution, $this->collectionElementVariable, $value);
         }
     }
 
@@ -79,7 +79,7 @@ abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivityBehavio
         if ($this->loopCardinalityExpression !== null) {
             $nrOfInstances = $this->resolveLoopCardinality($execution);
         } elseif ($this->collectionExpression !== null) {
-            $obj = $collectionExpression->getValue($execution);
+            $obj = $this->collectionExpression->getValue($execution);
             if (!is_array($obj)) {
                 //throw LOG.unresolvableExpressionException($collectionExpression->getExpressionText(), "Collection");
             }

@@ -66,7 +66,7 @@ class ByteArrayField
     public function setByteArrayValue($bytes, ?bool $isTransient = false): void
     {
         if ($bytes instanceof ByteArrayEntity) {
-            $this->byteArrayValue = $byteArrayValue;
+            $this->byteArrayValue = $this->byteArrayValue;
         } else {
             if ($bytes !== null) {
                 // note: there can be cases where byteArrayId is not null
@@ -103,7 +103,7 @@ class ByteArrayField
             if ($this->byteArrayValue !== null) {
                 Context::getCommandContext()
                         ->getDbEntityManager()
-                        ->delete($byteArrayValue);
+                        ->delete($this->byteArrayValue);
             }
 
             $this->byteArrayId = null;

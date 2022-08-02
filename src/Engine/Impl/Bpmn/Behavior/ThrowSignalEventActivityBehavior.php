@@ -34,7 +34,7 @@ class ThrowSignalEventActivityBehavior extends AbstractBpmnActivityBehavior
 
         foreach ($signalEventSubscriptions as $signalEventSubscription) {
             if ($this->isActiveEventSubscription($signalEventSubscription)) {
-                $signalEventSubscription->eventReceived($variableMap, null, $businessKey, $signalDefinition->isAsync());
+                $signalEventSubscription->eventReceived($variableMap, null, $businessKey, $this->signalDefinition->isAsync());
             }
         }
         $this->leave($execution);

@@ -30,7 +30,7 @@ class EvaluateStartConditionCmd implements CommandInterface
     public function execute(CommandContext $commandContext)
     {
         $conditionHandler = $commandContext->getProcessEngineConfiguration()->getConditionHandler();
-        $conditionSet = new ConditionSet($builder);
+        $conditionSet = new ConditionSet($this->builder);
 
         $results = $conditionHandler->evaluateStartCondition($commandContext, $conditionSet);
 

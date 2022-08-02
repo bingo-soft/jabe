@@ -75,7 +75,7 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         $newExecution = ExecutionEntity::createNewExecution();
 
         if ($this->tenantId !== null) {
-            $newExecution->setTenantId($tenantId);
+            $newExecution->setTenantId($this->tenantId);
         }
 
         return $newExecution;
@@ -90,7 +90,7 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         // do not reset executions (CAM-2557)!
         // processInstance->setExecutions(new ArrayList<ExecutionEntity>());
 
-        $processInstance->setProcessDefinition($processDefinition);
+        $processInstance->setProcessDefinition($this->processDefinition);
 
         // Do not initialize variable map (let it happen lazily)
 
@@ -132,7 +132,7 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
     {
         $identityLinks = Context::getCommandContext()
             ->getIdentityLinkManager()
-            ->findIdentityLinkByProcessDefinitionUserAndGroup($id, $userId, $groupId);
+            ->findIdentityLinkByProcessDefinitionUserAndGroup($this->id, $userId, $groupId);
 
         foreach ($identityLinks as $identityLink) {
             $identityLink->delete();
@@ -144,7 +144,7 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         if (!$this->isIdentityLinksInitialized) {
             $this->definitionIdentityLinkEntities = Context::getCommandContext()
             ->getIdentityLinkManager()
-            ->findIdentityLinksByProcessDefinitionId($id);
+            ->findIdentityLinksByProcessDefinitionId($this->id);
             $this->isIdentityLinksInitialized = true;
         }
 

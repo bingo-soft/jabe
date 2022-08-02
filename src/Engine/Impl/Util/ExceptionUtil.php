@@ -245,7 +245,8 @@ class ExceptionUtil
             $sqlState = $sqlException->getSQLState();
         } else {
             //SQLSTATE
-            preg_match_all('/SQLSTATE\[(\d*)\]/', $message, $matches);
+            $message = strtolower($sqlException->getMessage());
+            preg_match_all('/sqlstate\[(\d*)\]/', $message, $matches);
             if (!empty($matches[0])) {
                 $sqlState = $matches[0];
             }

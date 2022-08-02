@@ -104,18 +104,18 @@ class EnsureUtil
         throw self::generateException($message);
     }
 
-    public static function ensureNotContainsEmptyString(string $message, string $variableName, array $variable = []): void
+    public static function ensureNotContainsEmptyString(string $message, string $variableName, array $variables = []): void
     {
-        foreach ($values as $value) {
+        foreach ($variables as $value) {
             if (empty($value)) {
                 throw self::generateException($message, $variableName, "contains empty string");
             }
         }
     }
 
-    public static function ensureNotContainsNull(string $message, string $variableName, array $variable = []): void
+    public static function ensureNotContainsNull(string $message, string $variableName, array $variables = []): void
     {
-        foreach ($values as $value) {
+        foreach ($variables as $value) {
             if ($value === null) {
                 throw self::generateException($message, $variableName, "contains null");
             }

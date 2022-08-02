@@ -89,7 +89,7 @@ class ActivityExecutionTreeMapping
 
     protected function initialize(): void
     {
-        $processInstance = $commandContext->getExecutionManager()->findExecutionById($this->processInstanceId);
+        $processInstance = $this->commandContext->getExecutionManager()->findExecutionById($this->processInstanceId);
         $this->processDefinition = $processInstance->getProcessDefinition();
 
         $executions = $this->fetchExecutionsForProcessInstance($processInstance);

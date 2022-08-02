@@ -98,7 +98,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
     {
         $scope = $this;
         $mappedStatement = $this->dbSqlSessionFactory->mapStatement($statement);
-        $result = ExceptionUtil::doWithExceptionWrapper(function () use ($scope, $mappedStatementt, $params, $types) {
+        $result = ExceptionUtil::doWithExceptionWrapper(function () use ($scope, $mappedStatement, $params, $types) {
             return $scope->sqlSession->selectOne($mappedStatement, $params, $types);
         });
         $this->fireEntityLoaded($result);
@@ -225,7 +225,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
         if ($this->isConcurrentModificationException($operation, $failure)) {
             $failedState = DbOperationState::FAILED_CONCURRENT_MODIFICATION;
         } elseif (
-            DbOperationType::DELETE == $perationType
+            DbOperationType::DELETE == $operationType
             && $dependencyOperation !== null
             && $dependencyOperation->getState() !== null
             && $dependencyOperation->getState() != DbOperationState::APPLIED
@@ -522,8 +522,8 @@ abstract class DbSqlSession extends AbstractPersistenceSession
     {
         $selectSchemaVersionStatement = $this->dbSqlSessionFactory->mapStatement("selectDbSchemaVersion");
         $scope = $this;
-        return ExceptionUtil::doWithExceptionWrapper(function () use ($scope) {
-            return $this->sqlSession->selectOne($selectSchemaVersionStatement);
+        return ExceptionUtil::doWithExceptionWrapper(function () use ($scope, $selectSchemaVersionStatement) {
+            return $scope->sqlSession->selectOne($selectSchemaVersionStatement);
         });
     }
 

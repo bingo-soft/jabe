@@ -23,13 +23,13 @@ abstract class PvmAtomicOperationCreateScope implements PvmAtomicOperationInterf
         $activity = $execution->getActivity();
         if ($activity->isScope()) {
             $propagatingExecution = $execution->createExecution();
-            $propagatingEexecution->setActivity($activity);
-            $propagatingEexecution->setTransition($execution->getTransition());
+            $propagatingExecution->setActivity($activity);
+            $propagatingExecution->setTransition($execution->getTransition());
             $execution->setTransition(null);
             $execution->setActive(false);
             $execution->setActivity(null);
             //LOG.createScope(execution, propagatingExecution);
-            $propagatingEexecution->initialize();
+            $propagatingExecution->initialize();
         } else {
             $propagatingExecution = $execution;
         }

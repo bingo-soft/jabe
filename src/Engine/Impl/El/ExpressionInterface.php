@@ -10,7 +10,7 @@ use Jabe\Engine\Delegate\ExpressionInterface as DelegateExpressionInterface;
 
 interface ExpressionInterface extends DelegateExpressionInterface
 {
-    public function getValue(VariableScopeInterface $variableScope, BaseDelegateExecutionInterface $contextExecution);
+    public function getValue(VariableScopeInterface $variableScope, BaseDelegateExecutionInterface $contextExecution = null);
 
-    public function setValue($value, VariableScopeInterface $variableScope, BaseDelegateExecutionInterface $contextExecution): void;
+    public function setValue($value, VariableScopeInterface $variableScope, BaseDelegateExecutionInterface $contextExecution = null): void;
 }

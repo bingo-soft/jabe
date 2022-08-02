@@ -101,7 +101,7 @@ class MailActivityBehavior extends AbstractBpmnActivityBehavior
 
     protected function addTo(PHPMailer $email, string $to): void
     {
-        $tos = $splitAndTrim($to);
+        $tos = $this->splitAndTrim($to);
         if (!empty($tos)) {
             foreach ($tos as $t) {
                 try {
@@ -136,7 +136,7 @@ class MailActivityBehavior extends AbstractBpmnActivityBehavior
 
     protected function addCc(PHPMailer $email, string $cc): void
     {
-        $ccs = $this->splitAndTrim(cc);
+        $ccs = $this->splitAndTrim($cc);
         if (!empty($ccs)) {
             foreach ($ccs as $c) {
                 try {

@@ -205,7 +205,8 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
 
     public function setVariables($variables, ?bool $skipSerializationFormatCheck = null): void
     {
-        VariableUtil::setVariables($variables, new class ($this) implements SetVariableFunctionInterface {
+        $scope = $this;
+        VariableUtil::setVariables($variables, new class ($scope) implements SetVariableFunctionInterface {
             private $scope;
 
             public function __construct(AbstractVariableScope $scope)
@@ -215,14 +216,15 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
 
             public function apply(string $variableName, $variableValue): void
             {
-                $scope->setVariable($variableName, $variableValue);
+                $this->scope->setVariable($variableName, $variableValue);
             }
         });
     }
 
     public function setVariablesLocal($variables, ?bool $skipSerializationFormatCheck = null): void
     {
-        VariableUtil::setVariables($variables, new class ($this) implements SetVariableFunctionInterface {
+        $scope = $this;
+        VariableUtil::setVariables($variables, new class ($scope) implements SetVariableFunctionInterface {
             private $scope;
 
             public function __construct(AbstractVariableScope $scope)
@@ -232,7 +234,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
 
             public function apply(string $variableName, $variableValue): void
             {
-                $scope->setVariableLocal($variableName, $variableValue);
+                $this->scope->setVariableLocal($variableName, $variableValue);
             }
         });
     }

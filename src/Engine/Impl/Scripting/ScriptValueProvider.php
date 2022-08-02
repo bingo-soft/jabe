@@ -19,7 +19,7 @@ class ScriptValueProvider implements ParameterValueProviderInterface
 
     public function getValue(VariableScopeInterface $variableScope)
     {
-        $invocation = new ScriptInvocation($script, $variableScope);
+        $invocation = new ScriptInvocation($this->script, $variableScope);
         try {
             Context::getProcessEngineConfiguration()
             ->getDelegateInterceptor()

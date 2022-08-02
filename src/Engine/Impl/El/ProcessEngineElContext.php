@@ -15,23 +15,23 @@ class ProcessEngineElContext extends ELContext
 
     protected $functionMapper;
 
-    public function __construct(array $functionMappers, ?ELResolver $elResolver = null)
+    public function __construct(FunctionMapper $functionMapper, ELResolver $elResolver = null)
     {
-        $this->functionMapper = new CompositeFunctionMapper($functionMappers);
+        $this->functionMapper = $functionMapper;
         $this->elResolver = $elResolver;
     }
 
-    public function getELResolver(): ?ELResolver
+    public function getELResolver(): ELResolver
     {
         return $this->elResolver;
     }
 
-    public function getFunctionMapper(): ?FunctionMapper
+    public function getFunctionMapper(): FunctionMapper
     {
         return $this->functionMapper;
     }
 
-    public function getVariableMapper(): ?VariableMapper
+    public function getVariableMapper(): VariableMapper
     {
         return null;
     }

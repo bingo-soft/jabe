@@ -47,7 +47,7 @@ class EscalationEventDefinitionFinder implements TreeVisitorInterface
     protected function isReThrowingEscalationEventSubprocess(EscalationEventDefinition $escalationEventDefinition): bool
     {
         $escalationHandler = $escalationEventDefinition->getEscalationHandler();
-        return $escalationHandler->isSubProcessScope() && $escalationHandler == $throwEscalationActivity->getFlowScope();
+        return $escalationHandler->isSubProcessScope() && $escalationHandler == $this->throwEscalationActivity->getFlowScope();
     }
 
     public function getEscalationEventDefinition(): EscalationEventDefinition

@@ -73,7 +73,7 @@ class BpmnParser extends Parser
      */
     public function createParse(): BpmnParse
     {
-        return $bpmnParseFactory->createBpmnParse($this);
+        return $this->bpmnParseFactory->createBpmnParse($this);
     }
 
     public function getExpressionManager(): ExpressionManager

@@ -28,7 +28,7 @@ class UnregisterProcessApplicationCmd implements CommandInterface
         $commandContext->getAuthorizationManager()->checkAdminOrPermission("checkUnregisterProcessApplication");
         Context::getProcessEngineConfiguration()
             ->getProcessApplicationManager()
-            ->unregisterProcessApplicationForDeployments($this->deploymentIds, $removeProcessesFromCache);
+            ->unregisterProcessApplicationForDeployments($this->deploymentIds, $this->removeProcessesFromCache);
         return null;
     }
 }

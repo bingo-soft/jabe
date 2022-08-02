@@ -25,6 +25,6 @@ class AstNumber extends AstLiteral
 
     public function appendStructure(string &$b, Bindings $bindings): void
     {
-        $b .= strval($value);
+        $b .= strval($this->value);
     }
 }

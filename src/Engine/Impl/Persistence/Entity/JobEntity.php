@@ -87,6 +87,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
     public function execute(CommandContext $commandContext)
     {
+        $execution = null;
         if ($this->executionId !== null) {
             $execution = $this->getExecution();
             EnsureUtil::ensureNotNull("Cannot find execution with id '" . $this->executionId . "' referenced from job '" . $this . "'", "execution", $execution);
@@ -101,8 +102,8 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         $this->preExecute($commandContext);
         $jobHandler = $this->getJobHandler();
         $configuration = $this->getJobHandlerConfiguration();
-        EnsureUtil::ensureNotNull("Cannot find job handler '" . $jobHandlerType . "' from job '" . $this . "'", "jobHandler", $jobHandler);
-        $jobHandler->execute($configuration, $execution, $commandContext, $tenantId);
+        EnsureUtil::ensureNotNull("Cannot find job handler '" . $this->jobHandlerType . "' from job '" . $this . "'", "jobHandler", $jobHandler);
+        $jobHandler->execute($configuration, $execution, $commandContext, $this->tenantId);
         $this->postExecute($commandContext);
     }
 
@@ -185,7 +186,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         $persistentState["priority"] = $this->priority;
         $persistentState["tenantId"] = $this->tenantId;
         if ($this->exceptionByteArrayId !== null) {
-            $persistentState["exceptionByteArrayId"] = $exceptionByteArrayId;
+            $persistentState["exceptionByteArrayId"] = $this->exceptionByteArrayId;
         }
         return $persistentState;
     }
@@ -359,7 +360,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
     public function isSuspended(): bool
     {
-        return $suspensionState == SuspensionState::suspended()->getStateCode();
+        return $this->suspensionState == SuspensionState::suspended()->getStateCode();
     }
 
     public function getProcessDefinitionId(): string

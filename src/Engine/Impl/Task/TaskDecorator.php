@@ -29,7 +29,7 @@ class TaskDecorator
     public function decorate(TaskEntity $task, VariableScopeInterface $variableScope): void
     {
         // set the taskDefinition
-        $task->setTaskDefinition($taskDefinition);
+        $task->setTaskDefinition($this->taskDefinition);
         // name
         $this->initializeTaskName($task, $variableScope);
         // description
@@ -46,7 +46,7 @@ class TaskDecorator
 
     protected function initializeTaskName(TaskEntity $task, VariableScopeInterface $variableScope): void
     {
-        $nameExpression = $taskDefinition->getNameExpression();
+        $nameExpression = $this->taskDefinition->getNameExpression();
         if ($nameExpression !== null) {
             $name = $nameExpression->getValue($variableScope);
             $task->setName($name);
@@ -55,7 +55,7 @@ class TaskDecorator
 
     protected function initializeTaskDescription(TaskEntity $task, VariableScopeInterface $variableScope): void
     {
-        $descriptionExpression = $taskDefinition->getDescriptionExpression();
+        $descriptionExpression = $this->taskDefinition->getDescriptionExpression();
         if ($descriptionExpression !== null) {
             $description = $descriptionExpression->getValue($variableScope);
             $task->setDescription($description);
@@ -64,7 +64,7 @@ class TaskDecorator
 
     protected function initializeTaskDueDate(TaskEntity $task, VariableScopeInterface $variableScope): void
     {
-        $dueDateExpression = $taskDefinition->getDueDateExpression();
+        $dueDateExpression = $this->taskDefinition->getDueDateExpression();
         if ($dueDateExpression !== null) {
             $dueDate = $dueDateExpression->getValue($variableScope);
             if ($dueDate !== null) {
@@ -83,7 +83,7 @@ class TaskDecorator
 
     protected function initializeTaskFollowUpDate(TaskEntity $task, VariableScopeInterface $variableScope): void
     {
-        $followUpDateExpression = $taskDefinition->getFollowUpDateExpression();
+        $followUpDateExpression = $this->taskDefinition->getFollowUpDateExpression();
         if ($followUpDateExpression !== null) {
             $followUpDate = $followUpDateExpression->getValue($variableScope);
             if ($followUpDate !== null) {
@@ -134,7 +134,7 @@ class TaskDecorator
 
     protected function initializeTaskAssignee(TaskEntity $task, VariableScopeInterface $variableScope): void
     {
-        $assigneeExpression = $taskDefinition->getAssigneeExpression();
+        $assigneeExpression = $this->taskDefinition->getAssigneeExpression();
         if ($assigneeExpression !== null) {
             $task->setAssignee($assigneeExpression->getValue($variableScope));
         }
@@ -142,7 +142,7 @@ class TaskDecorator
 
     protected function initializeTaskCandidateGroups(TaskEntity $task, VariableScopeInterface $variableScope): void
     {
-        $candidateGroupIdExpressions = $taskDefinition->getCandidateGroupIdExpressions();
+        $candidateGroupIdExpressions = $this->taskDefinition->getCandidateGroupIdExpressions();
 
         foreach ($candidateGroupIdExpressions as $groupIdExpr) {
             $value = $groupIdExpr->getValue($variableScope);
@@ -160,7 +160,7 @@ class TaskDecorator
 
     protected function initializeTaskCandidateUsers(TaskEntity $task, VariableScopeInterface $variableScope): void
     {
-        $candidateUserIdExpressions = $taskDefinition->getCandidateUserIdExpressions();
+        $candidateUserIdExpressions = $this->taskDefinition->getCandidateUserIdExpressions();
         foreach ($candidateUserIdExpressions as $userIdExpr) {
             $value = $userIdExpr->getValue($variableScope);
             if (is_string($value)) {

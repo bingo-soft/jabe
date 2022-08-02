@@ -769,7 +769,7 @@ class UserOperationLogManager extends AbstractHistoricManager
 
             public function createHistoryEvents(HistoryEventProducerInterface $producer): array
             {
-                return $producer->createUserOperationLogEvents($context);
+                return $producer->createUserOperationLogEvents($this->context);
             }
         });
     }

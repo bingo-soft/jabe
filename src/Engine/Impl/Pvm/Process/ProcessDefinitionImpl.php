@@ -80,6 +80,7 @@ class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefinitionInt
 
     public function getInitialActivityStack(?ActivityImpl $startActivity = null): array
     {
+        $initialActivityStack = null;
         foreach ($this->initialActivityStacks as $stack) {
             if ($stack[0] == $startActivity) {
                 $initialActivityStack = $stack[1];

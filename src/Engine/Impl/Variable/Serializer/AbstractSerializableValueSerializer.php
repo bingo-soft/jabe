@@ -59,7 +59,7 @@ abstract class AbstractSerializableValueSerializer extends AbstractTypedValueSer
         $serializedByteValue = $this->readSerializedValueFromFields($valueFields);
         $serializedStringValue = $serializedByteValue;
 
-        if ($deserializeObjectValue) {
+        if ($deserializeValue) {
             $deserializedObject = null;
             if ($serializedByteValue !== null) {
                 try {
@@ -68,10 +68,10 @@ abstract class AbstractSerializableValueSerializer extends AbstractTypedValueSer
                     throw new ProcessEngineException("Cannot deserialize object in variable '" . $valueFields->getName());
                 }
             }
-            $value = $this->createDeserializedValue($deserializedObject, $serializedStringValue, $valueFields, $asTransientValue);
+            $value = $this->createDeserializedValue($deserializedObject, $serializedStringValue, $valueFields, $isTransient);
             return $value;
         } else {
-            return $this->createSerializedValue($serializedStringValue, $valueFields, $asTransientValue);
+            return $this->createSerializedValue($serializedStringValue, $valueFields, $isTransient);
         }
     }
 

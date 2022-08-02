@@ -29,11 +29,11 @@ class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable
             $this->acquisitionContext->reset();
             $this->acquisitionContext->setAcquisitionTime(time());
 
-            $processEngines = $jobExecutor->engineIterator();
+            $processEngines = $this->jobExecutor->engineIterator();
 
             try {
                 foreach ($processEngines as $currentProcessEngine) {
-                    if (!$jobExecutor->hasRegisteredEngine($currentProcessEngine)) {
+                    if (!$this->jobExecutor->hasRegisteredEngine($currentProcessEngine)) {
                         // if engine has been unregistered meanwhile
                         continue;
                     }

@@ -144,7 +144,7 @@ class HistoricBatchEntity extends HistoryEvent implements HistoricBatchInterface
     {
         $persistentState = [];
 
-        $persistentState["endTime"] = $endTime;
+        $persistentState["endTime"] = $this->endTime;
 
         return $persistentState;
     }
@@ -152,14 +152,14 @@ class HistoricBatchEntity extends HistoryEvent implements HistoricBatchInterface
     public function delete(): void
     {
         $historicIncidentManager = Context::getCommandContext()->getHistoricIncidentManager();
-        $historicIncidentManager->deleteHistoricIncidentsByJobDefinitionId($seedJobDefinitionId);
-        $historicIncidentManager->deleteHistoricIncidentsByJobDefinitionId($monitorJobDefinitionId);
-        $historicIncidentManager->deleteHistoricIncidentsByJobDefinitionId($batchJobDefinitionId);
+        $historicIncidentManager->deleteHistoricIncidentsByJobDefinitionId($this->seedJobDefinitionId);
+        $historicIncidentManager->deleteHistoricIncidentsByJobDefinitionId($this->monitorJobDefinitionId);
+        $historicIncidentManager->deleteHistoricIncidentsByJobDefinitionId($this->batchJobDefinitionId);
 
         $historicJobLogManager = Context::getCommandContext()->getHistoricJobLogManager();
-        $historicJobLogManager->deleteHistoricJobLogsByJobDefinitionId($seedJobDefinitionId);
-        $historicJobLogManager->deleteHistoricJobLogsByJobDefinitionId($monitorJobDefinitionId);
-        $historicJobLogManager->deleteHistoricJobLogsByJobDefinitionId($batchJobDefinitionId);
+        $historicJobLogManager->deleteHistoricJobLogsByJobDefinitionId($this->seedJobDefinitionId);
+        $historicJobLogManager->deleteHistoricJobLogsByJobDefinitionId($this->monitorJobDefinitionId);
+        $historicJobLogManager->deleteHistoricJobLogsByJobDefinitionId($this->batchJobDefinitionId);
 
         Context::getCommandContext()->getHistoricBatchManager()->delete($this);
     }

@@ -18,7 +18,7 @@ class VariableInstanceConcurrentLocalInitializer implements VariableInstanceLife
 
     public function onCreate(VariableInstanceEntity $variableInstance, AbstractVariableScope $sourceScope): void
     {
-        $variableInstance->setConcurrentLocal(!$execution->isScope() || $execution->isExecutingScopeLeafActivity());
+        $variableInstance->setConcurrentLocal(!$this->execution->isScope() || $this->execution->isExecutingScopeLeafActivity());
     }
 
     public function onDelete(VariableInstanceEntity $variableInstance, AbstractVariableScope $sourceScope): void

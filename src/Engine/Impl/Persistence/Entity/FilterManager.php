@@ -58,7 +58,7 @@ class FilterManager extends AbstractManager
     {
         EnsureUtil::ensureNotNull("Invalid filter id", "filterId", $filterId);
         $this->checkAuthorization(Permissions::read(), Resources::filter(), $filterId);
-        return $this->findFilterByIdInternal($filterIdfilterId);
+        return $this->findFilterByIdInternal($filterId);
     }
 
     protected function findFilterByIdInternal(string $filterId): FilterEntity

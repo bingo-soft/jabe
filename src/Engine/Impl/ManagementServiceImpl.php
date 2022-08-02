@@ -153,7 +153,7 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
 
     public function setJobRetriesAsync($ids, $queryOrRetries, $historicQueryOrRetries = null, $retries = null): BatchInterface
     {
-        if ($historicQueryOrretries instanceof HistoricProcessInstanceQueryInterface) {
+        if ($historicQueryOrRetries instanceof HistoricProcessInstanceQueryInterface) {
             return $this->commandExecutor->execute(
                 new SetJobsRetriesByProcessBatchCmd($ids, $queryOrRetries, $historicQueryOrRetries, $retries)
             );
@@ -258,7 +258,7 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
 
     public function createActivityStatisticsQuery(string $processDefinitionId): ActivityStatisticsQueryInterface
     {
-        return new ActivityStatisticsQueryImpl($processDefinitionId, $commandExecutor);
+        return new ActivityStatisticsQueryImpl($processDefinitionId, $this->commandExecutor);
     }
 
     public function createDeploymentStatisticsQuery(): DeploymentStatisticsQueryInterface

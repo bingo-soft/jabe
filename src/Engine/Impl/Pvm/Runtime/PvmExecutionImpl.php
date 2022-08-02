@@ -719,11 +719,11 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
             throw new PvmException("cannot signal execution " . $this->id . ": it has no current activity");
         }
 
-        $activityBehavior = $activity->getActivityBehavior();
+        $activityBehavior = $this->activity->getActivityBehavior();
         try {
             $activityBehavior->signal($this, $signalName, $signalData);
         } catch (\Exception $e) {
-            throw new PvmException("couldn't process signal '" . $signalName . "' on activity '" . $activity->getId() . "': " . $e->getMessage(), $e);
+            throw new PvmException("couldn't process signal '" . $signalName . "' on activity '" . $this->activity->getId() . "': " . $e->getMessage(), $e);
         }
     }
 
@@ -1110,7 +1110,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
             $executions[] = $this;
         }
 
-        foreach ($getExecutions() as $nestedExecution) {
+        foreach ($this->getExecutions() as $nestedExecution) {
             $nestedExecution->collectExecutions($activityId, $executions);
         }
     }
@@ -1158,7 +1158,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
                 public function createHistoryEvent(HistoryEventProducerInterface $producer): HistoryEvent
                 {
-                    return $producer->createProcessInstanceUpdateEvt($processInstance);
+                    return $producer->createProcessInstanceUpdateEvt($this->processInstance);
                 }
             });
         }
@@ -1585,12 +1585,14 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
             // and correspond to ancestors of the topmost previously collected scope
             $topMostScope = $scopes[count($scopes) - 1];
             (new FlowScopeWalker($topMostScope->getFlowScope()))
-                ->addPreVisitor(new class ($outerScope) implements TreeVisitorInterface {
+                ->addPreVisitor(new class ($outerScope, $mapping) implements TreeVisitorInterface {
                     private $outerScope;
+                    private $mapping;
 
-                    public function __construct($outerScope)
+                    public function __construct($outerScope, $mapping)
                     {
                         $this->outerScope = $outerScope;
+                        $this->mapping = $mapping;
                     }
 
                     public function visit($obj): void
@@ -1598,7 +1600,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
                         $this->outerScope->scopes[] = $obj;
 
                         $priorMappingExecution = null;
-                        foreach ($mapping as $map) {
+                        foreach ($this->mapping as $map) {
                             if ($map[0] == $obj) {
                                 $priorMappingExecution = $map[1];
                             }
@@ -1864,7 +1866,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
     public function setCompleteScope(bool $completeScope): void
     {
         if ($completeScope && !$this->isCanceled()) {
-            $activityInstanceState = ActivityInstanceState::scopeComplete()->getStateCode();
+            $this->activityInstanceState = ActivityInstanceState::scopeComplete()->getStateCode();
         }
     }
 
@@ -1885,7 +1887,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
     public function isInState(ActivityInstanceState $state): bool
     {
-        return $activityInstanceState == $state->getStateCode();
+        return $this->activityInstanceState == $state->getStateCode();
     }
 
     public function hasFailedOnEndListeners(): bool
@@ -2092,15 +2094,17 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
                 }
             }, new class () implements CallbackInterface {
                 private $scope;
+                private $continuation;
 
-                public function __construct(PvmExecutionImpl $scope)
+                public function __construct(PvmExecutionImpl $scope, $continuation)
                 {
                     $this->scope = $scope;
+                    $this->continuation = $continuation;
                 }
 
                 public function callback(PvmExecutionImpl $execution)
                 {
-                    $this->scope->continueExecutionIfNotCanceled($continuation, $execution);
+                    $this->scope->continueExecutionIfNotCanceled($this->continuation, $execution);
                     return null;
                 }
             }, $execution);

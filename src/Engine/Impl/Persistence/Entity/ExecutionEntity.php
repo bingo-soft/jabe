@@ -259,7 +259,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         $createdExecution->setSuspensionState($this->getSuspensionState());
 
         // make created execution start in same activity instance
-        $createdExecution->activityInstanceId = $activityInstanceId;
+        $createdExecution->activityInstanceId = $this->activityInstanceId;
 
         // inherit the tenant id from parent execution
         if ($this->tenantId !== null) {
@@ -490,6 +490,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         // TODO: This smells bad, as the rest of the history is done via the
         // ParseListener
         if ($historyLevel->isHistoryEventProduced(HistoryEventTypes::processInstanceStart(), $this->processInstance)) {
+            $processInstance = $this->processInstance;
             HistoryEventProcessor::processHistoryEvents(new class ($processInstance) extends HistoryEventCreator {
                 private $processInstance;
 
@@ -769,7 +770,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
     {
         if (($this->processDefinition === null) && ($this->processDefinitionId !== null)) {
             $deployedProcessDefinition = Context::getProcessEngineConfiguration()->getDeploymentCache()
-                ->findDeployedProcessDefinitionById($processDefinitionId);
+                ->findDeployedProcessDefinitionById($this->processDefinitionId);
             $this->setProcessDefinition($deployedProcessDefinition);
         }
     }
@@ -1101,11 +1102,11 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         }
         foreach ($this->getTasks() as $task) {
             if ($this->isReplacedByParent()) {
-                if ($task->getExecution() === null || $task->getExecution() != $replacedBy) {
+                if ($task->getExecution() === null || $task->getExecution() != $this->replacedBy) {
                     // All tasks should have been moved when "replacedBy" has been set.
                     // Just in case tasks where added,
                     // wo do an additional check here and move it
-                    $task->setExecution($replacedBy);
+                    $task->setExecution($this->replacedBy);
                     $this->getReplacedBy()->addTask($task);
                 }
             } else {
@@ -1216,8 +1217,8 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
 
     protected function moveVariablesTo(ExecutionEntity $other): void
     {
-        $variables = $variableStore->getVariables();
-        $variableStore->removeVariables();
+        $variables = $this->variableStore->getVariables();
+        $this->variableStore->removeVariables();
 
         foreach ($variables as $variable) {
             $this->moveVariableTo($variable, $other);
@@ -1242,7 +1243,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
 
     protected function moveConcurrentLocalVariablesTo(ExecutionEntity $other): void
     {
-        $variables = $variableStore->getVariables();
+        $variables = $this->variableStore->getVariables();
 
         foreach ($variables as $variable) {
             if ($variable->isConcurrentLocal()) {
@@ -1996,7 +1997,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
             $referenceIds[] = $this->superExecutionId;
         }
         if ($this->parentId !== null) {
-            $referenceIds[] = $parentId;
+            $referenceIds[] = $this->parentId;
         }
 
         return $referenceIds;
@@ -2053,9 +2054,9 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         if ($bpmnModelInstance !== null) {
             $modelElementInstance = null;
             if (ExecutionListenerInterface::EVENTNAME_TAKE == $this->eventName) {
-                $modelElementInstance = $bpmnModelInstance->getModelElementById($transition->getId());
+                $modelElementInstance = $bpmnModelInstance->getModelElementById($this->transition->getId());
             } else {
-                $modelElementInstance = $bpmnModelInstance->getModelElementById($activityId);
+                $modelElementInstance = $bpmnModelInstance->getModelElementById($this->activityId);
             }
 
             try {

@@ -77,14 +77,14 @@ class AstMethod extends AstNode
     {
         $base = $this->property->getPrefix()->eval($bindings, $context);
         if ($base === null) {
-            throw new PropertyNotFoundException(LocalMessages::get("error.property.base.null", $property->getPrefix()));
+            throw new PropertyNotFoundException(LocalMessages::get("error.property.base.null", $this->property->getPrefix()));
         }
-        $method = $property->getProperty($bindings, $context);
+        $method = $this->property->getProperty($bindings, $context);
         if ($method === null) {
             throw new PropertyNotFoundException(LocalMessages::get("error.property.method.notfound", "null", $base));
         }
         $name = $bindings->convert($method, "string");
-        $paramValues = $params->eval($bindings, $context);
+        $paramValues = $this->params->eval($bindings, $context);
 
         $context->setPropertyResolved(false);
         $result = $context->getELResolver()->invoke($context, $base, $name, $paramTypes, $paramValues);

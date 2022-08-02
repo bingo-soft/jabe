@@ -20,7 +20,7 @@ class RemoveExecutionVariablesCmd extends AbstractRemoveVariableCmd
     {
         EnsureUtil::ensureNotNull("executionId", "executionId", $this->entityId);
 
-        $execution = $commandContext
+        $execution = $this->commandContext
             ->getExecutionManager()
             ->findExecutionById($this->entityId);
 
@@ -39,12 +39,12 @@ class RemoveExecutionVariablesCmd extends AbstractRemoveVariableCmd
     protected function logVariableOperation(AbstractVariableScope $scope): void
     {
         $execution = $scope;
-        $commandContext->getOperationLogManager()->logVariableOperation($this->getLogEntryOperation(), $execution->getId(), null, PropertyChange::emptyChange());
+        $this->commandContext->getOperationLogManager()->logVariableOperation($this->getLogEntryOperation(), $execution->getId(), null, PropertyChange::emptyChange());
     }
 
     protected function checkRemoveExecutionVariables(ExecutionEntity $execution): void
     {
-        foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
+        foreach ($this->commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
             $checker->checkUpdateProcessInstanceVariables($execution);
         }
     }

@@ -26,9 +26,15 @@ class DefaultCallableElementTenantIdProvider implements ParameterValueProviderIn
 
     protected function getProcessDefinitionTenantId(ExecutionEntity $execution): ?string
     {
-        $rocessDefinition = $execution->getProcessDefinition();
+        $processDefinition = $execution->getProcessDefinition();
         return $processDefinition->getTenantId();
     }
+
+    public function isDynamic(): bool
+    {
+        return false;
+    }
+
     /*protected String getCaseDefinitionTenantId(CaseExecutionEntity caseExecution) {
       CaseDefinitionEntity caseDefinition = (CaseDefinitionEntity) caseExecution.getCaseDefinition();
       return caseDefinition.getTenantId();

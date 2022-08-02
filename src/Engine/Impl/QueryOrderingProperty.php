@@ -60,7 +60,7 @@ class QueryOrderingProperty implements \Serializable
 
     public function getQueryProperty(): QueryPropertyImpl
     {
-        return $queryProperty;
+        return $this->queryProperty;
     }
 
     public function setQueryProperty(QueryPropertyImpl $queryProperty): void

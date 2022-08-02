@@ -104,7 +104,7 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
     public function setValue(TypedValueInterface $value): TypedValueInterface
     {
         // determine serializer to use
-        $serializer = $this->getSerializers()->findSerializerForValue(
+        $serializer = self::getSerializers()->findSerializerForValue(
             $value,
             Context::getProcessEngineConfiguration()->getFallbackSerializerFactory()
         );
@@ -188,10 +188,10 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
     protected function ensureSerializerInitialized(): void
     {
         if ($this->serializerName !== null && $this->serializer === null) {
-            $this->serializer = $this->getSerializers()->getSerializerByName($this->serializerName);
+            $this->serializer = self::getSerializers()->getSerializerByName($this->serializerName);
 
             if ($this->serializer === null) {
-                $this->serializer = $this->getFallbackSerializer($this->serializerName);
+                $this->serializer = self::getFallbackSerializer($this->serializerName);
             }
 
             if ($this->serializer === null) {
@@ -205,7 +205,7 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
     {
         if (Context::getCommandContext() !== null) {
             $variableSerializers = Context::getProcessEngineConfiguration()->getVariableSerializers();
-            $paSerializers = $this->getCurrentPaSerializers();
+            $paSerializers = self::getCurrentPaSerializers();
 
             if ($paSerializers !== null) {
                 return $variableSerializers->join($paSerializers);

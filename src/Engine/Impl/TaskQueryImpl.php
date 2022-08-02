@@ -1080,7 +1080,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         } elseif ($this->candidateGroup !== null) {
             $this->cachedCandidateGroups = [$this->candidateGroup];
         } elseif (!empty($this->candidateGroups)) {
-            $this->cachedCandidateGroups = $candidateGroups;
+            $this->cachedCandidateGroups = $this->candidateGroups;
         }
 
         if ($this->candidateUser !== null) {
@@ -1203,7 +1203,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         $processEngineConfiguration = Context::getProcessEngineConfiguration();
         $variableSerializers = $processEngineConfiguration->getVariableSerializers();
         $dbType = $processEngineConfiguration->getDatabaseType();
-        foreach ($variables as $var) {
+        foreach ($this->variables as $var) {
             $var->initialize($variableSerializers, $dbType);
         }
 
@@ -1219,7 +1219,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
     public function addVariable($name, $value = null, string $operator = null, bool $isTaskVariable = null, bool $isProcessInstanceVariable = null): void
     {
         if ($name instanceof TaskQueryVariableValue) {
-            $this->variables[] = $taskQueryVariableValue;
+            $this->variables[] = $name;
         } else {
             EnsureUtil::ensureNotNull("name", "name", $name);
 
@@ -1244,7 +1244,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
             }
 
             $shouldMatchVariableValuesIgnoreCase = $variableValuesIgnoreCase == true && $value !== null && is_string($value);
-            $this->addVariable(new TaskQueryVariableValue($name, $value, $operator, $isTaskVariable, $isProcessInstanceVariable, $variableNamesIgnoreCase == true, $shouldMatchVariableValuesIgnoreCase));
+            $this->addVariable(new TaskQueryVariableValue($name, $value, $operator, $isTaskVariable, $isProcessInstanceVariable, $this->variableNamesIgnoreCase == true, $shouldMatchVariableValuesIgnoreCase));
         }
     }
 
@@ -2396,7 +2396,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         $orQuery = new TaskQueryImpl();
         $orQuery->isOrQueryActive = true;
         $orQuery->queries = $this->queries;
-        $queries->add($orQuery);
+        $this->queries->add($orQuery);
         return $orQuery;
     }
 

@@ -45,7 +45,7 @@ class SetTaskPriorityCmd implements CommandInterface, \Serializable
 
         $this->checkTaskPriority($task, $commandContext);
 
-        $task->setPriority($priority);
+        $task->setPriority($this->priority);
 
         $task->triggerUpdateEvent();
         $task->logUserOperation(UserOperationLogEntryInterface::OPERATION_TYPE_SET_PRIORITY);

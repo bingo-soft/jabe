@@ -31,7 +31,7 @@ class BooleanOperations
             return $converter->convert($o1, "integer") < $converter->convert($o2, "integer");
         }
         if ($t1 == "string" || $t2 == "string") {
-            return self::compareTo($this->converter->convert($o1, "string"), $this->converter->convert($o2, "string")) < 0;
+            return self::compareTo($converter->convert($o1, "string"), $converter->convert($o2, "string")) < 0;
         }
         try {
             return self::compareTo($o1, $o2) < 0;
@@ -57,7 +57,7 @@ class BooleanOperations
             return $converter->convert($o1, "integer") > $converter->convert($o2, "integer");
         }
         if ($t1 == "string" || $t2 == "string") {
-            return self::compareTo($this->converter->convert($o1, "string"), $this->converter->convert($o2, "string")) > 0;
+            return self::compareTo($converter->convert($o1, "string"), $converter->convert($o2, "string")) > 0;
         }
         try {
             return self::compareTo($o1, $o2) > 0;

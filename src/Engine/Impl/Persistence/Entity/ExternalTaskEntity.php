@@ -196,7 +196,7 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
 
     public function isSuspended(): bool
     {
-        return $suspensionState == SuspensionState::suspended()->getStateCode();
+        return $this->suspensionState == SuspensionState::suspended()->getStateCode();
     }
 
     public function getProcessInstanceId(): string
@@ -298,8 +298,8 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
         $persistentState["tenantId"] = $this->tenantId;
         $persistentState["priority"] = $this->priority;
 
-        if ($errorDetailsByteArrayId !== null) {
-            $persistentState["errorDetailsByteArrayId"] = $errorDetailsByteArrayId;
+        if ($this->errorDetailsByteArrayId !== null) {
+            $persistentState["errorDetailsByteArrayId"] = $this->errorDetailsByteArrayId;
         }
 
         return $persistentState;
@@ -384,13 +384,13 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
 
         $commandContext = Context::getCommandContext();
 
-        $activityInstanceIdcommandContext
+        $commandContext
         ->getExternalTaskManager()
         ->delete($this);
 
         // Also delete the external tasks's error details byte array
-        if ($errorDetailsByteArrayId !== null) {
-            $commandContext->getByteArrayManager()->deleteByteArrayById($errorDetailsByteArrayId);
+        if ($this->errorDetailsByteArrayId !== null) {
+            $commandContext->getByteArrayManager()->deleteByteArrayById($this->errorDetailsByteArrayId);
         }
 
         $this->removeIncidents($incidentResolved);
@@ -565,7 +565,7 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
         if (!empty($errorEventDefinitions)) {
             foreach ($errorEventDefinitions as $errorEventDefinition) {
                 if ($this->errorEventDefinitionMatches($errorEventDefinition, $continueOnException)) {
-                    $this->bpmnError($errorEventDefinition->getErrorCode(), $errorMessage, null);
+                    $this->bpmnError($errorEventDefinition->getErrorCode(), $this->errorMessage, null);
                     return true;
                 }
             }
@@ -677,7 +677,7 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
         $referenceIdAndClass = [];
 
         if ($this->executionId !== null) {
-            $referenceIdAndClass[$executionId] = ExecutionEntity::class;
+            $referenceIdAndClass[$this->executionId] = ExecutionEntity::class;
         }
         if ($this->errorDetailsByteArrayId !== null) {
             $referenceIdAndClass[$this->errorDetailsByteArrayId] = ByteArrayEntity::class;

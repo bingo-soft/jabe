@@ -21,7 +21,7 @@ class DateValueSerializer extends PrimitiveValueSerializer
 
     public function readValue(ValueFieldsInterface $valueFields, bool $isTransient, bool $deserializeValue = false): DateValueInterface
     {
-        return Variables::dateValue($valueFields->getTextValue(), $asTransientValue);
+        return Variables::dateValue($valueFields->getTextValue(), $isTransient);
     }
 
     public function writeValue(DateValueInterface $typedValue, ValueFieldsInterface $valueFields): void

@@ -22,7 +22,7 @@ class FormFieldValidationConstraintHandler
 
     public function createValidationConstraint(ExecutionEntity $execution): FormFieldValidationConstraintInterface
     {
-        return new FormFieldValidationConstraintImpl($name, $config);
+        return new FormFieldValidationConstraintImpl($this->name, $this->config);
     }
 
     // submit /////////////////////////////////
@@ -31,7 +31,7 @@ class FormFieldValidationConstraintHandler
     {
         try {
             $context = new DefaultFormFieldValidatorContext($variableScope, $this->config, $submittedValues, $formFieldHandler);
-            if (!$validator->validate($submittedValue, $context)) {
+            if (!$this->validator->validate($submittedValue, $context)) {
                 throw new \Exception("Invalid value submitted for form field '" . $formFieldHandler->getId() . "'");
             }
         } catch (\Exception $e) {

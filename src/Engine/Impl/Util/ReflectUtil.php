@@ -84,7 +84,7 @@ class ReflectUtil
         try {
             // Using getMathods(), getMathod(...) expects exact parameter type
             // matching and ignores inheritance-tree.
-            $ref = new \ReflectionClass($object);
+            $ref = new \ReflectionClass($clazz);
             $methods = $ref->getMethods();
             foreach ($methods as $method) {
                 if ($method->name == $setterName) {

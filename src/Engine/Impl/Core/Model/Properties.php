@@ -144,7 +144,7 @@ class Properties implements \Serializable
      */
     public function contains($property): bool
     {
-        return array_key_exists($property->getName(), $properties);
+        return array_key_exists($property->getName(), $this->properties);
     }
 
     /**

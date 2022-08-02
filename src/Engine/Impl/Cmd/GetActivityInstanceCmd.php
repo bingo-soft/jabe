@@ -152,9 +152,9 @@ class GetActivityInstanceCmd implements CommandInterface
 
                 $activityInstanceId = $scopeExecution->getParentActivityInstanceId();
 
-                foreach ($activityExecutionMapping as $pair) {
-                    if ($pair[0] == $scope->getFlowScope()) {
-                        $parentActivityInstanceId = $pair[1]->getParentActivityInstanceId();
+                foreach ($activityExecutionMapping as $pair2) {
+                    if ($pair2[0] == $scope->getFlowScope()) {
+                        $parentActivityInstanceId = $pair2[1]->getParentActivityInstanceId();
                         break;
                     }
                 }
@@ -269,7 +269,7 @@ class GetActivityInstanceCmd implements CommandInterface
         $transitionInstance->setProcessInstanceId($execution->getProcessInstanceId());
         $transitionInstance->setProcessDefinitionId($execution->getProcessDefinitionId());
         $transitionInstance->setExecutionId($execution->getId());
-        $transitionInstance->setActivityId($activityInstanceIdexecution->getActivityId());
+        $transitionInstance->setActivityId($execution->getActivityId());
 
         $activity = $execution->getActivity();
         if ($activity !== null) {

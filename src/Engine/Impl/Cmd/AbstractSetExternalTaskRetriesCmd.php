@@ -37,12 +37,12 @@ abstract class AbstractSetExternalTaskRetriesCmd implements CommandInterface
             $collectedProcessInstanceIds = $processInstanceIds;
         }
 
-        $processInstanceQuery = $builder->getProcessInstanceQuery();
+        $processInstanceQuery = $this->builder->getProcessInstanceQuery();
         if ($processInstanceQuery !== null) {
             $collectedProcessInstanceIds = array_merge($collectedProcessInstanceIds, $processInstanceQuery->listIds());
         }
 
-        $historicProcessInstanceQuery = $builder->getHistoricProcessInstanceQuery();
+        $historicProcessInstanceQuery = $this->builder->getHistoricProcessInstanceQuery();
         if ($historicProcessInstanceQuery !== null) {
             $collectedProcessInstanceIds = array_merge($collectedProcessInstanceIds, $historicProcessInstanceQuery->istIds());
         }
@@ -54,7 +54,7 @@ abstract class AbstractSetExternalTaskRetriesCmd implements CommandInterface
     {
         $elementConfiguration = new BatchElementConfiguration();
 
-        $externalTaskIds = $builder->getExternalTaskIds();
+        $externalTaskIds = $this->builder->getExternalTaskIds();
         if (!empty($externalTaskIds)) {
             EnsureUtil::ensureNotContainsNull("External task id cannot be null", "externalTaskIds", $externalTaskIds);
             $taskQuery = new ExternalTaskQueryImpl();
@@ -67,7 +67,7 @@ abstract class AbstractSetExternalTaskRetriesCmd implements CommandInterface
             );
         }
 
-        $externalTaskQuery = $builder->getExternalTaskQuery();
+        $externalTaskQuery = $this->builder->getExternalTaskQuery();
         if ($externalTaskQuery !== null) {
             $elementConfiguration->addDeploymentMappings($externalTaskQuery->listDeploymentIdMappings());
         }
@@ -92,7 +92,7 @@ abstract class AbstractSetExternalTaskRetriesCmd implements CommandInterface
         $propertyChanges = [];
         $propertyChanges[] = new PropertyChange("nrOfInstances", null, $numInstances);
         $propertyChanges[] = new PropertyChange("async", null, $async);
-        $propertyChanges[] = new PropertyChange("retries", null, $builder->getRetries());
+        $propertyChanges[] = new PropertyChange("retries", null, $this->builder->getRetries());
 
         $commandContext->getOperationLogManager()->logExternalTaskOperation(
             UserOperationLogEntryInterface::OPERATION_TYPE_SET_EXTERNAL_TASK_RETRIES,

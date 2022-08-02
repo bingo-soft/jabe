@@ -180,7 +180,7 @@ class BatchBuilder
             $instanceCount = count($instanceIds);
             $this->operationLogInstanceCountHandler->write($this->commandContext, $instanceCount);
         } else {
-            $this->operationLogHandler->write($commandContext);
+            $this->operationLogHandler->write($this->commandContext);
         }
     }
 

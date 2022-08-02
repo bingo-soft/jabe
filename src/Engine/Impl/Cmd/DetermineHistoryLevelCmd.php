@@ -25,7 +25,7 @@ class DetermineHistoryLevelCmd implements CommandInterface
         $result = null;
 
         if ($databaseHistoryLevel !== null) {
-            foreach ($historyLevels as $historyLevel) {
+            foreach ($this->historyLevels as $historyLevel) {
                 if ($historyLevel->getId() == $databaseHistoryLevel) {
                     $result = $historyLevel;
                     break;

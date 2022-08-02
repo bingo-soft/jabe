@@ -28,8 +28,8 @@ class IdentityInfoEntity implements DbEntityInterface, HasDbRevisionInterface, A
     public function getPersistentState()
     {
         $persistentState = [];
-        $persistentState["value"] = $value;
-        $persistentState["password"] = $passwordBytes;
+        $persistentState["value"] = $this->value;
+        $persistentState["password"] = $this->passwordBytes;
         return $persistentState;
     }
 

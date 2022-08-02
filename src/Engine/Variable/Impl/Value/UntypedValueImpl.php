@@ -43,7 +43,7 @@ class UntypedValueImpl implements TypedValueInterface
     {
         $json = json_decode($data);
         $this->value = $json->value;
-        $this->isTransient = $isTransient;
+        $this->isTransient = $json->isTransient;
     }
 
     public function isTransient(): bool

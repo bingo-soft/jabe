@@ -293,7 +293,7 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
             if (empty($extendedQuery->orderingProperties)) {
                 $extendedQuery->orderingProperties = $extendingQuery->orderingProperties;
             } else {
-                $extendedQuery->orderingProperties = array_merge($extendedQuery->orderingProperties, $extendingQuer->orderingProperties);
+                $extendedQuery->orderingProperties = array_merge($extendedQuery->orderingProperties, $extendingQuery->orderingProperties);
             }
         }
     }

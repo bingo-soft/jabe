@@ -191,7 +191,7 @@ class JobDefinitionEntity implements JobDefinitionInterface, HasDbRevisionInterf
 
     public function getOverridingJobPriority(): int
     {
-        return $his->jobPriority;
+        return $this->jobPriority;
     }
 
     public function setJobPriority(int $jobPriority): void

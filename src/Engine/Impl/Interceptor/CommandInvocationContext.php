@@ -128,7 +128,7 @@ class CommandInvocationContext
     public function rethrow(): void
     {
         if ($this->throwable !== null) {
-            throw new ProcessEngineException("exception while executing command ", $throwable);
+            throw new ProcessEngineException("exception while executing command ", $this->throwable);
         }
     }
 

@@ -44,7 +44,7 @@ class AuthorizationEntity implements AuthorizationInterface, DbEntityInterface, 
     {
         $this->authorizationType = $type;
 
-        if ($authorizationType == self::AUTH_TYPE_GLOBAL) {
+        if ($this->authorizationType == self::AUTH_TYPE_GLOBAL) {
             $this->userId = self::ANY;
         }
 
@@ -53,13 +53,13 @@ class AuthorizationEntity implements AuthorizationInterface, DbEntityInterface, 
 
     protected function resetPermissions(): void
     {
-        $cachedPermissions = [];
+        $this->cachedPermissions = [];
 
-        if ($authorizationType == self::AUTH_TYPE_GLOBAL) {
+        if ($this->authorizationType == self::AUTH_TYPE_GLOBAL) {
             $this->permissions = Permissions::none()->getValue();
-        } elseif ($authorizationType == self::AUTH_TYPE_GRANT) {
+        } elseif ($this->authorizationType == self::AUTH_TYPE_GRANT) {
             $this->permissions = Permissions::none()->getValue();
-        } elseif ($authorizationType == self::AUTH_TYPE_REVOKE) {
+        } elseif ($this->authorizationType == self::AUTH_TYPE_REVOKE) {
             $this->permissions = Permissions::all()->getValue();
         } else {
             //throw LOG.engineAuthorizationTypeException(authorizationType, AUTH_TYPE_GLOBAL, AUTH_TYPE_GRANT, AUTH_TYPE_REVOKE);

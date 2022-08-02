@@ -35,7 +35,7 @@ class CachedDbEntity implements RecyclableInterface
      */
     public function isDirty(): bool
     {
-        return $this->dbEntity->getPersistentState() != $copy;
+        return $this->dbEntity->getPersistentState() != $this->copy;
     }
 
     public function forceSetDirty(): void

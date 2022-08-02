@@ -22,6 +22,6 @@ class PhpDelegateInvocation extends DelegateInvocation
 
     protected function invoke(): void
     {
-        $this->delegateInstance->execute($execution);
+        $this->delegateInstance->execute($this->execution);
     }
 }

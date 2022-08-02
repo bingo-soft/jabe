@@ -24,8 +24,8 @@ class GroupEntity implements GroupInterface, \Serializable, DbEntityInterface, H
     public function getPersistentState()
     {
         $persistentState = [];
-        $persistentState["name"] = $name;
-        $persistentState["type"] = $type;
+        $persistentState["name"] = $this->name;
+        $persistentState["type"] = $this->type;
         return $persistentState;
     }
 

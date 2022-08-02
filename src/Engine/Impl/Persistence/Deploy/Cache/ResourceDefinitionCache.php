@@ -74,7 +74,7 @@ abstract class ResourceDefinitionCache
     {
         $commandContext = Context::getCommandContext();
         $scope = $this;
-        $definition = $commandContext->runWithoutAuthorization(function () use ($scope, $definitionVersionTag, $tenantId) {
+        $definition = $commandContext->runWithoutAuthorization(function () use ($scope, $definitionKey, $definitionVersionTag, $tenantId) {
             return $scope->getManager()->findDefinitionByKeyVersionTagAndTenantId($definitionKey, $definitionVersionTag, $tenantId);
         });
         $this->checkInvalidDefinitionByKeyVersionTagAndTenantId($definitionKey, $definitionVersionTag, $tenantId, $definition);

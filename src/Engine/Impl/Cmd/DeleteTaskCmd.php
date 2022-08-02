@@ -26,7 +26,7 @@ class DeleteTaskCmd implements CommandInterface, \Serializable
         if (is_array($taskIds)) {
             $this->taskIds = $taskIds;
         } else {
-            $this->taskId = $taskId;
+            $this->taskId = $taskIds;
         }
         $this->cascade = $cascade;
         $this->deleteReason = $deleteReason;

@@ -53,13 +53,13 @@ class ExecutionManager extends AbstractManager
         }
     }
 
-    public function deleteProcessInstance(string $processInstanceId, string $deleteReason, ?bool $cascade = false, ?bool $skipCustomListeners = false, ?bool $skipSubprocesses = false): void
+    public function deleteProcessInstance(string $processInstanceId, string $deleteReason = null, bool $cascade = false, bool $skipCustomListeners = false, bool $externallyTerminated = false, bool $skipIoMappings = false, bool $skipSubprocesses = false): void
     {
         $execution = $this->findExecutionById($processInstanceId);
 
         if ($execution === null) {
             //throw LOG.requestedProcessInstanceNotFoundException(processInstanceId);
-            throw new \Exception("Execution");
+            throw new \Exception("requestedProcessInstanceNotFoundException");
         }
 
         $this->getTaskManager()->deleteTasksByProcessInstanceId($processInstanceId, $deleteReason, $cascade, $skipCustomListeners);

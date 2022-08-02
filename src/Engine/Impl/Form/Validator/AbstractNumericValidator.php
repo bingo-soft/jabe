@@ -13,11 +13,11 @@ abstract class AbstractNumericValidator implements FormFieldValidatorInterface
         $configurationString = $validatorContext->getConfiguration();
 
         if ($this->isFLoat($submittedValue)) {
-            return $this->validateFloat(floatval($submittedValue), $configuration);
+            return $this->validateFloat(floatval($submittedValue), $configurationString);
         }
 
         if ($this->isInteger($submittedValue)) {
-            return $this->validateInteger(intval($submittedValue), $configuration);
+            return $this->validateInteger(intval($submittedValue), $configurationString);
         }
 
         throw new FormFieldValidationException("Numeric validator " .  get_class($this) . " cannot be used on non-numeric value ");

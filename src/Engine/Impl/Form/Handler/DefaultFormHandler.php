@@ -265,7 +265,7 @@ class DefaultFormHandler implements FormHandlerInterface
     protected function initializeFormProperties(FormDataImpl $formData, ExecutionEntity $execution): void
     {
         $formProperties = [];
-        foreach ($formPropertyHandlers as $formPropertyHandler) {
+        foreach ($ершы->formPropertyHandlers as $formPropertyHandler) {
             if ($formPropertyHandler->isReadable()) {
                 $formProperty = $formPropertyHandler->createFormProperty($execution);
                 $formProperties[] = $formProperty;
@@ -278,7 +278,7 @@ class DefaultFormHandler implements FormHandlerInterface
     {
         // add form fields
         $formFields = $taskFormData->getFormFields();
-        foreach ($formFieldHandlers as $formFieldHandler) {
+        foreach ($this->formFieldHandlers as $formFieldHandler) {
             $taskFormData->addFormField($formFieldHandler->createFormField($execution));
         }
     }
@@ -291,13 +291,13 @@ class DefaultFormHandler implements FormHandlerInterface
         $propertiesCopy = new VariableMapImpl($properties);
 
         // support legacy form properties
-        foreach ($formPropertyHandlers as $formPropertyHandler) {
+        foreach ($this->formPropertyHandlers as $formPropertyHandler) {
             // submitFormProperty will remove all the keys which it takes care of
             $formPropertyHandler->submitFormProperty($variableScope, $propertiesCopy);
         }
 
         // support form data:
-        foreach ($formFieldHandlers as $formFieldHandler) {
+        foreach ($this->formFieldHandlers as $formFieldHandler) {
             if (!$formFieldHandler->isBusinessKey()) {
                 $formFieldHandler->handleSubmit($variableScope, $propertiesCopy, $properties);
             }

@@ -115,7 +115,7 @@ class TelemetrySendingTask extends TimerTask
     {
         $this->updateStaticData();
         $dynamicData = $this->resolveDynamicData($sendData, $addLegacyNames);
-        $mergedData = new TelemetryDataImpl($staticData);
+        $mergedData = new TelemetryDataImpl($this->staticData);
         $mergedData->mergeInternals($dynamicData);
 
         if ($sendData) {
@@ -135,7 +135,7 @@ class TelemetrySendingTask extends TimerTask
         $internals = $this->staticData->getProduct()->getInternals();
 
         if ($internals->getApplicationServer() === null) {
-            $applicationServer = $telemetryRegistry->getApplicationServer();
+            $applicationServer = $this->telemetryRegistry->getApplicationServer();
             $internals->setApplicationServer($applicationServer);
         }
 
@@ -144,8 +144,8 @@ class TelemetrySendingTask extends TimerTask
         }
 
         // license key and Webapps data is fed from the outside to the registry but needs to be constantly updated
-        $internals->setLicenseKey($telemetryRegistry->getLicenseKey());
-        $internals->setWebapps($telemetryRegistry->getWebapps());
+        $internals->setLicenseKey($this->telemetryRegistry->getLicenseKey());
+        $internals->setWebapps($this->telemetryRegistry->getWebapps());
     }
 
     protected function isTelemetryEnabled(): bool
@@ -204,7 +204,7 @@ class TelemetrySendingTask extends TimerTask
 
             foreach (self::METRICS_TO_REPORT as $metricToReport) {
                 $metricValue = $metrics[$metricToReport];
-                $metricsRegistry->markTelemetryOccurrence($metricToReport, $metricValue->getCount());
+                $this->metricsRegistry->markTelemetryOccurrence($metricToReport, $metricValue->getCount());
             }
         }
     }
@@ -241,7 +241,7 @@ class TelemetrySendingTask extends TimerTask
         $metrics = [];
 
         if ($this->metricsRegistry !== null) {
-            $telemetryMeters = $metricsRegistry->getTelemetryMeters();
+            $telemetryMeters = $this->metricsRegistry->getTelemetryMeters();
 
             foreach (self::METRICS_TO_REPORT as $metricToReport) {
                 $value = $telemetryMeters[$metricToReport]->get($reset);
@@ -261,7 +261,7 @@ class TelemetrySendingTask extends TimerTask
     protected function performDataSend(RunnableInterface $runnable): void
     {
         if ($this->validateData($this->staticData)) {
-            $triesLeft = $telemetryRequestRetries + 1;
+            $triesLeft = $this->telemetryRequestRetries + 1;
             $requestSuccessful = false;
             do {
                 try {

@@ -37,7 +37,7 @@ class RuntimeContainerJobExecutor extends JobExecutor
         // delegate job execution to runtime container
         if (!$executorService->schedule($executeJobsRunnable, false)) {
             $this->logRejectedExecution($processEngine, count($jobIds));
-            $rejectedJobsHandler->jobsRejected($jobIds, $processEngine, $this);
+            $this->rejectedJobsHandler->jobsRejected($jobIds, $processEngine, $this);
         }
     }
 

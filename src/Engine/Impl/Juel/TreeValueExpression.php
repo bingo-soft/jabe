@@ -67,7 +67,7 @@ class TreeValueExpression extends ValueExpression
         $this->expr = $json->expr;
         $this->type = $json->type;
         $this->deferred = $json->deferred;
-        $this->node = $this->builder->build($expr)->getRoot();
+        $this->node = $this->builder->build($this->expr)->getRoot();
     }
 
     private function getStructuralId(): string
@@ -97,7 +97,7 @@ class TreeValueExpression extends ValueExpression
    */
     public function getType(ELContext $context): ?string
     {
-        return $this->node->getType($bindings, $context);
+        return $this->node->getType($this->bindings, $context);
     }
 
   /**

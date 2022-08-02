@@ -40,9 +40,9 @@ class SaveFilterCmd implements CommandInterface, \Serializable
 
         $savedFilter = $commandContext
             ->getFilterManager()
-            ->insertOrUpdateFilter($filter);
+            ->insertOrUpdateFilter($this->filter);
 
-        $commandContext->getOperationLogManager()->logFilterOperation($operation, $filter->getId());
+        $commandContext->getOperationLogManager()->logFilterOperation($operation, $this->filter->getId());
 
         return $savedFilter;
     }

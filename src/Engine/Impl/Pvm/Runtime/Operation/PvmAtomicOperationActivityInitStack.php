@@ -41,7 +41,7 @@ class PvmAtomicOperationActivityInitStack implements PvmAtomicOperationInterface
         }
 
         // notify listeners for the instantiated activity
-        $propagatingExecution->performOperation($operationOnScopeInitialization);
+        $propagatingExecution->performOperation($this->operationOnScopeInitialization);
     }
 
     public function isAsync(PvmExecutionImpl $instance): bool

@@ -58,7 +58,7 @@ class ObjectValueExpression extends ValueExpression
             if ($this->type != $obj->type) {
                 return false;
             }
-            return $this->object == $obj->object || $object !== null && $object == $obj->object;
+            return $this->object == $obj->object || $this->object !== null && $this->object == $obj->object;
         }
         return false;
     }

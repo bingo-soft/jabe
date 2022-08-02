@@ -33,7 +33,7 @@ abstract class DelegateFormHandler
 
     protected function performContextSwitch($callable)
     {
-        $targetProcessApplication = ProcessApplicationContextUtil::getTargetProcessApplication($deploymentId);
+        $targetProcessApplication = ProcessApplicationContextUtil::getTargetProcessApplication($this->deploymentId);
 
         if ($targetProcessApplication !== null) {
             $scope = $this;
@@ -56,6 +56,7 @@ abstract class DelegateFormHandler
 
     public function submitFormVariables(VariableMapInterface $properties, VariableScopeInterface $variableScope): void
     {
+        $scope = $this;
         $this->performContextSwitch(function () use ($scope, $properties, $variableScope) {
             Context::getProcessEngineConfiguration()
                 ->getDelegateInterceptor()

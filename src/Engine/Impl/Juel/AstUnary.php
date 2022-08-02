@@ -83,7 +83,7 @@ class AstUnary extends AstRightValue
 
     public function eval(Bindings $bindings, ELContext $context)
     {
-        return $this->operator->eval($bindings, $context, $child);
+        return $this->operator->eval($bindings, $context, $this->child);
     }
 
     public function __toString()

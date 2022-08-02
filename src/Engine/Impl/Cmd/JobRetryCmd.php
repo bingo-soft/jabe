@@ -33,8 +33,8 @@ abstract class JobRetryCmd implements CommandInterface
     protected function logException(JobEntity $job): void
     {
         if ($this->exception !== null) {
-            $job->setExceptionMessage($exception->getMessage());
-            $job->setExceptionStacktrace($exception->getTraceAsString());
+            $job->setExceptionMessage($this->exception->getMessage());
+            $job->setExceptionStacktrace($this->exception->getTraceAsString());
         }
     }
 

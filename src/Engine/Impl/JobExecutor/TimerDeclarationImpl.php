@@ -50,7 +50,7 @@ class TimerDeclarationImpl extends JobDeclaration
 
     public function getRepeat(): string
     {
-        return $repeat;
+        return $this->repeat;
     }
 
     public function setEventScopeActivityId(string $eventScopeActivityId): void
@@ -86,7 +86,7 @@ class TimerDeclarationImpl extends JobDeclaration
     {
         $dueDateString = $this->resolveAndSetDuedate($context, $job, false);
 
-        if ($this->type == TimerDeclarationType::CYCLE && $jobHandlerType != TimerCatchIntermediateEventJobHandler::TYPE) {
+        if ($this->type == TimerDeclarationType::CYCLE && $this->jobHandlerType != TimerCatchIntermediateEventJobHandler::TYPE) {
             // See ACT-1427: A boundary timer with a cancelActivity='true', doesn't need to repeat itself
             if (!$this->isInterruptingTimer) {
                 $prepared = $this->prepareRepeat($dueDateString);

@@ -71,7 +71,7 @@ class HtmlElementWriter
     protected function writeAttributes(HtmlWriteContext $context): void
     {
         $writer = $context->getWriter();
-        foreach ($attributes as $key => $attribute) {
+        foreach ($this->attributes as $key => $attribute) {
             $writer->write(" ");
             $writer->write($key);
             if ($attribute !== null) {

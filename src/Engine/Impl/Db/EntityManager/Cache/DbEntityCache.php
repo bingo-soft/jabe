@@ -67,7 +67,7 @@ class DbEntityCache
 
     public function getEntitiesByType(string $type): array
     {
-        $cacheKey = $cacheKeyMapping->getEntityCacheKey($type);
+        $cacheKey = $this->cacheKeyMapping->getEntityCacheKey($type);
         if (array_key_exists($cacheKey, $this->cachedEntites)) {
             $entities = $this->cachedEntites[$cacheKey];
         } else {
@@ -103,7 +103,7 @@ class DbEntityCache
     public function getCachedEntity($typeOrEntity, string $id = null): ?CachedDbEntity
     {
         if (is_string($typeOrEntity)) {
-            $cacheKey = $cacheKeyMapping->getEntityCacheKey($typeOrEntity);
+            $cacheKey = $this->cacheKeyMapping->getEntityCacheKey($typeOrEntity);
             if (array_key_exists($cacheKey, $this->cachedEntites)) {
                 $entitiesByType = $this->cachedEntites[$cacheKey];
                 return $entitiesByType[$id];
@@ -111,7 +111,7 @@ class DbEntityCache
                 return null;
             }
         } elseif ($typeOrEntity instanceof DbEntityInterface) {
-            return $this->getCachedEntity(get_class($dbEntity), $dbEntity->getId());
+            return $this->getCachedEntity(get_class($typeOrEntity), $typeOrEntity->getId());
         }
     }
 
@@ -244,7 +244,7 @@ class DbEntityCache
     public function remove(DbEntityInterface $e)
     {
         if ($e instanceof DbEntityInterface) {
-            $cacheKey = $cacheKeyMapping->getEntityCacheKey(get_class($e));
+            $cacheKey = $this->cacheKeyMapping->getEntityCacheKey(get_class($e));
             if (array_key_exists($cacheKey, $this->cachedEntites)) {
                 $typeMap = $this->cachedEntites[$cacheKey];
                 if (array_key_exists($e->getId(), $typeMap)) {

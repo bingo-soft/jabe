@@ -71,9 +71,9 @@ class PvmAtomicOperationProcessEnd extends PvmAtomicOperationActivityInstanceEnd
                 //LOG.exceptionWhileCompletingSupProcess(execution, e);
                 throw new ProcessEngineException("Error while completing sub process of execution " . $execution, $e);
             }
-        } elseif ($superCaseExecution !== null) {
+        }/* elseif ($superCaseExecution !== null) {
             $superCaseExecution->complete();
-        }
+        }*/
     }
 
     public function getCanonicalName(): string

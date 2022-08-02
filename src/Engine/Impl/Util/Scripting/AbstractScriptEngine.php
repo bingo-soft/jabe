@@ -20,7 +20,7 @@ abstract class AbstractScriptEngine implements ScriptEngineInterface
     public function __construct(BindingsInterface $n)
     {
         $this->context = new SimpleScriptContext();
-        $context->setBindings($n, ScriptContextInterface::ENGINE_SCOPE);
+        $this->context->setBindings($n, ScriptContextInterface::ENGINE_SCOPE);
     }
 
     /**

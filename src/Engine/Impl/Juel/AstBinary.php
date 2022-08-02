@@ -279,7 +279,7 @@ class AstBinary extends AstRightValue
 
     public function __toString()
     {
-        return "'" . $operator . "'";
+        return "'" . $this->operator . "'";
     }
 
     public function appendStructure(string &$b, Bindings $bindings): void
@@ -298,6 +298,6 @@ class AstBinary extends AstRightValue
 
     public function getChild(int $i): ?AstNode
     {
-        return $i == 0 ? $left : ($i == 1 ? $right : null);
+        return $i == 0 ? $this->left : ($i == 1 ? $this->right : null);
     }
 }

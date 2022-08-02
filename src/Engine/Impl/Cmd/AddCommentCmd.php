@@ -82,13 +82,13 @@ class AddCommentCmd implements CommandInterface, \Serializable
             $this->provideRemovalTime($comment);
         }
 
-        $eventMessage = str_replace('/\s+/', ' ', $message);
+        $eventMessage = str_replace('/\s+/', ' ', $this->message);
         if (strlen($eventMessage) > 163) {
             $eventMessage = substr($eventMessage, 0, 160) . "...";
         }
         $comment->setMessage($eventMessage);
 
-        $comment->setFullMessage($message);
+        $comment->setFullMessage($this->message);
 
         $commandContext
             ->getCommentManager()
@@ -119,7 +119,7 @@ class AddCommentCmd implements CommandInterface, \Serializable
     protected function getProcessInstance(CommandContext $commandContext): ?ExecutionEntity
     {
         if ($this->processInstanceId !== null) {
-            return $commandContext->getExecutionManager()->findExecutionById($processInstanceId);
+            return $commandContext->getExecutionManager()->findExecutionById($this->processInstanceId);
         } else {
             return null;
         }
