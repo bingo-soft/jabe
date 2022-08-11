@@ -2,7 +2,7 @@
 
 namespace Jabe\Engine\Impl\Persistence\Deploy\Cache;
 
-use Jabe\Commons\Utils\Cache\{
+use Jabe\Engine\Commons\Utils\Cache\{
     CacheInterface,
     ConcurrentLruCache
 };

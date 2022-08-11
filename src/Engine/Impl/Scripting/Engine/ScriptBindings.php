@@ -5,7 +5,7 @@ namespace Jabe\Engine\Impl\Scripting\Engine;
 use Jabe\Engine\Delegate\VariableScopeInterface;
 use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Engine\Impl\Context\Context;
-use Jabe\Engine\Impl\Util\Scripting\{
+use Script\{
     BindingsInterface,
     ScriptEngineInterface
 };

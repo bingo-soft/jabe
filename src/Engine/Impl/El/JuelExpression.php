@@ -12,7 +12,7 @@ use Jabe\Engine\Impl\Delegate\{
     ExpressionGetInvocation,
     ExpressionSetInvocation
 };
-use Jabe\Engine\Impl\Util\El\{
+use El\{
     ELContext,
     ELException,
     MethodNotFoundException,

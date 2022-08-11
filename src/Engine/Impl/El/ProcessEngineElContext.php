@@ -2,7 +2,7 @@
 
 namespace Jabe\Engine\Impl\El;
 
-use Jabe\Engine\Impl\Util\El\{
+use El\{
     ELContext,
     ELResolver,
     FunctionMapper,

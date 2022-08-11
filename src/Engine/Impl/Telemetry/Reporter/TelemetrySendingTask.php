@@ -36,10 +36,8 @@ use Jabe\Engine\Telemetry\{
     CommandInterface,
     MetricInterface
 };
-use Jabe\Engine\Impl\Util\Concurrent\{
-    RunnableInterface,
-    TimerTask
-};
+use Concurrent\RunnableInterface;
+use Concurrent\Task\TimerTask;
 use Jabe\Engine\Impl\Util\Core\MediaType;
 use Jabe\Engine\Impl\Util\Net\HttpURLConnection;
 use Jabe\Engine\Management\Metrics;

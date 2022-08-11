@@ -2,7 +2,7 @@
 
 namespace Jabe\Engine\Impl\El;
 
-use Jabe\Engine\Impl\Util\El\FunctionMapper;
+use El\FunctionMapper;
 
 class CompositeFunctionMapper extends FunctionMapper
 {

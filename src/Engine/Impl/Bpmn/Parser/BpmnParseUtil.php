@@ -27,7 +27,7 @@ use Jabe\Engine\Impl\Scripting\{
     ScriptValueProvider
 };
 use Jabe\Engine\Impl\Util\ScriptUtil;
-use Jabe\Engine\Impl\Util\Xml\Element;
+use Sax\Element;
 
 class BpmnParseUtil
 {

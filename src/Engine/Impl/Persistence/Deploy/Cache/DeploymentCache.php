@@ -10,8 +10,8 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     DeploymentEntity,
     ProcessDefinitionEntity
 };
-use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
-use Jabe\Commons\Utils\Cache\CacheInterface;
+use Bpmn\BpmnModelInstanceInterface;
+use Jabe\Engine\Commons\Utils\Cache\CacheInterface;
 
 class DeploymentCache
 {

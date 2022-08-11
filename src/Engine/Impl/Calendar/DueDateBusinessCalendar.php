@@ -3,13 +3,12 @@
 namespace Jabe\Engine\Impl\Calendar;
 
 use Jabe\Engine\Impl\Util\ClockUtil;
-use Jabe\Engine\Task\TaskInterface;
 
 class DueDateBusinessCalendar implements BusinessCalendarInterface
 {
     public const NAME = "dueDate";
 
-    public function resolveDuedate(string $duedateDescription, $startDate = null, ?TaskInterface $task = null, ?int $repeatOffset = 0): ?\DateTime
+    public function resolveDuedate(string $duedateDescription, $startDate = null, int $repeatOffset = 0): ?\DateTime
     {
         try {
             if ($startDate === null) {

@@ -2,7 +2,7 @@
 
 namespace Jabe\Engine\Repository;
 
-use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
+use Bpmn\BpmnModelInstanceInterface;
 
 interface ProcessApplicationDeploymentBuilderInterface extends DeploymentBuilderInterface
 {

@@ -3,7 +3,7 @@
 namespace Jabe\Engine\Impl\Delegate;
 
 use Jabe\Engine\Delegate\BaseDelegateExecutionInterface;
-use Jabe\Engine\Impl\Util\El\{
+use El\{
     ELContext,
     ValueExpression
 };

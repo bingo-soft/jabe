@@ -6,7 +6,7 @@ use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Persistence\AbstractResourceDefinitionManagerInterface;
 use Jabe\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
-use Jabe\Commons\Utils\Cache\CacheInterface;
+use Jabe\Engine\Commons\Utils\Cache\CacheInterface;
 
 abstract class ResourceDefinitionCache
 {

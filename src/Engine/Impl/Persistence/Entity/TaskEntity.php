@@ -66,8 +66,8 @@ use Jabe\Engine\Task\{
     IdentityLinkType,
     TaskInterface
 };
-use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
-use Jabe\Model\Bpmn\Instance\UserTaskInterface;
+use Bpmn\BpmnModelInstanceInterface;
+use Bpmn\Instance\UserTaskInterface;
 
 class TaskEntity extends AbstractVariableScope implements TaskInterface, DelegateTaskInterface, \Serializable, DbEntityInterface, HasDbRevisionInterface, HasDbReferencesInterface, CommandContextListenerInterface, VariablesProviderInterface
 {

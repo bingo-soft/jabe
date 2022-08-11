@@ -11,7 +11,7 @@ use Jabe\Engine\Impl\Metrics\{
 };
 use Jabe\Engine\Impl\Persistence\Entity\MeterLogEntity;
 use Jabe\Engine\Impl\Util\ClockUtil;
-use Jabe\Engine\Impl\Util\Concurrent\TimerTask;
+use Concurrent\Task\TimerTask;
 
 class MetricsCollectionTask extends TimerTask
 {

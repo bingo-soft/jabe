@@ -4,7 +4,7 @@ namespace Jabe\Engine\Impl\Bpmn\Parser;
 
 use Jabe\Engine\Impl\Cfg\BpmnParseFactoryInterface;
 use Jabe\Engine\Impl\El\ExpressionManager;
-use Jabe\Engine\Impl\Util\Xml\Parser;
+use Sax\Parser;
 
 class BpmnParser extends Parser
 {

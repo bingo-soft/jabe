@@ -4,7 +4,7 @@ namespace Jabe\Engine\Impl\Form\Type;
 
 use Jabe\Engine\Impl\Bpmn\Parser\BpmnParse;
 use Jabe\Engine\Impl\Form\Handler\DefaultFormHandler;
-use Jabe\Engine\Impl\Util\Xml\Element;
+use Sax\Element;
 
 class FormTypes
 {

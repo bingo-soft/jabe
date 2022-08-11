@@ -2,7 +2,7 @@
 
 namespace Jabe\Engine\Impl;
 
-use Jabe\Commons\Logging\BaseLogger;
+use Jabe\Engine\Commons\Logging\BaseLogger;
 
 class ProcessEngineLogger extends BaseLogger
 {

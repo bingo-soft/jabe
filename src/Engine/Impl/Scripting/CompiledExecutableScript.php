@@ -2,7 +2,7 @@
 
 namespace Jabe\Engine\Impl\Scripting;
 
-use Jabe\Engine\Impl\Util\Scripting\{
+use Script\{
     CompiledScript,
     BindingsInterface,
     ScriptEngineInterface,

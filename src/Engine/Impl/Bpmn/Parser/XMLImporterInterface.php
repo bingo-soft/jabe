@@ -2,7 +2,7 @@
 
 namespace Jabe\Engine\Impl\Bpmn\Parser;
 
-use Jabe\Engine\Impl\Util\Xml\Element;
+use Sax\Element;
 
 interface XMLImporterInterface
 {

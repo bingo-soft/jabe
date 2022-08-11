@@ -3,7 +3,7 @@
 namespace Jabe\Engine\Impl\Scripting\Engine;
 
 use Jabe\Engine\Delegate\VariableScopeInterface;
-use Jabe\Engine\Impl\Util\Scripting\BindingsInterface;
+use Script\BindingsInterface;
 
 class ScriptBindingsFactory
 {

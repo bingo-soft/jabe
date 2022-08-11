@@ -3,7 +3,7 @@
 namespace Jabe\Engine\Impl\El;
 
 use Jabe\Engine\ProcessEngineException;
-use Jabe\Engine\Impl\Util\El\{
+use El\{
     ELContext,
     ELResolver
 };

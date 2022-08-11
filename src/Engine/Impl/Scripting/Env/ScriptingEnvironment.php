@@ -17,7 +17,7 @@ use Jabe\Engine\Impl\Scripting\{
     ScriptFactory
 };
 use Jabe\Engine\Impl\Scripting\Engine\ScriptingEngines;
-use Jabe\Engine\Impl\Util\Scripting\{
+use Script\{
     BindingsInterface,
     ScriptEngineInterface
 };

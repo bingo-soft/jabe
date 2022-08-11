@@ -4,14 +4,14 @@ namespace Jabe\Engine\Impl\Cxf\Webservice;
 
 use Jabe\Engine\Impl\Bpmn\Data\SimpleStructureDefinition;
 use Jabe\Engine\Impl\Bpmn\Parser\XMLImporterInterface;
-use Jabe\Engine\Impl\Util\Xml\Element;
+use Sax\Element;
 use Jabe\Engine\Impl\Webservice\{
     WSDLManager,
     WSOperation,
     WSService,
     WSDLServiceBuilder
 };
-use Jabe\Model\Wsdl\Instance\{
+use Jabe\Engine\Impl\Model\Wsdl\Instance\{
     ComplexTypeInterface,
     DefinitionsInterface,
     OperationInterface,

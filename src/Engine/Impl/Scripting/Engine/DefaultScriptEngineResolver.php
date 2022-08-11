@@ -2,14 +2,15 @@
 
 namespace Jabe\Engine\Impl\Scripting\Engine;
 
-use Jabe\Engine\Impl\Util\Scripting\{
+use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
+use Jabe\Engine\Impl\Context\Context;
+use Script\{
     ScriptContextInterface,
     ScriptEngineInterface,
     ScriptEngineFactoryInterface,
-    ScriptEngineManager
+    ScriptEngineManager,
+    ScriptEngineResolverInterface
 };
-use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
-use Jabe\Engine\Impl\Context\Context;
 
 class DefaultScriptEngineResolver implements ScriptEngineResolverInterface
 {

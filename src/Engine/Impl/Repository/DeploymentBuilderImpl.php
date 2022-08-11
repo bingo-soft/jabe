@@ -26,7 +26,7 @@ use Jabe\Engine\Repository\{
     DeploymentBuilderInterface,
     DeploymentWithDefinitionsInterface
 };
-use Jabe\Model\Bpmn\{
+use Bpmn\{
     Bpmn,
     BpmnModelInstanceInterface
 };

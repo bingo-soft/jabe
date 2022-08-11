@@ -11,7 +11,7 @@ use Jabe\Engine\Impl\Pvm\Process\{
     ScopeImpl
 };
 use Jabe\Engine\Impl\Util\ParseUtil;
-use Jabe\Engine\Impl\Util\Xml\Element;
+use Sax\Element;
 
 class DefaultFailedJobParseListener extends AbstractBpmnParseListener
 {

@@ -21,7 +21,7 @@ use Jabe\Engine\Impl\Pvm\Process\{
     TransitionImpl
 };
 use Jabe\Engine\Impl\Task\TaskDefinition;
-use Jabe\Engine\Impl\Util\Xml\Element;
+use Sax\Element;
 use Jabe\Engine\Impl\Variable\VariableDeclaration;
 
 class HistoryParseListener implements BpmnParseListenerInterface

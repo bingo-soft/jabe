@@ -3,7 +3,7 @@
 namespace Jabe\Engine\Impl\JobExecutor;
 
 use Jabe\Engine\Impl\ProcessEngineLogger;
-use Jabe\Engine\Impl\Util\Concurrent\RunnableInterface;
+use Concurrent\RunnableInterface;
 
 abstract class AcquireJobsRunnable implements RunnableInterface
 {

@@ -72,7 +72,7 @@ class TaskDecorator
                     $task->setDueDate($dueDate->format('c'));
                 } elseif (is_string($dueDate)) {
                     $businessCalendar = $this->getBusinessCalender();
-                    $task->setDueDate($businessCalendar->resolveDuedate($dueDate, $task)->format('c'));
+                    $task->setDueDate($businessCalendar->resolveDuedate($dueDate/*, $task*/)->format('c'));
                 } else {
                     throw new ProcessEngineException("Due date expression does not resolve to a Date or Date string: " .
                         $dueDateExpression->getExpressionText());
@@ -91,7 +91,7 @@ class TaskDecorator
                     $task->setFollowUpDate($followUpDate->format('c'));
                 } elseif (is_string($followUpDate)) {
                     $businessCalendar = $this->getBusinessCalender();
-                    $task->setFollowUpDate($businessCalendar->resolveDuedate($followUpDate, $task)->format('c'));
+                    $task->setFollowUpDate($businessCalendar->resolveDuedate($followUpDate/*, $task*/)->format('c'));
                 } else {
                     throw new ProcessEngineException("Follow up date expression does not resolve to a Date or Date string: " .
                         $followUpDateExpression->getExpressionText());

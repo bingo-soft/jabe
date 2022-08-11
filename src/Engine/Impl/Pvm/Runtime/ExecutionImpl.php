@@ -19,8 +19,8 @@ use Jabe\Engine\Impl\Core\Variable\Scope\{
 };
 use Jabe\Engine\Impl\Pvm\PvmProcessInstanceInterface;
 use Jabe\Engine\Impl\Pvm\Delegate\ActivityExecutionInterface;
-use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
-use Jabe\Model\Bpmn\Instance\FlowElementInterface;
+use Bpmn\BpmnModelInstanceInterface;
+use Bpmn\Instance\FlowElementInterface;
 
 class ExecutionImpl extends PvmExecutionImpl implements ActivityExecutionInterface, PvmProcessInstanceInterface
 {

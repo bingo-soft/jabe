@@ -8,7 +8,7 @@ use Jabe\Engine\Impl\Pvm\Process\{
     ScopeImpl,
     TransitionImpl
 };
-use Jabe\Engine\Impl\Util\Xml\Element;
+use Sax\Element;
 use Jabe\Engine\Impl\Variable\VariableDeclaration;
 
 interface BpmnParseListener

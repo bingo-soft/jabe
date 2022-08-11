@@ -8,7 +8,6 @@ use Jabe\Engine\Impl\Util\{
     ClockUtil,
     EngineUtilLogger
 };
-use Jabe\Engine\Task\TaskInterface;
 
 class CycleBusinessCalendar implements BusinessCalendarInterface
 {
@@ -16,7 +15,7 @@ class CycleBusinessCalendar implements BusinessCalendarInterface
 
     public const NAME = "cycle";
 
-    public function resolveDuedate(string $duedateDescription, $startDate = null, ?TaskInterface $task = null, ?int $repeatOffset = 0): ?\DateTime
+    public function resolveDuedate(string $duedateDescription, $startDate = null, int $repeatOffset = 0): ?\DateTime
     {
         try {
             if (strpos($duedateDescription, "R") === 0) {

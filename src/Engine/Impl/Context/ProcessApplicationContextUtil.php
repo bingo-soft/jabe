@@ -12,7 +12,7 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     TaskEntity
 };
 use Jabe\Engine\Impl\Repository\ResourceDefinitionEntity;
-use Jabe\Engine\Impl\Util\Concurrent\RunnableInterface;
+use Concurrent\RunnableInterface;
 
 class ProcessApplicationContextUtil
 {

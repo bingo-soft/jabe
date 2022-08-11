@@ -2,7 +2,7 @@
 
 namespace Jabe\Engine;
 
-use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
+use Bpmn\BpmnModelInstanceInterface;
 use Jabe\Engine\Authorization\{
     Permissions,
     ProcessDefinitionPermissions,

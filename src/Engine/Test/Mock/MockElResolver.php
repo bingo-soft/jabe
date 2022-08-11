@@ -2,7 +2,7 @@
 
 namespace Jabe\Engine\Test\Mock;
 
-use Jabe\Engine\Impl\Util\El\{
+use El\{
     ELContext,
     ELResolver
 };

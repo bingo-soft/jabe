@@ -2,8 +2,8 @@
 
 namespace Jabe\Engine\Impl\Webservice;
 
-use Jabe\Model\Wsdl\Impl\WsdlParser;
-use Jabe\Model\Wsdl\Instance\DefinitionsInterface;
+use Jabe\Engine\Impl\Model\Wsdl\Impl\WsdlParser;
+use Jabe\Engine\Impl\Model\Wsdl\Instance\DefinitionsInterface;
 
 class WSDLManager
 {

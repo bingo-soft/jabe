@@ -15,7 +15,7 @@ use Jabe\Engine\Impl\Interceptor\{
     CommandExecutorInterface,
     ProcessDataContext
 };
-use Jabe\Engine\Impl\Util\Concurrent\RunnableInterface;
+use Concurrent\RunnableInterface;
 
 class ExecuteJobsRunnable implements RunnableInterface
 {

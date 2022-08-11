@@ -2,7 +2,7 @@
 
 namespace Jabe\Engine\Impl\Scripting\Engine;
 
-use Jabe\Engine\Impl\Util\Scripting\{
+use Script\{
     BindingsInterface,
     ScriptEngineInterface,
     ScriptEngineFactoryInterface,
@@ -14,13 +14,14 @@ use Jabe\Engine\Application\{
     ProcessApplicationReferenceInterface,
     ProcessApplicationUnavailableException
 };
-use Jabe\EngineDmn\Impl\Spi\El\DmnScriptEngineResolverInterface;
+//use Jabe\EngineDmn\Impl\Spi\El\DmnScriptEngineResolverInterface;
 use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Delegate\VariableScopeInterface;
 use Jabe\Engine\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Engine\Impl\Context\Context;
+use Script\ScriptEngineResolverInterface;
 
-class ScriptingEngines implements DmnScriptEngineResolverInterface
+class ScriptingEngines
 {
     public const DEFAULT_SCRIPTING_LANGUAGE = "juel";
 

@@ -11,8 +11,8 @@ use Jabe\Engine\Impl\Scripting\{
     ExecutableScript,
     ScriptFactory
 };
-use Jabe\Engine\Impl\Scripting\Engine\JuelScriptEngineFactory;
 use Jabe\Engine\Impl\Util\EnsureUtil;
+use Script\Engine\Juel\JuelScriptEngineFactory;
 
 class ScriptUtil
 {
@@ -133,7 +133,7 @@ class ScriptUtil
      */
     public static function isDynamicScriptExpression(?string $language, string $value): bool
     {
-        return StringUtil::isExpression($value) && $language != null && !in_array(strtolower($language), JuelScriptEngineFactory::$names);
+        return StringUtil::isExpression($value) && $language != null && !in_array(strtolower($language), JuelScriptEngineFactory::NAMES);
     }
 
     /**

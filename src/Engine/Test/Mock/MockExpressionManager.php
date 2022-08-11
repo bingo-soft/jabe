@@ -7,7 +7,7 @@ use Jabe\Engine\Impl\El\{
     JuelExpressionManager,
     VariableContextElResolver
 };
-use Jabe\Engine\Impl\Util\El\{
+use El\{
     ArrayELResolver,
     BeanELResolver,
     CompositeELResolver,

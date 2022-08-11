@@ -2,7 +2,7 @@
 
 namespace Jabe\Engine\Impl\Persistence\Deploy\Cache;
 
-use Jabe\Commons\Utils\Cache\CacheInterface;
+use Jabe\Engine\Commons\Utils\Cache\CacheInterface;
 
 interface CacheFactoryInterface
 {

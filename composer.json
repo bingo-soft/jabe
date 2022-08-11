@@ -17,6 +17,7 @@
     },
     "require": {
         "php": "^8.0",
+        "bingo-soft/xml": "^1.0",
         "doctrine/orm": "2.8.5",
         "doctrine/dbal": "2.12.1",
         "monolog/monolog": "^2.3",
@@ -25,7 +26,13 @@
         "ramsey/uuid": "^4.2",
         "dragonmantank/cron-expression": "^3.3",
         "symfony/event-dispatcher": "^6.0",
-        "guzzlehttp/guzzle": "^7.0"
+        "guzzlehttp/guzzle": "^7.0",
+        "bingo-soft/bpmn": "^1.0",
+        "bingo-soft/sax": "^1.0",
+        "bingo-soft/el": "^1.0",
+        "bingo-soft/script": "^1.1",
+        "bingo-soft/juel": "^1.1",
+        "bingo-soft/concurrent": "^1.0"
     },
     "require-dev": {
         "doctrine/coding-standard": "^9",

@@ -2,8 +2,8 @@
 
 namespace Jabe\Engine\Delegate;
 
-use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
-use Jabe\Model\Bpmn\Instnace\FlowElementInterface;
+use Bpmn\BpmnModelInstanceInterface;
+use Bpmn\Instnace\FlowElementInterface;
 
 interface BpmnModelExecutionContextInterface
 {

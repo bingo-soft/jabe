@@ -4,7 +4,7 @@ namespace Jabe\Engine\Impl\El;
 
 use Jabe\Engine\Delegate\VariableScopeInterface;
 use Jabe\Engine\Impl\Core\Variable\Scope\AbstractVariableScope;
-use Jabe\Engine\Impl\Util\El\{
+use El\{
     ArrayELResolver,
     CompositeELResolver,
     ELContext,
@@ -15,7 +15,7 @@ use Jabe\Engine\Impl\Util\El\{
     MapELResolver,
     ValueExpression
 };
-use Jabe\Engine\Impl\Juel\ExpressionFactoryImpl;
+use Juel\ExpressionFactoryImpl;
 use Jabe\Engine\Impl\Util\EnsureUtil;
 use Jabe\Engine\Test\Mock\MockElResolver;
 use Jabe\Engine\Variable\Context\VariableContextInterface;

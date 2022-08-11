@@ -2,7 +2,7 @@
 
 namespace Jabe\Engine\Application;
 
-use Jabe\Engine\Impl\Util\El\{
+use El\{
     ELResolver,
     BeanELResolver
 };

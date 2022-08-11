@@ -6,7 +6,7 @@ use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Delegate\VariableScopeInterface;
 use Jabe\Engine\Impl\Bpmn\Behavior\ExternalTaskActivityBehavior;
 use Jabe\Engine\Impl\Context\Context;
-use Jabe\Engine\Impl\Util\El\{
+use El\{
     ELContext,
     ELResolver
 };

@@ -8,7 +8,7 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     DeploymentEntity,
     ProcessDefinitionEntity
 };
-use Jabe\Engine\Impl\Util\Xml\Element;
+use Sax\Element;
 use Jabe\Engine\Variable\VariableMapInterface;
 
 interface FormHandlerInterface

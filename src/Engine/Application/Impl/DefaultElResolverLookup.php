@@ -3,7 +3,7 @@
 namespace Jabe\Engine\Application\Impl;
 
 use Jabe\Engine\Application\AbstractProcessApplication;
-use Jabe\Engine\Impl\Util\El\ELResolver;
+use El\ELResolver;
 
 class DefaultElResolverLookup
 {

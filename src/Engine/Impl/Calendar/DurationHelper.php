@@ -22,7 +22,7 @@ class DurationHelper
 
     private $times;
 
-    private $repeatOffset;
+    private $repeatOffset = 0;
 
     public function __construct(string $expressions, $startDate = null)
     {
@@ -51,7 +51,7 @@ class DurationHelper
                 $this->period = new \DateInterval($expression[1]);
             } else {
                 $this->end = (new \DateTime($expression[1]));
-                $this->period = (new \DateTime($expression[1]))->diff(new \DateTime($expression[0]));
+                $this->period = (clone $this->start)->diff($this->end);
             }
         }
         if ($this->start === null && $this->end === null) {
@@ -75,7 +75,7 @@ class DurationHelper
         if ($this->end !== null) {
             return $this->end;
         }
-        return $this->start->add($this->period);
+        return (clone $this->start)->add($this->period);
     }
 
     public function getTimes(): int
@@ -98,15 +98,15 @@ class DurationHelper
         $dateWithoutOffset = new \DateTime();
         $dateWithoutOffset->setTimestamp($date->getTimestamp() - $this->repeatOffset);
         if ($this->start !== null) {
-            $cur = $this->start;
+            $cur = clone $this->start;
             for ($i = 0; $i < $this->times && !($cur->getTimestamp() > $dateWithoutOffset->getTimestamp()); $i += 1) {
-                $cur = $cur->add($this->period);
+                $cur->add($this->period);
             }
             if ($cur->getTimestamp() < $dateWithoutOffset->getTimestamp()) {
                 return null;
             }
             // add offset to calculated due date
-            if ($this->repeatOffset == 0) {
+            if ($this->repeatOffset === 0) {
                 return $cur;
             } else {
                 $dateWithOffset = new \DateTime();
@@ -114,11 +114,12 @@ class DurationHelper
                 return $dateWithOffset;
             }
         }
-        $cur = $this->end->sub($this->period);
-        $next = $this->end;
+
+        $cur = (clone $this->end)->sub($this->period);
+        $next = clone $this->end;
 
         for ($i = 0; $i < $this->times && ($cur->getTimestamp() > $date->getTimestamp()); $i += 1) {
-            $next = $cur;
+            $next = clone $cur;
             $cur = $cur->sub($this->period);
         }
         return $next->getTimestamp() < $date->getTimestamp() ? null : $next;

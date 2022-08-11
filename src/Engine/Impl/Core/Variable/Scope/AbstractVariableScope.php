@@ -14,7 +14,7 @@ use Jabe\Engine\Impl\Core\Variable\Event\{
     VariableEvent,
     VariableEventDispatcherInterface
 };
-use Jabe\Engine\Impl\Util\El\ELContext;
+use El\ELContext;
 use Jabe\Engine\Variable\Variables;
 use Jabe\Engine\Variable\Impl\VariableMapImpl;
 use Jabe\Engine\Variable\Value\TypedValueInterface;

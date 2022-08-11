@@ -84,10 +84,10 @@ use Jabe\Engine\Variable\{
     VariableMapInterface,
     Variables
 };
-use Jabe\Model\Bpmn\BpmnModelInstanceInterface;
-use Jabe\Model\Bpmn\Instance\FlowElementInterface;
-use Jabe\Model\Xml\Instance\ModelElementInstanceInterface;
-use Jabe\Model\Xml\Type\ModelElementTypeInterface;
+use Bpmn\BpmnModelInstanceInterface;
+use Bpmn\Instance\FlowElementInterface;
+use Xml\Instance\ModelElementInstanceInterface;
+use Xml\Type\ModelElementTypeInterface;
 
 class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, ProcessInstanceInterface, DbEntityInterface, HasDbRevisionInterface, HasDbReferencesInterface, VariablesProviderInterface
 {

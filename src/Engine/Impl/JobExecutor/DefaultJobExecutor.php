@@ -3,17 +3,15 @@
 namespace Jabe\Engine\Impl\JobExecutor;
 
 use Jabe\Engine\Impl\ProcessEngineLogger;
-use Jabe\Engine\Impl\Util\Concurrent\{
-    ArrayBlockingQueue,
-    ProcessPoolExecutor,
-    TimeUnit
-};
+use Concurrent\Queue\ArrayBlockingQueue;
+use Concurrent\Executor\DefaultPoolExecutor;
+use Concurrent\TimeUnit;
 
 class DefaultJobExecutor extends ThreadPoolJobExecutor
 {
     //private final static JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
-    protected $queueSize = PHP_INT_MAX;
+    protected $queueSize = ArrayBlockingQueue::DEFAULT_CAPACITY;
     protected $corePoolSize = 4;
     protected $maxPoolSize = 10;
 
@@ -21,7 +19,7 @@ class DefaultJobExecutor extends ThreadPoolJobExecutor
     {
         if ($this->threadPoolExecutor === null || $this->threadPoolExecutor->isShutdown()) {
             $threadPoolQueue = new ArrayBlockingQueue($this->queueSize);
-            $this->threadPoolExecutor = new ProcessPoolExecutor($this->corePoolSize, 0, TimeUnit::MILLISECONDS, $threadPoolQueue);
+            $this->threadPoolExecutor = new DefaultPoolExecutor($this->corePoolSize, 0, TimeUnit::MILLISECONDS, $threadPoolQueue);
             //$this->threadPoolExecutor->setRejectedExecutionHandler(...);
         }
 

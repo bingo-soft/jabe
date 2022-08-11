@@ -56,11 +56,11 @@ use Jabe\Engine\Repository\{
     ResourceInterface,
     ResumePreviousBy
 };
-use Jabe\Model\Bpmn\{
+use Bpmn\{
     Bpmn,
     BpmnModelInstanceInterface
 };
-use Jabe\Model\Bpmn\Instance\ProcessInterface;
+use Bpmn\Instance\ProcessInterface;
 
 class DeployCmd implements CommandInterface
 {

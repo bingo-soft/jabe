@@ -2,7 +2,7 @@
 
 namespace Jabe\Engine\Impl\Interceptor;
 
-use Jabe\Commons\Logging\MdcAccess;
+use Jabe\Engine\Commons\Logging\MdcAccess;
 
 class ProcessDataStack
 {

@@ -4,7 +4,7 @@ namespace Jabe\Engine\Impl\Persistence\Deploy\Cache;
 
 use Jabe\Engine\Impl\ProcessDefinitionQueryImpl;
 use Jabe\Engine\Impl\Context\Context;
-use Jabe\Model\Bpmn\{
+use Bpmn\{
     Bpmn,
     BpmnModelInstanceInterface
 };

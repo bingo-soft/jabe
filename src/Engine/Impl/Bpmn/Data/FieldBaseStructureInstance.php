@@ -2,7 +2,7 @@
 
 namespace Jabe\Engine\Impl\Bpmn\Data;
 
-use Jabe\Engine\Impl\Juel\TypeConverterImpl;
+use Juel\TypeConverterImpl;
 
 class FieldBaseStructureInstance implements StructureInstanceInterface
 {

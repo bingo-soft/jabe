@@ -7,8 +7,8 @@ use Jabe\Engine\Impl\Cmd\GetDeploymentResourceCmd;
 use Jabe\Engine\Impl\Context\Context;
 use Jabe\Engine\Impl\Db\EnginePersistenceLogger;
 use Jabe\Engine\Impl\Repository\ResourceDefinitionEntityInterface;
-use Jabe\Model\Xml\ModelInstanceInterface;
-use Jabe\Commons\Utils\Cache\CacheInterface;
+use Xml\ModelInstanceInterface;
+use Jabe\Engine\Commons\Utils\Cache\CacheInterface;
 
 abstract class ModelInstanceCache
 {

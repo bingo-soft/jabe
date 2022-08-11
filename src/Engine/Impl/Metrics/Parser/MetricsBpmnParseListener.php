@@ -12,7 +12,7 @@ use Jabe\Engine\Impl\Pvm\Process\{
     ActivityImpl,
     ScopeImpl
 };
-use Jabe\Engine\Impl\Util\Xml\Element;
+use Sax\Element;
 use Jabe\Engine\Management\Metrics;
 
 class MetricsBpmnParseListener extends AbstractBpmnParseListener

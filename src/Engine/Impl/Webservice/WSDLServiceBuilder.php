@@ -2,7 +2,7 @@
 
 namespace Jabe\Engine\Impl\Webservice;
 
-use Jabe\Model\Wsdl\Instance\{
+use Jabe\Engine\Impl\Model\Wsdl\Instance\{
     DefinitionsInterface,
     ServiceInterface
 };

@@ -15,7 +15,7 @@ use Jabe\Engine\Repository\{
     DiagramLayout,
     DiagramNode
 };
-use Jabe\Model\Xml\Impl\Instance\{
+use Xml\Impl\Instance\{
     DomDocumentExt,
     DomElementExt
 };

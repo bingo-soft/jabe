@@ -25,7 +25,7 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     TimerEntity
 };
 use Jabe\Engine\Impl\Pvm\Process\ActivityImpl;
-use Jabe\Engine\Impl\Util\Concurrent\RunnableInterface;
+use Concurrent\RunnableInterface;
 use Jabe\Engine\Impl\Util\EnsureUtil;
 
 class RecalculateJobDuedateCmd implements CommandInterface, \Serializable

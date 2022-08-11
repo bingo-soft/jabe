@@ -1,18 +1,12 @@
-before_commands:
-    - "composer install --no-interaction"
 build:
   nodes:
     php80:
       environment:
         php: 8.0
         redis: false
-    #coverage:
-    #  tests:
-    #    override:
-    #      - command: vendor/bin/phpunit
-    #        coverage:
-    #          file: build/logs/clover.xml                                        
-    #          format: clover
+      dependencies:
+        before:
+          - command: 'pecl install openswoole'
     analysis:
       tests:
         override:

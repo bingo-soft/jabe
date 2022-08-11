@@ -4,8 +4,384 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "416db0d3664826ac5cb55d1a09c3ace7",
+    "content-hash": "29dcf2f69744488b3ccdff762f45475f",
     "packages": [
+        {
+            "name": "bingo-soft/bpmn",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bingo-soft/bpmn.git",
+                "reference": "9cca3a9498abc86fa921bfe5743e14af77a9001b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bingo-soft/bpmn/zipball/9cca3a9498abc86fa921bfe5743e14af77a9001b",
+                "reference": "9cca3a9498abc86fa921bfe5743e14af77a9001b",
+                "shasum": ""
+            },
+            "require": {
+                "bingo-soft/xml": "^1.0",
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "*",
+                "phpunit/phpunit": "*",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Bpmn\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bingo-Soft",
+                    "email": "bingosoft@bk.ru"
+                }
+            ],
+            "description": "Bpmn model used in workflow engine",
+            "homepage": "https://github.com/bingo-soft/xml",
+            "keywords": [
+                "automation",
+                "bpmn",
+                "model",
+                "php",
+                "process",
+                "workflow",
+                "xml"
+            ],
+            "support": {
+                "issues": "https://github.com/bingo-soft/bpmn/issues",
+                "source": "https://github.com/bingo-soft/bpmn/tree/1.0.0"
+            },
+            "time": "2022-08-02T13:37:29+00:00"
+        },
+        {
+            "name": "bingo-soft/concurrent",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bingo-soft/concurrent.git",
+                "reference": "35bf3e5918b53b82055a690275a75ef07093c398"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bingo-soft/concurrent/zipball/35bf3e5918b53b82055a690275a75ef07093c398",
+                "reference": "35bf3e5918b53b82055a690275a75ef07093c398",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "*",
+                "phpunit/phpunit": "*",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Concurrent\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bingo-Soft",
+                    "email": "bingosoft@bk.ru"
+                }
+            ],
+            "description": "Concurrent programming constructs for PHP",
+            "homepage": "https://github.com/bingo-soft/concurrent",
+            "keywords": [
+                "concurrent",
+                "parallel",
+                "php",
+                "pool",
+                "worker"
+            ],
+            "support": {
+                "issues": "https://github.com/bingo-soft/concurrent/issues",
+                "source": "https://github.com/bingo-soft/concurrent/tree/1.2.0"
+            },
+            "time": "2022-08-11T09:50:17+00:00"
+        },
+        {
+            "name": "bingo-soft/el",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bingo-soft/el.git",
+                "reference": "be278ad230f577cebf6bfa2edae25fdc37d8590f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bingo-soft/el/zipball/be278ad230f577cebf6bfa2edae25fdc37d8590f",
+                "reference": "be278ad230f577cebf6bfa2edae25fdc37d8590f",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "*",
+                "phpunit/phpunit": "*",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "El\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bingo-Soft",
+                    "email": "bingosoft@bk.ru"
+                }
+            ],
+            "description": "Java Expression Language (EL) ported to PHP",
+            "homepage": "https://github.com/bingo-soft/el",
+            "keywords": [
+                "el",
+                "expression language",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/bingo-soft/el/issues",
+                "source": "https://github.com/bingo-soft/el/tree/1.0.2"
+            },
+            "time": "2022-08-09T07:37:17+00:00"
+        },
+        {
+            "name": "bingo-soft/juel",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bingo-soft/juel.git",
+                "reference": "6d3d11e54002b287f72a4f51cd108ac555a20304"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bingo-soft/juel/zipball/6d3d11e54002b287f72a4f51cd108ac555a20304",
+                "reference": "6d3d11e54002b287f72a4f51cd108ac555a20304",
+                "shasum": ""
+            },
+            "require": {
+                "bingo-soft/el": "^1.0",
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "*",
+                "phpunit/phpunit": "*",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Juel\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bingo-Soft",
+                    "email": "bingosoft@bk.ru"
+                }
+            ],
+            "description": "Implementation of Java Unified Expression Language in PHP",
+            "homepage": "https://github.com/bingo-soft/juel",
+            "keywords": [
+                "el",
+                "expression",
+                "juel",
+                "language",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/bingo-soft/juel/issues",
+                "source": "https://github.com/bingo-soft/juel/tree/1.1.0"
+            },
+            "time": "2022-08-09T07:39:46+00:00"
+        },
+        {
+            "name": "bingo-soft/sax",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bingo-soft/sax.git",
+                "reference": "da5648fb3f10ed4c6a48d357fefd5904bea6f2de"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bingo-soft/sax/zipball/da5648fb3f10ed4c6a48d357fefd5904bea6f2de",
+                "reference": "da5648fb3f10ed4c6a48d357fefd5904bea6f2de",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "*",
+                "phpunit/phpunit": "*",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Sax\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bingo-Soft",
+                    "email": "bingosoft@bk.ru"
+                }
+            ],
+            "description": "Simple API for XML ported to PHP",
+            "homepage": "https://github.com/bingo-soft/sax",
+            "keywords": [
+                "php",
+                "sax",
+                "xml"
+            ],
+            "support": {
+                "issues": "https://github.com/bingo-soft/sax/issues",
+                "source": "https://github.com/bingo-soft/sax/tree/1.0.1"
+            },
+            "time": "2022-08-08T05:51:01+00:00"
+        },
+        {
+            "name": "bingo-soft/script",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bingo-soft/script.git",
+                "reference": "f4b994a348dd0b1421be6b5ba67ce847936986d7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bingo-soft/script/zipball/f4b994a348dd0b1421be6b5ba67ce847936986d7",
+                "reference": "f4b994a348dd0b1421be6b5ba67ce847936986d7",
+                "shasum": ""
+            },
+            "require": {
+                "bingo-soft/el": "^1.0",
+                "bingo-soft/juel": "^1.0",
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "*",
+                "phpunit/phpunit": "*",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Script\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bingo-Soft",
+                    "email": "bingosoft@bk.ru"
+                }
+            ],
+            "description": "Scripting API implemented in PHP",
+            "homepage": "https://github.com/bingo-soft/script",
+            "keywords": [
+                "el",
+                "expression",
+                "juel",
+                "lua",
+                "php",
+                "scripting"
+            ],
+            "support": {
+                "issues": "https://github.com/bingo-soft/script/issues",
+                "source": "https://github.com/bingo-soft/script/tree/1.2.0"
+            },
+            "time": "2022-08-10T05:00:54+00:00"
+        },
+        {
+            "name": "bingo-soft/xml",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bingo-soft/xml.git",
+                "reference": "b779063d44244c297edb7cb952be2d85c8aa6d45"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bingo-soft/xml/zipball/b779063d44244c297edb7cb952be2d85c8aa6d45",
+                "reference": "b779063d44244c297edb7cb952be2d85c8aa6d45",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "*",
+                "phpunit/phpunit": "*",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Xml\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bingo-Soft",
+                    "email": "bingosoft@bk.ru"
+                }
+            ],
+            "description": "Implementation of XML model - the core of BPMN engine",
+            "homepage": "https://github.com/bingo-soft/xml",
+            "keywords": [
+                "automation",
+                "bpmn",
+                "model",
+                "php",
+                "process",
+                "workflow",
+                "xml"
+            ],
+            "support": {
+                "issues": "https://github.com/bingo-soft/xml/issues",
+                "source": "https://github.com/bingo-soft/xml/tree/1.0.2"
+            },
+            "time": "2022-08-02T09:24:17+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.9.3",
@@ -5192,5 +5568,5 @@
         "php": "^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.3.0"
 }

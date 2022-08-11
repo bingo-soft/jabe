@@ -3,7 +3,7 @@
 namespace Jabe\Engine\Impl\JobExecutor;
 
 use Jabe\Engine\Impl\ProcessEngineImpl;
-use Jabe\Engine\Impl\Util\Concurrent\ProcessPoolExecutor;
+use Concurrent\ExecutorServiceInterface;
 
 class ThreadPoolJobExecutor extends JobExecutor
 {
@@ -30,12 +30,12 @@ class ThreadPoolJobExecutor extends JobExecutor
     }
 
     // getters / setters
-    public function getThreadPoolExecutor(): ProcessPoolExecutor
+    public function getThreadPoolExecutor(): ExecutorServiceInterface
     {
         return $this->threadPoolExecutor;
     }
 
-    public function setThreadPoolExecutor(ProcessPoolExecutor $threadPoolExecutor): void
+    public function setThreadPoolExecutor(ExecutorServiceInterface $threadPoolExecutor): void
     {
         $this->threadPoolExecutor = $threadPoolExecutor;
     }

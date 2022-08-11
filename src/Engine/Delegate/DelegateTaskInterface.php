@@ -2,7 +2,7 @@
 
 namespace Jabe\Engine\Delegate;
 
-use Jabe\Model\Bpmn\Instance\UserTaskInterface;
+use Bpmn\Instance\UserTaskInterface;
 
 interface DelegateTaskInterface extends VariableScopeInterface, BpmnModelExecutionContextInterface, ProcessEngineServicesAwareInterface
 {

@@ -34,7 +34,7 @@ use Jabe\Engine\Impl\Persistence\Entity\{
     ProcessDefinitionEntity,
     TaskEntity
 };
-use Jabe\Engine\Impl\Util\Xml\Element;
+use Sax\Element;
 use Jabe\Engine\Variable\VariableMapInterface;
 use Jabe\Engine\Variable\Impl\VariableMapImpl;
 use Jabe\Engine\Variable\Value\{

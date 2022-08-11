@@ -9,7 +9,7 @@ use Jabe\Engine\Application\{
 };
 use Jabe\Engine\ProcessEngineException;
 use Jabe\Engine\Impl\Context\Context;
-use Jabe\Engine\Impl\Util\El\ELResolver;
+use El\ELResolver;
 
 class ProcessApplicationElResolverDelegate extends AbstractElResolverDelegate
 {
