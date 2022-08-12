@@ -1,0 +1,7 @@
+<?php
+
+namespace Jabe\Runtime;
+
+interface ProcessInstanceModificationInstantiationBuilderInterface extends ProcessInstanceModificationBuilderInterface, ActivityInstantiationBuilderInterface
+{
+}

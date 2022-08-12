@@ -3,8 +3,8 @@
 namespace Tests\WSDL;
 
 use PHPUnit\Framework\TestCase;
-use Jabe\Engine\Impl\Model\Wsdl\Impl\WsdlParser;
-use Jabe\Engine\Impl\Model\Wsdl\Instance\{
+use Jabe\Impl\Model\Wsdl\Impl\WsdlParser;
+use Jabe\Impl\Model\Wsdl\Instance\{
     BindingInterface,
     ServiceInterface
 };

@@ -3,8 +3,8 @@
 namespace Tests\WSDL;
 
 use PHPUnit\Framework\TestCase;
-use Jabe\Engine\Impl\Util\ClockUtil;
-use Jabe\Engine\Impl\Calendar\DurationBusinessCalendar;
+use Jabe\Impl\Util\ClockUtil;
+use Jabe\Impl\Calendar\DurationBusinessCalendar;
 
 class DurationBusinessCalendarTest extends TestCase
 {

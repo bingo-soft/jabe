@@ -3,12 +3,12 @@
 namespace Tests\WSDL;
 
 use PHPUnit\Framework\TestCase;
-use Jabe\Engine\Impl\Cxf\Webservice\CxfWSDLImporter;
-use Jabe\Engine\Impl\Webservice\{
+use Jabe\Impl\Cxf\Webservice\CxfWSDLImporter;
+use Jabe\Impl\Webservice\{
     WSOperation,
     WSService
 };
-use Jabe\Engine\Impl\Bpmn\Data\{
+use Jabe\Impl\Bpmn\Data\{
     SimpleStructureDefinition,
     StructureDefinitionInterface
 };
