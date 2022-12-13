@@ -577,7 +577,7 @@ class BpmnParse extends Parse
     }
 
     /**
-    * Parses one process (ie anything inside a &lt;process&gt; element).
+    * Parses one process (ie anything inside a <process> element).
     *
     * @param processElement
     *          The 'process' element.

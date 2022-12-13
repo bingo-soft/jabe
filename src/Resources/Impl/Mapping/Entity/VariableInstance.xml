@@ -1,0 +1,981 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Copyright Camunda Services GmbH and/or licensed to Camunda Services GmbH
+    under one or more contributor license agreements. See the NOTICE file
+    distributed with this work for additional information regarding copyright
+    ownership. Camunda licenses this file to you under the Apache License,
+    Version 2.0; you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+        http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Jabe\Impl\Persistence\Entity\VariableInstanceEntity">
+
+  <!-- VARIABLE INSTANCE INSERT -->
+
+  <insert id="insertVariableInstance" parameterType="Jabe\Impl\Persistence\Entity\VariableInstanceEntity">
+    insert into ${prefix}ACT_RU_VARIABLE
+    (
+      ID_,
+      TYPE_,
+      NAME_,
+      PROC_DEF_ID_,
+      PROC_INST_ID_,
+      EXECUTION_ID_,
+      CASE_INST_ID_,
+      CASE_EXECUTION_ID_,
+      TASK_ID_,
+      BATCH_ID_,
+      BYTEARRAY_ID_,
+      DOUBLE_,
+      LONG_,
+      TEXT_,
+      TEXT2_,
+      VAR_SCOPE_,
+      SEQUENCE_COUNTER_,
+      IS_CONCURRENT_LOCAL_,
+      TENANT_ID_,
+      REV_
+    )
+    values (
+      #{id, dbalType=VARCHAR},
+      #{serializerName, dbalType=VARCHAR},
+      #{name, dbalType=VARCHAR},
+      #{processDefinitionId, dbalType=VARCHAR},
+      #{processInstanceId, dbalType=VARCHAR},
+      #{executionId, dbalType=VARCHAR},
+      #{caseInstanceId, dbalType=VARCHAR},
+      #{caseExecutionId, dbalType=VARCHAR},
+      #{taskId, dbalType=VARCHAR},
+      #{batchId, dbalType=VARCHAR},
+      #{byteArrayValueId, dbalType=VARCHAR},
+      #{doubleValue, dbalType=FLOAT},
+      #{longValue, dbalType=BIGINT},
+      #{textValue, dbalType=VARCHAR},
+      #{textValue2, dbalType=VARCHAR},
+      #{variableScopeId, dbalType=VARCHAR},
+      #{sequenceCounter, dbalType=BIGINT},
+      #{isConcurrentLocal, dbalType=BOOLEAN},
+      #{tenantId, dbalType=VARCHAR},
+      1
+    )
+  </insert>
+
+  <!-- VARIABLE INSTANCE UPDATE -->
+
+  <update id="updateVariableInstance" parameterType="Jabe\Impl\Persistence\Entity\VariableInstanceEntity">
+    update ${prefix}ACT_RU_VARIABLE
+    set
+      REV_ = #{revisionNext, dbalType=INTEGER},
+      EXECUTION_ID_ = #{executionId, dbalType=VARCHAR},
+      VAR_SCOPE_ = #{variableScopeId, dbalType=VARCHAR},
+      TYPE_ = #{serializerName, dbalType=VARCHAR },
+	    BYTEARRAY_ID_ = #{byteArrayValueId, dbalType=VARCHAR},
+	    DOUBLE_ = #{doubleValue, dbalType=FLOAT},
+	    LONG_ = #{longValue, dbalType=BIGINT},
+	    TEXT_ = #{textValue, dbalType=VARCHAR},
+	    TEXT2_ = #{textValue2, dbalType=VARCHAR},
+      SEQUENCE_COUNTER_ = #{sequenceCounter, dbalType=BIGINT}
+    where ID_ = #{id, dbalType=VARCHAR}
+      and REV_ = #{revision, dbalType=INTEGER}
+  </update>
+
+  <!-- VARIABLE INSTANCE DELETE -->
+
+  <delete id="deleteVariableInstance" parameterType="Jabe\Impl\Persistence\Entity\VariableInstanceEntity">
+    delete from ${prefix}ACT_RU_VARIABLE where ID_ = #{id, dbalType=VARCHAR} and REV_ = #{revision}
+  </delete>
+
+  <!-- VARIABLE INSTANCE RESULTMAP -->
+
+	<resultMap id="variableInstanceResultMap" type="Jabe\Impl\Persistence\Entity\VariableInstanceEntity">
+      <id property="id" column="ID_" dbalType="VARCHAR" />
+      <result property="revision" column="REV_" dbalType="INTEGER"/>
+      <result property="serializerName" column="TYPE_" javaType="String" dbalType="VARCHAR"/>
+      <result property="name" column="NAME_" javaType="String" dbalType="VARCHAR" />
+      <result property="processDefinitionId" column="PROC_DEF_ID_" dbalType="VARCHAR" />
+      <result property="processInstanceId" column="PROC_INST_ID_" dbalType="VARCHAR" />
+      <result property="executionId" column="EXECUTION_ID_" dbalType="VARCHAR" />
+      <result property="caseInstanceId" column="CASE_INST_ID_" dbalType="VARCHAR" />
+      <result property="caseExecutionId" column="CASE_EXECUTION_ID_" dbalType="VARCHAR" />
+      <result property="taskId" column="TASK_ID_" dbalType="VARCHAR" />
+      <result property="batchId" column="BATCH_ID_" dbalType="VARCHAR" />
+      <result property="activityInstanceId" column="ACT_INST_ID_" dbalType="VARCHAR" />
+      <result property="activityId" column="ACTIVITY_ID_" dbalType="VARCHAR" />
+      <result property="isActive" column="IS_ACTIVE_" dbalType="BOOLEAN" />
+      <result property="isConcurrencyScope" column="IS_CONCURRENCY_SCOPE_" dbalType="BOOLEAN" />
+      <result property="byteArrayValueId" column="BYTEARRAY_ID_" dbalType="VARCHAR" />
+      <result property="doubleValue" column="DOUBLE_" dbalType="FLOAT" />
+      <result property="textValue" column="TEXT_" dbalType="VARCHAR"/>
+      <result property="textValue2" column="TEXT2_" dbalType="VARCHAR"/>
+      <result property="longValue" column="LONG_" dbalType="BIGINT"/>
+      <result property="sequenceCounter" column="SEQUENCE_COUNTER_" dbalType="BIGINT"/>
+      <result property="isConcurrentLocal" column="IS_CONCURRENT_LOCAL_" dbalType="BOOLEAN"/>
+      <result property="tenantId" column="TENANT_ID_" dbalType="VARCHAR"/>
+	</resultMap>
+
+  <!-- VARIABLE INSTANCE SELECT -->
+
+  <select id="selectVariableInstancesByBatchId" parameterType="string" resultMap="variableInstanceResultMap">
+    SELECT * FROM ${prefix}ACT_RU_VARIABLE RES WHERE VAR_SCOPE_ = #{parameter.batchId}
+  </select>
+
+	<select id="selectVariableInstance" parameterType="string" resultMap="variableInstanceResultMap">
+		SELECT
+        RES.*,
+        (<include refid="actInstIdColumn"/>) ACT_INST_ID_
+    FROM
+        ${prefix}ACT_RU_VARIABLE RES
+
+    LEFT JOIN
+        ${prefix}ACT_RU_EXECUTION EXECUTION
+    ON
+        RES.EXECUTION_ID_ = EXECUTION.ID_
+
+    LEFT JOIN
+        ${prefix}ACT_RU_EXECUTION PARENT_EXECUTION
+    ON
+        EXECUTION.PARENT_ID_ = PARENT_EXECUTION.ID_
+
+    WHERE
+        RES.ID_ = #{id, dbalType=VARCHAR}
+  </select>
+
+  <select id="selectVariablesByExecutionId" parameterType="Jabe\Impl\Db\ListQueryParameterObject" resultMap="variableInstanceResultMap">
+    SELECT
+        RES.*,
+        (<include refid="actInstIdColumn"/>) ACT_INST_ID_
+    FROM
+        ${prefix}ACT_RU_VARIABLE RES
+
+    LEFT JOIN
+        ${prefix}ACT_RU_EXECUTION EXECUTION
+    ON
+        RES.EXECUTION_ID_ = EXECUTION.ID_
+
+    LEFT JOIN
+        ${prefix}ACT_RU_EXECUTION PARENT_EXECUTION
+    ON
+        EXECUTION.PARENT_ID_ = PARENT_EXECUTION.ID_
+
+    WHERE
+        EXECUTION_ID_ = #{parameter.executionId, dbalType=VARCHAR}
+    AND
+        TASK_ID_ is null
+    <if test="parameter.variableNames != null and count(parameter.variableNames) > 0">
+    AND
+        NAME_ IN
+        <foreach item="item" index="index" collection="parameter.variableNames" open="(" separator="," close=")">
+          #{item, dbalType=VARCHAR}
+        </foreach>
+    </if>
+  </select>
+
+  <select id="selectVariablesByProcessInstanceId" parameterType="Jabe\Impl\Db\ListQueryParameterObject" resultMap="variableInstanceResultMap">
+    SELECT
+        RES.*,
+        (<include refid="actInstIdColumn"/>) ACT_INST_ID_
+    FROM
+        ${prefix}ACT_RU_VARIABLE RES
+
+    LEFT JOIN
+        ${prefix}ACT_RU_EXECUTION EXECUTION
+    ON
+        RES.EXECUTION_ID_ = EXECUTION.ID_
+
+    LEFT JOIN
+        ${prefix}ACT_RU_EXECUTION PARENT_EXECUTION
+    ON
+        EXECUTION.PARENT_ID_ = PARENT_EXECUTION.ID_
+
+    WHERE
+        RES.PROC_INST_ID_ = #{parameter, dbalType=VARCHAR}
+  </select>
+
+  <select id="selectVariablesByCaseExecutionId" parameterType="Jabe\Impl\Db\ListQueryParameterObject" resultMap="variableInstanceResultMap">
+    SELECT
+        RES.*,
+        (<include refid="actInstIdColumn"/>) ACT_INST_ID_
+    FROM
+        ${prefix}ACT_RU_VARIABLE RES
+
+    LEFT JOIN
+        ${prefix}ACT_RU_EXECUTION EXECUTION
+    ON
+        RES.EXECUTION_ID_ = EXECUTION.ID_
+
+    LEFT JOIN
+        ${prefix}ACT_RU_EXECUTION PARENT_EXECUTION
+    ON
+        EXECUTION.PARENT_ID_ = PARENT_EXECUTION.ID_
+
+    WHERE
+        CASE_EXECUTION_ID_ = #{parameter.caseExecutionId, dbalType=VARCHAR}
+    AND
+        TASK_ID_ is null
+    <if test="parameter.variableNames != null and count(parameter.variableNames) > 0">
+    AND
+        NAME_ IN
+        <foreach item="item" index="index" collection="parameter.variableNames" open="(" separator="," close=")">
+          #{item, dbalType=VARCHAR}
+        </foreach>
+    </if>
+  </select>
+
+  <select id="selectVariablesByTaskId" parameterType="Jabe\Impl\Db\ListQueryParameterObject" resultMap="variableInstanceResultMap">
+    SELECT
+        RES.*,
+        (<include refid="actInstIdColumn"/>) ACT_INST_ID_
+    FROM
+        ${prefix}ACT_RU_VARIABLE RES
+
+    LEFT JOIN
+        ${prefix}ACT_RU_EXECUTION EXECUTION
+    ON
+        RES.EXECUTION_ID_ = EXECUTION.ID_
+
+    LEFT JOIN
+        ${prefix}ACT_RU_EXECUTION PARENT_EXECUTION
+    ON
+        EXECUTION.PARENT_ID_ = PARENT_EXECUTION.ID_
+
+    WHERE
+        TASK_ID_ = #{parameter.taskId, dbalType=VARCHAR}
+    <if test="parameter.variableNames != null and count(parameter.variableNames) > 0">
+    AND
+        NAME_ IN
+        <foreach item="item" index="index" collection="parameter.variableNames" open="(" separator="," close=")">
+          #{item, dbalType=VARCHAR}
+        </foreach>
+    </if>
+  </select>
+
+  <select id="selectVariableInstanceByQueryCriteria" parameterType="Jabe\Impl\VariableInstanceQueryImpl" resultMap="variableInstanceResultMap">
+    <include refid="src/Resources/Impl/Mapping/Entity/Commons.bindOrderBy"/>
+    ${limitBefore}
+    select ${distinct} RES.*
+    ${limitBetween}
+    <include refid="selectVariableInstanceByQueryCriteriaSql"/>
+    ${orderBy}
+    ${limitAfter}
+  </select>
+
+  <select id="selectVariableInstanceCountByQueryCriteria" parameterType="Jabe\Impl\VariableInstanceQueryImpl" resultType="integer">
+    ${countDistinctBeforeStart} RES.ID_ ${countDistinctBeforeEnd}
+    <include refid="selectVariableInstanceByQueryCriteriaSql"/>
+    ${countDistinctAfterEnd}
+  </select>
+
+  <sql id="actInstIdColumn">
+  case
+	  when
+      RES.TASK_ID_ is not null
+      and RES.EXECUTION_ID_ is not null
+	  then EXECUTION.ACT_INST_ID_
+
+    when
+      RES.CASE_EXECUTION_ID_ is not null
+    then RES.CASE_EXECUTION_ID_
+
+    <!-- if execution is process instance -->
+	  when
+	    EXECUTION.PARENT_ID_ is null
+      and RES.IS_CONCURRENT_LOCAL_ = ${falseConstant}
+	  then EXECUTION.ID_
+
+    <!-- if execution is scope execution (!= process instance) -->
+	  when
+	    EXECUTION.IS_SCOPE_ = ${trueConstant}
+	    and EXECUTION.PARENT_ID_ is not null
+      and RES.IS_CONCURRENT_LOCAL_ = ${falseConstant}
+	  then PARENT_EXECUTION.ACT_INST_ID_
+
+	  else EXECUTION.ACT_INST_ID_
+	end
+  </sql>
+
+  <sql id="selectVariableInstanceByQueryCriteriaSql">
+
+    from (
+          select
+            RES.*,
+            (<include refid="actInstIdColumn"/>) ACT_INST_ID_
+
+          from ${prefix}ACT_RU_VARIABLE RES
+
+          left join ${prefix}ACT_RU_EXECUTION EXECUTION
+          on RES.EXECUTION_ID_ = EXECUTION.ID_
+
+          left join ${prefix}ACT_RU_EXECUTION PARENT_EXECUTION
+          on EXECUTION.PARENT_ID_ = PARENT_EXECUTION.ID_
+
+          <if test="authCheck.shouldPerformAuthorizatioCheck and authCheck.authUserId != null">
+            left join ${prefix}ACT_RU_EXECUTION PROC_EXECUTION
+            on PROC_EXECUTION.ID_ = RES.PROC_INST_ID_
+
+            left join ${prefix}ACT_RE_PROCDEF PROCDEF
+            on PROCDEF.ID_ = PROC_EXECUTION.PROC_DEF_ID_   
+            <if test="!authCheck.revokeAuthorizationCheckEnabled">      
+              <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.authCheckJoinWithoutOnClause" /> 
+              AUTH ON (AUTH.RESOURCE_ID_ ${authJoinStart}
+                RES.PROC_INST_ID_ 
+                ${authJoinSeparator} PROC_EXECUTION.ID_
+                ${authJoinSeparator} PROCDEF.KEY_
+                ${authJoinSeparator} RES.TASK_ID_
+                ${authJoinSeparator} '*'
+                ${authJoinEnd}
+              )
+            </if>
+          </if>
+          <where>
+            <!-- variableId -->
+            <if test="variableId != null">
+              RES.ID_ = #{variableId}
+            </if>
+
+            <!-- variableName -->
+            <if test="variableName != null">
+              and RES.NAME_ = #{variableName}
+            </if>
+
+            <!-- variablesNames -->
+            <if test="variableNames != null and count(variableNames) > 0">
+              and RES.NAME_ in
+              <foreach item="item" index="index" collection="variableNames"
+                       open="(" separator="," close=")">
+                #{item}
+              </foreach>
+            </if>
+
+            <!-- variableNameLike -->
+            <if test="variableNameLike != null">
+              and RES.NAME_ like #{variableNameLike} ESCAPE ${escapeChar}
+            </if>
+
+            <!-- executionIds -->
+            <if test="executionIds != null and count(executionIds) > 0">
+              and RES.EXECUTION_ID_ in
+              <foreach item="item" index="index" collection="executionIds"
+                       open="(" separator="," close=")">
+                #{item}
+              </foreach>
+            </if>
+
+            <!-- processInstanceIds -->
+            <if test="processInstanceIds != null and count(processInstanceIds) > 0">
+              and RES.PROC_INST_ID_ in
+              <foreach item="item" index="index" collection="processInstanceIds"
+                       open="(" separator="," close=")">
+                #{item}
+              </foreach>
+            </if>
+
+            <!-- caseExecutionIds -->
+            <if test="caseExecutionIds != null and count(caseExecutionIds) > 0">
+              and RES.CASE_EXECUTION_ID_ in
+              <foreach item="item" index="index" collection="caseExecutionIds"
+                       open="(" separator="," close=")">
+                #{item}
+              </foreach>
+            </if>
+
+            <!-- caseInstanceIds -->
+            <if test="caseInstanceIds != null and count(caseInstanceIds) > 0">
+              and RES.CASE_INST_ID_ in
+              <foreach item="item" index="index" collection="caseInstanceIds"
+                       open="(" separator="," close=")">
+                #{item}
+              </foreach>
+            </if>
+
+            <!-- taskIds -->
+            <if test="taskIds != null and count(taskIds) > 0">
+              and RES.TASK_ID_ in
+              <foreach item="item" index="index" collection="taskIds"
+                       open="(" separator="," close=")">
+                #{item}
+              </foreach>
+            </if>
+
+            <!-- batchIds -->
+            <if test="batchIds != null and count(batchIds) > 0">
+              and RES.BATCH_ID_ in
+              <foreach item="item" index="index" collection="batchIds"
+                       open="(" separator="," close=")">
+                #{item}
+              </foreach>
+            </if>
+
+            <!-- variableScopeIds -->
+            <if test="variableScopeIds != null and count(variableScopeIds) > 0">
+              and RES.VAR_SCOPE_ in
+              <foreach item="item" index="index" collection="variableScopeIds"
+                       open="(" separator="," close=")">
+                #{item}
+              </foreach>
+            </if>
+
+            <!-- activityInstanceIds -->
+            <if test="activityInstanceIds != null and count(activityInstanceIds) > 0">
+              <bind name="sizeOfIds" value="count(activityInstanceIds)"/>
+              and ( <include refid="actInstIdColumn"/> IN
+			  <foreach item="id" index="index" collection="activityInstanceIds" open = "(" separator="" close=")">
+				#{id}
+				<choose>
+				  <when test="index != 0 and (index+1)%1000 == 0 and (index+1) < sizeOfIds">
+					) or <include refid="actInstIdColumn"/> IN (
+				  </when>
+				  <when test="index == sizeOfIds -1"></when>
+				  <otherwise> ,</otherwise>
+				</choose>
+			  </foreach>
+			    )
+			</if>
+
+            <if test="tenantIds != null and count(tenantIds) > 0">
+              and RES.TENANT_ID_ in
+              <foreach item="tenantId" index="index" collection="tenantIds"
+                       open="(" separator="," close=")">
+                #{tenantId}
+              </foreach>
+            </if>
+
+            <!-- PLEASE NOTE: If you change anything have a look into the HistoricVariableInstance & HistoricProcessInstance & Execution, the same query object is used there! -->
+            <foreach collection="queryVariableValues" index="index" item="queryVariableValue">
+              and
+              <bind name="varPrefix" value="'RES.'"/>
+              <include refid="src/Resources/Impl/Mapping/Entity/Commons.variableNameEqualsCaseInsensitive" />
+              <bind name="varTypeField" value="'TYPE_'"/>
+              <if test="queryVariableValue.valueConditions != null">
+                and
+                <include refid="src/Resources/Impl/Mapping/Entity/Commons.variableValueConditions"/>
+              </if>
+            </foreach>
+
+            <bind name="applyAuthorizationCheckForCaseInstances" value="true" />
+            <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.contextualAuthorizationCheck" />
+            <include refid="Jabe\Impl\Persistence\Entity\TenantEntity.queryTenantCheck" />
+
+          </where>
+    ) RES
+  </sql>
+
+  <!-- BYTE ARRAY INSERT -->
+
+  <insert id="insertByteArray" parameterType="Jabe\Impl\Persistence\Entity\ByteArrayEntity">
+    insert into ${prefix}ACT_GE_BYTEARRAY(ID_, NAME_, BYTES_, DEPLOYMENT_ID_, TENANT_ID_, TYPE_, CREATE_TIME_, ROOT_PROC_INST_ID_, REMOVAL_TIME_, REV_)
+    values (
+      #{id, dbalType=VARCHAR},
+      #{name, dbalType=VARCHAR}, 
+      #{bytes, dbalType=BLOB}, 
+      #{deploymentId, dbalType=VARCHAR},
+      #{tenantId, dbalType=VARCHAR},
+      #{type, dbalType=INTEGER},
+      #{createTime, dbalType=VARCHAR},
+      #{rootProcessInstanceId, dbalType=VARCHAR},
+      #{removalTime, dbalType=VARCHAR},
+      1 
+    )  
+  </insert>
+
+  <!-- BYTE ARRAY UPDATE -->
+
+  <update id="updateByteArray" parameterType="Jabe\Impl\Persistence\Entity\ByteArrayEntity">
+    update ${prefix}ACT_GE_BYTEARRAY 
+    set
+      REV_ = #{revisionNext, dbalType=INTEGER},
+      BYTES_ = #{bytes, dbalType=BLOB}
+    where ID_ = #{id}
+      and REV_ = #{revision, dbalType=INTEGER}
+  </update>
+
+  <update id="updateByteArraysByRootProcessInstanceId"
+          parameterType="array">
+      update ${prefix}ACT_GE_BYTEARRAY set
+      REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+
+      where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+  </update>
+
+  <update id="updateByteArraysByRootProcessInstanceId_mssql"
+          parameterType="array">
+      update RES set
+    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
+      where RES.ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+  </update>
+
+  <update id="updateVariableByteArraysByProcessInstanceId"
+          parameterType="array">
+    update ${prefix}ACT_GE_BYTEARRAY
+      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      where ID_ IN (
+        <!-- variables -->
+        SELECT BYTEARRAY_ID_
+        FROM ${prefix}ACT_HI_VARINST
+        WHERE PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateVariableByteArraysByProcessInstanceId_mssql"
+          parameterType="array">
+    update RES set
+    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
+      where RES.ID_ IN (
+        <!-- variables -->
+        SELECT BYTEARRAY_ID_
+        FROM ${prefix}ACT_HI_VARINST
+        WHERE PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateDecisionInputsByteArraysByProcessInstanceId"
+          parameterType="array">
+    update ${prefix}ACT_GE_BYTEARRAY
+      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      where ID_ IN (
+        <!-- decision inputs -->
+        SELECT BYTEARRAY_ID_
+        FROM ${prefix}ACT_HI_DEC_IN I
+        INNER JOIN ${prefix}ACT_HI_DECINST D
+        ON I.DEC_INST_ID_ = D.ID_
+        WHERE D.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateDecisionInputsByteArraysByProcessInstanceId_mssql"
+          parameterType="array">
+    update RES set
+    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
+      where RES.ID_ IN (
+        <!-- decision inputs -->
+        SELECT BYTEARRAY_ID_
+        FROM ${prefix}ACT_HI_DEC_IN I
+        INNER JOIN ${prefix}ACT_HI_DECINST D
+        ON I.DEC_INST_ID_ = D.ID_
+        WHERE D.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateDecisionOutputsByteArraysByProcessInstanceId"
+          parameterType="array">
+    update ${prefix}ACT_GE_BYTEARRAY
+      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      where ID_ IN (
+        <!-- decision outputs -->
+        SELECT BYTEARRAY_ID_
+        FROM ${prefix}ACT_HI_DEC_OUT O
+        INNER JOIN ${prefix}ACT_HI_DECINST D
+        ON O.DEC_INST_ID_ = D.ID_
+        WHERE D.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateDecisionOutputsByteArraysByProcessInstanceId_mssql"
+          parameterType="array">
+    update RES set
+    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
+      where RES.ID_ IN (
+        <!-- decision outputs -->
+        SELECT BYTEARRAY_ID_
+        FROM ${prefix}ACT_HI_DEC_OUT O
+        INNER JOIN ${prefix}ACT_HI_DECINST D
+        ON O.DEC_INST_ID_ = D.ID_
+        WHERE D.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateJobLogByteArraysByProcessInstanceId"
+          parameterType="array">
+    update ${prefix}ACT_GE_BYTEARRAY
+      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      where ID_ IN (
+        <!-- job log -->
+        SELECT JOB_EXCEPTION_STACK_ID_
+        FROM ${prefix}ACT_HI_JOB_LOG
+        WHERE PROCESS_INSTANCE_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateJobLogByteArraysByProcessInstanceId_mssql"
+          parameterType="array">
+    update RES set
+    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
+      where RES.ID_ IN (
+        <!-- job log -->
+        SELECT JOB_EXCEPTION_STACK_ID_
+        FROM ${prefix}ACT_HI_JOB_LOG
+        WHERE PROCESS_INSTANCE_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateExternalTaskLogByteArraysByProcessInstanceId"
+          parameterType="array">
+    update ${prefix}ACT_GE_BYTEARRAY
+      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      where ID_ IN (
+        <!-- external task log -->
+        SELECT ERROR_DETAILS_ID_
+        FROM ${prefix}ACT_HI_EXT_TASK_LOG
+        WHERE PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateExternalTaskLogByteArraysByProcessInstanceId_mssql"
+          parameterType="array">
+    update RES set
+    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
+      where RES.ID_ IN (
+        <!-- external task log -->
+        SELECT ERROR_DETAILS_ID_
+        FROM ${prefix}ACT_HI_EXT_TASK_LOG
+        WHERE PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateAttachmentByteArraysByProcessInstanceId"
+          parameterType="array">
+    update ${prefix}ACT_GE_BYTEARRAY
+      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      where ID_ IN (
+        <!-- attachment -->
+        SELECT CONTENT_ID_
+        FROM ${prefix}ACT_HI_ATTACHMENT A
+        LEFT JOIN ${prefix}ACT_HI_TASKINST T ON A.TASK_ID_ = T.ID_
+        WHERE A.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+          OR T.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateAttachmentByteArraysByProcessInstanceId_mssql"
+          parameterType="array">
+    update RES set
+    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
+      where RES.ID_ IN (
+        <!-- attachment -->
+        SELECT CONTENT_ID_
+        FROM ${prefix}ACT_HI_ATTACHMENT A
+        LEFT JOIN ${prefix}ACT_HI_TASKINST T ON A.TASK_ID_ = T.ID_
+        WHERE A.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+          OR T.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateDecisionInputByteArraysByRootDecisionInstanceId"
+          parameterType="array">
+    update ${prefix}ACT_GE_BYTEARRAY
+      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      where ID_ IN (
+        <!-- decision inputs -->
+        SELECT BYTEARRAY_ID_
+        FROM ${prefix}ACT_HI_DEC_IN I
+        INNER JOIN ${prefix}ACT_HI_DECINST D
+        ON I.DEC_INST_ID_ = D.ID_
+        WHERE D.ROOT_DEC_INST_ID_ = #{rootDecisionInstanceId, dbalType=VARCHAR} <!-- null for root dec instances -->
+           OR D.ID_ = #{rootDecisionInstanceId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateDecisionInputByteArraysByRootDecisionInstanceId_mssql"
+          parameterType="array">
+    update RES set
+    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
+      where RES.ID_ IN (
+        <!-- decision inputs -->
+        SELECT BYTEARRAY_ID_
+        FROM ${prefix}ACT_HI_DEC_IN I
+        INNER JOIN ${prefix}ACT_HI_DECINST D
+        ON I.DEC_INST_ID_ = D.ID_
+        WHERE D.ROOT_DEC_INST_ID_ = #{rootDecisionInstanceId, dbalType=VARCHAR} <!-- null for root dec instances -->
+           OR D.ID_ = #{rootDecisionInstanceId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateDecisionOutputByteArraysByRootDecisionInstanceId"
+          parameterType="array">
+    update ${prefix}ACT_GE_BYTEARRAY
+      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      where ID_ IN (
+        <!-- decision outputs -->
+        SELECT BYTEARRAY_ID_
+        FROM ${prefix}ACT_HI_DEC_OUT O
+        INNER JOIN ${prefix}ACT_HI_DECINST D
+        ON O.DEC_INST_ID_ = D.ID_
+        WHERE D.ROOT_DEC_INST_ID_ = #{rootDecisionInstanceId, dbalType=VARCHAR} <!-- null for root dec instances -->
+           OR D.ID_ = #{rootDecisionInstanceId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateDecisionOutputByteArraysByRootDecisionInstanceId_mssql"
+          parameterType="array">
+    update RES set
+    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
+      where RES.ID_ IN (
+        <!-- decision outputs -->
+        SELECT BYTEARRAY_ID_
+        FROM ${prefix}ACT_HI_DEC_OUT O
+        INNER JOIN ${prefix}ACT_HI_DECINST D
+        ON O.DEC_INST_ID_ = D.ID_
+        WHERE D.ROOT_DEC_INST_ID_ = #{rootDecisionInstanceId, dbalType=VARCHAR} <!-- null for root dec instances -->
+           OR D.ID_ = #{rootDecisionInstanceId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateDecisionInputByteArraysByDecisionInstanceId"
+          parameterType="array">
+    update ${prefix}ACT_GE_BYTEARRAY
+      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      where ID_ IN (
+        <!-- decision inputs -->
+        SELECT BYTEARRAY_ID_
+        FROM ${prefix}ACT_HI_DEC_IN I
+        INNER JOIN ${prefix}ACT_HI_DECINST D
+        ON I.DEC_INST_ID_ = D.ID_
+        WHERE D.ID_ = #{decisionInstanceId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateDecisionInputByteArraysByDecisionInstanceId_mssql"
+          parameterType="array">
+    update RES set
+    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
+      where RES.ID_ IN (
+        <!-- decision inputs -->
+        SELECT BYTEARRAY_ID_
+        FROM ${prefix}ACT_HI_DEC_IN I
+        INNER JOIN ${prefix}ACT_HI_DECINST D
+        ON I.DEC_INST_ID_ = D.ID_
+        WHERE D.ID_ = #{decisionInstanceId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateDecisionOutputByteArraysByDecisionInstanceId"
+          parameterType="array">
+    update ${prefix}ACT_GE_BYTEARRAY
+      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      where ID_ IN (
+        <!-- decision outputs -->
+        SELECT BYTEARRAY_ID_
+        FROM ${prefix}ACT_HI_DEC_OUT O
+        INNER JOIN ${prefix}ACT_HI_DECINST D
+        ON O.DEC_INST_ID_ = D.ID_
+        WHERE D.ID_ = #{decisionInstanceId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateDecisionOutputByteArraysByDecisionInstanceId_mssql"
+          parameterType="array">
+    update RES set
+    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
+      where RES.ID_ IN (
+        <!-- decision outputs -->
+        SELECT BYTEARRAY_ID_
+        FROM ${prefix}ACT_HI_DEC_OUT O
+        INNER JOIN ${prefix}ACT_HI_DECINST D
+        ON O.DEC_INST_ID_ = D.ID_
+        WHERE D.ID_ = #{decisionInstanceId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateByteArraysByBatchId"
+          parameterType="array">
+    update ${prefix}ACT_GE_BYTEARRAY
+      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      where ID_ IN (
+        SELECT JOB_EXCEPTION_STACK_ID_
+        FROM ${prefix}ACT_HI_JOB_LOG
+        WHERE JOB_DEF_CONFIGURATION_ = #{batchId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <update id="updateByteArraysByBatchId_mssql"
+          parameterType="array">
+    update RES set
+    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
+      where RES.ID_ IN (
+        SELECT JOB_EXCEPTION_STACK_ID_
+        FROM ${prefix}ACT_HI_JOB_LOG
+        WHERE JOB_DEF_CONFIGURATION_ = #{batchId, dbalType=VARCHAR}
+      )
+  </update>
+
+  <!-- BYTE ARRAY DELETE -->
+
+  <select id="selectBytesOfByteArray" parameterType="string" resultType="map">
+    select BYTES_ from ${prefix}ACT_GE_BYTEARRAY where ID_ = #{id} and REV_ = #{revision}
+  </select>
+
+  <delete id="deleteByteArraysForDeployment" parameterType="Jabe\Impl\Persistence\Entity\ByteArrayEntity">
+    delete from ${prefix}ACT_GE_BYTEARRAY where DEPLOYMENT_ID_ = #{id} and REV_ = #{revision}
+  </delete>
+
+  <delete id="deleteByteArray" parameterType="Jabe\Impl\Persistence\Entity\ByteArrayEntity">
+    delete from ${prefix}ACT_GE_BYTEARRAY where ID_ = #{id} and REV_ = #{revision}
+  </delete>
+
+  <delete id="deleteByteArrayNoRevisionCheck" parameterType="string">
+    delete from ${prefix}ACT_GE_BYTEARRAY where ID_ = #{id}
+  </delete>
+
+  <sql id="andWhereMinuteInDateBetweenSql">
+    <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
+      AND ${datepart1}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart2}${date}${datepart3}
+      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+    </if>
+  </sql>
+
+  <sql id="andWhereMinuteInDateBetweenSql_oracle">
+    <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
+      AND ${datepart1}${date}${datepart2}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart3}
+      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+    </if>
+  </sql>
+
+  <delete id="deleteByteArraysByRemovalTime"
+          parameterType="Jabe\Impl\Db\ListQueryParameterObject">
+    <bind name="date" value="'REMOVAL_TIME_'"/>
+    <bind name="reportPeriodUnitName" value="'MINUTE'"/>
+    delete ${limitBeforeWithoutOffset} from ${prefix}ACT_GE_BYTEARRAY
+    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    <include refid="andWhereMinuteInDateBetweenSql"/>
+    ${limitAfterWithoutOffset}
+  </delete>
+
+  <delete id="deleteByteArraysByRemovalTime_oracle"
+          parameterType="Jabe\Impl\Db\ListQueryParameterObject">
+    <bind name="date" value="'REMOVAL_TIME_'"/>
+    <bind name="reportPeriodUnitName" value="'MINUTE'"/>
+    delete ${limitBeforeWithoutOffset} from ${prefix}ACT_GE_BYTEARRAY
+    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    <include refid="andWhereMinuteInDateBetweenSql_oracle"/>
+    ${limitAfterWithoutOffset}
+  </delete>
+
+  <delete id="deleteByteArraysByRemovalTime_postgres_or_db2"
+          parameterType="Jabe\Impl\Db\ListQueryParameterObject">
+    <bind name="date" value="'REMOVAL_TIME_'"/>
+    <bind name="reportPeriodUnitName" value="'MINUTE'"/>
+    delete ${limitBeforeWithoutOffset} from ${prefix}ACT_GE_BYTEARRAY
+    where ID_ IN
+      (SELECT ID_
+       FROM ${prefix}ACT_GE_BYTEARRAY
+       WHERE REMOVAL_TIME_ <= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
+       ${limitAfterWithoutOffset})
+  </delete>
+
+  <delete id="deleteByteArraysByRemovalTime_mssql"
+          parameterType="Jabe\Impl\Db\ListQueryParameterObject">
+    <bind name="date" value="'REMOVAL_TIME_'"/>
+    <bind name="reportPeriodUnitName" value="'MINUTE'"/>
+    delete ${limitBeforeWithoutOffset} from ${prefix}ACT_GE_BYTEARRAY
+    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    <include refid="andWhereMinuteInDateBetweenSql"/>
+    ${limitAfterWithoutOffset}
+    OPTION (LOOP JOIN)
+  </delete>
+
+  <!-- BYTE ARRAY RESULTMAP -->
+
+  <resultMap id="byteArrayResultMap" type="Jabe\Impl\Persistence\Entity\ByteArrayEntity">
+    <id property="id" column="ID_" dbalType="VARCHAR" />
+    <result property="revision" column="REV_" dbalType="INTEGER"/>
+    <result property="name" column="NAME_" dbalType="VARCHAR"/>
+    <result property="bytes" column="BYTES_" dbalType="BLOB"/>
+    <result property="tenantId" column="TENANT_ID_" dbalType="VARCHAR"/>
+    <result property="type" column="TYPE_" dbalType="INTEGER"/>
+    <result property="createTime" column="CREATE_TIME_" dbalType="VARCHAR"/>
+    <result property="rootProcessInstanceId" column="ROOT_PROC_INST_ID_" dbalType="VARCHAR"/>
+    <result property="removalTime" column="REMOVAL_TIME_" dbalType="VARCHAR"/>
+  </resultMap>
+
+  <!-- BYTE ARRAY SELECT -->
+
+  <select id="selectByteArrays" resultMap="byteArrayResultMap">
+    select * from ${prefix}ACT_GE_BYTEARRAY
+    where
+      <bind name="listOfIds" value="parameter"/>
+      <bind name="fieldName" value="'ID_'"/>
+      <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedCollection"/>
+  </select>
+
+  <select id="selectByteArray" parameterType="string" resultMap="byteArrayResultMap">
+   select * from ${prefix}ACT_GE_BYTEARRAY where ID_ = #{id}
+  </select>
+
+<!-- Postgresql specific configuration -->
+  <resultMap id="byteArrayResultMap_postgres" type="Jabe\Impl\Persistence\Entity\ByteArrayEntity">
+    <id property="id" column="ID_" dbalType="VARCHAR" />
+    <result property="revision" column="REV_" dbalType="INTEGER"/>
+    <result property="name" column="NAME_" dbalType="VARCHAR"/>
+    <result property="bytes" column="BYTES_" dbalType="BINARY"/>
+    <result property="tenantId" column="TENANT_ID_" dbalType="VARCHAR"/>
+    <result property="type" column="TYPE_" dbalType="INTEGER"/>
+    <result property="createTime" column="CREATE_TIME_" dbalType="VARCHAR"/>
+    <result property="rootProcessInstanceId" column="ROOT_PROC_INST_ID_" dbalType="VARCHAR"/>
+    <result property="removalTime" column="REMOVAL_TIME_" dbalType="VARCHAR"/>
+  </resultMap>
+
+  <select id="selectByteArrays_postgres" resultMap="byteArrayResultMap_postgres">
+    select * from ${prefix}ACT_GE_BYTEARRAY
+    where
+      <bind name="listOfIds" value="parameter"/>
+      <bind name="fieldName" value="'ID_'"/>
+      <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedCollection"/>
+  </select>
+
+  <select id="selectByteArray_postgres" parameterType="string" resultMap="byteArrayResultMap_postgres">
+   select * from ${prefix}ACT_GE_BYTEARRAY where ID_ = #{id}
+  </select>
+
+	<update id="updateByteArray_postgres" parameterType="Jabe\Impl\Persistence\Entity\ByteArrayEntity">
+    update ${prefix}ACT_GE_BYTEARRAY
+    set
+      REV_ = #{revisionNext, dbalType=INTEGER},
+      BYTES_ = #{bytes, dbalType=BINARY}
+    where ID_ = #{id}
+      and REV_ = #{revision, dbalType=INTEGER}
+  </update>
+
+    <insert id="insertByteArray_postgres" parameterType="Jabe\Impl\Persistence\Entity\ByteArrayEntity">
+    insert into ${prefix}ACT_GE_BYTEARRAY(ID_, NAME_, BYTES_, DEPLOYMENT_ID_, TENANT_ID_, TYPE_, CREATE_TIME_, ROOT_PROC_INST_ID_, REMOVAL_TIME_, REV_)
+    values (
+      #{id, dbalType=VARCHAR},
+      #{name, dbalType=VARCHAR},
+      #{bytes, dbalType=BINARY},
+      #{deploymentId, dbalType=VARCHAR},
+      #{tenantId, dbalType=VARCHAR},
+      #{type, dbalType=INTEGER},
+      #{createTime, dbalType=VARCHAR},
+      #{rootProcessInstanceId, dbalType=VARCHAR},
+      #{removalTime, dbalType=VARCHAR},
+      1
+    )
+  </insert>
+
+<!--  MySQL specific configuration -->
+  <update id="updateByteArraysByBatchId_mysql"
+          parameterType="array">
+    update ${prefix}ACT_GE_BYTEARRAY BA
+      INNER JOIN ${prefix}ACT_HI_JOB_LOG JL
+        ON BA.ID_ = JL.JOB_EXCEPTION_STACK_ID_
+        AND JL.JOB_DEF_CONFIGURATION_ = #{batchId, dbalType=VARCHAR}
+      SET BA.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+  </update>
+</mapper>

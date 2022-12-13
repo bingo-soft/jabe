@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Copyright Camunda Services GmbH and/or licensed to Camunda Services GmbH
+    under one or more contributor license agreements. See the NOTICE file
+    distributed with this work for additional information regarding copyright
+    ownership. Camunda licenses this file to you under the Apache License,
+    Version 2.0; you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+        http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Jabe\Impl\Persistence\Entity\HistoricVariableInstanceEntity">
+
+  <!-- HISTORIC PROCESS VARIABLE INSERT -->
+
+  <insert id="insertHistoricVariableInstance" parameterType="Jabe\Impl\Persistence\Entity\HistoricVariableInstanceEntity">
+    insert into ${prefix}ACT_HI_VARINST (
+      ID_,
+      PROC_DEF_KEY_,
+      PROC_DEF_ID_,
+      ROOT_PROC_INST_ID_,
+      PROC_INST_ID_,
+      EXECUTION_ID_,
+      ACT_INST_ID_,
+      TENANT_ID_,
+      CASE_DEF_KEY_,
+      CASE_DEF_ID_,
+      CASE_INST_ID_,
+      CASE_EXECUTION_ID_,
+      TASK_ID_,
+      NAME_,
+      REV_,
+      VAR_TYPE_,
+      CREATE_TIME_,
+      REMOVAL_TIME_,
+      BYTEARRAY_ID_,
+      DOUBLE_,
+      LONG_,
+      TEXT_,
+      TEXT2_,
+      STATE_
+    ) values (
+      #{id, dbalType=VARCHAR},
+      #{processDefinitionKey, dbalType=VARCHAR},
+      #{processDefinitionId, dbalType=VARCHAR},
+      #{rootProcessInstanceId, dbalType=VARCHAR},
+      #{processInstanceId, dbalType=VARCHAR},
+      #{executionId, dbalType=VARCHAR},
+      #{activityInstanceId, dbalType=VARCHAR},
+      #{tenantId, dbalType=VARCHAR},
+      #{caseDefinitionKey, dbalType=VARCHAR},
+      #{caseDefinitionId, dbalType=VARCHAR},
+      #{caseInstanceId, dbalType=VARCHAR},
+      #{caseExecutionId, dbalType=VARCHAR},
+      #{taskId, dbalType=VARCHAR},
+      #{variableName, dbalType=VARCHAR},
+      #{revision, dbalType=VARCHAR},
+      #{serializerName, dbalType=VARCHAR},
+      #{createTime, dbalType=VARCHAR},
+      #{removalTime, dbalType=VARCHAR},
+      #{byteArrayId, dbalType=VARCHAR},
+      #{doubleValue, dbalType=FLOAT},
+      #{longValue, dbalType=BIGINT},
+      #{textValue, dbalType=VARCHAR},
+      #{textValue2, dbalType=VARCHAR},
+      #{state, dbalType=VARCHAR}
+    )
+  </insert>
+
+  <!-- HISTORIC PROCESS VARIABLE UPDATE -->
+
+  <update id="updateHistoricVariableInstance" parameterType="Jabe\Impl\Persistence\Entity\HistoricVariableInstanceEntity">
+    update ${prefix}ACT_HI_VARINST set
+      REV_ = #{revisionNext, dbalType=INTEGER},
+      VAR_TYPE_ = #{serializerName, dbalType=VARCHAR},
+      BYTEARRAY_ID_ = #{byteArrayId, dbalType=VARCHAR},
+      PROC_DEF_ID_ = #{processDefinitionId, dbalType=VARCHAR},
+      PROC_DEF_KEY_ = #{processDefinitionKey, dbalType=VARCHAR},
+      DOUBLE_ = #{doubleValue, dbalType=FLOAT},
+      LONG_ = #{longValue, dbalType=BIGINT},
+      TEXT_ = #{textValue, dbalType=VARCHAR},
+      TEXT2_ = #{textValue2, dbalType=VARCHAR},
+      STATE_ = #{state, dbalType=VARCHAR},
+      CASE_DEF_ID_ = #{caseDefinitionId, dbalType=VARCHAR}
+    where ID_ = #{id, dbalType=VARCHAR}
+      and REV_ = #{revision, dbalType=INTEGER}
+  </update>
+
+  <update id="updateHistoricVariableInstancesByRootProcessInstanceId"
+          parameterType="array">
+    update ${prefix}ACT_HI_VARINST set
+    REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+
+    where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+  </update>
+
+  <update id="updateHistoricVariableInstancesByRootProcessInstanceId_mssql"
+          parameterType="array">
+    update RES set
+    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    FROM ${prefix}ACT_HI_VARINST RES WITH (FORCESEEK)
+    where RES.ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+  </update>
+
+  <update id="updateHistoricVariableInstancesByProcessInstanceId"
+          parameterType="array">
+    update ${prefix}ACT_HI_VARINST
+      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      where PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+  </update>
+
+  <update id="updateHistoricVariableInstancesByProcessInstanceId_mssql"
+          parameterType="array">
+    update RES set
+    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    FROM ${prefix}ACT_HI_VARINST RES WITH (FORCESEEK)
+      where RES.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+  </update>
+
+  <!-- HISTORIC PROCESS VARIABLE DELETE -->
+
+  <delete id="deleteHistoricVariableInstance" parameterType="Jabe\Impl\Persistence\Entity\HistoricVariableInstanceEntity">
+    delete from ${prefix}ACT_HI_VARINST where ID_ = #{id} and REV_ = #{revision}
+  </delete>
+
+  <delete id="deleteHistoricVariableInstanceByIds" parameterType="array">
+    delete from ${prefix}ACT_HI_VARINST
+    <where>
+      <include refid="selectHistoricVariableProcessAndCaseInstanceByIdsSql"/>
+      <include refid="selectHistoricVariableTaskInstanceByIdsSql"/>
+    </where>
+  </delete>
+
+  <delete id="deleteHistoricVariableInstanceByIds_mysql" parameterType="array">
+    delete V from ${prefix}ACT_HI_VARINST V
+    <include refid="selectHistoricVariableTaskInstanceByIdsSql_mysql"/>
+    <where>
+      <include refid="selectHistoricVariableProcessAndCaseInstanceByIdsSql"/>
+    </where>
+  </delete>
+
+  <delete id="deleteHistoricVariableInstanceByteArraysByIds" parameterType="array">
+    delete from ${prefix}ACT_GE_BYTEARRAY
+    where ID_ in (
+      select DISTINCT BYTEARRAY_ID_
+      from ${prefix}ACT_HI_VARINST RES
+        <where>
+          <include refid="selectHistoricVariableProcessAndCaseInstanceByIdsSql"/>
+          <include refid="selectHistoricVariableTaskInstanceByIdsSql"/>
+          and BYTEARRAY_ID_ is not NULL
+        </where>
+    )
+  </delete>
+
+  <delete id="deleteHistoricVariableInstanceByteArraysByIds_mysql" parameterType="array">
+    delete B from ${prefix}ACT_GE_BYTEARRAY B
+    inner join ${prefix}ACT_HI_VARINST V
+      on B.ID_ = V.BYTEARRAY_ID_
+      <include refid="selectHistoricVariableTaskInstanceByIdsSql_mysql"/>
+      <where>
+        <include refid="selectHistoricVariableProcessAndCaseInstanceByIdsSql"/>
+        and V.BYTEARRAY_ID_ is not NULL
+      </where>
+  </delete>
+
+  <sql id="andWhereMinuteInDateBetweenSql">
+    <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
+      AND ${datepart1}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart2}${date}${datepart3}
+      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+    </if>
+  </sql>
+
+  <sql id="andWhereMinuteInDateBetweenSql_oracle">
+    <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
+      AND ${datepart1}${date}${datepart2}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart3}
+      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+    </if>
+  </sql>
+
+  <delete id="deleteHistoricVariableInstancesByRemovalTime"
+          parameterType="Jabe\Impl\Db\ListQueryParameterObject">
+    <bind name="date" value="'REMOVAL_TIME_'"/>
+    <bind name="reportPeriodUnitName" value="'MINUTE'"/>
+    delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_VARINST
+    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    <include refid="andWhereMinuteInDateBetweenSql"/>
+    ${limitAfterWithoutOffset}
+  </delete>
+
+  <delete id="deleteHistoricVariableInstancesByRemovalTime_oracle"
+          parameterType="Jabe\Impl\Db\ListQueryParameterObject">
+    <bind name="date" value="'REMOVAL_TIME_'"/>
+    <bind name="reportPeriodUnitName" value="'MINUTE'"/>
+    delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_VARINST
+    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    <include refid="andWhereMinuteInDateBetweenSql_oracle"/>
+    ${limitAfterWithoutOffset}
+  </delete>
+
+  <delete id="deleteHistoricVariableInstancesByRemovalTime_postgres_or_db2"
+          parameterType="Jabe\Impl\Db\ListQueryParameterObject">
+    <bind name="date" value="'REMOVAL_TIME_'"/>
+    <bind name="reportPeriodUnitName" value="'MINUTE'"/>
+    delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_VARINST
+    where ID_ IN
+      (SELECT ID_
+       FROM ${prefix}ACT_HI_VARINST
+       WHERE REMOVAL_TIME_ <= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
+       ${limitAfterWithoutOffset})
+  </delete>
+
+  <!-- HISTORIC PROCESS VARIABLE RESULTMAP -->
+  <resultMap id="historicVariableInstanceResultMap" type="Jabe\Impl\Persistence\Entity\HistoricVariableInstanceEntity">
+    <id property="id" column="ID_" dbalType="VARCHAR" />
+    <result property="processDefinitionKey" column="PROC_DEF_KEY_" dbalType="VARCHAR" />
+    <result property="processDefinitionId" column="PROC_DEF_ID_" dbalType="VARCHAR" />
+    <result property="rootProcessInstanceId" column="ROOT_PROC_INST_ID_" dbalType="VARCHAR" />
+    <result property="processInstanceId" column="PROC_INST_ID_" dbalType="VARCHAR" />
+    <result property="executionId" column="EXECUTION_ID_" dbalType="VARCHAR" />
+    <result property="activityInstanceId" column="ACT_INST_ID_" dbalType="VARCHAR" />
+    <result property="tenantId" column="TENANT_ID_" dbalType="VARCHAR" />
+    <result property="caseDefinitionKey" column="CASE_DEF_KEY_" dbalType="VARCHAR" />
+    <result property="caseDefinitionId" column="CASE_DEF_ID_" dbalType="VARCHAR" />
+    <result property="caseInstanceId" column="CASE_INST_ID_" dbalType="VARCHAR" />
+    <result property="caseExecutionId" column="CASE_EXECUTION_ID_" dbalType="VARCHAR" />
+    <result property="taskId" column="TASK_ID_" dbalType="VARCHAR" />
+    <result property="name" column="NAME_" javaType="String" dbalType="VARCHAR" />
+    <result property="revision" column="REV_" dbalType="INTEGER" />
+    <result property="serializerName" column="VAR_TYPE_" dbalType="VARCHAR"/>
+    <result property="createTime" column="CREATE_TIME_" dbalType="VARCHAR"/>
+    <result property="byteArrayId" column="BYTEARRAY_ID_" dbalType="VARCHAR" />
+    <result property="doubleValue" column="DOUBLE_" dbalType="FLOAT" />
+    <result property="textValue" column="TEXT_" dbalType="VARCHAR" />
+    <result property="textValue2" column="TEXT2_" dbalType="VARCHAR" />
+    <result property="longValue" column="LONG_" dbalType="BIGINT" />
+    <result property="state" column="STATE_" dbalType="VARCHAR" />
+    <result property="removalTime" column="REMOVAL_TIME_" dbalType="VARCHAR"/>
+  </resultMap>
+
+  <resultMap id="historicVariableInstanceResultMap_postgres" type="Jabe\Impl\Persistence\Entity\HistoricVariableInstanceEntity">
+    <id property="id" column="ID_" dbalType="VARCHAR" />
+    <result property="processDefinitionKey" column="PROC_DEF_KEY_" dbalType="VARCHAR" />
+    <result property="processDefinitionId" column="PROC_DEF_ID_" dbalType="VARCHAR" />
+    <result property="rootProcessInstanceId" column="ROOT_PROC_INST_ID_" dbalType="VARCHAR" />
+    <result property="processInstanceId" column="PROC_INST_ID_" dbalType="VARCHAR" />
+    <result property="executionId" column="EXECUTION_ID_" dbalType="VARCHAR" />
+    <result property="activityInstanceId" column="ACT_INST_ID_" dbalType="VARCHAR" />
+    <result property="tenantId" column="TENANT_ID_" dbalType="VARCHAR" />
+    <result property="caseDefinitionKey" column="CASE_DEF_KEY_" dbalType="VARCHAR" />
+    <result property="caseDefinitionId" column="CASE_DEF_ID_" dbalType="VARCHAR" />
+    <result property="caseInstanceId" column="CASE_INST_ID_" dbalType="VARCHAR" />
+    <result property="caseExecutionId" column="CASE_EXECUTION_ID_" dbalType="VARCHAR" />
+    <result property="taskId" column="TASK_ID_" dbalType="VARCHAR" />
+    <result property="name" column="NAME_" javaType="String" dbalType="VARCHAR" />
+    <result property="revision" column="REV_" dbalType="INTEGER" />
+    <result property="serializerName" column="VAR_TYPE_" dbalType="VARCHAR"/>
+    <result property="createTime" column="CREATE_TIME_" dbalType="VARCHAR"/>
+    <result property="byteArrayId" column="BYTEARRAY_ID_" dbalType="VARCHAR" />
+    <result property="doubleValue" column="DOUBLE_" dbalType="FLOAT" />
+    <result property="textValue" column="TEXT_" dbalType="VARCHAR" />
+    <result property="textValue2" column="TEXT2_" dbalType="VARCHAR" />
+    <result property="longValue" column="LONG_" dbalType="BIGINT" />
+    <result property="state" column="STATE_" dbalType="VARCHAR" />
+    <result property="removalTime" column="REMOVAL_TIME_" dbalType="VARCHAR"/>
+  </resultMap>
+
+  <!-- HISTORIC VARIABLE SELECT -->
+
+  <select id="selectHistoricVariablesByProcessInstanceId" parameterType="Jabe\Impl\Db\ListQueryParameterObject" resultMap="historicVariableInstanceResultMap">
+    select * from ${prefix}ACT_HI_VARINST
+    where PROC_INST_ID_ = #{parameter, dbalType=VARCHAR}
+  </select>
+
+  <select id="selectHistoricVariablesByCaseInstanceId" parameterType="Jabe\Impl\Db\ListQueryParameterObject" resultMap="historicVariableInstanceResultMap">
+    select * from ${prefix}ACT_HI_VARINST
+    where CASE_INST_ID_ = #{parameter, dbalType=VARCHAR}
+  </select>
+
+  <select id="selectHistoricVariableInstanceByQueryCriteria" parameterType="Jabe\Impl\HistoricVariableInstanceQueryImpl" resultMap="historicVariableInstanceResultMap">
+  	<include refid="src/Resources/Impl/Mapping/Entity/Commons.bindOrderBy"/>
+    ${limitBefore}
+    select ${distinct} RES.*
+    ${limitBetween}
+    <include refid="selectHistoricVariableInstanceByQueryCriteriaSql"/>
+    ${orderBy}
+    ${limitAfter}
+  </select>
+
+  <select id="selectHistoricVariableInstanceCountByQueryCriteria" parameterType="Jabe\Impl\HistoricVariableInstanceQueryImpl" resultType="integer">
+    ${countDistinctBeforeStart} RES.ID_ ${countDistinctBeforeEnd}
+    <include refid="selectHistoricVariableInstanceByQueryCriteriaSql"/>
+    ${countDistinctAfterEnd}
+  </select>
+
+  <sql id="selectHistoricVariableInstanceByQueryCriteriaSql">
+
+    from ${prefix}ACT_HI_VARINST RES
+
+    <if test="authCheck.shouldPerformAuthorizatioCheck and authCheck.authUserId != null">
+      <if test="authCheck.isHistoricInstancePermissionsEnabled">
+        left join ${prefix}ACT_HI_TASKINST TI
+          on TI.PROC_INST_ID_ = RES.PROC_INST_ID_ <!-- Include process tasks -->
+          or TI.ID_ = RES.TASK_ID_ <!-- Include standalone tasks -->
+      </if>
+      <if test="!authCheck.revokeAuthorizationCheckEnabled">
+      <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.authCheckJoinWithoutOnClause"/>
+        AUTH ON (AUTH.RESOURCE_ID_ ${authJoinStart}
+          RES.PROC_DEF_KEY_ ${authJoinSeparator} '*'
+          <if test="authCheck.isHistoricInstancePermissionsEnabled">
+            ${authJoinSeparator} RES.PROC_INST_ID_
+            ${authJoinSeparator} TI.ID_
+          </if>
+          ${authJoinEnd}
+        )
+      </if>
+    </if>
+
+    <if test="caseActivityIds != null and count(caseActivityIds) > 0">
+      INNER JOIN ${prefix}ACT_HI_CASEACTINST HCAI
+      ON RES.ACT_INST_ID_ = HCAI.ID_
+    </if>
+
+    <where>
+      <if test="variableNameIn != null">
+        <bind name="listOfIds" value="variableNameIn" />
+        <bind name="fieldName" value="'RES.NAME_'" />
+        <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedCollection" />
+      </if>
+      <if test="variableId != null">
+        and RES.ID_ = #{variableId}
+      </if>
+      <if test="processInstanceId != null">
+        and RES.PROC_INST_ID_ = #{processInstanceId}
+      </if>
+      <if test="caseInstanceId != null">
+        and RES.CASE_INST_ID_ = #{caseInstanceId}
+      </if>
+      <if test="processDefinitionId != null">
+        and RES.PROC_DEF_ID_ = #{processDefinitionId}
+      </if>
+      <if test="processDefinitionKey !=null">
+        and RES.PROC_DEF_KEY_ = #{processDefinitionKey}
+      </if>
+      <if test="variableName != null">
+      and
+        <choose>
+          <when test="variableNamesIgnoreCase">
+            UPPER(RES.NAME_) = UPPER(#{variableName})
+          </when>
+          <otherwise>
+            RES.NAME_ = #{variableName}
+          </otherwise>
+        </choose>
+        ${collationForCaseSensitivity}
+      </if>
+      <if test="variableNameLike != null">
+        and
+        <choose>
+          <when test="variableNamesIgnoreCase">
+            UPPER(RES.NAME_) like UPPER(#{variableNameLike})
+          </when>
+          <otherwise>
+            RES.NAME_ like #{variableNameLike}
+          </otherwise>
+          </choose>
+          ESCAPE ${escapeChar}
+          ${collationForCaseSensitivity}
+      </if>
+      <if test="includeDeleted == false">
+        and (RES.STATE_ != 'DELETED' or RES.STATE_ is null)
+      </if>
+
+      <!-- processInstanceIds -->
+      <if test="processInstanceIds != null and count(processInstanceIds) > 0">
+        and RES.PROC_INST_ID_ in
+        <foreach item="item" index="index" collection="processInstanceIds"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+
+      <!-- taskIds -->
+      <if test="taskIds != null and count(taskIds) > 0">
+        and RES.TASK_ID_ in
+        <foreach item="item" index="index" collection="taskIds"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+
+      <!-- variableTypes -->
+      <if test="variableTypes != null and count(variableTypes) > 0">
+        and lower(RES.VAR_TYPE_) in
+        <foreach item="item" index="index" collection="variableTypes"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+
+      <!-- executionIds -->
+      <if test="executionIds != null and count(executionIds) > 0">
+        and RES.EXECUTION_ID_ in
+        <foreach item="item" index="index" collection="executionIds"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+
+      <!-- caseExecutionIds -->
+      <if test="caseExecutionIds != null and count(caseExecutionIds) > 0">
+        and RES.CASE_EXECUTION_ID_ in
+        <foreach item="item" index="index" collection="caseExecutionIds"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+
+      <!-- caseActivityIds -->
+      <if test="caseActivityIds != null and count(caseActivityIds) > 0">
+        and HCAI.CASE_ACT_ID_ in
+        <foreach item="caseActivityId" index="index" collection="caseActivityIds"
+                 open="(" separator="," close=")">
+          #{caseActivityId}
+        </foreach>
+      </if>
+
+      <!-- activityInstanceIds -->
+      <if test="activityInstanceIds != null and count(activityInstanceIds) > 0">
+        and RES.ACT_INST_ID_ in
+        <foreach item="item" index="index" collection="activityInstanceIds"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+
+      <if test="isTenantIdSet">
+        <if test="tenantIds != null and count(tenantIds) > 0">
+          and RES.TENANT_ID_ in
+          <foreach item="tenantId" index="index" collection="tenantIds"
+                   open="(" separator="," close=")">
+            #{tenantId}
+          </foreach>
+        </if>
+        <if test="tenantIds == null">
+          and RES.TENANT_ID_ is null
+        </if>
+      </if>
+
+      <!-- PLEASE NOTE: If you change anything have a look into the Execution, the same query object is used there! -->
+      <if test="queryVariableValue != null" >
+        <bind name="varTypeField" value="'VAR_TYPE_'"/>
+        <bind name="varPrefix" value="'RES.'"/>
+        <if test="queryVariableValue.valueConditions != null">
+          and
+          <include refid="src/Resources/Impl/Mapping/Entity/Commons.variableValueConditions"/>
+        </if>
+      </if>
+
+      <if test="authCheck.shouldPerformAuthorizatioCheck and authCheck.authUserId != null">
+        <choose>
+          <when test="authCheck.isHistoricInstancePermissionsEnabled">
+            <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.queryAuthorizationCheck"/>
+          </when>
+          <otherwise>
+            and (
+            (RES.EXECUTION_ID_ is not null
+            <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.queryAuthorizationCheck"/>
+            )
+            <!-- Auth check is skipped for standalone tasks -->
+            or RES.EXECUTION_ID_ is null
+            )
+          </otherwise>
+        </choose>
+      </if>
+
+      <include refid="Jabe\Impl\Persistence\Entity\TenantEntity.queryTenantCheck" />
+
+    </where>
+  </sql>
+
+  <select id="selectHistoricVariableInstance" resultMap="historicVariableInstanceResultMap">
+    select * from ${prefix}ACT_HI_VARINST where ID_ = #{id}
+  </select>
+
+  <select id="selectHistoricVariableInstanceByVariableInstanceId" resultMap="historicVariableInstanceResultMap">
+    select * from ${prefix}ACT_HI_VARINST where ID_ = #{variableInstanceId}
+  </select>
+
+  <sql id="selectHistoricVariableProcessAndCaseInstanceByIdsSql">
+    <if test="processInstanceIds != null and count(processInstanceIds) > 0">
+      and
+        <bind name="listOfIds" value="processInstanceIds"/>
+        <bind name="fieldName" value="'PROC_INST_ID_'"/>
+        <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedCollection"/>
+    </if>
+    <if test="caseInstanceIds != null and count(caseInstanceIds) > 0">
+      and CASE_INST_ID_ IN
+        <foreach item="caseInstanceId" index="index" collection="caseInstanceIds" open="(" separator="," close=")">
+          #{caseInstanceId}
+        </foreach>
+    </if>
+  </sql>
+
+  <sql id="selectHistoricVariableTaskInstanceByIdsSql">
+    <if test="taskProcessInstanceIds != null and count(taskProcessInstanceIds) > 0">
+      and TASK_ID_ in (
+        select ID_
+        from ${prefix}ACT_HI_TASKINST
+        where
+          <bind name="listOfIds" value="taskProcessInstanceIds"/>
+          <bind name="fieldName" value="'PROC_INST_ID_'"/>
+          <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedCollection"/>
+      )
+    </if>
+    <if test="taskCaseInstanceIds != null and count(taskCaseInstanceIds) > 0">
+      and TASK_ID_ in (
+        select ID_
+        from ${prefix}ACT_HI_TASKINST
+        where
+          <bind name="listOfIds" value="taskCaseInstanceIds"/>
+          <bind name="fieldName" value="'CASE_INST_ID_'"/>
+          <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedCollection"/>
+      )
+    </if>
+  </sql>
+
+  <sql id="selectHistoricVariableTaskInstanceByIdsSql_mysql">
+    <if test="taskProcessInstanceIds != null and count(taskProcessInstanceIds) > 0">
+      inner join ${prefix}ACT_HI_TASKINST T
+        on TASK_ID_ = T.ID_
+        and T.PROC_INST_ID_ in
+          <foreach item="processInstanceId" index="index" collection="taskProcessInstanceIds" open="(" separator="," close=")">
+            #{processInstanceId}
+          </foreach>
+    </if>
+    <if test="taskCaseInstanceIds != null and count(taskCaseInstanceIds) > 0">
+      inner join ${prefix}ACT_HI_TASKINST T
+        on TASK_ID_ = T.ID_
+        and T.CASE_INST_ID_ in
+          <foreach item="caseInstanceId" index="index" collection="taskCaseInstanceIds" open="(" separator="," close=")">
+            #{caseInstanceId}
+          </foreach>
+    </if>
+  </sql>
+
+  <select id="selectHistoricVariableInstanceByNativeQuery" parameterType="array" resultMap="historicVariableInstanceResultMap">
+    <if test="resultType == 'LIST_PAGE'">
+      ${limitBefore}
+    </if>
+    ${sql}
+    <if test="resultType == 'LIST_PAGE'">
+      ${limitAfter}
+    </if>
+  </select>
+
+  <select id="selectHistoricVariableInstanceByNativeQuery_mssql_or_db2" parameterType="array" resultMap="historicVariableInstanceResultMap">
+    <if test="resultType == 'LIST_PAGE'">
+      ${limitBeforeNativeQuery}
+    </if>
+    ${sql}
+    <if test="resultType == 'LIST_PAGE'">
+      ${limitAfter}
+    </if>
+  </select>
+
+  <select id="selectHistoricVariableInstanceCountByNativeQuery" parameterType="array" resultType="integer">
+    ${sql}
+  </select>
+
+</mapper>

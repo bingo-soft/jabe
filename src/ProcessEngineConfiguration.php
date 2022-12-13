@@ -2,8 +2,6 @@
 
 namespace Jabe;
 
-use Doctrine\DBAL\DriverManager;
-use Doctrine\ORM\EntityManager;
 use Jabe\Impl\{
     BootstrapEngineCommand,
     HistoryLevelSetupCommand,
@@ -15,6 +13,7 @@ use Jabe\Variable\Type\ValueTypeResolverInterface;
 use Jabe\Identity\PasswordPolicyInterface;
 use Jabe\Runtime\DeserializationTypeValidatorInterface;
 use Jabe\Impl\Telemetry\TelemetryRegistry;
+use MyBatis\DataSource\DataSourceInterface;
 
 abstract class ProcessEngineConfiguration
 {
@@ -97,7 +96,7 @@ abstract class ProcessEngineConfiguration
 
     /**
      * Always enables check for {@link Authorization#AUTH_TYPE_REVOKE revoke} authorizations.
-     * This mode is equal to the &lt; 7.5 behavior.
+     * This mode is equal to the < 7.5 behavior.
      *<p />
     * *NOTE:* Checking revoke authorizations is very expensive for resources with a high potential
     * cardinality like tasks or process instances and can render authorized access to the process engine
@@ -157,12 +156,10 @@ abstract class ProcessEngineConfiguration
     protected $databaseVersion;
     protected $databaseSchemaUpdate = self::DB_SCHEMA_UPDATE_FALSE;
     //default Postgresql connection run inside the container
-    protected $dbDriver;
-    protected $dbHost;
-    protected $dbUsername;
-    protected $dbPassword;
-    protected $dbName;
-    protected $dbPort;
+    protected $dbDriver = 'pdo_pgsql';
+    protected $dbUrl = 'pgsql:host=localhost;port=5432;dbname=engine;';
+    protected $dbUsername = 'postgres';
+    protected $dbPassword = 'postgres';
     protected $dbMaxActiveConnections;
     protected $dbMaxIdleConnections;
     protected $dbMaxCheckoutTime;
@@ -181,9 +178,9 @@ abstract class ProcessEngineConfiguration
     protected $dbBatchProcessing = true;
 
     protected $persistenceUnitName;
-    protected $entityManagerFactory;
+    //protected $entityManagerFactory;
     protected $handleTransaction;
-    protected $closeEntityManager;
+    //protected $closeEntityManager;
     protected $defaultNumberOfRetries = JobEntity::DEFAULT_RETRIES;
 
     protected $createIncidentOnFailedJobEnabled = true;
@@ -357,12 +354,12 @@ abstract class ProcessEngineConfiguration
         $this->useTLS = json_decode(getenv('MAIL_USE_TLS', true));
         $this->mailServerDefaultFrom = getenv('MAIL_USE_FROM', true);
 
-        $this->dbDriver = getenv('DB_DRIVER', true);
+        /*$this->dbDriver = getenv('DB_DRIVER', true);
         $this->dbHost = getenv('DB_HOST', true);
         $this->dbUsername = getenv('DB_USER', true);
         $this->dbPassword = getenv('DB_PASSWORD', true);
         $this->dbName = getenv('DB_NAME', true);
-        $this->dbPort = getenv('DB_PORT', true);
+        $this->dbPort = getenv('DB_PORT', true);*/
 
         $this->schemaOperationsCommand = new SchemaOperationsProcessEngineBuild();
         $this->bootstrapCommand = new BootstrapEngineCommand();
@@ -521,12 +518,12 @@ abstract class ProcessEngineConfiguration
         return $this;
     }
 
-    public function getDataSource(): DriverManager
+    public function getDataSource(): DataSourceInterface
     {
         return $this->dataSource;
     }
 
-    public function setDataSource(DriverManager $dataSource): ProcessEngineConfiguration
+    public function setDataSource(DataSourceInterface $dataSource): ProcessEngineConfiguration
     {
         $this->dataSource = $dataSource;
         return $this;
@@ -773,17 +770,6 @@ abstract class ProcessEngineConfiguration
         return $this;
     }
 
-    public function getEntityManagerFactory(): EntityManager
-    {
-        return $this->entityManagerFactory;
-    }
-
-    public function setEntityManagerFactory(EntityManager $entityManagerFactory): ProcessEngineConfiguration
-    {
-        $this->entityManagerFactory = $entityManagerFactory;
-        return $this;
-    }
-
     public function isHandleTransaction(): bool
     {
         return $this->handleTransaction;
@@ -795,7 +781,7 @@ abstract class ProcessEngineConfiguration
         return $this;
     }
 
-    public function isCloseEntityManager(): bool
+    /*public function isCloseEntityManager(): bool
     {
         return $this->closeEntityManager;
     }
@@ -804,7 +790,7 @@ abstract class ProcessEngineConfiguration
     {
         $this->closeEntityManager = $closeEntityManager;
         return $this;
-    }
+    }*/
 
     public function getPersistenceUnitName(): string
     {

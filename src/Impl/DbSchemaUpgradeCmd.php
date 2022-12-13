@@ -3,6 +3,7 @@
 namespace Jabe\Impl;
 
 use Doctrine\DBAL\Connection;
+use Jabe\Impl\Db\Sql\DbSqlSession;
 use Jabe\Impl\Interceptor\{
     CommandContext,
     CommandInterface
@@ -24,9 +25,9 @@ class DbSchemaUpgradeCmd implements CommandInterface
     public function execute(CommandContext $commandContext)
     {
         $commandContext->getAuthorizationManager()->checkAdmin();
-        $dbSqlSessionFactory = $commandContext->getSessionFactories()[DbSqlSessionInterface::class];
+        $dbSqlSessionFactory = $commandContext->getSessionFactories()[DbSqlSession::class];
         $dbSqlSession = $dbSqlSessionFactory->openSession($this->connection, $this->catalog, $this->schema);
-        $commandContext->addSession(DbSqlSessionInterface::class, $dbSqlSession);
+        $commandContext->addSession(DbSqlSession::class, $dbSqlSession);
         $dbSqlSession->dbSchemaUpdate();
         return "";
     }

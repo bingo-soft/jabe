@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Copyright Camunda Services GmbH and/or licensed to Camunda Services GmbH
+    under one or more contributor license agreements. See the NOTICE file
+    distributed with this work for additional information regarding copyright
+    ownership. Camunda licenses this file to you under the Apache License,
+    Version 2.0; you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+        http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Jabe\Impl\Persistence\Entity\ExternalTaskEntity">
+
+  <resultMap id="externalTaskResultMap" type="Jabe\Impl\Persistence\Entity\ExternalTaskEntity">
+    <id property="id" column="ID_" dbalType="VARCHAR"/>
+    <result property="revision" column="REV_" dbalType="INTEGER"/>
+    <result property="topicName" column="TOPIC_NAME_" dbalType="VARCHAR"/>
+    <result property="workerId" column="WORKER_ID_" dbalType="VARCHAR" />
+    <result property="retries" column="RETRIES_" dbalType="INTEGER" />
+    <result property="errorMessage" column="ERROR_MSG_" dbalType="VARCHAR"/>
+    <result property="errorDetailsByteArrayId" column="ERROR_DETAILS_ID_" dbalType="VARCHAR" />
+
+    <result property="lockExpirationTime" column="LOCK_EXP_TIME_" dbalType="VARCHAR"/>
+    <result property="suspensionState" column="SUSPENSION_STATE_" dbalType="INTEGER" />
+    <result property="executionId" column="EXECUTION_ID_" dbalType="VARCHAR" />
+    <result property="processInstanceId" column="PROC_INST_ID_" dbalType="VARCHAR" />
+    <result property="processDefinitionId" column="PROC_DEF_ID_" dbalType="VARCHAR" />
+    <result property="processDefinitionKey" column="PROC_DEF_KEY_" dbalType="VARCHAR" />
+    <result property="processDefinitionVersionTag" column="VERSION_TAG_" dbalType="VARCHAR" />
+    <result property="activityId" column="ACT_ID_" dbalType="VARCHAR" />
+    <result property="activityInstanceId" column="ACT_INST_ID_" dbalType="VARCHAR" />
+    <result property="tenantId" column="TENANT_ID_" dbalType="VARCHAR" />
+    <result property="priority" column="PRIORITY_" dbalType="BIGINT" />
+    <result property="businessKey" column="BUSINESS_KEY_" dbalType="VARCHAR" />
+    <result property="lastFailureLogId" column="LAST_FAILURE_LOG_ID_" dbalType="VARCHAR" />
+    <!-- note: if you add mappings here, make sure to select the columns in 'columnSelection' -->
+  </resultMap>
+  
+  <resultMap type="Jabe\Impl\Util\ImmutablePair" id="deploymentIdMapping">
+    <id property="left" column="DEPLOYMENT_ID_" dbalType="VARCHAR" />
+    <id property="right" column="ID_" dbalType="VARCHAR" />
+  </resultMap>
+
+  <insert id="insertExternalTask" parameterType="Jabe\Impl\Persistence\Entity\ExternalTaskEntity">
+    insert into ${prefix}ACT_RU_EXT_TASK (
+      ID_,
+      WORKER_ID_,
+      TOPIC_NAME_,
+      LOCK_EXP_TIME_,
+      RETRIES_,
+      ERROR_MSG_,
+      ERROR_DETAILS_ID_,
+      SUSPENSION_STATE_,
+      EXECUTION_ID_,
+      PROC_INST_ID_,
+      PROC_DEF_ID_,
+      PROC_DEF_KEY_,
+      ACT_ID_,
+      ACT_INST_ID_,
+      TENANT_ID_,
+      PRIORITY_,
+      LAST_FAILURE_LOG_ID_,
+      REV_
+    ) values (
+      #{id, dbalType=VARCHAR},
+      #{workerId, dbalType=VARCHAR},
+      #{topicName, dbalType=VARCHAR},
+      #{lockExpirationTime, dbalType=VARCHAR},
+      #{retries, dbalType=INTEGER},
+      #{errorMessage, dbalType=VARCHAR},
+      #{errorDetailsByteArrayId, dbalType=VARCHAR},
+      #{suspensionState, dbalType=INTEGER},
+      #{executionId, dbalType=VARCHAR},
+      #{processInstanceId, dbalType=VARCHAR},
+      #{processDefinitionId, dbalType=VARCHAR},
+      #{processDefinitionKey, dbalType=VARCHAR},
+      #{activityId, dbalType=VARCHAR},
+      #{activityInstanceId, dbalType=VARCHAR},
+      #{tenantId, dbalType=VARCHAR},
+      #{priority, dbalType=BIGINT},
+      #{lastFailureLogId, dbalType=VARCHAR},
+      1
+    )
+  </insert>
+  
+  <update id="updateExternalTask" parameterType="Jabe\Impl\Persistence\Entity\ExternalTaskEntity">
+    update ${prefix}ACT_RU_EXT_TASK
+    <set>
+      REV_ = #{revisionNext, dbalType=INTEGER},
+      WORKER_ID_ = #{workerId, dbalType=VARCHAR},
+      TOPIC_NAME_ = #{topicName, dbalType=VARCHAR},
+      LOCK_EXP_TIME_ = #{lockExpirationTime, dbalType=VARCHAR},
+      RETRIES_ = #{retries, dbalType=INTEGER},
+      ERROR_MSG_ = #{errorMessage, dbalType=VARCHAR},
+      ERROR_DETAILS_ID_ = #{errorDetailsByteArrayId, dbalType=VARCHAR},
+      EXECUTION_ID_ = #{executionId, dbalType=VARCHAR},
+      PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR},
+      PROC_DEF_ID_ = #{processDefinitionId, dbalType=VARCHAR},
+      PROC_DEF_KEY_ = #{processDefinitionKey, dbalType=VARCHAR},
+      ACT_ID_ = #{activityId, dbalType=VARCHAR},
+      ACT_INST_ID_ = #{activityInstanceId, dbalType=VARCHAR},
+      SUSPENSION_STATE_ = #{suspensionState, dbalType=INTEGER},
+      PRIORITY_ = #{priority, dbalType=BIGINT},
+      LAST_FAILURE_LOG_ID_ = #{lastFailureLogId, dbalType=VARCHAR}
+    </set>
+    where ID_= #{id, dbalType=VARCHAR}
+      and REV_ = #{revision, dbalType=INTEGER}
+  </update>
+  
+  <update id="updateExternalTaskSuspensionStateByParameters" parameterType="Jabe\Impl\Db\ListQueryParameterObject">
+    update ${prefix}ACT_RU_EXT_TASK
+    <set>
+      SUSPENSION_STATE_ = #{parameter.suspensionState, dbalType=INTEGER}
+    </set>
+    <where>
+      <if test="parameter.processInstanceId != null">
+        PROC_INST_ID_ = #{parameter.processInstanceId}
+      </if>
+      <if test="parameter.processDefinitionId != null">
+        and PROC_DEF_ID_ = #{parameter.processDefinitionId}
+      </if>
+      <if test="parameter.processDefinitionKey != null">
+        <if test="!parameter.isProcessDefinitionTenantIdSet">
+          and PROC_DEF_KEY_ = #{parameter.processDefinitionKey, dbalType=VARCHAR}
+        </if>
+        <if test="parameter.isProcessDefinitionTenantIdSet">
+          and PROC_DEF_ID_ IN (
+            SELECT ID_ 
+            FROM ${prefix}ACT_RE_PROCDEF PD
+            WHERE PD.KEY_ = #{parameter.processDefinitionKey, dbalType=VARCHAR}
+            <if test="parameter.processDefinitionTenantId != null">
+              and PD.TENANT_ID_ = #{parameter.processDefinitionTenantId, dbalType=VARCHAR}
+            </if>
+            <if test="parameter.processDefinitionTenantId == null">
+              and PD.TENANT_ID_ is null
+            </if>
+          )
+        </if>
+        <bind name="columnPrefix" value="''"/>
+        <include refid="Jabe\Impl\Persistence\Entity\TenantEntity.queryTenantCheckWithPrefix" />
+      </if>
+    </where>
+  </update>
+  
+  <delete id="deleteExternalTask" parameterType="Jabe\Impl\Persistence\Entity\ExternalTaskEntity">
+    delete from ${prefix}ACT_RU_EXT_TASK where ID_ = #{id} and REV_ = #{revision}
+  </delete>
+  
+  <select id="selectExternalTask" parameterType="string" resultMap="externalTaskResultMap">
+   select * from ${prefix}ACT_RU_EXT_TASK where ID_ = #{id, dbalType=VARCHAR}
+  </select>
+  
+  <select id="selectExternalTasksByExecutionId" parameterType="Jabe\Impl\Db\ListQueryParameterObject" resultMap="externalTaskResultMap">
+    select * from ${prefix}ACT_RU_EXT_TASK where EXECUTION_ID_ = #{parameter, dbalType=VARCHAR}
+  </select>
+  
+  <select id="selectExternalTasksByProcessInstanceId" parameterType="Jabe\Impl\Db\ListQueryParameterObject" resultMap="externalTaskResultMap">
+    select * from ${prefix}ACT_RU_EXT_TASK where PROC_INST_ID_ = #{parameter, dbalType=VARCHAR}
+  </select>
+  
+  <select id="selectExternalTasksForTopics" parameterType="Jabe\Impl\Db\ListQueryParameterObject" resultMap="externalTaskResultMap">
+    <bind name="orderingProperties" value="parameter.orderingProperties" />
+    <include refid="src/Resources/Impl/Mapping/Entity/Commons.bindOrderBy"/>
+
+    <bind name="performAuthorizationCheck" value="authCheck.shouldPerformAuthorizatioCheck and !authCheck.revokeAuthorizationCheckEnabled and authCheck.authUserId != null" />
+
+    ${limitBefore}
+    select 
+    <!-- Distinct can only be omitted when there are no joins with a 1:n relationship.
+      Currently this is only the case for the authorization joins. When you add a join
+      in this statement in the future, check if distinct can be omitted or not -->
+    <if test="!parameter.usesPostgres || performAuthorizationCheck">
+      ${distinct} 
+    </if>
+    RES.*
+    ${limitBetween}
+    from (
+    select RES.*, PI.BUSINESS_KEY_, PD.VERSION_TAG_
+    from ${prefix}ACT_RU_EXT_TASK RES
+
+    left join ${prefix}ACT_RU_EXECUTION PI on RES.PROC_INST_ID_ = PI.ID_
+    inner join ${prefix}ACT_RE_PROCDEF PD on RES.PROC_DEF_ID_ = PD.ID_
+
+    <if test="performAuthorizationCheck">
+      <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.authCheckJoinWithoutOnClause" /> 
+      AUTH ON (
+       (AUTH.RESOURCE_TYPE_ = 8 
+        AND (AUTH.RESOURCE_ID_ ${authJoinStart} RES.PROC_INST_ID_ ${authJoinSeparator} '*' ${authJoinEnd})   
+        AND ${bitand1}AUTH.PERMS_${bitand2}2${bitand3} = 2)
+      OR
+       (AUTH.RESOURCE_TYPE_ = 6 
+        AND (AUTH.RESOURCE_ID_ ${authJoinStart} RES.PROC_DEF_KEY_ ${authJoinSeparator} '*' ${authJoinEnd}) 
+        AND ${bitand1}AUTH.PERMS_${bitand2}512${bitand3} = 512) 
+      )
+      <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.authCheckJoinWithoutOnClause" />
+      AUTH1 ON (
+         (AUTH1.RESOURCE_TYPE_ = 8 
+          AND (AUTH1.RESOURCE_ID_ ${authJoin1Start} RES.PROC_INST_ID_ ${authJoin1Separator} '*' ${authJoin1End})
+          AND ${bitand1}AUTH1.PERMS_${bitand2}4${bitand3} = 4)         
+      OR
+         (AUTH1.RESOURCE_TYPE_ = 6 
+          AND (AUTH1.RESOURCE_ID_ ${authJoin1Start} RES.PROC_DEF_KEY_ ${authJoin1Separator} '*' ${authJoin1End}) 
+          AND ${bitand1}AUTH1.PERMS_${bitand2}1024${bitand3} = 1024)
+      )    
+    </if>
+    <where>
+      (RES.LOCK_EXP_TIME_ is null or RES.LOCK_EXP_TIME_ <= #{parameter.now, dbalType=VARCHAR})
+      and (RES.SUSPENSION_STATE_ is null or RES.SUSPENSION_STATE_ = 1)
+      and (RES.RETRIES_ is null or RES.RETRIES_ > 0)
+      <if test="parameter != null and count(parameter.topics) > 0">
+        and
+        <foreach collection="parameter.topics" open="(" close=")" separator="or" item="topicFilters">
+          RES.TOPIC_NAME_ = #{topicFilters.topicName}
+          <if test="topicFilters.businessKey">
+            and PI.BUSINESS_KEY_ = #{topicFilters.businessKey}
+          </if>
+          <if test="topicFilters.processDefinitionId != null">
+            and RES.PROC_DEF_ID_ = #{topicFilters.processDefinitionId}
+          </if>
+          <if test="topicFilters.processDefinitionIds != null and count(topicFilters.processDefinitionIds) > 0">
+            and RES.PROC_DEF_ID_ in
+            <foreach item="item" index="index" collection="topicFilters.processDefinitionIds"
+                     open="(" separator="," close=")">
+              #{item}
+            </foreach>
+          </if>
+          <if test="topicFilters.processDefinitionKey != null">
+            and RES.PROC_DEF_KEY_ = #{topicFilters.processDefinitionKey}
+          </if>
+          <if test="topicFilters.processDefinitionKeys != null and count(topicFilters.processDefinitionKeys) > 0">
+            and RES.PROC_DEF_KEY_ in
+            <foreach item="item" index="index" collection="topicFilters.processDefinitionKeys"
+                     open="(" separator="," close=")">
+              #{item}
+            </foreach>
+          </if>
+          <if test="topicFilters.isTenantIdSet">
+            <if test="topicFilters.tenantIds == null" >
+              and RES.TENANT_ID_ is null
+            </if>
+            <if test="topicFilters.tenantIds != null and count(topicFilters.tenantIds) > 0">
+              and RES.TENANT_ID_ in
+              <foreach item="tenantId" index="index" collection="topicFilters.tenantIds"
+                       open="(" separator="," close=")">
+                #{tenantId}
+              </foreach>
+            </if>
+          </if>
+          <if test="count(topicFilters.filterVariables) > 0">
+            and RES.PROC_INST_ID_ in (
+              select VAR.EXECUTION_ID_
+              from ${prefix}ACT_RU_VARIABLE VAR
+              WHERE
+              <bind name="varPrefix" value="'VAR.'"/>
+              <bind name="varTypeField" value="'TYPE_'"/>
+              <foreach collection="topicFilters.filterVariables" open="(" close=")" separator="or" item="variable">
+                ${varPrefix}NAME_ = #{variable.name}
+                and
+                <bind name="queryVariableValue" value="variable" />
+                <include refid="src/Resources/Impl/Mapping/Entity/Commons.variableValueConditions" />
+              </foreach>
+              )
+          </if>
+          <if test="topicFilters.processDefinitionVersionTag != null">
+            and (PD.VERSION_TAG_ like #{topicFilters.processDefinitionVersionTag})
+          </if>
+        </foreach>
+
+      </if>
+    </where>
+    <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.queryAuthorizationCheck" />
+    <include refid="Jabe\Impl\Persistence\Entity\TenantEntity.queryTenantCheck" />
+    ) RES
+    <if test="parameter.applyOrdering">
+      ${orderBy}
+    </if>
+    ${limitAfter}
+  </select>
+
+  <select id="selectTopicNamesByQuery" parameterType="Jabe\Impl\ExternalTaskQueryImpl" resultType="string">
+    select distinct RES.TOPIC_NAME_
+    <include refid="selectExternalTaskByQueryCriteriaSql"/>
+  </select>
+
+  <select id="selectExternalTaskByQueryCriteria" parameterType="Jabe\Impl\ExternalTaskQueryImpl" resultMap="externalTaskResultMap">
+    <include refid="src/Resources/Impl/Mapping/Entity/Commons.bindOrderBy"/>
+    ${limitBefore}
+    select ${distinct}
+    <include refid="columnSelection"/>
+    ${limitBetween}
+    <include refid="selectExternalTaskByQueryCriteriaSql"/>
+    ${orderBy}
+    ${limitAfter}
+  </select>
+
+  <select id="selectExternalTaskIdsByQueryCriteria" parameterType="Jabe\Impl\ExternalTaskQueryImpl" resultType="string">
+    <include refid="src/Resources/Impl/Mapping/Entity/Commons.bindOrderBy"/>
+    ${limitBefore}
+    select ${distinct} RES.ID_
+    ${limitBetween}
+    <include refid="selectExternalTaskByQueryCriteriaSql"/>
+    ${orderBy}
+    ${limitAfter}
+  </select>
+
+  <select id="selectExternalTaskCountByQueryCriteria" parameterType="Jabe\Impl\ExternalTaskQueryImpl" resultType="integer">
+    ${countDistinctBeforeStart} RES.ID_ ${countDistinctBeforeEnd}
+    <include refid="selectExternalTaskByQueryCriteriaSql"/>
+    ${countDistinctAfterEnd}
+  </select>
+  
+  <select id="selectExternalTaskDeploymentIdMappingsByQueryCriteria" parameterType="Jabe\Impl\ExternalTaskQueryImpl" resultMap="deploymentIdMapping">
+    select distinct PD.DEPLOYMENT_ID_, RES.ID_
+    <include refid="selectExternalTaskByQueryCriteriaSql"/>
+    inner join ${prefix}ACT_RE_PROCDEF PD on RES.PROC_DEF_ID_ = PD.ID_
+    ORDER BY PD.DEPLOYMENT_ID_ ASC
+  </select>
+
+  <sql id="selectExternalTaskByQueryCriteriaSql">
+    from (
+    select RES.*, PI.BUSINESS_KEY_, PD.VERSION_TAG_
+    from ${prefix}ACT_RU_EXT_TASK RES
+    
+    left join ${prefix}ACT_RU_EXECUTION PI on RES.PROC_INST_ID_ = PI.ID_
+    left join ${prefix}ACT_RE_PROCDEF PD on RES.PROC_DEF_ID_ = PD.ID_
+
+    <if test="authCheck.shouldPerformAuthorizatioCheck and !authCheck.revokeAuthorizationCheckEnabled and authCheck.authUserId != null">
+      <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.authCheckJoinWithoutOnClause" /> 
+      AUTH ON (
+       (AUTH.RESOURCE_TYPE_ = 8 
+        AND AUTH.RESOURCE_ID_ ${authJoinStart} RES.PROC_INST_ID_ ${authJoinSeparator} '*' ${authJoinEnd} 
+        AND ${bitand1}AUTH.PERMS_${bitand2}2${bitand3} = 2)
+      OR
+       (AUTH.RESOURCE_TYPE_ = 6
+        AND AUTH.RESOURCE_ID_ ${authJoinStart} RES.PROC_DEF_KEY_ ${authJoinSeparator} '*' ${authJoinEnd} 
+        AND ${bitand1}AUTH.PERMS_${bitand2}512${bitand3} = 512) 
+      )
+    </if>
+    <where>
+      <if test="externalTaskId != null">
+        and RES.ID_ = #{externalTaskId}
+      </if>
+      <if test="externalTaskIds != null and !externalTaskIds.isEmpty()">
+        and
+        <bind name="listOfIds" value="externalTaskIds"/>
+        <bind name="fieldName" value="'RES.ID_'"/>
+        <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedCollection"/>
+      </if>
+      <if test="workerId != null">
+        and RES.WORKER_ID_ = #{workerId}
+      </if>
+      <if test="lockExpirationBefore != null">
+        and RES.LOCK_EXP_TIME_ < #{lockExpirationBefore}
+      </if>
+      <if test="lockExpirationAfter != null">
+        and RES.LOCK_EXP_TIME_ > #{lockExpirationAfter}
+      </if>
+      <if test="topicName != null">
+        and RES.TOPIC_NAME_ = #{topicName}
+      </if>
+      <if test="locked != null and locked">
+        and RES.LOCK_EXP_TIME_ is not null
+        and RES.LOCK_EXP_TIME_ > #{now, dbalType=VARCHAR}
+      </if>
+      <if test="notLocked != null and notLocked">
+        and (RES.LOCK_EXP_TIME_ is null
+        or RES.LOCK_EXP_TIME_ < #{now, dbalType=VARCHAR})
+      </if>
+      <if test="executionId != null">
+        and RES.EXECUTION_ID_ = #{executionId}
+      </if>
+      <if test="processInstanceId != null">
+        and RES.PROC_INST_ID_ = #{processInstanceId}
+      </if>
+      <if test="processInstanceIdIn != null and count(processInstanceIdIn) > 0">
+        and
+        <bind name="listOfIds" value="processInstanceIdIn"/>
+        <bind name="fieldName" value="'RES.PROC_INST_ID_'"/>
+        <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedArray"/>
+      </if>
+      <if test="processDefinitionId != null">
+        and RES.PROC_DEF_ID_ = #{processDefinitionId}
+      </if>
+      <if test="activityId != null">
+        and RES.ACT_ID_ = #{activityId}
+      </if>
+      <if test="activityIdIn != null and count(activityIdIn) > 0">
+        and RES.ACT_ID_ in
+        <foreach item="activityId" index="index" collection="activityIdIn"
+                 open="(" separator="," close=")">
+          #{activityId}
+        </foreach>
+      </if>
+      <if test="retriesLeft != null and retriesLeft">
+        and (RES.RETRIES_ is null
+        or RES.RETRIES_ > 0)
+      </if>
+      <if test="retriesLeft != null and !retriesLeft">
+        and RES.RETRIES_ is not null
+        and RES.RETRIES_ = 0
+      </if>
+      <if test="suspensionState != null">
+        <if test="suspensionState.stateCode == 1">
+            and RES.SUSPENSION_STATE_ = 1
+        </if>
+        <if test="suspensionState.stateCode == 2">
+            and RES.SUSPENSION_STATE_ = 2
+        </if>
+      </if>
+      <if test="priorityHigherThanOrEquals != null">
+        and RES.PRIORITY_ >= #{priorityHigherThanOrEquals}
+      </if>
+      <if test="priorityLowerThanOrEquals != null">
+        and RES.PRIORITY_ <= #{priorityLowerThanOrEquals}
+      </if>
+      <if test="tenantIds != null and count(tenantIds) > 0">
+        and RES.TENANT_ID_ in
+        <foreach item="tenantId" index="index" collection="tenantIds"
+                 open="(" separator="," close=")">
+          #{tenantId}
+        </foreach>
+      </if>
+      <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.queryAuthorizationCheck" />
+      <include refid="Jabe\Impl\Persistence\Entity\TenantEntity.queryTenantCheck" />
+    </where>
+    ) RES
+  </sql>
+  
+  <sql id="columnSelection">
+    RES.REV_, 
+    RES.ID_, 
+    RES.TOPIC_NAME_, 
+    RES.WORKER_ID_, 
+    RES.LOCK_EXP_TIME_,
+    RES.RETRIES_,
+    RES.ERROR_MSG_,
+    RES.ERROR_DETAILS_ID_,
+    RES.EXECUTION_ID_,
+    RES.PROC_INST_ID_,
+    RES.PROC_DEF_ID_,
+    RES.PROC_DEF_KEY_,
+    RES.ACT_ID_,
+    RES.ACT_INST_ID_,
+    RES.SUSPENSION_STATE_,
+    RES.TENANT_ID_,
+    RES.PRIORITY_,
+    RES.BUSINESS_KEY_,
+    RES.VERSION_TAG_,
+    RES.LAST_FAILURE_LOG_ID_
+  </sql>
+
+</mapper>

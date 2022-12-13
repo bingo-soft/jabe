@@ -12,9 +12,7 @@ use Jabe\Impl\Db\{
     DbEntityInterface,
     EnginePersistenceLogger,
     HasDbReferencesInterface,
-    HasDbRevisionInterface,
-    SqlSessionInterface,
-    SqlSessionFactoryInterface
+    HasDbRevisionInterface
 };
 use Jabe\Impl\Db\EntityManager\Operation\{
     DbBulkOperation,
@@ -23,6 +21,7 @@ use Jabe\Impl\Db\EntityManager\Operation\{
     DbOperationState,
     DbOperationType
 };
+use Jabe\Impl\Interceptor\SessionFactoryInterface;
 use Jabe\Impl\Util\{
     DatabaseUtil,
     EnsureUtil,
@@ -30,6 +29,7 @@ use Jabe\Impl\Util\{
     IoUtil,
     ReflectUtil
 };
+use MyBatis\Session\SqlSessionInterface;
 
 abstract class DbSqlSession extends AbstractPersistenceSession
 {
@@ -793,7 +793,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
         return $this->sqlSession;
     }
 
-    public function getDbSqlSessionFactory(): DbSqlSessionFactory
+    public function getDbSqlSessionFactory(): SessionFactoryInterface
     {
         return $this->dbSqlSessionFactory;
     }

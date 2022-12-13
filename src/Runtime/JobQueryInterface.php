@@ -37,7 +37,7 @@ interface JobQueryInterface extends QueryInterface
     public function withRetriesLeft(): JobQueryInterface;
 
     /** Only select jobs which are executable,
-     * ie. retries &gt; 0 and duestring $is null or duestring $is in the past **/
+     * ie. retries > 0 and duestring $is null or duestring $is in the past **/
     public function executable(): JobQueryInterface;
 
     /** Only select jobs that are timers.

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright Camunda Services GmbH and/or licensed to Camunda Services GmbH
+    under one or more contributor license agreements. See the NOTICE file
+    distributed with this work for additional information regarding copyright
+    ownership. Camunda licenses this file to you under the Apache License,
+    Version 2.0; you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+        http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="lazyLoadingEnabled" value="false" />
+	</settings>
+	<mappers>
+    <mapper resource="src/Resources/Impl/Mapping/Entity/Commons.xml" />
+    
+    <mapper resource="src/Resources/Impl/Mapping/Entity/Attachment.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/Comment.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/Deployment.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/Execution.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/Group.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/HistoricActivityInstance.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/HistoricCaseActivityInstance.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/HistoricDetail.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/HistoricIncident.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/HistoricIdentityLinkLog.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/HistoricProcessInstance.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/HistoricCaseInstance.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/HistoricStatistics.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/HistoricVariableInstance.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/HistoricTaskInstance.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/HistoricTaskInstanceReport.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/HistoricJobLog.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/HistoricExternalTaskLog.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/UserOperationLogEntry.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/IdentityInfo.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/IdentityLink.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/Job.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/JobDefinition.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/Incident.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/Membership.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/ProcessDefinition.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/Property.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/SchemaLogEntry.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/Resource.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/TableData.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/TaskMetrics.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/Task.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/User.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/VariableInstance.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/EventSubscription.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/Statistics.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/Authorization.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/Filter.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/Metrics.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/ExternalTask.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/Report.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/Batch.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/HistoricBatch.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/Tenant.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/TenantMembership.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/FormDefinition.xml" />
+
+    <!-- CMMN -->
+
+    <!--<mapper resource="src/Resources/Impl/Mapping/Entity/CaseDefinition.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/CaseExecution.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/CaseSentryPart.xml" />-->
+
+    <!-- DMN -->
+
+    <!--<mapper resource="src/Resources/Impl/Mapping/Entity/DecisionDefinition.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/HistoricDecisionInstance.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/HistoricDecisionInputInstance.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/HistoricDecisionOutputInstance.xml" />
+    <mapper resource="src/Resources/Impl/Mapping/Entity/DecisionRequirementsDefinition.xml" />-->
+
+	</mappers>
+</configuration>

@@ -8,11 +8,11 @@ use Doctrine\DBAL\Exception\{
     ForeignKeyConstraintViolationException,
     ServerException
 };
-use Doctrine\ORM\ORMException;
 use Jabe\ProcessEngineException;
 use Jabe\Impl\Context\Context;
 use Jabe\Impl\Persistence\Entity\ByteArrayEntity;
 use Jabe\Repository\ResourceTypeInterface;
+use MyBatis\Exception\PersistenceException;
 
 class ExceptionUtil
 {
@@ -61,7 +61,7 @@ class ExceptionUtil
         return $result;
     }
 
-    protected static function getPersistenceCauseException(/*ServerException|ORMException*/$persistenceException): \Throwable
+    protected static function getPersistenceCauseException(/*ServerException|PersistenceException*/$persistenceException): \Throwable
     {
         if (method_exists($persistenceException, "getCause")) {
             $cause = $persistenceException->getCause();
@@ -77,7 +77,7 @@ class ExceptionUtil
         return $persistenceException;
     }
 
-    public static function unwrapException(/*ProcessEngineException|ServerException|ORMException*/$exception): ?\Exception
+    public static function unwrapException(/*ProcessEngineException|ServerException|PersistenceException*/$exception): ?\Exception
     {
         if ($exception instanceof ProcessEngineException) {
             $cause = null;
@@ -95,17 +95,17 @@ class ExceptionUtil
                     $processEngineExceptionCause = $cause->getPrevious();
                 }
 
-                if ($processEngineExceptionCause instanceof ServerException || $processEngineExceptionCause instanceof ORMException) {
+                if ($processEngineExceptionCause instanceof ServerException || $processEngineExceptionCause instanceof PersistenceException) {
                     return self::unwrapException($processEngineExceptionCause);
                 } else {
                     return null;
                 }
-            } elseif ($cause instanceof ServerException || $cause instanceof ORMException) {
+            } elseif ($cause instanceof ServerException || $cause instanceof PersistenceException) {
                 return self::getPersistenceCauseException($cause);
             } else {
                 return null;
             }
-        } elseif ($exception instanceof ServerException || $exception instanceof ORMException) {
+        } elseif ($exception instanceof ServerException || $exception instanceof PersistenceException) {
             return self::getPersistenceCauseException($exception);
         } else {
             return null;
@@ -121,7 +121,7 @@ class ExceptionUtil
             } else {
                 return self::checkValueTooLongException($sqlException);
             }
-        } elseif ($exception instanceof ServerException || $exception instanceof ORMException) {
+        } elseif ($exception instanceof ServerException || $exception instanceof PersistenceException) {
             $message = $exception->getMessage();
             return strpos($message, "too long") !== false ||
                 strpos($message, "too large") !== false ||
@@ -155,7 +155,7 @@ class ExceptionUtil
             strpos($message, "SQLCODE=-803, SQLSTATE=23505");
     }
 
-    public static function checkForeignKeyConstraintViolation(/*ProcessEngineException|ServerException|ORMException*/$exception, bool $skipPostgres): bool
+    public static function checkForeignKeyConstraintViolation(/*ProcessEngineException|ServerException|PersistenceException*/$exception, bool $skipPostgres): bool
     {
         if ($exception instanceof ProcessEngineException) {
             $sqlException = self::unwrapException($exception);

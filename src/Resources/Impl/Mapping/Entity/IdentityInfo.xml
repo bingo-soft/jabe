@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Copyright Camunda Services GmbH and/or licensed to Camunda Services GmbH
+    under one or more contributor license agreements. See the NOTICE file
+    distributed with this work for additional information regarding copyright
+    ownership. Camunda licenses this file to you under the Apache License,
+    Version 2.0; you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+        http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="Jabe\Impl\Persistence\Entity\IdentityInfoEntity">
+  
+  <!-- INFO INSERT -->
+
+  <insert id="insertIdentityInfo" parameterType="Jabe\Impl\Persistence\Entity\IdentityInfoEntity">
+    insert into ${prefix}ACT_ID_INFO (ID_, USER_ID_, TYPE_, KEY_, VALUE_, PASSWORD_, PARENT_ID_, REV_)
+    values (
+      #{id ,dbalType=VARCHAR},
+      #{userId ,dbalType=VARCHAR},
+      #{type ,dbalType=VARCHAR},
+      #{key ,dbalType=VARCHAR},
+      #{value ,dbalType=VARCHAR},
+      #{passwordBytes ,dbalType=BLOB},
+      #{parentId ,dbalType=VARCHAR},
+      1
+    )
+  </insert>
+  
+   <insert id="insertIdentityInfo_postgres" parameterType="Jabe\Impl\Persistence\Entity\IdentityInfoEntity">
+    insert into ${prefix}ACT_ID_INFO (ID_, USER_ID_, TYPE_, KEY_, VALUE_, PASSWORD_, PARENT_ID_, REV_)
+    values (
+      #{id ,dbalType=VARCHAR},
+      #{userId ,dbalType=VARCHAR},
+      #{type ,dbalType=VARCHAR},
+      #{key ,dbalType=VARCHAR},
+      #{value ,dbalType=VARCHAR},
+      #{passwordBytes ,dbalType=BINARY},
+      #{parentId ,dbalType=VARCHAR},
+      1
+    )
+  </insert>
+  
+  <!-- INFO UPDATE -->
+  <update id="updateIdentityInfo" parameterType="Jabe\Impl\Persistence\Entity\IdentityInfoEntity">
+    update ${prefix}ACT_ID_INFO 
+    set REV_ = #{revisionNext ,dbalType=INTEGER},
+        VALUE_ = #{value ,dbalType=VARCHAR},
+        PASSWORD_ = #{passwordBytes ,dbalType=BLOB}
+    where ID_ = #{id}
+      and REV_ = #{revision}
+  </update>
+  
+  <update id="updateIdentityInfo_postgres" parameterType="Jabe\Impl\Persistence\Entity\IdentityInfoEntity">
+    update ${prefix}ACT_ID_INFO 
+    set REV_ = #{revisionNext ,dbalType=INTEGER},
+        VALUE_ = #{value ,dbalType=VARCHAR},
+        PASSWORD_ = #{passwordBytes ,dbalType=BINARY}
+    where ID_ = #{id}
+      and REV_ = #{revision}
+  </update>
+  
+  <!-- INFO DELETE -->
+
+  <delete id="deleteIdentityInfo" parameterType="Jabe\Impl\Persistence\Entity\IdentityInfoEntity">
+    delete from ${prefix}ACT_ID_INFO 
+    where ID_ = #{id} and REV_ = #{revision}
+  </delete>
+
+  <!-- INFO RESULTMAP -->
+
+  <resultMap id="identityInfoResultMap" type="Jabe\Impl\Persistence\Entity\IdentityInfoEntity">
+    <id property="id" column="ID_" dbalType="VARCHAR" />
+    <result property="revision" column="REV_" dbalType="INTEGER" />
+    <result property="userId" column="USER_ID_" dbalType="VARCHAR" />
+    <result property="type" column="TYPE_" dbalType="VARCHAR" />
+    <result property="key" column="KEY_" dbalType="VARCHAR" />
+    <result property="value" column="VALUE_" dbalType="VARCHAR" />
+    <result property="passwordBytes" column="PASSWORD_" dbalType="BLOB" />
+    <result property="parentId" column="PARENT_ID_" dbalType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="identityInfoResultMap_postgres" type="Jabe\Impl\Persistence\Entity\IdentityInfoEntity">
+    <id property="id" column="ID_" dbalType="VARCHAR" />
+    <result property="revision" column="REV_" dbalType="INTEGER" />
+    <result property="userId" column="USER_ID_" dbalType="VARCHAR" />
+    <result property="type" column="TYPE_" dbalType="VARCHAR" />
+    <result property="key" column="KEY_" dbalType="VARCHAR" />
+    <result property="value" column="VALUE_" dbalType="VARCHAR" />
+    <result property="passwordBytes" column="PASSWORD_" dbalType="BINARY" />
+    <result property="parentId" column="PARENT_ID_" dbalType="VARCHAR" />
+  </resultMap>
+  
+  <!-- INFO SELECT -->
+
+  <select id="selectIdentityInfoById" parameterType="string" resultMap="identityInfoResultMap">
+    select * from ${prefix}ACT_ID_INFO where ID_ = #{id,dbalType=VARCHAR}
+  </select>
+  
+  <select id="selectIdentityInfoById_postgres" parameterType="string" resultMap="identityInfoResultMap_postgres">
+    select * from ${prefix}ACT_ID_INFO where ID_ = #{id,dbalType=VARCHAR}
+  </select>
+  
+  <select id="selectIdentityInfoByUserIdAndKey" parameterType="array" resultMap="identityInfoResultMap">
+    select * from ${prefix}ACT_ID_INFO 
+    where USER_ID_ = #{userId,dbalType=VARCHAR}
+      and KEY_ =  #{key,dbalType=VARCHAR}
+      and PARENT_ID_ is null
+  </select>
+  
+   <select id="selectIdentityInfoByUserIdAndKey_postgres" parameterType="array" resultMap="identityInfoResultMap_postgres">
+    select * from ${prefix}ACT_ID_INFO 
+    where USER_ID_ = #{userId,dbalType=VARCHAR}
+      and KEY_ =  #{key,dbalType=VARCHAR}
+      and PARENT_ID_ is null
+  </select>
+  
+  <select id="selectIdentityInfoKeysByUserIdAndType" parameterType="array" resultType="string">
+    select KEY_ from ${prefix}ACT_ID_INFO 
+    where USER_ID_ = #{parameter.userId,dbalType=VARCHAR}
+      and TYPE_ =  #{parameter.type,dbalType=VARCHAR}
+      and PARENT_ID_ is null
+  </select>
+  
+  <select id="selectIdentityInfoByUserId" parameterType="string" resultMap="identityInfoResultMap">
+    select * from ${prefix}ACT_ID_INFO where USER_ID_ = #{parameter,dbalType=VARCHAR}
+  </select>
+  
+  <select id="selectIdentityInfoByUserId_postgres" parameterType="string" resultMap="identityInfoResultMap_postgres">
+    select * from ${prefix}ACT_ID_INFO where USER_ID_ = #{parameter,dbalType=VARCHAR}
+  </select>
+
+  <select id="selectIdentityInfoDetails" parameterType="string" resultMap="identityInfoResultMap">
+    select * from ${prefix}ACT_ID_INFO where PARENT_ID_ = #{parameter,dbalType=VARCHAR}
+  </select>
+
+  <select id="selectIdentityInfoDetails_postgres" parameterType="string" resultMap="identityInfoResultMap_postgres">
+    select * from ${prefix}ACT_ID_INFO where PARENT_ID_ = #{parameter,dbalType=VARCHAR}
+  </select>
+  
+  
+</mapper>

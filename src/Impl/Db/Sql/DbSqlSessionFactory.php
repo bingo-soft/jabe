@@ -3,7 +3,6 @@
 namespace Jabe\Impl\Db\Sql;
 
 use Doctrine\DBAL\Connection;
-use Jabe\Impl\Db\SqlSessionFactoryInterface;
 use Jabe\Impl\Cfg\IdGeneratorInterface;
 use Jabe\Impl\Db\DbEntityInterface;
 use Jabe\Impl\Interceptor\{
@@ -11,6 +10,7 @@ use Jabe\Impl\Interceptor\{
     SessionFactoryInterface
 };
 use Jabe\Impl\Util\ClassNameUtil;
+use MyBatis\Session\SqlSessionFactoryInterface;
 
 class DbSqlSessionFactory implements SessionFactoryInterface
 {

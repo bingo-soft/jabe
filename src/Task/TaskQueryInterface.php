@@ -375,7 +375,7 @@ interface TaskQueryInterface extends QueryInterface
     /**
      * Only select tasks with the given taskDefinitionKey.
      * The task definition key is the id of the userTask:
-     * &lt;userTask id="xxx" .../&gt;
+     * <userTask id="xxx" .../>
      **/
     public function taskDefinitionKey(string $key): TaskQueryInterface;
 
@@ -383,7 +383,7 @@ interface TaskQueryInterface extends QueryInterface
      * Only select tasks with a taskDefinitionKey that match the given parameter.
      *  The syntax is that of SQL: for example usage: taskDefinitionKeyLike("%camunda%").
      * The task definition key is the id of the userTask:
-     * &lt;userTask id="xxx" .../&gt;
+     * <userTask id="xxx" .../>
      **/
     public function taskDefinitionKeyLike(string $keyLike): TaskQueryInterface;
 

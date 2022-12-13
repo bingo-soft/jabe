@@ -79,7 +79,7 @@ class FormDefinitionManager extends AbstractManager implements AbstractResourceD
 
     public function findDefinitionsByDeploymentId(string $deploymentId): array
     {
-        return $this->getDbEntityManager()->selectList("selectCamundaFormDefinitionByDeploymentId", $deploymentId);
+        return $this->getDbEntityManager()->selectList("selectFormDefinitionByDeploymentId", $deploymentId);
     }
 
     public function getCachedResourceDefinitionEntity(string $definitionId): ?FormDefinitionEntity

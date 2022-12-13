@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Copyright Camunda Services GmbH and/or licensed to Camunda Services GmbH
+    under one or more contributor license agreements. See the NOTICE file
+    distributed with this work for additional information regarding copyright
+    ownership. Camunda licenses this file to you under the Apache License,
+    Version 2.0; you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+        http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Jabe\Impl\History\Event\UserOperationLogEntryEventEntity">
+
+  <!-- OPERATION LOG ENTRY INSERT -->
+
+  <insert id="insertUserOperationLogEntryEvent" parameterType="Jabe\Impl\History\Event\UserOperationLogEntryEventEntity">
+      insert into ${prefix}ACT_HI_OP_LOG (
+        ID_,
+        DEPLOYMENT_ID_,
+        PROC_DEF_ID_,
+        PROC_DEF_KEY_,
+        ROOT_PROC_INST_ID_,
+        PROC_INST_ID_,
+        EXECUTION_ID_,
+        CASE_DEF_ID_,
+        CASE_INST_ID_,
+        CASE_EXECUTION_ID_,
+        TASK_ID_,
+        JOB_ID_,
+        JOB_DEF_ID_,
+        BATCH_ID_,
+        USER_ID_,
+        TIMESTAMP_,
+        OPERATION_ID_ ,
+        OPERATION_TYPE_,
+        ENTITY_TYPE_,
+        PROPERTY_,
+        ORG_VALUE_,
+        NEW_VALUE_,
+        TENANT_ID_,
+        REMOVAL_TIME_,
+        CATEGORY_,
+        EXTERNAL_TASK_ID_,
+        ANNOTATION_
+      ) values (
+        #{id ,dbalType=VARCHAR},
+        #{deploymentId, dbalType=VARCHAR},
+        #{processDefinitionId, dbalType=VARCHAR},
+        #{processDefinitionKey, dbalType=VARCHAR},
+        #{rootProcessInstanceId, dbalType=VARCHAR},
+        #{processInstanceId, dbalType=VARCHAR},
+        #{executionId, dbalType=VARCHAR},
+        #{caseDefinitionId, dbalType=VARCHAR},
+        #{caseInstanceId, dbalType=VARCHAR},
+        #{caseExecutionId, dbalType=VARCHAR},
+        #{taskId ,dbalType=VARCHAR},
+        #{jobId, dbalType=VARCHAR},
+        #{jobDefinitionId, dbalType=VARCHAR},
+        #{batchId, dbalType=VARCHAR},
+        #{userId ,dbalType=VARCHAR},
+        #{timestamp ,dbalType=VARCHAR},
+        #{operationId ,dbalType=VARCHAR},
+        #{operationType ,dbalType=VARCHAR},
+        #{entityType ,dbalType=VARCHAR},
+        #{property, dbalType=VARCHAR},
+        #{orgValue, dbalType=VARCHAR},
+        #{newValue ,dbalType=VARCHAR},
+        #{tenantId ,dbalType=VARCHAR},
+        #{removalTime, dbalType=VARCHAR},
+        #{category, dbalType=VARCHAR},
+        #{externalTaskId, dbalType=VARCHAR},
+        #{annotation, dbalType=VARCHAR}
+      )
+  </insert>
+
+  <!-- OPERATION LOG ENTRY UPDATE -->
+
+  <update id="updateUserOperationLogByRootProcessInstanceId"
+          parameterType="array">
+      update ${prefix}ACT_HI_OP_LOG set
+      REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+
+      where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+  </update>
+
+  <update id="updateUserOperationLogByRootProcessInstanceId_mssql"
+          parameterType="array">
+      update RES set
+    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    FROM ${prefix}ACT_HI_OP_LOG RES WITH (FORCESEEK)
+      where RES.ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+  </update>
+
+  <update id="updateUserOperationLogByRootProcessInstanceId_mysql"
+          parameterType="array">
+      update ${prefix}ACT_HI_OP_LOG set
+      REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR},
+      TIMESTAMP_ = TIMESTAMP_
+
+      where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+  </update>
+
+  <update id="updateUserOperationLogByProcessInstanceId"
+          parameterType="array">
+    update ${prefix}ACT_HI_OP_LOG
+      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      where PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+  </update>
+
+  <update id="updateUserOperationLogByProcessInstanceId_mssql"
+          parameterType="array">
+    update RES set
+    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    FROM ${prefix}ACT_HI_OP_LOG RES WITH (FORCESEEK)
+      where RES.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+  </update>
+
+  <update id="updateUserOperationLogByProcessInstanceId_mysql"
+          parameterType="array">
+    update ${prefix}ACT_HI_OP_LOG
+      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR},
+          TIMESTAMP_ = TIMESTAMP_
+      where PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+  </update>
+
+  <update id="updateOperationLogAnnotationByOperationId"
+          parameterType="array">
+    update ${prefix}ACT_HI_OP_LOG
+      set ANNOTATION_ = #{annotation, dbalType=VARCHAR}
+      where OPERATION_ID_ = #{operationId, dbalType=VARCHAR}
+  </update>
+
+  <update id="updateOperationLogAnnotationByOperationId_mysql"
+          parameterType="array">
+    update ${prefix}ACT_HI_OP_LOG
+      set ANNOTATION_ = #{annotation, dbalType=VARCHAR},
+          TIMESTAMP_ = TIMESTAMP_
+      where OPERATION_ID_ = #{operationId, dbalType=VARCHAR}
+  </update>
+
+  <!-- OPERATION LOG ENTRY DELETE -->
+
+  <delete id="deleteUserOperationLogEntryById">
+    delete from ${prefix}ACT_HI_OP_LOG where ID_ = #{id}
+  </delete>
+
+
+  <sql id="andWhereMinuteInDateBetweenSql">
+    <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
+      AND ${datepart1}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart2}${date}${datepart3}
+      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+    </if>
+  </sql>
+
+  <sql id="andWhereMinuteInDateBetweenSql_oracle">
+    <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
+      AND ${datepart1}${date}${datepart2}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart3}
+      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+    </if>
+  </sql>
+
+  <delete id="deleteUserOperationLogByRemovalTime"
+          parameterType="Jabe\Impl\Db\ListQueryParameterObject">
+    <bind name="date" value="'REMOVAL_TIME_'"/>
+    <bind name="reportPeriodUnitName" value="'MINUTE'"/>
+    delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_OP_LOG
+    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    <include refid="andWhereMinuteInDateBetweenSql"/>
+    ${limitAfterWithoutOffset}
+  </delete>
+
+  <delete id="deleteUserOperationLogByRemovalTime_oracle"
+          parameterType="Jabe\Impl\Db\ListQueryParameterObject">
+    <bind name="date" value="'REMOVAL_TIME_'"/>
+    <bind name="reportPeriodUnitName" value="'MINUTE'"/>
+    delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_OP_LOG
+    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    <include refid="andWhereMinuteInDateBetweenSql_oracle"/>
+    ${limitAfterWithoutOffset}
+  </delete>
+
+  <delete id="deleteUserOperationLogByRemovalTime_postgres_or_db2"
+          parameterType="Jabe\Impl\Db\ListQueryParameterObject">
+    <bind name="date" value="'REMOVAL_TIME_'"/>
+    <bind name="reportPeriodUnitName" value="'MINUTE'"/>
+    delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_OP_LOG
+    where ID_ IN
+      (SELECT ID_
+       FROM ${prefix}ACT_HI_OP_LOG
+       WHERE REMOVAL_TIME_ <= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
+       ${limitAfterWithoutOffset})
+  </delete>
+
+  <!--OPERATION LOG ENTRY RESULT MAP -->
+
+  <resultMap id="UserOperationLogResultMap" type="Jabe\Impl\History\Event\UserOperationLogEntryEventEntity">
+    <id property="id" column="ID_" dbalType="VARCHAR" />
+    <result property="deploymentId" column="DEPLOYMENT_ID_" dbalType="VARCHAR" />
+    <result property="processDefinitionId" column="PROC_DEF_ID_" dbalType="VARCHAR" />
+    <result property="processDefinitionKey" column="PROC_DEF_KEY_" dbalType="VARCHAR" />
+    <result property="rootProcessInstanceId" column="ROOT_PROC_INST_ID_" dbalType="VARCHAR" />
+    <result property="processInstanceId" column="PROC_INST_ID_" dbalType="VARCHAR" />
+    <result property="executionId" column="EXECUTION_ID_" dbalType="VARCHAR" />
+    <result property="caseDefinitionId" column="CASE_DEF_ID_" dbalType="VARCHAR" />
+    <result property="caseInstanceId" column="CASE_INST_ID_" dbalType="VARCHAR" />
+    <result property="caseExecutionId" column="CASE_EXECUTION_ID_" dbalType="VARCHAR" />
+    <result property="taskId" column="TASK_ID_" dbalType="VARCHAR" />
+    <result property="jobId" column="JOB_ID_" dbalType="VARCHAR" />
+    <result property="jobDefinitionId" column="JOB_DEF_ID_" dbalType="VARCHAR" />
+    <result property="batchId" column="BATCH_ID_" dbalType="VARCHAR" />
+    <result property="userId" column="USER_ID_" dbalType="VARCHAR" />
+    <result property="timestamp" column="TIMESTAMP_" dbalType="VARCHAR" />
+    <result property="operationId" column="OPERATION_ID_" dbalType="VARCHAR" />
+    <result property="operationType" column="OPERATION_TYPE_" dbalType="VARCHAR" />
+    <result property="entityType" column="ENTITY_TYPE_" dbalType="VARCHAR" />
+    <result property="property" column="PROPERTY_" dbalType="VARCHAR" />
+    <result property="orgValue" column="ORG_VALUE_" dbalType="VARCHAR" />
+    <result property="newValue" column="NEW_VALUE_" dbalType="VARCHAR" />
+    <result property="tenantId" column="TENANT_ID_" dbalType="VARCHAR" />
+    <result property="removalTime" column="REMOVAL_TIME_" dbalType="VARCHAR"/>
+    <result property="category" column="CATEGORY_" dbalType="VARCHAR" />
+    <result property="externalTaskId" column="EXTERNAL_TASK_ID_" dbalType="VARCHAR" />
+    <result property="annotation" column="ANNOTATION_" dbalType="VARCHAR" />
+  </resultMap>
+
+  <!-- OPERATION LOG ENTRY SELECT -->
+
+  <select id="selectUserOperationLogEntryEvent" resultMap="UserOperationLogResultMap">
+    select * from ${prefix}ACT_HI_OP_LOG where ID_ = #{id}
+  </select>
+
+  <select id="selectUserOperationLogEntriesByQueryCriteria" parameterType="Jabe\Impl\UserOperationLogQueryImpl" resultMap="UserOperationLogResultMap">
+    <include refid="src/Resources/Impl/Mapping/Entity/Commons.bindOrderBy"/>
+    ${limitBefore}
+    select ${distinct} RES.*
+    ${limitBetween}
+    <include refid="selectUserOperationLogEntriesByQueryCriteriaSql"/>
+    ${orderBy}
+    ${limitAfter}
+  </select>
+
+  <select id="selectUserOperationLogEntryCountByQueryCriteria" parameterType="Jabe\Impl\UserOperationLogQueryImpl" resultType="integer">
+    ${countDistinctBeforeStart} RES.ID_ ${countDistinctBeforeEnd}
+    <include refid="selectUserOperationLogEntriesByQueryCriteriaSql"/>
+    ${countDistinctAfterEnd}
+  </select>
+
+  <sql id="selectUserOperationLogEntriesByQueryCriteriaSql">
+    from ${prefix}ACT_HI_OP_LOG RES
+
+    <if test="authCheck.shouldPerformAuthorizatioCheck and !authCheck.revokeAuthorizationCheckEnabled and authCheck.authUserId != null">
+      <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.authCheckJoinWithoutOnClause"/>
+      AUTH ON (AUTH.RESOURCE_ID_ ${authJoinStart}
+        RES.PROC_DEF_KEY_ ${authJoinSeparator} RES.CATEGORY_ ${authJoinSeparator} '*'
+        <if test="authCheck.isHistoricInstancePermissionsEnabled">
+          ${authJoinSeparator} RES.PROC_INST_ID_
+          ${authJoinSeparator} RES.TASK_ID_
+        </if>
+        ${authJoinEnd}
+      )
+    </if>
+
+    <where>
+      <if test="deploymentId != null">
+        RES.DEPLOYMENT_ID_ = #{deploymentId}
+      </if>
+      <if test="processDefinitionId != null">
+        RES.PROC_DEF_ID_ = #{processDefinitionId}
+      </if>
+      <if test="processDefinitionKey != null">
+        RES.PROC_DEF_KEY_ = #{processDefinitionKey}
+      </if>
+      <if test="processInstanceId != null">
+        and RES.PROC_INST_ID_ = #{processInstanceId}
+      </if>
+      <if test="executionId != null">
+        and RES.EXECUTION_ID_ = #{executionId}
+      </if>
+      <if test="caseDefinitionId != null">
+        and RES.CASE_DEF_ID_ = #{caseDefinitionId}
+      </if>
+      <if test="caseInstanceId != null">
+        and RES.CASE_INST_ID_ = #{caseInstanceId}
+      </if>
+      <if test="caseExecutionId != null">
+        and RES.CASE_EXECUTION_ID_ = #{caseExecutionId}
+      </if>
+      <if test="taskId != null">
+        and RES.TASK_ID_ = #{taskId}
+      </if>
+      <if test="jobId != null">
+        and RES.JOB_ID_ = #{jobId}
+      </if>
+      <if test="jobDefinitionId != null">
+        and RES.JOB_DEF_ID_ = #{jobDefinitionId}
+      </if>
+      <if test="batchId != null">
+        and RES.BATCH_ID_ = #{batchId}
+      </if>
+      <if test="userId != null">
+        and RES.USER_ID_ = #{userId}
+      </if>
+      <if test="operationId != null">
+        and RES.OPERATION_ID_ = #{operationId}
+      </if>
+      <if test="externalTaskId != null">
+        and RES.EXTERNAL_TASK_ID_ = #{externalTaskId}
+      </if>
+      <if test="operationType != null">
+        and RES.OPERATION_TYPE_ = #{operationType}
+      </if>
+      <if test="entityType != null">
+        and RES.ENTITY_TYPE_ = #{entityType}
+      </if>
+      <if test="entityTypes != null and count(entityTypes) > 0">
+        and RES.ENTITY_TYPE_ in
+        <foreach item="entityType" collection="entityTypes" open="(" separator="," close=")">
+          #{entityType}
+        </foreach>
+      </if>
+      <if test="property != null">
+        and RES.PROPERTY_ = #{property}
+      </if>
+      <if test="timestampAfter != null">
+        and RES.TIMESTAMP_ > #{timestampAfter}
+      </if>
+      <if test="timestampBefore != null">
+        and RES.TIMESTAMP_ < #{timestampBefore}
+      </if>
+      <if test="category != null">
+        and RES.CATEGORY_ = #{category}
+      </if>
+      <if test="categories != null and count(categories) > 0">
+        and RES.CATEGORY_ in
+        <foreach item="category" collection="categories" open="(" separator="," close=")">
+          #{category}
+        </foreach>
+      </if>
+      
+      <if test="authCheck.shouldPerformAuthorizatioCheck and authCheck.authUserId != null">
+        <!-- may not exist in the context of a process definition -->
+          and (
+            <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.queryAuthorizationCheckWithoutPrefix"/>
+            or ( RES.CATEGORY_ IS NULL AND RES.PROC_DEF_KEY_ IS NULL )
+          )
+      </if>
+
+    </where>
+  </sql>
+
+  <select id="selectHistoricUserOperationLogPage" resultMap="UserOperationLogResultMap" parameterType="array" >
+    <bind name="maxResults" value="parameter.maxResults" />
+    ${optimizeLimitBeforeWithoutOffset}
+    select ${limitBeforeWithoutOffset} * from ${prefix}ACT_HI_OP_LOG RES
+    <where>
+      <if test="parameter.occurredAfter != null">
+        RES.TIMESTAMP_ > #{parameter.occurredAfter}
+      </if>
+      <if test="parameter.occurredAt != null">
+        and RES.TIMESTAMP_ = #{parameter.occurredAt}
+      </if>
+      <if test="parameter.operationTypes != null and count(parameter.operationTypes) > 0">
+        and RES.OPERATION_TYPE_ in
+        <foreach item="item" index="index" collection="parameter.operationTypes" open="(" separator="," close=")">
+            #{item, dbalType=VARCHAR}
+        </foreach>
+      </if>
+    </where>
+
+    ORDER BY RES.TIMESTAMP_ ASC
+    ${optimizeLimitAfterWithoutOffset}
+  </select>
+
+</mapper>

@@ -1,0 +1,915 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Copyright Camunda Services GmbH and/or licensed to Camunda Services GmbH
+    under one or more contributor license agreements. See the NOTICE file
+    distributed with this work for additional information regarding copyright
+    ownership. Camunda licenses this file to you under the Apache License,
+    Version 2.0; you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+        http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="Jabe\Impl\Persistence\Entity\AuthorizationEntity">
+
+  <!-- AUTHORIZATION INSERT -->
+  <insert id="insertAuthorization" parameterType="Jabe\Impl\Persistence\Entity\AuthorizationEntity">
+    insert into ${prefix}ACT_RU_AUTHORIZATION (
+      ID_,
+      TYPE_,
+      GROUP_ID_,
+      USER_ID_,
+      RESOURCE_TYPE_,
+      RESOURCE_ID_,
+      PERMS_,
+      ROOT_PROC_INST_ID_,
+      REMOVAL_TIME_,
+      REV_
+      )
+    values (
+      #{id ,dbalType=VARCHAR},
+      #{authorizationType ,dbalType=INTEGER},
+      #{groupId ,dbalType=VARCHAR},
+      #{userId ,dbalType=VARCHAR},
+      #{resourceType ,dbalType=INTEGER},
+      #{resourceId ,dbalType=VARCHAR},
+      #{permissions, dbalType=INTEGER},
+      #{rootProcessInstanceId, dbalType=VARCHAR},
+      #{removalTime, dbalType=VARCHAR},
+      1
+    )
+  </insert>
+
+  <!-- AUTHORIZATION UPDATE -->
+
+  <update id="updateAuthorization" parameterType="Jabe\Impl\Persistence\Entity\AuthorizationEntity">
+    update ${prefix}ACT_RU_AUTHORIZATION set
+      REV_ = #{revisionNext, dbalType=INTEGER},
+      TYPE_ = #{authorizationType, dbalType=INTEGER},
+      GROUP_ID_ = #{groupId, dbalType=VARCHAR},
+      USER_ID_ = #{userId, dbalType=VARCHAR},
+      RESOURCE_TYPE_ = #{resourceType, dbalType=INTEGER},
+      RESOURCE_ID_ = #{resourceId, dbalType=VARCHAR},
+      PERMS_ = #{permissions, dbalType=INTEGER},
+      REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR},
+      ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+    where ID_ = #{id, dbalType=VARCHAR}
+      and REV_ = #{revision, dbalType=INTEGER}
+  </update>
+
+  <update id="updateAuthorizationsByRootProcessInstanceId"
+          parameterType="array">
+    update ${prefix}ACT_RU_AUTHORIZATION set
+    REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+
+    where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+  </update>
+
+  <update id="updateAuthorizationsByRootProcessInstanceId_mssql"
+          parameterType="array">
+    update RES set
+    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    FROM ${prefix}ACT_RU_AUTHORIZATION RES WITH (FORCESEEK)
+    where RES.ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+  </update>
+
+  <update id="updateAuthorizationsByProcessInstanceId"
+          parameterType="array">
+    update ${prefix}ACT_RU_AUTHORIZATION set
+    REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+
+    where
+      <!-- task instances -->
+      RESOURCE_ID_ IN (
+        SELECT ID_
+        FROM ${prefix}ACT_HI_TASKINST
+        WHERE PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      )
+      <!-- process instances -->
+      or RESOURCE_ID_ = #{processInstanceId, dbalType=VARCHAR}
+  </update>
+
+  <update id="updateAuthorizationsByProcessInstanceId_mssql"
+          parameterType="array">
+    update RES set
+    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    FROM ${prefix}ACT_RU_AUTHORIZATION RES WITH (FORCESEEK)
+    where
+      <!-- task instances -->
+      RES.RESOURCE_ID_ IN (
+        SELECT ID_
+        FROM ${prefix}ACT_HI_TASKINST
+        WHERE PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      )
+      <!-- process instances -->
+      or RES.RESOURCE_ID_ = #{processInstanceId, dbalType=VARCHAR}
+  </update>
+
+  <!-- AUTHORIZATION DELETE -->
+
+  <update id="deleteAuthorization" parameterType="Jabe\Impl\Persistence\Entity\AuthorizationEntity">
+    DELETE FROM 
+        ${prefix}ACT_RU_AUTHORIZATION 
+    where
+        ID_ = #{id}
+        and REV_ = #{revision}
+  </update>
+
+  <delete id="deleteAuthorizationsForResourceId" parameterType="array">
+    delete from ${prefix}ACT_RU_AUTHORIZATION 
+    where 
+        RESOURCE_TYPE_ = #{resourceType} 
+        AND RESOURCE_ID_ = #{resourceId}
+  </delete>
+
+  <delete id="deleteAuthorizationsForResourceIdAndUserId" parameterType="array">
+    delete from ${prefix}ACT_RU_AUTHORIZATION
+    where
+      RESOURCE_TYPE_ = #{resourceType}
+      AND RESOURCE_ID_ = #{resourceId}
+      AND USER_ID_ = #{userId}
+  </delete>
+
+  <delete id="deleteAuthorizationsForResourceIdAndGroupId" parameterType="array">
+    delete from ${prefix}ACT_RU_AUTHORIZATION
+    where
+      RESOURCE_TYPE_ = #{resourceType}
+      AND RESOURCE_ID_ = #{resourceId}
+      AND GROUP_ID_ = #{groupId}
+  </delete>
+
+  <delete id="deleteAuthorizationsByRemovalTime"
+          parameterType="Jabe\Impl\Db\ListQueryParameterObject">
+    <bind name="date" value="'REMOVAL_TIME_'"/>
+    <bind name="reportPeriodUnitName" value="'MINUTE'"/>
+    delete ${limitBeforeWithoutOffset} from ${prefix}ACT_RU_AUTHORIZATION
+    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    <include refid="andWhereMinuteInDateBetweenSql"/>
+    ${limitAfterWithoutOffset}
+  </delete>
+
+  <delete id="deleteAuthorizationsByRemovalTime_oracle"
+          parameterType="Jabe\Impl\Db\ListQueryParameterObject">
+    <bind name="date" value="'REMOVAL_TIME_'"/>
+    <bind name="reportPeriodUnitName" value="'MINUTE'"/>
+    delete ${limitBeforeWithoutOffset} from ${prefix}ACT_RU_AUTHORIZATION
+    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    <include refid="andWhereMinuteInDateBetweenSql_oracle"/>
+    ${limitAfterWithoutOffset}
+  </delete>
+
+  <delete id="deleteAuthorizationsByRemovalTime_postgres_or_db2"
+          parameterType="Jabe\Impl\Db\ListQueryParameterObject">
+    <bind name="date" value="'REMOVAL_TIME_'"/>
+    <bind name="reportPeriodUnitName" value="'MINUTE'"/>
+    delete ${limitBeforeWithoutOffset} from ${prefix}ACT_RU_AUTHORIZATION
+    where ID_ IN
+    (SELECT ID_
+    FROM ${prefix}ACT_RU_AUTHORIZATION
+    WHERE REMOVAL_TIME_ <= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
+    ${limitAfterWithoutOffset})
+  </delete>
+
+  <sql id="andWhereMinuteInDateBetweenSql">
+    <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
+      AND ${datepart1}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart2}${date}${datepart3}
+      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+    </if>
+  </sql>
+
+  <sql id="andWhereMinuteInDateBetweenSql_oracle">
+    <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
+      AND ${datepart1}${date}${datepart2}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart3}
+      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+    </if>
+  </sql>
+
+  <!-- AUTHORIZATION RESULTMAP -->
+
+  <resultMap id="authorizationResultMap" type="Jabe\Impl\Persistence\Entity\AuthorizationEntity">
+    <id property="id" column="ID_" dbalType="VARCHAR" />
+    <result property="revision" column="REV_" dbalType="INTEGER" />
+    <result property="authorizationType" column="TYPE_" dbalType="INTEGER" />
+    <result property="groupId" column="GROUP_ID_" dbalType="VARCHAR" />
+    <result property="userId" column="USER_ID_" dbalType="VARCHAR" />
+    <result property="resourceType" column="RESOURCE_TYPE_" dbalType="INTEGER" />
+    <result property="resourceId" column="RESOURCE_ID_" dbalType="VARCHAR" />
+    <result property="removalTime" column="REMOVAL_TIME_" dbalType="VARCHAR" />
+    <result property="rootProcessInstanceId" column="ROOT_PROC_INST_ID_" dbalType="VARCHAR" />
+    <result property="permissions" column="PERMS_" dbalType="INTEGER" />
+  </resultMap>
+
+  <!-- AUTHORIZATION SELECT -->
+
+  <select id="selectAuthorizationByParameters" resultMap="authorizationResultMap">
+    SELECT
+        *
+    FROM
+        ${prefix}ACT_RU_AUTHORIZATION
+    <where>
+      <if test="type != null">
+        TYPE_ = #{type}
+      </if>
+      <if test="userId != null">
+        AND USER_ID_ = #{userId}
+      </if>
+      <if test="groupId != null">
+        AND GROUP_ID_ = #{groupId}
+      </if>
+      <if test="resourceType != null">
+        AND RESOURCE_TYPE_ = #{resourceType}
+      </if>
+      <if test="resourceId != null">
+        AND RESOURCE_ID_ = #{resourceId}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectAuthorizedGroupIds" resultType="string">
+    SELECT distinct(A.GROUP_ID_) FROM ${prefix}ACT_RU_AUTHORIZATION A
+  </select>
+
+  <select id="selectAuthorization" resultMap="authorizationResultMap">
+    select * FROM ${prefix}ACT_RU_AUTHORIZATION WHERE ID_ = #{id}
+  </select>
+
+  <select id="selectRevokeAuthorization" resultType="integer">
+    SELECT
+    CASE
+    WHEN EXISTS
+    ( SELECT ID_
+      FROM ${prefix}ACT_RU_AUTHORIZATION 
+      WHERE TYPE_ = 2
+      AND (
+        USER_ID_ IN (#{userId, dbalType=VARCHAR}, '*')
+        <if test="authGroupIds != null and count(authGroupIds) > 0">
+        OR GROUP_ID_ IN <foreach item="item" index="index" collection="authGroupIds" open="(" separator="," close=")">#{item, dbalType=VARCHAR}</foreach>
+        </if>
+      )
+    ) THEN 1 ELSE 0 END ${dbSpecificDummyTable}
+  </select>
+
+  <select id="selectAuthorizationByQueryCriteria" parameterType="Jabe\Impl\AuthorizationQueryImpl" resultMap="authorizationResultMap">
+    <include refid="src/Resources/Impl/Mapping/Entity/Commons.bindOrderBy"/>
+    ${limitBefore}
+    select ${distinct} RES.* 
+    ${limitBetween}
+    <include refid="selectAuthorizationByQueryCriteriaSql"/>
+    ${orderBy}
+    ${limitAfter}
+  </select>
+
+  <select id="selectAuthorizationCountByQueryCriteria" parameterType="Jabe\Impl\AuthorizationQueryImpl" resultType="integer">
+    ${countDistinctBeforeStart} RES.ID_ ${countDistinctBeforeEnd}
+    <include refid="selectAuthorizationByQueryCriteriaSql"/>
+    ${countDistinctAfterEnd}
+  </select>
+
+  <sql id="selectAuthorizationByQueryCriteriaSql">
+    from ${prefix}ACT_RU_AUTHORIZATION RES
+
+    <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.authCheckJoin" /> 
+
+    <where>
+      <if test="id != null">
+        RES.ID_ = #{id}
+      </if>
+
+      <if test="authorizationType != null">
+        and RES.TYPE_ = #{authorizationType}
+      </if>
+
+      <!-- userIds -->
+      <if test="userIds != null and count(userIds) > 0">
+        and RES.USER_ID_ in
+        <foreach item="item" index="index" collection="userIds"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+
+      <!-- groupIds -->
+      <if test="groupIds != null and count(groupIds) > 0">
+        and RES.GROUP_ID_ in
+        <foreach item="item" index="index" collection="groupIds"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+
+      <if test="queryByResourceType">
+        and RES.RESOURCE_TYPE_ = #{resourceType}
+      </if>
+      <if test="resourceId != null">
+        and RES.RESOURCE_ID_ = #{resourceId}
+      </if>
+      <if test="queryByPermission">
+        and ${bitand1}RES.PERMS_${bitand2}#{permission}${bitand3} = #{permission}  
+      </if>
+
+      <if test="!queryByResourceType and resourcesIntersection != null and count(resourcesIntersection) > 0">
+        and RES.RESOURCE_TYPE_ in
+        <foreach item="key"
+                collection="resourcesIntersection"
+                open="("
+                separator=","
+                close=")">
+          #{key.id}
+        </foreach>
+      </if>
+
+      <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.queryAuthorizationCheck" />
+
+    </where>
+  </sql>
+
+  <select id="isUserAuthorizedForResource" resultType="integer">
+
+  <if test="permissionChecks != null and count(permissionChecks.atomicChecks) > 1">
+    SELECT
+  </if>
+
+  <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.authorizationCheck" />
+
+  <if test="permissionChecks != null and count(permissionChecks.atomicChecks) > 1">
+    ${dbSpecificDummyTable}
+  </if>
+
+  </select>
+
+  <sql id="authCheck">
+    SELECT
+    CASE
+
+      <!-- User GRANT -->
+      <if test="permCheck.resourceIdQueryParam != null || (permCheck.resourceId != null and !permCheck.resourceId.equals('*')) ">
+        WHEN
+          <if test="permCheck.resourceIdQueryParam != null">
+          ${permCheck.resourceIdQueryParam} IN
+          </if>
+          <if test="permCheck.resourceId != null">
+          EXISTS
+          </if>
+            (SELECT
+                    A.RESOURCE_ID_
+             FROM
+                    ${prefix}ACT_RU_AUTHORIZATION A
+             WHERE
+                    A.TYPE_ = 1
+             AND
+                    A.USER_ID_ = #{authUserId, dbalType=VARCHAR}
+             AND
+                    ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} = #{permCheck.perms,  dbalType=INTEGER}
+             AND
+                    A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+             AND
+                    A.RESOURCE_ID_ = <if test="permCheck.resourceIdQueryParam != null">${permCheck.resourceIdQueryParam}</if><if test="permCheck.resourceId != null">#{permCheck.resourceId, dbalType=VARCHAR}</if>)
+        THEN 1
+      </if>
+
+      <!-- User REVOKE -->
+      <if test="revokeAuthorizationCheckEnabled and (permCheck.resourceIdQueryParam != null || (permCheck.resourceId != null and !permCheck.resourceId.equals('*'))) ">
+        WHEN
+          <if test="permCheck.resourceIdQueryParam != null">
+          ${permCheck.resourceIdQueryParam} IN
+          </if>
+          <if test="permCheck.resourceId != null">
+          EXISTS
+          </if>
+            (SELECT
+                    A.RESOURCE_ID_
+             FROM
+                    ${prefix}ACT_RU_AUTHORIZATION A
+             WHERE
+                    A.TYPE_ = 2
+             AND
+                    A.USER_ID_ = #{authUserId, dbalType=VARCHAR}
+             AND
+                    ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} != #{permCheck.perms,  dbalType=INTEGER}
+             AND
+                    A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+             AND
+                    A.RESOURCE_ID_ = <if test="permCheck.resourceIdQueryParam != null">${permCheck.resourceIdQueryParam}</if><if test="permCheck.resourceId != null">#{permCheck.resourceId, dbalType=VARCHAR}</if>)
+        THEN 0
+      </if>
+
+      <!-- User GRANT -->
+      WHEN
+        EXISTS
+          (SELECT
+                  ID_
+           FROM
+                  ${prefix}ACT_RU_AUTHORIZATION A
+           WHERE
+                  A.TYPE_ = 1
+           AND
+                  A.USER_ID_ = #{authUserId, dbalType=VARCHAR}
+           AND
+                  ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} = #{permCheck.perms, dbalType=INTEGER}
+           AND
+                  A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+           AND
+                  A.RESOURCE_ID_ = '*')
+        THEN 1
+
+      <!-- User REVOKE -->
+      <if test="revokeAuthorizationCheckEnabled">
+      WHEN
+        EXISTS
+          (SELECT
+                  ID_
+           FROM
+                  ${prefix}ACT_RU_AUTHORIZATION A
+           WHERE
+                  A.TYPE_ = 2
+           AND
+                  A.USER_ID_ = #{authUserId, dbalType=VARCHAR}
+           AND
+                  ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} != #{permCheck.perms, dbalType=INTEGER}
+           AND
+                  A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+           AND
+                  A.RESOURCE_ID_ = '*')
+      THEN 0
+      </if>
+
+      ELSE
+          (
+          SELECT
+            CASE
+              <if test="authGroupIds != null and count(authGroupIds) > 0">
+
+                <!-- Group GRANTS -->
+                <if test="permCheck.resourceIdQueryParam != null || (permCheck.resourceId != null and !permCheck.resourceId.equals('*')) ">
+                  WHEN
+                    <if test="permCheck.resourceIdQueryParam != null">
+                    ${permCheck.resourceIdQueryParam} IN
+                    </if>
+                    <if test="permCheck.resourceId != null">
+                    EXISTS
+                    </if>
+                      (SELECT
+                              A.RESOURCE_ID_
+                       FROM
+                              ${prefix}ACT_RU_AUTHORIZATION A
+                       WHERE
+                              A.TYPE_ = 1
+                       AND
+                              A.GROUP_ID_ IN <foreach item="item" index="index" collection="authGroupIds" open="(" separator="," close=")">#{item}</foreach>
+                       AND
+                              ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} = #{permCheck.perms,  dbalType=INTEGER}
+                       AND
+                              A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+                       AND
+                              A.RESOURCE_ID_ = <if test="permCheck.resourceIdQueryParam != null">${permCheck.resourceIdQueryParam}</if><if test="permCheck.resourceId != null">#{permCheck.resourceId, dbalType=VARCHAR}</if>)
+                  THEN 1
+                </if>
+
+                <!-- Group REVOKES -->
+                <if test="revokeAuthorizationCheckEnabled and (permCheck.resourceIdQueryParam != null || (permCheck.resourceId != null and !permCheck.resourceId.equals('*'))) ">
+                  WHEN
+                    <if test="permCheck.resourceIdQueryParam != null">
+                    ${permCheck.resourceIdQueryParam} IN
+                    </if>
+                    <if test="permCheck.resourceId != null">
+                    EXISTS
+                    </if>
+                      (SELECT
+                              A.RESOURCE_ID_
+                       FROM
+                              ${prefix}ACT_RU_AUTHORIZATION A
+                       WHERE
+                              A.TYPE_ = 2
+                       AND
+                              A.GROUP_ID_ IN <foreach item="item" index="index" collection="authGroupIds" open="(" separator="," close=")">#{item}</foreach>
+                       AND
+                              ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} != #{permCheck.perms,  dbalType=INTEGER}
+                       AND
+                              A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+                       AND
+                              A.RESOURCE_ID_ = <if test="permCheck.resourceIdQueryParam != null">${permCheck.resourceIdQueryParam}</if><if test="permCheck.resourceId != null">#{permCheck.resourceId, dbalType=VARCHAR}</if>)
+                  THEN 0
+                </if>
+
+                <!-- Group GRANTS -->
+                WHEN
+                  EXISTS
+                    (SELECT
+                            ID_
+                     FROM
+                            ${prefix}ACT_RU_AUTHORIZATION A
+                     WHERE
+                            A.TYPE_ = 1
+                     AND
+                            A.GROUP_ID_ IN <foreach item="item" index="index" collection="authGroupIds" open="(" separator="," close=")">#{item}</foreach>
+                     AND
+                            ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} = #{permCheck.perms, dbalType=INTEGER}
+                     AND
+                            A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+                     AND
+                            A.RESOURCE_ID_ = '*')
+                  THEN 1
+
+                <!-- Group REVOKES -->
+                <if test="revokeAuthorizationCheckEnabled">
+                WHEN
+                  EXISTS
+                    (SELECT
+                            ID_
+                     FROM
+                            ${prefix}ACT_RU_AUTHORIZATION A
+                     WHERE
+                            A.TYPE_ = 2
+                     AND
+                            A.GROUP_ID_ IN <foreach item="item" index="index" collection="authGroupIds" open="(" separator="," close=")">#{item}</foreach>
+                     AND
+                            ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} != #{permCheck.perms, dbalType=INTEGER}
+                     AND
+                            A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+                     AND
+                            A.RESOURCE_ID_ = '*')
+                  THEN 0
+                </if>
+
+                ELSE (
+                      SELECT
+                        CASE
+              </if>
+                          <!-- GLOBAL GRANTS -->
+                          <if test="permCheck.resourceIdQueryParam != null || (permCheck.resourceId != null and !permCheck.resourceId.equals('*')) ">
+                            WHEN
+                              <if test="permCheck.resourceIdQueryParam != null">
+                              ${permCheck.resourceIdQueryParam} IN
+                              </if>
+                              <if test="permCheck.resourceId != null">
+                              EXISTS
+                              </if>
+                                (SELECT
+                                        A.RESOURCE_ID_
+                                 FROM
+                                        ${prefix}ACT_RU_AUTHORIZATION A
+                                 WHERE
+                                        A.TYPE_ = 0
+                                 AND
+                                        A.USER_ID_ = '*'
+                                 AND
+                                        ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} = #{permCheck.perms,  dbalType=INTEGER}
+                                 AND
+                                        A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+                                 AND
+                                        A.RESOURCE_ID_ = <if test="permCheck.resourceIdQueryParam != null">${permCheck.resourceIdQueryParam}</if><if test="permCheck.resourceId != null">#{permCheck.resourceId, dbalType=VARCHAR}</if>)
+                            THEN 1
+                          </if>
+
+                          <!-- GLOBAL REVOKES -->
+                          <if test="revokeAuthorizationCheckEnabled and (permCheck.resourceIdQueryParam != null || (permCheck.resourceId != null and !permCheck.resourceId.equals('*'))) ">
+                            WHEN
+                              <if test="permCheck.resourceIdQueryParam != null">
+                              ${permCheck.resourceIdQueryParam} IN
+                              </if>
+                              <if test="permCheck.resourceId != null">
+                              EXISTS
+                              </if>
+                                (SELECT
+                                        A.RESOURCE_ID_
+                                 FROM
+                                        ${prefix}ACT_RU_AUTHORIZATION A
+                                 WHERE
+                                        A.TYPE_ = 0
+                                 AND
+                                        A.USER_ID_ = '*'
+                                 AND
+                                        ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} != #{permCheck.perms,  dbalType=INTEGER}
+                                 AND
+                                        A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+                                 AND
+                                        A.RESOURCE_ID_ = <if test="permCheck.resourceIdQueryParam != null">${permCheck.resourceIdQueryParam}</if><if test="permCheck.resourceId != null">#{permCheck.resourceId, dbalType=VARCHAR}</if>)
+                            THEN 0
+                          </if>
+
+                          <!-- GLOBAL GRANTS -->
+                          WHEN
+                            EXISTS
+                              (SELECT
+                                      ID_
+                               FROM
+                                      ${prefix}ACT_RU_AUTHORIZATION A
+                               WHERE
+                                      A.TYPE_ = 0
+                               AND
+                                      A.USER_ID_ = '*'
+                               AND
+                                      ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} = #{permCheck.perms, dbalType=INTEGER}
+                               AND
+                                      A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+                               AND
+                                      A.RESOURCE_ID_ = '*')
+                            THEN 1
+
+                          <!-- GLOBAL REVOKES -->
+                          <if test="revokeAuthorizationCheckEnabled">
+                          WHEN
+                            EXISTS
+                              (SELECT
+                                      ID_
+                               FROM
+                                      ${prefix}ACT_RU_AUTHORIZATION A
+                               WHERE
+                                      A.TYPE_ = 0
+                               AND
+                                      A.USER_ID_ = '*'
+                               AND
+                                      ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} != #{permCheck.perms, dbalType=INTEGER}
+                               AND
+                                      A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+                               AND
+                                      A.RESOURCE_ID_ = '*')
+                            THEN 0
+                          </if>
+
+                          <!-- No matching authorization found: request is not authorized -->
+                          ELSE
+                          <if test="permCheck.authorizationNotFoundReturnValue != null">
+                            ${permCheck.authorizationNotFoundReturnValue}
+                          </if>
+                          <if test="permCheck.authorizationNotFoundReturnValue == null">
+                            null
+                          </if>
+
+              <if test="authGroupIds != null and count(authGroupIds) > 0">
+                        END ${dbSpecificDummyTable}
+                )
+              </if>
+            END ${dbSpecificDummyTable}
+      )
+    END  ${dbSpecificDummyTable}
+  </sql>
+
+  <!-- reusable authorization check for queries. -->
+  <sql id="queryAuthorizationCheck">
+      <if test="authCheck.shouldPerformAuthorizatioCheck and authCheck.authUserId != null">    
+        AND <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.queryAuthorizationCheckWithoutPrefix"/>
+      </if>
+  </sql>
+  
+  <sql id="queryAuthorizationCheckWithoutPrefix">
+      <if test="authCheck.shouldPerformAuthorizatioCheck and authCheck.authUserId != null">
+        <choose>
+          <when test="authCheck.revokeAuthorizationCheckEnabled">
+            <bind name="permissionChecks" value="authCheck.permissionChecks" />
+            <bind name="authUserId" value="authCheck.authUserId" />
+            <bind name="authGroupIds" value="authCheck.authGroupIds" />        
+            <bind name="revokeAuthorizationCheckEnabled" value="authCheck.revokeAuthorizationCheckEnabled" />
+            (<include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.authorizationCheck" />) = 1
+          </when> 
+          <otherwise>
+            AUTH.RESOURCE_ID_ IS NOT NULL 
+            <if test="authCheck.permissionChecks.compositeChecks != null and count(authCheck.permissionChecks.compositeChecks) > 0"> 
+              AND
+              <foreach item="permCheck" index="index" collection="authCheck.permissionChecks.compositeChecks" separator="AND">
+                <if test="index > 0">
+                  AUTH${index}.RESOURCE_ID_ IS NOT NULL
+                </if>
+              </foreach>
+            </if>
+          </otherwise>
+        </choose>
+    </if>
+  </sql>
+  
+  <!-- reusable single authorization check for queries. -->
+  <sql id="querySingleAuthorizationCheck">
+    <if test="authCheck.shouldPerformAuthorizatioCheck and authCheck.authUserId != null">
+
+        <bind name="authUserId" value="authCheck.authUserId" />
+        <bind name="authGroupIds" value="authCheck.authGroupIds" />
+        <bind name="permCheck" value="authCheck.permissionChecks.atomicChecks[0]" />
+        <bind name="revokeAuthorizationCheckEnabled" value="authCheck.revokeAuthorizationCheckEnabled" />
+        (<include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.authCheck" />) = 1
+    </if>
+  </sql>
+
+  <!-- 
+    input: "permissionChecks": an instance of CompositePermissionCheck
+  
+    limitation 1: can only handle at most two levels of composition (e.g. "(a or b) and (c or d)"); 
+      more levels are currently not implemented because MyBatis cannot process circular include statements
+      
+   limitation 2: can only a CompositePermissionCheck instance that contains atomic checks or composite cheks,
+     not a mixture of both (i.e. if you need "a or (b and c)", wrap "a" in another CompositePermissionCheck 
+  -->
+  <sql id="authorizationCheck">
+    <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.atomicChecks" />
+    <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.compositeChecks" />
+  </sql>
+  
+  
+  <sql id="authCheckJoin">
+    <if test="authCheck.shouldPerformAuthorizatioCheck and !authCheck.revokeAuthorizationCheckEnabled and authCheck.authUserId != null">      
+      <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.authCheckJoinWithoutOnClause" />
+      AUTH ON (AUTH.RESOURCE_ID_ ${authJoinStart} RES.ID_ ${authJoinSeparator} '*' ${authJoinEnd})
+    </if>    
+  </sql>
+  
+  
+  <sql id="authCheckJoinWithoutOnClause">
+    <bind name="authGroupIds" value="authCheck.authGroupIds" />
+    <bind name="atomicChecks" value="authCheck.permissionChecks.atomicChecks" />
+    <bind name="disjunctive" value="authCheck.permissionChecks.disjunctive" />
+    <bind name="useLeftJoin" value="authCheck.useLeftJoin" />
+    <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.authCheckJoinWithoutOnClauseWithBinding" />
+  </sql>
+
+  <sql id="authCheckJoinWithoutOnClauseWithBinding">
+    <choose>
+      <when test="useLeftJoin != null and useLeftJoin == true">left join</when>
+      <otherwise>inner join</otherwise>
+    </choose>
+    (
+    SELECT A.*
+    FROM ${prefix}ACT_RU_AUTHORIZATION A
+    WHERE A.TYPE_ < 2     
+    AND ( A.USER_ID_ in ( #{authCheck.authUserId, dbalType=VARCHAR}, '*')           
+    <if test="authGroupIds != null and count(authGroupIds) > 0">
+      OR A.GROUP_ID_ IN <foreach item="item" index="index" collection="authGroupIds" open="(" separator="," close=")">#{item}</foreach>
+    </if>
+    )
+    <if test="atomicChecks != null and count(atomicChecks) > 0">
+      AND (
+      <if test="disjunctive">
+        <foreach item="permCheck" index="index" collection="atomicChecks" open="(" separator="OR" close=")">
+          A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER} AND ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} = #{permCheck.perms,  dbalType=INTEGER}
+        </foreach>
+      </if>
+      <if test="!disjunctive">
+        <foreach item="permCheck" index="index" collection="atomicChecks" open="(" separator="AND" close=")">
+          A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER} AND ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} = #{permCheck.perms,  dbalType=INTEGER}
+        </foreach>
+      </if>
+      )
+    </if>  
+    )
+  </sql>
+
+  <!-- 
+   input: "permissionChecks": an instance of CompositePermissionCheck
+  -->
+  <sql id="atomicChecks">
+    <if test="permissionChecks.atomicChecks != null and count(permissionChecks.atomicChecks) == 1">
+
+      <bind name="permCheck" value="permissionChecks.atomicChecks[0]" />
+      <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.authCheck"/>
+
+    </if>
+
+    <if test="permissionChecks.atomicChecks != null and count(permissionChecks.atomicChecks) > 1">
+      <if test="permissionChecks.disjunctive">
+        <bind name="atomicChecks" value="permissionChecks.atomicChecks" />
+        <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.disjunctiveAtomicChecks" />
+      </if>
+      <if test="!permissionChecks.disjunctive">
+        <bind name="atomicChecks" value="permissionChecks.atomicChecks" />
+        <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.conjunctiveAtomicChecks" />
+      </if>
+    </if>
+  </sql>
+  
+  <!-- 
+   input: "permissionChecks": an instance of CompositePermissionCheck
+  -->
+  <sql id="compositeChecks">
+    <if test="permissionChecks.compositeChecks != null and count(permissionChecks.compositeChecks) > 1">
+      <if test="permissionChecks.disjunctive">
+        <bind name="compositeChecks" value="permissionChecks.compositeChecks" />
+        <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.disjunctiveCompositeChecks"/>
+      </if>
+      <if test="!permissionChecks.disjunctive">
+        <bind name="compositeChecks" value="permissionChecks.compositeChecks" />
+        <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.conjunctiveCompositeChecks"/>
+      </if>
+    </if>
+  </sql>
+  
+  <!-- 
+   input: "atomicChecks": list of PermissionCheck objects
+  -->
+  <sql id="disjunctiveAtomicChecks">
+    <foreach item="permCheck" index="index" collection="atomicChecks" separator=",">
+      ${dbSpecificIfNullFunction}((<include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.authCheck"/>)
+    </foreach>
+    , 0
+    <foreach item="permCheck" index="index" collection="atomicChecks">
+      )
+    </foreach>
+  </sql>
+  
+  <!-- 
+   input: "compositeChecks": a list of CompositePermissionCheck objects
+  -->
+  <sql id="disjunctiveCompositeChecks">
+    <foreach item="permissionChecks" index="index" collection="compositeChecks" separator=",">
+      ${dbSpecificIfNullFunction}((<include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.atomicChecks" />)
+    </foreach>
+    , 0
+    <foreach item="permissionChecks" index="index" collection="compositeChecks">
+      )
+    </foreach> 
+  </sql>
+  
+  <!-- 
+   input: "atomicChecks": list of PermissionCheck objects
+  -->
+  <sql id="conjunctiveAtomicChecks">
+    <!-- the BITAND function on databases like Oracle and DB2 takes exactly two arguments;
+    Instead of BITAND(a, b, c), we generate BITAND(BITAND(a, b), c)) instead -->
+    <foreach index="index" collection="atomicChecks">
+      <if test="index < count(atomicChecks) - 1">
+        ${bitand1}
+      </if>
+    </foreach>
+    <foreach  item="permCheck" index="i" collection="atomicChecks">
+      ${dbSpecificIfNullFunction}(
+        (<include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.authCheck"/>)
+      , 0)
+      <if test="i > 0">
+        ${bitand3}
+      </if>
+      <if test="i < count(atomicChecks) - 1">
+        ${bitand2}
+      </if>
+    </foreach>
+  </sql>
+  
+  <!-- 
+   input: "compositeChecks": a list of CompositePermissionCheck objects
+  -->
+  <sql id="conjunctiveCompositeChecks">
+    <!-- the BITAND function on databases like Oracle and DB2 takes exactly two arguments;
+    Instead of BITAND(a, b, c), we generate BITAND(BITAND(a, b), c)) instead -->
+    <foreach index="index" collection="compositeChecks">
+      <if test="index < count(compositeChecks) - 1">
+        ${bitand1}
+      </if>
+    </foreach>
+    <foreach  item="permissionChecks" index="i" collection="compositeChecks">
+      <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.atomicChecks" />
+      <if test="i > 0">
+        ${bitand3}
+      </if>
+      <if test="i < count(compositeChecks) - 1">
+        ${bitand2}
+      </if>
+    </foreach>
+  </sql>
+
+  <sql id="contextualAuthorizationCheck">
+    <if test="authCheck.shouldPerformAuthorizatioCheck and authCheck.authUserId != null">
+      <choose>
+        <when test="authCheck.revokeAuthorizationCheckEnabled">    
+          <bind name="authUserId" value="authCheck.authUserId" />
+          <bind name="authGroupIds" value="authCheck.authGroupIds" />
+          <bind name="revokeAuthorizationCheckEnabled" value="authCheck.revokeAuthorizationCheckEnabled" />              
+          AND
+          ( CASE          
+          WHEN
+          <!-- variable instance or task exists in context of a case instance -->
+          RES.CASE_EXECUTION_ID_ is not null
+          THEN
+          <!-- everything which exists in context of a case instance is visible to the users -->
+          1
+          ELSE
+          <!-- EVERYTHING ELSE like standalone tasks and other -->
+          (
+          <bind name="permissionChecks" value="authCheck.permissionChecks" />
+          <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.authorizationCheck" />
+          )
+          END ) = 1
+        </when>
+        <otherwise>
+          and (
+          <!-- Task query does not use left join if cmmn is disabled, 
+            so we don't need to account for case tasks in this case. -->
+          <if test="applyAuthorizationCheckForCaseInstances" >
+            (RES.CASE_EXECUTION_ID_ IS NOT NULL)
+            OR
+          </if>
+            (AUTH.RESOURCE_ID_ IS NOT NULL)
+            <if test="authCheck.permissionChecks.compositeChecks != null and count(authCheck.permissionChecks.compositeChecks) > 0"> 
+              AND
+              <foreach item="permCheck" index="index" collection="authCheck.permissionChecks.compositeChecks" separator="AND">
+                <if test="index > 0">
+                  AUTH${index}.RESOURCE_ID_ IS NOT NULL
+                </if>
+              </foreach>
+            </if>
+          )
+        </otherwise>
+      </choose>
+    </if>
+  </sql>
+</mapper>

@@ -48,9 +48,7 @@ class SimpleDbSqlSession extends DbSqlSession
 
     protected function insertEntity(DbEntityOperation $operation): void
     {
-        //TODO. Use Doctrine ORM instead!!!
         $dbEntity = $operation->getEntity();
-
         // get statement
         $insertStatement = $this->dbSqlSessionFactory->getInsertStatement($dbEntity);
         $insertStatement = $this->dbSqlSessionFactory->mapStatement($insertStatement);
