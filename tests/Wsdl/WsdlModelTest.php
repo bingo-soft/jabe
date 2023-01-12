@@ -15,7 +15,7 @@ class WsdlModelTest extends TestCase
 
     protected $modelInstance;
 
-    protected function parseModel(string $test)
+    protected function parseModel(?string $test)
     {
         $this->modelParser = new WsdlParser();
         $xml = fopen("tests/Wsdl/Resources/$test.wsdl", 'r+');

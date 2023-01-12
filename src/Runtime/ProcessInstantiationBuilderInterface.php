@@ -8,7 +8,7 @@ interface ProcessInstantiationBuilderInterface extends ActivityInstantiationBuil
      * Specify the id of the tenant the process definition belongs to. Can only be
      * used when the definition is referenced by <code>key</code> and not by <code>id</code>.
      */
-    public function processDefinitionTenantId(string $tenantId): ProcessInstantiationBuilderInterface;
+    public function processDefinitionTenantId(?string $tenantId): ProcessInstantiationBuilderInterface;
 
     /**
      * Specify that the process definition belongs to no tenant. Can only be
@@ -19,12 +19,12 @@ interface ProcessInstantiationBuilderInterface extends ActivityInstantiationBuil
     /**
      * Set the business key for the process instance
      */
-    public function businessKey(string $businessKey): ProcessInstantiationBuilderInterface;
+    public function businessKey(?string $businessKey): ProcessInstantiationBuilderInterface;
 
     /**
      * Associate a case instance with the process instance
      */
-    //public function caseInstanceId(string $caseInstanceId): ProcessInstantiationBuilderInterface;
+    //public function caseInstanceId(?string $caseInstanceId): ProcessInstantiationBuilderInterface;
 
     /**
      * Start the process instance.

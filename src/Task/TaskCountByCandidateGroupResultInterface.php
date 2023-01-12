@@ -8,5 +8,5 @@ interface TaskCountByCandidateGroupResultInterface
     public function getTaskCount(): int;
 
     /** The group which as the number of tasks */
-    public function getGroupName(): string;
+    public function getGroupName(): ?string;
 }

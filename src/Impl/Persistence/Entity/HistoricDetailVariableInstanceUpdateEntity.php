@@ -61,32 +61,32 @@ class HistoricDetailVariableInstanceUpdateEntity extends HistoricVariableUpdateE
         return $this->typedValueField->getSerializer();
     }
 
-    public function getErrorMessage(): string
+    public function getErrorMessage(): ?string
     {
         return $this->typedValueField->getErrorMessage();
     }
 
-    public function setByteArrayId(string $id): void
+    public function setByteArrayId(?string $id): void
     {
         $this->byteArrayField->setByteArrayId($id);
     }
 
-    public function getSerializerName(): string
+    public function getSerializerName(): ?string
     {
         return $this->typedValueField->getSerializerName();
     }
 
-    public function setSerializerName(string $serializerName): void
+    public function setSerializerName(?string $serializerName): void
     {
         $this->typedValueField->setSerializerName($serializerName);
     }
 
-    public function getByteArrayValueId(): string
+    public function getByteArrayValueId(): ?string
     {
         return $this->byteArrayField->getByteArrayId();
     }
 
-    public function getByteArrayValue(): string
+    public function getByteArrayValue(): ?string
     {
         return $this->byteArrayField->getByteArrayValue();
     }
@@ -96,7 +96,7 @@ class HistoricDetailVariableInstanceUpdateEntity extends HistoricVariableUpdateE
         $this->byteArrayField->setByteArrayValue($bytes);
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->getVariableName();
     }
@@ -111,17 +111,17 @@ class HistoricDetailVariableInstanceUpdateEntity extends HistoricVariableUpdateE
 
     // getters and setters //////////////////////////////////////////////////////
 
-    public function getTypeName(): string
+    public function getTypeName(): ?string
     {
         return $this->typedValueField->getTypeName();
     }
 
-    public function getVariableTypeName(): string
+    public function getVariableTypeName(): ?string
     {
         return $this->getTypeName();
     }
 
-    public function getTime(): string
+    public function getTime(): ?string
     {
         return $this->timestamp;
     }

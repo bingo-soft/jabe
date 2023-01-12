@@ -12,7 +12,7 @@ class GetJobExceptionStacktraceCmd implements CommandInterface, \Serializable
 {
     private $jobId;
 
-    public function __construct(string $jobId)
+    public function __construct(?string $jobId)
     {
         $this->jobId = $jobId;
     }
@@ -45,5 +45,10 @@ class GetJobExceptionStacktraceCmd implements CommandInterface, \Serializable
         }
 
         return $job->getExceptionStacktrace();
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

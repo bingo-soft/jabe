@@ -2,6 +2,10 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
+use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface
+};
 use Jabe\Impl\{
     JobDefinitionQueryImpl,
     Page
@@ -11,22 +15,22 @@ use Jabe\Impl\Persistence\AbstractManager;
 
 class JobDefinitionManager extends AbstractManager
 {
-    public function findById(string $jobDefinitionId): ?JobDefinitionEntity
+    public function findById(?string $jobDefinitionId): ?JobDefinitionEntity
     {
         return $this->getDbEntityManager()->selectById(JobDefinitionEntity::class, $jobDefinitionId);
     }
 
-    public function findByProcessDefinitionId(string $processDefinitionId): array
+    public function findByProcessDefinitionId(?string $processDefinitionId): array
     {
         return $this->getDbEntityManager()->selectList("selectJobDefinitionsByProcessDefinitionId", $processDefinitionId);
     }
 
-    public function deleteJobDefinitionsByProcessDefinitionId(string $id): void
+    public function deleteJobDefinitionsByProcessDefinitionId(?string $id): void
     {
         $this->getDbEntityManager()->delete(JobDefinitionEntity::class, "deleteJobDefinitionsByProcessDefinitionId", $id);
     }
 
-    public function findJobDefnitionByQueryCriteria(JobDefinitionQueryImpl $jobDefinitionQuery, Page $page): array
+    public function findJobDefnitionByQueryCriteria(JobDefinitionQueryImpl $jobDefinitionQuery, ?Page $page): array
     {
         $this->configureQuery($jobDefinitionQuery);
         return $this->getDbEntityManager()->selectList("selectJobDefinitionByQueryCriteria", $jobDefinitionQuery, $page);
@@ -38,7 +42,7 @@ class JobDefinitionManager extends AbstractManager
         return $this->getDbEntityManager()->selectOne("selectJobDefinitionCountByQueryCriteria", $jobDefinitionQuery);
     }
 
-    public function updateJobDefinitionSuspensionStateById(string $jobDefinitionId, SuspensionState $suspensionState): void
+    public function updateJobDefinitionSuspensionStateById(?string $jobDefinitionId, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["jobDefinitionId"] = $jobDefinitionId;
@@ -50,7 +54,7 @@ class JobDefinitionManager extends AbstractManager
         );
     }
 
-    public function updateJobDefinitionSuspensionStateByProcessDefinitionId(string $processDefinitionId, SuspensionState $suspensionState): void
+    public function updateJobDefinitionSuspensionStateByProcessDefinitionId(?string $processDefinitionId, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processDefinitionId"] = $processDefinitionId;
@@ -62,7 +66,7 @@ class JobDefinitionManager extends AbstractManager
         );
     }
 
-    public function updateJobDefinitionSuspensionStateByProcessDefinitionKey(string $processDefinitionKey, SuspensionState $suspensionState): void
+    public function updateJobDefinitionSuspensionStateByProcessDefinitionKey(?string $processDefinitionKey, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processDefinitionKey"] = $processDefinitionKey;
@@ -75,7 +79,7 @@ class JobDefinitionManager extends AbstractManager
         );
     }
 
-    public function updateJobDefinitionSuspensionStateByProcessDefinitionKeyAndTenantId(string $processDefinitionKey, string $processDefinitionTenantId, SuspensionState $suspensionState): void
+    public function updateJobDefinitionSuspensionStateByProcessDefinitionKeyAndTenantId(?string $processDefinitionKey, ?string $processDefinitionTenantId, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processDefinitionKey"] = $processDefinitionKey;
@@ -89,7 +93,7 @@ class JobDefinitionManager extends AbstractManager
         );
     }
 
-    protected function configureQuery(JobDefinitionQueryImpl $query): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         $this->getAuthorizationManager()->configureJobDefinitionQuery($query);
         $this->getTenantManager()->configureQuery($query);

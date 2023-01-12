@@ -4,7 +4,7 @@ namespace Jabe\Repository;
 
 interface CandidateDeploymentInterface
 {
-    public function getName(): string;
+    public function getName(): ?string;
 
     /**
      * @return a map of all the resources provided for deployment

@@ -30,12 +30,12 @@ class FormPropertyAdapter implements FormFieldInterface
         }
     }
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->formProperty->getId();
     }
 
-    public function getLabel(): string
+    public function getLabel(): ?string
     {
         return $this->formProperty->getName();
     }
@@ -45,7 +45,7 @@ class FormPropertyAdapter implements FormFieldInterface
         return $this->formProperty->getType();
     }
 
-    public function getTypeName(): string
+    public function getTypeName(): ?string
     {
         return $this->formProperty->getType()->getName();
     }

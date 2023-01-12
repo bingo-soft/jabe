@@ -21,7 +21,7 @@ class SimpleVariableInstanceFactory implements VariableInstanceFactoryInterface
         return self::$INSTANCE;
     }
 
-    public function build(string $name, TypedValueInterface $value, bool $isTransient): CoreVariableInstanceInterface
+    public function build(?string $name, TypedValueInterface $value, bool $isTransient): CoreVariableInstanceInterface
     {
         return new SimpleVariableInstance($name, $value);
     }

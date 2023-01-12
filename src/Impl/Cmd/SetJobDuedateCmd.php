@@ -76,4 +76,9 @@ class SetJobDuedateCmd implements CommandInterface, \Serializable
         }
         return null;
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

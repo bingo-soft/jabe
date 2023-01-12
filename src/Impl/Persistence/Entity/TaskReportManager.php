@@ -4,6 +4,8 @@ namespace Jabe\Impl\Persistence\Entity;
 
 use Jabe\Authorization\{
     AuthorizationInterface,
+    PermissionInterface,
+    ResourceInterface,
     Permissions,
     Resources
 };
@@ -40,7 +42,7 @@ class TaskReportManager extends AbstractManager
         return $this->getDbEntityManager()->selectListWithRawParameter("selectHistoricTaskInstanceDurationReport", $query, 0, PHP_INT_MAX);
     }
 
-    protected function configureQuery($parameter): void
+    public function configureQuery(/*TaskReportImpl|HistoricTaskInstanceReportImpl*/$parameter, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         if ($parameter instanceof TaskReportImpl) {
             $this->getAuthorizationManager()->checkAuthorization(Permissions::read(), Resources::task(), AuthorizationInterface::ANY);

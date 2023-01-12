@@ -6,5 +6,5 @@ use Jabe\Impl\Interceptor\CommandInterface;
 
 interface FailedJobCommandFactoryInterface
 {
-    public function getCommand(string $jobId, \Throwable $exception): CommandInterface;
+    public function getCommand(?string $jobId, \Throwable $exception): CommandInterface;
 }

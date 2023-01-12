@@ -22,7 +22,7 @@ class BatchStatisticsQueryImpl extends AbstractQuery implements BatchStatisticsQ
 {
     protected $batchId;
     protected $type;
-    protected $isTenantIdSet = false;
+    protected bool $isTenantIdSet = false;
     protected $tenantIds = [];
     protected $suspensionState;
 
@@ -31,26 +31,26 @@ class BatchStatisticsQueryImpl extends AbstractQuery implements BatchStatisticsQ
         parent::__construct($commandExecutor);
     }
 
-    public function batchId(string $batchId): BatchStatisticsQueryInterface
+    public function batchId(?string $batchId): BatchStatisticsQueryInterface
     {
         EnsureUtil::ensureNotNull("Batch id", "batchId", $batchId);
         $this->batchId = $batchId;
         return $this;
     }
 
-    public function getBatchId(): string
+    public function getBatchId(): ?string
     {
         return $this->batchId;
     }
 
-    public function type(string $type): BatchStatisticsQueryInterface
+    public function type(?string $type): BatchStatisticsQueryInterface
     {
         EnsureUtil::ensureNotNull("Type", "type", $type);
         $this->type = $type;
         return $this;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -115,7 +115,7 @@ class BatchStatisticsQueryImpl extends AbstractQuery implements BatchStatisticsQ
             ->getStatisticsCountGroupedByBatch($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         return $commandContext

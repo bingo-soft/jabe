@@ -14,7 +14,10 @@ use Jabe\Impl\Batch\{
 use Jabe\Impl\Cmd\CorrelateAllMessageCmd;
 use Jabe\Impl\Core\Variable\VariableUtil;
 use Jabe\Impl\Interceptor\CommandContext;
-use Jabe\Impl\JobExecutor\JobDeclaration;
+use Jabe\Impl\JobExecutor\{
+    JobDeclaration,
+    JobHandlerConfigurationInterface
+};
 use Jabe\Impl\Json\MessageCorrelationBatchConfigurationJsonConverter;
 use Jabe\Impl\Json\JsonObjectConverter;
 use Jabe\Impl\Persistence\Entity\{
@@ -30,7 +33,7 @@ class MessageCorrelationBatchJobHandler extends AbstractBatchJobHandler
 {
     public static $JOB_DECLARATION;
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return BatchInterface::TYPE_CORRELATE_MESSAGE;
     }
@@ -65,7 +68,7 @@ class MessageCorrelationBatchJobHandler extends AbstractBatchJobHandler
         }
     }
 
-    public function execute(BatchJobConfiguration $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId)
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
     {
         $configurationEntity = $commandContext
             ->getDbEntityManager()

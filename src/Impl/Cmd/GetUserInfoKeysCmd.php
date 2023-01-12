@@ -12,7 +12,7 @@ class GetUserInfoKeysCmd implements CommandInterface, \Serializable
     protected $userId;
     protected $userInfoType;
 
-    public function __construct(string $userId, string $userInfoType)
+    public function __construct(?string $userId, ?string $userInfoType)
     {
         $this->userId = $userId;
         $this->userInfoType = $userInfoType;
@@ -38,5 +38,10 @@ class GetUserInfoKeysCmd implements CommandInterface, \Serializable
         return $commandContext
             ->getIdentityInfoManager()
             ->findUserInfoKeysByUserIdAndType($this->userId, $this->userInfoType);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

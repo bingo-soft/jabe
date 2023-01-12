@@ -37,9 +37,9 @@ abstract class AbstractDeleteProcessDefinitionCmd implements CommandInterface, \
         $this->skipIoMappings = $json->skipIoMappings;
     }
 
-    protected function deleteProcessDefinitionCmd(CommandContext $commandContext, string $processDefinitionId, bool $cascade, bool $skipCustomListeners, bool $skipIoMappings): void
+    protected function deleteProcessDefinitionCmd(CommandContext $commandContext, ?string $processDefinitionId, bool $cascade, bool $skipCustomListeners, bool $skipIoMappings): void
     {
-        EnsureUtil::ensureNotNull("processDefinitionId", $processDefinitionId);
+        EnsureUtil::ensureNotNull("processDefinitionId", "processDefinitionId", $processDefinitionId);
 
         $processDefinition = $commandContext->getProcessDefinitionManager()
             ->findLatestProcessDefinitionById($processDefinitionId);
@@ -64,5 +64,10 @@ abstract class AbstractDeleteProcessDefinitionCmd implements CommandInterface, \
 
         $definitionManager = $commandContext->getProcessDefinitionManager();
         $definitionManager->deleteProcessDefinition($processDefinition, $processDefinitionId, $cascade, $cascade, $this->skipCustomListeners, $this->skipIoMappings);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

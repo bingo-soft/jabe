@@ -13,7 +13,7 @@ abstract class AbstractQueryVariableValueCondition
         $this->wrappedQueryValue = $variableValue;
     }
 
-    abstract public function initializeValue(VariableSerializersInterface $serializers, string $dbType): void;
+    abstract public function initializeValue(VariableSerializersInterface $serializers, ?string $dbType): void;
 
     abstract public function getDisjunctiveConditions(): array;
 }

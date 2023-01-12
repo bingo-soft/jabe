@@ -36,7 +36,7 @@ use Jabe\Variable\Value\{
 interface TaskServiceInterface
 {
     /** create a new task with a user defined task id */
-    public function newTask(string $taskId = null): TaskInterface;
+    public function newTask(?string $taskId = null): TaskInterface;
 
     /**
      * Saves the given task to the persistent data store. If the task is already
@@ -69,7 +69,7 @@ interface TaskServiceInterface
     * @throws AuthorizationException
     *          If the user has no Permissions#DELETE permission on Resources#TASK.
     */
-    public function deleteTask(string $taskId, $cascadeOrReason = false): void;
+    public function deleteTask(?string $taskId, $cascadeOrReason = false): void;
 
     /**
     * Deletes all tasks of the given collection.
@@ -104,7 +104,7 @@ interface TaskServiceInterface
     *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
-    public function claim(string $taskId, string $userId): void;
+    public function claim(?string $taskId, ?string $userId): void;
 
     /**
     * Delegates the task to another user.
@@ -128,7 +128,7 @@ interface TaskServiceInterface
     *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
-    public function delegateTask(string $taskId, string $userId): void;
+    public function delegateTask(?string $taskId, ?string $userId): void;
 
     /**
     * Marks that the {@link Task#getAssignee() assignee} is done with the task
@@ -150,7 +150,7 @@ interface TaskServiceInterface
     *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
-    public function resolveTask(string $taskId, array $variables = []): void;
+    public function resolveTask(?string $taskId, array $variables = []): void;
 
     /**
     * Marks a task as done and continues process execution.
@@ -170,7 +170,7 @@ interface TaskServiceInterface
     *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
-    public function complete(string $taskId, array $variables = []): void;
+    public function complete(?string $taskId, array $variables = []): void;
 
     /**
     * Marks a task as done and continues process execution.
@@ -195,7 +195,7 @@ interface TaskServiceInterface
     *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
-    public function completeWithVariablesInReturn(string $taskId, array $variables = [], bool $deserializeValues = true): VariableMapInterface;
+    public function completeWithVariablesInReturn(?string $taskId, array $variables = [], bool $deserializeValues = true): VariableMapInterface;
 
     /**
     * Changes the assignee of the given task to the given userId.
@@ -211,7 +211,7 @@ interface TaskServiceInterface
     *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
-    public function setAssignee(string $taskId, string $userId): void;
+    public function setAssignee(?string $taskId, ?string $userId): void;
 
     /**
     * Transfers ownership of this task to another user.
@@ -227,7 +227,7 @@ interface TaskServiceInterface
     *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
-    public function setOwner(string $taskId, string $userId): void;
+    public function setOwner(?string $taskId, ?string $userId): void;
 
     /**
     * Retrieves the IdentityLinks associated with the given task.
@@ -241,7 +241,7 @@ interface TaskServiceInterface
     *          or no Permissions#READ_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
-    public function getIdentityLinksForTask(string $taskId): array;
+    public function getIdentityLinksForTask(?string $taskId): array;
 
     /**
     * Convenience shorthand for {@link #addUserIdentityLink(String, String, String)}; with type IdentityLinkType#CANDIDATE
@@ -256,7 +256,7 @@ interface TaskServiceInterface
     *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
-    public function addCandidateUser(string $taskId, string $userId): void;
+    public function addCandidateUser(?string $taskId, ?string $userId): void;
 
     /**
     * Convenience shorthand for {@link #addGroupIdentityLink(String, String, String)}; with type IdentityLinkType#CANDIDATE
@@ -271,7 +271,7 @@ interface TaskServiceInterface
     *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
-    public function addCandidateGroup(string $taskId, string $groupId): void;
+    public function addCandidateGroup(?string $taskId, ?string $groupId): void;
 
     /**
     * Involves a user with a task. The type of identity link is defined by the
@@ -288,7 +288,7 @@ interface TaskServiceInterface
     *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
-    public function addUserIdentityLink(string $taskId, string $userId, string $identityLinkType): void;
+    public function addUserIdentityLink(?string $taskId, ?string $userId, ?string $identityLinkType): void;
 
     /**
     * Involves a group with a task. The type of identityLink is defined by the
@@ -305,7 +305,7 @@ interface TaskServiceInterface
     *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
-    public function addGroupIdentityLink(string $taskId, string $groupId, string $identityLinkType): void;
+    public function addGroupIdentityLink(?string $taskId, ?string $groupId, ?string $identityLinkType): void;
 
     /**
     * Convenience shorthand for {@link #deleteUserIdentityLink(String, String, String)}; with type IdentityLinkType#CANDIDATE
@@ -320,7 +320,7 @@ interface TaskServiceInterface
     *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
-    public function deleteCandidateUser(string $taskId, string $userId): void;
+    public function deleteCandidateUser(?string $taskId, ?string $userId): void;
 
     /**
     * Convenience shorthand for {@link #deleteGroupIdentityLink(String, String, String)}; with type IdentityLinkType#CANDIDATE
@@ -335,7 +335,7 @@ interface TaskServiceInterface
     *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
-    public function deleteCandidateGroup(string $taskId, string $groupId): void;
+    public function deleteCandidateGroup(?string $taskId, ?string $groupId): void;
 
     /**
     * Removes the association between a user and a task for the given identityLinkType.
@@ -351,7 +351,7 @@ interface TaskServiceInterface
     *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
-    public function deleteUserIdentityLink(string $taskId, string $userId, string $identityLinkType): void;
+    public function deleteUserIdentityLink(?string $taskId, ?string $userId, ?string $identityLinkType): void;
 
     /**
     * Removes the association between a group and a task for the given identityLinkType.
@@ -367,7 +367,7 @@ interface TaskServiceInterface
     *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
-    public function deleteGroupIdentityLink(string $taskId, string $groupId, string $identityLinkType): void;
+    public function deleteGroupIdentityLink(?string $taskId, ?string $groupId, ?string $identityLinkType): void;
 
     /**
     * Changes the priority of the task.
@@ -384,7 +384,7 @@ interface TaskServiceInterface
     *          or no Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION
     *          (if the task is part of a running process instance).
     */
-    public function setPriority(string $taskId, int $priority): variant_mod;
+    public function setPriority(?string $taskId, int $priority): void;
 
     /**
     * Returns a new TaskQuery that can be used to dynamically query tasks.
@@ -413,7 +413,7 @@ interface TaskServiceInterface
     *           <li>Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION</li>
     *           </ul>
     */
-    public function setVariable(string $taskId, string $variableName, $value): void;
+    public function setVariable(?string $taskId, ?string $variableName, $value): void;
 
     /**
     * Set variables on a task. If the variable is not already existing, it will be created in the
@@ -432,7 +432,7 @@ interface TaskServiceInterface
     *           <li>Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION</li>
     *           </ul>
     */
-    public function setVariables(string $taskId, array $variables, bool $local = false): void;
+    public function setVariables(?string $taskId, array $variables, bool $local = false): void;
 
     /**
     * Set variable on a task. If the variable is not already existing, it will be created in the
@@ -450,7 +450,7 @@ interface TaskServiceInterface
     *           <li>Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION</li>
     *           </ul>
     */
-    public function setVariableLocal(string $taskId, string $variableName, $value): void;
+    public function setVariableLocal(?string $taskId, ?string $variableName, $value): void;
 
     /**
     * Set variables on a task. If the variable is not already existing, it will be created in the
@@ -468,7 +468,7 @@ interface TaskServiceInterface
     *           <li>Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION</li>
     *           </ul>
     */
-    public function setVariablesLocal(string $taskId, array $variables): void;
+    public function setVariablesLocal(?string $taskId, array $variables): void;
 
     /**
     * Get a variables and search in the task scope and if available also the execution scopes.
@@ -487,7 +487,7 @@ interface TaskServiceInterface
     *          the user has no TaskPermissions#READ_VARIABLE permission on Resources#TASK and
     *          no ProcessDefinitionPermissions#READ_TASK_VARIABLE permission on Resources#PROCESS_DEFINITION</li></p>
     */
-    public function getVariable(string $taskId, string $variableName);
+    public function getVariable(?string $taskId, ?string $variableName);
 
     /**
     * Get a variables and search in the task scope and if available also the execution scopes.
@@ -516,7 +516,7 @@ interface TaskServiceInterface
     *
     * @since 7.2
     */
-    public function getVariableTyped(string $taskId, string $variableName, bool $deserializeValue = true): ?TypedValueInterface;
+    public function getVariableTyped(?string $taskId, ?string $variableName, bool $deserializeValue = true): ?TypedValueInterface;
 
     /**
     * Get a variables and only search in the task scope.
@@ -535,7 +535,7 @@ interface TaskServiceInterface
     *          the user has no TaskPermissions#READ_VARIABLE permission on Resources#TASK and
     *          no ProcessDefinitionPermissions#READ_TASK_VARIABLE permission on Resources#PROCESS_DEFINITION</li></p>
     */
-    public function getVariableLocal(string $taskId, string $variableName);
+    public function getVariableLocal(?string $taskId, ?string $variableName);
 
     /**
     * Get a variables and only search in the task scope.
@@ -564,7 +564,7 @@ interface TaskServiceInterface
     *
     * @since 7.2
     */
-    public function getVariableLocalTyped(string $taskId, string $variableName, bool $deserializeValue = true): TypedValueInterface;
+    public function getVariableLocalTyped(?string $taskId, ?string $variableName, bool $deserializeValue = true): TypedValueInterface;
 
     /**
     * Get values for all given variableNames
@@ -584,7 +584,7 @@ interface TaskServiceInterface
     *          no ProcessDefinitionPermissions#READ_TASK_VARIABLE permission on Resources#PROCESS_DEFINITION</li></p>
     *
     */
-    public function getVariables(string $taskId, array $variableNames = []): array;
+    public function getVariables(?string $taskId, array $variableNames = []): VariableMapInterface;
 
     /**
     * Get values for all given variableName
@@ -609,7 +609,7 @@ interface TaskServiceInterface
     *
     * @since 7.2
     * */
-    public function getVariablesTyped(string $taskId, array $variableNames = [], bool $deserializeValues = true): VariableMapInterface;
+    public function getVariablesTyped(?string $taskId, array $variableNames = [], bool $deserializeValues = true): VariableMapInterface;
 
     /**
     * Get a variable on a task
@@ -629,7 +629,7 @@ interface TaskServiceInterface
     *          no ProcessDefinitionPermissions#READ_TASK_VARIABLE permission on Resources#PROCESS_DEFINITION</li></p>
     *
     */
-    public function getVariablesLocal(string $taskId, array $variableNames = []): array;
+    public function getVariablesLocal(?string $taskId, array $variableNames = []): VariableMapInterface;
 
     /**
     * Get values for all given variableName. Only search in the local task scope.
@@ -654,7 +654,7 @@ interface TaskServiceInterface
     *
     * @since 7.2
     */
-    public function getVariablesLocalTyped(string $taskId, array $variableNames = [], bool $deserializeValues = true): VariableMapInterface;
+    public function getVariablesLocalTyped(?string $taskId, array $variableNames = [], bool $deserializeValues = true): VariableMapInterface;
 
     /**
     * Removes the variable from the task.
@@ -672,7 +672,7 @@ interface TaskServiceInterface
     *           <li>Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION</li>
     *           </ul>
     */
-    public function removeVariable(string $taskId, string $variableName): void;
+    public function removeVariable(?string $taskId, ?string $variableName): void;
 
     /**
     * Removes the variable from the task (not considering parent scopes).
@@ -690,7 +690,7 @@ interface TaskServiceInterface
     *           <li>Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION</li>
     *           </ul>
     */
-    public function removeVariableLocal(string $taskId, string $variableName): void;
+    public function removeVariableLocal(?string $taskId, ?string $variableName): void;
 
     /**
     * Removes all variables in the given collection from the task.
@@ -708,7 +708,7 @@ interface TaskServiceInterface
     *           <li>Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION</li>
     *           </ul>
     */
-    public function removeVariables(string $taskId, ?array $variableNames = []): void;
+    public function removeVariables(?string $taskId, ?array $variableNames = []): void;
 
     /**
     * Removes all variables in the given collection from the task (not considering parent scopes).
@@ -726,19 +726,19 @@ interface TaskServiceInterface
     *           <li>Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION</li>
     *           </ul>
     */
-    public function removeVariablesLocal(string $taskId, ?array $variableNames = []): void;
+    public function removeVariablesLocal(?string $taskId, ?array $variableNames = []): void;
 
     /** Creates a comment to a task and/or process instance and returns the comment. */
-    public function createComment(string $taskId, string $processInstanceId, string $message): CommentInterface;
+    public function createComment(?string $taskId, ?string $processInstanceId, ?string $message): CommentInterface;
 
     /** The comments related to the given task. */
-    public function getTaskComments(string $taskId): array;
+    public function getTaskComments(?string $taskId): array;
 
     /** Retrieve a particular task comment */
-    public function getTaskComment(string $taskId, string $commentId): CommentInterface;
+    public function getTaskComment(?string $taskId, ?string $commentId): CommentInterface;
 
     /** The comments related to the given process instance. */
-    public function getProcessInstanceComments(string $processInstanceId): array;
+    public function getProcessInstanceComments(?string $processInstanceId): array;
 
     /**
     * Add a new attachment to a task and/or a process instance and use an input stream to provide the content
@@ -754,37 +754,37 @@ interface TaskServiceInterface
     * @param content byte array with content of attachment
     *
     */
-    public function createAttachment(string $attachmentType, string $taskId, string $processInstanceId, string $attachmentName, string $attachmentDescription, $content = null, string $url = null): AttachmentInterface;
+    public function createAttachment(?string $attachmentType, ?string $taskId, ?string $processInstanceId, ?string $attachmentName, ?string $attachmentDescription, $content = null, ?string $url = null): AttachmentInterface;
 
     /** Update the name and decription of an attachment */
     public function saveAttachment(AttachmentInterface $attachment): void;
 
     /** Retrieve a particular attachment */
-    public function getAttachment(string $attachmentId): AttachmentInterface;
+    public function getAttachment(?string $attachmentId): AttachmentInterface;
 
     /** Retrieve a particular attachment to the given task id and attachment id*/
-    public function getTaskAttachment(string $taskId, string $attachmentId): AttachmentInterface;
+    public function getTaskAttachment(?string $taskId, ?string $attachmentId): AttachmentInterface;
 
     /** Retrieve stream content of a particular attachment */
-    public function getAttachmentContent(string $attachmentId);
+    public function getAttachmentContent(?string $attachmentId);
 
     /** Retrieve stream content of a particular attachment to the given task id and attachment id*/
-    public function getTaskAttachmentContent(string $taskId, string $attachmentId);
+    public function getTaskAttachmentContent(?string $taskId, ?string $attachmentId);
 
     /** The list of attachments associated to a task */
-    public function getTaskAttachments(string $taskId): array;
+    public function getTaskAttachments(?string $taskId): array;
 
     /** The list of attachments associated to a process instance */
-    public function getProcessInstanceAttachments(string $processInstanceId): array;
+    public function getProcessInstanceAttachments(?string $processInstanceId): array;
 
     /** Delete an attachment */
-    public function deleteAttachment(string $attachmentId): void;
+    public function deleteAttachment(?string $attachmentId): void;
 
     /** Delete an attachment to the given task id and attachment id */
-    public function deleteTaskAttachment(string $taskId, string $attachmentId): void;
+    public function deleteTaskAttachment(?string $taskId, ?string $attachmentId): void;
 
     /** The list of subtasks for this parent task */
-    public function getSubTasks(string $parentTaskId): array;
+    public function getSubTasks(?string $parentTaskId): array;
 
     /** Instantiate a task report */
     public function createTaskReport(): TaskReportInterface;
@@ -797,7 +797,7 @@ interface TaskServiceInterface
     * @param errorMessage the error message of the corresponding bmpn error
     * @param variables the variables to pass to the execution
     */
-    public function handleBpmnError(string $taskId, string $errorCode, string $errorMessage = null, array $variables = []): void;
+    public function handleBpmnError(?string $taskId, ?string $errorCode, ?string $errorMessage = null, array $variables = []): void;
 
     /**
     * Signals that an escalation appears, which should be handled by the process engine.
@@ -815,5 +815,5 @@ interface TaskServiceInterface
     * <li>Permissions#UPDATE permission on Resources#TASK resource</li>
     * <li>Permissions#UPDATE_TASK permission on Resources#PROCESS_DEFINITION resource</li>
     */
-    public function handleEscalation(string $taskId, string $escalationCode, array $variables = []): void;
+    public function handleEscalation(?string $taskId, ?string $escalationCode, array $variables = []): void;
 }

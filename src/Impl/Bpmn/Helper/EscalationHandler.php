@@ -23,7 +23,7 @@ class EscalationHandler
 {
     //private final static BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
-    public static function propagateEscalation(ActivityExecutionInterface $execution, string $escalationCode): void
+    public static function propagateEscalation(ActivityExecutionInterface $execution, ?string $escalationCode): void
     {
         $escalationEventDefinition = self::executeEscalation($execution, $escalationCode);
 
@@ -36,7 +36,7 @@ class EscalationHandler
      * Walks through the activity execution hierarchy, fetches and executes matching escalation catch event
      * @return EscalationEventDefinition the escalation event definition if found matching escalation catch event
      */
-    public static function executeEscalation(ActivityExecutionInterface $execution, string $escalationCode): EscalationEventDefinition
+    public static function executeEscalation(ActivityExecutionInterface $execution, ?string $escalationCode): EscalationEventDefinition
     {
         $currentActivity = $execution->getActivity();
 
@@ -72,7 +72,7 @@ class EscalationHandler
     protected static function executeEscalationHandler(
         EscalationEventDefinition $escalationEventDefinition,
         ActivityExecutionMappingCollector $activityExecutionMappingCollector,
-        string $escalationCode
+        ?string $escalationCode
     ): void {
         $escalationHandler = $escalationEventDefinition->getEscalationHandler();
         $escalationScope = self::getScopeForEscalation($escalationEventDefinition);

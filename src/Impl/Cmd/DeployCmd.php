@@ -609,7 +609,7 @@ class DeployCmd implements CommandInterface
         }
     }
 
-    protected function ensureResourcesWithIdsExist(string $deploymentId, array $expectedIds, array $actual): void
+    protected function ensureResourcesWithIdsExist(?string $deploymentId, array $expectedIds, array $actual): void
     {
         $resources = [];
         foreach ($actual as $resource) {
@@ -618,7 +618,7 @@ class DeployCmd implements CommandInterface
         $this->ensureResourcesWithKeysExist($deploymentId, $expectedIds, $resources, "id");
     }
 
-    protected function ensureResourcesWithNamesExist(string $deploymentId, array $expectedNames, array $actual): void
+    protected function ensureResourcesWithNamesExist(?string $deploymentId, array $expectedNames, array $actual): void
     {
         $resources = [];
         foreach ($actual as $resource) {
@@ -627,7 +627,7 @@ class DeployCmd implements CommandInterface
         $this->ensureResourcesWithKeysExist($deploymentId, $expectedNames, $resources, "name");
     }
 
-    protected function ensureResourcesWithKeysExist(string $deploymentId, array $expectedKeys, array $actual, string $valueProperty): void
+    protected function ensureResourcesWithKeysExist(?string $deploymentId, array $expectedKeys, array $actual, ?string $valueProperty): void
     {
         $missingResources = $this->getMissingElements($expectedKeys, $actual);
 

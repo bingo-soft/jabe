@@ -41,6 +41,7 @@ use Jabe\Impl\History\Event\{
     HistoryEventCreator,
     HistoryEventTypes
 };
+use Jabe\Impl\History\Producer\HistoryEventProducerInterface;
 use Jabe\Impl\Incident\{
     IncidentContext,
     IncidentHandling
@@ -138,9 +139,9 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
      */
     //protected $subCaseInstance;
 
-    protected $shouldQueryForSubprocessInstance = false;
+    protected bool $shouldQueryForSubprocessInstance = false;
 
-    //protected $shouldQueryForSubCaseInstance = false;
+    //protected bool $shouldQueryForSubCaseInstance = false;
 
     // associated entities /////////////////////////////////////////////////////
 
@@ -150,7 +151,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
     protected $tasks;
     protected $externalTasks;
     protected $incidents;
-    protected $cachedEntityState;
+    protected int $cachedEntityState = 0;
 
     protected $variableStore;
 
@@ -161,7 +162,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
 
     // Persistence //////////////////////////////////////////////////////////////
 
-    protected $revision = 1;
+    protected int $revision = 1;
 
     /**
      * persisted reference to the processDefinition.
@@ -221,7 +222,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
      * @See {@link #getSuperCaseExecution()}
      * @see <code>setSuperCaseExecution(ExecutionEntity)</code>
      */
-    protected $superCaseExecutionId;
+    //protected $superCaseExecutionId;
 
     /**
      * Contains observers which are observe the execution.
@@ -241,7 +242,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
      * creates a new execution. properties processDefinition, processInstance and
      * activity will be initialized.
      */
-    public function createExecution(): ExecutionEntity
+    public function createExecution(?bool $initializeExecutionStartContext = null): ExecutionEntity
     {
         // create the new child execution
         $createdExecution = self::createNewExecution();
@@ -300,12 +301,11 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         return $subProcessInstance;
     }
 
-    protected static function createNewExecution(): ExecutionEntity
+    public static function createNewExecution(): ExecutionEntity
     {
         $newExecution = new ExecutionEntity();
         self::initializeAssociations($newExecution);
         $newExecution->insert();
-
         return $newExecution;
     }
 
@@ -361,7 +361,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
                     $this->scope = $scope;
                 }
 
-                public function createHistoryEvent(HistoryEventProducer $producer): HistoryEvent
+                public function createHistoryEvent(HistoryEventProducerInterface $producer): ?HistoryEvent
                 {
                     return $producer->createActivityInstanceUpdateEvt($this->scope);
                 }
@@ -435,7 +435,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         $execution->cachedEntityState = 0;
     }
 
-    public function start(array $variables, VariableMapInterface $formProperties): void
+    public function start(?VariableMapInterface $variables = null, ?VariableMapInterface $formProperties = null): void
     {
         if ($this->getSuperExecution() === null) {
             $this->setRootProcessInstanceId($this->processInstanceId);
@@ -456,13 +456,13 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         parent::startWithoutExecuting($variables);
     }
 
-    protected function provideTenantId(array $variables, ?VariableMap $properties = null): void
+    protected function provideTenantId(?VariableMapInterface $variables = null, ?VariableMap $properties = null): void
     {
         if ($this->tenantId === null) {
             $tenantIdProvider = Context::getProcessEngineConfiguration()->getTenantIdProvider();
 
-            if ($tenantIdProvider !== null) {
-                $variableMap = Variables::fromMap($variables);
+            if ($variables !== null && $tenantIdProvider !== null) {
+                $variableMap = $variables;/*Variables::fromMap($variables)*/
                 if ($properties !== null && !$properties->isEmpty()) {
                     $variableMap->putAll($properties);
                 }
@@ -499,7 +499,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
                     $this->processInstance = $processInstance;
                 }
 
-                public function createHistoryEvent(HistoryEventProducer $producer): HistoryEvent
+                public function createHistoryEvent(HistoryEventProducerInterface $producer): ?HistoryEvent
                 {
                     return $producer->createProcessInstanceStartEvt($this->processInstance);
                 }
@@ -570,9 +570,8 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         }
     }
 
-    public function interrupt(string $reason, bool $skipCustomListeners, bool $skipIoMappings, bool $externallyTerminated): void
+    public function interrupt(?string $reason, ?bool $skipCustomListeners = false, ?bool $skipIoMappings = false, ?bool $externallyTerminated = false): void
     {
-
         // remove Jobs
         if ($this->preserveScope) {
             $this->removeActivityJobs($reason);
@@ -586,7 +585,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         parent::interrupt($reason, $skipCustomListeners, $skipIoMappings, $externallyTerminated);
     }
 
-    protected function removeActivityJobs(string $reason): void
+    protected function removeActivityJobs(?string $reason): void
     {
         if ($this->activityId !== null) {
             foreach ($this->getJobs() as $job) {
@@ -675,7 +674,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         }
     }
 
-    public function isActive(string $activityId): bool
+    public function isActive(?string $activityId = null): bool
     {
         return $this->findExecution($activityId) !== null;
     }
@@ -689,7 +688,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
 
     public function addExecutionObserver(ExecutionObserverInterface $observer): void
     {
-        $this->executionObservers[$observer];
+        $this->executionObservers[] = $observer;
     }
 
     public function removeExecutionObserver(ExecutionObserverInterface $observer): void
@@ -752,12 +751,12 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         return $this->processDefinition;
     }
 
-    public function setProcessDefinitionId(string $processDefinitionId): void
+    public function setProcessDefinitionId(?string $processDefinitionId): void
     {
         $this->processDefinitionId = $processDefinitionId;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
@@ -838,7 +837,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         return parent::getActivity();
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
@@ -866,16 +865,15 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
     /**
      * generates an activity instance id
      */
-    protected function generateActivityInstanceId(string $activityId): string
+    protected function generateActivityInstanceId(?string $activityId): ?string
     {
-
         if ($activityId == $this->processDefinitionId) {
             return $this->processInstanceId;
         } else {
             $nextId = Context::getProcessEngineConfiguration()->getIdGenerator()->getNextId();
 
             $compositeId = $activityId . ":" . $nextId;
-            if (count($compositeId) > 64) {
+            if (strlen($compositeId) > 64) {
                 return $nextId;
             } else {
                 return $compositeId;
@@ -956,7 +954,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         return $this->subProcessInstance;
     }
 
-    public function setSubProcessInstance(PvmExecutionImpl $subProcessInstance): void
+    public function setSubProcessInstance(?PvmExecutionImpl $subProcessInstance): void
     {
         $this->shouldQueryForSubprocessInstance = $subProcessInstance !== null;
         $this->subProcessInstance = $subProcessInstance;
@@ -1197,7 +1195,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
             $externalTask->setExecutionId($other->getId());
             $externalTask->setExecution($other);
 
-            $other->addExternalTask(externalTask);
+            $other->addExternalTask($externalTask);
         }
 
         $this->externalTasks = [];
@@ -1475,8 +1473,8 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         $persistentState["isEventScope"] = $this->isEventScope;
         $persistentState["parentId"] = $this->parentId;
         $persistentState["superExecution"] = $this->superExecutionId;
-        $persistentState["superCaseExecutionId"] = $this->superCaseExecutionId;
-        $persistentState["caseInstanceId"] = $this->caseInstanceId;
+        //$persistentState["superCaseExecutionId"] = $this->superCaseExecutionId;
+        //$persistentState["caseInstanceId"] = $this->caseInstanceId;
         $persistentState["suspensionState"] = $this->suspensionState;
         $persistentState["cachedEntityState"] = $this->getCachedEntityState();
         $persistentState["sequenceCounter"] = $this->getSequenceCounter();
@@ -1509,7 +1507,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         }
     }
 
-    protected function getToStringIdentity(): string
+    protected function getToStringIdentity(): ?string
     {
         return $this->id;
     }
@@ -1673,7 +1671,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         }
     }
 
-    public function getIncidentByCauseIncidentId(string $causeIncidentId): ?IncidentEntity
+    public function getIncidentByCauseIncidentId(?string $causeIncidentId): ?IncidentEntity
     {
         foreach ($this->getIncidents() as $incident) {
             if ($incident->getCauseIncidentId() !== null && $incident->getCauseIncidentId() == $causeIncidentId) {
@@ -1839,7 +1837,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         }
     }
 
-    public function dispatchEvent(VariableEvent $variableEvent): void
+    public function dispatchEvent(?VariableEvent $variableEvent): void
     {
         $execs = [];
         $scope = new \stdClass();
@@ -1898,7 +1896,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
             $this->externalTasks = [];
         }
         $this->shouldQueryForSubprocessInstance = BitMaskUtil::isBitOn($this->cachedEntityState, self::SUB_PROCESS_INSTANCE_STATE_BIT);
-        $this->shouldQueryForSubCaseInstance = BitMaskUtil::isBitOn($this->cachedEntityState, self::SUB_CASE_INSTANCE_STATE_BIT);
+        //$this->shouldQueryForSubCaseInstance = BitMaskUtil::isBitOn($this->cachedEntityState, self::SUB_CASE_INSTANCE_STATE_BIT);
     }
 
     public function getCachedEntityState(): int
@@ -1914,7 +1912,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         $this->cachedEntityState = BitMaskUtil::setBit($this->cachedEntityState, self::INCIDENT_STATE_BIT, ($this->incidents === null || count($this->incidents) > 0));
         $this->cachedEntityState = BitMaskUtil::setBit($this->cachedEntityState, self::VARIABLES_STATE_BIT, (!$this->variableStore->isInitialized() || !$this->variableStore->isEmpty()));
         $this->cachedEntityState = BitMaskUtil::setBit($this->cachedEntityState, self::SUB_PROCESS_INSTANCE_STATE_BIT, $this->shouldQueryForSubprocessInstance);
-        $this->cachedEntityState = BitMaskUtil::setBit($this->cachedEntityState, self::SUB_CASE_INSTANCE_STATE_BIT, $this->shouldQueryForSubCaseInstance);
+        //$this->cachedEntityState = BitMaskUtil::setBit($this->cachedEntityState, self::SUB_CASE_INSTANCE_STATE_BIT, $this->shouldQueryForSubCaseInstance);
         $this->cachedEntityState = BitMaskUtil::setBit($this->cachedEntityState, self::EXTERNAL_TASKS_BIT, ($this->externalTasks === null || count($this->externalTasks) > 0));
 
         return $this->cachedEntityState;
@@ -1925,7 +1923,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         return $this->cachedEntityState;
     }
 
-    public function getRootProcessInstanceId(): string
+    public function getRootProcessInstanceId(): ?string
     {
         if ($this->isProcessInstanceExecution()) {
             return $this->rootProcessInstanceId;
@@ -1935,22 +1933,22 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         }
     }
 
-    public function getRootProcessInstanceIdRaw(): string
+    public function getRootProcessInstanceIdRaw(): ?string
     {
         return $this->rootProcessInstanceId;
     }
 
-    public function setRootProcessInstanceId(string $rootProcessInstanceId): void
+    public function setRootProcessInstanceId(?string $rootProcessInstanceId): void
     {
         $this->rootProcessInstanceId = $rootProcessInstanceId;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
 
-    public function setProcessInstanceId(string $processInstanceId): void
+    public function setProcessInstanceId(?string $processInstanceId): void
     {
         $this->processInstanceId = $processInstanceId;
 
@@ -1964,12 +1962,12 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         return $this->parentId;
     }
 
-    public function setParentId(string $parentId): void
+    public function setParentId(?string $parentId): void
     {
         $this->parentId = $parentId;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }
@@ -1979,12 +1977,12 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         $this->revision = $revision;
     }
 
-    public function setActivityId(string $activityId): void
+    public function setActivityId(?string $activityId): void
     {
         $this->activityId = $activityId;
     }
 
-    public function setSuperExecutionId(string $superExecutionId): void
+    public function setSuperExecutionId(?string $superExecutionId): void
     {
         $this->superExecutionId = $superExecutionId;
     }
@@ -2048,7 +2046,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         return $this->activityName;
     }
 
-    public function getBpmnModelElementInstance(): FlowElementInterface
+    public function getBpmnModelElementInstance(): ?FlowElementInterface
     {
         $bpmnModelInstance = $this->getBpmnModelInstance();
         if ($bpmnModelInstance !== null) {
@@ -2094,5 +2092,10 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
     public function getProcessDefinitionTenantId(): ?string
     {
         return $this->getProcessDefinition()->getTenantId();
+    }
+
+    public function getDependentEntities(): array
+    {
+        return [];
     }
 }

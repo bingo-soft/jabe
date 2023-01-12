@@ -23,7 +23,7 @@ class CommandInvocationContext
 
     protected $throwable;
     protected $command;
-    protected $isExecuting = false;
+    protected bool $isExecuting = false;
     protected $queuedInvocations = [];
     protected $bpmnStackTrace;
     protected $processDataContext;

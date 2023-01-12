@@ -26,7 +26,7 @@ interface UpdateJobDefinitionSuspensionStateBuilderInterface
      *
      * @return UpdateJobDefinitionSuspensionStateBuilderInterface the builder
      */
-    public function executionDate(string $executionDate): UpdateJobDefinitionSuspensionStateBuilderInterface;
+    public function executionDate(?string $executionDate): UpdateJobDefinitionSuspensionStateBuilderInterface;
 
     /**
      * Activates the provided job definitions.

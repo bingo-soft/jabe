@@ -12,7 +12,10 @@ use Jabe\Impl\Batch\{
 };
 use Jabe\Impl\Context\Context;
 use Jabe\Impl\Interceptor\CommandContext;
-use Jabe\Impl\JobExecutor\JobDeclaration;
+use Jabe\Impl\JobExecutor\{
+    JobDeclaration,
+    JobHandlerConfigurationInterface
+};
 use Jabe\Impl\Json\ModificationBatchConfigurationJsonConverter;
 use Jabe\Impl\Json\JsonObjectConverter;
 use Jabe\Impl\Persistence\Entity\{
@@ -34,7 +37,7 @@ class ModificationBatchJobHandler extends AbstractBatchJobHandler
         }
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return BatchInterface::TYPE_PROCESS_INSTANCE_MODIFICATION;
     }
@@ -49,7 +52,7 @@ class ModificationBatchJobHandler extends AbstractBatchJobHandler
         }
     }
 
-    public function execute(BatchJobConfiguration $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId)
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
     {
         $configurationEntity = $commandContext
             ->getDbEntityManager()
@@ -97,7 +100,7 @@ class ModificationBatchJobHandler extends AbstractBatchJobHandler
         return ModificationBatchConfigurationJsonConverter::instance();
     }
 
-    protected function getProcessDefinition(CommandContext $commandContext, string $processDefinitionId): ProcessDefinitionEntity
+    protected function getProcessDefinition(CommandContext $commandContext, ?string $processDefinitionId): ProcessDefinitionEntity
     {
         return $commandContext->getProcessEngineConfiguration()
             ->getDeploymentCache()

@@ -15,4 +15,9 @@ class GetHistoryLevelCmd implements CommandInterface
         $commandContext->getAuthorizationManager()->checkCamundaAdminOrPermission("checkReadHistoryLevel");
         return Context::getProcessEngineConfiguration()->getHistoryLevel()->getId();
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

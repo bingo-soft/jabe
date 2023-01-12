@@ -14,6 +14,7 @@ use Jabe\Impl\Db\{
     DbEntityInterface,
     DbEntityLifecycleAwareInterface,
     EnginePersistenceLogger,
+    HasDbRevisionInterface,
     HasDbReferencesInterface,
     HasDbRevision
 };
@@ -37,7 +38,7 @@ class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface,
     protected $owner;
     protected $query;
     protected $properties = [];
-    protected $revision = 0;
+    protected int $revision = 0;
 
     public function __construct(?string $resourceType = null)
     {
@@ -73,7 +74,7 @@ class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface,
         $this->revision = $json->revision;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
@@ -83,7 +84,7 @@ class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface,
         return $this->id;
     }
 
-    public function setResourceType(string $resourceType): FilterInterface
+    public function setResourceType(?string $resourceType): FilterInterface
     {
         EnsureUtil::ensureNotEmpty(NotValidException::class, "Filter resource type must not be null or empty", "resourceType", $resourceType);
         EnsureUtil::ensureNull(NotValidException::class, "Cannot overwrite filter resource type", "resourceType", $this->resourceType);
@@ -92,29 +93,29 @@ class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface,
         return $this;
     }
 
-    public function getResourceType(): string
+    public function getResourceType(): ?string
     {
         return $this->resourceType;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): FilterInterface
+    public function setName(?string $name): FilterInterface
     {
         EnsureUtil::ensureNotEmpty(NotValidException::class, "Filter name must not be null or empty", "name", $name);
         $this->name = $name;
         return $this;
     }
 
-    public function getOwner(): string
+    public function getOwner(): ?string
     {
         return $this->owner;
     }
 
-    public function setOwner(string $owner): FilterInterface
+    public function setOwner(?string $owner): FilterInterface
     {
         $this->owner = $owner;
         return $this;
@@ -125,7 +126,7 @@ class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface,
         return $this->query;
     }
 
-    public function getQueryInternal(): string
+    public function getQueryInternal(): ?string
     {
         $converter = $this->getConverter();
         return $converter->toJson($this->query);
@@ -138,7 +139,7 @@ class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface,
         return $this;
     }
 
-    public function setQueryInternal(string $query): void
+    public function setQueryInternal(?string $query): void
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "query", $query);
         $converter = $this->getConverter();
@@ -150,7 +151,7 @@ class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface,
         return $this->properties;
     }
 
-    public function getPropertiesInternal(): string
+    public function getPropertiesInternal(): ?string
     {
         return JsonUtil::asString($this->properties);
     }
@@ -161,7 +162,7 @@ class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface,
         return $this;
     }
 
-    public function setPropertiesInternal(string $properties): void
+    public function setPropertiesInternal(?string $properties): void
     {
         if ($properties !== null) {
             $json = JsonUtil::asObject($properties);
@@ -171,7 +172,7 @@ class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface,
         }
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }
@@ -248,5 +249,10 @@ class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface,
     {
         $referenceIdAndClass = [];
         return $referenceIdAndClass;
+    }
+
+    public function getDependentEntities(): array
+    {
+        return [];
     }
 }

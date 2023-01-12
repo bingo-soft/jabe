@@ -22,9 +22,9 @@ class DeploymentQueryImpl extends AbstractQuery implements DeploymentQueryInterf
     protected $deploymentBefore;
     protected $deploymentAfter;
 
-    protected $isTenantIdSet = false;
+    protected bool $isTenantIdSet = false;
     protected $tenantIds = [];
-    protected $includeDeploymentsWithoutTenantId = false;
+    protected bool $includeDeploymentsWithoutTenantId = false;
 
     public function __construct(CommandExecutorInterface $commandExecutor)
     {
@@ -62,42 +62,42 @@ class DeploymentQueryImpl extends AbstractQuery implements DeploymentQueryInterf
         $this->includeDeploymentsWithoutTenantId = $json->includeDeploymentsWithoutTenantId;
     }
 
-    public function deploymentId(string $deploymentId): DeploymentQueryImpl
+    public function deploymentId(?string $deploymentId): DeploymentQueryImpl
     {
         EnsureUtil::ensureNotNull("Deployment id", "Deployment id", $deploymentId);
         $this->deploymentId = $deploymentId;
         return $this;
     }
 
-    public function deploymentName(string $deploymentName): DeploymentQueryImpl
+    public function deploymentName(?string $deploymentName): DeploymentQueryImpl
     {
         EnsureUtil::ensureNotNull("deploymentName", "deploymentName", $deploymentName);
         $this->name = $deploymentName;
         return $this;
     }
 
-    public function deploymentNameLike(string $nameLike): DeploymentQueryImpl
+    public function deploymentNameLike(?string $nameLike): DeploymentQueryImpl
     {
         EnsureUtil::ensureNotNull("deploymentNameLike", "deploymentNameLike", $nameLike);
         $this->nameLike = $nameLike;
         return $this;
     }
 
-    public function deploymentSource(string $source): DeploymentQueryInterface
+    public function deploymentSource(?string $source): DeploymentQueryInterface
     {
         $this->sourceQueryParamEnabled = true;
         $this->source = $source;
         return $this;
     }
 
-    public function deploymentBefore(string $before): DeploymentQueryInterface
+    public function deploymentBefore(?string $before): DeploymentQueryInterface
     {
         EnsureUtil::ensureNotNull("deploymentBefore", "deploymentBefore", $before);
         $this->deploymentBefore = $before;
         return $this;
     }
 
-    public function deploymentAfter(string $after): DeploymentQueryInterface
+    public function deploymentAfter(?string $after): DeploymentQueryInterface
     {
         EnsureUtil::ensureNotNull("deploymentAfter", "deploymentAfter", $after);
         $this->deploymentAfter = $after;
@@ -167,7 +167,7 @@ class DeploymentQueryImpl extends AbstractQuery implements DeploymentQueryInterf
             ->findDeploymentCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         return $commandContext
@@ -177,17 +177,17 @@ class DeploymentQueryImpl extends AbstractQuery implements DeploymentQueryInterf
 
     //getters ////////////////////////////////////////////////////////
 
-    public function getDeploymentId(): string
+    public function getDeploymentId(): ?string
     {
         return $this->deploymentId;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getNameLike(): string
+    public function getNameLike(): ?string
     {
         return $this->nameLike;
     }
@@ -197,17 +197,17 @@ class DeploymentQueryImpl extends AbstractQuery implements DeploymentQueryInterf
         return $this->sourceQueryParamEnabled;
     }
 
-    public function getSource(): string
+    public function getSource(): ?string
     {
         return $this->source;
     }
 
-    public function getDeploymentBefore(): string
+    public function getDeploymentBefore(): ?string
     {
         return $this->deploymentBefore;
     }
 
-    public function getDeploymentAfter(): string
+    public function getDeploymentAfter(): ?string
     {
         return $this->deploymentAfter;
     }

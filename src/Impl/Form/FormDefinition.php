@@ -12,7 +12,7 @@ class FormDefinition
     protected $formDefinitionBinding;
     protected $formDefinitionVersion;
 
-    public function getFormKey(): ExpressionInterface
+    public function getFormKey(): ?ExpressionInterface
     {
         return $this->formKey;
     }
@@ -32,12 +32,12 @@ class FormDefinition
         $this->formDefinitionKey = $formDefinitionKey;
     }
 
-    public function getFormDefinitionBinding(): string
+    public function getFormDefinitionBinding(): ?string
     {
         return $this->formDefinitionBinding;
     }
 
-    public function setFormDefinitionBinding(string $formDefinitionBinding): void
+    public function setFormDefinitionBinding(?string $formDefinitionBinding): void
     {
         $this->formDefinitionBinding = $formDefinitionBinding;
     }

@@ -16,7 +16,7 @@ class HandleTaskBpmnErrorCmd implements CommandInterface, \Serializable
     protected $errorMessage;
     protected $variables = [];
 
-    public function __construct(string $taskId, string $errorCode, string $errorMessage = null, array $variables = [])
+    public function __construct(?string $taskId, ?string $errorCode, ?string $errorMessage = null, array $variables = [])
     {
         $this->taskId = $taskId;
         $this->errorCode = $errorCode;
@@ -44,5 +44,10 @@ class HandleTaskBpmnErrorCmd implements CommandInterface, \Serializable
         $task->bpmnError($this->errorCode, $this->errorMessage, $this->variables);
 
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

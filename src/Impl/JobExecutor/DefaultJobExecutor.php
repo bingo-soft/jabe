@@ -12,8 +12,8 @@ class DefaultJobExecutor extends ThreadPoolJobExecutor
     //private final static JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
     protected $queueSize = ArrayBlockingQueue::DEFAULT_CAPACITY;
-    protected $corePoolSize = 4;
-    protected $maxPoolSize = 10;
+    protected int $corePoolSize = 4;
+    protected int $maxPoolSize = 10;
 
     protected function startExecutingJobs(): void
     {

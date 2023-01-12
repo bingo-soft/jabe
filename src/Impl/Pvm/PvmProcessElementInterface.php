@@ -10,7 +10,7 @@ interface PvmProcessElementInterface extends \Serializable
      * The id of the element
      * @return string the id
      */
-    public function getId(): string;
+    public function getId(): ?string;
 
     /**
      * The process definition scope, root of the scope hierarchy.
@@ -18,7 +18,7 @@ interface PvmProcessElementInterface extends \Serializable
      */
     public function getProcessDefinition(): PvmProcessDefinitionInterface;
 
-    public function getProperty(string $name);
+    public function getProperty(?string $name);
 
     /**
      * Returns the properties of the element.

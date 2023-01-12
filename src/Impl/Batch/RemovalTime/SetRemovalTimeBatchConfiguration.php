@@ -18,12 +18,12 @@ class SetRemovalTimeBatchConfiguration extends BatchConfiguration
         parent::__construct($ids, $mappings);
     }
 
-    public function getRemovalTime(): string
+    public function getRemovalTime(): ?string
     {
         return $this->removalTime;
     }
 
-    public function setRemovalTime(string $removalTime): SetRemovalTimeBatchConfiguration
+    public function setRemovalTime(?string $removalTime): SetRemovalTimeBatchConfiguration
     {
         $this->removalTime = $removalTime;
         return $this;

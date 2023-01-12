@@ -14,7 +14,7 @@ abstract class HandleExternalTaskCmd extends ExternalTaskCmd
      */
     protected $workerId;
 
-    public function __construct(string $externalTaskId, string $workerId)
+    public function __construct(?string $externalTaskId, ?string $workerId)
     {
         parent::__construct($externalTaskId);
         $this->workerId = $workerId;
@@ -46,7 +46,7 @@ abstract class HandleExternalTaskCmd extends ExternalTaskCmd
      *
      * @return string the specific error message
      */
-    abstract public function getErrorMessageOnWrongWorkerAccess(): string;
+    abstract public function getErrorMessageOnWrongWorkerAccess(): ?string;
 
     /**
      * Validates the current input of the command.

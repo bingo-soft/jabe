@@ -67,7 +67,7 @@ class HistoricTaskInstanceReportImpl implements HistoricTaskInstanceReportInterf
             ->selectHistoricTaskInstanceCountByTaskNameReport($this);
     }
 
-    public function duration(string $periodUnit): array
+    public function duration(?string $periodUnit): array
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "periodUnit", $periodUnit);
         $this->durationPeriodUnit = $periodUnit;
@@ -87,24 +87,24 @@ class HistoricTaskInstanceReportImpl implements HistoricTaskInstanceReportInterf
             ->createHistoricTaskDurationReport($this);
     }
 
-    public function getCompletedAfter(): string
+    public function getCompletedAfter(): ?string
     {
         return $this->completedAfter;
     }
 
-    public function getCompletedBefore(): string
+    public function getCompletedBefore(): ?string
     {
         return $this->completedBefore;
     }
 
-    public function completedAfter(string $completedAfter): HistoricTaskInstanceReportInterface
+    public function completedAfter(?string $completedAfter): HistoricTaskInstanceReportInterface
     {
         EnsureUril::ensureNotNull(NotValidException::class, "completedAfter", $completedAfter);
         $this->completedAfter = $completedAfter;
         return $this;
     }
 
-    public function completedBefore(string $completedBefore): HistoricTaskInstanceReportInterface
+    public function completedBefore(?string $completedBefore): HistoricTaskInstanceReportInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "completedBefore", $completedBefore);
         $this->completedBefore = $completedBefore;
@@ -116,7 +116,7 @@ class HistoricTaskInstanceReportImpl implements HistoricTaskInstanceReportInterf
         return $this->tenantCheck;
     }
 
-    public function getReportPeriodUnitName(): string
+    public function getReportPeriodUnitName(): ?string
     {
         return $this->durationPeriodUnit;
     }

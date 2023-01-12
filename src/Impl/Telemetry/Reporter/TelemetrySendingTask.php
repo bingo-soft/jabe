@@ -51,20 +51,20 @@ class TelemetrySendingTask extends TimerTask
         Metrics::ACTIVTY_INSTANCE_START
     ];
     //protected static final TelemetryLogger LOG = ProcessEngineLogger.TELEMETRY_LOGGER;
-    protected const UUID4_PATTERN = "/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/i";
+    protected const UUID4_PATTERN = '/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/i';
 
     protected $commandExecutor;
     protected $telemetryEndpoint;
     protected $staticData;
     protected $httpConnector;
-    protected $telemetryRequestRetries;
+    protected int $telemetryRequestRetries = 0;
     protected $telemetryRegistry;
     protected $metricsRegistry;
-    protected $telemetryRequestTimeout;
+    protected int $telemetryRequestTimeout = 0;
 
     public function __construct(
         CommandExecutorInterface $commandExecutor,
-        string $telemetryEndpoint,
+        ?string $telemetryEndpoint,
         int $telemetryRequestRetries,
         TelemetryDataImpl $data,
         ClientInterface $httpConnector,

@@ -12,7 +12,7 @@ class GetUserInfoCmd implements CommandInterface, \Serializable
     protected $userId;
     protected $key;
 
-    public function __construct(string $userId, string $key)
+    public function __construct(?string $userId, ?string $key)
     {
         $this->userId = $userId;
         $this->key = $key;
@@ -40,5 +40,10 @@ class GetUserInfoCmd implements CommandInterface, \Serializable
             ->findUserInfoByUserIdAndKey($this->userId, $this->key);
 
         return ($identityInfo !== null ? $identityInfo->getValue() : null);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

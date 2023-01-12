@@ -10,7 +10,7 @@ interface FileValueBuilderInterface extends TypedValueBuilderInterface
      * @param mimeType
      *          the MIME type as string
      */
-    public function mimeType(string $mimeType): FileValueBuilderInterface;
+    public function mimeType(?string $mimeType): FileValueBuilderInterface;
 
     /**
      * Sets the value to the specified File.
@@ -23,5 +23,5 @@ interface FileValueBuilderInterface extends TypedValueBuilderInterface
      * @param encoding
      * @return
      */
-    public function encoding(string $encoding): FileValueBuilderInterface;
+    public function encoding(?string $encoding): FileValueBuilderInterface;
 }

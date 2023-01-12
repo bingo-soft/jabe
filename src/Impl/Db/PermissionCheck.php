@@ -11,11 +11,11 @@ class PermissionCheck
 {
     /** the permission to check for */
     protected $permission;
-    protected $perms;
+    protected int $perms = 0;
 
     /** the type of the resource to check permissions for */
     protected $resource;
-    protected $resourceType;
+    protected int $resourceType = 0;
 
     /** the id of the resource to check permission for */
     protected $resourceId;
@@ -62,22 +62,22 @@ class PermissionCheck
         return $this->resourceType;
     }
 
-    public function getResourceId(): string
+    public function getResourceId(): ?string
     {
         return $this->resourceId;
     }
 
-    public function setResourceId(string $resourceId): void
+    public function setResourceId(?string $resourceId): void
     {
         $this->resourceId = $resourceId;
     }
 
-    public function getResourceIdQueryParam(): string
+    public function getResourceIdQueryParam(): ?string
     {
         return $this->resourceIdQueryParam;
     }
 
-    public function setResourceIdQueryParam(string $resourceIdQueryParam): void
+    public function setResourceIdQueryParam(?string $resourceIdQueryParam): void
     {
         $this->resourceIdQueryParam = $resourceIdQueryParam;
     }

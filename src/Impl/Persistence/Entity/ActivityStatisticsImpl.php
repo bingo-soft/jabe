@@ -11,8 +11,8 @@ use Jabe\Impl\Util\ClassNameUtil;
 class ActivityStatisticsImpl implements ActivityStatisticsInterface
 {
     protected $id;
-    protected $instances;
-    protected $failedJobs;
+    protected int $instances = 0;
+    protected int $failedJobs = 0;
     protected $incidentStatistics;
 
     public function getId(): ?string
@@ -20,7 +20,7 @@ class ActivityStatisticsImpl implements ActivityStatisticsInterface
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }

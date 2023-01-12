@@ -22,14 +22,14 @@ interface PvmActivityInterface extends PvmScopeInterface
      *
      * @return string the start behavior of an activity.
      */
-    public function getActivityStartBehavior(): string;
+    public function getActivityStartBehavior(): ?string;
 
     /**
      * Finds and returns an outgoing sequence flow (transition) by it's id.
      * @param transitionId the id of the transition to find
      * @return PvmTransitionInterface the transition or null in case it cannot be found
      */
-    public function findOutgoingTransition(string $transitionId): PvmTransitionInterface;
+    public function findOutgoingTransition(?string $transitionId): ?PvmTransitionInterface;
 
     /**
      * @return array the list of outgoing sequence flows (transitions)

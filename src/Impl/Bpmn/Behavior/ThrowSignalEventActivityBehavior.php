@@ -40,7 +40,7 @@ class ThrowSignalEventActivityBehavior extends AbstractBpmnActivityBehavior
         $this->leave($execution);
     }
 
-    protected function findSignalEventSubscriptions(string $signalName, ?string $tenantId): array
+    protected function findSignalEventSubscriptions(?string $signalName, ?string $tenantId): array
     {
         $eventSubscriptionManager = Context::getCommandContext()->getEventSubscriptionManager();
 

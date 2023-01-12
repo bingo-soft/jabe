@@ -2,7 +2,11 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
-use Jabe\Authorization\Resources;
+use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface,
+    Resources
+};
 use Jabe\History\{
     CleanableHistoricProcessInstanceReportResultInterface,
     HistoricProcessInstanceInterface
@@ -28,7 +32,7 @@ use Jabe\Impl\Util\{
 
 class HistoricProcessInstanceManager extends AbstractHistoricManager
 {
-    public function findHistoricProcessInstance(string $processInstanceId): ?HistoricProcessInstanceEntity
+    public function findHistoricProcessInstance(?string $processInstanceId): ?HistoricProcessInstanceEntity
     {
         if ($this->isHistoryEnabled()) {
             return $this->getDbEntityManager()->selectById(HistoricProcessInstanceEntity::class, $processInstanceId);
@@ -36,7 +40,7 @@ class HistoricProcessInstanceManager extends AbstractHistoricManager
         return null;
     }
 
-    public function findHistoricProcessInstanceEvent(string $eventId): ?HistoricProcessInstanceEventEntity
+    public function findHistoricProcessInstanceEvent(?string $eventId): ?HistoricProcessInstanceEventEntity
     {
         if ($this->isHistoryEnabled()) {
             return $this->getDbEntityManager()->selectById(HistoricProcessInstanceEventEntity::class, $eventId);
@@ -44,7 +48,7 @@ class HistoricProcessInstanceManager extends AbstractHistoricManager
         return null;
     }
 
-    public function deleteHistoricProcessInstanceByProcessDefinitionId(string $processDefinitionId): void
+    public function deleteHistoricProcessInstanceByProcessDefinitionId(?string $processDefinitionId): void
     {
         if ($this->isHistoryEnabled()) {
             $historicProcessInstanceIds = $this->getDbEntityManager()
@@ -89,7 +93,7 @@ class HistoricProcessInstanceManager extends AbstractHistoricManager
         return 0;
     }
 
-    public function findHistoricProcessInstancesByQueryCriteria(HistoricProcessInstanceQueryImpl $historicProcessInstanceQuery, Page $page): array
+    public function findHistoricProcessInstancesByQueryCriteria(HistoricProcessInstanceQueryImpl $historicProcessInstanceQuery, ?Page $page): array
     {
         if ($this->isHistoryEnabled()) {
             $this->configureQuery($historicProcessInstanceQuery);
@@ -108,7 +112,7 @@ class HistoricProcessInstanceManager extends AbstractHistoricManager
         return $this->getDbEntityManager()->selectOne("selectHistoricProcessInstanceCountByNativeQuery", $parameterMap);
     }
 
-    protected function configureQuery(HistoricProcessInstanceQueryImpl $query): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         $this->getAuthorizationManager()->configureHistoricProcessInstanceQuery($query);
         $this->getTenantManager()->configureQuery($query);
@@ -138,7 +142,7 @@ class HistoricProcessInstanceManager extends AbstractHistoricManager
         return $this->getDbEntityManager()->selectList("selectHistoricProcessInstanceDeploymentIdMappingsByQueryCriteria", $historicProcessInstanceQuery);
     }
 
-    public function findCleanableHistoricProcessInstancesReportByCriteria(CleanableHistoricProcessInstanceReportImpl $query, Page $page): array
+    public function findCleanableHistoricProcessInstancesReportByCriteria(CleanableHistoricProcessInstanceReportImpl $query, ?Page $page): array
     {
         $query->setCurrentTimestamp(ClockUtil::getCurrentTime());
 
@@ -156,7 +160,7 @@ class HistoricProcessInstanceManager extends AbstractHistoricManager
         return $this->getDbEntityManager()->selectOne("selectFinishedProcessInstancesReportEntitiesCount", $query);
     }
 
-    public function addRemovalTimeToProcessInstancesByRootProcessInstanceId(string $rootProcessInstanceId, string $removalTime): void
+    public function addRemovalTimeToProcessInstancesByRootProcessInstanceId(?string $rootProcessInstanceId, ?string $removalTime): void
     {
         $commandContext = Context::getCommandContext();
 
@@ -209,7 +213,7 @@ class HistoricProcessInstanceManager extends AbstractHistoricManager
             ->updatePreserveOrder(HistoricProcessInstanceEventEntity::class, "updateHistoricProcessInstanceEventsByRootProcessInstanceId", $parameters);
     }
 
-    public function addRemovalTimeById(string $processInstanceId, string $removalTime): void
+    public function addRemovalTimeById(?string $processInstanceId, ?string $removalTime): void
     {
         $commandContext = Context::getCommandContext();
 
@@ -262,7 +266,7 @@ class HistoricProcessInstanceManager extends AbstractHistoricManager
             ->updatePreserveOrder(HistoricProcessInstanceEventEntity::class, "updateHistoricProcessInstanceByProcessInstanceId", $parameters);
     }
 
-    public function deleteHistoricProcessInstancesByRemovalTime(string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): array
+    public function deleteHistoricProcessInstancesByRemovalTime(?string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): array
     {
         $commandContext = Context::getCommandContext();
 

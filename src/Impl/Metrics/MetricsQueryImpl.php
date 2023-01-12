@@ -64,26 +64,26 @@ class MetricsQueryImpl extends ListQueryParameterObject implements \Serializable
         $this->aggregateByReporter = $json->aggregateByReporter;
     }
 
-    public function name(string $name): MetricsQueryImpl
+    public function name(?string $name): MetricsQueryImpl
     {
         $this->name = MetricsUtil::resolveInternalName($name);
         return $this;
     }
 
-    public function reporter(string $reporter): MetricsQueryInterface
+    public function reporter(?string $reporter): MetricsQueryInterface
     {
         $this->reporter = $reporter;
         return $this;
     }
 
-    public function startDate(string $startDate): MetricsQueryImpl
+    public function startDate(?string $startDate): MetricsQueryImpl
     {
         $this->startDate = $startDate;
         $this->startDateMilliseconds = (new \DateTime($startDate))->getTimestamp() * 1000;
         return $this;
     }
 
-    public function endDate(string $endDate): MetricsQueryImpl
+    public function endDate(?string $endDate): MetricsQueryImpl
     {
         $this->endDate = $endDate;
         $this->endDateMilliseconds = (new \DateTime($endDate))->getTimestamp() * 1000;
@@ -147,12 +147,12 @@ class MetricsQueryImpl extends ListQueryParameterObject implements \Serializable
         $this->maxResults = $maxResults;
     }
 
-    public function getStartDate(): string
+    public function getStartDate(): ?string
     {
         return $this->startDate;
     }
 
-    public function getEndDate(): string
+    public function getEndDate(): ?string
     {
         return $this->endDate;
     }
@@ -167,12 +167,12 @@ class MetricsQueryImpl extends ListQueryParameterObject implements \Serializable
         return $this->endDateMilliseconds;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getReporter(): string
+    public function getReporter(): ?string
     {
         return $this->reporter;
     }

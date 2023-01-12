@@ -7,7 +7,7 @@ use Jabe\Impl\Persistence\Entity\TaskEntity;
 
 class ResolveTaskCmd extends CompleteTaskCmd
 {
-    public function __construct(string $taskId, array $variables)
+    public function __construct(?string $taskId, array $variables)
     {
         parent::__construct($taskId, $variables, false, false);
     }

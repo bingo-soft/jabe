@@ -21,7 +21,10 @@ interface InstantiationBuilderInterface
      * @param activityId the activity to instantiate
      * @throws ProcessEngineException if more than one possible ancestor activity instance exists
      */
-    public function startBeforeActivity(string $activityId): InstantiationBuilderInterface;
+    public function startBeforeActivity(
+        ?string $activityId,
+        ?string $ancestorActivityInstanceId = null
+    ): InstantiationBuilderInterface;
 
     /**
      * Submits an instruction that behaves like startTransition and always instantiates
@@ -30,7 +33,10 @@ interface InstantiationBuilderInterface
      * @param activityId the activity for which the outgoing flow should be executed
      * @throws ProcessEngineException if the activity has 0 or more than 1 outgoing sequence flows
      */
-    public function startAfterActivity(string $activityId): InstantiationBuilderInterface;
+    public function startAfterActivity(
+        ?string $activityId,
+        ?string $ancestorActivityInstanceId = null
+    ): InstantiationBuilderInterface;
 
     /**
      * <p><i>Submits the instruction:</i></p>
@@ -48,5 +54,8 @@ interface InstantiationBuilderInterface
      * @param transitionId the sequence flow to execute
      * @throws ProcessEngineException if more than one possible ancestor activity instance exists
      */
-    public function startTransition(string $transitionId): InstantiationBuilderInterface;
+    public function startTransition(
+        ?string $transitionId,
+        ?string $ancestorActivityInstanceId = null
+    ): InstantiationBuilderInterface;
 }

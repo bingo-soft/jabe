@@ -12,35 +12,36 @@ class HistoricDetailEventEntity extends HistoryEvent
     protected $timestamp;
     protected $tenantId;
     protected $userOperationId;
+    protected bool $initial;
 
     // getters and setters //////////////////////////////////////////////////////
 
-    public function getActivityInstanceId(): string
+    public function getActivityInstanceId(): ?string
     {
         return $this->activityInstanceId;
     }
 
-    public function setActivityInstanceId(string $activityInstanceId): void
+    public function setActivityInstanceId(?string $activityInstanceId): void
     {
         $this->activityInstanceId = $activityInstanceId;
     }
 
-    public function getTaskId(): string
+    public function getTaskId(): ?string
     {
         return $this->taskId;
     }
 
-    public function setTaskId(string $taskId): void
+    public function setTaskId(?string $taskId): void
     {
         $this->taskId = $taskId;
     }
 
-    public function getTimestamp(): string
+    public function getTimestamp(): ?string
     {
         return $this->timestamp;
     }
 
-    public function setTimestamp(string $timestamp): void
+    public function setTimestamp(?string $timestamp): void
     {
         $this->timestamp = $timestamp;
     }
@@ -55,22 +56,22 @@ class HistoricDetailEventEntity extends HistoryEvent
         $this->tenantId = $tenantId;
     }
 
-    public function getUserOperationId(): string
+    public function getUserOperationId(): ?string
     {
         return $this->userOperationId;
     }
 
-    public function setUserOperationId(string $userOperationId): void
+    public function setUserOperationId(?string $userOperationId): void
     {
         $this->userOperationId = $userOperationId;
     }
 
-    public function getRootProcessInstanceId(): string
+    public function getRootProcessInstanceId(): ?string
     {
         return $this->rootProcessInstanceId;
     }
 
-    public function setRootProcessInstanceId(string $rootProcessInstanceId): void
+    public function setRootProcessInstanceId(?string $rootProcessInstanceId): void
     {
         $this->rootProcessInstanceId = $rootProcessInstanceId;
     }

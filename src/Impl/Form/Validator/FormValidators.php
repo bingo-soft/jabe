@@ -61,7 +61,7 @@ class FormValidators
         return null;
     }
 
-    protected function createValidatorInstance(string $validator): FormFieldValidatorInterface
+    protected function createValidatorInstance(?string $validator): FormFieldValidatorInterface
     {
         try {
             return new $validator();
@@ -70,7 +70,7 @@ class FormValidators
         }
     }
 
-    public function addValidator(string $name, string $validatorType): void
+    public function addValidator(?string $name, ?string $validatorType): void
     {
         $this->validators[$name] = $validatorType;
     }

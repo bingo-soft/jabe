@@ -29,7 +29,7 @@ class ExecuteJobsCmd implements CommandInterface, \Serializable
 
     protected $jobFailureCollector;
 
-    public function __construct(string $jobId, JobFailureCollector $jobFailureCollector)
+    public function __construct(?string $jobId, JobFailureCollector $jobFailureCollector)
     {
         $this->jobId = $jobId;
         $this->jobFailureCollector = $jobFailureCollector;
@@ -119,5 +119,10 @@ class ExecuteJobsCmd implements CommandInterface, \Serializable
             }
         }
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

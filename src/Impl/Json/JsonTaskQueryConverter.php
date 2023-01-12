@@ -258,7 +258,7 @@ class JsonTaskQueryConverter extends JsonObjectConverter
         }
     }
 
-    protected function addVariable($jsonObject, string $variableType, TaskQueryVariableValue $variable): void
+    protected function addVariable($jsonObject, ?string $variableType, TaskQueryVariableValue $variable): void
     {
         $variables = JsonUtil::getArray($jsonObject, $variableType);
         JsonUtil::addElement($variables, self::variableValueConverter(), $variable);

@@ -15,7 +15,7 @@ interface BatchJobHandlerInterface extends JobHandlerInterface
      * @param configuration the configuration object
      * @return string the serialized configuration
      */
-    public function writeConfiguration(BatchConfiguration $configuration): string;
+    public function writeConfiguration(BatchConfiguration $configuration): ?string;
 
     /**
      * Read the serialized configuration of the batch.
@@ -23,7 +23,7 @@ interface BatchJobHandlerInterface extends JobHandlerInterface
      * @param serializedConfiguration the serialized configuration
      * @return BatchConfiguration the deserialized configuration object
      */
-    public function readConfiguration(string $serializedConfiguration): BatchConfiguration;
+    public function readConfiguration(?string $serializedConfiguration): BatchConfiguration;
 
     /**
      * Get the job declaration for batch jobs.

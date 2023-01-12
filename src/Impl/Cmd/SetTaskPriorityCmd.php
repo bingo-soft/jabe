@@ -14,7 +14,7 @@ class SetTaskPriorityCmd implements CommandInterface, \Serializable
     protected $priority;
     protected $taskId;
 
-    public function __construct(string $taskId, int $priority)
+    public function __construct(?string $taskId, int $priority)
     {
         $this->taskId = $taskId;
         $this->priority = $priority;
@@ -58,5 +58,10 @@ class SetTaskPriorityCmd implements CommandInterface, \Serializable
         foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
             $checker->checkTaskAssign($task);
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

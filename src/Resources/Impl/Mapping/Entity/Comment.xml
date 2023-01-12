@@ -22,36 +22,36 @@
   <insert id="insertComment" parameterType="Jabe\Impl\Persistence\Entity\CommentEntity">
     insert into ${prefix}ACT_HI_COMMENT (ID_, TYPE_, TIME_, USER_ID_, TASK_ID_, ROOT_PROC_INST_ID_, PROC_INST_ID_, ACTION_, MESSAGE_, FULL_MSG_, TENANT_ID_, REMOVAL_TIME_)
     values (
-      #{id ,dbalType=VARCHAR},
-      #{type ,dbalType=VARCHAR},
-      #{time ,dbalType=VARCHAR},
-      #{userId ,dbalType=VARCHAR},
-      #{taskId ,dbalType=VARCHAR},
-      #{rootProcessInstanceId ,dbalType=VARCHAR},
-      #{processInstanceId ,dbalType=VARCHAR},
-      #{action ,dbalType=VARCHAR},
-      #{message ,dbalType=VARCHAR},
-      #{fullMessageBytes ,dbalType=BLOB},
-      #{tenantId ,dbalType=VARCHAR},
-      #{removalTime, dbalType=VARCHAR}
+      #{id:VARCHAR},
+      #{type:VARCHAR},
+      #{time:VARCHAR},
+      #{userId:VARCHAR},
+      #{taskId:VARCHAR},
+      #{rootProcessInstanceId:VARCHAR},
+      #{processInstanceId:VARCHAR},
+      #{action:VARCHAR},
+      #{message:VARCHAR},
+      #{fullMessageBytes},
+      #{tenantId:VARCHAR},
+      #{removalTime:VARCHAR}
     )
   </insert>
 
   <insert id="insertComment_postgres" parameterType="Jabe\Impl\Persistence\Entity\CommentEntity">
     insert into ${prefix}ACT_HI_COMMENT (ID_, TYPE_, TIME_, USER_ID_, TASK_ID_, ROOT_PROC_INST_ID_, PROC_INST_ID_, ACTION_, MESSAGE_, FULL_MSG_, TENANT_ID_, REMOVAL_TIME_)
     values (
-      #{id ,dbalType=VARCHAR},
-      #{type ,dbalType=VARCHAR},
-      #{time ,dbalType=VARCHAR},
-      #{userId ,dbalType=VARCHAR},
-      #{taskId ,dbalType=VARCHAR},
-      #{rootProcessInstanceId ,dbalType=VARCHAR},
-      #{processInstanceId ,dbalType=VARCHAR},
-      #{action ,dbalType=VARCHAR},
-      #{message ,dbalType=VARCHAR},
-      #{fullMessageBytes ,dbalType=BINARY},
-      #{tenantId ,dbalType=VARCHAR},
-      #{removalTime, dbalType=VARCHAR}
+      #{id:VARCHAR},
+      #{type:VARCHAR},
+      #{time:VARCHAR},
+      #{userId:VARCHAR},
+      #{taskId:VARCHAR},
+      #{rootProcessInstanceId:VARCHAR},
+      #{processInstanceId:VARCHAR},
+      #{action:VARCHAR},
+      #{message:VARCHAR},
+      #{fullMessageBytes},
+      #{tenantId:VARCHAR},
+      #{removalTime:VARCHAR}
     )
   </insert>
 
@@ -59,41 +59,41 @@
   <update id="updateCommentsByRootProcessInstanceId"
           parameterType="array">
       update ${prefix}ACT_HI_COMMENT set
-      REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      REMOVAL_TIME_ = #{removalTime:VARCHAR}
 
-      where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+      where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateCommentsByRootProcessInstanceId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_HI_COMMENT RES WITH (FORCESEEK)
-    where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+    where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateCommentsByProcessInstanceId"
           parameterType="array">
     update ${prefix}ACT_HI_COMMENT
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
-      where PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR}
+      where PROC_INST_ID_ = #{processInstanceId:VARCHAR}
         or TASK_ID_ in (
           SELECT ID_
           FROM ${prefix}ACT_HI_TASKINST
-          WHERE PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+          WHERE PROC_INST_ID_ = #{processInstanceId:VARCHAR}
         )
   </update>
 
   <update id="updateCommentsByProcessInstanceId_mssql"
           parameterType="array">
     update RES set
-      RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
       FROM ${prefix}ACT_HI_COMMENT RES WITH (FORCESEEK)
-      where RES.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      where RES.PROC_INST_ID_ = #{processInstanceId:VARCHAR}
         or RES.TASK_ID_ in (
           SELECT ID_
           FROM ${prefix}ACT_HI_TASKINST
-          WHERE PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+          WHERE PROC_INST_ID_ = #{processInstanceId:VARCHAR}
         )
   </update>
 
@@ -106,7 +106,7 @@
   <delete id="deleteCommentsByIds" parameterType="array">
     delete from ${prefix}ACT_HI_COMMENT
     where 
-    <if test="taskProcessInstanceIds != null and count(taskProcessInstanceIds) > 0">
+    <if test="!empty(taskProcessInstanceIds)">
       TASK_ID_ in (
         select ID_
         from ${prefix}ACT_HI_TASKINST
@@ -116,7 +116,7 @@
           <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedCollection"/>
       )
     </if>
-    <if test="taskCaseInstanceIds != null and count(taskCaseInstanceIds) > 0">
+    <!--<if test="taskCaseInstanceIds != null and count(taskCaseInstanceIds) &gt; 0">
       TASK_ID_ in (
         select ID_
         from ${prefix}ACT_HI_TASKINST
@@ -125,8 +125,8 @@
           <bind name="fieldName" value="'CASE_INST_ID_'"/>
           <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedCollection"/>
         )
-    </if>
-    <if test="processInstanceIds != null and count(processInstanceIds) > 0">
+    </if>-->
+    <if test="!empty(processInstanceIds)">
       <bind name="listOfIds" value="processInstanceIds"/>
       <bind name="fieldName" value="'PROC_INST_ID_'"/>
       <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedCollection"/>
@@ -137,19 +137,19 @@
     delete CO from ${prefix}ACT_HI_COMMENT CO
     left join ${prefix}ACT_HI_TASKINST T
       on CO.TASK_ID_ = T.ID_
-      <if test="taskProcessInstanceIds != null and count(taskProcessInstanceIds) > 0">
+      <if test="!empty(taskProcessInstanceIds)">
         where
           <bind name="listOfIds" value="taskProcessInstanceIds"/>
           <bind name="fieldName" value="'T.PROC_INST_ID_'"/>
           <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedCollection"/>
       </if>
-      <if test="taskCaseInstanceIds != null and count(taskCaseInstanceIds) > 0">
+      <!--<if test="taskCaseInstanceIds != null and count(taskCaseInstanceIds) &gt; 0">
         where
           <bind name="listOfIds" value="taskCaseInstanceIds"/>
           <bind name="fieldName" value="'T.CASE_INST_ID_'"/>
           <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedCollection"/>
-      </if>
-      <if test="processInstanceIds != null and count(processInstanceIds) > 0">
+      </if>-->
+      <if test="!empty(processInstanceIds)">
         where
           <bind name="listOfIds" value="processInstanceIds"/>
           <bind name="fieldName" value="'CO.PROC_INST_ID_'"/>
@@ -160,14 +160,14 @@
   <sql id="andWhereMinuteInDateBetweenSql">
     <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
       AND ${datepart1}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart2}${date}${datepart3}
-      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+      between #{parameter.minuteFrom} and #{parameter.minuteTo}
     </if>
   </sql>
 
   <sql id="andWhereMinuteInDateBetweenSql_oracle">
     <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
       AND ${datepart1}${date}${datepart2}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart3}
-      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+      between #{parameter.minuteFrom} and #{parameter.minuteTo}
     </if>
   </sql>
 
@@ -176,7 +176,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_COMMENT
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql"/>
     ${limitAfterWithoutOffset}
   </delete>
@@ -186,7 +186,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_COMMENT
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql_oracle"/>
     ${limitAfterWithoutOffset}
   </delete>
@@ -199,7 +199,7 @@
     where ID_ IN
       (SELECT ID_
        FROM ${prefix}ACT_HI_COMMENT
-       WHERE REMOVAL_TIME_ <= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
+       WHERE REMOVAL_TIME_ &lt;= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
        ${limitAfterWithoutOffset})
   </delete>
 
@@ -240,7 +240,7 @@
   <select id="selectCommentsByTaskId" parameterType="Jabe\Impl\Db\ListQueryParameterObject" resultMap="commentResultMap">
     select * 
     from ${prefix}ACT_HI_COMMENT 
-    where TASK_ID_ = #{parameter,dbalType=VARCHAR}
+    where TASK_ID_ = #{parameter:VARCHAR}
       and TYPE_ = 'comment'
     order by TIME_ desc
   </select>
@@ -248,7 +248,7 @@
   <select id="selectCommentsByTaskId_postgres" parameterType="Jabe\Impl\Db\ListQueryParameterObject" resultMap="commentResultMap_postgres">
     select * 
     from ${prefix}ACT_HI_COMMENT 
-    where TASK_ID_ = #{parameter,dbalType=VARCHAR}
+    where TASK_ID_ = #{parameter:VARCHAR}
       and TYPE_ = 'comment'
     order by TIME_ desc
   </select>
@@ -276,7 +276,7 @@
           ACTION_,
           MESSAGE_
         from ${prefix}ACT_HI_COMMENT
-        where TASK_ID_ = #{parameter,dbalType=VARCHAR}
+        where TASK_ID_ = #{parameter:VARCHAR}
      UNION
      select
         ID_ as ID_,
@@ -288,7 +288,7 @@
         OPERATION_TYPE_ as ACTION_,
         ${constant.op_message} as MESSAGE_
         from ${prefix}ACT_HI_OP_LOG
-        where TASK_ID_ = #{parameter,dbalType=VARCHAR}
+        where TASK_ID_ = #{parameter:VARCHAR}
         and OPERATION_TYPE_ in ('AddUserLink',
                                 'DeleteUserLink',
                                 'AddGroupLink',
@@ -304,7 +304,7 @@
         OPERATION_TYPE_ as ACTION_,
         NEW_VALUE_ as MESSAGE_
         from ${prefix}ACT_HI_OP_LOG
-        where TASK_ID_ = #{parameter,dbalType=VARCHAR}
+        where TASK_ID_ = #{parameter:VARCHAR}
         and OPERATION_TYPE_ in ('AddAttachment',
                                 'DeleteAttachment')
     ) RES
@@ -315,27 +315,27 @@
   <select id="selectCommentsByProcessInstanceId" parameterType="Jabe\Impl\Db\ListQueryParameterObject" resultMap="commentResultMap">
     select * 
     from ${prefix}ACT_HI_COMMENT 
-    where PROC_INST_ID_ = #{parameter,dbalType=VARCHAR}
+    where PROC_INST_ID_ = #{parameter:VARCHAR}
     order by TIME_ desc
   </select>
 
   <select id="selectCommentsByProcessInstanceId_postgres" parameterType="Jabe\Impl\Db\ListQueryParameterObject" resultMap="commentResultMap_postgres">
     select * 
     from ${prefix}ACT_HI_COMMENT 
-    where PROC_INST_ID_ = #{parameter,dbalType=BINARY}
+    where PROC_INST_ID_ = #{parameter}
     order by TIME_ desc
   </select>
 
   <select id="selectCommentByTaskIdAndCommentId" parameterType="array" resultMap="commentResultMap">
     select * from ${prefix}ACT_HI_COMMENT 
-    where TASK_ID_ = #{taskId,dbalType=VARCHAR}
-      and ID_ =  #{id,dbalType=VARCHAR}
+    where TASK_ID_ = #{taskId:VARCHAR}
+      and ID_ =  #{id:VARCHAR}
   </select>
 
   <select id="selectCommentByTaskIdAndCommentId_postgres" parameterType="array" resultMap="commentResultMap_postgres">
     select * from ${prefix}ACT_HI_COMMENT 
-    where TASK_ID_ = #{taskId,dbalType=VARCHAR}
-      and ID_ =  #{id,dbalType=VARCHAR}
+    where TASK_ID_ = #{taskId:VARCHAR}
+      and ID_ =  #{id:VARCHAR}
   </select>
 
 </mapper>

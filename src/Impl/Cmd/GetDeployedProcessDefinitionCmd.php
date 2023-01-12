@@ -16,7 +16,7 @@ class GetDeployedProcessDefinitionCmd implements CommandInterface
     protected $processDefinitionId;
     protected $processDefinitionKey;
     protected $processDefinitionTenantId;
-    protected $isTenantIdSet = false;
+    protected bool $isTenantIdSet = false;
     protected $checkReadPermission;
 
     public function __construct($el, bool $checkReadPermission)
@@ -58,17 +58,22 @@ class GetDeployedProcessDefinitionCmd implements CommandInterface
         }
     }
 
-    protected function findById(DeploymentCache $deploymentCache, string $processDefinitionId): ?ProcessDefinitionEntity
+    protected function findById(DeploymentCache $deploymentCache, ?string $processDefinitionId): ?ProcessDefinitionEntity
     {
         return $deploymentCache->findDeployedProcessDefinitionById($processDefinitionId);
     }
 
-    protected function findByKey(DeploymentCache $deploymentCache, string $processDefinitionKey): ?ProcessDefinitionEntity
+    protected function findByKey(DeploymentCache $deploymentCache, ?string $processDefinitionKey): ?ProcessDefinitionEntity
     {
         if ($this->isTenantIdSet) {
             return $deploymentCache->findDeployedLatestProcessDefinitionByKeyAndTenantId($processDefinitionKey, $this->processDefinitionTenantId);
         } else {
-            return $deploymentCache->findDeployedLatestProcessDefinitionByKey(processDefinitionKey);
+            return $deploymentCache->findDeployedLatestProcessDefinitionByKey($processDefinitionKey);
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

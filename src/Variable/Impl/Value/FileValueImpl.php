@@ -19,7 +19,7 @@ class FileValueImpl implements FileValueInterface
 
     public function __construct(
         FileValueTypeInterface $type,
-        string $filename,
+        ?string $filename,
         ?string $mimeType = null,
         ?string $encoding = null,
         ?string $value = null
@@ -31,7 +31,7 @@ class FileValueImpl implements FileValueInterface
         $this->value = $value;
     }
 
-    public function getFilename(): string
+    public function getFilename(): ?string
     {
         return $this->filename;
     }
@@ -41,12 +41,12 @@ class FileValueImpl implements FileValueInterface
         return $this->mimeType;
     }
 
-    public function setMimeType(string $mimeType): void
+    public function setMimeType(?string $mimeType): void
     {
         $this->mimeType = $mimeType;
     }
 
-    public function setValue(string $value): void
+    public function setValue(?string $value): void
     {
         $this->value = $value;
     }
@@ -67,7 +67,7 @@ class FileValueImpl implements FileValueInterface
         return $this->type;
     }
 
-    public function setEncoding(string $encoding): void
+    public function setEncoding(?string $encoding): void
     {
         $this->encoding = $encoding;
     }

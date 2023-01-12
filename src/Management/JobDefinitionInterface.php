@@ -7,24 +7,24 @@ interface JobDefinitionInterface
     /**
      * @return string the id of the job definition.
      */
-    public function getId(): string;
+    public function getId(): ?string;
 
     /**
      * @return string the id of the ProcessDefinition this job definition is associated with.
      */
-    public function getProcessDefinitionId(): string;
+    public function getProcessDefinitionId(): ?string;
 
     /**
      * @return string the key of the ProcessDefinition this job definition is associated with.
      */
-    public function getProcessDefinitionKey(): string;
+    public function getProcessDefinitionKey(): ?string;
 
     /**
      * The Type of a job. Asynchronous continuation, timer, ...
      *
      * @return string the type of a Job.
      */
-    public function getJobType(): string;
+    public function getJobType(): ?string;
 
     /**
      * The configuration of a job definition provides details about the jobs which will be created.
@@ -32,14 +32,14 @@ interface JobDefinitionInterface
      *
      * @return string the configuration of this job definition.
      */
-    public function getJobConfiguration(): string;
+    public function getJobConfiguration(): ?string;
 
     /**
      * The Id of the activity (from BPMN 2.0 Xml) this Job Definition is associated with.
      *
      * @return string the activity id for this Job Definition.
      */
-    public function getActivityId(): string;
+    public function getActivityId(): ?string;
 
 
     /**

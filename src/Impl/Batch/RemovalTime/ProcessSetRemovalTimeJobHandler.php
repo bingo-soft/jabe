@@ -6,12 +6,16 @@ use Jabe\ProcessEngineConfiguration;
 use Jabe\Batch\BatchInterface;
 use Jabe\Impl\Batch\{
     AbstractBatchJobHandler,
+    BatchConfiguration,
     BatchJobConfiguration,
     BatchJobContext,
     BatchJobDeclaration
 };
 use Jabe\Impl\Interceptor\CommandContext;
-use Jabe\Impl\JobExecutor\JobDeclaration;
+use Jabe\Impl\JobExecutor\{
+    JobDeclaration,
+    JobHandlerConfigurationInterface
+};
 use Jabe\Impl\Json\JsonObjectConverter;
 use Jabe\Impl\Persistence\Entity\{
     ByteArrayEntity,
@@ -25,7 +29,7 @@ class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler
 {
     public static $JOB_DECLARATION;
 
-    public function execute(BatchJobConfiguration $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId)
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
     {
         $byteArrayId = $configuration->getConfigurationByteArrayId();
         $configurationByteArray = $this->findByteArrayById($byteArrayId, $commandContext);
@@ -62,7 +66,7 @@ class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler
         }
     }
 
-    protected function addRemovalTimeToHierarchy(string $rootProcessInstanceId, string $removalTime, CommandContext $commandContext): void
+    protected function addRemovalTimeToHierarchy(?string $rootProcessInstanceId, ?string $removalTime, CommandContext $commandContext): void
     {
         $commandContext->getHistoricProcessInstanceManager()
             ->addRemovalTimeToProcessInstancesByRootProcessInstanceId($rootProcessInstanceId, $removalTime);
@@ -73,7 +77,7 @@ class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler
         }*/
     }
 
-    protected function addRemovalTime(string $instanceId, string $removalTime, CommandContext $commandContext): void
+    protected function addRemovalTime(?string $instanceId, ?string $removalTime, CommandContext $commandContext): void
     {
         $commandContext->getHistoricProcessInstanceManager()
             ->addRemovalTimeById($instanceId, $removalTime);
@@ -109,13 +113,13 @@ class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler
         return $instance->getRootProcessInstanceId() !== null;
     }
 
-    protected function getHistoryRemovalTimeStrategy(CommandContext $commandContext): string
+    protected function getHistoryRemovalTimeStrategy(CommandContext $commandContext): ?string
     {
         return $commandContext->getProcessEngineConfiguration()
             ->getHistoryRemovalTimeStrategy();
     }
 
-    protected function findProcessDefinitionById(string $processDefinitionId, CommandContext $commandContext): ?ProcessDefinitionInterface
+    protected function findProcessDefinitionById(?string $processDefinitionId, CommandContext $commandContext): ?ProcessDefinitionInterface
     {
         return $commandContext->getProcessEngineConfiguration()
             ->getDeploymentCache()
@@ -126,7 +130,7 @@ class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler
         return $commandContext->getProcessEngineConfiguration().isDmnEnabled();
     }*/
 
-    protected function calculateRemovalTime(HistoricProcessInstanceEntity $processInstance, CommandContext $commandContext): string
+    protected function calculateRemovalTime(HistoricProcessInstanceEntity $processInstance, CommandContext $commandContext): ?string
     {
         $processDefinition = $this->findProcessDefinitionById($processInstance->getProcessDefinitionId(), $commandContext);
 
@@ -135,13 +139,13 @@ class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler
             ->calculateRemovalTime($processInstance, $processDefinition);
     }
 
-    protected function findByteArrayById(string $byteArrayId, CommandContext $commandContext): ByteArrayEntity
+    protected function findByteArrayById(?string $byteArrayId, CommandContext $commandContext): ByteArrayEntity
     {
         return $commandContext->getDbEntityManager()
             ->selectById(ByteArrayEntity::class, $byteArrayId);
     }
 
-    protected function findProcessInstanceById(string $instanceId, CommandContext $commandContext): ?HistoricProcessInstanceEntity
+    protected function findProcessInstanceById(?string $instanceId, CommandContext $commandContext): ?HistoricProcessInstanceEntity
     {
         return $commandContext->getHistoricProcessInstanceManager()
             ->findHistoricProcessInstance($instanceId);
@@ -168,8 +172,8 @@ class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler
         return SetRemovalTimeJsonConverter::instance();
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
-        return BatchInteface::TYPE_PROCESS_SET_REMOVAL_TIME;
+        return BatchInterface::TYPE_PROCESS_SET_REMOVAL_TIME;
     }
 }

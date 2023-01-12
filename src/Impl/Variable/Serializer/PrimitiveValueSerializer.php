@@ -7,12 +7,12 @@ use Jabe\Variable\Value\TypedValueInterface;
 
 abstract class PrimitiveValueSerializer extends AbstractTypedValueSerializer
 {
-    public function __construct(PrimitiveValueTypeInterface $variableType)
+    public function __construct(/*PrimitiveValueTypeInterface*/$variableType)
     {
         parent::__construct($variableType);
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         // default implementation returns the name of the type. This is OK since we assume that
         // there is only a single serializer for a primitive variable type.

@@ -15,7 +15,7 @@ class PasswordPolicyLengthRuleImpl implements PasswordPolicyRuleInterface
         $this->minLength = $minLength;
     }
 
-    public function getPlaceholder(): string
+    public function getPlaceholder(): ?string
     {
         return PasswordPolicyLengthRuleImpl::PLACEHOLDER;
     }
@@ -27,7 +27,7 @@ class PasswordPolicyLengthRuleImpl implements PasswordPolicyRuleInterface
         return $parameter;
     }
 
-    public function execute(string $password): bool
+    public function execute(?string $password): bool
     {
         return strlen($password) >= $this->minLength;
     }

@@ -13,7 +13,7 @@ class GetIdentityLinksForProcessDefinitionCmd implements CommandInterface, \Seri
 {
     protected $processDefinitionId;
 
-    public function __construct(string $processDefinitionId)
+    public function __construct(?string $processDefinitionId)
     {
         $this->processDefinitionId = $processDefinitionId;
     }
@@ -41,5 +41,10 @@ class GetIdentityLinksForProcessDefinitionCmd implements CommandInterface, \Seri
 
         $identityLinks = $processDefinition->getIdentityLinks();
         return $identityLinks;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

@@ -32,13 +32,13 @@ class CommentManager extends AbstractHistoricManager
         parent::insert($dbEntity);
     }
 
-    public function findCommentsByTaskId(string $taskId): array
+    public function findCommentsByTaskId(?string $taskId): array
     {
         $this->checkHistoryEnabled();
         return $this->getDbEntityManager()->selectList("selectCommentsByTaskId", $taskId);
     }
 
-    public function findEventsByTaskId(string $taskId): array
+    public function findEventsByTaskId(?string $taskId): array
     {
         $this->checkHistoryEnabled();
 
@@ -49,7 +49,7 @@ class CommentManager extends AbstractHistoricManager
         return $this->getDbEntityManager()->selectList("selectEventsByTaskId", $query);
     }
 
-    public function deleteCommentsByTaskId(string $taskId): void
+    public function deleteCommentsByTaskId(?string $taskId): void
     {
         $this->checkHistoryEnabled();
         $this->getDbEntityManager()->delete(CommentEntity::class, "deleteCommentsByTaskId", $taskId);
@@ -81,13 +81,13 @@ class CommentManager extends AbstractHistoricManager
         $this->getDbEntityManager()->deletePreserveOrder(CommentEntity::class, "deleteCommentsByIds", $parameters);
     }
 
-    public function findCommentsByProcessInstanceId(string $processInstanceId): array
+    public function findCommentsByProcessInstanceId(?string $processInstanceId): array
     {
         $this->checkHistoryEnabled();
         return $this->getDbEntityManager()->selectList("selectCommentsByProcessInstanceId", $processInstanceId);
     }
 
-    public function findCommentByTaskIdAndCommentId(string $taskId, string $commentId): ?CommentEntity
+    public function findCommentByTaskIdAndCommentId(?string $taskId, ?string $commentId): ?CommentEntity
     {
         $this->checkHistoryEnabled();
 
@@ -98,7 +98,7 @@ class CommentManager extends AbstractHistoricManager
         return $this->getDbEntityManager()->selectOne("selectCommentByTaskIdAndCommentId", $parameters);
     }
 
-    public function addRemovalTimeToCommentsByRootProcessInstanceId(string $rootProcessInstanceId, string $removalTime): void
+    public function addRemovalTimeToCommentsByRootProcessInstanceId(?string $rootProcessInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["rootProcessInstanceId"] = $rootProcessInstanceId;
@@ -108,7 +108,7 @@ class CommentManager extends AbstractHistoricManager
             ->updatePreserveOrder(CommentEntity::class, "updateCommentsByRootProcessInstanceId", $parameters);
     }
 
-    public function addRemovalTimeToCommentsByProcessInstanceId(string $processInstanceId, string $removalTime): void
+    public function addRemovalTimeToCommentsByProcessInstanceId(?string $processInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["processInstanceId"] = $processInstanceId;
@@ -118,7 +118,7 @@ class CommentManager extends AbstractHistoricManager
             ->updatePreserveOrder(CommentEntity::class, "updateCommentsByProcessInstanceId", $parameters);
     }
 
-    public function deleteCommentsByRemovalTime(string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
+    public function deleteCommentsByRemovalTime(?string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
     {
         $parameters = [];
         $parameters["removalTime"] = $removalTime;

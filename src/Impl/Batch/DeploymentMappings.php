@@ -4,7 +4,7 @@ namespace Jabe\Impl\Batch;
 
 class DeploymentMappings extends \ArrayObject
 {
-    protected $overallIdCount;
+    protected int $overallIdCount = 0;
 
     public static function of(DeploymentMapping $mapping): DeploymentMappings
     {

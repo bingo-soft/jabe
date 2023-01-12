@@ -29,7 +29,7 @@ class RestartProcessInstanceBuilderImpl implements RestartProcessInstanceBuilder
     protected $skipIoMappings;
     protected $withoutBusinessKey;
 
-    public function __construct($processDefinitionIdOrExecutor, string $processDefinitionId = null)
+    public function __construct($processDefinitionIdOrExecutor, ?string $processDefinitionId = null)
     {
         if ($processDefinitionIdOrExecutor instanceof CommandExecutorInterface) {
             EnsureUtil::ensureNotNull(NotValidException::class, "processDefinitionId", $processDefinitionId);
@@ -40,21 +40,21 @@ class RestartProcessInstanceBuilderImpl implements RestartProcessInstanceBuilder
         }
     }
 
-    public function startBeforeActivity(string $activityId): RestartProcessInstanceBuilderInterface
+    public function startBeforeActivity(?string $activityId): RestartProcessInstanceBuilderInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "activityId", $activityId);
         $this->instructions[] = new ActivityBeforeInstantiationCmd(null, $activityId);
         return $this;
     }
 
-    public function startAfterActivity(string $activityId): RestartProcessInstanceBuilderInterface
+    public function startAfterActivity(?string $activityId): RestartProcessInstanceBuilderInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "activityId", $activityId);
         $this->instructions[] = new ActivityAfterInstantiationCmd(null, $activityId);
         return $this;
     }
 
-    public function startTransition(string $transitionId): RestartProcessInstanceBuilderInterface
+    public function startTransition(?string $transitionId): RestartProcessInstanceBuilderInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "activityId", $transitionId);
         $this->instructions[] = new TransitionInstantiationCmd(null, $transitionId);
@@ -92,7 +92,7 @@ class RestartProcessInstanceBuilderImpl implements RestartProcessInstanceBuilder
         return $this->query;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
@@ -102,7 +102,7 @@ class RestartProcessInstanceBuilderImpl implements RestartProcessInstanceBuilder
         $this->instructions = $instructions;
     }
 
-    public function setProcessDefinitionId(string $processDefinitionId): void
+    public function setProcessDefinitionId(?string $processDefinitionId): void
     {
         $this->processDefinitionId = $processDefinitionId;
     }

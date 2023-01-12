@@ -61,7 +61,7 @@ class TaskDefinition
         $this->descriptionExpression = $descriptionExpression;
     }
 
-    public function getAssigneeExpression(): ExpressionInterface
+    public function getAssigneeExpression(): ?ExpressionInterface
     {
         return $this->assigneeExpression;
     }
@@ -91,7 +91,7 @@ class TaskDefinition
         $this->candidateGroupIdExpressions[] = $groupId;
     }
 
-    public function getPriorityExpression(): ExpressionInterface
+    public function getPriorityExpression(): ?ExpressionInterface
     {
         return $this->priorityExpression;
     }
@@ -111,17 +111,17 @@ class TaskDefinition
         $this->taskFormHandler = $taskFormHandler;
     }
 
-    public function getKey(): string
+    public function getKey(): ?string
     {
         return $this->key;
     }
 
-    public function setKey(string $key): void
+    public function setKey(?string $key): void
     {
         $this->key = $key;
     }
 
-    public function getDueDateExpression(): ExpressionInterface
+    public function getDueDateExpression(): ?ExpressionInterface
     {
         return $this->dueDateExpression;
     }
@@ -131,7 +131,7 @@ class TaskDefinition
         $this->dueDateExpression = $dueDateExpression;
     }
 
-    public function getFollowUpDateExpression(): ExpressionInterface
+    public function getFollowUpDateExpression(): ?ExpressionInterface
     {
         return $this->followUpDateExpression;
     }
@@ -168,7 +168,7 @@ class TaskDefinition
         return $this->builtinTaskListeners;
     }
 
-    public function getTimeoutTaskListener(string $timeoutId): ?TaskListenerInterface
+    public function getTimeoutTaskListener(?string $timeoutId): ?TaskListenerInterface
     {
         if (array_key_exists($timeoutId, $this->timeoutTaskListeners)) {
             return $this->timeoutTaskListeners[$timeoutId];
@@ -176,12 +176,12 @@ class TaskDefinition
         return null;
     }
 
-    public function addTaskListener(string $eventName, TaskListenerInterface $taskListener): void
+    public function addTaskListener(?string $eventName, TaskListenerInterface $taskListener): void
     {
         CollectionUtil::addToMapOfLists($this->taskListeners, $eventName, $taskListener);
     }
 
-    public function addBuiltInTaskListener(string $eventName, TaskListenerInterface $taskListener): void
+    public function addBuiltInTaskListener(?string $eventName, TaskListenerInterface $taskListener): void
     {
         $listeners = [];
         if (array_key_exists($eventName, $this->taskListeners)) {
@@ -201,7 +201,7 @@ class TaskDefinition
         CollectionUtil::addToMapOfLists($this->builtinTaskListeners, $eventName, $taskListener);
     }
 
-    public function addTimeoutTaskListener(string $timeoutId, TaskListenerInterface $taskListener): void
+    public function addTimeoutTaskListener(?string $timeoutId, TaskListenerInterface $taskListener): void
     {
         $this->timeoutTaskListeners[$timeoutId] = $taskListener;
     }
@@ -216,7 +216,7 @@ class TaskDefinition
         $this->formDefinition = $formDefinition;
     }
 
-    public function getFormKey(): ExpressionInterface
+    public function getFormKey(): ?ExpressionInterface
     {
         return $this->formDefinition->getFormKey();
     }
@@ -231,7 +231,7 @@ class TaskDefinition
         return $this->formDefinition->getFormDefinitionKey();
     }
 
-    public function getFormDefinitionBinding(): string
+    public function getFormDefinitionBinding(): ?string
     {
         return $this->formDefinition->getFormDefinitionBinding();
     }

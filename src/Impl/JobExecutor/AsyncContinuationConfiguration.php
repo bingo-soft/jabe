@@ -7,27 +7,27 @@ class AsyncContinuationConfiguration implements JobHandlerConfigurationInterface
     protected $atomicOperation;
     protected $transitionId;
 
-    public function getAtomicOperation(): string
+    public function getAtomicOperation(): ?string
     {
         return $this->atomicOperation;
     }
 
-    public function setAtomicOperation(string $atomicOperation): void
+    public function setAtomicOperation(?string $atomicOperation): void
     {
         $this->atomicOperation = $atomicOperation;
     }
 
-    public function getTransitionId(): string
+    public function getTransitionId(): ?string
     {
         return $this->transitionId;
     }
 
-    public function setTransitionId(string $transitionId): void
+    public function setTransitionId(?string $transitionId): void
     {
         $this->transitionId = $transitionId;
     }
 
-    public function toCanonicalString(): string
+    public function toCanonicalString(): ?string
     {
         $configuration = $this->atomicOperation;
 

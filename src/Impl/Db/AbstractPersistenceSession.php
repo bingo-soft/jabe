@@ -49,7 +49,7 @@ abstract class AbstractPersistenceSession implements PersistenceSessionInterface
 
     abstract protected function updateBulk(DbBulkOperation $operation): void;
 
-    abstract protected function getDbVersion(): string;
+    abstract protected function getDbVersion(): ?string;
 
     public function dbSchemaCreate(): void
     {
@@ -64,23 +64,24 @@ abstract class AbstractPersistenceSession implements PersistenceSessionInterface
             throw new \Exception("databaseHistoryLevelException");
         }
 
-        if ($this->isEngineTablePresent()) {
+        /*if ($this->isEngineTablePresent()) {
             $dbVersion = $this->getDbVersion();
             if (ProcessEngineInterface::VERSION != $dbVersion) {
                 //throw LOG.wrongDbVersionException(ProcessEngine.VERSION, dbVersion);
                 throw new \Exception("wrongDbVersionException");
             }
         } else {
-            $this->dbSchemaCreateEngine();
-        }
+            //$this->dbSchemaCreateEngine();
+        }*/
 
-        if ($processEngineConfiguration->isDbHistoryUsed()) {
+        //@TODO
+        /*if ($processEngineConfiguration->isDbHistoryUsed()) {
             $this->dbSchemaCreateHistory();
-        }
+        }*/
 
-        if ($processEngineConfiguration->isDbIdentityUsed()) {
+        /*if ($processEngineConfiguration->isDbIdentityUsed()) {
             $this->dbSchemaCreateIdentity();
-        }
+        }*/
 
         /*if (processEngineConfiguration.isCmmnEnabled()) {
             dbSchemaCreateCmmn();
@@ -98,11 +99,11 @@ abstract class AbstractPersistenceSession implements PersistenceSessionInterface
         }*/
     }
 
-    abstract protected function dbSchemaCreateIdentity(): void;
+    //abstract protected function dbSchemaCreateIdentity(): void;
 
-    abstract protected function dbSchemaCreateHistory(): void;
+    //abstract protected function dbSchemaCreateHistory(): void;
 
-    abstract protected function dbSchemaCreateEngine(): void;
+    //abstract protected function dbSchemaCreateEngine(): void;
 
     /*abstract protected function dbSchemaCreateCmmn(): void;
 
@@ -133,20 +134,20 @@ abstract class AbstractPersistenceSession implements PersistenceSessionInterface
             dbSchemaDropCmmnHistory();
         }*/
 
-        if ($processEngineConfiguration->isDbHistoryUsed()) {
+        /*if ($processEngineConfiguration->isDbHistoryUsed()) {
             $this->dbSchemaDropHistory();
         }
 
         if ($processEngineConfiguration->isDbIdentityUsed()) {
             $this->dbSchemaDropIdentity();
-        }
+        }*/
     }
 
-    abstract protected function dbSchemaDropIdentity(): void;
+    //abstract protected function dbSchemaDropIdentity(): void;
 
-    abstract protected function dbSchemaDropHistory(): void;
+    //abstract protected function dbSchemaDropHistory(): void;
 
-    abstract protected function dbSchemaDropEngine(): void;
+    //abstract protected function dbSchemaDropEngine(): void;
 
     /*abstract protected function void dbSchemaDropCmmn();
 
@@ -158,13 +159,13 @@ abstract class AbstractPersistenceSession implements PersistenceSessionInterface
 
     public function dbSchemaPrune(): void
     {
-        $processEngineConfiguration = Context::getProcessEngineConfiguration();
+        /*$processEngineConfiguration = Context::getProcessEngineConfiguration();
         if ($this->isHistoryTablePresent() && !$processEngineConfiguration->isDbHistoryUsed()) {
             $this->dbSchemaDropHistory();
         }
         if ($this->isIdentityTablePresent() && !$processEngineConfiguration->isDbIdentityUsed()) {
             $this->dbSchemaDropIdentity();
-        }
+        }*/
         /*if (isCmmnTablePresent() && !processEngineConfiguration.isCmmnEnabled()) {
             dbSchemaDropCmmn();
         }
@@ -179,11 +180,11 @@ abstract class AbstractPersistenceSession implements PersistenceSessionInterface
         }*/
     }
 
-    abstract public function isEngineTablePresent(): bool;
+    //abstract public function isEngineTablePresent(): bool;
 
-    abstract public function isHistoryTablePresent(): bool;
+    //abstract public function isHistoryTablePresent(): bool;
 
-    abstract public function isIdentityTablePresent(): bool;
+    //abstract public function isIdentityTablePresent(): bool;
 
     /*abstract public function boolean isCmmnTablePresent();
 

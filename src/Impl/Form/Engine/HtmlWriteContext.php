@@ -13,7 +13,7 @@ class HtmlWriteContext
         $this->elements = $elements;
     }
 
-    public function getWriter(): StringWriter
+    public function getWriter(): ?StringWriter
     {
         return $this->writer;
     }

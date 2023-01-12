@@ -17,12 +17,12 @@ class EnumFormType extends SimpleFormFieldType
         $this->values = $values;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return self::TYPE_NAME;
     }
 
-    public function getInformation(string $key)
+    public function getInformation(?string $key)
     {
         if ($key == "values") {
             return $this->values;

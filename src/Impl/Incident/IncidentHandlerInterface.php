@@ -9,12 +9,12 @@ interface IncidentHandlerInterface
     /**
      * Returns the incident type this handler activates for.
      */
-    public function getIncidentHandlerType(): string;
+    public function getIncidentHandlerType(): ?string;
 
     /**
      * Handle an incident that arose in the context of an execution.
      */
-    public function handleIncident(IncidentContext $context, string $message): IncidentInterface;
+    public function handleIncident(IncidentContext $context, ?string $message): IncidentInterface;
 
     /**
      * Called in situations in which an incident handler may wish to resolve existing incidents

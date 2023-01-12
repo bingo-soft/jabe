@@ -234,13 +234,13 @@ class Resources implements ResourceInterface
     private $name;
     private $id;
 
-    private function __construct(string $name, int $id)
+    private function __construct(?string $name, int $id)
     {
         $this->name = $name;
         $this->id = $id;
     }
 
-    public function resourceName(): string
+    public function resourceName(): ?string
     {
         return $this->name;
     }

@@ -19,7 +19,7 @@ class HistoricFormPropertyEntity extends HistoricFormPropertyEventEntity impleme
         }
     }
 
-    public function getFieldId(): string
+    public function getFieldId(): ?string
     {
         return $this->propertyId;
     }

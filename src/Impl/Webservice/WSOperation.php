@@ -15,19 +15,19 @@ class WSOperation implements OperationImplementationInterface
 
     protected $service;
 
-    public function __construct(string $id, string $operationName, WSService $service)
+    public function __construct(?string $id, ?string $operationName, WSService $service)
     {
         $this->id = $id;
         $this->name = $operationName;
         $this->service = $service;
     }
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }

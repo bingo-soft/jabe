@@ -27,7 +27,7 @@ class ConditionSet
         return $this->businessKey;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }

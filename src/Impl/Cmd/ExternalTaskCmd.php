@@ -19,7 +19,7 @@ abstract class ExternalTaskCmd implements CommandInterface
      */
     protected $externalTaskId;
 
-    public function __construct(string $externalTaskId)
+    public function __construct(?string $externalTaskId)
     {
         $this->externalTaskId = $externalTaskId;
     }
@@ -88,4 +88,9 @@ abstract class ExternalTaskCmd implements CommandInterface
      * Validates the current input of the command.
      */
     abstract protected function validateInput(): void;
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

@@ -31,7 +31,7 @@
         ACT_ID_,
         TASK_ID_,
         CALL_PROC_INST_ID_,
-        CALL_CASE_INST_ID_,
+        <!-- CALL_CASE_INST_ID_, -->
         ACT_NAME_,
         ACT_TYPE_,
         ASSIGNEE_,
@@ -43,27 +43,27 @@
         TENANT_ID_,
         REMOVAL_TIME_
       ) values (
-        #{id ,dbalType=VARCHAR},
-        #{parentActivityInstanceId ,dbalType=VARCHAR},
-        #{processDefinitionKey, dbalType=VARCHAR},
-        #{processDefinitionId, dbalType=VARCHAR},
-        #{rootProcessInstanceId, dbalType=VARCHAR},
-        #{processInstanceId, dbalType=VARCHAR},
-        #{executionId, dbalType=VARCHAR},
-        #{activityId ,dbalType=VARCHAR},
-        #{taskId ,dbalType=VARCHAR},
-        #{calledProcessInstanceId ,dbalType=VARCHAR},
-        #{calledCaseInstanceId ,dbalType=VARCHAR},
-        #{activityName ,dbalType=VARCHAR},
-        #{activityType ,dbalType=VARCHAR},
-        #{taskAssignee ,dbalType=VARCHAR},
-        #{startTime, dbalType=VARCHAR},
-        #{endTime, dbalType=VARCHAR},
-        #{durationInMillis ,dbalType=BIGINT},
-        #{activityInstanceState,dbalType=INTEGER},
-        #{sequenceCounter,dbalType=BIGINT},
-        #{tenantId, dbalType=VARCHAR},
-        #{removalTime, dbalType=VARCHAR}
+        #{id:VARCHAR},
+        #{parentActivityInstanceId:VARCHAR},
+        #{processDefinitionKey:VARCHAR},
+        #{processDefinitionId:VARCHAR},
+        #{rootProcessInstanceId:VARCHAR},
+        #{processInstanceId:VARCHAR},
+        #{executionId:VARCHAR},
+        #{activityId:VARCHAR},
+        #{taskId:VARCHAR},
+        #{calledProcessInstanceId:VARCHAR},
+        <!-- #{calledCaseInstanceId:VARCHAR},-->
+        #{activityName:VARCHAR},
+        #{activityType:VARCHAR},
+        #{taskAssignee:VARCHAR},
+        #{startTime:VARCHAR},
+        #{endTime:VARCHAR},
+        #{durationInMillis },
+        #{activityInstanceState},
+        #{sequenceCounter},
+        #{tenantId:VARCHAR},
+        #{removalTime:VARCHAR}
       )
   </insert>
 
@@ -73,65 +73,65 @@
     UPDATE
         ${prefix}ACT_HI_ACTINST
     SET
-      EXECUTION_ID_ = #{executionId, dbalType=VARCHAR},
-      PROC_DEF_KEY_ = #{processDefinitionKey, dbalType=VARCHAR},
-      PROC_DEF_ID_ = #{processDefinitionId, dbalType=VARCHAR},
-      ACT_ID_ = #{activityId, dbalType=VARCHAR},
-      ACT_NAME_ = #{activityName, dbalType=VARCHAR},
-      ACT_TYPE_ = #{activityType, dbalType=VARCHAR},
-      PARENT_ACT_INST_ID_ = #{parentActivityInstanceId, dbalType=VARCHAR}
+      EXECUTION_ID_ = #{executionId:VARCHAR},
+      PROC_DEF_KEY_ = #{processDefinitionKey:VARCHAR},
+      PROC_DEF_ID_ = #{processDefinitionId:VARCHAR},
+      ACT_ID_ = #{activityId:VARCHAR},
+      ACT_NAME_ = #{activityName:VARCHAR},
+      ACT_TYPE_ = #{activityType:VARCHAR},
+      PARENT_ACT_INST_ID_ = #{parentActivityInstanceId:VARCHAR}
       <if test="calledProcessInstanceId != null">
-        , CALL_PROC_INST_ID_ = #{calledProcessInstanceId, dbalType=VARCHAR}
+        , CALL_PROC_INST_ID_ = #{calledProcessInstanceId:VARCHAR}
       </if>
       <if test="eventType == 'update'">
-        , ASSIGNEE_ = #{taskAssignee, dbalType=VARCHAR}
-        , TASK_ID_ = #{taskId, dbalType=VARCHAR}
+        , ASSIGNEE_ = #{taskAssignee:VARCHAR}
+        , TASK_ID_ = #{taskId:VARCHAR}
       </if>
       <if test="endTime!=null">
-        , END_TIME_ = #{endTime, dbalType=VARCHAR}
-        , DURATION_ = #{durationInMillis, dbalType=BIGINT}
-        , ACT_INST_STATE_ = #{activityInstanceState, dbalType=INTEGER}
+        , END_TIME_ = #{endTime:VARCHAR}
+        , DURATION_ = #{durationInMillis}
+        , ACT_INST_STATE_ = #{activityInstanceState}
       </if>
     WHERE
-      ID_ = #{id, dbalType=VARCHAR}
+      ID_ = #{id:VARCHAR}
   </update>
 
   <update id="updateHistoricActivityInstancesByRootProcessInstanceId"
           parameterType="array">
     update ${prefix}ACT_HI_ACTINST set
-    REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    REMOVAL_TIME_ = #{removalTime:VARCHAR}
 
-    where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+    where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateHistoricActivityInstancesByRootProcessInstanceId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_HI_ACTINST RES WITH (FORCESEEK)
-    where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+    where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateHistoricActivityInstancesByProcessInstanceId"
           parameterType="array">
     update ${prefix}ACT_HI_ACTINST
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
-      where PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR}
+      where PROC_INST_ID_ = #{processInstanceId:VARCHAR}
   </update>
 
   <update id="updateHistoricActivityInstancesByProcessInstanceId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_HI_ACTINST RES WITH (FORCESEEK)
-    where RES.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+    where RES.PROC_INST_ID_ = #{processInstanceId:VARCHAR}
   </update>
 
   <!-- HISTORIC ACTIVITY INSTANCE SELECT -->
 
   <select id="selectHistoricActivityInstanceEvent" parameterType="string" resultMap="historicActivityInstanceResultMap">
     select HAI.START_TIME_ from ${prefix}ACT_HI_ACTINST HAI
-    where HAI.ID_ = #{id, dbalType=VARCHAR}
+    where HAI.ID_ = #{id:VARCHAR}
   </select>
 
   <!-- HISTORIC ACTIVITY INSTANCE DELETE -->
@@ -147,14 +147,14 @@
   <sql id="andWhereMinuteInDateBetweenSql">
     <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
       AND ${datepart1}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart2}${date}${datepart3}
-      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+      between #{parameter.minuteFrom} and #{parameter.minuteTo}
     </if>
   </sql>
 
   <sql id="andWhereMinuteInDateBetweenSql_oracle">
     <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
       AND ${datepart1}${date}${datepart2}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart3}
-      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+      between #{parameter.minuteFrom} and #{parameter.minuteTo}
     </if>
   </sql>
 
@@ -163,7 +163,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_ACTINST
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql"/>
     ${limitAfterWithoutOffset}
   </delete>
@@ -173,7 +173,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_ACTINST
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql_oracle"/>
     ${limitAfterWithoutOffset}
   </delete>
@@ -186,7 +186,7 @@
     where ID_ IN
       (SELECT ID_
        FROM ${prefix}ACT_HI_ACTINST
-       WHERE REMOVAL_TIME_ <= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
+       WHERE REMOVAL_TIME_ &lt;= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
        ${limitAfterWithoutOffset})
   </delete>
 
@@ -203,7 +203,7 @@
     <result property="activityId" column="ACT_ID_" dbalType="VARCHAR" />
     <result property="taskId" column="TASK_ID_" dbalType="VARCHAR" />
     <result property="calledProcessInstanceId" column="CALL_PROC_INST_ID_" dbalType="VARCHAR" />
-    <result property="calledCaseInstanceId" column="CALL_CASE_INST_ID_" dbalType="VARCHAR" />
+    <!--<result property="calledCaseInstanceId" column="CALL_CASE_INST_ID_" dbalType="VARCHAR" />-->
     <result property="activityName" column="ACT_NAME_" dbalType="VARCHAR" />
     <result property="activityType" column="ACT_TYPE_" dbalType="VARCHAR" />
     <result property="taskAssignee" column="ASSIGNEE_" dbalType="VARCHAR" />
@@ -299,29 +299,29 @@
       <if test="finished">and RES.END_TIME_ is not null
       </if>
       <if test="startedBefore != null">
-        and RES.START_TIME_ <= #{startedBefore}
+        and RES.START_TIME_ &lt;= #{startedBefore}
       </if>
       <if test="startedAfter != null">
-        and RES.START_TIME_ >= #{startedAfter}
+        and RES.START_TIME_ &gt;= #{startedAfter}
       </if>
       <if test="finishedBefore != null">
-        and RES.END_TIME_ <= #{finishedBefore}
+        and RES.END_TIME_ &lt;= #{finishedBefore}
       </if>
       <if test="finishedAfter != null">
-        and RES.END_TIME_ >= #{finishedAfter}
+        and RES.END_TIME_ &gt;= #{finishedAfter}
       </if>
       <if test="activityInstanceState != null">
         and RES.ACT_INST_STATE_ = #{activityInstanceState.stateCode}
       </if>
       <if test="isTenantIdSet">
-        <if test="tenantIds != null and count(tenantIds) > 0">
+        <if test="!empty(tenantIds)">
           and RES.TENANT_ID_ in
           <foreach item="tenantId" index="index" collection="tenantIds"
                    open="(" separator="," close=")">
             #{tenantId}
           </foreach>
         </if>
-        <if test="tenantIds == null">
+        <if test="empty(tenantIds)">
           and RES.TENANT_ID_ is null
         </if>
       </if>
@@ -365,7 +365,7 @@
 
     <where>
       <if test="parameter.finishedAfter != null">
-        and RES.END_TIME_ > #{parameter.finishedAfter}
+        and RES.END_TIME_ &gt; #{parameter.finishedAfter}
       </if>
       <if test="parameter.finishedAt != null">
         and RES.END_TIME_ = #{parameter.finishedAt}
@@ -387,7 +387,7 @@
 
     <where>
       <if test="parameter.startedAfter != null">
-        and RES.START_TIME_ > #{parameter.startedAfter}
+        and RES.START_TIME_ &gt; #{parameter.startedAfter}
       </if>
       <if test="parameter.startedAt != null">
         and RES.START_TIME_ = #{parameter.startedAt}

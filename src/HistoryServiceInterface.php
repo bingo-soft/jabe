@@ -2,8 +2,8 @@
 
 namespace Jabe;
 
+use Jabe\Batch\History\HistoricBatchQueryInterface;
 use Jabe\History\{
-    HistoricBatchQueryInterface,
     CleanableHistoricBatchReportInterface,
     CleanableHistoricProcessInstanceReportInterface,
     NativeHistoricProcessInstanceQueryInterface,
@@ -18,9 +18,12 @@ use Jabe\History\{
     HistoricProcessInstanceReportInterface,
     HistoricTaskInstanceReportInterface,
     UserOperationLogQueryInterface,
+    HistoricActivityInstanceQueryInterface,
     HistoricProcessInstanceQueryInterface,
     HistoricTaskInstanceQueryInterface,
     HistoricVariableInstanceQueryInterface,
+    NativeHistoricActivityInstanceQueryInterface,
+    NativeHistoricTaskInstanceQueryInterface,
     SetRemovalTimeSelectModeForHistoricBatchesBuilderInterface,
     SetRemovalTimeSelectModeForHistoricProcessInstancesBuilderInterface
 };
@@ -63,7 +66,7 @@ interface HistoryServiceInterface
      * <p>The result of the query is empty when the user has no Permissions#READ_HISTORY
      * permission on Resources#PROCESS_DEFINITION
      */
-    public function createHistoricActivityStatisticsQuery(string $processDefinitionId): HistoricActivityStatisticsQueryInterface;
+    public function createHistoricActivityStatisticsQuery(?string $processDefinitionId): HistoricActivityStatisticsQueryInterface;
 
     /**
      * <p>Creates a new programmatic query to search for HistoricTaskInstances.
@@ -181,7 +184,7 @@ interface HistoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no Permissions#DELETE_HISTORY permission on Resources#PROCESS_DEFINITION.
      */
-    public function deleteHistoricTaskInstance(string $taskId): void;
+    public function deleteHistoricTaskInstance(?string $taskId): void;
 
     /**
      * Deletes historic process instance. All historic activities, historic task and
@@ -190,7 +193,7 @@ interface HistoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no Permissions#DELETE_HISTORY permission on Resources#PROCESS_DEFINITION.
      */
-    public function deleteHistoricProcessInstance(string $processInstanceId): void;
+    public function deleteHistoricProcessInstance(?string $processInstanceId): void;
 
     /**
      * Deletes historic process instance. All historic activities, historic task and
@@ -200,7 +203,7 @@ interface HistoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no Permissions#DELETE_HISTORY permission on Resources#PROCESS_DEFINITION.
      */
-    public function deleteHistoricProcessInstanceIfExists(string $processInstanceId): void;
+    public function deleteHistoricProcessInstanceIfExists(?string $processInstanceId): void;
 
     /**
      * Deletes historic process instances. All historic activities, historic task and
@@ -264,7 +267,7 @@ interface HistoryServiceInterface
      *          If the user has no Permissions#CREATE or
      *          BatchPermissions#CREATE_BATCH_DELETE_FINISHED_PROCESS_INSTANCES permission on Resources#BATCH.
      */
-    public function deleteHistoricProcessInstancesAsync(array $processInstanceIds, ?HistoricProcessInstanceQueryInterface $query, string $deleteReason): BatchInterface;
+    public function deleteHistoricProcessInstancesAsync(array $processInstanceIds, ?HistoricProcessInstanceQueryInterface $query, ?string $deleteReason): BatchInterface;
 
     /**
      * Deletes a user operation log entry. Does not cascade to any related entities.
@@ -279,7 +282,7 @@ interface HistoryServiceInterface
      *           UserOperationLogCategoryPermissions#DELETE permission on
      *           Resources#OPERATION_LOG_CATEGORY.
      */
-    public function deleteUserOperationLogEntry(string $entryId): void;
+    public function deleteUserOperationLogEntry(?string $entryId): void;
 
     /**
      * Deletes a historic variable instance by its id. All related historic
@@ -295,7 +298,7 @@ interface HistoryServiceInterface
      *           the user has no Permissions#DELETE_HISTORY permission on
      *           Resources#PROCESS_DEFINITION.
      */
-    public function deleteHistoricVariableInstance(string $variableInstanceId): void;
+    public function deleteHistoricVariableInstance(?string $variableInstanceId): void;
 
     /**
      * Deletes all historic variables and historic details (variable updates, form properties) of a process instance.
@@ -305,7 +308,7 @@ interface HistoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no Permissions#DELETE_HISTORY permission on Resources#PROCESS_DEFINITION.
      */
-    public function deleteHistoricVariableInstancesByProcessInstanceId(string $processInstanceId): void;
+    public function deleteHistoricVariableInstancesByProcessInstanceId(?string $processInstanceId): void;
 
     /**
      * creates a native query to search for HistoricProcessInstances via SQL
@@ -351,7 +354,7 @@ interface HistoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no Permissions#READ_HISTORY permission on Resources#PROCESS_DEFINITION.
      */
-    public function getHistoricJobLogExceptionStacktrace(string $historicJobLogId): string;
+    public function getHistoricJobLogExceptionStacktrace(?string $historicJobLogId): ?string;
 
     /**
      * Creates a new programmatic query to create a historic process instance report.
@@ -387,7 +390,7 @@ interface HistoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no Permissions#DELETE permission on Resources#BATCH
      */
-    public function deleteHistoricBatch(string $id): void;
+    public function deleteHistoricBatch(?string $id): void;
 
 
     /**
@@ -395,7 +398,7 @@ interface HistoryServiceInterface
      *
      * @param decisionRequirementsDefinitionId id of decision requirement definition
      */
-    public function createHistoricDecisionInstanceStatisticsQuery(string $decisionRequirementsDefinitionId): HistoricDecisionInstanceStatisticsQueryInterface;
+    //public function createHistoricDecisionInstanceStatisticsQuery(?string $decisionRequirementsDefinitionId): HistoricDecisionInstanceStatisticsQueryInterface;
 
     /**
      * <p>Creates a new programmatic query to search for
@@ -422,7 +425,7 @@ interface HistoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no Permissions#READ_HISTORY permission on Resources#PROCESS_DEFINITION.
      */
-    public function getHistoricExternalTaskLogErrorDetails(string $historicExternalTaskLogId): string;
+    public function getHistoricExternalTaskLogErrorDetails(?string $historicExternalTaskLogId): ?string;
 
     /**
      * <p>Set a removal time to historic process instances and
@@ -432,7 +435,7 @@ interface HistoryServiceInterface
      * SetRemovalTimeToHistoricProcessInstancesBuilder#byQuery(HistoricProcessInstanceQuery).
      *
      * <p>An absolute time can be specified via
-     * {@link SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder#absoluteRemovalTime(string $)}.
+     * {@link SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder#absoluteRemovalTime(?string $)}.
      * Pass {@code null} to clear the removal time.
      *
      * <p>As an alternative, the removal time can also be calculated via
@@ -456,7 +459,7 @@ interface HistoryServiceInterface
      * SetRemovalTimeToHistoricBatchesBuilder#byQuery(HistoricBatchQuery).
      *
      * <p>An absolute time can be specified via
-     * {@link SetRemovalTimeSelectModeForHistoricBatchesBuilder#absoluteRemovalTime(string $)}.
+     * {@link SetRemovalTimeSelectModeForHistoricBatchesBuilder#absoluteRemovalTime(?string $)}.
      * Pass {@code null} to clear the removal time.
      *
      * <p>As an alternative, the removal time can also be calculated via
@@ -487,7 +490,7 @@ interface HistoryServiceInterface
      * @param operationId of the user operation log entries that are updated
      * @param annotation that is set to the user operation log entries
      */
-    public function setAnnotationForOperationLogById(string $operationId, string $annotation): void;
+    public function setAnnotationForOperationLogById(?string $operationId, ?string $annotation): void;
 
     /**
      * <p>Clear the annotation for user operation log entries.</p>
@@ -507,5 +510,5 @@ interface HistoryServiceInterface
      *
      * @param operationId of the user operation log entries that are updated
      */
-    public function clearAnnotationForOperationLogById(string $operationId): void;
+    public function clearAnnotationForOperationLogById(?string $operationId): void;
 }

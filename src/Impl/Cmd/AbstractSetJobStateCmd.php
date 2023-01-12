@@ -23,7 +23,7 @@ abstract class AbstractSetJobStateCmd extends AbstractSetStateCmd
     protected $processDefinitionKey;
 
     protected $processDefinitionTenantId;
-    protected $processDefinitionTenantIdSet = false;
+    protected bool $processDefinitionTenantIdSet = false;
 
     public function __construct(UpdateJobSuspensionStateBuilderImpl $builder)
     {

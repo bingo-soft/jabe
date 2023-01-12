@@ -16,7 +16,7 @@ interface CorrelationHandlerInterface
      * @return CorrelationHandlerResult the matched correlation target or <code>null</code> if the message
      *         could not be correlated.
      */
-    public function correlateMessage(CommandContext $commandContext, string $messageName, CorrelationSet $correlationSet): CorrelationHandlerResult;
+    public function correlateMessage(CommandContext $commandContext, ?string $messageName, CorrelationSet $correlationSet): ?CorrelationHandlerResult;
 
     /**
      * Correlate the given message to all waiting executions and all process
@@ -28,7 +28,7 @@ interface CorrelationHandlerInterface
      * @return all matched correlation targets or an empty List if the message
      *         could not be correlated.
      */
-    public function correlateMessages(CommandContext $commandContext, string $messageName, CorrelationSet $correlationSet): array;
+    public function correlateMessages(CommandContext $commandContext, ?string $messageName, CorrelationSet $correlationSet): array;
 
     /**
      * Correlate the given message to process definitions with a message start
@@ -40,5 +40,5 @@ interface CorrelationHandlerInterface
      * @return array the matched correlation targets or an empty list if the message
      *         could not be correlated.
      */
-    public function correlateStartMessages(CommandContext $commandContext, string $messageName, CorrelationSet $correlationSet): array;
+    public function correlateStartMessages(CommandContext $commandContext, ?string $messageName, CorrelationSet $correlationSet): array;
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Jabe\Impl\History\Handler;
+namespace Jabe\Impl\History\Producer;
 
 use Jabe\{
     ProcessEngineException,
@@ -143,8 +143,8 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         HistoricActivityInstanceEventEntity $evt,
         ExecutionEntity $execution,
         PvmScopeInterface $eventSource,
-        string $activityInstanceId,
-        string $parentActivityInstanceId,
+        ?string $activityInstanceId,
+        ?string $parentActivityInstanceId,
         HistoryEventTypeInterface $eventType
     ): void {
 
@@ -565,7 +565,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
 
     protected function loadTaskInstanceEvent(DelegateTaskInterface $task): HistoricTaskInstanceEventEntity
     {
-        return newTaskInstanceEventEntity($task);
+        return $this->newTaskInstanceEventEntity($task);
     }
 
     protected function loadIncidentEvent(IncidentInterface $incident): HistoricIncidentEventEntity
@@ -575,7 +575,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
 
     protected function loadBatchEntity(BatchEntity $batch): HistoricBatchEntity
     {
-        return newBatchEventEntity($batch);
+        return $this->newBatchEventEntity($batch);
     }
 
     // Implementation ////////////////////////////////
@@ -700,14 +700,14 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         return $evt;
     }
 
-    protected function addRemovalTimeToHistoricDecisions(string $rootProcessInstanceId, string $removalTime): void
+    protected function addRemovalTimeToHistoricDecisions(?string $rootProcessInstanceId, ?string $removalTime): void
     {
         Context::getCommandContext()
             ->getHistoricDecisionInstanceManager()
             ->addRemovalTimeToDecisionsByRootProcessInstanceId($rootProcessInstanceId, $removalTime);
     }
 
-    protected function addRemovalTimeToHistoricProcessInstances(string $rootProcessInstanceId, string $removalTime): void
+    protected function addRemovalTimeToHistoricProcessInstances(?string $rootProcessInstanceId, ?string $removalTime): void
     {
         Context::getCommandContext()
             ->getHistoricProcessInstanceManager()
@@ -806,7 +806,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
     {
 
         // create event instance
-        $evt = newTaskInstanceEventEntity($task);
+        $evt = $this->newTaskInstanceEventEntity($task);
 
         // initialize event
         $this->initTaskInstanceEvent($evt, $task, HistoryEventTypes::taskInstanceCreate());
@@ -839,7 +839,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         return $evt;
     }
 
-    public function createTaskInstanceCompleteEvt(DelegateTaskInterface $task, string $deleteReason): HistoryEvent
+    public function createTaskInstanceCompleteEvt(DelegateTaskInterface $task, ?string $deleteReason): HistoryEvent
     {
         // create event instance
         $evt = $this->loadTaskInstanceEvent($task);
@@ -905,12 +905,11 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
 
     // form Properties ///////////////////////////
 
-    public function createFormPropertyUpdateEvt(ExecutionEntity $execution, string $propertyId, string $propertyValue, string $taskId): HistoryEvent
+    public function createFormPropertyUpdateEvt(ExecutionEntity $execution, ?string $propertyId, ?string $propertyValue, ?string $taskId): HistoryEvent
     {
         $idGenerator = Context::getProcessEngineConfiguration()->getIdGenerator();
 
         $historicFormPropertyEntity = newHistoricFormPropertyEvent();
-
         $historicFormPropertyEntity->setId($idGenerator->getNextId());
         $historicFormPropertyEntity->setEventType(HistoryEventTypes::formPropertyUpdate()->getEventName());
         $historicFormPropertyEntity->setTimestamp(ClockUtil::getCurrentTime()->format('c'));
@@ -1324,7 +1323,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         return ProcessEngineConfiguration::HISTORY_REMOVAL_TIME_STRATEGY_END == $this->getHistoryRemovalTimeStrategy();
     }
 
-    protected function getHistoryRemovalTimeStrategy(): string
+    protected function getHistoryRemovalTimeStrategy(): ?string
     {
         return Context::getProcessEngineConfiguration()
             ->getHistoryRemovalTimeStrategy();
@@ -1334,7 +1333,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
     {
         if ($event instanceof HistoryEvent) {
             $processDefinitionId = $event->getProcessDefinitionId();
-            $processDefinition = findProcessDefinitionById($processDefinitionId);
+            $processDefinition = $this->findProcessDefinitionById($processDefinitionId);
 
             return Context::getProcessEngineConfiguration()
                 ->getHistoryRemovalTimeProvider()
@@ -1367,14 +1366,14 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         }
     }
 
-    protected function getHistoricRootProcessInstance(string $rootProcessInstanceId): ?HistoricProcessInstanceEventEntity
+    protected function getHistoricRootProcessInstance(?string $rootProcessInstanceId): ?HistoricProcessInstanceEventEntity
     {
         return Context::getCommandContext()
             ->getDbEntityManager()
             ->selectById(HistoricProcessInstanceEventEntity::class, $rootProcessInstanceId);
     }
 
-    protected function findProcessDefinitionById(string $processDefinitionId): ?ProcessDefinitionInterface
+    protected function findProcessDefinitionById(?string $processDefinitionId): ?ProcessDefinitionInterface
     {
         return Context::getCommandContext()
             ->getProcessEngineConfiguration()
@@ -1382,14 +1381,14 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
             ->findDeployedProcessDefinitionById($processDefinitionId);
     }
 
-    protected function getHistoricBatchById(string $batchId): ?HistoricBatchEntity
+    protected function getHistoricBatchById(?string $batchId): ?HistoricBatchEntity
     {
         return Context::getCommandContext()
             ->getHistoricBatchManager()
             ->findHistoricBatchById($batchId);
     }
 
-    protected function getHistoricBatchByJobId(string $jobId): ?HistoricBatchEntity
+    protected function getHistoricBatchByJobId(?string $jobId): ?HistoricBatchEntity
     {
         return Context::getCommandContext()
             ->getHistoricBatchManager()

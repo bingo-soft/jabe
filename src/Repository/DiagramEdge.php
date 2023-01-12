@@ -6,7 +6,7 @@ class DiagramEdge extends DiagramElement
 {
     private $waypoints;
 
-    public function __construct(string $id, array $waypoints)
+    public function __construct(?string $id, array $waypoints)
     {
         parent::__construct($id);
         $this->waypoints = $waypoints;

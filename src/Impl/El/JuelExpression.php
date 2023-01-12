@@ -26,7 +26,7 @@ class JuelExpression implements ExpressionInterface
     protected $valueExpression;
     protected $expressionManager;
 
-    public function __construct(ValueExpression $valueExpression, JuelExpressionManager $expressionManager, string $expressionText)
+    public function __construct(ValueExpression $valueExpression, JuelExpressionManager $expressionManager, ?string $expressionText)
     {
         $this->valueExpression = $valueExpression;
         $this->expressionManager = $expressionManager;
@@ -53,7 +53,7 @@ class JuelExpression implements ExpressionInterface
         }
     }
 
-    public function setValue($value, VariableScopeInterface $variableScope, BaseDelegateExecutionInterface $contextExecution = null)
+    public function setValue($value, VariableScopeInterface $variableScope, BaseDelegateExecutionInterface $contextExecution = null): void
     {
         $elContext = $this->expressionManager->getElContext($variableScope);
         try {
@@ -76,7 +76,7 @@ class JuelExpression implements ExpressionInterface
         return $this->valueExpression->isLiteralText();
     }
 
-    public function getExpressionText(): string
+    public function getExpressionText(): ?string
     {
         return $this->expressionText;
     }

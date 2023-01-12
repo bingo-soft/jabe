@@ -15,7 +15,7 @@ class HistoryLevelActivity extends AbstractHistoryLevel
         return 1;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return ProcessEngineConfiguration::HISTORY_ACTIVITY;
     }

@@ -24,17 +24,17 @@ class SignalDefinition implements \Serializable
         $this->name = unserialize($json->name);
     }
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name->getExpressionText();
     }

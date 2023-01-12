@@ -48,7 +48,7 @@ abstract class AbstractModificationCmd implements CommandInterface
         ProcessDefinitionInterface $processDefinition,
         int $numInstances,
         bool $async,
-        string $annotation
+        ?string $annotation
     ): void {
         $propertyChanges = [];
         $propertyChanges[] = new PropertyChange("nrOfInstances", null, $numInstances);
@@ -66,11 +66,16 @@ abstract class AbstractModificationCmd implements CommandInterface
             );
     }
 
-    protected function getProcessDefinition(CommandContext $commandContext, string $processDefinitionId): ?ProcessDefinitionEntity
+    protected function getProcessDefinition(CommandContext $commandContext, ?string $processDefinitionId): ?ProcessDefinitionEntity
     {
         return $commandContext
             ->getProcessEngineConfiguration()
             ->getDeploymentCache()
             ->findDeployedProcessDefinitionById($processDefinitionId);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

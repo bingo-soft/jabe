@@ -22,7 +22,7 @@ class SuspendJobDefinitionCmd extends AbstractSetJobDefinitionStateCmd
         return SuspensionState::suspended();
     }
 
-    protected function getDelayedExecutionJobHandlerType(): string
+    protected function getDelayedExecutionJobHandlerType(): ?string
     {
         return TimerSuspendJobDefinitionHandler::TYPE;
     }
@@ -32,7 +32,7 @@ class SuspendJobDefinitionCmd extends AbstractSetJobDefinitionStateCmd
         return new SuspendJobCmd($jobCommandBuilder);
     }
 
-    protected function getLogEntryOperation(): string
+    protected function getLogEntryOperation(): ?string
     {
         return UserOperationLogEntryInterface::OPERATION_TYPE_SUSPEND_JOB_DEFINITION;
     }

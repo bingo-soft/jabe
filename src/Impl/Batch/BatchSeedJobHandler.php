@@ -17,7 +17,7 @@ class BatchSeedJobHandler implements JobHandlerInterface
 {
     public const TYPE = "batch-seed-job";
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return self::TYPE;
     }
@@ -44,7 +44,7 @@ class BatchSeedJobHandler implements JobHandlerInterface
         }
     }
 
-    public function newConfiguration(string $canonicalString): JobHandlerConfigurationInterface
+    public function newConfiguration(?string $canonicalString): JobHandlerConfigurationInterface
     {
         return new BatchSeedJobConfiguration($canonicalString);
     }

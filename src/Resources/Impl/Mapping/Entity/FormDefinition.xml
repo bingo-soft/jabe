@@ -28,12 +28,12 @@
       RESOURCE_NAME_,
       TENANT_ID_,
       REV_)
-    values (#{id, dbalType=VARCHAR},
-            #{key, dbalType=VARCHAR},
-            #{version, dbalType=INTEGER},
-            #{deploymentId, dbalType=VARCHAR},
-            #{resourceName, dbalType=VARCHAR},
-            #{tenantId, dbalType=VARCHAR},
+    values (#{id:VARCHAR},
+            #{key:VARCHAR},
+            #{version},
+            #{deploymentId:VARCHAR},
+            #{resourceName:VARCHAR},
+            #{tenantId:VARCHAR},
             1
            )
   </insert>
@@ -42,9 +42,9 @@
 
   <update id="updateFormDefinition" parameterType="Jabe\Impl\Persistence\Entity\FormDefinitionEntity">
     update ${prefix}ACT_RE_CAMFORMDEF set
-      REV_ = #{revisionNext, dbalType=INTEGER}
-    where ID_ = #{id, dbalType=VARCHAR}
-      and REV_ = #{revision, dbalType=INTEGER}
+      REV_ = #{revisionNext}
+    where ID_ = #{id:VARCHAR}
+      and REV_ = #{revision}
   </update>
 
   <!-- CAMUNDA FORM DEFINITION DELETE -->
@@ -171,7 +171,7 @@
           <if test="tenantId == null">
             AND TENANT_ID_ is null
           </if>
-          AND VERSION_ < #{version})
+          AND VERSION_ &lt; #{version})
   </select>
 
 </mapper>

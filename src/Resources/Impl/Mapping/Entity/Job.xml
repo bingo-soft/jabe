@@ -40,31 +40,31 @@
   <update id="updateJobSuspensionStateByParameters" parameterType="Jabe\Impl\Db\ListQueryParameterObject">
     update ${prefix}ACT_RU_JOB set
       REV_ = 1 + REV_ ,
-      SUSPENSION_STATE_ = #{parameter.suspensionState, dbalType=INTEGER}
+      SUSPENSION_STATE_ = #{parameter.suspensionState}
     <where>
       <if test="parameter.jobId != null">
-        ID_ = #{parameter.jobId, dbalType=VARCHAR}
+        ID_ = #{parameter.jobId:VARCHAR}
       </if>
       <if test="parameter.jobDefinitionId != null">
-        and JOB_DEF_ID_ = #{parameter.jobDefinitionId, dbalType=VARCHAR}
+        and JOB_DEF_ID_ = #{parameter.jobDefinitionId:VARCHAR}
       </if>
       <if test="parameter.processInstanceId != null">
-        and PROCESS_INSTANCE_ID_ = #{parameter.processInstanceId, dbalType=VARCHAR}
+        and PROCESS_INSTANCE_ID_ = #{parameter.processInstanceId:VARCHAR}
       </if>
       <if test="parameter.processDefinitionId != null">
-        and PROCESS_DEF_ID_ = #{parameter.processDefinitionId, dbalType=VARCHAR}
+        and PROCESS_DEF_ID_ = #{parameter.processDefinitionId:VARCHAR}
       </if>
       <if test="parameter.processDefinitionKey != null">
         <if test="!parameter.isProcessDefinitionTenantIdSet">
-          and PROCESS_DEF_KEY_ = #{parameter.processDefinitionKey, dbalType=VARCHAR}
+          and PROCESS_DEF_KEY_ = #{parameter.processDefinitionKey:VARCHAR}
         </if>
         <if test="parameter.isProcessDefinitionTenantIdSet">
           and PROCESS_DEF_ID_ IN (
             SELECT ID_ 
             FROM ${prefix}ACT_RE_PROCDEF PD
-            WHERE PD.KEY_ = #{parameter.processDefinitionKey, dbalType=VARCHAR}
+            WHERE PD.KEY_ = #{parameter.processDefinitionKey:VARCHAR}
             <if test="parameter.processDefinitionTenantId != null">
-              and PD.TENANT_ID_ = #{parameter.processDefinitionTenantId, dbalType=VARCHAR}
+              and PD.TENANT_ID_ = #{parameter.processDefinitionTenantId:VARCHAR}
             </if>
             <if test="parameter.processDefinitionTenantId == null">
               and PD.TENANT_ID_ is null
@@ -75,7 +75,7 @@
         <include refid="Jabe\Impl\Persistence\Entity\TenantEntity.queryTenantCheckWithPrefix" />
       </if>
       <if test="parameter.handlerType != null">
-        and HANDLER_TYPE_ =  #{parameter.handlerType, dbalType=VARCHAR}
+        and HANDLER_TYPE_ =  #{parameter.handlerType:VARCHAR}
       </if>
     </where>
   </update>
@@ -85,11 +85,11 @@
       REV_ = 1 + REV_ ,
       LOCK_OWNER_ = NULL,
       LOCK_EXP_TIME_ = NULL,
-      RETRIES_ = #{retries, dbalType=INTEGER}
+      RETRIES_ = #{retries}
     <where>
       RETRIES_ = 0
       <if test="jobDefinitionId != null">
-        and JOB_DEF_ID_ = #{jobDefinitionId, dbalType=VARCHAR}
+        and JOB_DEF_ID_ = #{jobDefinitionId:VARCHAR}
       </if>
     </where>
   </update>
@@ -97,9 +97,9 @@
   <update id="updateJobPriorityByDefinitionId" parameterType="array">
     <!-- this does not increment revision; it is ok if this update is overwritten by parallel operations -->
     update ${prefix}ACT_RU_JOB set
-      PRIORITY_ = #{priority, dbalType=INTEGER}
+      PRIORITY_ = #{priority}
     where
-      JOB_DEF_ID_ = #{jobDefinitionId, dbalType=VARCHAR}
+      JOB_DEF_ID_ = #{jobDefinitionId:VARCHAR}
   </update>
 
   <!-- JOB RESULTMAP (FOR TIMER AND MESSAGE) -->
@@ -129,7 +129,7 @@
     <result property="createTime" column="CREATE_TIME_" dbalType="VARCHAR" />
     <result property="sequenceCounter" column="SEQUENCE_COUNTER_" dbalType="BIGINT" />
     <result property="lastFailureLogId" column="LAST_FAILURE_LOG_ID_" dbalType="VARCHAR" />
-    <discriminator javaType="string" column="TYPE_">
+    <discriminator phpType="string" column="TYPE_">
       <case value="message" resultMap="messageResultMap"/>
       <case value="timer" resultMap="timerResultMap"/>
       <case value="ever-living" resultMap="everLivingJobResultMap"/>
@@ -177,19 +177,19 @@
     ${limitBetweenAcquisition}
     from ${prefix}ACT_RU_JOB RES
 
-    where (RES.RETRIES_ > 0)
+    where (RES.RETRIES_ &gt; 0)
       and (
       <if test="!parameter.alwaysSetDueDate">
           RES.DUEDATE_ is null or
       </if>
-          RES.DUEDATE_ <= #{parameter.now, dbalType=VARCHAR}
+          RES.DUEDATE_ &lt;= #{parameter.now:VARCHAR}
       )
-      and (RES.LOCK_OWNER_ is null or RES.LOCK_EXP_TIME_ < #{parameter.now, dbalType=VARCHAR})
+      and (RES.LOCK_OWNER_ is null or RES.LOCK_EXP_TIME_ &lt; #{parameter.now:VARCHAR})
       and RES.SUSPENSION_STATE_ = 1
 
       <if test="parameter.deploymentAware">
         and (RES.DEPLOYMENT_ID_ is null
-        <if test="parameter.deploymentIds != null">
+        <if test="!empty(parameter.deploymentIds)">
           or
           <bind name="listOfIds" value="parameter.deploymentIds"/>
           <bind name="fieldName" value="'RES.DEPLOYMENT_ID_'"/>
@@ -199,10 +199,10 @@
       </if>
 
       <if test="parameter.jobPriorityMin != null">
-        and RES.PRIORITY_ >= #{parameter.jobPriorityMin}
+        and RES.PRIORITY_ &gt;= #{parameter.jobPriorityMin}
       </if>
       <if test="parameter.jobPriorityMax != null">
-        and RES.PRIORITY_ <= #{parameter.jobPriorityMax}
+        and RES.PRIORITY_ &lt;= #{parameter.jobPriorityMax}
       </if>
 
       and (<include refid="AtomicExclusiveOrNonExclusiveJobs"/>)
@@ -229,7 +229,7 @@
             select J2.ID_ from ${prefix}ACT_RU_JOB J2
             where J2.PROCESS_INSTANCE_ID_ = RES.PROCESS_INSTANCE_ID_                                           -- from the same proc. inst.
             and (J2.EXCLUSIVE_ = ${trueConstant})                                                              -- also exclusive
-            and (J2.LOCK_OWNER_ is not null and J2.LOCK_EXP_TIME_ >= #{parameter.now, dbalType=VARCHAR})  -- in progress
+            and (J2.LOCK_OWNER_ is not null and J2.LOCK_EXP_TIME_ &gt;= #{parameter.now:VARCHAR})  -- in progress
             )
   </sql>
 
@@ -246,9 +246,9 @@
       <if test="parameter.tenantId == null">
         and TENANT_ID_ is null
       </if>
-      and (HANDLER_CFG_ = #{parameter.handlerConfiguration, dbalType=VARCHAR}
+      and (HANDLER_CFG_ = #{parameter.handlerConfiguration:VARCHAR}
       <if test="parameter.handlerConfigurationWithFollowUpJobCreatedProperty != null">
-      or HANDLER_CFG_ = #{parameter.handlerConfigurationWithFollowUpJobCreatedProperty, dbalType=VARCHAR}
+      or HANDLER_CFG_ = #{parameter.handlerConfigurationWithFollowUpJobCreatedProperty:VARCHAR}
       </if>)
   </select>
 
@@ -309,7 +309,7 @@
       <if test="id != null">
         RES.ID_ = #{id}
       </if>
-      <if test="ids != null and !ids.isEmpty()">
+      <if test="!empty(ids)">
         <bind name="listOfIds" value="ids" />
         <bind name="fieldName" value="'RES.ID_'" />
         <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedCollection" />
@@ -323,7 +323,7 @@
       <if test="processInstanceId != null">
         and RES.PROCESS_INSTANCE_ID_ = #{processInstanceId}
       </if>
-      <if test="processInstanceIds != null and !processInstanceIds.isEmpty()">
+      <if test="!empty(processInstanceIds)">
         <bind name="listOfIds" value="processInstanceIds" />
         <bind name="fieldName" value="'RES.PROCESS_INSTANCE_ID_'" />
         <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedCollection" />
@@ -342,7 +342,7 @@
       </if>
       <if test="executable">
         and (RES.RETRIES_ > 0)
-        and (RES.DUEDATE_ is null or RES.DUEDATE_ <= #{now, dbalType=VARCHAR})
+        and (RES.DUEDATE_ is null or RES.DUEDATE_ &lt;= #{now:VARCHAR})
         and (
             (RES.EXECUTION_ID_ is null)
             or
@@ -356,28 +356,28 @@
         and RES.TYPE_ = 'message'
       </if>
       <if test="duedateHigherThan != null">
-        and RES.DUEDATE_ > #{duedateHigherThan}
+        and RES.DUEDATE_ &gt; #{duedateHigherThan}
       </if>
       <if test="duedateLowerThan != null">
-        and RES.DUEDATE_ < #{duedateLowerThan}
+        and RES.DUEDATE_ &lt; #{duedateLowerThan}
       </if>
       <if test="duedateHigherThanOrEqual != null">
-        and RES.DUEDATE_ >= #{duedateHigherThanOrEqual}
+        and RES.DUEDATE_ &gt;= #{duedateHigherThanOrEqual}
       </if>
       <if test="duedateLowerThanOrEqual != null">
-        and RES.DUEDATE_ <= #{duedateLowerThanOrEqual}
+        and RES.DUEDATE_ &lt;= #{duedateLowerThanOrEqual}
       </if>
       <if test="createdAfter != null">
-        and RES.CREATE_TIME_ > #{createdAfter}
+        and RES.CREATE_TIME_ &gt; #{createdAfter}
       </if>
       <if test="createdBefore != null">
-        and RES.CREATE_TIME_ <= #{createdBefore}
+        and RES.CREATE_TIME_ &lt;= #{createdBefore}
       </if>
       <if test="priorityHigherThanOrEqual != null">
-        and RES.PRIORITY_ >= #{priorityHigherThanOrEqual}
+        and RES.PRIORITY_ &gt;= #{priorityHigherThanOrEqual}
       </if>
       <if test="priorityLowerThanOrEqual != null">
-        and RES.PRIORITY_ <= #{priorityLowerThanOrEqual}
+        and RES.PRIORITY_ &lt;= #{priorityLowerThanOrEqual}
       </if>
       <if test="withException">
       	and (RES.EXCEPTION_MSG_ is not null or RES.EXCEPTION_STACK_ID_ is not null)
@@ -395,7 +395,7 @@
         and RES.SUSPENSION_STATE_ = #{suspensionState.stateCode}
       </if>
       <if test="isTenantIdSet">
-        <if test="tenantIds != null and tenantIds.length > 0">
+        <if test="!empty(tenantIds)">
           and ( RES.TENANT_ID_ in
           <foreach item="tenantId" index="index" collection="tenantIds"
                    open="(" separator="," close=")">
@@ -406,7 +406,7 @@
           </if>
           )
         </if>
-        <if test="tenantIds == null">
+        <if test="empty(tenantIds)">
           and RES.TENANT_ID_ is null
         </if>
       </if>
@@ -467,31 +467,31 @@
             CREATE_TIME_,
             REV_
           )
-    values (#{id, dbalType=VARCHAR},
+    values (#{id:VARCHAR},
             'timer',
-            #{lockOwner, dbalType=VARCHAR},
-            #{lockExpirationTime, dbalType=VARCHAR},
-            #{exclusive, dbalType=BOOLEAN},
-            #{executionId, dbalType=VARCHAR},
-            #{processInstanceId, dbalType=VARCHAR},
-            #{processDefinitionId, dbalType=VARCHAR},
-            #{processDefinitionKey, dbalType=VARCHAR},
-            #{retries, dbalType=INTEGER},
-            #{exceptionByteArrayId, dbalType=VARCHAR},
-            #{exceptionMessage, dbalType=VARCHAR},
-            #{failedActivityId, dbalType=VARCHAR},
-            #{duedate, dbalType=VARCHAR},
-            #{repeat, dbalType=VARCHAR},
-            #{repeatOffset, dbalType=BIGINT},
-            #{jobHandlerType, dbalType=VARCHAR},
-            #{jobHandlerConfigurationRaw, dbalType=VARCHAR},
-            #{deploymentId, dbalType=VARCHAR},
-            #{suspensionState, dbalType=INTEGER},
-            #{jobDefinitionId, dbalType=VARCHAR},
-            #{priority, dbalType=BIGINT},
-            #{sequenceCounter, dbalType=BIGINT},
-            #{tenantId, dbalType=VARCHAR},
-            #{createTime, dbalType=VARCHAR},
+            #{lockOwner:VARCHAR},
+            #{lockExpirationTime:VARCHAR},
+            #{exclusive},
+            #{executionId:VARCHAR},
+            #{processInstanceId:VARCHAR},
+            #{processDefinitionId:VARCHAR},
+            #{processDefinitionKey:VARCHAR},
+            #{retries},
+            #{exceptionByteArrayId:VARCHAR},
+            #{exceptionMessage:VARCHAR},
+            #{failedActivityId:VARCHAR},
+            #{duedate:VARCHAR},
+            #{repeat:VARCHAR},
+            #{repeatOffset},
+            #{jobHandlerType:VARCHAR},
+            #{jobHandlerConfigurationRaw:VARCHAR},
+            #{deploymentId:VARCHAR},
+            #{suspensionState},
+            #{jobDefinitionId:VARCHAR},
+            #{priority},
+            #{sequenceCounter},
+            #{tenantId:VARCHAR},
+            #{createTime:VARCHAR},
             1
     )
   </insert>
@@ -501,29 +501,29 @@
   <update id="updateTimer" parameterType="Jabe\Impl\Persistence\Entity\TimerEntity">
     update ${prefix}ACT_RU_JOB
     <set>
-       REV_ =  #{revisionNext, dbalType=INTEGER},
-       EXECUTION_ID_ = #{executionId, dbalType=VARCHAR},
-       LOCK_EXP_TIME_ = #{lockExpirationTime, dbalType=VARCHAR},
-       LOCK_OWNER_ = #{lockOwner, dbalType=VARCHAR},
-       RETRIES_ = #{retries, dbalType=INTEGER},
-       EXCEPTION_STACK_ID_ = #{exceptionByteArrayId, dbalType=VARCHAR},
-       EXCEPTION_MSG_ = #{exceptionMessage, dbalType=VARCHAR},
-       FAILED_ACT_ID_ = #{failedActivityId, dbalType=VARCHAR},
-       DUEDATE_ = #{duedate, dbalType=VARCHAR},
-       REPEAT_ = #{repeat, dbalType=VARCHAR},
-       REPEAT_OFFSET_ = #{repeatOffset, dbalType=BIGINT},
-       SUSPENSION_STATE_ = #{suspensionState, dbalType=INTEGER},
-       PROCESS_DEF_ID_ = #{processDefinitionId, dbalType=VARCHAR},
-       PROCESS_DEF_KEY_ = #{processDefinitionKey, dbalType=VARCHAR},
-       JOB_DEF_ID_ = #{jobDefinitionId, dbalType=VARCHAR},
-       DEPLOYMENT_ID_ = #{deploymentId, dbalType=VARCHAR},
-       HANDLER_CFG_ = #{jobHandlerConfigurationRaw, dbalType=VARCHAR},
-       PRIORITY_ = #{priority, dbalType=BIGINT},
-       SEQUENCE_COUNTER_ = #{sequenceCounter, dbalType=BIGINT},
-       LAST_FAILURE_LOG_ID_ = #{lastFailureLogId, dbalType=VARCHAR}
+       REV_ =  #{revisionNext},
+       EXECUTION_ID_ = #{executionId:VARCHAR},
+       LOCK_EXP_TIME_ = #{lockExpirationTime:VARCHAR},
+       LOCK_OWNER_ = #{lockOwner:VARCHAR},
+       RETRIES_ = #{retries},
+       EXCEPTION_STACK_ID_ = #{exceptionByteArrayId:VARCHAR},
+       EXCEPTION_MSG_ = #{exceptionMessage:VARCHAR},
+       FAILED_ACT_ID_ = #{failedActivityId:VARCHAR},
+       DUEDATE_ = #{duedate:VARCHAR},
+       REPEAT_ = #{repeat:VARCHAR},
+       REPEAT_OFFSET_ = #{repeatOffset},
+       SUSPENSION_STATE_ = #{suspensionState},
+       PROCESS_DEF_ID_ = #{processDefinitionId:VARCHAR},
+       PROCESS_DEF_KEY_ = #{processDefinitionKey:VARCHAR},
+       JOB_DEF_ID_ = #{jobDefinitionId:VARCHAR},
+       DEPLOYMENT_ID_ = #{deploymentId:VARCHAR},
+       HANDLER_CFG_ = #{jobHandlerConfigurationRaw:VARCHAR},
+       PRIORITY_ = #{priority},
+       SEQUENCE_COUNTER_ = #{sequenceCounter},
+       LAST_FAILURE_LOG_ID_ = #{lastFailureLogId:VARCHAR}
     </set>
-    where ID_= #{id, dbalType=VARCHAR}
-      and REV_ = #{revision, dbalType=INTEGER}
+    where ID_= #{id:VARCHAR}
+      and REV_ = #{revision}
   </update>
 
   <!-- TIMER SELECT -->
@@ -533,8 +533,8 @@
     from ${prefix}ACT_RU_JOB
     where (TYPE_ = 'timer')
       and (DUEDATE_ is not null)
-      and (DUEDATE_ < #{parameter, dbalType=VARCHAR})
-      and (LOCK_OWNER_ is null or LOCK_EXP_TIME_ < #{parameter, dbalType=VARCHAR})
+      and (DUEDATE_ &lt; #{parameter:VARCHAR})
+      and (LOCK_OWNER_ is null or LOCK_EXP_TIME_ &lt; #{parameter:VARCHAR})
       and (RETRIES_  > 0)
     order by DUEDATE_
   </select>
@@ -576,29 +576,29 @@
             CREATE_TIME_,
             REV_
             )
-    values (#{id, dbalType=VARCHAR},
+    values (#{id:VARCHAR},
             'message',
-            #{lockOwner, dbalType=VARCHAR},
-            #{lockExpirationTime, dbalType=VARCHAR},
-            #{exclusive, dbalType=BOOLEAN},
-            #{executionId, dbalType=VARCHAR},
-            #{processInstanceId, dbalType=VARCHAR},
-            #{processDefinitionId, dbalType=VARCHAR},
-            #{processDefinitionKey, dbalType=VARCHAR},
-            #{retries, dbalType=INTEGER},
-            #{exceptionByteArrayId, dbalType=VARCHAR},
-            #{exceptionMessage, dbalType=VARCHAR},
-            #{failedActivityId, dbalType=VARCHAR},
-            #{duedate, dbalType=VARCHAR},
-            #{jobHandlerType, dbalType=VARCHAR},
-            #{jobHandlerConfigurationRaw, dbalType=VARCHAR},
-            #{deploymentId, dbalType=VARCHAR},
-            #{suspensionState, dbalType=INTEGER},
-            #{jobDefinitionId, dbalType=VARCHAR},
-            #{priority, dbalType=BIGINT},
-            #{sequenceCounter, dbalType=BIGINT},
-            #{tenantId, dbalType=VARCHAR},
-            #{createTime, dbalType=VARCHAR},
+            #{lockOwner:VARCHAR},
+            #{lockExpirationTime:VARCHAR},
+            #{exclusive},
+            #{executionId:VARCHAR},
+            #{processInstanceId:VARCHAR},
+            #{processDefinitionId:VARCHAR},
+            #{processDefinitionKey:VARCHAR},
+            #{retries},
+            #{exceptionByteArrayId:VARCHAR},
+            #{exceptionMessage:VARCHAR},
+            #{failedActivityId:VARCHAR},
+            #{duedate:VARCHAR},
+            #{jobHandlerType:VARCHAR},
+            #{jobHandlerConfigurationRaw:VARCHAR},
+            #{deploymentId:VARCHAR},
+            #{suspensionState},
+            #{jobDefinitionId:VARCHAR},
+            #{priority},
+            #{sequenceCounter},
+            #{tenantId:VARCHAR},
+            #{createTime:VARCHAR},
             1
     )
   </insert>
@@ -607,27 +607,27 @@
   <update id="updateMessage" parameterType="Jabe\Impl\Persistence\Entity\MessageEntity">
     update ${prefix}ACT_RU_JOB
     <set>
-       REV_ =  #{revisionNext, dbalType=INTEGER},
-       EXECUTION_ID_ = #{executionId, dbalType=VARCHAR},
-       LOCK_EXP_TIME_ = #{lockExpirationTime, dbalType=VARCHAR},
-       LOCK_OWNER_ = #{lockOwner, dbalType=VARCHAR},
-       RETRIES_ = #{retries, dbalType=INTEGER},
-       EXCEPTION_STACK_ID_ = #{exceptionByteArrayId, dbalType=VARCHAR},
-       EXCEPTION_MSG_ = #{exceptionMessage, dbalType=VARCHAR},
-       FAILED_ACT_ID_ = #{failedActivityId, dbalType=VARCHAR},
-       DUEDATE_ = #{duedate, dbalType=VARCHAR},
-       SUSPENSION_STATE_ = #{suspensionState, dbalType=INTEGER},
-       PROCESS_DEF_ID_ = #{processDefinitionId, dbalType=VARCHAR},
-       PROCESS_DEF_KEY_ = #{processDefinitionKey, dbalType=VARCHAR},
-       JOB_DEF_ID_ = #{jobDefinitionId, dbalType=VARCHAR},
-       DEPLOYMENT_ID_ = #{deploymentId, dbalType=VARCHAR},
-       HANDLER_CFG_ = #{jobHandlerConfigurationRaw, dbalType=VARCHAR},
-       PRIORITY_ = #{priority, dbalType=BIGINT},
-       SEQUENCE_COUNTER_ = #{sequenceCounter, dbalType=BIGINT},
-       LAST_FAILURE_LOG_ID_ = #{lastFailureLogId, dbalType=VARCHAR}
+       REV_ =  #{revisionNext},
+       EXECUTION_ID_ = #{executionId:VARCHAR},
+       LOCK_EXP_TIME_ = #{lockExpirationTime:VARCHAR},
+       LOCK_OWNER_ = #{lockOwner:VARCHAR},
+       RETRIES_ = #{retries},
+       EXCEPTION_STACK_ID_ = #{exceptionByteArrayId:VARCHAR},
+       EXCEPTION_MSG_ = #{exceptionMessage:VARCHAR},
+       FAILED_ACT_ID_ = #{failedActivityId:VARCHAR},
+       DUEDATE_ = #{duedate:VARCHAR},
+       SUSPENSION_STATE_ = #{suspensionState},
+       PROCESS_DEF_ID_ = #{processDefinitionId:VARCHAR},
+       PROCESS_DEF_KEY_ = #{processDefinitionKey:VARCHAR},
+       JOB_DEF_ID_ = #{jobDefinitionId:VARCHAR},
+       DEPLOYMENT_ID_ = #{deploymentId:VARCHAR},
+       HANDLER_CFG_ = #{jobHandlerConfigurationRaw:VARCHAR},
+       PRIORITY_ = #{priority},
+       SEQUENCE_COUNTER_ = #{sequenceCounter},
+       LAST_FAILURE_LOG_ID_ = #{lastFailureLogId:VARCHAR}
     </set>
-    where ID_= #{id, dbalType=VARCHAR}
-      and REV_ = #{revision, dbalType=INTEGER}
+    where ID_= #{id:VARCHAR}
+      and REV_ = #{revision}
   </update>
 
     <insert id="insertEverLivingJob" parameterType="Jabe\Impl\Persistence\Entity\EverLivingJobEntity">
@@ -657,29 +657,29 @@
         CREATE_TIME_,
         REV_
         )
-        values (#{id, dbalType=VARCHAR},
+        values (#{id:VARCHAR},
         'ever-living',
-        #{lockOwner, dbalType=VARCHAR},
-        #{lockExpirationTime, dbalType=VARCHAR},
-        #{exclusive, dbalType=BOOLEAN},
-        #{executionId, dbalType=VARCHAR},
-        #{processInstanceId, dbalType=VARCHAR},
-        #{processDefinitionId, dbalType=VARCHAR},
-        #{processDefinitionKey, dbalType=VARCHAR},
-        #{retries, dbalType=INTEGER},
-        #{exceptionByteArrayId, dbalType=VARCHAR},
-        #{exceptionMessage, dbalType=VARCHAR},
-        #{failedActivityId, dbalType=VARCHAR},
-        #{duedate, dbalType=VARCHAR},
-        #{jobHandlerType, dbalType=VARCHAR},
-        #{jobHandlerConfigurationRaw, dbalType=VARCHAR},
-        #{deploymentId, dbalType=VARCHAR},
-        #{suspensionState, dbalType=INTEGER},
-        #{jobDefinitionId, dbalType=VARCHAR},
-        #{priority, dbalType=BIGINT},
-        #{sequenceCounter, dbalType=BIGINT},
-        #{tenantId, dbalType=VARCHAR},
-        #{createTime, dbalType=VARCHAR},
+        #{lockOwner:VARCHAR},
+        #{lockExpirationTime:VARCHAR},
+        #{exclusive},
+        #{executionId:VARCHAR},
+        #{processInstanceId:VARCHAR},
+        #{processDefinitionId:VARCHAR},
+        #{processDefinitionKey:VARCHAR},
+        #{retries},
+        #{exceptionByteArrayId:VARCHAR},
+        #{exceptionMessage:VARCHAR},
+        #{failedActivityId:VARCHAR},
+        #{duedate:VARCHAR},
+        #{jobHandlerType:VARCHAR},
+        #{jobHandlerConfigurationRaw:VARCHAR},
+        #{deploymentId:VARCHAR},
+        #{suspensionState},
+        #{jobDefinitionId:VARCHAR},
+        #{priority},
+        #{sequenceCounter},
+        #{tenantId:VARCHAR},
+        #{createTime:VARCHAR},
         1
         )
     </insert>
@@ -688,42 +688,42 @@
     <update id="updateEverLivingJob" parameterType="Jabe\Impl\Persistence\Entity\EverLivingJobEntity">
         update ${prefix}ACT_RU_JOB
         <set>
-            REV_ =  #{revisionNext, dbalType=INTEGER},
-            EXECUTION_ID_ = #{executionId, dbalType=VARCHAR},
-            LOCK_EXP_TIME_ = #{lockExpirationTime, dbalType=VARCHAR},
-            LOCK_OWNER_ = #{lockOwner, dbalType=VARCHAR},
-            RETRIES_ = #{retries, dbalType=INTEGER},
-            EXCEPTION_STACK_ID_ = #{exceptionByteArrayId, dbalType=VARCHAR},
-            EXCEPTION_MSG_ = #{exceptionMessage, dbalType=VARCHAR},
-            FAILED_ACT_ID_ = #{failedActivityId, dbalType=VARCHAR},
-            DUEDATE_ = #{duedate, dbalType=VARCHAR},
-            SUSPENSION_STATE_ = #{suspensionState, dbalType=INTEGER},
-            PROCESS_DEF_ID_ = #{processDefinitionId, dbalType=VARCHAR},
-            PROCESS_DEF_KEY_ = #{processDefinitionKey, dbalType=VARCHAR},
-            JOB_DEF_ID_ = #{jobDefinitionId, dbalType=VARCHAR},
-            DEPLOYMENT_ID_ = #{deploymentId, dbalType=VARCHAR},
-            HANDLER_CFG_ = #{jobHandlerConfigurationRaw, dbalType=VARCHAR},
-            PRIORITY_ = #{priority, dbalType=BIGINT},
-            SEQUENCE_COUNTER_ = #{sequenceCounter, dbalType=BIGINT},
-            LAST_FAILURE_LOG_ID_ = #{lastFailureLogId, dbalType=VARCHAR}
+            REV_ =  #{revisionNext},
+            EXECUTION_ID_ = #{executionId:VARCHAR},
+            LOCK_EXP_TIME_ = #{lockExpirationTime:VARCHAR},
+            LOCK_OWNER_ = #{lockOwner:VARCHAR},
+            RETRIES_ = #{retries},
+            EXCEPTION_STACK_ID_ = #{exceptionByteArrayId:VARCHAR},
+            EXCEPTION_MSG_ = #{exceptionMessage:VARCHAR},
+            FAILED_ACT_ID_ = #{failedActivityId:VARCHAR},
+            DUEDATE_ = #{duedate:VARCHAR},
+            SUSPENSION_STATE_ = #{suspensionState},
+            PROCESS_DEF_ID_ = #{processDefinitionId:VARCHAR},
+            PROCESS_DEF_KEY_ = #{processDefinitionKey:VARCHAR},
+            JOB_DEF_ID_ = #{jobDefinitionId:VARCHAR},
+            DEPLOYMENT_ID_ = #{deploymentId:VARCHAR},
+            HANDLER_CFG_ = #{jobHandlerConfigurationRaw:VARCHAR},
+            PRIORITY_ = #{priority},
+            SEQUENCE_COUNTER_ = #{sequenceCounter},
+            LAST_FAILURE_LOG_ID_ = #{lastFailureLogId:VARCHAR}
         </set>
-        where ID_= #{id, dbalType=VARCHAR}
-        and REV_ = #{revision, dbalType=INTEGER}
+        where ID_= #{id:VARCHAR}
+        and REV_ = #{revision}
     </update>
 
     <!-- ACQUIRABLE JOB UPDATE -->
     <update id="updateAcquirableJob" parameterType="Jabe\Impl\Persistence\Entity\AcquirableJobEntity">
       update ${prefix}ACT_RU_JOB
       <set>
-          REV_ =  #{revisionNext, dbalType=INTEGER},
-          LOCK_EXP_TIME_ = #{lockExpirationTime, dbalType=VARCHAR},
-          LOCK_OWNER_ = #{lockOwner, dbalType=VARCHAR},
-          DUEDATE_ = #{duedate, dbalType=VARCHAR},
-          PROCESS_INSTANCE_ID_ = #{processInstanceId, dbalType=VARCHAR},
-          EXCLUSIVE_ = #{exclusive, dbalType=BOOLEAN},
+          REV_ =  #{revisionNext},
+          LOCK_EXP_TIME_ = #{lockExpirationTime:VARCHAR},
+          LOCK_OWNER_ = #{lockOwner:VARCHAR},
+          DUEDATE_ = #{duedate:VARCHAR},
+          PROCESS_INSTANCE_ID_ = #{processInstanceId:VARCHAR},
+          EXCLUSIVE_ = #{exclusive},
       </set>
-      where ID_= #{id, dbalType=VARCHAR}
-        and REV_ = #{revision, dbalType=INTEGER}
+      where ID_= #{id:VARCHAR}
+        and REV_ = #{revision}
     </update>
 
 </mapper>

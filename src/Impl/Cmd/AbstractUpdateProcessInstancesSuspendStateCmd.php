@@ -96,4 +96,9 @@ abstract class AbstractUpdateProcessInstancesSuspendStateCmd implements CommandI
     {
         $this->writeUserOperationLog($commandContext, $numInstances, true);
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

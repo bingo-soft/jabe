@@ -9,8 +9,8 @@ class HandleExternalTaskFailureCmd extends HandleExternalTaskCmd
 {
     protected $errorMessage;
     protected $errorDetails;
-    protected $retryDuration;
-    protected $retries;
+    protected int $retryDuration = 0;
+    protected int $retries = 0;
     protected $variables = [];
     protected $localVariables = [];
 
@@ -25,10 +25,10 @@ class HandleExternalTaskFailureCmd extends HandleExternalTaskCmd
      * @param retryDuration
      */
     public function __construct(
-        string $externalTaskId,
-        string $workerId,
-        string $errorMessage,
-        string $errorDetails,
+        ?string $externalTaskId,
+        ?string $workerId,
+        ?string $errorMessage,
+        ?string $errorDetails,
         int $retries,
         int $retryDuration,
         array $variables,
@@ -55,7 +55,7 @@ class HandleExternalTaskFailureCmd extends HandleExternalTaskCmd
         EnsureUtil::ensureGreaterThanOrEqual("Retry duration cannot be negative", "retryDuration", $this->retryDuration, 0);
     }
 
-    public function getErrorMessageOnWrongWorkerAccess(): string
+    public function getErrorMessageOnWrongWorkerAccess(): ?string
     {
         return "Failure of External Task " . $this->externalTaskId . " cannot be reported by worker '" . $this->workerId;
     }

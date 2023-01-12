@@ -7,7 +7,7 @@ interface ExecutionInterface
     /**
      * The unique identifier of the execution.
      */
-    public function getId(): string;
+    public function getId(): ?string;
 
     /**
      * Indicates if the execution is suspended.
@@ -21,7 +21,7 @@ interface ExecutionInterface
 
     /** Id of the root of the execution tree representing the process instance.
      * It is the same as #getId() if this execution is the process instance. */
-    public function getProcessInstanceId(): string;
+    public function getProcessInstanceId(): ?string;
 
     /**
      * The id of the tenant this execution belongs to. Can be <code>null</code>

@@ -27,7 +27,7 @@ abstract class AbstractDeleteProcessInstanceCmd
     protected $deleteReason;
     protected $skipCustomListeners;
     protected $skipSubprocesses;
-    protected $failIfNotExists = true;
+    protected bool $failIfNotExists = true;
 
     protected function checkDeleteProcessInstance(ExecutionEntity $execution, CommandContext $commandContext): void
     {
@@ -38,8 +38,8 @@ abstract class AbstractDeleteProcessInstanceCmd
 
     protected function deleteProcessInstance(
         CommandContext $commandContext,
-        string $processInstanceId,
-        string $deleteReason,
+        ?string $processInstanceId,
+        ?string $deleteReason,
         bool $skipCustomListeners,
         bool $externallyTerminated,
         bool $skipIoMappings,
@@ -91,7 +91,8 @@ abstract class AbstractDeleteProcessInstanceCmd
                 $processInstanceId,
                 null,
                 null,
-                [PropertyChange::emptyChange()]
+                [PropertyChange::emptyChange()],
+                null
             );
     }
 

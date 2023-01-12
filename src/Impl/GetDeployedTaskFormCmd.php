@@ -13,7 +13,7 @@ class GetDeployedTaskFormCmd extends AbstractGetDeployedFormCmd
 {
     protected $taskId;
 
-    public function __construct(string $taskId)
+    public function __construct(?string $taskId)
     {
         EnsureUtil::ensureNotNull("Task id cannot be null", "taskId", $taskId);
         $this->taskId = $taskId;

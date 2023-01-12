@@ -29,7 +29,7 @@ class CustomActivityBehavior implements ActivityBehaviorInterface, SignallableAc
             ->handleInvocation(new ActivityBehaviorInvocation($this->delegateActivityBehavior, $execution));
     }
 
-    public function signal(ActivityExecutionInterface $execution, string $signalEvent, $signalData): void
+    public function signal(ActivityExecutionInterface $execution, ?string $signalEvent, $signalData): void
     {
         Context::getProcessEngineConfiguration()
             ->getDelegateInterceptor()

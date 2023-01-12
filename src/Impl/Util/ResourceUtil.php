@@ -21,7 +21,7 @@ class ResourceUtil
      * @param deployment the deployment to load resources from
      * @return the resource content as String
      */
-    public static function loadResourceContent(string $resourcePath, DeploymentEntity $deployment): string
+    public static function loadResourceContent(?string $resourcePath, DeploymentEntity $deployment): ?string
     {
         $pathSplit = explode("://", $resourcePath);
 

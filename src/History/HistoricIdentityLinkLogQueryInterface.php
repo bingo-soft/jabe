@@ -9,52 +9,52 @@ interface HistoricIdentityLinkLogQueryInterface extends QueryInterface
     /**
      * Only select historic identity links which have the date before the give date.
      **/
-    public function dateBefore(string $dateBefore): HistoricIdentityLinkLogQueryInterface;
+    public function dateBefore(?string $dateBefore): HistoricIdentityLinkLogQueryInterface;
 
     /**
      * Only select historic identity links which have the date after the give date.
      **/
-    public function dateAfter(string $dateAfter): HistoricIdentityLinkLogQueryInterface;
+    public function dateAfter(?string $dateAfter): HistoricIdentityLinkLogQueryInterface;
 
     /**
      * Only select historic identity links which have the given identity link type.
      **/
-    public function type(string $type): HistoricIdentityLinkLogQueryInterface;
+    public function type(?string $type): HistoricIdentityLinkLogQueryInterface;
 
     /**
      * Only select historic identity links which have the given user id.
      **/
-    public function userId(string $userId): HistoricIdentityLinkLogQueryInterface;
+    public function userId(?string $userId): HistoricIdentityLinkLogQueryInterface;
 
     /**
      * Only select historic identity links which have the given group id.
      **/
-    public function groupId(string $groupId): HistoricIdentityLinkLogQueryInterface;
+    public function groupId(?string $groupId): HistoricIdentityLinkLogQueryInterface;
 
     /**
      * Only select historic identity links which have the given task id.
      **/
-    public function taskId(string $taskId): HistoricIdentityLinkLogQueryInterface;
+    public function taskId(?string $taskId): HistoricIdentityLinkLogQueryInterface;
 
     /**
      * Only select historic identity links which have the given process definition id.
      **/
-    public function processDefinitionId(string $processDefinitionId): HistoricIdentityLinkLogQueryInterface;
+    public function processDefinitionId(?string $processDefinitionId): HistoricIdentityLinkLogQueryInterface;
 
     /**
      * Only select historic identity links which have the given process definition key.
      **/
-    public function processDefinitionKey(string $processDefinitionKey): HistoricIdentityLinkLogQueryInterface;
+    public function processDefinitionKey(?string $processDefinitionKey): HistoricIdentityLinkLogQueryInterface;
 
     /**
      * Only select historic identity links which have the given operation type (add/delete).
      **/
-    public function operationType(string $operationType): HistoricIdentityLinkLogQueryInterface;
+    public function operationType(?string $operationType): HistoricIdentityLinkLogQueryInterface;
 
     /**
      * Only select historic identity links which have the given assigner id.
      **/
-    public function assignerId(string $assignerId): HistoricIdentityLinkLogQueryInterface;
+    public function assignerId(?string $assignerId): HistoricIdentityLinkLogQueryInterface;
 
     /**
      * Only select historic identity links which have the given tenant id.

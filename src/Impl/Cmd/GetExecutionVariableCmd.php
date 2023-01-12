@@ -69,4 +69,9 @@ class GetExecutionVariableCmd implements CommandInterface, \Serializable
             $checker->checkReadProcessInstanceVariable($execution);
         }
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

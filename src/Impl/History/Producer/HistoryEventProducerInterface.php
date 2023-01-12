@@ -1,6 +1,6 @@
 <?php
 
-namespace Jabe\Impl\History\Handler;
+namespace Jabe\Impl\History\Producer;
 
 use Jabe\Batch\BatchInterface;
 use Jabe\Delegate\{
@@ -126,7 +126,7 @@ interface HistoryEventProducerInterface
      * @param deleteReason
      * @return the history event
      */
-    public function createTaskInstanceCompleteEvt(DelegateTaskInterface $task, string $deleteReason): HistoryEvent;
+    public function createTaskInstanceCompleteEvt(DelegateTaskInterface $task, ?string $deleteReason): HistoryEvent;
 
     // User Operation Logs ///////////////////////////////
 
@@ -189,7 +189,7 @@ interface HistoryEventProducerInterface
      * @param taskId
      * @return the history event
      */
-    public function createFormPropertyUpdateEvt(ExecutionEntity $execution, string $propertyId, string $propertyValue, string $taskId): HistoryEvent;
+    public function createFormPropertyUpdateEvt(ExecutionEntity $execution, ?string $propertyId, ?string $propertyValue, ?string $taskId): HistoryEvent;
 
     // Incidents //////////////////////////////////////////
 

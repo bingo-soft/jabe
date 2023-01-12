@@ -14,7 +14,7 @@ class TelemetryRegistry
     protected $licenseKey;
     protected $integration;
     protected $webapps = [];
-    protected $isCollectingTelemetryDataEnabled = false;
+    protected bool $isCollectingTelemetryDataEnabled = false;
 
     public function getApplicationServer(): ApplicationServerImpl
     {
@@ -34,12 +34,12 @@ class TelemetryRegistry
         return $this->commands;
     }
 
-    public function getIntegration(): string
+    public function getIntegration(): ?string
     {
         return $this->integration;
     }
 
-    public function setIntegration(string $integration): void
+    public function setIntegration(?string $integration): void
     {
         $this->integration = $integration;
     }
@@ -74,7 +74,7 @@ class TelemetryRegistry
         $this->isCollectingTelemetryDataEnabled = $isTelemetryEnabled;
     }
 
-    public function markOccurrence(string $name, int $times = 1): void
+    public function markOccurrence(?string $name, int $times = 1): void
     {
         if (!array_key_exists($name, $this->commands)) {
             $counter = new CommandCounter($name);
@@ -86,7 +86,7 @@ class TelemetryRegistry
         $counter->mark($times);
     }
 
-    public function addWebapp(string $webapp): void
+    public function addWebapp(?string $webapp): void
     {
         if (!in_array($webapp, $this->webapps)) {
             $this->webapps[] = $webapp;

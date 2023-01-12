@@ -19,7 +19,7 @@ class UpdateProcessDefinitionHistoryTimeToLiveCmd implements CommandInterface, \
     protected $processDefinitionId;
     protected $historyTimeToLive;
 
-    public function __construct(string $processDefinitionId, ?int $historyTimeToLive)
+    public function __construct(?string $processDefinitionId, ?int $historyTimeToLive)
     {
         $this->processDefinitionId = $processDefinitionId;
         $this->historyTimeToLive = $historyTimeToLive;
@@ -72,5 +72,10 @@ class UpdateProcessDefinitionHistoryTimeToLiveCmd implements CommandInterface, \
                 $processDefinitionEntity->getKey(),
                 $propertyChange
             );
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

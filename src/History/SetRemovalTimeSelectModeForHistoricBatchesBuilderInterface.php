@@ -10,7 +10,7 @@ interface SetRemovalTimeSelectModeForHistoricBatchesBuilderInterface extends Set
      * @param removalTime supposed to be set to historic entities.
      * @return SetRemovalTimeToHistoricBatchesBuilderInterface the builder.
      */
-    public function absoluteRemovalTime(string $removalTime): SetRemovalTimeToHistoricBatchesBuilderInterface;
+    public function absoluteRemovalTime(?string $removalTime): SetRemovalTimeToHistoricBatchesBuilderInterface;
 
     /**
      * Calculates the removal time dynamically based on the time to

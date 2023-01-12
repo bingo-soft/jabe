@@ -14,22 +14,22 @@ interface VariableSerializersInterface
      *   can be determined. If this factory is not able to build serializer either, an exception is thrown. May be null
      * @return TypedValueSerializerInterface he VariableValueserializer selected for persisting the value or 'null' in case no serializer can be found
      */
-    public function findSerializerForValue(TypedValueInterface $value, ?VariableSerializerFactory $fallBackSerializerFactory = null): TypedValueSerializerInterface;
+    public function findSerializerForValue(TypedValueInterface $value, ?VariableSerializerFactoryInterface $fallBackSerializerFactory = null): ?TypedValueSerializerInterface;
 
     /**
      *
      * @return TypedValueSerializerInterface the serializer for the given serializerName name.
      * Returns null if no type was found with the name.
      */
-    public function getSerializerByName(string $serializerName): TypedValueSerializerInterface;
+    public function getSerializerByName(?string $serializerName): ?TypedValueSerializerInterface;
 
-    public function addSerializer(TypedValueSerializerInterface $serializer, ?int $index = null): VariableSerializersInterface;
+    public function addSerializer(TypedValueSerializerInterface $serializer, ?int $index = null);
 
     public function removeSerializer(TypedValueSerializerInterface $serializer): VariableSerializersInterface;
 
     public function getSerializerIndex(TypedValueSerializerInterface $serializer): ?int;
 
-    public function getSerializerIndexByName(string $serializerName): ?int;
+    public function getSerializerIndexByName(?string $serializerName): ?int;
 
     /**
     * Merges two VariableSerializers instances into one. Implementations may apply

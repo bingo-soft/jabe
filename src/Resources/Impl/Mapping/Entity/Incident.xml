@@ -44,21 +44,21 @@
       ANNOTATION_,
       REV_)
     values (
-      #{id ,dbalType=VARCHAR},
-      #{incidentTimestamp, dbalType=VARCHAR},
-      #{incidentMessage, dbalType=VARCHAR},
-      #{incidentType, dbalType=VARCHAR},
-      #{executionId ,dbalType=VARCHAR},
-      #{activityId ,dbalType=VARCHAR},
-      #{failedActivityId ,dbalType=VARCHAR},
-      #{processInstanceId ,dbalType=VARCHAR},
-      #{processDefinitionId ,dbalType=VARCHAR},
-      #{causeIncidentId ,dbalType=VARCHAR},
-      #{rootCauseIncidentId ,dbalType=VARCHAR},
-      #{configuration, dbalType=VARCHAR},
-      #{tenantId, dbalType=VARCHAR},
-      #{jobDefinitionId, dbalType=VARCHAR},
-      #{annotation, dbalType=VARCHAR},
+      #{id:VARCHAR},
+      #{incidentTimestamp:VARCHAR},
+      #{incidentMessage:VARCHAR},
+      #{incidentType:VARCHAR},
+      #{executionId:VARCHAR},
+      #{activityId:VARCHAR},
+      #{failedActivityId:VARCHAR},
+      #{processInstanceId:VARCHAR},
+      #{processDefinitionId:VARCHAR},
+      #{causeIncidentId:VARCHAR},
+      #{rootCauseIncidentId:VARCHAR},
+      #{configuration:VARCHAR},
+      #{tenantId:VARCHAR},
+      #{jobDefinitionId:VARCHAR},
+      #{annotation:VARCHAR},
       1
     )
   </insert>
@@ -104,9 +104,9 @@
   <select id="selectIncidentsByConfiguration" resultMap="incidentResultMap">
     select *
     from ${prefix}ACT_RU_INCIDENT I
-    where I.CONFIGURATION_ = #{parameter.configuration, dbalType=VARCHAR}
+    where I.CONFIGURATION_ = #{parameter.configuration:VARCHAR}
     <if test="parameter.incidentType != null">
-      and INCIDENT_TYPE_ = #{parameter.incidentType, dbalType=VARCHAR}
+      and INCIDENT_TYPE_ = #{parameter.incidentType:VARCHAR}
     </if>
   </select>
 
@@ -129,7 +129,7 @@
   <sql id="selectIncidentByQueryCriteriaSql">
     from ${prefix}ACT_RU_INCIDENT RES
 
-    <if test="(processDefinitionKeys != null and count(processDefinitionKeys) > 0)
+    <if test="!empty(processDefinitionKeys)
         || (authCheck.shouldPerformAuthorizatioCheck and authCheck.authUserId != null)">
       left join ${prefix}ACT_RE_PROCDEF PROCDEF
       on RES.PROC_DEF_ID_ = PROCDEF.ID_
@@ -152,10 +152,10 @@
         and RES.EXECUTION_ID_ = #{executionId}
       </if>
       <if test="incidentTimestampBefore != null">
-        and RES.INCIDENT_TIMESTAMP_ < #{incidentTimestampBefore}
+        and RES.INCIDENT_TIMESTAMP_ &lt; #{incidentTimestampBefore}
       </if>
       <if test="incidentTimestampAfter != null">
-        and RES.INCIDENT_TIMESTAMP_ > #{incidentTimestampAfter}
+        and RES.INCIDENT_TIMESTAMP_ &gt; #{incidentTimestampAfter}
       </if>
       <if test="activityId != null">
         and RES.ACTIVITY_ID_ = #{activityId}
@@ -169,7 +169,7 @@
       <if test="processDefinitionId != null">
         and RES.PROC_DEF_ID_ = #{processDefinitionId}
       </if>
-      <if test="processDefinitionKeys != null and count(processDefinitionKeys) > 0">
+      <if test="!empty(processDefinitionKeys)">
 	      and PROCDEF.KEY_ in
         <foreach item="item" index="index" collection="processDefinitionKeys"
                  open="(" separator="," close=")">
@@ -186,14 +186,14 @@
         and RES.CONFIGURATION_ = #{configuration}
       </if>
       
-      <if test="tenantIds != null and ctenantIds.length > 0">
+      <if test="!empty(tenantIds)">
         and RES.TENANT_ID_ in
         <foreach item="tenantId" index="index" collection="tenantIds"
                  open="(" separator="," close=")">
           #{tenantId}
         </foreach>
       </if>
-      <if test="jobDefinitionIds != null and jobDefinitionIds.length > 0">
+      <if test="!empty(jobDefinitionIds)">
         and RES.JOB_DEF_ID_ in
         <foreach item="jobDefinitionId" index="index" collection="jobDefinitionIds"
                  open="(" separator="," close=")">
@@ -229,17 +229,17 @@
   <update id="updateIncident" parameterType="Jabe\Impl\Persistence\Entity\IncidentEntity">
     update ${prefix}ACT_RU_INCIDENT
     <set>
-      REV_ = #{revisionNext, dbalType=INTEGER},
-      EXECUTION_ID_ = #{executionId, dbalType=VARCHAR},
-      PROC_DEF_ID_ = #{processDefinitionId, dbalType=VARCHAR},
-      ACTIVITY_ID_ = #{activityId, dbalType=VARCHAR},
-      FAILED_ACTIVITY_ID_ = #{failedActivityId, dbalType=VARCHAR},
-      JOB_DEF_ID_ = #{jobDefinitionId, dbalType=VARCHAR},
-      ANNOTATION_ = #{annotation, dbalType=VARCHAR}
+      REV_ = #{revisionNext},
+      EXECUTION_ID_ = #{executionId:VARCHAR},
+      PROC_DEF_ID_ = #{processDefinitionId:VARCHAR},
+      ACTIVITY_ID_ = #{activityId:VARCHAR},
+      FAILED_ACTIVITY_ID_ = #{failedActivityId:VARCHAR},
+      JOB_DEF_ID_ = #{jobDefinitionId:VARCHAR},
+      ANNOTATION_ = #{annotation:VARCHAR}
     </set>
     <where>
-      ID_ = #{id, dbalType=VARCHAR}
-      and REV_ = #{revision, dbalType=INTEGER}
+      ID_ = #{id:VARCHAR}
+      and REV_ = #{revision}
     </where>
   </update>
 

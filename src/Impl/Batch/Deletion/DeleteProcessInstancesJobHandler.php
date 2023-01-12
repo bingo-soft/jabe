@@ -7,6 +7,7 @@ use Jabe\Impl\ProcessInstanceQueryImpl;
 use Jabe\Impl\Batch\{
     AbstractBatchJobHandler,
     BatchEntity,
+    BatchConfiguration,
     BatchJobConfiguration,
     BatchJobContext,
     BatchJobDeclaration,
@@ -29,7 +30,7 @@ class DeleteProcessInstancesJobHandler extends AbstractBatchJobHandler
 {
     public static $JOB_DECLARATION;
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return BatchInterface::TYPE_PROCESS_INSTANCE_DELETION;
     }
@@ -74,7 +75,7 @@ class DeleteProcessInstancesJobHandler extends AbstractBatchJobHandler
         $commandContext->getByteArrayManager()->delete($configurationEntity);
     }
 
-    protected function createJobEntities(BatchEntity $batch, DeleteProcessInstanceBatchConfiguration $configuration, ?string $deploymentId, array $processIds, int $invocationsPerBatchJob): void
+    protected function createJobEntities(BatchEntity $batch, BatchConfiguration $configuration, ?string $deploymentId, array $processIds, int $invocationsPerBatchJob): void
     {
         // handle legacy batch entities (no up-front deployment mapping has been done)
         if ($deploymentId === null && ($configuration->getIdMappings() === null || $configuration->getIdMappings()->isEmpty())) {

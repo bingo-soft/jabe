@@ -22,7 +22,7 @@ class DeleteHistoricVariableInstanceCmd implements CommandInterface, \Serializab
 {
     private $variableInstanceId;
 
-    public function __construct(string $variableInstanceId)
+    public function __construct(?string $variableInstanceId)
     {
         $this->variableInstanceId = $variableInstanceId;
     }
@@ -80,5 +80,10 @@ class DeleteHistoricVariableInstanceCmd implements CommandInterface, \Serializab
         );
 
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

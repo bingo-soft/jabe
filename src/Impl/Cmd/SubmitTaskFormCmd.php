@@ -22,7 +22,7 @@ class SubmitTaskFormCmd implements CommandInterface, \Serializable
     protected $returnVariables;
     protected $deserializeValues;
 
-    public function __construct(string $taskId, array $properties, bool $returnVariables, bool $deserializeValues)
+    public function __construct(?string $taskId, array $properties, bool $returnVariables, bool $deserializeValues)
     {
         $this->taskId = $taskId;
         $this->properties = Variables::fromMap($properties);
@@ -94,5 +94,10 @@ class SubmitTaskFormCmd implements CommandInterface, \Serializable
         } else {
             return null;
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

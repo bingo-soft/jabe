@@ -7,13 +7,14 @@ use Jabe\Impl\Core\Variable\Scope\{
     AbstractVariableScope,
     VariableInstanceLifecycleListenerInterface
 };
-use Jabe\Impl\History\AbstractHistoryLevel;
+use Jabe\Impl\History\HistoryLevelInterface;
 use Jabe\Impl\History\Event\{
     HistoryEvent,
     HistoryEventCreator,
     HistoryEventTypes
 };
 use Jabe\Impl\History\Producer\HistoryEventProducerInterface;
+use Jabe\Impl\Core\Variable\CoreVariableInstanceInterface;
 
 class VariableInstanceHistoryListener implements VariableInstanceLifecycleListenerInterface
 {
@@ -31,7 +32,7 @@ class VariableInstanceHistoryListener implements VariableInstanceLifecycleListen
     {
     }
 
-    public function onCreate(VariableInstanceEntity $variableInstance, AbstractVariableScope $sourceScope): void
+    public function onCreate(CoreVariableInstanceInterface $variableInstance, AbstractVariableScope $sourceScope): void
     {
         if ($this->getHistoryLevel()->isHistoryEventProduced(HistoryEventTypes::variableInstanceCreate(), $variableInstance) && !$variableInstance->isTransient()) {
             HistoryEventProcessor::processHistoryEvents(new class ($variableInstance, $sourceScope) extends HistoryEventCreator {
@@ -52,7 +53,7 @@ class VariableInstanceHistoryListener implements VariableInstanceLifecycleListen
         }
     }
 
-    public function onDelete(VariableInstanceEntity $variableInstance, AbstractVariableScope $sourceScope): void
+    public function onDelete(CoreVariableInstanceInterface $variableInstance, AbstractVariableScope $sourceScope): void
     {
         if ($this->getHistoryLevel()->isHistoryEventProduced(HistoryEventTypes::variableInstanceDelete(), $variableInstance) && !$variableInstance->isTransient()) {
             HistoryEventProcessor::processHistoryEvents(new class ($variableInstance, $sourceScope) extends HistoryEventCreator {
@@ -73,7 +74,7 @@ class VariableInstanceHistoryListener implements VariableInstanceLifecycleListen
         }
     }
 
-    public function onUpdate(VariableInstanceEntity $variableInstance, AbstractVariableScope $sourceScope): void
+    public function onUpdate(CoreVariableInstanceInterface $variableInstance, AbstractVariableScope $sourceScope): void
     {
         if ($this->getHistoryLevel()->isHistoryEventProduced(HistoryEventTypes::variableInstanceUpdate(), $variableInstance) && !$variableInstance->isTransient()) {
             HistoryEventProcessor::processHistoryEvents(new class ($variableInstance, $sourceScope) extends HistoryEventCreator {
@@ -94,7 +95,7 @@ class VariableInstanceHistoryListener implements VariableInstanceLifecycleListen
         }
     }
 
-    protected function getHistoryLevel(): AbstractHistoryLevel
+    protected function getHistoryLevel(): HistoryLevelInterface
     {
         return Context::getProcessEngineConfiguration()->getHistoryLevel();
     }

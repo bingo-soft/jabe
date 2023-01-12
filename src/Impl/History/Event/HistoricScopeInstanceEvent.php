@@ -10,22 +10,22 @@ class HistoricScopeInstanceEvent extends HistoryEvent
 
     // getters / setters ////////////////////////////////////
 
-    public function getEndTime(): string
+    public function getEndTime(): ?string
     {
         return $this->endTime;
     }
 
-    public function setEndTime(string $endTime): void
+    public function setEndTime(?string $endTime): void
     {
         $this->endTime = $endTime;
     }
 
-    public function getStartTime(): string
+    public function getStartTime(): ?string
     {
         return $this->startTime;
     }
 
-    public function setStartTime(string $startTime): void
+    public function setStartTime(?string $startTime): void
     {
         $this->startTime = $startTime;
     }

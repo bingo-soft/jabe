@@ -10,13 +10,13 @@ class SingleVariableContext implements VariableContextInterface
     protected $typedValue;
     protected $name;
 
-    public function __construct(string $name, TypedValueInterface $typedValue)
+    public function __construct(?string $name, TypedValueInterface $typedValue)
     {
         $this->name = $name;
         $this->typedValue = $typedValue;
     }
 
-    public function resolve(string $variableName): ?TypedValueInterface
+    public function resolve(?string $variableName): ?TypedValueInterface
     {
         if ($this->containsVariable($variableName)) {
             return $this->typedValue;
@@ -39,7 +39,7 @@ class SingleVariableContext implements VariableContextInterface
         return [$this->name];
     }
 
-    public static function singleVariable(string $name, TypedValueInterface $value): SingleVariableContext
+    public static function singleVariable(?string $name, TypedValueInterface $value): SingleVariableContext
     {
         return new SingleVariableContext($name, $value);
     }

@@ -22,7 +22,7 @@ interface FormFieldValidatorContextInterface
     public function getVariableScope(): VariableScopeInterface;
 
     /** @return string the configuration of this validator */
-    public function getConfiguration(): string;
+    public function getConfiguration(): ?string;
 
     /** @return all values submitted in the form */
     public function getSubmittedValues(): array;

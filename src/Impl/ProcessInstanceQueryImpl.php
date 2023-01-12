@@ -45,13 +45,13 @@ class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements Proc
     protected $isRootProcessInstances;
     protected $isLeafProcessInstances;
 
-    protected $isTenantIdSet = false;
+    protected bool $isTenantIdSet = false;
     protected $tenantIds = [];
-    protected $isProcessDefinitionWithoutTenantId = false;
+    protected bool $isProcessDefinitionWithoutTenantId = false;
 
     // or query /////////////////////////////
     protected $queries = [];//new ArrayList<>(Arrays.asList($this));
-    protected $isOrQueryActive = false;
+    protected bool $isOrQueryActive = false;
 
     public function __construct(CommandExecutorInterface $commandExecutor = null)
     {
@@ -128,7 +128,7 @@ class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements Proc
         $this->isOrQueryActive = $data->isOrQueryActive;
     }
 
-    public function processInstanceId(string $processInstanceId): ProcessInstanceQueryImpl
+    public function processInstanceId(?string $processInstanceId): ProcessInstanceQueryImpl
     {
         EnsureUtil::ensureNotNull("Process instance id", "processInstanceId", $processInstanceId);
         $this->processInstanceId = $processInstanceId;
@@ -142,7 +142,7 @@ class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements Proc
         return $this;
     }
 
-    public function processInstanceBusinessKey(string $businessKey, string $processDefinitionKey = null): ProcessInstanceQueryInterface
+    public function processInstanceBusinessKey(?string $businessKey, ?string $processDefinitionKey = null): ProcessInstanceQueryInterface
     {
         EnsureUtil::ensureNotNull("Business key", "businessKey", $businessKey);
         $this->businessKey = $businessKey;
@@ -150,20 +150,20 @@ class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements Proc
         return $this;
     }
 
-    public function processInstanceBusinessKeyLike(string $businessKeyLike): ProcessInstanceQueryInterface
+    public function processInstanceBusinessKeyLike(?string $businessKeyLike): ProcessInstanceQueryInterface
     {
         $this->businessKeyLike = $businessKeyLike;
         return $this;
     }
 
-    public function processDefinitionId(string $processDefinitionId): ProcessInstanceQueryImpl
+    public function processDefinitionId(?string $processDefinitionId): ProcessInstanceQueryImpl
     {
         EnsureUtil::ensureNotNull("Process definition id", "processDefinitionId", $processDefinitionId);
         $this->processDefinitionId = $processDefinitionId;
         return $this;
     }
 
-    public function processDefinitionKey(string $processDefinitionKey): ProcessInstanceQueryImpl
+    public function processDefinitionKey(?string $processDefinitionKey): ProcessInstanceQueryImpl
     {
         EnsureUtil::ensureNotNull("Process definition key", "processDefinitionKey", $processDefinitionKey);
         $this->processDefinitionKey = $processDefinitionKey;
@@ -184,14 +184,14 @@ class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements Proc
         return $this;
     }
 
-    public function deploymentId(string $deploymentId): ProcessInstanceQueryInterface
+    public function deploymentId(?string $deploymentId): ProcessInstanceQueryInterface
     {
         EnsureUtil::ensureNotNull("Deployment id", "deploymentId", $deploymentId);
         $this->deploymentId = $deploymentId;
         return $this;
     }
 
-    public function superProcessInstanceId(string $superProcessInstanceId): ProcessInstanceQueryInterface
+    public function superProcessInstanceId(?string $superProcessInstanceId): ProcessInstanceQueryInterface
     {
         if ($this->isRootProcessInstances) {
             throw new ProcessEngineException("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId");
@@ -200,26 +200,26 @@ class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements Proc
         return $this;
     }
 
-    public function subProcessInstanceId(string $subProcessInstanceId): ProcessInstanceQueryInterface
+    public function subProcessInstanceId(?string $subProcessInstanceId): ProcessInstanceQueryInterface
     {
         $this->subProcessInstanceId = $subProcessInstanceId;
         return $this;
     }
 
-    /*public function caseInstanceId(string $caseInstanceId): ProcessInstanceQueryInterface
+    /*public function caseInstanceId(?string $caseInstanceId): ProcessInstanceQueryInterface
     {
         EnsureUtil::ensureNotNull("caseInstanceId", caseInstanceId);
         $this->caseInstanceId = caseInstanceId;
         return $this;
     }
 
-    public ProcessInstanceQueryInterface superCaseInstanceId(string $superCaseInstanceId) {
+    public ProcessInstanceQueryInterface superCaseInstanceId(?string $superCaseInstanceId) {
         EnsureUtil::ensureNotNull("superCaseInstanceId", superCaseInstanceId);
         $this->superCaseInstanceId = superCaseInstanceId;
         return $this;
     }
 
-    public ProcessInstanceQueryInterface subCaseInstanceId(string $subCaseInstanceId) {
+    public ProcessInstanceQueryInterface subCaseInstanceId(?string $subCaseInstanceId) {
         EnsureUtil::ensureNotNull("subCaseInstanceId", subCaseInstanceId);
         $this->subCaseInstanceId = subCaseInstanceId;
         return $this;
@@ -303,28 +303,28 @@ class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements Proc
         return $this;
     }
 
-    public function incidentType(string $incidentType): ProcessInstanceQueryInterface
+    public function incidentType(?string $incidentType): ProcessInstanceQueryInterface
     {
         EnsureUtil::ensureNotNull("incident type", "incidentType", $incidentType);
         $this->incidentType = $incidentType;
         return $this;
     }
 
-    public function incidentId(string $incidentId): ProcessInstanceQueryInterface
+    public function incidentId(?string $incidentId): ProcessInstanceQueryInterface
     {
         EnsureUtil::ensureNotNull("incident id", "incidentId", $incidentId);
         $this->incidentId = $incidentId;
         return $this;
     }
 
-    public function incidentMessage(string $incidentMessage): ProcessInstanceQueryInterface
+    public function incidentMessage(?string $incidentMessage): ProcessInstanceQueryInterface
     {
         EnsureUtil::ensureNotNull("incident message", "incidentMessage", $incidentMessage);
         $this->incidentMessage = $incidentMessage;
         return $this;
     }
 
-    public function incidentMessageLike(string $incidentMessageLike): ProcessInstanceQueryInterface
+    public function incidentMessageLike(?string $incidentMessageLike): ProcessInstanceQueryInterface
     {
         EnsureUtil::ensureNotNull("incident messageLike", "incidentMessageLike", $incidentMessageLike);
         $this->incidentMessageLike = $incidentMessageLike;
@@ -395,7 +395,7 @@ class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements Proc
             ->findProcessInstanceCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
 
@@ -441,7 +441,7 @@ class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements Proc
 
     //getters /////////////////////////////////////////////////////////////////
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
@@ -477,22 +477,22 @@ class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements Proc
         return $this->activityIds;
     }
 
-    public function getBusinessKey(): string
+    public function getBusinessKey(): ?string
     {
         return $this->businessKey;
     }
 
-    public function getBusinessKeyLike(): string
+    public function getBusinessKeyLike(): ?string
     {
         return $this->businessKeyLike;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }
@@ -507,17 +507,17 @@ class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements Proc
         return $this->processDefinitionKeyNotIn;
     }
 
-    public function getDeploymentId(): string
+    public function getDeploymentId(): ?string
     {
         return $this->deploymentId;
     }
 
-    public function getSuperProcessInstanceId(): string
+    public function getSuperProcessInstanceId(): ?string
     {
         return $this->superProcessInstanceId;
     }
 
-    public function getSubProcessInstanceId(): string
+    public function getSubProcessInstanceId(): ?string
     {
         return $this->subProcessInstanceId;
     }
@@ -537,22 +537,22 @@ class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements Proc
         return $this->withIncident;
     }
 
-    public function getIncidentId(): string
+    public function getIncidentId(): ?string
     {
         return $this->incidentId;
     }
 
-    public function getIncidentType(): string
+    public function getIncidentType(): ?string
     {
         return $this->incidentType;
     }
 
-    public function getIncidentMessage(): string
+    public function getIncidentMessage(): ?string
     {
         return $this->incidentMessage;
     }
 
-    public function getIncidentMessageLike(): string
+    public function getIncidentMessageLike(): ?string
     {
         return $this->incidentMessageLike;
     }

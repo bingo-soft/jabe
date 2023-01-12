@@ -16,7 +16,7 @@ class SetPropertyCmd implements CommandInterface
     protected $name;
     protected $value;
 
-    public function __construct(string $name, string $value)
+    public function __construct(?string $name, ?string $value)
     {
         $this->name = $name;
         $this->value = $value;
@@ -47,5 +47,10 @@ class SetPropertyCmd implements CommandInterface
         );
 
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

@@ -29,9 +29,9 @@ class SourceExecutableScript extends CompiledExecutableScript
     protected $scriptSource;
 
     /** Flag to signal if the script should be compiled */
-    protected $shouldBeCompiled = true;
+    protected bool $shouldBeCompiled = true;
 
-    public function __construct(string $language, string $source)
+    public function __construct(?string $language, ?string $source)
     {
         parent::__construct($language);
         $this->scriptSource = $source;
@@ -76,7 +76,7 @@ class SourceExecutableScript extends CompiledExecutableScript
         }
     }
 
-    public function compile(ScriptEngineInterface $scriptEngine, string $language, string $src): CompiledScript
+    public function compile(ScriptEngineInterface $scriptEngine, ?string $language, ?string $src): CompiledScript
     {
         if ($scriptEngine instanceof CompilableInterface) {
             $compilingEngine = $scriptEngine;
@@ -102,7 +102,7 @@ class SourceExecutableScript extends CompiledExecutableScript
         return $engine->eval($this->scriptSource, $bindings);
     }
 
-    public function getScriptSource(): string
+    public function getScriptSource(): ?string
     {
         return $this->scriptSource;
     }
@@ -113,7 +113,7 @@ class SourceExecutableScript extends CompiledExecutableScript
      * @param scriptSource
      *          the new script source code
      */
-    public function setScriptSource(string $scriptSource): void
+    public function setScriptSource(?string $scriptSource): void
     {
         $this->compiledScript = null;
         $this->shouldBeCompiled = true;

@@ -52,7 +52,7 @@ class FormDataImpl implements FormDataInterface, \Serializable
         $this->formFields = $fields;
     }
 
-    public function getFormKey(): string
+    public function getFormKey(): ?string
     {
         return $this->formKey;
     }
@@ -65,12 +65,12 @@ class FormDataImpl implements FormDataInterface, \Serializable
         return $this->formProperties;
     }
 
-    public function setFormKey(string $formKey): void
+    public function setFormKey(?string $formKey): void
     {
         $this->formKey = $formKey;
     }
 
-    public function setDeploymentId(string $deploymentId): void
+    public function setDeploymentId(?string $deploymentId): void
     {
         $this->deploymentId = $deploymentId;
     }

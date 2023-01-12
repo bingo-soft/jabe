@@ -25,42 +25,42 @@ class IncidentContext
         $this->jobDefinitionId = $incident->getJobDefinitionId();
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function setProcessDefinitionId(string $processDefinitionId): void
+    public function setProcessDefinitionId(?string $processDefinitionId): void
     {
         $this->processDefinitionId = $processDefinitionId;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
 
-    public function setActivityId(string $activityId): void
+    public function setActivityId(?string $activityId): void
     {
         $this->activityId = $activityId;
     }
 
-    public function getExecutionId(): string
+    public function getExecutionId(): ?string
     {
         return $this->executionId;
     }
 
-    public function setExecutionId(string $executionId): void
+    public function setExecutionId(?string $executionId): void
     {
         $this->executionId = $executionId;
     }
 
-    public function getConfiguration(): string
+    public function getConfiguration(): ?string
     {
         return $this->configuration;
     }
 
-    public function setConfiguration(string $configuration): void
+    public function setConfiguration(?string $configuration): void
     {
         $this->configuration = $configuration;
     }
@@ -75,22 +75,22 @@ class IncidentContext
         $this->tenantId = $tenantId;
     }
 
-    public function getJobDefinitionId(): string
+    public function getJobDefinitionId(): ?string
     {
         return $this->jobDefinitionId;
     }
 
-    public function setJobDefinitionId(string $jobDefinitionId): void
+    public function setJobDefinitionId(?string $jobDefinitionId): void
     {
         $this->jobDefinitionId = $jobDefinitionId;
     }
 
-    public function getHistoryConfiguration(): string
+    public function getHistoryConfiguration(): ?string
     {
         return $this->historyConfiguration;
     }
 
-    public function setHistoryConfiguration(string $historicConfiguration): void
+    public function setHistoryConfiguration(?string $historicConfiguration): void
     {
         $this->historyConfiguration = $historicConfiguration;
     }
@@ -100,7 +100,7 @@ class IncidentContext
         return $this->failedActivityId;
     }
 
-    public function setFailedActivityId(string $failedActivityId): void
+    public function setFailedActivityId(?string $failedActivityId): void
     {
         $this->failedActivityId = $failedActivityId;
     }

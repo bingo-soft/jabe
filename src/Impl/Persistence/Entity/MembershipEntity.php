@@ -9,6 +9,8 @@ class MembershipEntity implements \Serializable, DbEntityInterface
 {
     protected $user;
     protected $group;
+    protected ?string $userId;
+    protected ?string $groupId;
 
     /**
      * To handle a MemberhipEntity in the cache, an id is necessary.
@@ -28,7 +30,7 @@ class MembershipEntity implements \Serializable, DbEntityInterface
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         // For the sake of Entity caching the id is necessary
         $this->id = $id;
@@ -54,12 +56,12 @@ class MembershipEntity implements \Serializable, DbEntityInterface
         $this->group = $group;
     }
 
-    public function getUserId(): string
+    public function getUserId(): ?string
     {
         return $this->user->getId();
     }
 
-    public function getGroupId(): string
+    public function getGroupId(): ?string
     {
         return $this->group->getId();
     }

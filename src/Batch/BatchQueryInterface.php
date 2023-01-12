@@ -7,12 +7,12 @@ use Jabe\Query\QueryInterface;
 interface BatchQueryInterface extends QueryInterface
 {
     /** Only select batch instances for the given batch id. */
-    public function batchId(string $batchId): BatchQueryInterface;
+    public function batchId(?string $batchId): BatchQueryInterface;
 
     /**
      * Only select batches of the given type.
      */
-    public function type(string $type): BatchQueryInterface;
+    public function type(?string $type): BatchQueryInterface;
 
     /** Only selects batches with one of the given tenant ids. */
     public function tenantIdIn(array $tenantIds): BatchQueryInterface;

@@ -19,7 +19,7 @@ use Jabe\Impl\Persistence\Entity\{
 
 class BatchJobDeclaration extends JobDeclaration
 {
-    public function __construct(string $jobHandlerType)
+    public function __construct(?string $jobHandlerType)
     {
         parent::__construct($jobHandlerType);
     }
@@ -39,7 +39,7 @@ class BatchJobDeclaration extends JobDeclaration
         return new BatchJobConfiguration($context->getConfiguration()->getId());
     }
 
-    protected function resolveJobDefinitionId(/*BatchJobContext*/$context): string
+    protected function resolveJobDefinitionId(/*BatchJobContext*/$context): ?string
     {
         return $context->getBatch()->getBatchJobDefinitionId();
     }

@@ -8,12 +8,12 @@ class BatchMonitorJobConfiguration implements JobHandlerConfigurationInterface
 {
     protected $batchId;
 
-    public function __construct(string $batchId)
+    public function __construct(?string $batchId)
     {
         $this->batchId = $batchId;
     }
 
-    public function getBatchId(): string
+    public function getBatchId(): ?string
     {
         return $this->batchId;
     }
@@ -23,7 +23,7 @@ class BatchMonitorJobConfiguration implements JobHandlerConfigurationInterface
         return $this->batchId;
     }
 
-    public function toCanonicalString(): string
+    public function toCanonicalString(): ?string
     {
         return $this->batchId;
     }

@@ -26,7 +26,7 @@ class CompleteTaskCmd implements CommandInterface, \Serializable
     protected $deserializeReturnedVariables;
 
     public function __construct(
-        string $taskId,
+        ?string $taskId,
         array $variables,
         bool $returnVariables = false,
         bool $deserializeReturnedVariables = false
@@ -58,7 +58,7 @@ class CompleteTaskCmd implements CommandInterface, \Serializable
 
     public function execute(CommandContext $commandContext)
     {
-        EnsureUtil::ensureNotNull("taskId", $this->taskId);
+        EnsureUtil::ensureNotNull("taskId", "taskId", $this->taskId);
 
         $taskManager = $commandContext->getTaskManager();
         $task = $taskManager->findTaskById($this->taskId);
@@ -102,5 +102,10 @@ class CompleteTaskCmd implements CommandInterface, \Serializable
         foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
             $checker->checkTaskWork($task);
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

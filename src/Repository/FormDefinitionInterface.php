@@ -2,6 +2,6 @@
 
 namespace Jabe\Repository;
 
-interface FormDefinitionInterface extends ResourceDefinition
+interface FormDefinitionInterface extends ResourceDefinitionInterface
 {
 }

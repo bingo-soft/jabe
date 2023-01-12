@@ -9,34 +9,34 @@ interface FilterInterface
     /**
      * @return string the id of the filer
      */
-    public function getId(): string;
+    public function getId(): ?string;
 
     /**
      * @return string the resource type fo the filter
      */
-    public function getResourceType(): string;
+    public function getResourceType(): ?string;
 
     /**
      * @return string the name of the filter
      */
-    public function getName(): string;
+    public function getName(): ?string;
 
     /**
      * @param name the name of the filter
      * @return this filter
      */
-    public function setName(string $name): FilterInterface;
+    public function setName(?string $name): FilterInterface;
 
     /**
      * @return string the owner of the filter
      */
-    public function getOwner(): string;
+    public function getOwner(): ?string;
 
     /**
      * @param owner the owner of the filter
      * @return this filter
      */
-    public function setOwner(string $owner): FilterInterface;
+    public function setOwner(?string $owner): FilterInterface;
 
     /**
      * @return QueryInterface the saved query as query object

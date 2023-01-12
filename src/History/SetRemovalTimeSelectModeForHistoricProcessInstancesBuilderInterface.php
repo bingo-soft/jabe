@@ -10,7 +10,7 @@ interface SetRemovalTimeSelectModeForHistoricProcessInstancesBuilderInterface ex
      * @param removalTime supposed to be set to historic entities.
      * @return SetRemovalTimeToHistoricProcessInstancesBuilderInterface the builder.
      */
-    public function absoluteRemovalTime(string $removalTime): SetRemovalTimeToHistoricProcessInstancesBuilderInterface;
+    public function absoluteRemovalTime(?string $removalTime): SetRemovalTimeToHistoricProcessInstancesBuilderInterface;
 
     /**
      * <p> Calculates the removal time dynamically based on the respective process definition time to

@@ -23,7 +23,7 @@ class AuthorizationCheckCmd implements CommandInterface
     protected $resource;
     protected $resourceId;
 
-    public function __construct(string $userId, array $groupIds, PermissionInterface $permission, ResourceInterface $resource, string $resourceId)
+    public function __construct(?string $userId, array $groupIds, PermissionInterface $permission, ResourceInterface $resource, ?string $resourceId)
     {
         $this->userId = $userId;
         $this->groupIds = $groupIds;
@@ -49,7 +49,7 @@ class AuthorizationCheckCmd implements CommandInterface
         return $authorizationManager->isAuthorized($this->userId, $this->groupIds, $this->permission, $this->resource, $this->resourceId);
     }
 
-    protected function validate(string $userId, array $groupIds, PermissionInterface $permission, ResourceInterface $resource): void
+    protected function validate(?string $userId, array $groupIds, PermissionInterface $permission, ResourceInterface $resource): void
     {
         EnsureUtil::ensureAtLeastOneNotNull("Authorization must have a 'userId' or/and a 'groupId'.", $userId, $groupIds);
         EnsureUtil::ensureNotNull("Invalid permission for an authorization", "authorization.getResource()", $permission);
@@ -65,5 +65,10 @@ class AuthorizationCheckCmd implements CommandInterface
     {
         return Resources::historicTask() == $this->resource ||
                Resources::historicProcessInstance() == $this->resource;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

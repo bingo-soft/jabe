@@ -7,12 +7,12 @@ interface HistoricBatchInterface
     /**
     * @return string the id of the batch
     */
-    public function getId(): string;
+    public function getId(): ?string;
 
     /**
      * @return string the type of the batch
      */
-    public function getType(): string;
+    public function getType(): ?string;
 
     /**
      * @return int the number of batch execution jobs required to complete the batch
@@ -32,17 +32,17 @@ interface HistoricBatchInterface
     /**
      * @return string the id of the batch seed job definition
      */
-    public function getSeedJobDefinitionId(): string;
+    public function getSeedJobDefinitionId(): ?string;
 
     /**
      * @return string the id of the batch monitor job definition
      */
-    public function getMonitorJobDefinitionId(): string;
+    public function getMonitorJobDefinitionId(): ?string;
 
     /**
      * @return string the id of the batch job definition
      */
-    public function getBatchJobDefinitionId(): string;
+    public function getBatchJobDefinitionId(): ?string;
 
     /**
      * @return string the batch's tenant id or null
@@ -52,18 +52,18 @@ interface HistoricBatchInterface
     /**
      * @return string the batch creator's user id
      */
-    public function getCreateUserId(): string;
+    public function getCreateUserId(): ?string;
 
     /**
      * @return string the date the batch was started
      */
-    public function getStartTime(): string;
+    public function getStartTime(): ?string;
 
     /**
      * @return string the date the batch was completed
      */
-    public function getEndTime(): string;
+    public function getEndTime(): ?string;
 
     /** The time the historic batch will be removed. */
-    public function getRemovalTime(): string;
+    public function getRemovalTime(): ?string;
 }

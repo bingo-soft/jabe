@@ -12,11 +12,11 @@ use Jabe\Impl\Util\ClassNameUtil;
 class GroupEntity implements GroupInterface, \Serializable, DbEntityInterface, HasDbRevisionInterface
 {
     protected $id;
-    protected $revision;
+    protected int $revision = 0;
     protected $name;
     protected $type;
 
-    public function __construct(string $id)
+    public function __construct(?string $id = null)
     {
         $this->id = $id;
     }
@@ -39,32 +39,32 @@ class GroupEntity implements GroupInterface, \Serializable, DbEntityInterface, H
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function setType(string $type): void
+    public function setType(?string $type): void
     {
         $this->type = $type;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }

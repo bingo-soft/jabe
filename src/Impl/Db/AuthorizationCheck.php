@@ -11,18 +11,18 @@ class AuthorizationCheck implements \Serializable
      * useful when implementing a query which may perform an authorization check
      * only under certain circumstances.
      */
-    protected $isAuthorizationCheckEnabled = false;
+    protected bool $isAuthorizationCheckEnabled = false;
 
     /**
      * If true authorization check is performed.
      */
-    protected $shouldPerformAuthorizatioCheck = false;
+    protected bool $shouldPerformAuthorizatioCheck = false;
 
     /**
      * Indicates if the revoke authorization checks are enabled or not.
      * The authorization checks without checking revoke permissions are much more faster.
      */
-    protected $isRevokeAuthorizationCheckEnabled = false;
+    protected bool $isRevokeAuthorizationCheckEnabled = false;
 
     /** the id of the user to check permissions for */
     protected $authUserId;
@@ -32,18 +32,19 @@ class AuthorizationCheck implements \Serializable
 
     /** the default permissions to use if no matching authorization
      * can be found.*/
-    protected $authDefaultPerm = Permissions::ALL;
+    protected $authDefaultPerm;
 
     protected $permissionChecks;
 
-    protected $historicInstancePermissionsEnabled = false;
+    protected bool $historicInstancePermissionsEnabled = false;
 
-    protected $useLeftJoin = true;
+    protected bool $useLeftJoin = true;
 
-    public function __construct(string $authUserId, array $authGroupIds, CompositePermissionCheck $permissionCheck, bool $isRevokeAuthorizationCheckEnabled)
+    public function __construct(?string $authUserId = null, ?array $authGroupIds = [], ?CompositePermissionCheck $permissionCheck = null, ?bool $isRevokeAuthorizationCheckEnabled = false)
     {
         $this->authUserId = $authUserId;
         $this->authGroupIds = $authGroupIds;
+        $this->authDefaultPerm = Permissions::all();
         $this->permissionChecks = $permissionCheck;
         $this->isRevokeAuthorizationCheckEnabled = $isRevokeAuthorizationCheckEnabled;
     }
@@ -107,12 +108,12 @@ class AuthorizationCheck implements \Serializable
         return empty($this->permissionChecks->getAtomicChecks()) && empty($this->permissionChecks->getCompositeChecks());
     }
 
-    public function getAuthUserId(): string
+    public function getAuthUserId(): ?string
     {
         return $this->authUserId;
     }
 
-    public function setAuthUserId(string $authUserId): void
+    public function setAuthUserId(?string $authUserId): void
     {
         $this->authUserId = $authUserId;
     }
@@ -122,7 +123,7 @@ class AuthorizationCheck implements \Serializable
         return $this->authGroupIds;
     }
 
-    public function setAuthGroupIds(array $authGroupIds): void
+    public function setAuthGroupIds(?array $authGroupIds = []): void
     {
         $this->authGroupIds = $authGroupIds;
     }
@@ -142,6 +143,14 @@ class AuthorizationCheck implements \Serializable
     public function getPermissionChecks(): CompositePermissionCheck
     {
         return $this->permissionChecks;
+    }
+
+    public function clearPermissionChecks(): void
+    {
+        //@TODO, will not be null after fix
+        if ($this->permissionChecks !== null) {
+            $this->permissionChecks->clear();
+        }
     }
 
     public function setAtomicPermissionChecks(array $permissionChecks): void

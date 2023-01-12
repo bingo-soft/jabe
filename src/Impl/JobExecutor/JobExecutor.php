@@ -25,28 +25,28 @@ abstract class JobExecutor
     protected $rejectedJobsHandler;
     protected $jobAcquisitionThread;
 
-    protected $isAutoActivate = false;
-    protected $isActive = false;
+    protected bool $isAutoActivate = false;
+    protected bool $isActive = false;
 
-    protected $maxJobsPerAcquisition = 3;
+    protected int $maxJobsPerAcquisition = 3;
 
     // waiting when job acquisition is idle
-    protected $waitTimeInMillis = 5 * 1000;
-    protected $waitIncreaseFactor = 2;
-    protected $maxWait = 60 * 1000;
+    protected int $waitTimeInMillis = 5 * 1000;
+    protected int $waitIncreaseFactor = 2;
+    protected int $maxWait = 60 * 1000;
 
     // backoff when job acquisition fails to lock all jobs
-    protected $backoffTimeInMillis = 0;
-    protected $maxBackoff = 0;
+    protected int $backoffTimeInMillis = 0;
+    protected int $maxBackoff = 0;
 
     /**
      * The number of job acquisition cycles without locking failures
      * until the backoff level is reduced.
      */
-    protected $backoffDecreaseThreshold = 100;
+    protected int $backoffDecreaseThreshold = 100;
 
     protected $lockOwner;
-    protected $lockTimeInMillis = 5 * 60 * 1000;
+    protected int $lockTimeInMillis = 5 * 60 * 1000;
 
     public function __construct()
     {
@@ -249,12 +249,12 @@ abstract class JobExecutor
         $this->lockTimeInMillis = $lockTimeInMillis;
     }
 
-    public function getLockOwner(): string
+    public function getLockOwner(): ?string
     {
         return $this->lockOwner;
     }
 
-    public function setLockOwner(string $lockOwner): void
+    public function setLockOwner(?string $lockOwner): void
     {
         $this->lockOwner = $lockOwner;
     }
@@ -324,7 +324,7 @@ abstract class JobExecutor
         $this->backoffDecreaseThreshold = $backoffDecreaseThreshold;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -349,7 +349,7 @@ abstract class JobExecutor
         return $this->isActive;
     }
 
-    public function getRejectedJobsHandler(): RejectedJobsHandlerInterface
+    public function getRejectedJobsHandler(): ?RejectedJobsHandlerInterface
     {
         return $this->rejectedJobsHandler;
     }

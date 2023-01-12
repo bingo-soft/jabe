@@ -11,7 +11,7 @@ interface ValueTypeInterface extends \Serializable
     /**
      * Returns the name of the variable type
      */
-    public function getName(): string;
+    public function getName(): ?string;
 
     /**
      * Indicates whether this type is primitive valued. Primitive valued types can be handled

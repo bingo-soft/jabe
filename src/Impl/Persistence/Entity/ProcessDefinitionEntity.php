@@ -21,7 +21,7 @@ use Jabe\Impl\Pvm\Process\{
 use Jabe\Impl\Pvm\Runtime\PvmExecutionImpl;
 use Jabe\Impl\Repository\ResourceDefinitionEntityInterface;
 use Jabe\Impl\Task\TaskDefinition;
-use Jabe\Respository\ProcessDefinitionInterface;
+use Jabe\Repository\ProcessDefinitionInterface;
 use Jabe\Task\IdentityLinkType;
 
 class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDefinitionInterface, ResourceDefinitionEntityInterface, DbEntityInterface, HasDbRevisionInterface
@@ -29,8 +29,8 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
     //protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
     protected $key;
-    protected $revision = 1;
-    protected $version;
+    protected int $revision = 1;
+    protected int $version = 0;
     protected $category;
     protected $deploymentId;
     protected $resourceName;
@@ -45,15 +45,15 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
     protected $tenantId;
     protected $versionTag;
     protected $historyTimeToLive;
-    protected $isIdentityLinksInitialized = false;
+    protected bool $isIdentityLinksInitialized = false;
     protected $definitionIdentityLinkEntities = [];
     protected $candidateStarterUserIdExpressions = [];
     protected $candidateStarterGroupIdExpressions = [];
-    protected $isStartableInTasklist;
+    protected bool $isStartableInTasklist = false;
 
     // firstVersion is true, when version == 1 or when
     // this definition does not have any previous definitions
-    protected $firstVersion = false;
+    protected bool $firstVersion = false;
     protected $previousProcessDefinitionId;
 
     public function __construct()
@@ -81,40 +81,44 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         return $newExecution;
     }
 
-    public function createProcessInstance(?string $businessKey = null, ?string $caseInstanceId = null, ?ActivityImpl $initial = null): PvmProcessInstance
+    public function createProcessInstance(?string $businessKey = null, ?string $caseInstanceId = null, ?ActivityImpl $initial = null): ExecutionEntity
     {
-        $this->ensureNotSuspended();
+        if ($initial !== null) {
+            $this->ensureNotSuspended();
 
-        $processInstance = $this->createProcessInstanceForInitial($initial);
+            $processInstance = $this->createProcessInstanceForInitial($initial);
 
-        // do not reset executions (CAM-2557)!
-        // processInstance->setExecutions(new ArrayList<ExecutionEntity>());
+            // do not reset executions (CAM-2557)!
+            // processInstance->setExecutions(new ArrayList<ExecutionEntity>());
 
-        $processInstance->setProcessDefinition($this->processDefinition);
+            $processInstance->setProcessDefinition($this->processDefinition);
 
-        // Do not initialize variable map (let it happen lazily)
+            // Do not initialize variable map (let it happen lazily)
 
-        // reset the process instance in order to have the db-generated process instance id available
-        $processInstance->setProcessInstance($processInstance);
+            // reset the process instance in order to have the db-generated process instance id available
+            $processInstance->setProcessInstance($processInstance);
 
-        // initialize business key
-        if ($businessKey !== null) {
-            $processInstance->setBusinessKey($businessKey);
+            // initialize business key
+            if ($businessKey !== null) {
+                $processInstance->setBusinessKey($businessKey);
+            }
+
+            // initialize case instance id
+            /*if ($caseInstanceId !== null) {
+                $processInstance->setCaseInstanceId($caseInstanceId);
+            }*/
+
+            if ($this->tenantId !== null) {
+                $processInstance->setTenantId($this->tenantId);
+            }
+
+            return $processInstance;
+        } else {
+            return parent::createProcessInstance($businessKey, $caseInstanceId, $initial);
         }
-
-        // initialize case instance id
-        /*if ($caseInstanceId !== null) {
-            $processInstance->setCaseInstanceId($caseInstanceId);
-        }*/
-
-        if ($this->tenantId !== null) {
-            $processInstance->setTenantId($this->tenantId);
-        }
-
-        return $processInstance;
     }
 
-    public function addIdentityLink(string $userId, string $groupId): IdentityLinkEntity
+    public function addIdentityLink(?string $userId, ?string $groupId): IdentityLinkEntity
     {
         $identityLinkEntity = IdentityLinkEntity::newIdentityLink();
         $this->getIdentityLinks();
@@ -128,7 +132,7 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         return $identityLinkEntity;
     }
 
-    public function deleteIdentityLink(string $userId, string $groupId): void
+    public function deleteIdentityLink(?string $userId, ?string $groupId): void
     {
         $identityLinks = Context::getCommandContext()
             ->getIdentityLinkManager()
@@ -160,7 +164,7 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
      * Updates all modifiable fields from another process definition entity.
      * @param updatingProcessDefinition
      */
-    public function updateModifiableFieldsFromEntity(ProcessDefinitionEntity $updatingProcessDefinition): void
+    public function updateModifiableFieldsFromEntity(/*ProcessDefinitionEntity*/$updatingProcessDefinition): void
     {
         if ($this->key == $updatingProcessDefinition->key && $this->deploymentId == $updatingProcessDefinition->deploymentId) {
             // TODO: add a guard once the mismatch between revisions in deployment cache and database has been resolved
@@ -198,7 +202,7 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
     /**
      * Returns the cached version if exists; does not update the entity from the database in that case
      */
-    protected function loadProcessDefinition(string $processDefinitionId): ProcessDefinitionEntity
+    protected function loadProcessDefinition(?string $processDefinitionId): ProcessDefinitionEntity
     {
         $configuration = Context::getProcessEngineConfiguration();
         $deploymentCache = $configuration->getDeploymentCache();
@@ -218,7 +222,7 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         return $processDefinition;
     }
 
-    public function getPreviousProcessDefinitionId(): string
+    public function getPreviousProcessDefinitionId(): ?string
     {
         $this->ensurePreviousProcessDefinitionIdInitialized();
         return $this->previousProcessDefinitionId;
@@ -230,7 +234,7 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         $this->ensurePreviousProcessDefinitionIdInitialized();
     }
 
-    protected function setPreviousProcessDefinitionId(string $previousProcessDefinitionId): void
+    protected function setPreviousProcessDefinitionId(?string $previousProcessDefinitionId): void
     {
         $this->previousProcessDefinitionId = $previousProcessDefinitionId;
     }
@@ -258,17 +262,17 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         return $persistentState;
     }
 
-    public function getKey(): string
+    public function getKey(): ?string
     {
         return $this->key;
     }
 
-    public function setKey(string $key): void
+    public function setKey(?string $key): void
     {
         $this->key = $key;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->getProperty(BpmnParse::PROPERTYNAME_DOCUMENTATION);
     }
@@ -278,7 +282,7 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         return $this->deploymentId;
     }
 
-    public function setDeploymentId(string $deploymentId): void
+    public function setDeploymentId(?string $deploymentId): void
     {
         $this->deploymentId = $deploymentId;
     }
@@ -294,17 +298,17 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         $this->firstVersion = ($this->version == 1);
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getResourceName(): string
+    public function getResourceName(): ?string
     {
         return $this->resourceName;
     }
 
-    public function setResourceName(string $resourceName): void
+    public function setResourceName(?string $resourceName): void
     {
         $this->resourceName = $resourceName;
     }
@@ -344,7 +348,7 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         return $this->taskDefinitions;
     }
 
-    public function addTaskDefinition(string $taskDefinitionKey, TaskDefinition $def): array
+    public function addTaskDefinition(?string $taskDefinitionKey, TaskDefinition $def): void
     {
         $this->taskDefinitions[$taskDefinitionKey] = $def;
     }
@@ -354,22 +358,22 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         $this->taskDefinitions = $taskDefinitions;
     }
 
-    public function getCategory(): string
+    public function getCategory(): ?string
     {
         return $this->category;
     }
 
-    public function setCategory(string $category): void
+    public function setCategory(?string $category): void
     {
         $this->category = $category;
     }
 
-    public function getDiagramResourceName(): string
+    public function getDiagramResourceName(): ?string
     {
         return $this->diagramResourceName;
     }
 
-    public function setDiagramResourceName(string $diagramResourceName): void
+    public function setDiagramResourceName(?string $diagramResourceName): void
     {
         $this->diagramResourceName = $diagramResourceName;
     }
@@ -404,7 +408,7 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         $this->isGraphicalNotationDefined = $isGraphicalNotationDefined;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }
@@ -464,22 +468,22 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         $this->tenantId = $tenantId;
     }
 
-    public function getVersionTag(): string
+    public function getVersionTag(): ?string
     {
         return $this->versionTag;
     }
 
-    public function setVersionTag(string $versionTag): void
+    public function setVersionTag(?string $versionTag): void
     {
         $this->versionTag = $versionTag;
     }
 
-    public function getHistoryTimeToLive(): int
+    public function getHistoryTimeToLive(): ?int
     {
         return $this->historyTimeToLive;
     }
 
-    public function setHistoryTimeToLive(int $historyTimeToLive): void
+    public function setHistoryTimeToLive(?int $historyTimeToLive): void
     {
         $this->historyTimeToLive = $historyTimeToLive;
     }

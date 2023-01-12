@@ -63,4 +63,9 @@ class TelemetryConfigureCmd implements CommandInterface
             $processEngineConfiguration->getMetricsRegistry()
         );
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

@@ -12,7 +12,7 @@ interface PermissionInterface
     /*
      * Returns the name of the permission, ie. 'UPDATE'
      */
-    public function getName(): string;
+    public function getName(): ?string;
 
     /*
      * Returns the unique numeric value of the permission.

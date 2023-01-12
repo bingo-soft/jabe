@@ -13,7 +13,7 @@ class EmbeddedProcessApplication extends AbstractProcessApplication
     public const DEFAULT_NAME = "Process Application";
     //private static $LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 
-    protected function autodetectProcessApplicationName(): string
+    protected function autodetectProcessApplicationName(): ?string
     {
         return self::DEFAULT_NAME;
     }

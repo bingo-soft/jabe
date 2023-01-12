@@ -22,10 +22,10 @@
   <insert id="insertTenantMembership" parameterType="array">
     insert into ${prefix}ACT_ID_TENANT_MEMBER (ID_, TENANT_ID_, USER_ID_, GROUP_ID_)
     values (
-      #{id ,dbalType=VARCHAR},
-      #{tenantId ,dbalType=VARCHAR},
-      #{userId ,dbalType=VARCHAR},
-      #{groupId ,dbalType=VARCHAR}
+      #{id:VARCHAR},
+      #{tenantId:VARCHAR},
+      #{userId:VARCHAR},
+      #{groupId:VARCHAR}
     )
   </insert>
   

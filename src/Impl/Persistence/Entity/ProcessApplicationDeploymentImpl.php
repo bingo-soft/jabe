@@ -24,17 +24,17 @@ class ProcessApplicationDeploymentImpl implements ProcessApplicationDeploymentIn
         return $this->deployment->getId();
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->deployment->getName();
     }
 
-    public function getDeploymentTime(): string
+    public function getDeploymentTime(): ?string
     {
         return $this->deployment->getDeploymentTime();
     }
 
-    public function getSource(): string
+    public function getSource(): ?string
     {
         return $this->deployment->getSource();
     }

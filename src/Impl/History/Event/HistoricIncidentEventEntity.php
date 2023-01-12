@@ -14,99 +14,99 @@ class HistoricIncidentEventEntity extends HistoryEvent
     protected $rootCauseIncidentId;
     protected $configuration;
     protected $incidentMessage;
-    protected $incidentState;
+    protected int $incidentState = 0;
     protected $tenantId;
     protected $jobDefinitionId;
     protected $historyConfiguration;
     protected $failedActivityId;
     protected $annotation;
 
-    public function getCreateTime(): string
+    public function getCreateTime(): ?string
     {
         return $this->createTime;
     }
 
-    public function setCreateTime(string $createTime): void
+    public function setCreateTime(?string $createTime): void
     {
         $this->createTime = $createTime;
     }
 
-    public function getEndTime(): string
+    public function getEndTime(): ?string
     {
         return $this->endTime;
     }
 
-    public function setEndTime(string $endTime): void
+    public function setEndTime(?string $endTime): void
     {
         $this->endTime = $endTime;
     }
 
-    public function getIncidentType(): string
+    public function getIncidentType(): ?string
     {
         return $this->incidentType;
     }
 
-    public function setIncidentType(string $incidentType): void
+    public function setIncidentType(?string $incidentType): void
     {
         $this->incidentType = $incidentType;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
 
-    public function setActivityId(string $activityId): void
+    public function setActivityId(?string $activityId): void
     {
         $this->activityId = $activityId;
     }
 
-    public function getCauseIncidentId(): string
+    public function getCauseIncidentId(): ?string
     {
         return $this->causeIncidentId;
     }
 
-    public function setCauseIncidentId(string $causeIncidentId): void
+    public function setCauseIncidentId(?string $causeIncidentId): void
     {
         $this->causeIncidentId = $causeIncidentId;
     }
 
-    public function getRootCauseIncidentId(): string
+    public function getRootCauseIncidentId(): ?string
     {
         return $this->rootCauseIncidentId;
     }
 
-    public function setRootCauseIncidentId(string $rootCauseIncidentId): void
+    public function setRootCauseIncidentId(?string $rootCauseIncidentId): void
     {
         $this->rootCauseIncidentId = $rootCauseIncidentId;
     }
 
-    public function getConfiguration(): string
+    public function getConfiguration(): ?string
     {
         return $this->configuration;
     }
 
-    public function setConfiguration(string $configuration): void
+    public function setConfiguration(?string $configuration): void
     {
         $this->configuration = $configuration;
     }
 
-    public function getHistoryConfiguration(): string
+    public function getHistoryConfiguration(): ?string
     {
         return $this->historyConfiguration;
     }
 
-    public function setHistoryConfiguration(string $historyConfiguration): void
+    public function setHistoryConfiguration(?string $historyConfiguration): void
     {
         $this->historyConfiguration = $historyConfiguration;
     }
 
-    public function getIncidentMessage(): string
+    public function getIncidentMessage(): ?string
     {
         return $this->incidentMessage;
     }
 
-    public function setIncidentMessage(string $incidentMessage): void
+    public function setIncidentMessage(?string $incidentMessage): void
     {
         $this->incidentMessage = $incidentMessage;
     }
@@ -126,12 +126,12 @@ class HistoricIncidentEventEntity extends HistoryEvent
         $this->tenantId = $tenantId;
     }
 
-    public function getJobDefinitionId(): string
+    public function getJobDefinitionId(): ?string
     {
         return $this->jobDefinitionId;
     }
 
-    public function setJobDefinitionId(string $jobDefinitionId): void
+    public function setJobDefinitionId(?string $jobDefinitionId): void
     {
         $this->jobDefinitionId = $jobDefinitionId;
     }
@@ -151,12 +151,12 @@ class HistoricIncidentEventEntity extends HistoryEvent
         return IncidentStateImpl::resolved()->getStateCode() == $this->incidentState;
     }
 
-    public function getRootProcessInstanceId(): string
+    public function getRootProcessInstanceId(): ?string
     {
         return $this->rootProcessInstanceId;
     }
 
-    public function setRootProcessInstanceId(string $rootProcessInstanceId): void
+    public function setRootProcessInstanceId(?string $rootProcessInstanceId): void
     {
         $this->rootProcessInstanceId = $rootProcessInstanceId;
     }
@@ -166,17 +166,17 @@ class HistoricIncidentEventEntity extends HistoryEvent
         return $this->failedActivityId;
     }
 
-    public function setFailedActivityId(string $failedActivityId): void
+    public function setFailedActivityId(?string $failedActivityId): void
     {
         $this->failedActivityId = $failedActivityId;
     }
 
-    public function getAnnotation(): string
+    public function getAnnotation(): ?string
     {
         return $this->annotation;
     }
 
-    public function setAnnotation(string $annotation): void
+    public function setAnnotation(?string $annotation): void
     {
         $this->annotation = $annotation;
     }

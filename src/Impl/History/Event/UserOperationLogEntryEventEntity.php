@@ -25,112 +25,112 @@ class UserOperationLogEntryEventEntity extends HistoryEvent implements UserOpera
     protected $externalTaskId;
     protected $annotation;
 
-    public function getOperationId(): string
+    public function getOperationId(): ?string
     {
         return $this->operationId;
     }
 
-    public function getOperationType(): string
+    public function getOperationType(): ?string
     {
         return $this->operationType;
     }
 
-    public function getTaskId(): string
+    public function getTaskId(): ?string
     {
         return $this->taskId;
     }
 
-    public function getUserId(): string
+    public function getUserId(): ?string
     {
         return $this->userId;
     }
 
-    public function getTimestamp(): string
+    public function getTimestamp(): ?string
     {
         return $this->timestamp;
     }
 
-    public function getProperty(): string
+    public function getProperty(): ?string
     {
         return $this->property;
     }
 
-    public function getOrgValue(): string
+    public function getOrgValue(): ?string
     {
         return $this->orgValue;
     }
 
-    public function getNewValue(): string
+    public function getNewValue(): ?string
     {
         return $this->newValue;
     }
 
-    public function setOperationId(string $operationId): void
+    public function setOperationId(?string $operationId): void
     {
         $this->operationId = $operationId;
     }
 
-    public function setOperationType(string $operationType): void
+    public function setOperationType(?string $operationType): void
     {
         $this->operationType = $operationType;
     }
 
-    public function setTaskId(string $taskId): void
+    public function setTaskId(?string $taskId): void
     {
         $this->taskId = $taskId;
     }
 
-    public function setUserId(string $userId): void
+    public function setUserId(?string $userId): void
     {
         $this->userId = $userId;
     }
 
-    public function setTimestamp(string $timestamp): void
+    public function setTimestamp(?string $timestamp): void
     {
         $this->timestamp = $timestamp;
     }
 
-    public function setProperty(string $property): void
+    public function setProperty(?string $property): void
     {
         $this->property = $property;
     }
 
-    public function setOrgValue(string $orgValue): void
+    public function setOrgValue(?string $orgValue): void
     {
         $this->orgValue = $orgValue;
     }
 
-    public function setNewValue(string $newValue): void
+    public function setNewValue(?string $newValue): void
     {
         $this->newValue = $newValue;
     }
 
-    public function getEntityType(): string
+    public function getEntityType(): ?string
     {
         return $this->entityType;
     }
 
-    public function setEntityType(string $entityType): void
+    public function setEntityType(?string $entityType): void
     {
         $this->entityType = $entityType;
     }
 
-    public function getJobId(): string
+    public function getJobId(): ?string
     {
         return $this->jobId;
     }
 
-    public function setJobId(string $jobId): void
+    public function setJobId(?string $jobId): void
     {
         $this->jobId = $jobId;
     }
 
-    public function getJobDefinitionId(): string
+    public function getJobDefinitionId(): ?string
     {
         return $this->jobDefinitionId;
     }
 
-    public function setJobDefinitionId(string $jobDefinitionId): void
+    public function setJobDefinitionId(?string $jobDefinitionId): void
     {
         $this->jobDefinitionId = $jobDefinitionId;
     }
@@ -140,7 +140,7 @@ class UserOperationLogEntryEventEntity extends HistoryEvent implements UserOpera
         return $this->deploymentId;
     }
 
-    public function setDeploymentId(string $deploymentId): void
+    public function setDeploymentId(?string $deploymentId): void
     {
         $this->deploymentId = $deploymentId;
     }
@@ -155,52 +155,52 @@ class UserOperationLogEntryEventEntity extends HistoryEvent implements UserOpera
         $this->tenantId = $tenantId;
     }
 
-    public function getBatchId(): string
+    public function getBatchId(): ?string
     {
         return $this->batchId;
     }
 
-    public function setBatchId(string $batchId): void
+    public function setBatchId(?string $batchId): void
     {
         $this->batchId = $batchId;
     }
 
-    public function getCategory(): string
+    public function getCategory(): ?string
     {
         return $this->category;
     }
 
-    public function setCategory(string $category): void
+    public function setCategory(?string $category): void
     {
         $this->category = $category;
     }
 
-    public function getRootProcessInstanceId(): string
+    public function getRootProcessInstanceId(): ?string
     {
         return $this->rootProcessInstanceId;
     }
 
-    public function setRootProcessInstanceId(string $rootProcessInstanceId): void
+    public function setRootProcessInstanceId(?string $rootProcessInstanceId): void
     {
         $this->rootProcessInstanceId = $rootProcessInstanceId;
     }
 
-    public function getExternalTaskId(): string
+    public function getExternalTaskId(): ?string
     {
         return $this->externalTaskId;
     }
 
-    public function setExternalTaskId(string $externalTaskId): void
+    public function setExternalTaskId(?string $externalTaskId): void
     {
         $this->externalTaskId = $externalTaskId;
     }
 
-    public function getAnnotation(): string
+    public function getAnnotation(): ?string
     {
         return $this->annotation;
     }
 
-    public function setAnnotation(string $annotation): void
+    public function setAnnotation(?string $annotation): void
     {
         $this->annotation = $annotation;
     }

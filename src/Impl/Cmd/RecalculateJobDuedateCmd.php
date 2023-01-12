@@ -33,7 +33,7 @@ class RecalculateJobDuedateCmd implements CommandInterface, \Serializable
     private $jobId;
     private $creationDateBased;
 
-    public function __construct(string $jobId, bool $creationDateBased)
+    public function __construct(?string $jobId, bool $creationDateBased)
     {
         EnsureUtil::ensureNotEmpty("The job id is mandatory", "jobId", $jobId);
         $this->jobId = $jobId;
@@ -192,5 +192,10 @@ class RecalculateJobDuedateCmd implements CommandInterface, \Serializable
             }
         }
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

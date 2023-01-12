@@ -25,9 +25,9 @@
         TIMESTAMP_,
         VERSION_
       ) values (
-        #{id ,dbalType=VARCHAR},
-        #{timestamp, dbalType=VARCHAR},
-        #{version, dbalType=VARCHAR}
+        #{id:VARCHAR},
+        #{timestamp:VARCHAR},
+        #{version:VARCHAR}
       )
   </insert>
 

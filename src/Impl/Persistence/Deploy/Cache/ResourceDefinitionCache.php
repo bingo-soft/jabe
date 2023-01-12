@@ -19,12 +19,12 @@ abstract class ResourceDefinitionCache
         $this->cacheDeployer = $cacheDeployer;
     }
 
-    public function findDefinitionFromCache(string $definitionId): ?ResourceDefinitionEntityInterface
+    public function findDefinitionFromCache(?string $definitionId): ?ResourceDefinitionEntityInterface
     {
         return $this->cache->get($definitionId);
     }
 
-    public function findDeployedDefinitionById(string $definitionId): ?ResourceDefinitionEntityInterface
+    public function findDeployedDefinitionById(?string $definitionId): ?ResourceDefinitionEntityInterface
     {
         $this->checkInvalidDefinitionId($definitionId);
         $definition = $this->getManager()->getCachedResourceDefinitionEntity($definitionId);
@@ -42,7 +42,7 @@ abstract class ResourceDefinitionCache
      * @return ResourceDefinitionEntityInterface the latest version of the definition with the given key (from any tenant)
      * @throws ProcessEngineException if more than one tenant has a definition with the given key
      */
-    public function findDeployedLatestDefinitionByKey(string $definitionKey): ?ResourceDefinitionEntityInterface
+    public function findDeployedLatestDefinitionByKey(?string $definitionKey): ?ResourceDefinitionEntityInterface
     {
         $definition = $this->getManager()->findLatestDefinitionByKey($definitionKey);
         $this->checkInvalidDefinitionByKey($definitionKey, $definition);
@@ -50,7 +50,7 @@ abstract class ResourceDefinitionCache
         return $definition;
     }
 
-    public function findDeployedLatestDefinitionByKeyAndTenantId(string $definitionKey, string $tenantId): ?ResourceDefinitionEntityInterface
+    public function findDeployedLatestDefinitionByKeyAndTenantId(?string $definitionKey, ?string $tenantId): ?ResourceDefinitionEntityInterface
     {
         $definition = $this->getManager()->findLatestDefinitionByKeyAndTenantId($definitionKey, $tenantId);
         $this->checkInvalidDefinitionByKeyAndTenantId($definitionKey, $tenantId, $definition);
@@ -58,7 +58,7 @@ abstract class ResourceDefinitionCache
         return $definition;
     }
 
-    public function findDeployedDefinitionByKeyVersionAndTenantId(string $definitionKey, int $definitionVersion, string $tenantId): ?ResourceDefinitionEntityInterface
+    public function findDeployedDefinitionByKeyVersionAndTenantId(?string $definitionKey, int $definitionVersion, ?string $tenantId): ?ResourceDefinitionEntityInterface
     {
         $commandContext = Context::getCommandContext();
         $scope = $this;
@@ -70,7 +70,7 @@ abstract class ResourceDefinitionCache
         return $definition;
     }
 
-    public function findDeployedDefinitionByKeyVersionTagAndTenantId(string $definitionKey, string $definitionVersionTag, string $tenantId): ?ResourceDefinitionEntityInterface
+    public function findDeployedDefinitionByKeyVersionTagAndTenantId(?string $definitionKey, ?string $definitionVersionTag, ?string $tenantId): ?ResourceDefinitionEntityInterface
     {
         $commandContext = Context::getCommandContext();
         $scope = $this;
@@ -82,7 +82,7 @@ abstract class ResourceDefinitionCache
         return $definition;
     }
 
-    public function findDeployedDefinitionByDeploymentAndKey(string $deploymentId, string $definitionKey): ?ResourceDefinitionEntityInterface
+    public function findDeployedDefinitionByDeploymentAndKey(?string $deploymentId, ?string $definitionKey): ?ResourceDefinitionEntityInterface
     {
         $definition = $this->getManager()->findDefinitionByDeploymentAndKey($deploymentId, $definitionKey);
         $this->checkInvalidDefinitionByDeploymentAndKey($deploymentId, $definitionKey, $definition);
@@ -118,12 +118,12 @@ abstract class ResourceDefinitionCache
         $this->cache->put($definition->getId(), $definition);
     }
 
-    public function getDefinition(string $id): ?ResourceDefinitionEntityInterface
+    public function getDefinition(?string $id): ?ResourceDefinitionEntityInterface
     {
         return $this->cache->get($id);
     }
 
-    public function removeDefinitionFromCache(string $id): void
+    public function removeDefinitionFromCache(?string $id): void
     {
         $this->cache->remove($id);
     }
@@ -140,19 +140,19 @@ abstract class ResourceDefinitionCache
 
     abstract protected function getManager(): AbstractResourceDefinitionManagerInterface;
 
-    abstract protected function checkInvalidDefinitionId(string $definitionId): void;
+    abstract protected function checkInvalidDefinitionId(?string $definitionId): void;
 
-    abstract protected function checkDefinitionFound(string $definitionId, ResourceDefinitionEntityInterface $definition): void;
+    abstract protected function checkDefinitionFound(?string $definitionId, /*ResourceDefinitionEntityInterface*/$definition): void;
 
-    abstract protected function checkInvalidDefinitionByKey(string $definitionKey, ResourceDefinitionEntityInterface $definition): void;
+    abstract protected function checkInvalidDefinitionByKey(?string $definitionKey, /*ResourceDefinitionEntityInterface*/$definition): void;
 
-    abstract protected function checkInvalidDefinitionByKeyAndTenantId(string $definitionKey, string $tenantId, ResourceDefinitionEntityInterface $definition): void;
+    abstract protected function checkInvalidDefinitionByKeyAndTenantId(?string $definitionKey, ?string $tenantId, /*ResourceDefinitionEntityInterface*/$definition): void;
 
-    abstract protected function checkInvalidDefinitionByKeyVersionAndTenantId(string $definitionKey, int $definitionVersion, string $tenantId, ResourceDefinitionEntityInterface $definition): void;
+    abstract protected function checkInvalidDefinitionByKeyVersionAndTenantId(?string $definitionKey, int $definitionVersion, ?string $tenantId, /*ResourceDefinitionEntityInterface*/$definition): void;
 
-    abstract protected function checkInvalidDefinitionByKeyVersionTagAndTenantId(string $definitionKey, string $definitionVersionTag, string $tenantId, ResourceDefinitionEntityInterface $definition): void;
+    abstract protected function checkInvalidDefinitionByKeyVersionTagAndTenantId(?string $definitionKey, ?string $definitionVersionTag, ?string $tenantId, /*ResourceDefinitionEntityInterface*/$definition): void;
 
-    abstract protected function checkInvalidDefinitionByDeploymentAndKey(string $deploymentId, string $definitionKey, ResourceDefinitionEntityInterface $definition): void;
+    abstract protected function checkInvalidDefinitionByDeploymentAndKey(?string $deploymentId, ?string $definitionKey, /*ResourceDefinitionEntityInterface*/$definition): void;
 
-    abstract protected function checkInvalidDefinitionWasCached(string $deploymentId, string $definitionId, ResourceDefinitionEntityInterface $definition): void;
+    abstract protected function checkInvalidDefinitionWasCached(?string $deploymentId, ?string $definitionId, /*ResourceDefinitionEntityInterface*/$definition): void;
 }

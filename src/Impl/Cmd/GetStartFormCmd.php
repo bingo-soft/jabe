@@ -13,7 +13,7 @@ class GetStartFormCmd implements CommandInterface, \Serializable
 {
     protected $processDefinitionId;
 
-    public function __construct(string $processDefinitionId)
+    public function __construct(?string $processDefinitionId)
     {
         $this->processDefinitionId = $processDefinitionId;
     }
@@ -46,5 +46,10 @@ class GetStartFormCmd implements CommandInterface, \Serializable
         EnsureUtil::ensureNotNull("No startFormHandler defined in process '" . $this->processDefinitionId . "'", "startFormHandler", $startFormHandler);
 
         return $startFormHandler->createStartFormData($processDefinition);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

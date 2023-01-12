@@ -12,7 +12,7 @@ class DeleteUserPictureCmd implements CommandInterface
 {
     protected $userId;
 
-    public function __construct(string $userId)
+    public function __construct(?string $userId)
     {
         $this->userId = $userId;
     }
@@ -35,5 +35,10 @@ class DeleteUserPictureCmd implements CommandInterface
         }
 
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

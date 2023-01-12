@@ -28,8 +28,8 @@ class ConcurrentLruCache implements CacheInterface
         if (array_key_exists($key, $this->cache)) {
             $value = $this->cache[$key];
             if ($value !== null) {
-                foreach ($this->keys as $innerKey => $value) {
-                    if ($value == $key) {
+                foreach ($this->keys as $innerKey => $val) {
+                    if ($val == $key) {
                         unset($this->keys[$innerKey]);
                         break;
                     }
@@ -53,8 +53,8 @@ class ConcurrentLruCache implements CacheInterface
         }
         $this->cache[$key] = $value;
         if ($previousValue !== null) {
-            foreach ($this->keys as $innerKey => $value) {
-                if ($value == $key) {
+            foreach ($this->keys as $innerKey => $val) {
+                if ($innerKey == $key) {
                     unset($this->keys[$innerKey]);
                 }
             }
@@ -64,8 +64,8 @@ class ConcurrentLruCache implements CacheInterface
         if (count($this->cache) > $this->capacity) {
             $lruKey = array_shift($this->keys);
             if ($lruKey !== null) {
-                foreach ($this->cache as $innerKey => $value) {
-                    if ($value == $lruKey) {
+                foreach ($this->cache as $innerKey => $val) {
+                    if ($innerKey == $lruKey) {
                         unset($this->cache[$innerKey]);
                     }
                 }
@@ -84,13 +84,15 @@ class ConcurrentLruCache implements CacheInterface
     public function remove($key): void
     {
         foreach ($this->keys as $innerKey => $value) {
-            if ($value == $key) {
+            if ($innerKey == $key) {
                 unset($this->keys[$innerKey]);
+                break;
             }
         }
         foreach ($this->cache as $innerKey => $value) {
-            if ($value == $key) {
+            if ($innerKey == $key) {
                 unset($this->cache[$innerKey]);
+                break;
             }
         }
     }

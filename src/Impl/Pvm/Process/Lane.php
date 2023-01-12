@@ -13,22 +13,22 @@ class Lane implements HasDIBoundsInterface
     protected $width = -1;
     protected $height = -1;
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
@@ -78,7 +78,7 @@ class Lane implements HasDIBoundsInterface
         return $this->flowNodeIds;
     }
 
-    public function addFlowNodeId(string $id): void
+    public function addFlowNodeId(?string $id): void
     {
         $this->flowNodeIds[] = $id;
     }

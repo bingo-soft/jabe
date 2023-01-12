@@ -3,7 +3,7 @@
 namespace Jabe\Impl\Bpmn\Parser;
 
 use Jabe\Impl\Cfg\BpmnParseFactoryInterface;
-use Jabe\Impl\El\ExpressionManager;
+use Jabe\Impl\El\ExpressionManagerInterface;
 use Sax\Parser;
 
 class BpmnParser extends Parser
@@ -16,12 +16,12 @@ class BpmnParser extends Parser
     /**
      * The location of the BPMN 2.0 XML schema.
      */
-    public const BPMN_20_SCHEMA_LOCATION = "src/Engine/Resources/Bpmn/BPMN20.xsd";
+    public const BPMN_20_SCHEMA_LOCATION = "src/Resources/BPMN20.xsd";
 
     /**
      * The namespace of the custom BPMN extensions.
      */
-    public const BPMN_EXTENSIONS_NS = "http://test.org/schema/1.0/bpmn";
+    public const BPMN_EXTENSIONS_NS = "http://activiti.org/bpmn";
 
     /**
      * The namespace of the custom BPMN extensions.
@@ -61,7 +61,7 @@ class BpmnParser extends Parser
 
     protected $bpmnParseFactory;
 
-    public function __construct(ExpressionManager $expressionManager, BpmnParseFactoryInterface $bpmnParseFactory)
+    public function __construct(ExpressionManagerInterface $expressionManager, BpmnParseFactoryInterface $bpmnParseFactory)
     {
         $this->expressionManager = $expressionManager;
         $this->bpmnParseFactory = $bpmnParseFactory;
@@ -76,12 +76,12 @@ class BpmnParser extends Parser
         return $this->bpmnParseFactory->createBpmnParse($this);
     }
 
-    public function getExpressionManager(): ExpressionManager
+    public function getExpressionManager(): ExpressionManagerInterface
     {
         return $this->expressionManager;
     }
 
-    public function setExpressionManager(ExpressionManager $expressionManager): void
+    public function setExpressionManager(ExpressionManagerInterface $expressionManager): void
     {
         $this->expressionManager = $expressionManager;
     }

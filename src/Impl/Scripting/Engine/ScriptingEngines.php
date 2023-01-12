@@ -28,7 +28,7 @@ class ScriptingEngines
     protected $scriptEngineResolver;
     protected $scriptBindingsFactory;
 
-    protected $enableScriptEngineCaching = true;
+    protected bool $enableScriptEngineCaching = true;
 
     public function __construct(ScriptEngineResolverInterface $scriptEngineResolver, ?ScriptBindingsFactory $scriptBindingsFactory = null)
     {
@@ -64,7 +64,7 @@ class ScriptingEngines
      * @return ScriptEngineInterface the script engine
      * @throws ProcessEngineException if no such engine can be found.
      */
-    public function getScriptEngineForLanguage(string $language): ScriptEngineInterface
+    public function getScriptEngineForLanguage(?string $language): ScriptEngineInterface
     {
         $language = strtolower($language);
 
@@ -85,7 +85,7 @@ class ScriptingEngines
         return $engine;
     }
 
-    protected function getPaScriptEngine(string $language, ProcessApplicationReferenceInterface $pa): ?ScriptEngineInterface
+    protected function getPaScriptEngine(?string $language, ProcessApplicationReferenceInterface $pa): ?ScriptEngineInterface
     {
         try {
             $processApplication = $pa->getProcessApplication();
@@ -101,7 +101,7 @@ class ScriptingEngines
         }
     }
 
-    protected function getGlobalScriptEngine(string $language): ScriptEngineInterface
+    protected function getGlobalScriptEngine(?string $language): ScriptEngineInterface
     {
         $scriptEngine = $this->scriptEngineResolver->getScriptEngine($language, $this->enableScriptEngineCaching);
         return $scriptEngine;

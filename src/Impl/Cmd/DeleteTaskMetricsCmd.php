@@ -55,4 +55,9 @@ class DeleteTaskMetricsCmd implements CommandInterface, \Serializable
             $propertyChanges
         );
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

@@ -5,7 +5,7 @@ namespace Jabe;
 interface ProblemInterface
 {
     /** The message of this problem */
-    public function getMessage(): string;
+    public function getMessage(): ?string;
 
     /** The line where the problem occurs */
     public function getLine(): int;
@@ -17,7 +17,7 @@ interface ProblemInterface
      * The id of the main element causing the problem. It can be
     * <code>null</code> in case the element doesn't have an id.
     */
-    public function getMainElementId(): string;
+    public function getMainElementId(): ?string;
 
     /**
      * The ids of all involved elements in the problem. It can be an empty

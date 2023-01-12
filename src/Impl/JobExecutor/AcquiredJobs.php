@@ -9,7 +9,7 @@ class AcquiredJobs
     protected $acquiredJobBatches = [];
     protected $acquiredJobs = [];
 
-    protected $numberOfJobsFailedToLock = 0;
+    protected int $numberOfJobsFailedToLock = 0;
 
     public function __construct(int $numberOfJobsAttemptedToAcquire)
     {
@@ -33,7 +33,7 @@ class AcquiredJobs
         }
     }
 
-    public function contains(string $jobId): bool
+    public function contains(?string $jobId): bool
     {
         return in_array($jobId, $this->acquiredJobs);
     }
@@ -43,7 +43,7 @@ class AcquiredJobs
         return count($this->acquiredJobs);
     }
 
-    public function removeJobId(string $id): void
+    public function removeJobId(?string $id): void
     {
         $this->numberOfJobsFailedToLock += 1;
 

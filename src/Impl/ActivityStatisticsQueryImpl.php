@@ -12,7 +12,7 @@ use Jabe\Management\ActivityStatisticsQueryInterface;
 
 class ActivityStatisticsQueryImpl extends AbstractQuery implements ActivityStatisticsQueryInterface
 {
-    protected $includeFailedJobs = false;
+    protected bool $includeFailedJobs = false;
     protected $processDefinitionId;
     protected $includeIncidents;
     protected $includeIncidentsForType;
@@ -22,7 +22,7 @@ class ActivityStatisticsQueryImpl extends AbstractQuery implements ActivityStati
     protected $jobPermissionChecks = [];
     protected $incidentPermissionChecks = [];
 
-    public function __construct(string $processDefinitionId, CommandExecutorInterface $executor)
+    public function __construct(?string $processDefinitionId, CommandExecutorInterface $executor)
     {
         parent::__construct($executor);
         $this->processDefinitionId = $processDefinitionId;
@@ -37,7 +37,7 @@ class ActivityStatisticsQueryImpl extends AbstractQuery implements ActivityStati
             ->getStatisticsCountGroupedByActivity($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         return
@@ -58,7 +58,7 @@ class ActivityStatisticsQueryImpl extends AbstractQuery implements ActivityStati
         return $this;
     }
 
-    public function includeIncidentsForType(string $incidentType): ActivityStatisticsQueryInterface
+    public function includeIncidentsForType(?string $incidentType): ActivityStatisticsQueryInterface
     {
         $this->includeIncidentsForType = $incidentType;
         return $this;
@@ -74,7 +74,7 @@ class ActivityStatisticsQueryImpl extends AbstractQuery implements ActivityStati
         return $this->includeIncidents || $this->includeIncidentsForType !== null;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }

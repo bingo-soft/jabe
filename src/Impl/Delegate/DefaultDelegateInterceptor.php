@@ -101,7 +101,7 @@ class DefaultDelegateInterceptor implements DelegateInterceptorInterface
         return $coreExecutionContext !== null && $coreExecutionContext->getExecution() == $execution;
     }
 
-    protected function getProcessApplicationForInvocation(DelegateInvocation $invocation): ProcessApplicationReferenceInterface
+    protected function getProcessApplicationForInvocation(DelegateInvocation $invocation): ?ProcessApplicationReferenceInterface
     {
         $contextExecution = $invocation->getContextExecution();
         $contextResource = $invocation->getContextResource();

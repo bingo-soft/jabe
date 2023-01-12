@@ -36,7 +36,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
 
     // users ////////////////////////////////////////////////////////
 
-    public function createNewUser(string $userId): UserEntity
+    public function createNewUser(?string $userId): UserEntity
     {
         $this->checkAuthorization(Permissions::create(), Resources::user(), null);
         return new UserEntity($userId);
@@ -64,7 +64,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
         return new IdentityOperationResult($userEntity, $operation);
     }
 
-    public function deleteUser(string $userId): IdentityOperationResult
+    public function deleteUser(?string $userId): IdentityOperationResult
     {
         $this->checkAuthorization(Permissions::delete(), Resources::user(), $userId);
         $user = $this->findUserById($userId);
@@ -91,7 +91,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
         return new IdentityOperationResult(null, IdentityOperationResult::OPERATION_NONE);
     }
 
-    public function checkPassword(string $userId, string $password): bool
+    public function checkPassword(?string $userId, ?string $password): bool
     {
         $user = $this->findUserById($userId);
         if ($user == null || empty($password)) {
@@ -171,7 +171,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
 
     // groups ////////////////////////////////////////////////////////
 
-    public function createNewGroup(string $groupId): GroupEntity
+    public function createNewGroup(?string $groupId): GroupEntity
     {
         $this->checkAuthorization(Permissions::create(), Resources::group(), null);
         return new GroupEntity($groupId);
@@ -194,7 +194,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
         return new IdentityOperationResult($groupEntity, $operation);
     }
 
-    public function deleteGroup(string $groupId): IdentityOperationResult
+    public function deleteGroup(?string $groupId): IdentityOperationResult
     {
         $this->checkAuthorization(Permissions::delete(), Resources::group(), $groupId);
         $group = $this->findGroupById($groupId);
@@ -214,7 +214,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
                 }
                 return null;
             });
-            $this->getDbEntityManager()->delete(group);
+            $this->getDbEntityManager()->delete($group);
             return new IdentityOperationResult(null, IdentityOperationResult::OPERATION_DELETE);
         }
         return new IdentityOperationResult(null, IdentityOperationResult::OPERATION_NONE);
@@ -222,7 +222,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
 
     // tenants //////////////////////////////////////////////////////
 
-    public function createNewTenant(string $tenantId): TenantInterface
+    public function createNewTenant(?string $tenantId): TenantInterface
     {
         $this->checkAuthorization(Permissions::create(), Resources::tenant(), null);
         return new TenantEntity($tenantId);
@@ -245,7 +245,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
         return new IdentityOperationResult($tenantEntity, $operation);
     }
 
-    public function deleteTenant(string $tenantId): IdentityOperationResult
+    public function deleteTenant(?string $tenantId): IdentityOperationResult
     {
         $this->checkAuthorization(Permissions::delete(), Resources::tenant(), $tenantId);
         $tenant = $this->findTenantById($tenantId);
@@ -260,7 +260,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
 
     // membership //////////////////////////////////////////////////////
 
-    public function createMembership(string $userId, string $groupId): IdentityOperationResult
+    public function createMembership(?string $userId, ?string $groupId): IdentityOperationResult
     {
         $this->checkAuthorization(Permissions::create(), Resources::groupMembership(), $groupId);
         $user = $this->findUserById($userId);
@@ -275,7 +275,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
         return new IdentityOperationResult(null, IdentityOperationResult::OPERATION_CREATE);
     }
 
-    public function deleteMembership(string $userId, string $groupId): IdentityOperationResult
+    public function deleteMembership(?string $userId, ?string $groupId): IdentityOperationResult
     {
         $this->checkAuthorization(Permissions::delete(), Resources::groupMembership(), $groupId);
         if ($this->existsMembership($userId, $groupId)) {
@@ -289,17 +289,17 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
         return new IdentityOperationResult(null, IdentityOperationResult::OPERATION_NONE);
     }
 
-    protected function deleteMembershipsByUserId(string $userId): void
+    protected function deleteMembershipsByUserId(?string $userId): void
     {
         $this->getDbEntityManager()->delete(MembershipEntity::class, "deleteMembershipsByUserId", $userId);
     }
 
-    protected function deleteMembershipsByGroupId(string $groupId): void
+    protected function deleteMembershipsByGroupId(?string $groupId): void
     {
         $this->getDbEntityManager()->delete(MembershipEntity::class, "deleteMembershipsByGroupId", $groupId);
     }
 
-    public function createTenantUserMembership(string $tenantId, string $userId): IdentityOperationResult
+    public function createTenantUserMembership(?string $tenantId, ?string $userId): IdentityOperationResult
     {
         $this->checkAuthorization(Permissions::create(), Resources::tenantMembership(), $tenantId);
 
@@ -319,7 +319,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
         return new IdentityOperationResult(null, IdentityOperationResult::OPERATION_CREATE);
     }
 
-    public function createTenantGroupMembership(string $tenantId, string $groupId): IdentityOperationResult
+    public function createTenantGroupMembership(?string $tenantId, ?string $groupId): IdentityOperationResult
     {
         $this->checkAuthorization(Permissions::create(), Resources::tenantMembership(), $tenantId);
 
@@ -339,7 +339,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
         return new IdentityOperationResult(null, IdentityOperationResult::OPERATION_CREATE);
     }
 
-    public function deleteTenantUserMembership(string $tenantId, string $userId): IdentityOperationResult
+    public function deleteTenantUserMembership(?string $tenantId, ?string $userId): IdentityOperationResult
     {
         $this->checkAuthorization(Permissions::delete(), Resources::tenantMembership(), $tenantId);
         if ($this->existsTenantMembership($tenantId, $userId, null)) {
@@ -356,7 +356,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
         return new IdentityOperationResult(null, IdentityOperationResult::OPERATION_NONE);
     }
 
-    public function deleteTenantGroupMembership(string $tenantId, string $groupId): IdentityOperationResult
+    public function deleteTenantGroupMembership(?string $tenantId, ?string $groupId): IdentityOperationResult
     {
         $this->checkAuthorization(Permissions::delete(), Resources::tenantMembership(), $tenantId);
 
@@ -374,17 +374,17 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
         return new IdentityOperationResult(null, IdentityOperationResult::OPERATION_NONE);
     }
 
-    protected function deleteTenantMembershipsOfUser(string $userId): void
+    protected function deleteTenantMembershipsOfUser(?string $userId): void
     {
         $this->getDbEntityManager()->delete(TenantMembershipEntity::class, "deleteTenantMembershipsOfUser", $userId);
     }
 
-    protected function deleteTenantMembershipsOfGroup(string $groupId): void
+    protected function deleteTenantMembershipsOfGroup(?string $groupId): void
     {
         $this->getDbEntityManager()->delete(TenantMembershipEntity::class, "deleteTenantMembershipsOfGroup", $groupId);
     }
 
-    protected function deleteTenantMembershipsOfTenant(string $tenant): void
+    protected function deleteTenantMembershipsOfTenant(?string $tenant): void
     {
         $this->getDbEntityManager()->delete(TenantMembershipEntity::class, "deleteTenantMembershipsOfTenant", $tenant);
     }
@@ -398,26 +398,26 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
                 $this->saveDefaultAuthorizations($this->getResourceAuthorizationProvider()->newUser($data));
             }
         } elseif ($data instanceof GroupInterface) {
-            if ($this->AuthorizationEnabled()) {
+            if ($this->isAuthorizationEnabled()) {
                 $this->saveDefaultAuthorizations($this->getResourceAuthorizationProvider()->newGroup($data));
             }
         } elseif ($data instanceof TenantInterface) {
-            if ($this->AuthorizationEnabled()) {
+            if ($this->isAuthorizationEnabled()) {
                 $this->saveDefaultAuthorizations($this->getResourceAuthorizationProvider()->newTenant($data));
             }
         }
     }
 
-    protected function createDefaultMembershipAuthorizations(string $userId, string $groupId): void
+    protected function createDefaultMembershipAuthorizations(?string $userId, ?string $groupId): void
     {
-        if ($this->AuthorizationEnabled()) {
+        if ($this->isAuthorizationEnabled()) {
             $this->saveDefaultAuthorizations($this->getResourceAuthorizationProvider()->groupMembershipCreated($groupId, $userId));
         }
     }
 
     protected function createDefaultTenantMembershipAuthorizations(TenantInterface $tenant, /*UserInterface|GroupInterface*/$data): void
     {
-        if ($this->AuthorizationEnabled()) {
+        if ($this->isAuthorizationEnabled()) {
             $this->saveDefaultAuthorizations($this->getResourceAuthorizationProvider()->tenantMembershipCreated($tenant, $data));
         }
     }

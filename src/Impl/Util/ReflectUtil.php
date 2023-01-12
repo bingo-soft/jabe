@@ -19,7 +19,7 @@ class ReflectUtil
         "Ü" => "%C3%9C"
     ];
 
-    public static function getResourceAsStream(string $name)
+    public static function getResourceAsStream(?string $name)
     {
         $resourceStream = null;
         if (file_exists($name)) {
@@ -28,12 +28,12 @@ class ReflectUtil
         return $resourceStream;
     }
 
-    public static function getResource(string $name): ?string
+    public static function getResource(?string $name): ?string
     {
         return file_exists($name) ? $name : null;
     }
 
-    public static function getResourceUrlAsString(string $name): string
+    public static function getResourceUrlAsString(?string $name): ?string
     {
         $url = self::getResource($name);
         foreach (self::CHAR_ENCODINGS as $key => $value) {
@@ -42,7 +42,7 @@ class ReflectUtil
         return $url;
     }
 
-    public static function instantiate(string $className)
+    public static function instantiate(?string $className)
     {
         try {
             return new $className();
@@ -55,7 +55,7 @@ class ReflectUtil
     /**
      * Returns the field of the given object or null if it doesnt exist.
      */
-    public static function getField(string $fieldName, $object): ?\ReflectionProperty
+    public static function getField(?string $fieldName, $object): ?\ReflectionProperty
     {
         try {
             $ref = new \ReflectionClass($object);
@@ -78,7 +78,7 @@ class ReflectUtil
     /**
      * Returns the setter-method for the given field name or null if no setter exists.
      */
-    public static function getSetter(string $fieldName, string $clazz): ?\ReflectionMethod
+    public static function getSetter(?string $fieldName, ?string $clazz): ?\ReflectionMethod
     {
         $setterName = self::buildSetterName($fieldName);
         try {
@@ -98,7 +98,7 @@ class ReflectUtil
         }
     }
 
-    private static function buildSetterName(string $fieldName): string
+    private static function buildSetterName(?string $fieldName): ?string
     {
         return "set" . strtoupper($fieldName[0]) . substr($fieldName, 1);
     }
@@ -109,7 +109,7 @@ class ReflectUtil
      * @param declaringType the name of the class
      * @param methodName the name of the method to look for
      */
-    public static function getMethod(string $declaringType, string $methodName): ?\ReflectionMethod
+    public static function getMethod(?string $declaringType, ?string $methodName): ?\ReflectionMethod
     {
         try {
             $ref = new \ReflectionClass($declaringType);

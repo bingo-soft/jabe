@@ -21,7 +21,7 @@ interface SignalEventReceivedBuilderInterface
      *          signal to
      * @return SignalEventReceivedBuilderInterface the builder
      */
-    public function executionId(string $executionId): SignalEventReceivedBuilderInterface;
+    public function executionId(?string $executionId): SignalEventReceivedBuilderInterface;
 
     /**
      * Specify a tenant to deliver the signal to. The signal can only be received
@@ -32,7 +32,7 @@ interface SignalEventReceivedBuilderInterface
      *          the id of the tenant
      * @return SignalEventReceivedBuilderInterface the builder
      */
-    public function tenantId(string $tenantId): SignalEventReceivedBuilderInterface;
+    public function tenantId(?string $tenantId): SignalEventReceivedBuilderInterface;
 
     /**
      * Specify that the signal can only be received on executions or process

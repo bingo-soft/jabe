@@ -32,7 +32,7 @@ class AddCommentCmd implements CommandInterface, \Serializable
     protected $processInstanceId;
     protected $message;
 
-    public function __construct(string $taskId, string $processInstanceId, string $message)
+    public function __construct(?string $taskId, ?string $processInstanceId, ?string $message)
     {
         $this->taskId = $taskId;
         $this->processInstanceId = $processInstanceId;
@@ -62,7 +62,7 @@ class AddCommentCmd implements CommandInterface, \Serializable
             throw new ProcessEngineException("Process instance id and task id is null");
         }
 
-        EnsureUtil::ensureNotNull("Message", $this->message);
+        EnsureUtil::ensureNotNull("Message", "message", $this->message);
 
         $userId = $commandContext->getAuthenticatedUserId();
         $comment = new CommentEntity();
@@ -139,13 +139,13 @@ class AddCommentCmd implements CommandInterface, \Serializable
         return ProcessEngineConfiguration::HISTORY_REMOVAL_TIME_STRATEGY_START == $this->getHistoryRemovalTimeStrategy();
     }
 
-    protected function getHistoryRemovalTimeStrategy(): string
+    protected function getHistoryRemovalTimeStrategy(): ?string
     {
         return Context::getProcessEngineConfiguration()
             ->getHistoryRemovalTimeStrategy();
     }
 
-    protected function getHistoricRootProcessInstance(string $rootProcessInstanceId): HistoricProcessInstanceEventEntity
+    protected function getHistoricRootProcessInstance(?string $rootProcessInstanceId): HistoricProcessInstanceEventEntity
     {
         return Context::getCommandContext()
             ->getDbEntityManager()
@@ -162,5 +162,10 @@ class AddCommentCmd implements CommandInterface, \Serializable
                 $comment->setRemovalTime($removalTime);
             }
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

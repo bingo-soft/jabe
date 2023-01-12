@@ -18,7 +18,7 @@ class DeleteJobCmd implements CommandInterface, \Serializable
 {
     protected $jobId;
 
-    public function __construct(string $jobId)
+    public function __construct(?string $jobId)
     {
         $this->jobId = $jobId;
     }
@@ -38,7 +38,7 @@ class DeleteJobCmd implements CommandInterface, \Serializable
 
     public function execute(CommandContext $commandContext)
     {
-        EnsureUtil::ensureNotNull("jobId", $this->jobId);
+        EnsureUtil::ensureNotNull("jobId", "jobId", $this->jobId);
 
         $job = $commandContext->getJobManager()->findJobById($this->jobId);
         EnsureUtil::ensureNotNull("No job found with id '" . $this->jobId . "'", "job", $job);
@@ -65,5 +65,10 @@ class DeleteJobCmd implements CommandInterface, \Serializable
 
         $job->delete();
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

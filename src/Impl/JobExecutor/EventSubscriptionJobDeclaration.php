@@ -52,17 +52,17 @@ class EventSubscriptionJobDeclaration extends JobDeclaration
         return $message;
     }
 
-    public function getEventType(): string
+    public function getEventType(): ?string
     {
         return $this->eventSubscriptionDeclaration->getEventType();
     }
 
-    public function getEventName(): string
+    public function getEventName(): ?string
     {
         return $this->eventSubscriptionDeclaration->getUnresolvedEventName();
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->eventSubscriptionDeclaration->getActivityId();
     }

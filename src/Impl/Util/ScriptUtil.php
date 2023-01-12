@@ -28,7 +28,7 @@ class ScriptUtil
      * @return the newly created script
      * @throws NotValidException if language is null or empty or both of source and resource are null or empty
      */
-    public static function getScript(string $language, string $source, ?string $resource, ?ExpressionManager $expressionManager): ExecutableScript
+    public static function getScript(?string $language, ?string $source, ?string $resource, ?ExpressionManager $expressionManager): ExecutableScript
     {
         $scriptFactory = self::getScriptFactory();
         EnsureUtil::ensureNotEmpty(NotValidException::class, "Script language", $language);
@@ -51,7 +51,7 @@ class ScriptUtil
      * @return the newly created script
      * @throws NotValidException if language is null or empty or source is null
      */
-    public static function getScriptFromSource(string $language, string $source, ?ExpressionManager $expressionManager, ScriptFactory $scriptFactory): ExecutableScript
+    public static function getScriptFromSource(?string $language, ?string $source, ?ExpressionManager $expressionManager, ScriptFactory $scriptFactory): ExecutableScript
     {
         EnsureUtil::ensureNotEmpty(NotValidException::class, "Script language", $language);
         EnsureUtil::ensureNotNull(NotValidException::class, "Script source", $source);
@@ -75,7 +75,7 @@ class ScriptUtil
      * @return the newly created script
      * @throws NotValidException if language is null or empty or sourceExpression is null
      */
-    public static function getScriptFromSourceExpression(string $language, ExpressionInterface $sourceExpression, ScriptFactory $scriptFactory): ExecutableScript
+    public static function getScriptFromSourceExpression(?string $language, ExpressionInterface $sourceExpression, ScriptFactory $scriptFactory): ExecutableScript
     {
         EnsureUtil::ensureNotEmpty(NotValidException::class, "Script language", $language);
         EnsureUtil::ensureNotNull(NotValidException::class, "Script source expression", $sourceExpression);
@@ -93,7 +93,7 @@ class ScriptUtil
      * @return the newly created script
      * @throws NotValidException if language or resource are null or empty
      */
-    public static function getScriptFromResource(string $language, string $resource, ?ExpressionManager $expressionManager, ?ScriptFactory $scriptFactory): ExecutableScript
+    public static function getScriptFromResource(?string $language, ?string $resource, ?ExpressionManager $expressionManager, ?ScriptFactory $scriptFactory): ExecutableScript
     {
         EnsureUtil::ensureNotEmpty(NotValidException::class, "Script language", $language);
         EnsureUtil::ensureNotEmpty(NotValidException::class, "Script resource", $resource);
@@ -117,7 +117,7 @@ class ScriptUtil
      * @return the newly created script
      * @throws NotValidException if language is null or empty or resourceExpression is null
      */
-    public static function getScriptFromResourceExpression(string $language, ExpressionInterface $resourceExpression, ScriptFactory $scriptFactory): ExecutableScript
+    public static function getScriptFromResourceExpression(?string $language, ExpressionInterface $resourceExpression, ScriptFactory $scriptFactory): ExecutableScript
     {
         EnsureUtil::ensureNotEmpty(NotValidException::class, "Script language", $language);
         EnsureUtil::ensureNotNull(NotValidException::class, "Script resource expression", $resourceExpression);
@@ -131,7 +131,7 @@ class ScriptUtil
      * @param value the value to check
      * @return true if the value is an expression for a dynamic script source/resource, otherwise false
      */
-    public static function isDynamicScriptExpression(?string $language, string $value): bool
+    public static function isDynamicScriptExpression(?string $language, ?string $value): bool
     {
         return StringUtil::isExpression($value) && $language != null && !in_array(strtolower($language), JuelScriptEngineFactory::NAMES);
     }

@@ -23,7 +23,7 @@ class MessageCorrelationAsyncBuilderImpl implements MessageCorrelationAsyncBuild
     protected $processInstanceQuery;
     protected $historicProcessInstanceQuery;
 
-    public function __construct($commandExecutorOrName, string $messageName = null)
+    public function __construct($commandExecutorOrName, ?string $messageName = null)
     {
         if ($commandExecutorOrName instanceof CommandExecutorInterface) {
             $this->messageName = $messageName;
@@ -55,7 +55,7 @@ class MessageCorrelationAsyncBuilderImpl implements MessageCorrelationAsyncBuild
         return $this;
     }
 
-    public function setVariable(string $variableName, $variableValue): MessageCorrelationAsyncBuilderInterface
+    public function setVariable(?string $variableName, $variableValue): MessageCorrelationAsyncBuilderInterface
     {
         EnsureUtil::ensureNotNull("variableName", "variableName", $variableName);
         $this->ensurePayloadProcessInstanceVariablesInitialized();
@@ -91,7 +91,7 @@ class MessageCorrelationAsyncBuilderImpl implements MessageCorrelationAsyncBuild
         return $this->commandExecutor;
     }
 
-    public function getMessageName(): string
+    public function getMessageName(): ?string
     {
         return $this->messageName;
     }

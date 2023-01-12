@@ -15,7 +15,7 @@ interface HistoricTaskInstanceReportInterface extends ReportInterface
      * @throws NotValidException
      *          When the given date is null.
      */
-    public function completedAfter(string $completedAfter): HistoricTaskInstanceReportInterface;
+    public function completedAfter(?string $completedAfter): HistoricTaskInstanceReportInterface;
 
     /**
      * <p>Sets the completed before date for constraining the query to search for all tasks
@@ -26,7 +26,7 @@ interface HistoricTaskInstanceReportInterface extends ReportInterface
      * @throws NotValidException
      *          When the given date is null.
      */
-    public function completedBefore(string $completedBefore): HistoricTaskInstanceReportInterface;
+    public function completedBefore(?string $completedBefore): HistoricTaskInstanceReportInterface;
 
     /**
      * <p>Executes the task report query and returns a list of HistoricTaskInstanceReportResults</p>

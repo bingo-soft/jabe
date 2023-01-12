@@ -12,7 +12,7 @@ class PvmAtomicOperationTransitionCreateScope extends PvmAtomicOperationCreateSc
         return $activity->isAsyncBefore();
     }
 
-    public function getCanonicalName(): string
+    public function getCanonicalName(): ?string
     {
         return "transition-create-scope";
     }

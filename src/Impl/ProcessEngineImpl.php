@@ -68,7 +68,6 @@ class ProcessEngineImpl implements ProcessEngineInterface
         }*/
         $this->processEngineConfiguration = $processEngineConfiguration;
         $this->name = $processEngineConfiguration->getProcessEngineName();
-
         $this->repositoryService = $processEngineConfiguration->getRepositoryService();
         $this->runtimeService = $processEngineConfiguration->getRuntimeService();
         $this->historicDataService = $processEngineConfiguration->getHistoryService();
@@ -128,9 +127,10 @@ class ProcessEngineImpl implements ProcessEngineInterface
         }
     }
 
+    //@TODO
     protected function executeSchemaOperations(): void
     {
-        $this->commandExecutorSchemaOperations->execute($this->processEngineConfiguration->getSchemaOperationsCommand());
+        /*$this->commandExecutorSchemaOperations->execute($this->processEngineConfiguration->getSchemaOperationsCommand());
         $this->commandExecutorSchemaOperations->execute($this->processEngineConfiguration->getHistoryLevelCommand());
 
         try {
@@ -140,13 +140,13 @@ class ProcessEngineImpl implements ProcessEngineInterface
             // if an OLE occurred during the process engine bootstrap, we suppress it
             // since all the data has already been persisted by a previous process engine bootstrap
             // LOG.historyCleanupJobReconfigurationFailure(ole);
-            /*$databaseType = $this->getProcessEngineConfiguration()->getDatabaseType();
+            $databaseType = $this->getProcessEngineConfiguration()->getDatabaseType();
             if (DbSqlSessionFactory.CRDB.equals(databaseType)) {
                 // on CRDB, we want to re-throw the OLE to the caller
                 // when the CRDB Command retries are exausted
                 throw ole;
-            }*/
-        }
+            }
+        }*/
     }
 
     public function close(): void
@@ -174,7 +174,7 @@ class ProcessEngineImpl implements ProcessEngineInterface
         //LOG.processEngineClosed(name);
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }

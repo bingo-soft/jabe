@@ -9,13 +9,13 @@ abstract class CoreActivity extends CoreModelElement
 {
     protected $ioMapping;
 
-    public function __construct(string $id)
+    public function __construct(?string $id)
     {
         parent::__construct($id);
     }
 
     /** searches for the activity recursively */
-    public function findActivity(string $activityId): ?CoreActivity
+    public function findActivity(?string $activityId): ?CoreActivity
     {
         $localActivity = $this->getChildActivity($activityId);
         if ($localActivity !== null) {
@@ -31,7 +31,7 @@ abstract class CoreActivity extends CoreModelElement
     }
 
     /** searches for the activity locally */
-    abstract public function getChildActivity(string $activityId): ?CoreActivity;
+    abstract public function getChildActivity(?string $activityId): ?CoreActivity;
 
     abstract public function createActivity(?string $activityId = null): CoreActivity;
 

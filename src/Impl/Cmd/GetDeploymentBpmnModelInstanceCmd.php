@@ -51,4 +51,9 @@ class GetDeploymentBpmnModelInstanceCmd implements CommandInterface, \Serializab
         EnsureUtil::ensureNotNull("no BPMN model instance found for process definition id " . $this->processDefinitionId, "modelInstance", $modelInstance);
         return $modelInstance;
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

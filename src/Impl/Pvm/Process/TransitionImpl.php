@@ -20,7 +20,7 @@ class TransitionImpl extends CoreModelElement implements PvmTransitionInterface
     /** Graphical information: a list of waypoints: x1, y1, x2, y2, x3, y3, .. */
     protected $waypoints = [];
 
-    public function __construct(string $id, ProcessDefinitionImpl $processDefinition)
+    public function __construct(?string $id, ProcessDefinitionImpl $processDefinition)
     {
         parent::__construct($id);
         $this->processDefinition = $processDefinition;
@@ -66,7 +66,7 @@ class TransitionImpl extends CoreModelElement implements PvmTransitionInterface
         return $this->processDefinition;
     }
 
-    protected function setSource(ActivityImpl $source): void
+    public function setSource(ActivityImpl $source): void
     {
         $this->source = $source;
     }

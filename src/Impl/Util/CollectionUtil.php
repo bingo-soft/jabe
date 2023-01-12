@@ -16,7 +16,7 @@ class CollectionUtil
      * generic typed map <K,T> depending on the input type, but we often need a
      * <String, Object> map.
      */
-    public static function singletonMap(string $key, $value): array
+    public static function singletonMap(?string $key, $value): array
     {
         $map = [];
         $map[$key] = $value;

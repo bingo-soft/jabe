@@ -25,7 +25,7 @@ class ClassDelegateActivityBehavior extends AbstractBpmnActivityBehavior
     protected $className;
     protected $fieldDeclarations = [];
 
-    public function __construct(string $className, array $fieldDeclarations)
+    public function __construct(?string $className, array $fieldDeclarations)
     {
         $this->className = $className;
         $this->fieldDeclarations = $fieldDeclarations;
@@ -41,7 +41,7 @@ class ClassDelegateActivityBehavior extends AbstractBpmnActivityBehavior
     }
 
     // Signallable activity behavior
-    public function signal(ActivityExecutionInterface $execution, string $signalName, $signalData): void
+    public function signal(ActivityExecutionInterface $execution, ?string $signalName, $signalData): void
     {
         $targetProcessApplication = ProcessApplicationContextUtil::getTargetProcessApplication($execution);
         $scope = $this;
@@ -55,7 +55,7 @@ class ClassDelegateActivityBehavior extends AbstractBpmnActivityBehavior
         }
     }
 
-    protected function doSignal(ActivityExecutionInterface $execution, string $signalName, $signalData): void
+    protected function doSignal(ActivityExecutionInterface $execution, ?string $signalName, $signalData): void
     {
         $activityBehaviorInstance = $this->getActivityBehaviorInstance($execution);
 

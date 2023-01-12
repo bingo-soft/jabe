@@ -85,9 +85,9 @@ class CommandContext
 {
     //private final static ContextLogger LOG = ProcessEngineLogger.CONTEXT_LOGGER;
 
-    protected $authorizationCheckEnabled = true;
-    protected $userOperationLogEnabled = true;
-    protected $tenantCheckEnabled = true;
+    protected bool $authorizationCheckEnabled = true;
+    protected bool $userOperationLogEnabled = true;
+    protected bool $tenantCheckEnabled = true;
     protected $restrictUserOperationLogToAuthenticatedUsers;
 
     protected $transactionContext;
@@ -156,7 +156,6 @@ class CommandContext
         // even
         // if exceptions occur in close or flush methods of the sessions or the
         // transaction context.
-
         try {
             try {
                 try {
@@ -172,9 +171,9 @@ class CommandContext
                             $this->transactionContext->commit();
                         }
                     } catch (\Throwable $exception) {
-                        if (DbSqlSession::isCrdbConcurrencyConflict($exception)) {
-                            //$exception = ProcessEngineLogger.PERSISTENCE_LOGGER.crdbTransactionRetryExceptionOnCommit(exception);
-                        }
+                        //if (DbSqlSession::isCrdbConcurrencyConflict($exception)) {
+                        //    //$exception = ProcessEngineLogger.PERSISTENCE_LOGGER.crdbTransactionRetryExceptionOnCommit(exception);
+                        //}
                         $commandInvocationContext->trySetThrowable($exception);
                     }
 
@@ -200,7 +199,7 @@ class CommandContext
                 $this->closeSessions($commandInvocationContext);
             }
         } catch (\Throwable $exception) {
-            $commandInvocationContext->trySetThrowable(exception);
+            $commandInvocationContext->trySetThrowable($exception);
         }
 
         // rethrow the original exception if there was one
@@ -281,7 +280,7 @@ class CommandContext
         return $session;
     }
 
-    public function addSession(string $sessionClass, DbSqlSession $session): void
+    public function addSession(?string $sessionClass, DbSqlSession $session): void
     {
         $this->sessions[$sessionClass] = $session;
     }
@@ -486,14 +485,14 @@ class CommandContext
         return $this->getSession(AuthorizationManager::class);
     }
 
-    public function getReadOnlyIdentityProvider(): ReadOnlyIdentityProvider
+    public function getReadOnlyIdentityProvider(): ReadOnlyIdentityProviderInterface
     {
-        return $this->getSession(ReadOnlyIdentityProvider::class);
+        return $this->getSession(ReadOnlyIdentityProviderInterface::class);
     }
 
-    public function getWritableIdentityProvider(): WritableIdentityProvider
+    public function getWritableIdentityProvider(): WritableIdentityProviderInterface
     {
-        return $this->getSession(WritableIdentityProvider::class);
+        return $this->getSession(WritableIdentityProviderInterface::class);
     }
 
     public function getTenantManager(): TenantManager
@@ -583,7 +582,7 @@ class CommandContext
         return $this->failedJobCommandFactory;
     }
 
-    public function getAuthentication(): Authentication
+    public function getAuthentication(): ?Authentication
     {
         $identityService = $this->processEngineConfiguration->getIdentityService();
         return $identityService->getCurrentAuthentication();
@@ -596,16 +595,16 @@ class CommandContext
                 $commandContext = Context::getCommandContext();
             }
             $authorizationEnabled = $commandContext->isAuthorizationCheckEnabled();
-            try {
+            /*try {*/
                 $commandContext->disableAuthorizationCheck();
                 return $command();
-            } catch (\Exception $e) {
-                throw new ProcessEngineException($e->getMessage(), $e);
-            } finally {
+            /*} catch (\Exception $e) {*/
+               //throw new ProcessEngineException($e->getMessage(), $e);
+            /*} finally {
                 if ($authorizationEnabled) {
                     $commandContext->enableAuthorizationCheck();
                 }
-            }
+            }*/
         } elseif ($command instanceof CommandInterface) {
             $commandContext = Context::getCommandContext();
             return $this->runWithoutAuthorization(
@@ -730,7 +729,7 @@ class CommandContext
         return $this->operationId;
     }
 
-    public function setOperationId(string $operationId): void
+    public function setOperationId(?string $operationId): void
     {
         $this->operationId = $operationId;
     }

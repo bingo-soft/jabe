@@ -21,7 +21,7 @@ interface TransactionContextInterface
      * @param transactionState the transaction state for which the TransactionListener should be added.
      * @param transactionListener the TransactionListener to add.
      */
-    public function addTransactionListener(string $transactionState, TransactionListenerInterface $transactionListener): void;
+    public function addTransactionListener(?string $transactionState, TransactionListenerInterface $transactionListener): void;
 
     public function isTransactionActive(): bool;
 }

@@ -19,7 +19,7 @@ class ActivityCancellationCmd extends AbstractProcessInstanceModificationCommand
     protected $activityInstanceTree;
 
     //@TODO. Check invocation arguments ordering
-    public function __construct(?string $processInstanceId, string $activityId)
+    public function __construct(?string $processInstanceId, ?string $activityId)
     {
         if ($processInstanceId !== null) {
             parent::__construct($processInstanceId);
@@ -41,7 +41,7 @@ class ActivityCancellationCmd extends AbstractProcessInstanceModificationCommand
         return null;
     }
 
-    protected function collectParentScopeIdsForActivity(ProcessDefinitionImpl $processDefinition, string $activityId): array
+    protected function collectParentScopeIdsForActivity(ProcessDefinitionImpl $processDefinition, ?string $activityId): array
     {
         $parentScopeIds = [];
         $scope = $processDefinition->findActivity($activityId);
@@ -106,7 +106,7 @@ class ActivityCancellationCmd extends AbstractProcessInstanceModificationCommand
         });
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
@@ -116,7 +116,7 @@ class ActivityCancellationCmd extends AbstractProcessInstanceModificationCommand
         $this->activityInstanceTree = $activityInstanceTreeToCancel;
     }
 
-    protected function describe(): string
+    protected function describe(): ?string
     {
         return "Cancel all instances of activity '" . $this->activityId . "'";
     }

@@ -21,4 +21,9 @@ class HistoricTaskInstanceCountByProcessDefinitionKey implements CommandInterfac
     {
         return $this->scope->executeCountByProcessDefinitionKey($commandContext);
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

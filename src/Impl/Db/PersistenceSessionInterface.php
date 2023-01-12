@@ -14,15 +14,15 @@ interface PersistenceSessionInterface extends SessionInterface
 
     public function flushOperations(): void;
 
-    public function selectList(string $statement, array $params = [], array $types = []);
+    public function selectList(?string $statement, $params = null);
 
-    public function selectById(string $type, string $id);
+    public function selectById(?string $type, ?string $id);
 
-    public function selectOne(string $statement, array $params = [], array $types = []);
+    public function selectOne(?string $statement, $params = null);
 
-    public function lock(string $statement, array $params = [], array $types = []): void;
+    public function lock(?string $statement, $params): void;
 
-    public function executeNonEmptyUpdateStmt(string $statement, array $params = [], array $types = []);
+    public function executeNonEmptyUpdateStmt(?string $statement, $params = null): int;
 
     public function commit();
 

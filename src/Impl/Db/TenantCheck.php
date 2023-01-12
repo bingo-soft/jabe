@@ -9,7 +9,7 @@ class TenantCheck implements \Serializable
      * ensure that the query only access data that belongs to one of the
      * authenticated tenant ids.
      */
-    protected $isTenantCheckEnabled = true;
+    protected bool $isTenantCheckEnabled = true;
 
     /** the ids of the authenticated tenants */
     protected $authTenantIds = [];
@@ -50,7 +50,7 @@ class TenantCheck implements \Serializable
         return $this->authTenantIds;
     }
 
-    public function setAuthTenantIds(array $tenantIds): void
+    public function setAuthTenantIds(?array $tenantIds = []): void
     {
         $this->authTenantIds = $tenantIds;
     }

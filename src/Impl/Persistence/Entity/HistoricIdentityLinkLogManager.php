@@ -2,6 +2,10 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
+use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface
+};
 use Jabe\Impl\{
     HistoricIdentityLinkLogQueryImpl,
     Page
@@ -23,13 +27,13 @@ class HistoricIdentityLinkLogManager extends AbstractHistoricManager
         return $this->getDbEntityManager()->selectOne("selectHistoricIdentityLinkCountByQueryCriteria", $query);
     }
 
-    public function findHistoricIdentityLinkLogByQueryCriteria(HistoricIdentityLinkLogQueryImpl $query, Page $page): array
+    public function findHistoricIdentityLinkLogByQueryCriteria(HistoricIdentityLinkLogQueryImpl $query, ?Page $page): array
     {
         $this->configureQuery($query);
         return $this->getDbEntityManager()->selectList("selectHistoricIdentityLinkByQueryCriteria", $query, $page);
     }
 
-    public function addRemovalTimeToIdentityLinkLogByRootProcessInstanceId(string $rootProcessInstanceId, string $removalTime): void
+    public function addRemovalTimeToIdentityLinkLogByRootProcessInstanceId(?string $rootProcessInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["rootProcessInstanceId"] = $rootProcessInstanceId;
@@ -39,7 +43,7 @@ class HistoricIdentityLinkLogManager extends AbstractHistoricManager
             ->updatePreserveOrder(HistoricIdentityLinkLogEventEntity::class, "updateIdentityLinkLogByRootProcessInstanceId", $parameters);
     }
 
-    public function addRemovalTimeToIdentityLinkLogByProcessInstanceId(string $processInstanceId, string $removalTime): void
+    public function addRemovalTimeToIdentityLinkLogByProcessInstanceId(?string $processInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["processInstanceId"] = $processInstanceId;
@@ -49,14 +53,14 @@ class HistoricIdentityLinkLogManager extends AbstractHistoricManager
             ->updatePreserveOrder(HistoricIdentityLinkLogEventEntity::class, "updateIdentityLinkLogByProcessInstanceId", $parameters);
     }
 
-    public function deleteHistoricIdentityLinksLogByProcessDefinitionId(string $processDefId): void
+    public function deleteHistoricIdentityLinksLogByProcessDefinitionId(?string $processDefId): void
     {
         if ($this->isHistoryEventProduced()) {
             $this->getDbEntityManager()->delete(HistoricIdentityLinkLogEntity::class, "deleteHistoricIdentityLinksByProcessDefinitionId", $processDefId);
         }
     }
 
-    public function deleteHistoricIdentityLinksLogByTaskId(string $taskId): void
+    public function deleteHistoricIdentityLinksLogByTaskId(?string $taskId): void
     {
         if ($this->isHistoryEventProduced()) {
             $this->getDbEntityManager()->delete(HistoricIdentityLinkLogEntity::class, "deleteHistoricIdentityLinksByTaskId", $taskId);
@@ -72,7 +76,7 @@ class HistoricIdentityLinkLogManager extends AbstractHistoricManager
         getDbEntityManager().deletePreserveOrder(HistoricIdentityLinkLogEntity.class, "deleteHistoricIdentityLinksByTaskCaseInstanceIds", caseInstanceIds);
     }*/
 
-    public function deleteHistoricIdentityLinkLogByRemovalTime(string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
+    public function deleteHistoricIdentityLinkLogByRemovalTime(?string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
     {
         $parameters = [];
         $parameters["removalTime"] = $removalTime;
@@ -90,7 +94,7 @@ class HistoricIdentityLinkLogManager extends AbstractHistoricManager
             );
     }
 
-    protected function configureQuery(HistoricIdentityLinkLogQueryImpl $query): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         $this->getAuthorizationManager()->configureHistoricIdentityLinkQuery($query);
         $this->getTenantManager()->configureQuery($query);

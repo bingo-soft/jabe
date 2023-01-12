@@ -60,13 +60,13 @@ class WsdlImporterTest extends TestCase
         $this->assertStructure(array_values($structures)[13], "setToResponse", [], []);
     }
 
-    private function assertOperation(WSOperation $wsOperation, string $name, WSService $service): void
+    private function assertOperation(WSOperation $wsOperation, ?string $name, WSService $service): void
     {
         $this->assertEquals($name, $wsOperation->getName());
         $this->assertEquals($service, $wsOperation->getService());
     }
 
-    private function assertStructure(StructureDefinitionInterface $structure, string $structureId, array $parameters, array $classes): void
+    private function assertStructure(StructureDefinitionInterface $structure, ?string $structureId, array $parameters, array $classes): void
     {
         $this->assertEquals($structureId, $structure->getId());
         for ($i = 0; $i < $structure->getFieldSize(); $i += 1) {

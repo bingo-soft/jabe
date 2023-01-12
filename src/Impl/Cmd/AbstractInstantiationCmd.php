@@ -38,7 +38,7 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
     protected $variablesLocal;
     protected $ancestorActivityInstanceId;
 
-    public function __construct(string $processInstanceId, ?string $ancestorActivityInstanceId = null)
+    public function __construct(?string $processInstanceId, ?string $ancestorActivityInstanceId = null)
     {
         parent::__construct($processInstanceId);
         $this->ancestorActivityInstanceId = $ancestorActivityInstanceId;
@@ -46,12 +46,12 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
         $this->variablesLocal = new VariableMapImpl();
     }
 
-    public function addVariable(string $name, $value): void
+    public function addVariable(?string $name, $value): void
     {
         $this->variables->put($name, $value);
     }
 
-    public function addVariableLocal(string $name, $value): void
+    public function addVariableLocal(?string $name, $value): void
     {
         $this->variablesLocal->put($name, $value);
     }
@@ -325,7 +325,7 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
         }
     }
 
-    protected function isConcurrentStart(string $startBehavior): bool
+    protected function isConcurrentStart(?string $startBehavior): bool
     {
         return $startBehavior == ActivityStartBehavior::DEFAULT
             || $startBehavior == ActivityStartBehavior::CONCURRENT_IN_FLOW_SCOPE;
@@ -389,5 +389,5 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
 
     abstract protected function getTargetElement(ProcessDefinitionImpl $processDefinition): CoreModelElement;
 
-    abstract protected function getTargetElementId(): string;
+    abstract protected function getTargetElementId(): ?string;
 }

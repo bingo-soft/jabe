@@ -6,7 +6,7 @@ use Jabe\History\ReportResultInterface;
 
 abstract class ReportResultEntity implements ReportResultInterface
 {
-    protected $period;
+    protected int $period = 0;
     protected $periodUnit;
 
     public function getPeriod(): int
@@ -19,12 +19,12 @@ abstract class ReportResultEntity implements ReportResultInterface
         $this->period = $period;
     }
 
-    public function getPeriodUnit(): string
+    public function getPeriodUnit(): ?string
     {
         return $this->periodUnit;
     }
 
-    public function setPeriodUnit(string $periodUnit): void
+    public function setPeriodUnit(?string $periodUnit): void
     {
         $this->periodUnit = $periodUnit;
     }

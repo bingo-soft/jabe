@@ -39,7 +39,7 @@ class SetRemovalTimeToHistoricBatchesBuilderImpl implements SetRemovalTimeSelect
         return $this;
     }
 
-    public function absoluteRemovalTime(string $removalTime): SetRemovalTimeToHistoricBatchesBuilderInterface
+    public function absoluteRemovalTime(?string $removalTime): SetRemovalTimeToHistoricBatchesBuilderInterface
     {
         EnsureUtil::ensureNull(BadUserRequestException::class, "The removal time modes are mutually exclusive", "mode", $this->mode);
         $this->mode = Mode::ABSOLUTE_REMOVAL_TIME;
@@ -76,7 +76,7 @@ class SetRemovalTimeToHistoricBatchesBuilderImpl implements SetRemovalTimeSelect
         return $this->ids;
     }
 
-    public function getRemovalTime(): string
+    public function getRemovalTime(): ?string
     {
         return $this->removalTime;
     }

@@ -33,4 +33,9 @@ class DeleteUserOperationLogEntryCmd implements CommandInterface
         $commandContext->getOperationLogManager()->deleteOperationLogEntryById($this->entryId);
         return null;
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

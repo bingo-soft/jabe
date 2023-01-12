@@ -7,23 +7,23 @@ use Jabe\Query\QueryInterface;
 interface HistoricActivityInstanceQueryInterface extends QueryInterface
 {
     /** Only select historic activity instances with the given id (primary key within history tables). */
-    public function activityInstanceId(string $activityInstanceId): HistoricActivityInstanceQueryInterface;
+    public function activityInstanceId(?string $activityInstanceId): HistoricActivityInstanceQueryInterface;
 
     /** Only select historic activity instances with the given process instance.
      * {@link ProcessInstance ) ids and HistoricProcessInstance ids match. */
-    public function processInstanceId(string $processInstanceId): HistoricActivityInstanceQueryInterface;
+    public function processInstanceId(?string $processInstanceId): HistoricActivityInstanceQueryInterface;
 
     /** Only select historic activity instances for the given process definition */
-    public function processDefinitionId(string $processDefinitionId): HistoricActivityInstanceQueryInterface;
+    public function processDefinitionId(?string $processDefinitionId): HistoricActivityInstanceQueryInterface;
 
     /** Only select historic activity instances for the given execution */
-    public function executionId(string $executionId): HistoricActivityInstanceQueryInterface;
+    public function executionId(?string $executionId): HistoricActivityInstanceQueryInterface;
 
     /** Only select historic activity instances for the given activity (id from BPMN 2.0 XML) */
-    public function activityId(string $activityId): HistoricActivityInstanceQueryInterface;
+    public function activityId(?string $activityId): HistoricActivityInstanceQueryInterface;
 
     /** Only select historic activity instances for activities with the given name */
-    public function activityName(string $activityName): HistoricActivityInstanceQueryInterface;
+    public function activityName(?string $activityName): HistoricActivityInstanceQueryInterface;
 
     /**
      * Only select historic activity instances for activities which activityName is like the given value.
@@ -31,13 +31,13 @@ interface HistoricActivityInstanceQueryInterface extends QueryInterface
      * @param activityNameLike The string can include the wildcard character '%' to express
      *    like-strategy: starts with (string%), ends with (%string) or contains (%string%).
      */
-    public function activityNameLike(string $activityNameLike): HistoricActivityInstanceQueryInterface;
+    public function activityNameLike(?string $activityNameLike): HistoricActivityInstanceQueryInterface;
 
     /** Only select historic activity instances for activities with the given activity type */
-    public function activityType(string $activityType): HistoricActivityInstanceQueryInterface;
+    public function activityType(?string $activityType): HistoricActivityInstanceQueryInterface;
 
     /** Only select historic activity instances for userTask activities assigned to the given user */
-    public function taskAssignee(string $userId): HistoricActivityInstanceQueryInterface;
+    public function taskAssignee(?string $userId): HistoricActivityInstanceQueryInterface;
 
     /** Only select historic activity instances that are finished. */
     public function finished(): HistoricActivityInstanceQueryInterface;
@@ -52,16 +52,16 @@ interface HistoricActivityInstanceQueryInterface extends QueryInterface
     public function canceled(): HistoricActivityInstanceQueryInterface;
 
     /** Only select historic activity instances that were started before the given date. */
-    public function startedBefore(string $date): HistoricActivityInstanceQueryInterface;
+    public function startedBefore(?string $date): HistoricActivityInstanceQueryInterface;
 
     /** Only select historic activity instances that were started after the given date. */
-    public function startedAfter(string $date): HistoricActivityInstanceQueryInterface;
+    public function startedAfter(?string $date): HistoricActivityInstanceQueryInterface;
 
     /** Only select historic activity instances that were started before the given date. */
-    public function finishedBefore(string $date): HistoricActivityInstanceQueryInterface;
+    public function finishedBefore(?string $date): HistoricActivityInstanceQueryInterface;
 
     /** Only select historic activity instances that were started after the given date. */
-    public function finishedAfter(string $date): HistoricActivityInstanceQueryInterface;
+    public function finishedAfter(?string $date): HistoricActivityInstanceQueryInterface;
 
     // ordering /////////////////////////////////////////////////////////////////
     /** Order by id (needs to be followed by {@link #asc()} or {@link #desc()}). */

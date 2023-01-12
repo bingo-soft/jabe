@@ -83,7 +83,7 @@ abstract class AbstractBatchJobHandler implements BatchJobHandlerInterface
         }
     }
 
-    protected function createJobEntities(BatchEntity $batch, BatchConfiguration $configuration, string $deploymentId, array $processIds, int $invocationsPerBatchJob): void
+    protected function createJobEntities(BatchEntity $batch, BatchConfiguration $configuration, ?string $deploymentId, array $processIds, int $invocationsPerBatchJob): void
     {
         if (empty($processIds)) {
             return;
@@ -142,7 +142,7 @@ abstract class AbstractBatchJobHandler implements BatchJobHandlerInterface
         }
     }
 
-    public function newConfiguration(string $canonicalString): JobHandlerConfigurationInterface
+    public function newConfiguration(?string $canonicalString): JobHandlerConfigurationInterface
     {
         return new BatchJobConfiguration($canonicalString);
     }
@@ -164,13 +164,13 @@ abstract class AbstractBatchJobHandler implements BatchJobHandlerInterface
         return $configurationEntity;
     }
 
-    public function writeConfiguration(BatchConfiguration $configuration): string
+    public function writeConfiguration(BatchConfiguration $configuration): ?string
     {
         $jsonObject = $this->getJsonConverterInstance()->toJsonObject($configuration);
         return JsonUtil::asBytes($jsonObject);
     }
 
-    public function readConfiguration(string $serializedConfiguration): BatchConfiguration
+    public function readConfiguration(?string $serializedConfiguration): BatchConfiguration
     {
         return $this->getJsonConverterInstance()->toObject(JsonUtil::asObject($serializedConfiguration));
     }

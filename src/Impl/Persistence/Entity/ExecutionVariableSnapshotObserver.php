@@ -13,8 +13,8 @@ class ExecutionVariableSnapshotObserver implements ExecutionObserverInterface
 
     protected $execution;
 
-    protected $localVariables = true;
-    protected $deserializeValues = false;
+    protected bool $localVariables = true;
+    protected bool $deserializeValues = false;
 
     public function __construct(ExecutionEntity $executionEntity, ?bool $localVariables = true, ?bool $deserializeValues = false)
     {

@@ -4,7 +4,7 @@ namespace Jabe\Impl;
 
 use Jabe\{
     BadUserRequestException,
-    IdentityService,
+    IdentityServiceInterface,
     ProcessEngineException
 };
 use Jabe\Identity\{
@@ -74,17 +74,17 @@ class IdentityServiceImpl extends ServiceImpl implements IdentityServiceInterfac
         return $this->commandExecutor->execute(new IsIdentityServiceReadOnlyCmd());
     }
 
-    public function newGroup(string $groupId): GroupInterface
+    public function newGroup(?string $groupId): GroupInterface
     {
         return $this->commandExecutor->execute(new CreateGroupCmd($groupId));
     }
 
-    public function newUser(string $userId): UserInterface
+    public function newUser(?string $userId): UserInterface
     {
         return $this->commandExecutor->execute(new CreateUserCmd($userId));
     }
 
-    public function newTenant(string $tenantId): TenantInterface
+    public function newTenant(?string $tenantId): TenantInterface
     {
         return $this->commandExecutor->execute(new CreateTenantCmd($tenantId));
     }
@@ -145,29 +145,29 @@ class IdentityServiceImpl extends ServiceImpl implements IdentityServiceInterfac
         return $this->commandExecutor->execute(new CreateTenantQueryCmd());
     }
 
-    public function createMembership(string $userId, string $groupId): void
+    public function createMembership(?string $userId, ?string $groupId): void
     {
         $this->commandExecutor->execute(new CreateMembershipCmd($userId, $groupId));
     }
 
-    public function deleteGroup(string $groupId): void
+    public function deleteGroup(?string $groupId): void
     {
         $this->commandExecutor->execute(new DeleteGroupCmd($groupId));
     }
 
-    public function deleteMembership(string $userId, string $groupId): void
+    public function deleteMembership(?string $userId, ?string $groupId): void
     {
         $this->commandExecutor->execute(new DeleteMembershipCmd($userId, $groupId));
     }
 
-    public function checkPassword(string $userId, string $password): bool
+    public function checkPassword(?string $userId, ?string $password): bool
     {
         return $this->commandExecutor->execute(new CheckPassword($userId, $password));
     }
 
     public function checkPasswordAgainstPolicy(
         ?PasswordPolicyResultInterface $policy,
-        string $candidatePassword,
+        ?string $candidatePassword,
         ?UserInterface $user
     ): PasswordPolicyResultInterface {
         $policy = $policy ?? $this->getPasswordPolicy();
@@ -192,42 +192,42 @@ class IdentityServiceImpl extends ServiceImpl implements IdentityServiceInterfac
         return $this->commandExecutor->execute(new GetPasswordPolicyCmd());
     }
 
-    public function unlockUser(string $userId): void
+    public function unlockUser(?string $userId): void
     {
         $this->commandExecutor->execute(new UnlockUserCmd($userId));
     }
 
-    public function deleteUser(string $userId): void
+    public function deleteUser(?string $userId): void
     {
         $this->commandExecutor->execute(new DeleteUserCmd($userId));
     }
 
-    public function deleteTenant(string $tenantId): void
+    public function deleteTenant(?string $tenantId): void
     {
         $this->commandExecutor->execute(new DeleteTenantCmd($tenantId));
     }
 
-    public function setUserPicture(string $userId, Picture $picture): void
+    public function setUserPicture(?string $userId, Picture $picture): void
     {
         $this->commandExecutor->execute(new SetUserPictureCmd($userId, $picture));
     }
 
-    public function getUserPicture(string $userId): Picture
+    public function getUserPicture(?string $userId): Picture
     {
         return $this->commandExecutor->execute(new GetUserPictureCmd($userId));
     }
 
-    public function deleteUserPicture(string $userId): void
+    public function deleteUserPicture(?string $userId): void
     {
         $this->commandExecutor->execute(new DeleteUserPictureCmd($userId));
     }
 
-    public function setAuthenticatedUserId(string $authenticatedUserId): void
+    public function setAuthenticatedUserId(?string $authenticatedUserId): void
     {
         $this->setAuthentication(new Authentication($authenticatedUserId, null));
     }
 
-    public function setAuthentication(string $userId, array $groups, ?array $tenantIds = null): void
+    public function setAuthentication(?string $userId, array $groups, ?array $tenantIds = null): void
     {
         $this->currentAuthentication = new Authentication($userId, $groups, $tenantIds);
     }
@@ -242,62 +242,62 @@ class IdentityServiceImpl extends ServiceImpl implements IdentityServiceInterfac
         return $this->currentAuthentication;
     }
 
-    public function getUserInfo(string $userId, string $key): string
+    public function getUserInfo(?string $userId, ?string $key): ?string
     {
         return $this->commandExecutor->execute(new GetUserInfoCmd($userId, $key));
     }
 
-    public function getUserInfoKeys(string $userId): array
+    public function getUserInfoKeys(?string $userId): array
     {
         return $this->commandExecutor->execute(new GetUserInfoKeysCmd($userId, IdentityInfoEntity::TYPE_USERINFO));
     }
 
-    public function getUserAccountNames(string $userId): array
+    public function getUserAccountNames(?string $userId): array
     {
         return $this->commandExecutor->execute(new GetUserInfoKeysCmd($userId, IdentityInfoEntity::TYPE_USERACCOUNT));
     }
 
-    public function setUserInfo(string $userId, string $key, string $value): void
+    public function setUserInfo(?string $userId, ?string $key, ?string $value): void
     {
         $this->commandExecutor->execute(new SetUserInfoCmd($userId, $key, $value));
     }
 
-    public function deleteUserInfo(string $userId, string $key): void
+    public function deleteUserInfo(?string $userId, ?string $key): void
     {
         $this->commandExecutor->execute(new DeleteUserInfoCmd($userId, $key));
     }
 
-    public function deleteUserAccount(string $userId, string $accountName): void
+    public function deleteUserAccount(?string $userId, ?string $accountName): void
     {
         $this->commandExecutor->execute(new DeleteUserInfoCmd($userId, $accountName));
     }
 
-    public function getUserAccount(string $userId, string $userPassword, string $accountName): ?AccountInterface
+    public function getUserAccount(?string $userId, ?string $userPassword, ?string $accountName): ?AccountInterface
     {
         return $this->commandExecutor->execute(new GetUserAccountCmd($userId, $userPassword, $accountName));
     }
 
-    public function setUserAccount(string $userId, string $userPassword, string $accountName, string $accountUsername, string $accountPassword, array $accountDetails): void
+    public function setUserAccount(?string $userId, ?string $userPassword, ?string $accountName, ?string $accountUsername, ?string $accountPassword, array $accountDetails): void
     {
         $this->commandExecutor->execute(new SetUserInfoCmd($userId, $userPassword, $accountName, $accountUsername, $accountPassword, $accountDetails));
     }
 
-    public function createTenantUserMembership(string $tenantId, string $userId): void
+    public function createTenantUserMembership(?string $tenantId, ?string $userId): void
     {
         $this->commandExecutor->execute(new CreateTenantUserMembershipCmd($tenantId, $userId));
     }
 
-    public function createTenantGroupMembership(string $tenantId, string $groupId): void
+    public function createTenantGroupMembership(?string $tenantId, ?string $groupId): void
     {
         $this->commandExecutor->execute(new CreateTenantGroupMembershipCmd($tenantId, $groupId));
     }
 
-    public function deleteTenantUserMembership(string $tenantId, string $userId): void
+    public function deleteTenantUserMembership(?string $tenantId, ?string $userId): void
     {
         $this->commandExecutor->execute(new DeleteTenantUserMembershipCmd($tenantId, $userId));
     }
 
-    public function deleteTenantGroupMembership(string $tenantId, string $groupId): void
+    public function deleteTenantGroupMembership(?string $tenantId, ?string $groupId): void
     {
         $this->commandExecutor->execute(new DeleteTenantGroupMembershipCmd($tenantId, $groupId));
     }

@@ -16,7 +16,7 @@ class DeploymentEntity implements \Serializable, DeploymentWithDefinitionsInterf
     protected $name;
     protected $resources = [];
     protected $deploymentTime;
-    protected $validatingSchema = true;
+    protected bool $validatingSchema = true;
     protected $isNew;
     protected $source;
     protected $tenantId;
@@ -62,7 +62,7 @@ class DeploymentEntity implements \Serializable, DeploymentWithDefinitionsInterf
      */
     protected $deployedArtifacts = [];
 
-    public function getResource(string $resourceName): ?ResourceEntity
+    public function getResource(?string $resourceName): ?ResourceEntity
     {
         $resources = $this->getResources();
         if (array_key_exists($resourceName, $resources)) {
@@ -155,17 +155,17 @@ class DeploymentEntity implements \Serializable, DeploymentWithDefinitionsInterf
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
@@ -175,14 +175,18 @@ class DeploymentEntity implements \Serializable, DeploymentWithDefinitionsInterf
         $this->resources = $resources;
     }
 
-    public function getDeploymentTime(): string
+    public function getDeploymentTime(): ?string
     {
         return $this->deploymentTime;
     }
 
-    public function setDeploymentTime(string $deploymentTime): void
+    public function setDeploymentTime(/*string|\DateTime*/$deploymentTime): void
     {
-        $this->deploymentTime = $deploymentTime;
+        if (is_string($deploymentTime)) {
+            $this->deploymentTime = $deploymentTime;
+        } elseif ($deploymentTime instanceof \DateTime) {
+            $this->deploymentTime = $deploymentTime->format('c');
+        }
     }
 
     public function isValidatingSchema(): bool
@@ -205,12 +209,12 @@ class DeploymentEntity implements \Serializable, DeploymentWithDefinitionsInterf
         $this->isNew = $isNew;
     }
 
-    public function getSource(): string
+    public function getSource(): ?string
     {
         return $this->source;
     }
 
-    public function setSource(string $source): void
+    public function setSource(?string $source): void
     {
         $this->source = $source;
     }

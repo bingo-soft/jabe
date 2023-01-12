@@ -56,23 +56,23 @@
       ${prefix}ACT_HI_PROCINST HPI
     <where>
         END_TIME_ IS NOT NULL
-      <if test="processDefinitionIdIn != null and count(processDefinitionIdIn) > 0">
+      <if test="!empty(processDefinitionIdIn)">
         AND PROC_DEF_ID_ IN
         <foreach item="item" index="index" collection="processDefinitionIdIn" open="(" separator="," close=")">
           #{item}
         </foreach>
       </if>
-      <if test="processDefinitionKeyIn != null and count(processDefinitionKeyIn) > 0">
+      <if test="!empty(processDefinitionKeyIn)">
         AND PROC_DEF_KEY_ IN
         <foreach item="item" index="index" collection="processDefinitionKeyIn" open="(" separator="," close=")">
           #{item}
         </foreach>
       </if>
       <if test="startedBefore != null">
-        AND START_TIME_ <= #{startedBefore}
+        AND START_TIME_ &lt;= #{startedBefore}
       </if>
       <if test="startedAfter != null">
-        AND START_TIME_ >= #{startedAfter}
+        AND START_TIME_ &gt;= #{startedAfter}
       </if>
 
       <bind name="columnPrefix" value="'HPI.'"/>

@@ -78,7 +78,7 @@ class CommentEntity implements CommentInterface, EventInterface, DbEntityInterfa
         return $this->fullMessage;
     }
 
-    public function setFullMessageBytes(string $fullMessageBytes): void
+    public function setFullMessageBytes(?string $fullMessageBytes): void
     {
         $this->fullMessage = $fullMessageBytes;
     }
@@ -132,82 +132,82 @@ class CommentEntity implements CommentInterface, EventInterface, DbEntityInterfa
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getUserId(): string
+    public function getUserId(): ?string
     {
         return $this->userId;
     }
 
-    public function setUserId(string $userId): void
+    public function setUserId(?string $userId): void
     {
         $this->userId = $userId;
     }
 
-    public function getTaskId(): string
+    public function getTaskId(): ?string
     {
         return $this->taskId;
     }
 
-    public function setTaskId(string $taskId): void
+    public function setTaskId(?string $taskId): void
     {
         $this->taskId = $taskId;
     }
 
-    public function getMessage(): string
+    public function getMessage(): ?string
     {
         return $this->message;
     }
 
-    public function getTime(): string
+    public function getTime(): ?string
     {
         return $this->time;
     }
 
-    public function setTime(string $time): void
+    public function setTime(?string $time): void
     {
         $this->time = $time;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
 
-    public function setProcessInstanceId(string $processInstanceId): void
+    public function setProcessInstanceId(?string $processInstanceId): void
     {
         $this->processInstanceId = $processInstanceId;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function setType(string $type): void
+    public function setType(?string $type): void
     {
         $this->type = $type;
     }
 
-    public function getFullMessage(): string
+    public function getFullMessage(): ?string
     {
         return $this->fullMessage;
     }
 
-    public function setFullMessage(string $fullMessage): void
+    public function setFullMessage(?string $fullMessage): void
     {
         $this->fullMessage = $fullMessage;
     }
 
-    public function getAction(): string
+    public function getAction(): ?string
     {
         return $this->action;
     }
 
-    public function setAction(string $action): void
+    public function setAction(?string $action): void
     {
         $this->action = $action;
     }
@@ -222,22 +222,22 @@ class CommentEntity implements CommentInterface, EventInterface, DbEntityInterfa
         $this->tenantId = $tenantId;
     }
 
-    public function getRootProcessInstanceId(): string
+    public function getRootProcessInstanceId(): ?string
     {
         return $this->rootProcessInstanceId;
     }
 
-    public function setRootProcessInstanceId(string $rootProcessInstanceId): void
+    public function setRootProcessInstanceId(?string $rootProcessInstanceId): void
     {
         $this->rootProcessInstanceId = $rootProcessInstanceId;
     }
 
-    public function getRemovalTime(): string
+    public function getRemovalTime(): ?string
     {
         return $this->removalTime;
     }
 
-    public function setRemovalTime(string $removalTime): void
+    public function setRemovalTime(?string $removalTime): void
     {
         $this->removalTime = $removalTime;
     }

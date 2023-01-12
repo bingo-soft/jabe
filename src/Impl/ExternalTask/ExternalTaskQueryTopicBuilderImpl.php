@@ -24,7 +24,7 @@ class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopicBuilder
 
     protected $currentInstruction;
 
-    public function __construct(CommandExecutorInterface $commandExecutor, string $workerId, int $maxTasks, bool $usePriority)
+    public function __construct(CommandExecutorInterface $commandExecutor, ?string $workerId, int $maxTasks, bool $usePriority)
     {
         $this->commandExecutor = $commandExecutor;
         $this->workerId = $workerId;
@@ -39,7 +39,7 @@ class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopicBuilder
         return $this->commandExecutor->execute(new FetchExternalTasksCmd($this->workerId, $this->maxTasks, $this->instructions, $this->usePriority));
     }
 
-    public function topic(string $topicName, int $lockDuration): ExternalTaskQueryTopicBuilderInterface
+    public function topic(?string $topicName, int $lockDuration): ExternalTaskQueryTopicBuilderInterface
     {
         $this->submitCurrentInstruction();
         $this->currentInstruction = new TopicFetchInstruction($topicName, $lockDuration);
@@ -66,7 +66,7 @@ class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopicBuilder
         return $this;
     }
 
-    public function businessKey(string $businessKey): ExternalTaskQueryTopicBuilderInterface
+    public function businessKey(?string $businessKey): ExternalTaskQueryTopicBuilderInterface
     {
         $this->currentInstruction->setBusinessKey($businessKey);
         return $this;
@@ -82,7 +82,7 @@ class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopicBuilder
         return $this;
     }
 
-    public function processDefinitionKey(string $processDefinitionKey): ExternalTaskQueryTopicBuilderInterface
+    public function processDefinitionKey(?string $processDefinitionKey): ExternalTaskQueryTopicBuilderInterface
     {
         $this->currentInstruction->setProcessDefinitionKey($processDefinitionKey);
         return $this;
@@ -94,7 +94,7 @@ class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopicBuilder
         return $this;
     }
 
-    public function processDefinitionVersionTag(string $processDefinitionVersionTag): ExternalTaskQueryTopicBuilderInterface
+    public function processDefinitionVersionTag(?string $processDefinitionVersionTag): ExternalTaskQueryTopicBuilderInterface
     {
         $this->currentInstruction->setProcessDefinitionVersionTag($processDefinitionVersionTag);
         return $this;

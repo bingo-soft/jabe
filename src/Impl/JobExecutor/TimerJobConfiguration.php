@@ -12,12 +12,12 @@ class TimerJobConfiguration implements JobHandlerConfigurationInterface
     protected $timerElementSecondaryKey;
     protected $followUpJobCreated;
 
-    public function getTimerElementKey(): string
+    public function getTimerElementKey(): ?string
     {
         return $this->timerElementKey;
     }
 
-    public function setTimerElementKey(string $timerElementKey): void
+    public function setTimerElementKey(?string $timerElementKey): void
     {
         $this->timerElementKey = $timerElementKey;
     }
@@ -32,17 +32,17 @@ class TimerJobConfiguration implements JobHandlerConfigurationInterface
         $this->followUpJobCreated = $followUpJobCreated;
     }
 
-    public function getTimerElementSecondaryKey(): string
+    public function getTimerElementSecondaryKey(): ?string
     {
         return $this->timerElementSecondaryKey;
     }
 
-    public function setTimerElementSecondaryKey(string $timerElementSecondaryKey): void
+    public function setTimerElementSecondaryKey(?string $timerElementSecondaryKey): void
     {
         $this->timerElementSecondaryKey = $timerElementSecondaryKey;
     }
 
-    public function toCanonicalString(): string
+    public function toCanonicalString(): ?string
     {
         $canonicalString = $this->timerElementKey;
 

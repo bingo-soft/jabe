@@ -82,67 +82,67 @@ class IncidentQueryImpl extends AbstractQuery implements IncidentQueryInterface,
         $this->jobDefinitionIds = $json->jobDefinitionIds;
     }
 
-    public function incidentId(string $incidentId): IncidentQueryInterface
+    public function incidentId(?string $incidentId): IncidentQueryInterface
     {
         $this->id = $incidentId;
         return $this;
     }
 
-    public function incidentType(string $incidentType): IncidentQueryInterface
+    public function incidentType(?string $incidentType): IncidentQueryInterface
     {
         $this->incidentType = $incidentType;
         return $this;
     }
 
-    public function incidentMessage(string $incidentMessage): IncidentQueryInterface
+    public function incidentMessage(?string $incidentMessage): IncidentQueryInterface
     {
         $this->incidentMessage = $incidentMessage;
         return $this;
     }
 
-    public function incidentMessageLike(string $incidentMessageLike): IncidentQueryInterface
+    public function incidentMessageLike(?string $incidentMessageLike): IncidentQueryInterface
     {
         $this->incidentMessageLike = $incidentMessageLike;
         return $this;
     }
 
-    public function executionId(string $executionId): IncidentQueryInterface
+    public function executionId(?string $executionId): IncidentQueryInterface
     {
         $this->executionId = $executionId;
         return $this;
     }
 
-    public function incidentTimestampBefore(string $incidentTimestampBefore): IncidentQueryInterface
+    public function incidentTimestampBefore(?string $incidentTimestampBefore): IncidentQueryInterface
     {
         $this->incidentTimestampBefore = $incidentTimestampBefore;
         return $this;
     }
 
-    public function incidentTimestampAfter(string $incidentTimestampAfter): IncidentQueryInterface
+    public function incidentTimestampAfter(?string $incidentTimestampAfter): IncidentQueryInterface
     {
         $this->incidentTimestampAfter = $incidentTimestampAfter;
         return $this;
     }
 
-    public function activityId(string $activityId): IncidentQueryInterface
+    public function activityId(?string $activityId): IncidentQueryInterface
     {
         $this->activityId = $activityId;
         return $this;
     }
 
-    public function failedActivityId(string $activityId): IncidentQueryInterface
+    public function failedActivityId(?string $activityId): IncidentQueryInterface
     {
         $this->failedActivityId = $activityId;
         return $this;
     }
 
-    public function processInstanceId(string $processInstanceId): IncidentQueryInterface
+    public function processInstanceId(?string $processInstanceId): IncidentQueryInterface
     {
         $this->processInstanceId = $processInstanceId;
         return $this;
     }
 
-    public function processDefinitionId(string $processDefinitionId): IncidentQueryInterface
+    public function processDefinitionId(?string $processDefinitionId): IncidentQueryInterface
     {
         $this->processDefinitionId = $processDefinitionId;
         return $this;
@@ -155,19 +155,19 @@ class IncidentQueryImpl extends AbstractQuery implements IncidentQueryInterface,
         return $this;
     }
 
-    public function causeIncidentId(string $causeIncidentId): IncidentQueryInterface
+    public function causeIncidentId(?string $causeIncidentId): IncidentQueryInterface
     {
         $this->causeIncidentId = $causeIncidentId;
         return $this;
     }
 
-    public function rootCauseIncidentId(string $rootCauseIncidentId): IncidentQueryInterface
+    public function rootCauseIncidentId(?string $rootCauseIncidentId): IncidentQueryInterface
     {
         $this->rootCauseIncidentId = $rootCauseIncidentId;
         return $this;
     }
 
-    public function configuration(string $configuration): IncidentQueryInterface
+    public function configuration(?string $configuration): IncidentQueryInterface
     {
         $this->configuration = $configuration;
         return $this;
@@ -265,7 +265,7 @@ class IncidentQueryImpl extends AbstractQuery implements IncidentQueryInterface,
             ->findIncidentCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         return $commandContext

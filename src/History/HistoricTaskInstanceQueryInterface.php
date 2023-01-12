@@ -7,13 +7,13 @@ use Jabe\Query\QueryInterface;
 interface HistoricTaskInstanceQueryInterface extends QueryInterface
 {
     /** Only select historic task instances for the given task id. */
-    public function taskId(string $taskId): HistoricTaskInstanceQueryInterface;
+    public function taskId(?string $taskId): HistoricTaskInstanceQueryInterface;
 
     /** Only select historic task instances for the given process instance. */
-    public function processInstanceId(string $processInstanceId): HistoricTaskInstanceQueryInterface;
+    public function processInstanceId(?string $processInstanceId): HistoricTaskInstanceQueryInterface;
 
     /** Only select historic tasks for the given process instance business key */
-    public function processInstanceBusinessKey(string $processInstanceBusinessKey): HistoricTaskInstanceQueryInterface;
+    public function processInstanceBusinessKey(?string $processInstanceBusinessKey): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic tasks for any of the given the given process instance business keys.
@@ -22,35 +22,35 @@ interface HistoricTaskInstanceQueryInterface extends QueryInterface
 
     /** Only select historic tasks matching the given process instance business key.
      *  The syntax is that of SQL: for example usage: nameLike(%camunda%)*/
-    public function processInstanceBusinessKeyLike(string $processInstanceBusinessKey): HistoricTaskInstanceQueryInterface;
+    public function processInstanceBusinessKeyLike(?string $processInstanceBusinessKey): HistoricTaskInstanceQueryInterface;
 
     /** Only select historic task instances for the given execution. */
-    public function executionId(string $executionId): HistoricTaskInstanceQueryInterface;
+    public function executionId(?string $executionId): HistoricTaskInstanceQueryInterface;
 
     /** Only select historic task instances which have one of the given activity instance ids. **/
     public function activityInstanceIdIn(array $activityInstanceIds): HistoricTaskInstanceQueryInterface;
 
     /** Only select historic task instances for the given process definition. */
-    public function processDefinitionId(string $processDefinitionId): HistoricTaskInstanceQueryInterface;
+    public function processDefinitionId(?string $processDefinitionId): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances which are part of a (historic) process instance
      * which has the given process definition key.
      */
-    public function processDefinitionKey(string $processDefinitionKey): HistoricTaskInstanceQueryInterface;
+    public function processDefinitionKey(?string $processDefinitionKey): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances which are part of a (historic) process instance
      * which has the given definition name.
      */
-    public function processDefinitionName(string $processDefinitionName): HistoricTaskInstanceQueryInterface;
+    public function processDefinitionName(?string $processDefinitionName): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances with the given task name.
      * This is the last name given to the task.
      * The query will match the names of historic task instances in a case-insensitive way.
      */
-    public function taskName(string $taskName): HistoricTaskInstanceQueryInterface;
+    public function taskName(?string $taskName): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances with a task name like the given value.
@@ -58,14 +58,14 @@ interface HistoricTaskInstanceQueryInterface extends QueryInterface
      * The syntax that should be used is the same as in SQL, eg. %activiti%.
      * The query will match the names of historic task instances in a case-insensitive way.
      */
-    public function taskNameLike(string $taskNameLike): HistoricTaskInstanceQueryInterface;
+    public function taskNameLike(?string $taskNameLike): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances with the given task description.
      * This is the last description given to the task.
      * The query will match the descriptions of historic task instances in a case-insensitive way.
      */
-    public function taskDescription(string $taskDescription): HistoricTaskInstanceQueryInterface;
+    public function taskDescription(?string $taskDescription): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances with a task description like the given value.
@@ -73,13 +73,13 @@ interface HistoricTaskInstanceQueryInterface extends QueryInterface
      * The syntax that should be used is the same as in SQL, eg. %activiti%.
      * The query will match the descriptions of historice task instances in a case-insensitive way.
      */
-    public function taskDescriptionLike(string $taskDescriptionLike): HistoricTaskInstanceQueryInterface;
+    public function taskDescriptionLike(?string $taskDescriptionLike): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances with the given task definition key.
      * @see Task#getTaskDefinitionKey()
      */
-    public function taskDefinitionKey(string $taskDefinitionKey): HistoricTaskInstanceQueryInterface;
+    public function taskDefinitionKey(?string $taskDefinitionKey): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances with one of the given task definition keys.
@@ -88,13 +88,13 @@ interface HistoricTaskInstanceQueryInterface extends QueryInterface
     public function taskDefinitionKeyIn(array $taskDefinitionKeys): HistoricTaskInstanceQueryInterface;
 
     /** Only select historic task instances with the given task delete reason. */
-    public function taskDeleteReason(string $taskDeleteReason): HistoricTaskInstanceQueryInterface;
+    public function taskDeleteReason(?string $taskDeleteReason): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances with a task description like the given value.
      * The syntax that should be used is the same as in SQL, eg. %activiti%.
      */
-    public function taskDeleteReasonLike(string $taskDeleteReasonLike): HistoricTaskInstanceQueryInterface;
+    public function taskDeleteReasonLike(?string $taskDeleteReasonLike): HistoricTaskInstanceQueryInterface;
 
     /** Only select historic task instances with an assignee. */
     public function taskAssigned(): HistoricTaskInstanceQueryInterface;
@@ -105,25 +105,25 @@ interface HistoricTaskInstanceQueryInterface extends QueryInterface
     /**
      * Only select historic task instances which were last taskAssigned to the given assignee.
      */
-    public function taskAssignee(string $taskAssignee): HistoricTaskInstanceQueryInterface;
+    public function taskAssignee(?string $taskAssignee): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances which were last taskAssigned to an assignee like
      * the given value.
      * The syntax that should be used is the same as in SQL, eg. %activiti%.
      */
-    public function taskAssigneeLike(string $taskAssigneeLike): HistoricTaskInstanceQueryInterface;
+    public function taskAssigneeLike(?string $taskAssigneeLike): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances which have the given owner.
      */
-    public function taskOwner(string $taskOwner): HistoricTaskInstanceQueryInterface;
+    public function taskOwner(?string $taskOwner): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances which have an owner like the one specified.
      * The syntax that should be used is the same as in SQL, eg. %activiti%.
      */
-    public function taskOwnerLike(string $taskOwnerLike): HistoricTaskInstanceQueryInterface;
+    public function taskOwnerLike(?string $taskOwnerLike): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances with the given priority.
@@ -156,25 +156,25 @@ interface HistoricTaskInstanceQueryInterface extends QueryInterface
      * Only select historic task instances which have mapping
      * with Historic identity links based on user id
       */
-    public function taskInvolvedUser(string $involvedUser): HistoricTaskInstanceQueryInterface;
+    public function taskInvolvedUser(?string $involvedUser): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances which have mapping
      * with Historic identity links based on group id
      */
-    public function taskInvolvedGroup(string $involvedGroup): HistoricTaskInstanceQueryInterface;
+    public function taskInvolvedGroup(?string $involvedGroup): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances which have mapping
      * with Historic identity links with the condition of user being a candidate
      */
-    public function taskHadCandidateUser(string $candidateUser): HistoricTaskInstanceQueryInterface;
+    public function taskHadCandidateUser(?string $candidateUser): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances which have mapping
      * with Historic identity links with the condition of group being a candidate
      */
-    public function taskHadCandidateGroup(string $candidateGroup): HistoricTaskInstanceQueryInterface;
+    public function taskHadCandidateGroup(?string $candidateGroup): HistoricTaskInstanceQueryInterface;
 
     /** Only select historic task instances which have a candidate group */
     public function withCandidateGroups(): HistoricTaskInstanceQueryInterface;
@@ -197,10 +197,10 @@ interface HistoricTaskInstanceQueryInterface extends QueryInterface
      * given name set to the given value. Make sure history-level is configured
      * >= AUDIT when this feature is used.
      */
-    public function taskVariableValueEquals(string $variableName, $variableValue): HistoricTaskInstanceQueryInterface;
+    public function taskVariableValueEquals(?string $variableName, $variableValue): HistoricTaskInstanceQueryInterface;
 
     /** Only select subtasks of the given parent task */
-    public function taskParentTaskId(string $parentTaskId): HistoricTaskInstanceQueryInterface;
+    public function taskParentTaskId(?string $parentTaskId): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances which are part of a process instance which have a variable
@@ -208,7 +208,7 @@ interface HistoricTaskInstanceQueryInterface extends QueryInterface
      * (HistoricDetail) will be used, so make sure history-level is configured
      * >= AUDIT when this feature is used.
      */
-    public function processVariableValueEquals(string $variableName, $variableValue): HistoricTaskInstanceQueryInterface;
+    public function processVariableValueEquals(?string $variableName, $variableValue): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances which have a variable with the given name, but
@@ -216,60 +216,60 @@ interface HistoricTaskInstanceQueryInterface extends QueryInterface
      * Byte-arrays and Serializable objects (which are not primitive type wrappers)
      * are not supported.
      */
-    public function processVariableValueNotEquals(string $variableName, $variableValue): HistoricTaskInstanceQueryInterface;
+    public function processVariableValueNotEquals(?string $variableName, $variableValue): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances which are part of a process that have a variable
      * with the given name and matching the given value.
      * The syntax is that of SQL: for example usage: valueLike(%value%)
      * */
-    public function processVariableValueLike(string $variableName, $variableValue): HistoricTaskInstanceQueryInterface;
+    public function processVariableValueLike(?string $variableName, $variableValue): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances which are part of a process that have a variable
      * with the given name and not matching the given value.
      * The syntax is that of SQL: for example usage: valueNotLike(%value%)
      * */
-    public function processVariableValueNotLike(string $variableName, $variableValue): HistoricTaskInstanceQueryInterface;
+    public function processVariableValueNotLike(?string $variableName, $variableValue): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances which are part of a process that have a variable
      * with the given name and a value greater than the given one.
      */
-    public function processVariableValueGreaterThan(string $variableName, $variableValue): HistoricTaskInstanceQueryInterface;
+    public function processVariableValueGreaterThan(?string $variableName, $variableValue): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances which are part of a process that have a variable
      * with the given name and a value greater than or equal to the given one.
      */
-    public function processVariableValueGreaterThanOrEquals(string $variableName, $variableValue): HistoricTaskInstanceQueryInterface;
+    public function processVariableValueGreaterThanOrEquals(?string $variableName, $variableValue): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances which are part of a process that have a variable
      * with the given name and a value less than the given one.
      */
-    public function processVariableValueLessThan(string $variableName, $variableValue): HistoricTaskInstanceQueryInterface;
+    public function processVariableValueLessThan(?string $variableName, $variableValue): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select historic task instances which are part of a process that have a variable
      * with the given name and a value less than or equal to the given one.
      */
-    public function processVariableValueLessThanOrEquals(string $variableName, $variableValue): HistoricTaskInstanceQueryInterface;
+    public function processVariableValueLessThanOrEquals(?string $variableName, $variableValue): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select select historic task instances with the given due date.
      */
-    public function taskDueDate(string $dueDate): HistoricTaskInstanceQueryInterface;
+    public function taskDueDate(?string $dueDate): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select select historic task instances which have a due date before the given date.
      */
-    public function taskDueBefore(string $dueDate): HistoricTaskInstanceQueryInterface;
+    public function taskDueBefore(?string $dueDate): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select select historic task instances which have a due date after the given date.
      */
-    public function taskDueAfter(string $dueDate): HistoricTaskInstanceQueryInterface;
+    public function taskDueAfter(?string $dueDate): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select select historic task instances that have no due date.
@@ -279,17 +279,17 @@ interface HistoricTaskInstanceQueryInterface extends QueryInterface
     /**
      * Only select select historic task instances with the given follow-up date.
      */
-    public function taskFollowUpDate(string $followUpDate): HistoricTaskInstanceQueryInterface;
+    public function taskFollowUpDate(?string $followUpDate): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select select historic task instances which have a follow-up date before the given date.
      */
-    public function taskFollowUpBefore(string $followUpDate): HistoricTaskInstanceQueryInterface;
+    public function taskFollowUpBefore(?string $followUpDate): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select select historic task instances which have a follow-up date after the given date.
      */
-    public function taskFollowUpAfter(string $followUpDate): HistoricTaskInstanceQueryInterface;
+    public function taskFollowUpAfter(?string $followUpDate): HistoricTaskInstanceQueryInterface;
 
     /** Only select historic task instances with one of the given tenant ids. */
     public function tenantIdIn(array $tenantIds): HistoricTaskInstanceQueryInterface;
@@ -300,22 +300,22 @@ interface HistoricTaskInstanceQueryInterface extends QueryInterface
     /**
      * Only select tasks where end time is after given date
      */
-    public function finishedAfter(string $date): HistoricTaskInstanceQueryInterface;
+    public function finishedAfter(?string $date): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select tasks where end time is before given date
      */
-    public function finishedBefore(string $date): HistoricTaskInstanceQueryInterface;
+    public function finishedBefore(?string $date): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select tasks where started after given date
      */
-    public function startedAfter(string $date): HistoricTaskInstanceQueryInterface;
+    public function startedAfter(?string $date): HistoricTaskInstanceQueryInterface;
 
     /**
      * Only select tasks where started before given date
      */
-    public function startedBefore(string $date): HistoricTaskInstanceQueryInterface;
+    public function startedBefore(?string $date): HistoricTaskInstanceQueryInterface;
 
     /**
      * Order by tenant id (needs to be followed by {@link #asc()} or {@link #desc()}).
@@ -378,13 +378,13 @@ interface HistoricTaskInstanceQueryInterface extends QueryInterface
     public function orderByTaskPriority(): HistoricTaskInstanceQueryInterface;
 
     /** Order by case definition id (needs to be followed by {@link #asc()} or {@link #desc()}). */
-    public function orderByCaseDefinitionId(): HistoricTaskInstanceQueryInterface;
+    //public function orderByCaseDefinitionId(): HistoricTaskInstanceQueryInterface;
 
     /** Order by case instance id (needs to be followed by {@link #asc()} or {@link #desc()}). */
     //public function orderByCaseInstanceId(): HistoricTaskInstanceQueryInterface;
 
     /** Order by case execution id (needs to be followed by {@link #asc()} or {@link #desc()}). */
-    public function orderByCaseExecutionId(): HistoricTaskInstanceQueryInterface;
+    //public function orderByCaseExecutionId(): HistoricTaskInstanceQueryInterface;
 
     /**
      * <p>After calling or(), a chain of several filter criteria could follow. Each filter criterion that follows or()

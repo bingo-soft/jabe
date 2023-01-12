@@ -7,10 +7,7 @@ use Jabe\Variable\Impl\Value\{
     UntypedValueImpl
 };
 use Jabe\Variable\Type\ValueType;
-use Jabe\Variable\Value\{
-    NullValueInterface,
-    TypedValueInterface
-};
+use Jabe\Variable\Value\TypedValueInterface;
 
 class NullValueSerializer extends PrimitiveValueSerializer
 {
@@ -19,22 +16,22 @@ class NullValueSerializer extends PrimitiveValueSerializer
         parent::__construct(ValueType::getNull());
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return strtolower(ValueType::getNull()->getName());
     }
 
-    public function convertToTypedValue(UntypedValueImpl $untypedValue): NullValueInterface
+    public function convertToTypedValue(UntypedValueImpl $untypedValue): NullValueImpl
     {
         return NullValueImpl::getInstance($untypedValue->isTransient());
     }
 
-    public function writeValue(NullValueInterface $value, ValueFieldsInterface $valueFields): void
+    public function writeValue($value, ValueFieldsInterface $valueFields): void
     {
         //
     }
 
-    public function readValue(ValueFieldsInterface $valueFields, bool $isTransient, bool $deserializeValue = false): NullValueInterface
+    public function readValue(ValueFieldsInterface $valueFields, bool $isTransient, bool $deserializeValue = false): NullValueImpl
     {
         return NullValueImpl::getInstance(false);
     }

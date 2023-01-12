@@ -31,7 +31,7 @@ class HtmlDocumentBuilder
         return $this;
     }
 
-    public function getHtmlString(): string
+    public function getHtmlString(): ?string
     {
         return strval($this->writer);
     }

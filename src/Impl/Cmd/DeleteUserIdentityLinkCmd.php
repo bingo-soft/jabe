@@ -8,7 +8,7 @@ use Jabe\Impl\Persistence\Entity\PropertyChange;
 
 class DeleteUserIdentityLinkCmd extends DeleteIdentityLinkCmd
 {
-    public function __construct(string $taskId, string $userId, string $type)
+    public function __construct(?string $taskId, ?string $userId, ?string $type)
     {
         parent::__construct($taskId, $userId, null, $type);
     }

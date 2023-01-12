@@ -7,22 +7,22 @@ use Jabe\Query\QueryInterface;
 interface JobDefinitionQueryInterface extends QueryInterface
 {
     /** Only select job definitions with the given id */
-    public function jobDefinitionId(string $jobDefinitionId): JobDefinitionQueryInterface;
+    public function jobDefinitionId(?string $jobDefinitionId): JobDefinitionQueryInterface;
 
     /** Only select job definitions which exist for the listed activity ids */
     public function activityIdIn(array $activityIds): JobDefinitionQueryInterface;
 
     /** Only select job definitions which exist for the given process definition id. **/
-    public function processDefinitionId(string $processDefinitionId): JobDefinitionQueryInterface;
+    public function processDefinitionId(?string $processDefinitionId): JobDefinitionQueryInterface;
 
     /** Only select job definitions which exist for the given process definition key. **/
-    public function processDefinitionKey(string $processDefinitionKey): JobDefinitionQueryInterface;
+    public function processDefinitionKey(?string $processDefinitionKey): JobDefinitionQueryInterface;
 
     /** Only select job definitions which have the given job type. **/
-    public function jobType(string $jobType): JobDefinitionQueryInterface;
+    public function jobType(?string $jobType): JobDefinitionQueryInterface;
 
     /** Only select job definitions which contain the configuration. **/
-    public function jobConfiguration(string $jobConfiguration): JobDefinitionQueryInterface;
+    public function jobConfiguration(?string $jobConfiguration): JobDefinitionQueryInterface;
 
     /** Only selects job definitions which are active **/
     public function active(): JobDefinitionQueryInterface;

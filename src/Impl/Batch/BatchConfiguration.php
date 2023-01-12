@@ -58,12 +58,12 @@ class BatchConfiguration
         $this->failIfNotExists = $failIfNotExists;
     }
 
-    public function getBatchId(): string
+    public function getBatchId(): ?string
     {
         return $this->batchId;
     }
 
-    public function setBatchId(string $batchId): void
+    public function setBatchId(?string $batchId): void
     {
         $this->batchId = $batchId;
     }

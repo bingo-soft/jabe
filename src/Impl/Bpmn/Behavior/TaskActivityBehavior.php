@@ -43,7 +43,7 @@ class TaskActivityBehavior extends AbstractBpmnActivityBehavior
     {
     }
 
-    public function execute(ActivityExecutionInterface $execution): void
+    public function execute(/*ActivityExecutionInterface*/$execution): void
     {
         $this->performExecution($execution);
     }

@@ -28,7 +28,7 @@ interface ExternalTaskQueryTopicBuilderInterface extends ExternalTaskQueryBuilde
      * @param businessKey the value of the Business Key to filter by
      * @return this builder
      */
-    public function businessKey(string $businessKey): ExternalTaskQueryTopicBuilderInterface;
+    public function businessKey(?string $businessKey): ExternalTaskQueryTopicBuilderInterface;
 
     /**
      * Define process definition id to filter external tasks by.
@@ -36,7 +36,7 @@ interface ExternalTaskQueryTopicBuilderInterface extends ExternalTaskQueryBuilde
      * @param processDefinitionId the definition id to filter by
      * @return this builder
      */
-    public function processDefinitionId(string $processDefinitionId): ExternalTaskQueryTopicBuilderInterface;
+    public function processDefinitionId(?string $processDefinitionId): ExternalTaskQueryTopicBuilderInterface;
 
     /**
      * Define process definition ids to filter external tasksb by.
@@ -52,7 +52,7 @@ interface ExternalTaskQueryTopicBuilderInterface extends ExternalTaskQueryBuilde
      * @param processDefinitionKey the definition key to filter by
      * @return this builder
      */
-    public function processDefinitionKey(string $processDefinitionKey): ExternalTaskQueryTopicBuilderInterface;
+    public function processDefinitionKey(?string $processDefinitionKey): ExternalTaskQueryTopicBuilderInterface;
 
     /**
      * Define process definition keys to filter external tasks by.
@@ -69,7 +69,7 @@ interface ExternalTaskQueryTopicBuilderInterface extends ExternalTaskQueryBuilde
      * @param versionTag the version tag to filter by
      * @return this builder
      */
-    public function processDefinitionVersionTag(string $versionTag): ExternalTaskQueryTopicBuilderInterface;
+    public function processDefinitionVersionTag(?string $versionTag): ExternalTaskQueryTopicBuilderInterface;
 
     /**
      * Filter external tasks only with null tenant id.

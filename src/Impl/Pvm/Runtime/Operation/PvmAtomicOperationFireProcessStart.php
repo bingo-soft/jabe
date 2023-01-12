@@ -8,7 +8,7 @@ use Jabe\Impl\Core\Instance\CoreExecution;
 
 class PvmAtomicOperationFireProcessStart extends AbstractPvmEventAtomicOperation
 {
-    public function getCanonicalName(): string
+    public function getCanonicalName(): ?string
     {
         return "fire-process-start";
     }
@@ -18,7 +18,7 @@ class PvmAtomicOperationFireProcessStart extends AbstractPvmEventAtomicOperation
         return $execution->getProcessDefinition();
     }
 
-    protected function getEventName(): string
+    protected function getEventName(): ?string
     {
         return ExecutionListenerInterface::EVENTNAME_START;
     }

@@ -392,7 +392,7 @@ class Permissions implements PermissionInterface
 
     private $resourceTypes = [];
 
-    private function __construct(string $name, int $id, ?array $resourceTypes = null)
+    private function __construct(?string $name, int $id, ?array $resourceTypes = null)
     {
         $this->name = $name;
         $this->id = $id;
@@ -411,7 +411,7 @@ class Permissions implements PermissionInterface
         return $this->resourceTypes;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }

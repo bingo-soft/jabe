@@ -20,7 +20,7 @@ class CompiledExecutableScript extends ExecutableScript
     //private final static ScriptLogger LOG = ProcessEngineLogger.SCRIPT_LOGGER;
     protected $compiledScript;
 
-    public function __construct(string $language, ?CompiledScript $compiledScript = null)
+    public function __construct(?string $language, ?CompiledScript $compiledScript = null)
     {
         parent::__construct($language);
         $this->compiledScript = $compiledScript;

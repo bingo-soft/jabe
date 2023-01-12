@@ -12,7 +12,7 @@ class GetAttachmentCmd implements CommandInterface, \Serializable
 {
     protected $attachmentId;
 
-    public function __construct(string $attachmentId)
+    public function __construct(?string $attachmentId)
     {
         $this->attachmentId = $attachmentId;
     }
@@ -35,5 +35,10 @@ class GetAttachmentCmd implements CommandInterface, \Serializable
         return $commandContext
             ->getDbEntityManager()
             ->selectById(AttachmentEntity::class, $this->attachmentId);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

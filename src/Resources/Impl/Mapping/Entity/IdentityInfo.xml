@@ -22,13 +22,13 @@
   <insert id="insertIdentityInfo" parameterType="Jabe\Impl\Persistence\Entity\IdentityInfoEntity">
     insert into ${prefix}ACT_ID_INFO (ID_, USER_ID_, TYPE_, KEY_, VALUE_, PASSWORD_, PARENT_ID_, REV_)
     values (
-      #{id ,dbalType=VARCHAR},
-      #{userId ,dbalType=VARCHAR},
-      #{type ,dbalType=VARCHAR},
-      #{key ,dbalType=VARCHAR},
-      #{value ,dbalType=VARCHAR},
-      #{passwordBytes ,dbalType=BLOB},
-      #{parentId ,dbalType=VARCHAR},
+      #{id:VARCHAR},
+      #{userId:VARCHAR},
+      #{type:VARCHAR},
+      #{key:VARCHAR},
+      #{value:VARCHAR},
+      #{passwordBytes},
+      #{parentId:VARCHAR},
       1
     )
   </insert>
@@ -36,13 +36,13 @@
    <insert id="insertIdentityInfo_postgres" parameterType="Jabe\Impl\Persistence\Entity\IdentityInfoEntity">
     insert into ${prefix}ACT_ID_INFO (ID_, USER_ID_, TYPE_, KEY_, VALUE_, PASSWORD_, PARENT_ID_, REV_)
     values (
-      #{id ,dbalType=VARCHAR},
-      #{userId ,dbalType=VARCHAR},
-      #{type ,dbalType=VARCHAR},
-      #{key ,dbalType=VARCHAR},
-      #{value ,dbalType=VARCHAR},
-      #{passwordBytes ,dbalType=BINARY},
-      #{parentId ,dbalType=VARCHAR},
+      #{id:VARCHAR},
+      #{userId:VARCHAR},
+      #{type:VARCHAR},
+      #{key:VARCHAR},
+      #{value:VARCHAR},
+      #{passwordBytes},
+      #{parentId:VARCHAR},
       1
     )
   </insert>
@@ -50,18 +50,18 @@
   <!-- INFO UPDATE -->
   <update id="updateIdentityInfo" parameterType="Jabe\Impl\Persistence\Entity\IdentityInfoEntity">
     update ${prefix}ACT_ID_INFO 
-    set REV_ = #{revisionNext ,dbalType=INTEGER},
-        VALUE_ = #{value ,dbalType=VARCHAR},
-        PASSWORD_ = #{passwordBytes ,dbalType=BLOB}
+    set REV_ = #{revisionNext},
+        VALUE_ = #{value:VARCHAR},
+        PASSWORD_ = #{passwordBytes}
     where ID_ = #{id}
       and REV_ = #{revision}
   </update>
   
   <update id="updateIdentityInfo_postgres" parameterType="Jabe\Impl\Persistence\Entity\IdentityInfoEntity">
     update ${prefix}ACT_ID_INFO 
-    set REV_ = #{revisionNext ,dbalType=INTEGER},
-        VALUE_ = #{value ,dbalType=VARCHAR},
-        PASSWORD_ = #{passwordBytes ,dbalType=BINARY}
+    set REV_ = #{revisionNext},
+        VALUE_ = #{value:VARCHAR},
+        PASSWORD_ = #{passwordBytes}
     where ID_ = #{id}
       and REV_ = #{revision}
   </update>
@@ -100,48 +100,48 @@
   <!-- INFO SELECT -->
 
   <select id="selectIdentityInfoById" parameterType="string" resultMap="identityInfoResultMap">
-    select * from ${prefix}ACT_ID_INFO where ID_ = #{id,dbalType=VARCHAR}
+    select * from ${prefix}ACT_ID_INFO where ID_ = #{id:VARCHAR}
   </select>
   
   <select id="selectIdentityInfoById_postgres" parameterType="string" resultMap="identityInfoResultMap_postgres">
-    select * from ${prefix}ACT_ID_INFO where ID_ = #{id,dbalType=VARCHAR}
+    select * from ${prefix}ACT_ID_INFO where ID_ = #{id:VARCHAR}
   </select>
   
   <select id="selectIdentityInfoByUserIdAndKey" parameterType="array" resultMap="identityInfoResultMap">
     select * from ${prefix}ACT_ID_INFO 
-    where USER_ID_ = #{userId,dbalType=VARCHAR}
-      and KEY_ =  #{key,dbalType=VARCHAR}
+    where USER_ID_ = #{userId:VARCHAR}
+      and KEY_ =  #{key:VARCHAR}
       and PARENT_ID_ is null
   </select>
   
    <select id="selectIdentityInfoByUserIdAndKey_postgres" parameterType="array" resultMap="identityInfoResultMap_postgres">
     select * from ${prefix}ACT_ID_INFO 
-    where USER_ID_ = #{userId,dbalType=VARCHAR}
-      and KEY_ =  #{key,dbalType=VARCHAR}
+    where USER_ID_ = #{userId:VARCHAR}
+      and KEY_ =  #{key:VARCHAR}
       and PARENT_ID_ is null
   </select>
   
   <select id="selectIdentityInfoKeysByUserIdAndType" parameterType="array" resultType="string">
     select KEY_ from ${prefix}ACT_ID_INFO 
-    where USER_ID_ = #{parameter.userId,dbalType=VARCHAR}
-      and TYPE_ =  #{parameter.type,dbalType=VARCHAR}
+    where USER_ID_ = #{parameter.userId:VARCHAR}
+      and TYPE_ =  #{parameter.type:VARCHAR}
       and PARENT_ID_ is null
   </select>
   
   <select id="selectIdentityInfoByUserId" parameterType="string" resultMap="identityInfoResultMap">
-    select * from ${prefix}ACT_ID_INFO where USER_ID_ = #{parameter,dbalType=VARCHAR}
+    select * from ${prefix}ACT_ID_INFO where USER_ID_ = #{parameter:VARCHAR}
   </select>
   
   <select id="selectIdentityInfoByUserId_postgres" parameterType="string" resultMap="identityInfoResultMap_postgres">
-    select * from ${prefix}ACT_ID_INFO where USER_ID_ = #{parameter,dbalType=VARCHAR}
+    select * from ${prefix}ACT_ID_INFO where USER_ID_ = #{parameter:VARCHAR}
   </select>
 
   <select id="selectIdentityInfoDetails" parameterType="string" resultMap="identityInfoResultMap">
-    select * from ${prefix}ACT_ID_INFO where PARENT_ID_ = #{parameter,dbalType=VARCHAR}
+    select * from ${prefix}ACT_ID_INFO where PARENT_ID_ = #{parameter:VARCHAR}
   </select>
 
   <select id="selectIdentityInfoDetails_postgres" parameterType="string" resultMap="identityInfoResultMap_postgres">
-    select * from ${prefix}ACT_ID_INFO where PARENT_ID_ = #{parameter,dbalType=VARCHAR}
+    select * from ${prefix}ACT_ID_INFO where PARENT_ID_ = #{parameter:VARCHAR}
   </select>
   
   

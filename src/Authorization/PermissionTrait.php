@@ -5,9 +5,9 @@ namespace Jabe\Authorization;
 trait PermissionTrait
 {
     private $name;
-    private $id;
+    private int $id = 0;
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -17,7 +17,7 @@ trait PermissionTrait
         return $this->id;
     }
 
-    public static function forName(string $name): PermissionInterface
+    public static function forName(?string $name): PermissionInterface
     {
         $names = explode("_", strtolower($name));
         $func = $names[0];

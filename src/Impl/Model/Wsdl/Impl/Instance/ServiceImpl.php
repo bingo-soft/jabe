@@ -57,7 +57,7 @@ class ServiceImpl extends RootElementImpl implements ServiceInterface
         return self::$nameAttribute->getValue($this);
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         self::$nameAttribute->setValue($this, $name);
     }
@@ -72,12 +72,12 @@ class ServiceImpl extends RootElementImpl implements ServiceInterface
         self::$portChild->setChild($this, $port);
     }
 
-    public function getBinding(): string
+    public function getBinding(): ?string
     {
         return $this->getPort()->getBinding();
     }
 
-    public function getEndpoint(): string
+    public function getEndpoint(): ?string
     {
         return $this->getPort()->getAddress()->getLocation();
     }

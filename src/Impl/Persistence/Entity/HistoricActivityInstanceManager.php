@@ -2,6 +2,10 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
+use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface
+};
 use Jabe\Impl\{
     HistoricActivityInstanceQueryImpl,
     Page
@@ -27,7 +31,7 @@ class HistoricActivityInstanceManager extends AbstractHistoricManager
         $this->getDbEntityManager()->insert($historicActivityInstance);
     }
 
-    public function findHistoricActivityInstance(string $activityId, string $processInstanceId): ?HistoricActivityInstanceEntity
+    public function findHistoricActivityInstance(?string $activityId, ?string $processInstanceId): ?HistoricActivityInstanceEntity
     {
         $parameters = [];
         $parameters["activityId"] = $activityId;
@@ -42,7 +46,7 @@ class HistoricActivityInstanceManager extends AbstractHistoricManager
         return $this->getDbEntityManager()->selectOne("selectHistoricActivityInstanceCountByQueryCriteria", $historicActivityInstanceQuery);
     }
 
-    public function findHistoricActivityInstancesByQueryCriteria(HistoricActivityInstanceQueryImpl $historicActivityInstanceQuery, Page $page): array
+    public function findHistoricActivityInstancesByQueryCriteria(HistoricActivityInstanceQueryImpl $historicActivityInstanceQuery, ?Page $page): array
     {
         $this->configureQuery($historicActivityInstanceQuery);
         return $this->getDbEntityManager()->selectList("selectHistoricActivityInstancesByQueryCriteria", $historicActivityInstanceQuery, $page);
@@ -58,13 +62,13 @@ class HistoricActivityInstanceManager extends AbstractHistoricManager
         return $this->getDbEntityManager()->selectOne("selectHistoricActivityInstanceCountByNativeQuery", $parameterMap);
     }
 
-    protected function configureQuery(HistoricActivityInstanceQueryImpl $query): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         $this->getAuthorizationManager()->configureHistoricActivityInstanceQuery($query);
         $this->getTenantManager()->configureQuery($query);
     }
 
-    public function addRemovalTimeToActivityInstancesByRootProcessInstanceId(string $rootProcessInstanceId, string $removalTime): void
+    public function addRemovalTimeToActivityInstancesByRootProcessInstanceId(?string $rootProcessInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["rootProcessInstanceId"] = $rootProcessInstanceId;
@@ -74,7 +78,7 @@ class HistoricActivityInstanceManager extends AbstractHistoricManager
             ->updatePreserveOrder(HistoricActivityInstanceEventEntity::class, "updateHistoricActivityInstancesByRootProcessInstanceId", $parameters);
     }
 
-    public function addRemovalTimeToActivityInstancesByProcessInstanceId(string $processInstanceId, string $removalTime): void
+    public function addRemovalTimeToActivityInstancesByProcessInstanceId(?string $processInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["processInstanceId"] = $processInstanceId;
@@ -84,7 +88,7 @@ class HistoricActivityInstanceManager extends AbstractHistoricManager
             ->updatePreserveOrder(HistoricActivityInstanceEventEntity::class, "updateHistoricActivityInstancesByProcessInstanceId", $parameters);
     }
 
-    public function deleteHistoricActivityInstancesByRemovalTime(string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
+    public function deleteHistoricActivityInstancesByRemovalTime(?string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
     {
         $parameters = [];
         $parameters["removalTime"] = $removalTime;

@@ -18,4 +18,9 @@ class GetPasswordPolicyCmd implements CommandInterface
             return null;
         }
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

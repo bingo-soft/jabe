@@ -7,7 +7,7 @@ use Jabe\Impl\Pvm\Runtime\PvmExecutionImpl;
 
 class PvmAtomicOperationActivityStartInterruptEventScope extends PvmAtomicOperationInterruptScope
 {
-    public function getCanonicalName(): string
+    public function getCanonicalName(): ?string
     {
         return "activity-start-interrupt-scope";
     }

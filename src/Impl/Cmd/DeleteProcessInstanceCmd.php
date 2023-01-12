@@ -14,8 +14,8 @@ class DeleteProcessInstanceCmd extends AbstractDeleteProcessInstanceCmd implemen
     protected $skipSubprocesses;
 
     public function __construct(
-        string $processInstanceId,
-        string $deleteReason,
+        ?string $processInstanceId,
+        ?string $deleteReason,
         bool $skipCustomListeners,
         bool $externallyTerminated,
         bool $skipIoMappings,
@@ -59,5 +59,10 @@ class DeleteProcessInstanceCmd extends AbstractDeleteProcessInstanceCmd implemen
     {
         $this->deleteProcessInstance($commandContext, $this->processInstanceId, $this->deleteReason, $this->skipCustomListeners, $this->externallyTerminated, $this->skipIoMappings, $this->skipSubprocesses);
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

@@ -7,7 +7,7 @@ class EventSubscriptionQueryValue implements \Serializable
     protected $eventType;
     protected $eventName;
 
-    public function __construct(string $eventName, string $eventType)
+    public function __construct(?string $eventName, ?string $eventType)
     {
         $this->eventName = $eventName;
         $this->eventType = $eventType;
@@ -28,22 +28,22 @@ class EventSubscriptionQueryValue implements \Serializable
         $this->eventType = $json->eventType;
     }
 
-    public function getEventType(): string
+    public function getEventType(): ?string
     {
         return $this->eventType;
     }
 
-    public function setEventType(string $eventType): void
+    public function setEventType(?string $eventType): void
     {
         $this->eventType = $eventType;
     }
 
-    public function getEventName(): string
+    public function getEventName(): ?string
     {
         return $this->eventName;
     }
 
-    public function setEventName(string $eventName): void
+    public function setEventName(?string $eventName): void
     {
         $this->eventName = $eventName;
     }

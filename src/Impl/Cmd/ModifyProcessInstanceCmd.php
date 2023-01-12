@@ -103,14 +103,14 @@ class ModifyProcessInstanceCmd implements CommandInterface
         }
     }
 
-    protected function ensureProcessInstanceExist(string $processInstanceId, ?ExecutionEntity $processInstance): void
+    protected function ensureProcessInstanceExist(?string $processInstanceId, ?ExecutionEntity $processInstance): void
     {
         if ($processInstance === null) {
             //throw LOG.processInstanceDoesNotExist(processInstanceId);
         }
     }
 
-    protected function getLogEntryOperation(): string
+    protected function getLogEntryOperation(): ?string
     {
         return UserOperationLogEntryInterface::OPERATION_TYPE_MODIFY_PROCESS_INSTANCE;
     }
@@ -129,7 +129,7 @@ class ModifyProcessInstanceCmd implements CommandInterface
         }
     }
 
-    protected function deletePropagate(ExecutionEntity $processInstance, string $deleteReason, bool $skipCustomListeners, bool $skipIoMappings, bool $externallyTerminated): void
+    protected function deletePropagate(ExecutionEntity $processInstance, ?string $deleteReason, bool $skipCustomListeners, bool $skipIoMappings, bool $externallyTerminated): void
     {
         $topmostDeletableExecution = $processInstance;
         $parentScopeExecution = $topmostDeletableExecution->getParentScopeExecution(true);
@@ -141,5 +141,10 @@ class ModifyProcessInstanceCmd implements CommandInterface
 
         $topmostDeletableExecution->deleteCascade($deleteReason, $skipCustomListeners, $skipIoMappings, $externallyTerminated, false);
         ModificationUtil::handleChildRemovalInScope($topmostDeletableExecution);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

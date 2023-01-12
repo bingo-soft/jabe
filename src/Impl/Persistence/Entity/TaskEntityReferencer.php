@@ -13,12 +13,12 @@ class TaskEntityReferencer implements VariableStoreObserverInterface
         $this->task = $task;
     }
 
-    public function onAdd(VariableInstanceEntity $variable): void
+    public function onAdd(/*VariableInstanceEntity*/$variable): void
     {
         $variable->setTask($this->task);
     }
 
-    public function onRemove(VariableInstanceEntity $variable): void
+    public function onRemove(/*VariableInstanceEntity*/$variable): void
     {
         $variable->setTask(null);
     }

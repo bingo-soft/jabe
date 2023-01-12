@@ -6,6 +6,7 @@ use Jabe\Impl\Core\Variable\Scope\{
     AbstractVariableScope,
     VariableInstanceLifecycleListenerInterface
 };
+use Jabe\Impl\Core\Variable\CoreVariableInstanceInterface;
 
 class VariableInstanceSequenceCounterListener implements VariableInstanceLifecycleListenerInterface
 {
@@ -23,16 +24,16 @@ class VariableInstanceSequenceCounterListener implements VariableInstanceLifecyc
     {
     }
 
-    public function onCreate(VariableInstanceEntity $variableInstance, AbstractVariableScope $sourceScope): void
+    public function onCreate(CoreVariableInstanceInterface $variableInstance, AbstractVariableScope $sourceScope): void
     {
     }
 
-    public function onDelete(VariableInstanceEntity $variableInstance, AbstractVariableScope $sourceScope): void
+    public function onDelete(CoreVariableInstanceInterface $variableInstance, AbstractVariableScope $sourceScope): void
     {
         $variableInstance->incrementSequenceCounter();
     }
 
-    public function onUpdate(VariableInstanceEntity $variableInstance, AbstractVariableScope $sourceScope): void
+    public function onUpdate(CoreVariableInstanceInterface $variableInstance, AbstractVariableScope $sourceScope): void
     {
         $variableInstance->incrementSequenceCounter();
     }

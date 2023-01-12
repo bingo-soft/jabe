@@ -58,4 +58,9 @@ class GetDeploymentProcessModelCmd implements CommandInterface, \Serializable
             return $processDiagramStream;
         }
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

@@ -30,8 +30,8 @@ interface ProcessInstanceModificationBuilderInterface extends InstantiationBuild
      *   activity instance should be created
      */
     public function startBeforeActivity(
-        string $activityId,
-        string $ancestorActivityInstanceId
+        ?string $activityId,
+        ?string $ancestorActivityInstanceId = null
     ): ProcessInstanceModificationBuilderInterface;
 
     /**
@@ -42,8 +42,8 @@ interface ProcessInstanceModificationBuilderInterface extends InstantiationBuild
      * @throws ProcessEngineException if the activity has 0 or more than 1 outgoing sequence flows
      */
     public function startAfterActivity(
-        string $activityId,
-        string $ancestorActivityInstanceId
+        ?string $activityId,
+        ?string $ancestorActivityInstanceId = null
     ): ProcessInstanceModificationBuilderInterface;
 
     /**
@@ -64,8 +64,8 @@ interface ProcessInstanceModificationBuilderInterface extends InstantiationBuild
      *   transition should be executed
      */
     public function startTransition(
-        string $transitionId,
-        string $ancestorActivityInstanceId
+        ?string $transitionId,
+        ?string $ancestorActivityInstanceId = null
     ): ProcessInstanceModificationBuilderInterface;
 
     /**
@@ -79,7 +79,7 @@ interface ProcessInstanceModificationBuilderInterface extends InstantiationBuild
      *
      * @param activityInstanceId the id of the activity instance to cancel
      */
-    public function cancelActivityInstance(string $activityInstanceId): ProcessInstanceModificationBuilderInterface;
+    public function cancelActivityInstance(?string $activityInstanceId): ProcessInstanceModificationBuilderInterface;
 
     /**
      * <p><i>Submits the instruction:</i></p>
@@ -88,7 +88,7 @@ interface ProcessInstanceModificationBuilderInterface extends InstantiationBuild
      *
      * @param transitionInstanceId the id of the transition instance to cancel
      */
-    public function cancelTransitionInstance(string $transitionInstanceId): ProcessInstanceModificationBuilderInterface;
+    public function cancelTransitionInstance(?string $transitionInstanceId): ProcessInstanceModificationBuilderInterface;
 
     /**
      * <p><i>Submits the instruction:</i></p>
@@ -107,7 +107,7 @@ interface ProcessInstanceModificationBuilderInterface extends InstantiationBuild
      *
      * @param activityId the activity for which all instances should be cancelled
      */
-    public function cancelAllForActivity(string $activityId): ProcessInstanceModificationBuilderInterface;
+    public function cancelAllForActivity(?string $activityId): ProcessInstanceModificationBuilderInterface;
 
     /**
      * <p>
@@ -129,7 +129,7 @@ interface ProcessInstanceModificationBuilderInterface extends InstantiationBuild
     public function cancellationSourceExternal(bool $external): ProcessInstanceModificationBuilderInterface;
 
     /** Provides annotation for the current modification. */
-    public function setAnnotation(string $annotation): ProcessInstanceModificationBuilderInterface;
+    public function setAnnotation(?string $annotation): ProcessInstanceModificationBuilderInterface;
 
     /**
      * @param skipCustomListeners specifies whether custom listeners (task and execution)
@@ -145,9 +145,10 @@ interface ProcessInstanceModificationBuilderInterface extends InstantiationBuild
      *          Resources#PROCESS_DEFINITION.
      */
     public function execute(
-        ?bool $skipCustomListeners,
-        ?bool $skipIoMappings
-    ): ProcessInstanceModificationBuilderInterface;
+        ?bool $writeUserOperationLog = true,
+        ?bool $skipCustomListeners = false,
+        ?bool $skipIoMappings = false
+    ): void;
 
     /**
      * @param skipCustomListeners specifies whether custom listeners (task and execution)

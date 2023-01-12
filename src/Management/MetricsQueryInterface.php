@@ -9,22 +9,22 @@ interface MetricsQueryInterface
      *
      * @param name The name of the metrics to query for
      */
-    public function name(string $name): MetricsQueryInterface;
+    public function name(?string $name): MetricsQueryInterface;
 
     /**
      * Restrict to data collected by the reported with the given identifier
      */
-    public function reporter(string $reporter): MetricsQueryInterface;
+    public function reporter(?string $reporter): MetricsQueryInterface;
 
     /**
      * Restrict to data collected after the given date (inclusive)
      */
-    public function startDate(string $startTime): MetricsQueryInterface;
+    public function startDate(?string $startTime): MetricsQueryInterface;
 
     /**
      * Restrict to data collected before the given date (exclusive)
      */
-    public function endDate(string $endTime): MetricsQueryInterface;
+    public function endDate(?string $endTime): MetricsQueryInterface;
 
 
     /**

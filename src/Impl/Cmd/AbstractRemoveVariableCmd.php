@@ -9,7 +9,7 @@ abstract class AbstractRemoveVariableCmd extends AbstractVariableCmd
 {
     protected $variableNames = [];
 
-    public function __construct(string $entityId, array $variableNames, bool $isLocal)
+    public function __construct(?string $entityId, array $variableNames, bool $isLocal)
     {
         parent::__construct($entityId, $isLocal);
         $this->variableNames = $variableNames;
@@ -24,7 +24,7 @@ abstract class AbstractRemoveVariableCmd extends AbstractVariableCmd
         }
     }
 
-    protected function getLogEntryOperation(): string
+    protected function getLogEntryOperation(): ?string
     {
         return UserOperationLogEntryInterface::OPERATION_TYPE_REMOVE_VARIABLE;
     }

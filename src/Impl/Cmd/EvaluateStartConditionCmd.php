@@ -64,4 +64,9 @@ class EvaluateStartConditionCmd implements CommandInterface
 
         return $processInstance;
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

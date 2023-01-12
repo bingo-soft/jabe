@@ -7,13 +7,13 @@ use Jabe\Query\QueryInterface;
 interface DeploymentQueryInterface extends QueryInterface
 {
     /** Only select deployments with the given deployment id. */
-    public function deploymentId(string $deploymentId): DeploymentQueryInterface;
+    public function deploymentId(?string $deploymentId): DeploymentQueryInterface;
 
     /** Only select deployments with the given name. */
-    public function deploymentName(string $name): DeploymentQueryInterface;
+    public function deploymentName(?string $name): DeploymentQueryInterface;
 
     /** Only select deployments with a name like the given string. */
-    public function deploymentNameLike(string $nameLike): DeploymentQueryInterface;
+    public function deploymentNameLike(?string $nameLike): DeploymentQueryInterface;
 
     /**
      * If the given <code>source</code> is <code>null</code>,
@@ -21,13 +21,13 @@ interface DeploymentQueryInterface extends QueryInterface
      * Otherwise only deployments with the given source are
      * selected.
      */
-    public function deploymentSource(string $source): DeploymentQueryInterface;
+    public function deploymentSource(?string $source): DeploymentQueryInterface;
 
     /** Only select deployments deployed before the given date */
-    public function deploymentBefore(string $before): DeploymentQueryInterface;
+    public function deploymentBefore(?string $before): DeploymentQueryInterface;
 
     /** Only select deployments deployed after the given date */
-    public function deploymentAfter(string $after): DeploymentQueryInterface;
+    public function deploymentAfter(?string $after): DeploymentQueryInterface;
 
     /** Only select deployments with one of the given tenant ids. */
     public function tenantIdIn(array $tenantIds): DeploymentQueryInterface;

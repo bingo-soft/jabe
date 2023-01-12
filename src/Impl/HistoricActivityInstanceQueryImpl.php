@@ -48,7 +48,7 @@ class HistoricActivityInstanceQueryImpl extends AbstractQuery implements Histori
         ->findHistoricActivityInstanceCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         return $commandContext
@@ -56,49 +56,49 @@ class HistoricActivityInstanceQueryImpl extends AbstractQuery implements Histori
         ->findHistoricActivityInstancesByQueryCriteria($this, $page);
     }
 
-    public function processInstanceId(string $processInstanceId): HistoricActivityInstanceQueryImpl
+    public function processInstanceId(?string $processInstanceId): HistoricActivityInstanceQueryImpl
     {
         $this->processInstanceId = $processInstanceId;
         return $this;
     }
 
-    public function executionId(string $executionId): HistoricActivityInstanceQueryImpl
+    public function executionId(?string $executionId): HistoricActivityInstanceQueryImpl
     {
         $this->executionId = $executionId;
         return $this;
     }
 
-    public function processDefinitionId(string $processDefinitionId): HistoricActivityInstanceQueryImpl
+    public function processDefinitionId(?string $processDefinitionId): HistoricActivityInstanceQueryImpl
     {
         $this->processDefinitionId = $processDefinitionId;
         return $this;
     }
 
-    public function activityId(string $activityId): HistoricActivityInstanceQueryImpl
+    public function activityId(?string $activityId): HistoricActivityInstanceQueryImpl
     {
         $this->activityId = $activityId;
         return $this;
     }
 
-    public function activityName(string $activityName): HistoricActivityInstanceQueryImpl
+    public function activityName(?string $activityName): HistoricActivityInstanceQueryImpl
     {
         $this->activityName = $activityName;
         return $this;
     }
 
-    public function activityNameLike(string $activityNameLike): HistoricActivityInstanceQueryImpl
+    public function activityNameLike(?string $activityNameLike): HistoricActivityInstanceQueryImpl
     {
         $this->activityNameLike = $activityNameLike;
         return $this;
     }
 
-    public function activityType(string $activityType): HistoricActivityInstanceQueryImpl
+    public function activityType(?string $activityType): HistoricActivityInstanceQueryImpl
     {
         $this->activityType = $activityType;
         return $this;
     }
 
-    public function taskAssignee(string $assignee): HistoricActivityInstanceQueryImpl
+    public function taskAssignee(?string $assignee): HistoricActivityInstanceQueryImpl
     {
         $this->assignee = $assignee;
         return $this;
@@ -135,25 +135,25 @@ class HistoricActivityInstanceQueryImpl extends AbstractQuery implements Histori
         return $this;
     }
 
-    public function startedAfter(string $date): HistoricActivityInstanceQueryImpl
+    public function startedAfter(?string $date): HistoricActivityInstanceQueryImpl
     {
         $this->startedAfter = $date;
         return $this;
     }
 
-    public function startedBefore(string $date): HistoricActivityInstanceQueryImpl
+    public function startedBefore(?string $date): HistoricActivityInstanceQueryImpl
     {
         $this->startedBefore = $date;
         return $this;
     }
 
-    public function finishedAfter(string $date): HistoricActivityInstanceQueryImpl
+    public function finishedAfter(?string $date): HistoricActivityInstanceQueryImpl
     {
         $this->finishedAfter = $date;
         return $this;
     }
 
-    public function finishedBefore(string $date): HistoricActivityInstanceQueryImpl
+    public function finishedBefore(?string $date): HistoricActivityInstanceQueryImpl
     {
         $this->finishedBefore = $date;
         return $this;
@@ -254,7 +254,7 @@ class HistoricActivityInstanceQueryImpl extends AbstractQuery implements Histori
         return orderBy(HistoricActivityInstanceQueryProperty::tenantId());
     }
 
-    public function activityInstanceId(string $activityInstanceId): HistoricActivityInstanceQueryImpl
+    public function activityInstanceId(?string $activityInstanceId): HistoricActivityInstanceQueryImpl
     {
         $this->activityInstanceId = $activityInstanceId;
         return $this;
@@ -262,37 +262,37 @@ class HistoricActivityInstanceQueryImpl extends AbstractQuery implements Histori
 
     // getters and setters //////////////////////////////////////////////////////
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
 
-    public function getExecutionId(): string
+    public function getExecutionId(): ?string
     {
         return $this->executionId;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
 
-    public function getActivityName(): string
+    public function getActivityName(): ?string
     {
         return $this->activityName;
     }
 
-    public function getActivityType(): string
+    public function getActivityType(): ?string
     {
         return $this->activityType;
     }
 
-    public function getAssignee(): string
+    public function getAssignee(): ?string
     {
         return $this->assignee;
     }
@@ -307,27 +307,27 @@ class HistoricActivityInstanceQueryImpl extends AbstractQuery implements Histori
         return $this->unfinished;
     }
 
-    public function getActivityInstanceId(): string
+    public function getActivityInstanceId(): ?string
     {
         return $this->activityInstanceId;
     }
 
-    public function getStartedAfter(): string
+    public function getStartedAfter(): ?string
     {
         return $this->startedAfter;
     }
 
-    public function getStartedBefore(): string
+    public function getStartedBefore(): ?string
     {
         return $this->startedBefore;
     }
 
-    public function getFinishedAfter(): string
+    public function getFinishedAfter(): ?string
     {
         return $this->finishedAfter;
     }
 
-    public function getFinishedBefore(): string
+    public function getFinishedBefore(): ?string
     {
         return $this->finishedBefore;
     }

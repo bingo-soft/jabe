@@ -485,7 +485,7 @@ class HistoryEventTypes implements HistoryEventTypeInterface
         return self::$USER_OPERATION_LOG;
     }
 
-    private function __construct(string $entityType, string $eventName)
+    private function __construct(?string $entityType, ?string $eventName)
     {
         $this->entityType = $entityType;
         $this->eventName = $eventName;
@@ -499,13 +499,28 @@ class HistoryEventTypes implements HistoryEventTypeInterface
         return $this->eventName == $obj->getEventName() && $this->entityType == $obj->getEntityType();
     }
 
-    public function getEntityType(): string
+    public function getEntityType(): ?string
     {
         return $this->entityType;
     }
 
-    public function getEventName(): string
+    public function getEventName(): ?string
     {
         return $this->eventName;
+    }
+
+    public function serialize()
+    {
+        return json_encode([
+            'entityType' => $this->entityType,
+            'eventName' => $this->eventName
+        ]);
+    }
+
+    public function unserialize($data)
+    {
+        $json = json_decode($data);
+        $this->entityType = $json->entityType;
+        $this->eventName = $json->eventName;
     }
 }

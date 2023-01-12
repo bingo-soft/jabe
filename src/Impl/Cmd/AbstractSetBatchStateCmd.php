@@ -21,7 +21,7 @@ abstract class AbstractSetBatchStateCmd implements CommandInterface
 
     protected $batchId;
 
-    public function __construct(string $batchId)
+    public function __construct(?string $batchId)
     {
         $this->batchId = $batchId;
     }
@@ -59,7 +59,7 @@ abstract class AbstractSetBatchStateCmd implements CommandInterface
         }
     }
 
-    protected function setJobDefinitionState(CommandContext $commandContext, string $jobDefinitionId): void
+    protected function setJobDefinitionState(CommandContext $commandContext, ?string $jobDefinitionId): void
     {
         $this->createSetJobDefinitionStateCommand($jobDefinitionId)->execute($commandContext);
     }
@@ -84,5 +84,10 @@ abstract class AbstractSetBatchStateCmd implements CommandInterface
             ->logBatchOperation($this->getUserOperationType(), $this->batchId, $propertyChange);
     }
 
-    abstract protected function getUserOperationType(): string;
+    abstract protected function getUserOperationType(): ?string;
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

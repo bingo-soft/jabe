@@ -17,7 +17,7 @@ class ProcessDataContext
     protected $mdcPropertyInstanceId;
     protected $mdcPropertyTenantId;
 
-    protected $handleMdc = false;
+    protected bool $handleMdc = false;
 
     protected $activityIdStack;
 

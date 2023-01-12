@@ -4,12 +4,12 @@ namespace Jabe\Impl\Db\Sql;
 
 class VariableTableMapping implements DoctrineTableMappingInterface
 {
-    public function getTableName(): string
+    public function getTableName(): ?string
     {
         return "ACT_RU_VARIABLE";
     }
 
-    public function getTableAlias(): string
+    public function getTableAlias(): ?string
     {
         return "V";
     }

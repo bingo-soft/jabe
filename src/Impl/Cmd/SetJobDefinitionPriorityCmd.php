@@ -29,7 +29,7 @@ class SetJobDefinitionPriorityCmd implements CommandInterface
 
     protected $jobDefinitionId;
     protected $priority;
-    protected $cascade = false;
+    protected bool $cascade = false;
 
     public function __construct(?string $jobDefinitionId, ?int $priority, bool $cascade)
     {
@@ -116,5 +116,10 @@ class SetJobDefinitionPriorityCmd implements CommandInterface
             ->create();
 
         $opLogContext->addEntry($entry);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

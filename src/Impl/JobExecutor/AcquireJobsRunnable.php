@@ -10,8 +10,8 @@ abstract class AcquireJobsRunnable implements RunnableInterface
     //private final static JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
     protected $jobExecutor;
-    protected $isInterrupted = false;
-    protected $isJobAdded = false;
+    protected bool $isInterrupted = false;
+    protected bool $isJobAdded = false;
     protected $monitor;
 
     public function __construct(JobExecutor $jobExecutor)

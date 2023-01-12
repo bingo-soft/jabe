@@ -13,14 +13,14 @@ class ResourceReportImpl implements ResourceReportInterface
     protected $errors = [];
     protected $warnings = [];
 
-    public function __construct(string $resourceName, array $errors, array $warnings)
+    public function __construct(?string $resourceName, array $errors, array $warnings)
     {
         $this->resourceName = $resourceName;
         $this->errors = $errors;
         $this->warnings = $warnings;
     }
 
-    public function getResourceName(): string
+    public function getResourceName(): ?string
     {
         return $this->resourceName;
     }

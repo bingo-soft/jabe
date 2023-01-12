@@ -23,7 +23,7 @@ abstract class FlowNodeActivityBehavior implements SignallableActivityBehaviorIn
     /**
      * Default behaviour: just leave the activity with no extra functionality.
      */
-    public function execute(ActivityExecutionInterface $execution): void
+    public function execute(/*ActivityExecutionInterface*/$execution): void
     {
         $this->leave($execution);
     }
@@ -47,7 +47,7 @@ abstract class FlowNodeActivityBehavior implements SignallableActivityBehaviorIn
         $this->bpmnActivityBehavior->performIgnoreConditionsOutgoingBehavior($activityContext);
     }
 
-    public function signal(ActivityExecutionInterface $execution, string $signalName, $signalData): void
+    public function signal(ActivityExecutionInterface $execution, ?string $signalName, $signalData): void
     {
         // concrete activity behaviors that do accept signals should override this method;
         //throw LOG.unsupportedSignalException(execution.getActivity().getId());

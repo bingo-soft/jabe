@@ -19,7 +19,7 @@ class SetUserPictureCmd implements CommandInterface, \Serializable
     protected $userId;
     protected $picture;
 
-    public function __construct(string $userId, Picture $picture)
+    public function __construct(?string $userId, Picture $picture)
     {
         $this->userId = $userId;
         $this->picture = $picture;
@@ -68,5 +68,10 @@ class SetUserPictureCmd implements CommandInterface, \Serializable
         $pictureInfo->setValue($byteArrayEntity->getId());
 
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

@@ -21,4 +21,9 @@ class MetricsQuerySumCmd implements CommandInterface
         return $commandContext->getMeterLogManager()
             ->executeSelectSum($this->metricsQuery);
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

@@ -27,8 +27,8 @@ use Jabe\Impl\Cmd\Optimize\{
 class OptimizeService extends ServiceImpl
 {
     public function getCompletedHistoricActivityInstances(
-        string $finishedAfter,
-        string $finishedAt,
+        ?string $finishedAfter,
+        ?string $finishedAt,
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
@@ -37,8 +37,8 @@ class OptimizeService extends ServiceImpl
     }
 
     public function getRunningHistoricActivityInstances(
-        string $startedAfter,
-        string $startedAt,
+        ?string $startedAfter,
+        ?string $startedAt,
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
@@ -47,8 +47,8 @@ class OptimizeService extends ServiceImpl
     }
 
     public function getCompletedHistoricTaskInstances(
-        string $finishedAfter,
-        string $finishedAt,
+        ?string $finishedAfter,
+        ?string $finishedAt,
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
@@ -57,8 +57,8 @@ class OptimizeService extends ServiceImpl
     }
 
     public function getRunningHistoricTaskInstances(
-        string $startedAfter,
-        string $startedAt,
+        ?string $startedAfter,
+        ?string $startedAt,
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
@@ -67,8 +67,8 @@ class OptimizeService extends ServiceImpl
     }
 
     public function getHistoricUserOperationLogs(
-        string $occurredAfter,
-        string $occurredAt,
+        ?string $occurredAfter,
+        ?string $occurredAt,
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
@@ -77,8 +77,8 @@ class OptimizeService extends ServiceImpl
     }
 
     public function getHistoricIdentityLinkLogs(
-        string $occurredAfter,
-        string $occurredAt,
+        ?string $occurredAfter,
+        ?string $occurredAt,
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
@@ -87,8 +87,8 @@ class OptimizeService extends ServiceImpl
     }
 
     public function getCompletedHistoricProcessInstances(
-        string $finishedAfter,
-        string $finishedAt,
+        ?string $finishedAfter,
+        ?string $finishedAt,
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
@@ -97,8 +97,8 @@ class OptimizeService extends ServiceImpl
     }
 
     public function getRunningHistoricProcessInstances(
-        string $startedAfter,
-        string $startedAt,
+        ?string $startedAfter,
+        ?string $startedAt,
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
@@ -107,8 +107,8 @@ class OptimizeService extends ServiceImpl
     }
 
     public function getHistoricVariableUpdates(
-        string $occurredAfter,
-        string $occurredAt,
+        ?string $occurredAfter,
+        ?string $occurredAt,
         bool $excludeObjectValues,
         int $maxResults
     ): array {
@@ -118,8 +118,8 @@ class OptimizeService extends ServiceImpl
     }
 
     public function getCompletedHistoricIncidents(
-        string $finishedAfter,
-        string $finishedAt,
+        ?string $finishedAfter,
+        ?string $finishedAt,
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
@@ -128,8 +128,8 @@ class OptimizeService extends ServiceImpl
     }
 
     public function getOpenHistoricIncidents(
-        string $createdAfter,
-        string $createdAt,
+        ?string $createdAfter,
+        ?string $createdAt,
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
@@ -138,8 +138,8 @@ class OptimizeService extends ServiceImpl
     }
 
     public function getHistoricDecisionInstances(
-        string $evaluatedAfter,
-        string $evaluatedAt,
+        ?string $evaluatedAfter,
+        ?string $evaluatedAt,
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(

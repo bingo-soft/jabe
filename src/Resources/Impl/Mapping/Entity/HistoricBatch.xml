@@ -38,19 +38,19 @@
     )
     values
     (
-      #{id ,dbalType=VARCHAR},
-      #{type, dbalType=VARCHAR},
-      #{totalJobs, dbalType=INTEGER},
-      #{batchJobsPerSeed, dbalType=INTEGER},
-      #{invocationsPerBatchJob, dbalType=INTEGER},
-      #{seedJobDefinitionId, dbalType=VARCHAR},
-      #{monitorJobDefinitionId, dbalType=VARCHAR},
-      #{batchJobDefinitionId, dbalType=VARCHAR},
-      #{tenantId, dbalType=VARCHAR},
-      #{createUserId, dbalType=VARCHAR},
-      #{startTime, dbalType=VARCHAR},
-      #{endTime, dbalType=VARCHAR},
-      #{removalTime, dbalType=VARCHAR}
+      #{id:VARCHAR},
+      #{type:VARCHAR},
+      #{totalJobs},
+      #{batchJobsPerSeed},
+      #{invocationsPerBatchJob},
+      #{seedJobDefinitionId:VARCHAR},
+      #{monitorJobDefinitionId:VARCHAR},
+      #{batchJobDefinitionId:VARCHAR},
+      #{tenantId:VARCHAR},
+      #{createUserId:VARCHAR},
+      #{startTime:VARCHAR},
+      #{endTime:VARCHAR},
+      #{removalTime:VARCHAR}
     )
   </insert>
 
@@ -104,7 +104,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_BATCH
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql"/>
     ${limitAfterWithoutOffset}
   </delete>
@@ -114,7 +114,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_BATCH
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql_oracle"/>
     ${limitAfterWithoutOffset}
   </delete>
@@ -127,7 +127,7 @@
     where ID_ IN
       (SELECT ID_
        FROM ${prefix}ACT_HI_BATCH
-       WHERE REMOVAL_TIME_ <= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
+       WHERE REMOVAL_TIME_ &lt;= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
        ${limitAfterWithoutOffset})
   </delete>
 
@@ -136,50 +136,50 @@
     update ${prefix}ACT_HI_BATCH
     <set>
       <if test="endTime != null">
-        END_TIME_ = #{endTime, dbalType=VARCHAR},
+        END_TIME_ = #{endTime:VARCHAR},
       </if>
       <if test="removalTime != null">
-        REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR},
+        REMOVAL_TIME_ = #{removalTime:VARCHAR},
       </if>
       <if test="executionStartTime != null">
-        EXEC_START_TIME_ = #{executionStartTime, dbalType=VARCHAR}
+        EXEC_START_TIME_ = #{executionStartTime:VARCHAR}
       </if>
     </set>
-    where ID_= #{id, dbalType=VARCHAR}
+    where ID_= #{id:VARCHAR}
   </update>
 
   <update id="updateHistoricBatch_mssql" parameterType="Jabe\Impl\Batch\history.HistoricBatchEntity">
     update RES
     <set>
       <if test="endTime != null">
-        RES.END_TIME_ = #{endTime, dbalType=VARCHAR},
+        RES.END_TIME_ = #{endTime:VARCHAR},
       </if>
       <if test="removalTime != null">
-        RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR},
+        RES.REMOVAL_TIME_ = #{removalTime:VARCHAR},
       </if>
       <if test="executionStartTime != null">
-        EXEC_START_TIME_ = #{executionStartTime, dbalType=VARCHAR}
+        EXEC_START_TIME_ = #{executionStartTime:VARCHAR}
       </if>
     </set>
     FROM ${prefix}ACT_HI_BATCH RES WITH (FORCESEEK)
-    where RES.ID_= #{id, dbalType=VARCHAR}
+    where RES.ID_= #{id:VARCHAR}
   </update>
 
   <update id="updateHistoricBatchRemovalTimeById" parameterType="Jabe\Impl\Batch\history.HistoricBatchEntity">
     update ${prefix}ACT_HI_BATCH
     <set>
-        REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+        REMOVAL_TIME_ = #{removalTime:VARCHAR}
     </set>
-    where ID_ = #{id, dbalType=VARCHAR}
+    where ID_ = #{id:VARCHAR}
   </update>
 
   <update id="updateHistoricBatchRemovalTimeById_mssql" parameterType="Jabe\Impl\Batch\history.HistoricBatchEntity">
     update RES
     <set>
-      RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     </set>
     FROM ${prefix}ACT_HI_BATCH RES WITH (FORCESEEK)
-    where RES.ID_ = #{id, dbalType=VARCHAR}
+    where RES.ID_ = #{id:VARCHAR}
   </update>
 
   <!-- SELECT -->
@@ -222,14 +222,14 @@
         and RES.END_TIME_ is null
       </if>
       <if test="isTenantIdSet">
-        <if test="tenantIds != null and count(tenantIds) > 0">
+        <if test="!empty(tenantIds)">
           and RES.TENANT_ID_ in
           <foreach item="tenantId" index="index" collection="tenantIds"
                    open="(" separator="," close=")">
             #{tenantId}
           </foreach>
         </if>
-        <if test="tenantIds == null">
+        <if test="empty(tenantIds)">
           and RES.TENANT_ID_ is null
         </if>
       </if>
@@ -277,7 +277,7 @@
     FROM ${prefix}ACT_HI_BATCH RES
     WHERE
     <foreach index="key" item="value" collection="parameter.map" open="(" separator="OR" close=")">
-      <bind name="days" value="'#{value, dbalType=INTEGER}'"/>
+      <bind name="days" value="'#{value}'"/>
       RES.TYPE_ = #{key} and ${dayComparator}
     </foreach>
     AND RES.END_TIME_ is not null
@@ -286,14 +286,14 @@
   <sql id="andWhereMinuteInDateBetweenSql">
     <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
       AND ${datepart1}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart2}${date}${datepart3}
-      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+      between #{parameter.minuteFrom} and #{parameter.minuteTo}
     </if>
   </sql>
 
   <sql id="andWhereMinuteInDateBetweenSql_oracle">
     <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
       AND ${datepart1}${date}${datepart2}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart3}
-      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+      between #{parameter.minuteFrom} and #{parameter.minuteTo}
     </if>
   </sql>
 
@@ -322,7 +322,7 @@
              C.HISTORY_TTL_,
              <choose>
                <when test="isHistoryCleanupStrategyRemovalTimeBased">
-                 SUM(CASE WHEN REMOVAL_TIME_ is not null and REMOVAL_TIME_ <= #{currentTimestamp} THEN 1 ELSE 0 END) AS CLEANABLE_,
+                 SUM(CASE WHEN REMOVAL_TIME_ is not null and REMOVAL_TIME_ &lt;= #{currentTimestamp} THEN 1 ELSE 0 END) AS CLEANABLE_,
                </when>
                <otherwise>
                  SUM(CASE WHEN HISTORY_TTL_ is not null and (HISTORY_TTL_ = 0 OR ${dayComparator}) and END_TIME_ is not null THEN 1 ELSE 0 END) AS CLEANABLE_,

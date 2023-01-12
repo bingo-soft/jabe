@@ -67,17 +67,17 @@ class DefinitionsImpl extends ModelElementInstanceImpl implements DefinitionsInt
         return self::$nameAttribute->getValue($this);
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         self::$nameAttribute->setValue($this, $name);
     }
 
-    public function getTargetNamespace(): string
+    public function getTargetNamespace(): ?string
     {
         return self::$targetNamespaceAttribute->getValue($this);
     }
 
-    public function setTargetNamespace(string $namespace): void
+    public function setTargetNamespace(?string $namespace): void
     {
         self::$targetNamespaceAttribute->setValue($this, $namespace);
     }

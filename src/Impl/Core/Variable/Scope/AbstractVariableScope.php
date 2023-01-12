@@ -37,7 +37,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
         }
     }
 
-    public function getVariableScopeKey(): string
+    public function getVariableScopeKey(): ?string
     {
         return "scope";
     }
@@ -66,7 +66,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
         return $variables;
     }
 
-    public function collectVariables(VariableMapImpl $resultVariables, array $variableNames = [], bool $isLocal = false, bool $deserializeValues = false): void
+    public function collectVariables(VariableMapImpl $resultVariables, ?array $variableNames = [], bool $isLocal = false, bool $deserializeValues = false): void
     {
         $collectAll = empty($variableNames);
 
@@ -88,12 +88,12 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
         }
     }
 
-    public function getVariable(string $variableName, ?bool $deserializeObjectValue = true)
+    public function getVariable(?string $variableName, ?bool $deserializeObjectValue = true)
     {
         return $this->getValueFromVariableInstance($deserializeObjectValue, $this->getVariableInstance($variableName));
     }
 
-    public function getVariableLocal(string $variableName, ?bool $deserializeObjectValue = true)
+    public function getVariableLocal(?string $variableName, ?bool $deserializeObjectValue = true)
     {
         return $this->getValueFromVariableInstance($deserializeObjectValue, $this->getVariableInstanceLocal($variableName));
     }
@@ -109,13 +109,13 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
         return null;
     }
 
-    public function getVariableTyped(string $variableName, ?bool $deserializeValue = null): ?TypedValueInterface
+    public function getVariableTyped(?string $variableName, ?bool $deserializeValue = null): ?TypedValueInterface
     {
         $deserializeValue = $deserializeValue ?? true;
         return $this->getTypedValueFromVariableInstance($deserializeValue, $this->getVariableInstance($variableName));
     }
 
-    public function getVariableLocalTyped(string $variableName, ?bool $deserializeValue = null): ?TypedValueInterface
+    public function getVariableLocalTyped(?string $variableName, ?bool $deserializeValue = null): ?TypedValueInterface
     {
         $deserializeValue = $deserializeValue ?? true;
         return $this->getTypedValueFromVariableInstance($deserializeValue, $this->getVariableInstanceLocal($variableName));
@@ -130,7 +130,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
         }
     }
 
-    public function getVariableInstance(string $variableName): ?CoreVariableInstanceInterface
+    public function getVariableInstance(?string $variableName): ?CoreVariableInstanceInterface
     {
         $variableInstance = $this->getVariableInstanceLocal($variableName);
         if ($variableInstance !== null) {
@@ -143,7 +143,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
         return null;
     }
 
-    public function getVariableInstanceLocal(string $name): ?CoreVariableInstanceInterface
+    public function getVariableInstanceLocal(?string $name): ?CoreVariableInstanceInterface
     {
         return $this->getVariableStore()->getVariable($name);
     }
@@ -167,7 +167,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
         return !$this->getVariableStore()->isEmpty();
     }
 
-    public function hasVariable(string $variableName): bool
+    public function hasVariable(?string $variableName): bool
     {
         if ($this->hasVariableLocal($variableName)) {
             return true;
@@ -176,7 +176,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
         return $parentScope !== null && $parentScope->hasVariable($variableName);
     }
 
-    public function hasVariableLocal(string $variableName): bool
+    public function hasVariableLocal(?string $variableName): bool
     {
         return $this->getVariableStore()->containsKey($variableName);
     }
@@ -214,7 +214,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
                 $this->scope = $scope;
             }
 
-            public function apply(string $variableName, $variableValue): void
+            public function apply(?string $variableName, $variableValue): void
             {
                 $this->scope->setVariable($variableName, $variableValue);
             }
@@ -232,7 +232,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
                 $this->scope = $scope;
             }
 
-            public function apply(string $variableName, $variableValue): void
+            public function apply(?string $variableName, $variableValue): void
             {
                 $this->scope->setVariableLocal($variableName, $variableValue);
             }
@@ -268,19 +268,28 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
         }
     }
 
-    public function setVariable(string $variableName, $value, ?AbstractVariableScope $sourceActivityVariableScope = null): void
+    public function setVariable(?string $variableName, $value, /*AbstractVariableScope|bool|string*/...$args): void
     {
         if ($value instanceof TypedValueInterface) {
+            if (!empty($args)) {
+                if ($args[0] instanceof AbstractVariableScope) {
+                    $sourceActivityVariableScope = $args[0];
+                }
+                if (count($args) == 2) {
+                    $skipPhpSerializationFormatCheck = $args[1] ?? false;
+                }
+            }
+            $skipPhpSerializationFormatCheck ??= false;
             if ($this->hasVariableLocal($variableName)) {
-                $this->setVariableLocal($variableName, $value, $sourceActivityVariableScope);
+                $this->setVariableLocal($variableName, $value, $sourceActivityVariableScope, $skipPhpSerializationFormatCheck);
                 return;
             }
             $parentVariableScope = $this->getParentVariableScope();
             if ($parentVariableScope !== null) {
                 if ($sourceActivityVariableScope === null) {
-                    $parentVariableScope->setVariable($variableName, $value);
+                    $parentVariableScope->setVariable($variableName, $value, $skipPhpSerializationFormatCheck);
                 } else {
-                    $parentVariableScope->setVariable($variableName, $value, $sourceActivityVariableScope);
+                    $parentVariableScope->setVariable($variableName, $value, $sourceActivityVariableScope, $skipPhpSerializationFormatCheck);
                 }
                 return;
             }
@@ -288,26 +297,41 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
             $this->setVariableLocal($variableName, $value, $sourceActivityVariableScope);
         } else {
             $typedValue = Variables::untypedValue($value);
-            $this->setVariable($variableName, $typedValue, $this->getSourceActivityVariableScope());
+            $sourceActivityVariableScope = $this->getSourceActivityVariableScope();
+            if (count($args) == 1 && is_bool($args[0])) {
+                $skipPhpSerializationFormatCheck = $args[0];
+            } else {
+                $skipPhpSerializationFormatCheck = false;
+            }
+            $this->setVariable($variableName, $typedValue, $sourceActivityVariableScope, $skipPhpSerializationFormatCheck);
         }
     }
 
-    public function setVariableLocal(string $variableName, $value, ?AbstractVariableScope $sourceActivityExecution = null): void
+    public function setVariableLocal(?string $variableName, $value, /*AbstractVariableScope|string|bool*/...$args): void
     {
         if ($value instanceof TypedValueInterface) {
-            VariableUtil::checkPhpSerialization($variableName, $value);
+            if (!empty($args)) {
+                if ($args[0] instanceof AbstractVariableScope) {
+                    $sourceActivityExecution = $args[0];
+                }
+                if (count($args) == 2) {
+                    $skipPhpSerializationFormatCheck = $args[1] ?? false;
+                }
+            }
+            $skipPhpSerializationFormatCheck ??= false;
+
+            if (!$skipPhpSerializationFormatCheck) {
+                VariableUtil::checkPhpSerialization($variableName, $value);
+            }
 
             $variableStore = $this->getVariableStore();
 
             if ($variableStore->containsKey($variableName)) {
                 $existingInstance = $variableStore->getVariable($variableName);
-
                 $previousValue = $existingInstance->getTypedValue(false);
-
                 if ($value->isTransient() != $previousValue->isTransient()) {
                     //throw ProcessEngineLogger.CORE_LOGGER.transientVariableException($variableName);
                 }
-
                 $existingInstance->setValue($value);
                 $this->invokeVariableLifecycleListenersUpdate($existingInstance, $sourceActivityExecution);
             } elseif (!$value->isTransient() && $variableStore->isRemoved($variableName)) {
@@ -326,7 +350,13 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
             }
         } else {
             $typedValue = Variables::untypedValue($value);
-            $this->setVariableLocal($variableName, $typedValue, $this->getSourceActivityVariableScope());
+            $sourceActivityVariableScope = $this->getSourceActivityVariableScope();
+            if (count($args) == 1 && is_bool($args[0])) {
+                $skipPhpSerializationFormatCheck = $args[0];
+            } else {
+                $skipPhpSerializationFormatCheck = false;
+            }
+            $this->setVariableLocal($variableName, $typedValue, $sourceActivityVariableScope, $skipPhpSerializationFormatCheck);
         }
     }
 
@@ -369,7 +399,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
         }
     }
 
-    protected function removeVariable(string $variableName, ?AbstractVariableScope $sourceActivityExecution = null): void
+    public function removeVariable(?string $variableName, ?AbstractVariableScope $sourceActivityExecution = null): void
     {
         if ($sourceActivityExecution === null) {
             $sourceActivityExecution = $this->getSourceActivityVariableScope();
@@ -393,7 +423,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
         return $this;
     }
 
-    protected function removeVariableLocal(string $variableName, ?AbstractVariableScope $sourceActivityExecution = null): void
+    public function removeVariableLocal(?string $variableName, ?AbstractVariableScope $sourceActivityExecution = null): void
     {
         if ($sourceActivityExecution === null) {
             $sourceActivityExecution = $this->getSourceActivityVariableScope();

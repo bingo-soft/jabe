@@ -13,7 +13,7 @@ class GetTaskCommentCmd implements CommandInterface, \Serializable
     protected $taskId;
     protected $commentId;
 
-    public function __construct(string $taskId, string $commentId)
+    public function __construct(?string $taskId, ?string $commentId)
     {
         $this->taskId = $taskId;
         $this->commentId = $commentId;
@@ -42,5 +42,10 @@ class GetTaskCommentCmd implements CommandInterface, \Serializable
         return $commandContext
             ->getCommentManager()
             ->findCommentByTaskIdAndCommentId($this->taskId, $this->commentId);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

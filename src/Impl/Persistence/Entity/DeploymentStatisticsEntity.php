@@ -10,8 +10,8 @@ use Jabe\Impl\Util\ClassNameUtil;
 
 class DeploymentStatisticsEntity extends DeploymentEntity implements DeploymentStatisticsInterface
 {
-    protected $instances;
-    protected $failedJobs;
+    protected int $instances = 0;
+    protected int $failedJobs = 0;
     protected $incidentStatistics = [];
 
     public function getInstances(): int

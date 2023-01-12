@@ -43,7 +43,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
     protected $connectionMetadataDefaultCatalog = null;
     protected $connectionMetadataDefaultSchema = null;
 
-    public function __construct(DbSqlSessionFactory $dbSqlSessionFactory, Connection $connection = null, string $catalog = null, string $schema = null)
+    public function __construct(DbSqlSessionFactory $dbSqlSessionFactory, Connection $connection = null, ?string $catalog = null, ?string $schema = null)
     {
         $this->dbSqlSessionFactory = $dbSqlSessionFactory;
         $sqlSessionFactory = $this->dbSqlSessionFactory->getSqlSessionFactory();
@@ -62,25 +62,25 @@ abstract class DbSqlSession extends AbstractPersistenceSession
 
     // select ////////////////////////////////////////////
 
-    public function selectList(string $statement, array $params = [], array $types = [])
+    public function selectList(?string $statement, $params = null)
     {
         $statement = $this->dbSqlSessionFactory->mapStatement($statement);
-        $resultList = $this->executeSelectList($statement, $params, $types);
+        $resultList = $this->executeSelectList($statement, $params);
         foreach ($resultList as $object) {
             $this->fireEntityLoaded($object);
         }
         return $resultList;
     }
 
-    public function executeSelectList(string $statement, array $params = [], array $types = []): array
+    public function executeSelectList(?string $statement, $params = null): array
     {
         $scope = $this;
-        return ExceptionUtil::doWithExceptionWrapper(function () use ($scope, $statement, $params, $types) {
-            return $scope->sqlSession->selectList($statement, $params, $types);
+        return ExceptionUtil::doWithExceptionWrapper(function () use ($scope, $statement, $params) {
+            return $scope->sqlSession->selectList($statement, $params);
         });
     }
 
-    public function selectById(string $type, string $id)
+    public function selectById(?string $type, ?string $id)
     {
         $selectStatement = $this->dbSqlSessionFactory->getSelectStatement($type);
         $mappedSelectStatement = $this->dbSqlSessionFactory->mapStatement($selectStatement);
@@ -94,12 +94,12 @@ abstract class DbSqlSession extends AbstractPersistenceSession
         return $result;
     }
 
-    public function selectOne(string $statement, array $params = [], array $types = [])
+    public function selectOne(?string $statement, $params = null)
     {
         $scope = $this;
         $mappedStatement = $this->dbSqlSessionFactory->mapStatement($statement);
-        $result = ExceptionUtil::doWithExceptionWrapper(function () use ($scope, $mappedStatement, $params, $types) {
-            return $scope->sqlSession->selectOne($mappedStatement, $params, $types);
+        $result = ExceptionUtil::doWithExceptionWrapper(function () use ($scope, $mappedStatement, $params) {
+            return $scope->sqlSession->selectOne($mappedStatement, $params);
         });
         $this->fireEntityLoaded($result);
         return $result;
@@ -107,7 +107,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
 
     // lock ////////////////////////////////////////////
 
-    public function lock(string $statement, array $params = [], array $types = []): void
+    public function lock(?string $statement, $params = null): void
     {
         // do not perform locking if H2 database is used. H2 uses table level locks
         // by default which may cause deadlocks if the deploy command needs to get a new
@@ -124,10 +124,10 @@ abstract class DbSqlSession extends AbstractPersistenceSession
             LOG.debugDisabledPessimisticLocks();
         }*/
         $mappedStatement = $this->dbSqlSessionFactory->mapStatement($statement);
-        $this->executeSelectForUpdate($mappedStatement, $params, $types);
+        $this->executeSelectForUpdate($mappedStatement, $params);
     }
 
-    abstract protected function executeSelectForUpdate(string $statement, array $params = [], array $types = []): void;
+    abstract protected function executeSelectForUpdate(?string $statement, $params = null): void;
 
     protected function entityUpdatePerformed(
         DbEntityOperation $operation,
@@ -168,7 +168,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
         int $rowsAffected,
         \Exception $failure = null
     ): void {
-        bulkOperationPerformed($operation, $rowsAffected, $failure);
+        $this->bulkOperationPerformed($operation, $rowsAffected, $failure);
     }
 
     protected function bulkOperationPerformed(
@@ -333,7 +333,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
         $this->executeInsertEntity($insertStatement, $dbEntity);
     }
 
-    protected function executeInsertEntity(string $insertStatement, $parameter): void
+    protected function executeInsertEntity(?string $insertStatement, $parameter = null): void
     {
         //LOG.executeDatabaseOperation("INSERT", parameter);
         try {
@@ -366,7 +366,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
 
     // delete ///////////////////////////////////////////
 
-    protected function executeDelete(string $deleteStatement, $parameter)
+    protected function executeDelete(?string $deleteStatement, $parameter = null)
     {
         // map the statement
         $mappedDeleteStatement = $this->dbSqlSessionFactory->mapStatement($deleteStatement);
@@ -380,7 +380,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
 
     // update ////////////////////////////////////////
 
-    public function executeUpdate(string $updateStatement, $parameter)
+    public function executeUpdate(?string $updateStatement, $parameter = null)
     {
         $mappedUpdateStatement = $this->dbSqlSessionFactory->mapStatement($updateStatement);
         try {
@@ -391,7 +391,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
         }
     }
 
-    public function update(string $updateStatement, $parameter)
+    public function update(?string $updateStatement, $parameter = null)
     {
         $scope = $this;
         return ExceptionUtil::doWithExceptionWrapper(function () use ($scope, $updateStatement, $parameter) {
@@ -399,7 +399,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
         });
     }
 
-    public function executeNonEmptyUpdateStmt(string $updateStmt, $parameter): int
+    public function executeNonEmptyUpdateStmt(?string $updateStmt, $parameter = null): int
     {
         $mappedUpdateStmt = $this->dbSqlSessionFactory->mapStatement($updateStmt);
 
@@ -518,7 +518,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
         }
     }
 
-    protected function getDbVersion(): string
+    protected function getDbVersion(): ?string
     {
         $selectSchemaVersionStatement = $this->dbSqlSessionFactory->mapStatement("selectDbSchemaVersion");
         $scope = $this;
@@ -594,7 +594,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
       executeMandatorySchemaResource("drop", "decision.history");
     }
 
-    public function executeMandatorySchemaResource(string $operation, string $component): void
+    public function executeMandatorySchemaResource(?string $operation, ?string $component): void
     {
         $this->executeSchemaResource($operation, $component, $this->getResourceForDbOperation($operation, $operation, $component), false);
     }*/
@@ -631,7 +631,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
       return isTablePresent("ACT_HI_DECINST");
     }*/
 
-    public function isTablePresent(string $tableName): bool
+    public function isTablePresent(?string $tableName): bool
     {
         $connection = $this->sqlSession->getConnection();
         $schemaManager = $connection->getSchemaManager();
@@ -743,7 +743,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
         return sqlStatement + " \n" + line;
     }
 
-    protected function readNextTrimmedLine(BufferedReader reader): string
+    protected function readNextTrimmedLine(BufferedReader reader): ?string
     {
         String line = reader.readLine();
         if (line!=null) {

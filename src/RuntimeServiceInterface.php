@@ -83,7 +83,7 @@ interface RuntimeServiceInterface
      *          if the user has no Permissions#CREATE permission on Resources#PROCESS_INSTANCE
      *          and no Permissions#CREATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
-    public function startProcessInstanceByKey(string $processDefinitionKey, string $businessKey = null, array $variables = []): ProcessInstanceInterface;
+    public function startProcessInstanceByKey(?string $processDefinitionKey, ?string $businessKey = null, array $variables = []): ProcessInstanceInterface;
 
     /**
      * Starts a new process instance in the exactly specified version of the process definition with the given id.
@@ -111,7 +111,7 @@ interface RuntimeServiceInterface
      *          if the user has no Permissions#CREATE permission on Resources#PROCESS_INSTANCE
      *          and no Permissions#CREATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
-    public function startProcessInstanceById(string $processDefinitionId, string $businessKey = null, array $variables = []): ProcessInstanceInterface;
+    public function startProcessInstanceById(?string $processDefinitionId, ?string $businessKey = null, array $variables = []): ProcessInstanceInterface;
 
     /**
      * <p>Signals the process engine that a message is received and starts a new
@@ -139,7 +139,7 @@ interface RuntimeServiceInterface
      *
      * @since 5.9
      */
-    public function startProcessInstanceByMessage(string $messageName, string $businessKey = null, array $processVariables = []): ProcessInstanceInterface;
+    public function startProcessInstanceByMessage(?string $messageName, ?string $businessKey = null, array $processVariables = []): ProcessInstanceInterface;
 
     /**
      * <p>Signals the process engine that a message is received and starts a new
@@ -167,7 +167,7 @@ interface RuntimeServiceInterface
      *
      * @since 7.3
      */
-    public function startProcessInstanceByMessageAndProcessDefinitionId(string $messageName, string $processDefinitionId, string $businessKey = null, array $processVariables = []): ProcessInstanceInterface;
+    public function startProcessInstanceByMessageAndProcessDefinitionId(?string $messageName, ?string $processDefinitionId, ?string $businessKey = null, array $processVariables = []): ProcessInstanceInterface;
 
     /**
      * Delete an existing runtime process instances asynchronously using Batch operation.
@@ -192,7 +192,7 @@ interface RuntimeServiceInterface
         array $processInstanceIds,
         ProcessInstanceQueryInterface $processInstanceQuery = null,
         HistoricProcessInstanceQueryInterface $historicProcessInstanceQuery = null,
-        string $deleteReason = null,
+        ?string $deleteReason = null,
         bool $skipCustomListeners = false,
         bool $skipSubprocesses = false
     ): BatchInterface;
@@ -219,8 +219,8 @@ interface RuntimeServiceInterface
      *          or no Permissions#DELETE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
     public function deleteProcessInstance(
-        string $processInstanceId,
-        string $deleteReason = null,
+        ?string $processInstanceId,
+        ?string $deleteReason = null,
         bool $skipCustomListeners = false,
         bool $skipIoMappings = false,
         bool $externallyTerminated = false,
@@ -251,7 +251,7 @@ interface RuntimeServiceInterface
      */
     public function deleteProcessInstances(
         array $processInstanceIds,
-        string $deleteReason = null,
+        ?string $deleteReason = null,
         bool $skipCustomListeners = false,
         bool $externallyTerminated = false,
         bool $skipSubprocesses = false
@@ -279,7 +279,7 @@ interface RuntimeServiceInterface
      *          if the user has no Permissions#DELETE permission on Resources#PROCESS_INSTANCE
      *          or no Permissions#DELETE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
-    public function deleteProcessInstancesIfExists(array $processInstanceIds, string $deleteReason = null, bool $skipCustomListeners = false, bool $externallyTerminated = false, bool $skipSubprocesses = false): void;
+    public function deleteProcessInstancesIfExists(array $processInstanceIds, ?string $deleteReason = null, bool $skipCustomListeners = false, bool $externallyTerminated = false, bool $skipSubprocesses = false): void;
 
     /**
      * Delete an existing runtime process instance.
@@ -304,7 +304,7 @@ interface RuntimeServiceInterface
      *          if the user has no Permissions#DELETE permission on Resources#PROCESS_INSTANCE
      *          or no Permissions#DELETE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
-    public function deleteProcessInstanceIfExists(string $processInstanceId, string $deleteReason = null, bool $skipCustomListeners = false, bool $externallyTerminated = false, bool $skipIoMappings = false, bool $skipSubprocesses = false): void;
+    public function deleteProcessInstanceIfExists(?string $processInstanceId, ?string $deleteReason = null, bool $skipCustomListeners = false, bool $externallyTerminated = false, bool $skipIoMappings = false, bool $skipSubprocesses = false): void;
 
     /**
      * Finds the activity ids for all executions that are waiting in activities.
@@ -320,7 +320,7 @@ interface RuntimeServiceInterface
      *          if the user has no Permissions#READ permission on Resources#PROCESS_INSTANCE
      *          or no Permissions#READ_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
-    public function getActiveActivityIds(string $executionId): array;
+    public function getActiveActivityIds(?string $executionId): array;
 
     /**
      * <p>Allows retrieving the activity instance tree for a given process instance.
@@ -372,7 +372,7 @@ interface RuntimeServiceInterface
      *
      * @since 7.0
      */
-    public function getActivityInstance(string $processInstanceId): ActivityInstanceInterface;
+    public function getActivityInstance(?string $processInstanceId): ActivityInstanceInterface;
 
     /**
      * Sends an external trigger to an activity instance that is waiting inside the given execution.
@@ -391,7 +391,7 @@ interface RuntimeServiceInterface
      *          if the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
      *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
-    public function signal(string $executionId, string $signalName = null, $signalData = null, array $processVariables = []): void;
+    public function signal(?string $executionId, ?string $signalName = null, $signalData = null, array $processVariables = []): void;
 
     /**
      * The variable values for all given variableNames, takes all variables into account which are visible from the given execution scope (including parent scopes).
@@ -409,7 +409,7 @@ interface RuntimeServiceInterface
      *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
      *          the user has no ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
      */
-    public function getVariables(string $executionId, array $variableNames = []): array;
+    public function getVariables(?string $executionId, array $variableNames = []): VariableMapInterface;
 
     /**
      * The variable values for all given variableNames, takes all variables into account which are visible from the given execution scope (including parent scopes).
@@ -430,7 +430,7 @@ interface RuntimeServiceInterface
      * @since 7.2
      *
      */
-    public function getVariablesTyped(string $executionId, array $variableNames = [], bool $deserializeValues = true): VariableMapInterface;
+    public function getVariablesTyped(?string $executionId, array $variableNames = [], bool $deserializeValues = true): VariableMapInterface;
 
     /**
      * The variable values for the given variableNames only taking the given execution scope into account, not looking in outer scopes.
@@ -448,7 +448,7 @@ interface RuntimeServiceInterface
      *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
      *          the user has no ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
      */
-    public function getVariablesLocal(string $executionId, array $variableNames = []): array;
+    public function getVariablesLocal(?string $executionId, array $variableNames = []): VariableMapInterface;
 
     /**
      * The variable values for the given variableNames only taking the given execution scope into account, not looking in outer scopes.
@@ -469,7 +469,7 @@ interface RuntimeServiceInterface
      * @since 7.2
      *
      */
-    public function getVariablesLocalTyped(string $executionId, array $variableNames = [], bool $deserializeValues = true): VariableMapInterface;
+    public function getVariablesLocalTyped(?string $executionId, array $variableNames = [], bool $deserializeValues = true): VariableMapInterface;
 
     /**
      * The variable value.  Searching for the variable is done in all scopes that are visible to the given execution (including parent scopes).
@@ -488,7 +488,7 @@ interface RuntimeServiceInterface
      *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
      *          the user has no ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
      */
-    public function getVariable(string $executionId, string $variableName);
+    public function getVariable(?string $executionId, ?string $variableName);
 
     /**
      * Returns a TypedValue for the variable. Searching for the variable is done in all scopes that are visible
@@ -511,7 +511,7 @@ interface RuntimeServiceInterface
      * @since 7.2
      *
      */
-    public function getVariableTyped(string $executionId, string $variableName, bool $deserializeValue = true): ?TypedValueInterface;
+    public function getVariableTyped(?string $executionId, ?string $variableName, bool $deserializeValue = true): ?TypedValueInterface;
 
     /**
      * The variable value for an execution. Returns the value when the variable is set
@@ -530,7 +530,7 @@ interface RuntimeServiceInterface
      *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
      *          the user has no ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE permission on Resources#PROCESS_DEFINITION</li>
      */
-    public function getVariableLocal(string $executionId, string $variableName);
+    public function getVariableLocal(?string $executionId, ?string $variableName);
 
     /**
      * Returns a TypedValue for the variable. Searching for the variable is done in all scopes that are visible
@@ -553,7 +553,7 @@ interface RuntimeServiceInterface
      * @since 7.2
      *
      */
-    public function getVariableLocalTyped(string $executionId, string $variableName, bool $deserializeValue = true): ?TypedValueInterface;
+    public function getVariableLocalTyped(?string $executionId, ?string $variableName, bool $deserializeValue = true): ?TypedValueInterface;
 
     /**
      * Update or create a variable for an execution.  If the variable does not already exist
@@ -574,7 +574,7 @@ interface RuntimeServiceInterface
      *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
      *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
-    public function setVariable(string $executionId, string $variableName, $value): void;
+    public function setVariable(?string $executionId, ?string $variableName, $value): void;
 
     /**
      * Update or create a variable for an execution (not considering parent scopes).
@@ -594,7 +594,7 @@ interface RuntimeServiceInterface
      *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
      *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
-    public function setVariableLocal(string $executionId, string $variableName, $value): void;
+    public function setVariableLocal(?string $executionId, ?string $variableName, $value): void;
 
     /**
      * Update or create given variables for an execution (including parent scopes). If the variables are not already existing, they will be created in the process instance
@@ -612,7 +612,7 @@ interface RuntimeServiceInterface
      *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
      *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
-    public function setVariables(string $executionId, array $variables = []): void;
+    public function setVariables(?string $executionId, array $variables = []): void;
 
     /**
      * Update or create given variables for an execution (not considering parent scopes). If the variables are not already existing, it will be created in the given execution.
@@ -629,7 +629,7 @@ interface RuntimeServiceInterface
      *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
      *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
-    public function setVariablesLocal(string $executionId, array $variables = []): void;
+    public function setVariablesLocal(?string $executionId, array $variables = []): void;
 
     /**
      * Update or create runtime process variables in the root scope of process instances.
@@ -664,7 +664,7 @@ interface RuntimeServiceInterface
     public function setVariablesAsync(
         array $processInstanceIds,
         ProcessInstanceQueryInterface $processInstanceQuery = null,
-        HistoricProcessInstanceQuery $historicProcessInstanceQuery = null,
+        HistoricProcessInstanceQueryInterface $historicProcessInstanceQuery = null,
         array $variables = []
     ): BatchInterface;
 
@@ -683,7 +683,7 @@ interface RuntimeServiceInterface
      *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
      *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
-    public function removeVariable(string $executionId, string $variableName): void;
+    public function removeVariable(?string $executionId, ?string $variableName): void;
 
     /**
      * Removes a variable for an execution (not considering parent scopes).
@@ -700,7 +700,7 @@ interface RuntimeServiceInterface
      *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
      *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
-    public function removeVariableLocal(string $executionId, string $variableName): void;
+    public function removeVariableLocal(?string $executionId, ?string $variableName): void;
 
     /**
      * Removes variables for an execution.
@@ -717,7 +717,7 @@ interface RuntimeServiceInterface
      *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
      *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
-    public function removeVariables(string $executionId, array $variableNames = []): void;
+    public function removeVariables(?string $executionId, ?array $variableNames = []): void;
 
     /**
      * Remove variables for an execution (not considering parent scopes).
@@ -734,7 +734,7 @@ interface RuntimeServiceInterface
      *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
      *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
-    public function removeVariablesLocal(string $executionId, array $variableNames = []): void;
+    public function removeVariablesLocal(?string $executionId, ?array $variableNames = []): void;
 
     // Queries ////////////////////////////////////////////////////////
 
@@ -816,7 +816,7 @@ interface RuntimeServiceInterface
      *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
      *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
-    public function suspendProcessInstanceById(string $processInstanceId): void;
+    public function suspendProcessInstanceById(?string $processInstanceId): void;
 
     /**
      * <p>Suspends the process instances with the given process definition id.
@@ -854,7 +854,7 @@ interface RuntimeServiceInterface
      *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
      *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
-    public function suspendProcessInstanceByProcessDefinitionId(string $processDefinitionId): void;
+    public function suspendProcessInstanceByProcessDefinitionId(?string $processDefinitionId): void;
 
     /**
      * <p>Suspends the process instances with the given process definition key.
@@ -892,7 +892,7 @@ interface RuntimeServiceInterface
      *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
      *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
-    public function suspendProcessInstanceByProcessDefinitionKey(string $processDefinitionKey): void;
+    public function suspendProcessInstanceByProcessDefinitionKey(?string $processDefinitionKey): void;
 
     /**
      * <p>Activates the process instance with the given id.</p>
@@ -912,7 +912,7 @@ interface RuntimeServiceInterface
      *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
      *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
-    public function activateProcessInstanceById(string $processInstanceId): void;
+    public function activateProcessInstanceById(?string $processInstanceId): void;
 
     /**
      * <p>Activates the process instance with the given process definition id.</p>
@@ -932,7 +932,7 @@ interface RuntimeServiceInterface
      *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
      *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
-    public function activateProcessInstanceByProcessDefinitionId(string $processDefinitionId): void;
+    public function activateProcessInstanceByProcessDefinitionId(?string $processDefinitionId): void;
 
     /**
      * <p>Activates the process instance with the given process definition key.</p>
@@ -952,7 +952,7 @@ interface RuntimeServiceInterface
      *          <li>Permissions#UPDATE permission on Resources#PROCESS_INSTANCE</li>
      *          <li>Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION</li>
      */
-    public function activateProcessInstanceByProcessDefinitionKey(string $processDefinitionKey): void;
+    public function activateProcessInstanceByProcessDefinitionKey(?string $processDefinitionKey): void;
 
     /**
      * Activate or suspend process instances using a fluent builder. Specify the
@@ -990,7 +990,7 @@ interface RuntimeServiceInterface
      *          if the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
      *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
-    public function signalEventReceived(string $signalName, string $executionId = null, array $processVariables = []): void;
+    public function signalEventReceived(?string $signalName, ?string $executionId = null, array $processVariables = []): void;
 
     /**
      * Notifies the process engine that a signal event has been received using a
@@ -1000,7 +1000,7 @@ interface RuntimeServiceInterface
      *          the name of the signal event
      * @return SignalEventReceivedBuilderInterface the fluent builder to send the signal
      */
-    public function createSignalEvent(string $signalName): SignalEventReceivedBuilderInterface;
+    public function createSignalEvent(?string $signalName): SignalEventReceivedBuilderInterface;
 
     /**
      * Notifies the process engine that a message event with the name 'messageName' has
@@ -1025,7 +1025,7 @@ interface RuntimeServiceInterface
      *          if the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
      *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
-    public function messageEventReceived(string $messageName, string $executionId, array $processVariables = []): void;
+    public function messageEventReceived(?string $messageName, ?string $executionId, array $processVariables = []): void;
 
     /**
      * Define a complex message correlation using a fluent builder.
@@ -1036,7 +1036,7 @@ interface RuntimeServiceInterface
      *
      * @return MessageCorrelationBuilderInterface the fluent builder for defining the message correlation.
      */
-    public function createMessageCorrelation(string $messageName): MessageCorrelationBuilderInterface;
+    public function createMessageCorrelation(?string $messageName): MessageCorrelationBuilderInterface;
 
     /**
      * Correlates a message to
@@ -1071,7 +1071,7 @@ interface RuntimeServiceInterface
      *          if the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
      *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
-    public function correlateMessage(string $messageName, string $businessKey = null, array $correlationKeys = null, array $processVariables = null): void;
+    public function correlateMessage(?string $messageName, ?string $businessKey = null, array $correlationKeys = null, array $processVariables = null): void;
 
     /**
      * Define a modification of a process instance in terms of activity cancellations
@@ -1079,7 +1079,7 @@ interface RuntimeServiceInterface
      *
      * @param processInstanceId the process instance to modify
      */
-    public function createProcessInstanceModification(string $processInstanceId): ProcessInstanceModificationBuilderInterface;
+    public function createProcessInstanceModification(?string $processInstanceId): ProcessInstanceModificationBuilderInterface;
 
     /**
      * Returns a fluent builder to start a new process instance in the exactly
@@ -1094,7 +1094,7 @@ interface RuntimeServiceInterface
      *
      * @return a builder to create a process instance of the definition
      */
-    public function createProcessInstanceById(string $processDefinitionId): ProcessInstantiationBuilderInterface;
+    public function createProcessInstanceById(?string $processDefinitionId): ProcessInstantiationBuilderInterface;
 
     /**
      * Returns a fluent builder to start a new process instance in the latest
@@ -1109,7 +1109,7 @@ interface RuntimeServiceInterface
      *
      * @return a builder to create a process instance of the definition
      */
-    public function createProcessInstanceByKey(string $processDefinitionKey): ProcessInstantiationBuilderInterface;
+    public function createProcessInstanceByKey(?string $processDefinitionKey): ProcessInstantiationBuilderInterface;
 
     /**
      * Creates a migration plan to migrate process instance between different process definitions.
@@ -1119,7 +1119,7 @@ interface RuntimeServiceInterface
      * @param targetProcessDefinitionId the process definition that instances are migrated to
      * @return a fluent builder
      */
-    public function createMigrationPlan(string $sourceProcessDefinitionId, string $targetProcessDefinitionId): MigrationPlanBuilderInterface;
+    public function createMigrationPlan(?string $sourceProcessDefinitionId, ?string $targetProcessDefinitionId): MigrationPlanBuilderInterface;
 
     /**
      * Executes a migration plan for a given list of process instances. The migration can
@@ -1156,7 +1156,7 @@ interface RuntimeServiceInterface
      * @return a fluent builder
      */
 
-    public function createModification(string $processDefinitionId): ModificationBuilderInterface;
+    public function createModification(?string $processDefinitionId): ModificationBuilderInterface;
 
     /**
      * Restarts process instances that are completed or deleted with the initial or last set of variables.
@@ -1173,7 +1173,7 @@ interface RuntimeServiceInterface
      *       <li>Permissions#READ_HISTORY permission on Resources#PROCESS_DEFINITION</li>
      *     </ul>
      */
-    public function restartProcessInstances(string $processDefinitionId): RestartProcessInstanceBuilderInterface;
+    public function restartProcessInstances(?string $processDefinitionId): RestartProcessInstanceBuilderInterface;
 
     /**
      * Creates an incident
@@ -1189,7 +1189,7 @@ interface RuntimeServiceInterface
      *          if the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
      *          and no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
-    public function createIncident(string $incidentType, string $executionId, string $configuration, string $message = null): IncidentInterface;
+    public function createIncident(?string $incidentType, ?string $executionId, ?string $configuration, ?string $message = null): IncidentInterface;
 
     /**
      * Resolves and remove an incident
@@ -1200,7 +1200,7 @@ interface RuntimeServiceInterface
      *          if the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
      *          and no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
-    public function resolveIncident(string $incidentId): void;
+    public function resolveIncident(?string $incidentId): void;
 
     /**
      * Set an annotation to an incident.
@@ -1216,7 +1216,7 @@ interface RuntimeServiceInterface
      *
      * @since 7.15
      */
-    public function setAnnotationForIncidentById(string $incidentId, string $annotation): void;
+    public function setAnnotationForIncidentById(?string $incidentId, ?string $annotation): void;
 
     /**
      * Clear the annotation for an incident.
@@ -1231,7 +1231,7 @@ interface RuntimeServiceInterface
      *
      * @since 7.15
      */
-    public function clearAnnotationForIncidentById(string $incidentId): void;
+    public function clearAnnotationForIncidentById(?string $incidentId): void;
 
     /**
      * Define a complex condition evaluation using a fluent builder.

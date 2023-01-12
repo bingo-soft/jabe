@@ -97,4 +97,9 @@ class SaveTaskCmd implements CommandInterface, \Serializable
             $checker->checkCreateTask($task);
         }
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

@@ -11,7 +11,7 @@ class GetTaskAttachmentsCmd implements CommandInterface, \Serializable
 {
     protected $taskId;
 
-    public function __construct(string $taskId)
+    public function __construct(?string $taskId)
     {
         $this->taskId = $taskId;
     }
@@ -34,5 +34,10 @@ class GetTaskAttachmentsCmd implements CommandInterface, \Serializable
         return $commandContext
             ->getAttachmentManager()
             ->findAttachmentsByTaskId($this->taskId);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

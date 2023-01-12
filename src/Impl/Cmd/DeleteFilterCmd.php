@@ -12,7 +12,7 @@ class DeleteFilterCmd implements CommandInterface, \Serializable
 {
     protected $filterId;
 
-    public function __construct(string $filterId)
+    public function __construct(?string $filterId)
     {
         $this->filterId = $filterId;
     }
@@ -38,5 +38,10 @@ class DeleteFilterCmd implements CommandInterface, \Serializable
             ->getFilterManager()
             ->deleteFilter($this->filterId);
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

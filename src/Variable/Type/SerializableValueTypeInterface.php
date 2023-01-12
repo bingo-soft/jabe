@@ -21,5 +21,5 @@ interface SerializableValueTypeInterface extends ValueTypeInterface
      * @param serializedValue the value in serialized form
      * @return SerializableValueInterface the typed value for the value
      */
-    public function createValueFromSerialized(string $serializedValue, ?array $valueInfo = null): SerializableValueInterface;
+    public function createValueFromSerialized(?string $serializedValue, ?array $valueInfo = null): SerializableValueInterface;
 }

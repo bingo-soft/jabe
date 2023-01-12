@@ -14,4 +14,9 @@ class IsIdentityServiceReadOnlyCmd implements CommandInterface
     {
         return !array_key_exists(WritableIdentityProviderInterface::class, $commandContext->getSessionFactories());
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

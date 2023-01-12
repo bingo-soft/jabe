@@ -12,7 +12,7 @@ class SimpleStructureDefinition implements FieldBaseStructureDefinitionInterface
 
     protected $fieldParameterTypes = [];
 
-    public function __construct(string $id)
+    public function __construct(?string $id)
     {
         $this->id = $id;
     }
@@ -22,12 +22,12 @@ class SimpleStructureDefinition implements FieldBaseStructureDefinitionInterface
         return count($this->fieldNames);
     }
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function setFieldName(string $fieldName, string $type, ?string $parameterType): void
+    public function setFieldName(?string $fieldName, ?string $type, ?string $parameterType): void
     {
         $this->fieldNames[] = $fieldName;
         $this->fieldTypes[] = $type;

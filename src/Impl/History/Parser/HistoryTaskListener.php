@@ -49,5 +49,5 @@ abstract class HistoryTaskListener implements TaskListenerInterface
         }
     }
 
-    abstract protected function createHistoryEvent(DelegateTaskInterface $task, ExecutionEntityInterface $execution): HistoryEvent;
+    abstract protected function createHistoryEvent(DelegateTaskInterface $task, ExecutionEntity $execution): ?HistoryEvent;
 }

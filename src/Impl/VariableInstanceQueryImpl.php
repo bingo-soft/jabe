@@ -18,7 +18,7 @@ use Jabe\Runtime\{
     VariableInstanceQueryInterface
 };
 
-class VariableInstanceQueryImpl extends AbstractVariableQueryImpl implements VariableInstanceQuery, \Serializable
+class VariableInstanceQueryImpl extends AbstractVariableQueryImpl implements VariableInstanceQueryInterface, \Serializable
 {
     //private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
@@ -36,8 +36,8 @@ class VariableInstanceQueryImpl extends AbstractVariableQueryImpl implements Var
     protected $activityInstanceIds = [];
     protected $tenantIds = [];
 
-    protected $isByteArrayFetchingEnabled = true;
-    protected $isCustomObjectDeserializationEnabled = true;
+    protected bool $isByteArrayFetchingEnabled = true;
+    protected bool $isCustomObjectDeserializationEnabled = true;
 
     public function __construct(CommandExecutorInterface $commandExecutor = null)
     {
@@ -81,14 +81,14 @@ class VariableInstanceQueryImpl extends AbstractVariableQueryImpl implements Var
         $this->isCustomObjectDeserializationEnabled = $json->isCustomObjectDeserializationEnabled;
     }
 
-    public function variableId(string $id): VariableInstanceQueryInterface
+    public function variableId(?string $id): VariableInstanceQueryInterface
     {
         EnsureUtil::ensureNotNull("id", "id", $id);
         $this->variableId = $id;
         return $this;
     }
 
-    public function variableName(string $variableName): VariableInstanceQueryInterface
+    public function variableName(?string $variableName): VariableInstanceQueryInterface
     {
         $this->variableName = $variableName;
         return $this;
@@ -100,7 +100,7 @@ class VariableInstanceQueryImpl extends AbstractVariableQueryImpl implements Var
         return $this;
     }
 
-    public function variableNameLike(string $variableNameLike): VariableInstanceQueryInterface
+    public function variableNameLike(?string $variableNameLike): VariableInstanceQueryInterface
     {
         $this->variableNameLike = $variableNameLike;
         return $this;
@@ -213,7 +213,7 @@ class VariableInstanceQueryImpl extends AbstractVariableQueryImpl implements Var
             ->findVariableInstanceCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         $this->ensureVariablesInitialized();
@@ -249,12 +249,12 @@ class VariableInstanceQueryImpl extends AbstractVariableQueryImpl implements Var
 
     // getters ////////////////////////////////////////////////////
 
-    public function getVariableId(): string
+    public function getVariableId(): ?string
     {
         return $this->variableId;
     }
 
-    public function getVariableName(): string
+    public function getVariableName(): ?string
     {
         return $this->variableName;
     }
@@ -264,7 +264,7 @@ class VariableInstanceQueryImpl extends AbstractVariableQueryImpl implements Var
         return $this->variableNames;
     }
 
-    public function getVariableNameLike(): string
+    public function getVariableNameLike(): ?string
     {
         return $this->variableNameLike;
     }

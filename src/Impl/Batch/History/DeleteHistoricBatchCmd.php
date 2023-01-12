@@ -14,7 +14,7 @@ class DeleteHistoricBatchCmd implements CommandInterface
 {
     protected $batchId;
 
-    public function __construct(string $batchId)
+    public function __construct(?string $batchId)
     {
         $this->batchId = $batchId;
     }
@@ -46,5 +46,10 @@ class DeleteHistoricBatchCmd implements CommandInterface
     {
         $commandContext->getOperationLogManager()
             ->logBatchOperation(UserOperationLogEntryInterface::OPERATION_TYPE_DELETE_HISTORY, $this->batchId, PropertyChange::emptyChange());
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

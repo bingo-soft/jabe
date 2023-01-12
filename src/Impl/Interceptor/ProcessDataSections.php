@@ -10,7 +10,7 @@ class ProcessDataSections
      */
     protected $sections = [];
 
-    protected $currentSectionSealed = true;
+    protected bool $currentSectionSealed = true;
 
     /**
      * Adds a stack to the current section. If the current section is already sealed,

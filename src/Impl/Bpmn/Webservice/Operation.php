@@ -21,7 +21,7 @@ class Operation
      */
     protected $bpmnInterface;
 
-    public function __construct(string $id = null, string $name = null, BpmnInterface $bpmnInterface = null, MessageDefinition $inMessage = null)
+    public function __construct(?string $id = null, ?string $name = null, BpmnInterface $bpmnInterface = null, MessageDefinition $inMessage = null)
     {
         if ($id !== null) {
             $this->setId($id);
@@ -36,7 +36,7 @@ class Operation
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
@@ -46,7 +46,7 @@ class Operation
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }

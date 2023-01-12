@@ -14,4 +14,9 @@ class FindHistoryCleanupJobsCmd implements CommandInterface
     {
         return $commandContext->getJobManager()->findJobsByHandlerType(HistoryCleanupJobHandler::TYPE);
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

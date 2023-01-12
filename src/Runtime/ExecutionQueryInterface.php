@@ -6,70 +6,70 @@ use Jabe\Query\QueryInterface;
 
 interface ExecutionQueryInterface extends QueryInterface
 {
-    public function processDefinitionKey(string $processDefinitionKey): ExecutionQueryInterface;
+    public function processDefinitionKey(?string $processDefinitionKey): QueryInterface;
 
-    public function processDefinitionId(string $processDefinitionId): ExecutionQueryInterface;
+    public function processDefinitionId(?string $processDefinitionId): QueryInterface;
 
-    public function processInstanceId(string $processInstanceId): ExecutionQueryInterface;
+    public function processInstanceId(?string $processInstanceId): QueryInterface;
 
-    public function processInstanceBusinessKey(string $processInstanceBusinessKey): ExecutionQueryInterface;
+    public function processInstanceBusinessKey(?string $processInstanceBusinessKey): QueryInterface;
 
-    public function executionId(string $executionId): ExecutionQueryInterface;
+    public function executionId(?string $executionId): QueryInterface;
 
-    public function activityId(string $activityId): ExecutionQueryInterface;
+    public function activityId(?string $activityId): QueryInterface;
 
-    public function matchVariableNamesIgnoreCase(): ExecutionQueryInterface;
+    public function matchVariableNamesIgnoreCase(): QueryInterface;
 
-    public function matchVariableValuesIgnoreCase(): ExecutionQueryInterface;
+    public function matchVariableValuesIgnoreCase(): QueryInterface;
 
-    public function variableValueEquals(string $name, $value): ExecutionQueryInterface;
+    public function variableValueEquals(?string $name, $value): QueryInterface;
 
-    public function variableValueNotEquals(string $name, $value): ExecutionQueryInterface;
+    public function variableValueNotEquals(?string $name, $value): QueryInterface;
 
-    public function variableValueGreaterThan(string $name, $value): ExecutionQueryInterface;
+    public function variableValueGreaterThan(?string $name, $value): QueryInterface;
 
-    public function variableValueGreaterThanOrEqual(string $name, $value): ExecutionQueryInterface;
+    public function variableValueGreaterThanOrEqual(?string $name, $value): QueryInterface;
 
-    public function variableValueLessThan(string $name, $value): ExecutionQueryInterface;
+    public function variableValueLessThan(?string $name, $value): QueryInterface;
 
-    public function variableValueLessThanOrEqual(string $name, $value): ExecutionQueryInterface;
+    public function variableValueLessThanOrEqual(?string $name, $value): QueryInterface;
 
-    public function variableValueLike(string $name, string $value): ExecutionQueryInterface;
+    public function variableValueLike(?string $name, ?string $value): QueryInterface;
 
-    public function processVariableValueEquals(string $variableName, $variableValue): ExecutionQueryInterface;
+    public function processVariableValueEquals(?string $variableName, $variableValue): QueryInterface;
 
-    public function processVariableValueNotEquals(string $variableName, $variableValue): ExecutionQueryInterface;
+    public function processVariableValueNotEquals(?string $variableName, $variableValue): QueryInterface;
 
     // event subscriptions //////////////////////////////////////////////////
 
-    public function signalEventSubscriptionName(string $signalName): ExecutionQueryInterface;
+    public function signalEventSubscriptionName(?string $signalName): QueryInterface;
 
-    public function messageEventSubscriptionName(string $messageName): ExecutionQueryInterface;
+    public function messageEventSubscriptionName(?string $messageName): QueryInterface;
 
-    public function messageEventSubscription(): ExecutionQueryInterface;
+    public function messageEventSubscription(): QueryInterface;
 
-    public function suspended(): ExecutionQueryInterface;
+    public function suspended(): QueryInterface;
 
-    public function active(): ExecutionQueryInterface;
+    public function active(): QueryInterface;
 
-    public function incidentType(string $incidentType): ExecutionQueryInterface;
+    public function incidentType(?string $incidentType): QueryInterface;
 
-    public function incidentId(string $incidentId): ExecutionQueryInterface;
+    public function incidentId(?string $incidentId): QueryInterface;
 
-    public function incidentMessage(string $incidentMessage): ExecutionQueryInterface;
+    public function incidentMessage(?string $incidentMessage): QueryInterface;
 
-    public function incidentMessageLike(string $incidentMessageLike): ExecutionQueryInterface;
+    public function incidentMessageLike(?string $incidentMessageLike): QueryInterface;
 
-    public function tenantIdIn(array $tenantIds): ExecutionQueryInterface;
+    public function tenantIdIn(array $tenantIds): QueryInterface;
 
-    public function withoutTenantId(): ExecutionQueryInterface;
+    public function withoutTenantId(): QueryInterface;
 
   //ordering //////////////////////////////////////////////////////////////
-    public function orderByProcessInstanceId(): ExecutionQueryInterface;
+    public function orderByProcessInstanceId(): QueryInterface;
 
-    public function orderByProcessDefinitionKey(): ExecutionQueryInterface;
+    public function orderByProcessDefinitionKey(): QueryInterface;
 
-    public function orderByProcessDefinitionId(): ExecutionQueryInterface;
+    public function orderByProcessDefinitionId(): QueryInterface;
 
-    public function orderByTenantId(): ExecutionQueryInterface;
+    public function orderByTenantId(): QueryInterface;
 }

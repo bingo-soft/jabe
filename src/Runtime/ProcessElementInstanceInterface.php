@@ -11,8 +11,8 @@ interface ProcessElementInstanceInterface
     public function getParentActivityInstanceId(): ?string;
 
     /** the process definition id */
-    public function getProcessDefinitionId(): string;
+    public function getProcessDefinitionId(): ?string;
 
     /** the id of the process instance this process element is part of */
-    public function getProcessInstanceId(): string;
+    public function getProcessInstanceId(): ?string;
 }

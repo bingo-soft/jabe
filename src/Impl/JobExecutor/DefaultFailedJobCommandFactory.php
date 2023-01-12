@@ -7,7 +7,7 @@ use Jabe\Impl\Interceptor\CommandInterface;
 
 class DefaultFailedJobCommandFactory implements FailedJobCommandFactoryInterface
 {
-    public function getCommand(string $jobId, \Throwable $exception): CommandInterface
+    public function getCommand(?string $jobId, \Throwable $exception): CommandInterface
     {
         return new DefaultJobRetryCmd($jobId, $exception);
     }

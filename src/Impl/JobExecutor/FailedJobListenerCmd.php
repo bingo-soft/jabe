@@ -14,7 +14,7 @@ class FailedJobListenerCmd implements CommandInterface
     protected $cmd;
     protected $listener;
 
-    public function __construct(string $jobId, CommandInterface $cmd, FailedJobListener $listener)
+    public function __construct(?string $jobId, CommandInterface $cmd, FailedJobListener $listener)
     {
         $this->jobId = $jobId;
         $this->cmd = $cmd;
@@ -35,5 +35,10 @@ class FailedJobListenerCmd implements CommandInterface
             //LOG.debugFailedJobNotFound(jobId);
         }
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

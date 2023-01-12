@@ -14,7 +14,7 @@ use Jabe\Impl\Persistence\AbstractManager;
 
 class HistoricStatisticsManager extends AbstractManager
 {
-    public function getHistoricStatisticsGroupedByActivity(HistoricActivityStatisticsQueryImpl $query, Page $page): array
+    public function getHistoricStatisticsGroupedByActivity(HistoricActivityStatisticsQueryImpl $query, ?Page $page): array
     {
         if ($this->ensureHistoryReadOnProcessDefinition($query)) {
             return $this->getDbEntityManager()->selectList("selectHistoricActivityStatistics", $query, $page);

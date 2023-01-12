@@ -13,7 +13,7 @@ class IdentityOperationResult
     protected $value;
     protected $operation;
 
-    public function __construct(\Serializable $value, string $operation)
+    public function __construct(?\Serializable $value, ?string $operation)
     {
         $this->value = $value;
         $this->operation = $operation;
@@ -29,12 +29,12 @@ class IdentityOperationResult
         $this->value = $value;
     }
 
-    public function getOperation(): string
+    public function getOperation(): ?string
     {
         return $this->operation;
     }
 
-    public function setOperation(string $operation): void
+    public function setOperation(?string $operation): void
     {
         $this->operation = $operation;
     }

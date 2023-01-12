@@ -13,7 +13,7 @@ class GetUserAccountCmd implements CommandInterface, \Serializable
     protected $userPassword;
     protected $accountName;
 
-    public function __construct(string $userId, string $userPassword, string $accountName)
+    public function __construct(?string $userId, ?string $userPassword, ?string $accountName)
     {
         $this->userId = $userId;
         $this->userPassword = $userPassword;
@@ -42,5 +42,10 @@ class GetUserAccountCmd implements CommandInterface, \Serializable
         return $commandContext
             ->getIdentityInfoManager()
             ->findUserAccountByUserIdAndKey($this->userId, $this->userPassword, $this->accountName);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

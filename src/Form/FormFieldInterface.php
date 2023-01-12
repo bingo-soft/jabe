@@ -10,12 +10,12 @@ interface FormFieldInterface
      * @return string the id of a form property. Must be unique for a given form.
      * The id is used for mapping the form field to a process variable.
      */
-    public function getId(): string;
+    public function getId(): ?string;
 
     /**
      * @return string the human-readable display name of a form property.
      */
-    public function getLabel(): string;
+    public function getLabel(): ?string;
 
     /**
      * @return FormTypeInterface the type of this form field.
@@ -25,7 +25,7 @@ interface FormFieldInterface
     /**
      * @return string the name of the type of this form field
      */
-    public function getTypeName(): string;
+    public function getTypeName(): ?string;
 
     /**
      * @return TypedValueInterface the value for this form field

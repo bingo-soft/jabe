@@ -46,7 +46,7 @@ abstract class AbstractGetDeployedFormCmd implements CommandInterface
         }
     }
 
-    protected function getResourceForFormKey(FormDataInterface $formData, string $formKey)
+    protected function getResourceForFormKey(FormDataInterface $formData, ?string $formKey)
     {
         $resourceName = $formKey;
 
@@ -65,11 +65,11 @@ abstract class AbstractGetDeployedFormCmd implements CommandInterface
         return $this->getDeploymentResource($formData->getDeploymentId(), $resourceName);
     }
 
-    protected function getResourceForFormRef(FormRefInterface $formRef, string $deploymentId)
+    protected function getResourceForFormRef(FormRefInterface $formRef, ?string $deploymentId)
     {
         $ctx = $this->commandContext;
         $definition = $ctx->runWithoutAuthorization(function () use ($ctx, $formRef, $deploymentId) {
-            $cmd = new GetCamundaFormDefinitionCmd($formRef, $deploymentId);
+            $cmd = new GetFormDefinitionCmd($formRef, $deploymentId);
             return $cmd->execute($ctx);
         });
 
@@ -80,7 +80,7 @@ abstract class AbstractGetDeployedFormCmd implements CommandInterface
         return $this->getDeploymentResource($definition->getDeploymentId(), $definition->getResourceName());
     }
 
-    protected function getDeploymentResource(string $deploymentId, string $resourceName)
+    protected function getDeploymentResource(?string $deploymentId, ?string $resourceName)
     {
         try {
             $ctx = $this->commandContext;
@@ -96,4 +96,9 @@ abstract class AbstractGetDeployedFormCmd implements CommandInterface
     abstract protected function getFormData(): FormDataInterface;
 
     abstract protected function checkAuthorization(): void;
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

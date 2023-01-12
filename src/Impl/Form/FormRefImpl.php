@@ -10,28 +10,28 @@ class FormRefImpl implements FormRefInterface
     private $binding;
     private $version;
 
-    public function __construct(string $key, string $binding)
+    public function __construct(?string $key, ?string $binding)
     {
         $this->key = $key;
         $this->binding = $binding;
     }
 
-    public function getKey(): string
+    public function getKey(): ?string
     {
         return $this->key;
     }
 
-    public function setKey(string $key): void
+    public function setKey(?string $key): void
     {
         $this->key = $key;
     }
 
-    public function getBinding(): string
+    public function getBinding(): ?string
     {
         return $this->binding;
     }
 
-    public function setBinding(string $binding): void
+    public function setBinding(?string $binding): void
     {
         $this->binding = $binding;
     }

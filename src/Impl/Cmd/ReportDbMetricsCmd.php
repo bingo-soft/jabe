@@ -27,4 +27,9 @@ class ReportDbMetricsCmd implements CommandInterface
         $dbMetricsReporter->reportNow();
         return null;
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

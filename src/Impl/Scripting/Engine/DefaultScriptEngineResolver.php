@@ -39,7 +39,7 @@ class DefaultScriptEngineResolver implements ScriptEngineResolverInterface
      * @param language the language (such as 'groovy' for the script engine)
      * @return ScriptEngineInterface the cached engine or null if no script engine can be created for the given language
      */
-    public function getScriptEngine(string $language, bool $resolveFromCache = false): ?ScriptEngineInterface
+    public function getScriptEngine(?string $language, bool $resolveFromCache = false): ?ScriptEngineInterface
     {
         $scriptEngine = null;
 

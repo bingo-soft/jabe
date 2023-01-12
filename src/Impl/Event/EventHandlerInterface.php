@@ -7,7 +7,7 @@ use Jabe\Impl\Persistence\Entity\EventSubscriptionEntity;
 
 interface EventHandlerInterface
 {
-    public function getEventHandlerType(): string;
+    public function getEventHandlerType(): ?string;
 
     public function handleEvent(
         EventSubscriptionEntity $eventSubscription,

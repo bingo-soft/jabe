@@ -15,7 +15,7 @@ class ReportDbMetricsValueCmd implements CommandInterface
     protected $name;
     protected $value;
 
-    public function __construct(string $reporterId, string $name, int $value)
+    public function __construct(?string $reporterId, ?string $name, int $value)
     {
         $this->reporterId = $reporterId;
         $this->name = $name;
@@ -26,5 +26,10 @@ class ReportDbMetricsValueCmd implements CommandInterface
     {
         $commandContext->getMeterLogManager()->insert(new MeterLogEntity($this->name, $this->reporterId, $this->value, ClockUtil::getCurrentTime()->format('c')));
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

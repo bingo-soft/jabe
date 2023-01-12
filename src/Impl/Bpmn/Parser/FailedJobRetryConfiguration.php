@@ -6,7 +6,7 @@ use Jabe\Impl\El\ExpressionInterface;
 
 class FailedJobRetryConfiguration
 {
-    protected $retries = 0;
+    protected int $retries = 0;
     protected $retryIntervals = [];
     protected $expression;
 

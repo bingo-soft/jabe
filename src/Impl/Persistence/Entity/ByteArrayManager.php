@@ -15,7 +15,7 @@ class ByteArrayManager extends AbstractManager
      * bytes in memory. So use this method only in conjunction with an entity that has
      * optimistic locking!.
      */
-    public function deleteByteArrayById(string $byteArrayEntityId): void
+    public function deleteByteArrayById(?string $byteArrayEntityId): void
     {
         $this->getDbEntityManager()->delete(ByteArrayEntity::class, "deleteByteArrayNoRevisionCheck", $byteArrayEntityId);
     }
@@ -26,7 +26,7 @@ class ByteArrayManager extends AbstractManager
         $this->getDbEntityManager()->insert($arr);
     }
 
-    public function addRemovalTimeToByteArraysByRootProcessInstanceId(string $rootProcessInstanceId, string $removalTime): void
+    public function addRemovalTimeToByteArraysByRootProcessInstanceId(?string $rootProcessInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["rootProcessInstanceId"] = $rootProcessInstanceId;
@@ -36,7 +36,7 @@ class ByteArrayManager extends AbstractManager
             ->updatePreserveOrder(ByteArrayEntity::class, "updateByteArraysByRootProcessInstanceId", $parameters);
     }
 
-    public function addRemovalTimeToByteArraysByProcessInstanceId(string $processInstanceId, string $removalTime): void
+    public function addRemovalTimeToByteArraysByProcessInstanceId(?string $processInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["processInstanceId"] = $processInstanceId;
@@ -59,7 +59,7 @@ class ByteArrayManager extends AbstractManager
             ->updatePreserveOrder(ByteArrayEntity::class, "updateAttachmentByteArraysByProcessInstanceId", $parameters);
     }
 
-    public function deleteByteArraysByRemovalTime(string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
+    public function deleteByteArraysByRemovalTime(?string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
     {
         $parameters = [];
         $parameters["removalTime"] = $removalTime;

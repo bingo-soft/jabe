@@ -8,7 +8,7 @@ use Jabe\Impl\Pvm\Runtime\PvmExecutionImpl;
 class PvmAtomicOperationActivityStartCancelScope extends PvmAtomicOperationCancelActivity
 {
 
-    public function getCanonicalName(): string
+    public function getCanonicalName(): ?string
     {
         return "activity-start-cancel-scope";
     }

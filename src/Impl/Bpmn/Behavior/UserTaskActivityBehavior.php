@@ -2,7 +2,7 @@
 
 namespace Jabe\Impl\Bpmn\Behavior;
 
-use Jabe\Impl\El\ExpressionManager;
+use Jabe\Impl\El\ExpressionManagerInterface;
 use Jabe\Impl\Migration\Instance\{
     MigratingActivityInstance,
     MigratingUserTaskInstance
@@ -27,12 +27,14 @@ class UserTaskActivityBehavior extends TaskActivityBehavior implements Migration
 {
     protected $taskDecorator;
 
-    public function __construct(?ExpressionManager $expressionManager, ?TaskDefinition $taskDefinition, ?TaskDecorator $taskDecorator)
+    public function __construct(/*ExpressionManagerInterface|TaskDecorator*/$expressionManagerOrDecorator, ?TaskDefinition $taskDefinition = null, ?TaskDecorator $taskDecorator = null)
     {
         if ($taskDecorator !== null) {
             $this->taskDecorator = $taskDecorator;
-        } elseif ($expressionManager !== null && $taskDefinition !== null) {
-            $this->taskDecorator = new TaskDecorator($taskDefinition, $expressionManager);
+        } elseif ($expressionManagerOrDecorator !== null && $taskDefinition !== null) {
+            $this->taskDecorator = new TaskDecorator($taskDefinition, $expressionManagerOrDecorator);
+        } elseif ($expressionManagerOrDecorator instanceof TaskDecorator) {
+            $this->taskDecorator = $expressionManagerOrDecorator;
         }
     }
 
@@ -48,7 +50,7 @@ class UserTaskActivityBehavior extends TaskActivityBehavior implements Migration
         $task->transitionTo(TaskState::STATE_CREATED);
     }
 
-    public function signal(ActivityExecutionInterface $execution, string $signalName, $ignalData): void
+    public function signal(ActivityExecutionInterface $execution, ?string $signalName, $ignalData): void
     {
         $this->leave($execution);
     }
@@ -82,7 +84,7 @@ class UserTaskActivityBehavior extends TaskActivityBehavior implements Migration
         return $this->taskDecorator->getTaskDefinition();
     }
 
-    public function getExpressionManager(): ExpressionManager
+    public function getExpressionManager(): ExpressionManagerInterface
     {
         return $this->taskDecorator->getExpressionManager();
     }

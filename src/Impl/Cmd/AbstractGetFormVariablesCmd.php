@@ -13,7 +13,7 @@ abstract class AbstractGetFormVariablesCmd implements CommandInterface, \Seriali
     public $formVariableNames;
     protected $deserializeObjectValues;
 
-    public function __construct(string $resourceId, array $formVariableNames, bool $deserializeObjectValues)
+    public function __construct(?string $resourceId, array $formVariableNames, bool $deserializeObjectValues)
     {
         $this->resourceId = $resourceId;
         $this->formVariableNames = $formVariableNames;
@@ -41,5 +41,10 @@ abstract class AbstractGetFormVariablesCmd implements CommandInterface, \Seriali
     {
         $value = $formField->getValue();
         return $value;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

@@ -6,10 +6,10 @@ class DeploymentMapping
 {
     protected const NULL_ID = '$NULL';
 
-    protected $deploymentId;
-    protected $count;
+    protected ?string $deploymentId;
+    protected int $count = 0;
 
-    public function __construct(string $deploymentId, int $count)
+    public function __construct(?string $deploymentId, int $count)
     {
         $this->deploymentId = $deploymentId == null ? self::NULL_ID : $deploymentId;
         $this->count = $count;

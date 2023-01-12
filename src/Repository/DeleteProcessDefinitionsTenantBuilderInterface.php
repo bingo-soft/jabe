@@ -17,5 +17,5 @@ interface DeleteProcessDefinitionsTenantBuilderInterface extends DeleteProcessDe
      * @param tenantId id which identifies the tenant
      * @return DeleteProcessDefinitionsBuilderInterface the builder
      */
-    public function withTenantId(string $tenantId): DeleteProcessDefinitionsBuilderInterface;
+    public function withTenantId(?string $tenantId): DeleteProcessDefinitionsBuilderInterface;
 }

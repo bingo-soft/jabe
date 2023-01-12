@@ -36,7 +36,7 @@ class PropertyChange
         return $this->propertyName;
     }
 
-    public function setPropertyName(string $propertyName): void
+    public function setPropertyName(?string $propertyName): void
     {
         $this->propertyName = $propertyName;
     }

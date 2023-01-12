@@ -32,7 +32,7 @@ class CorrelationHandlerResult
         return $messageCorrelationResult;
     }
 
-    public static function matchedProcessDefinition(ProcessDefinitionEntity $processDefinitionEntity, string $startEventActivityId): CorrelationHandlerResult
+    public static function matchedProcessDefinition(ProcessDefinitionEntity $processDefinitionEntity, ?string $startEventActivityId): CorrelationHandlerResult
     {
         $messageCorrelationResult = new CorrelationHandlerResult();
         $messageCorrelationResult->processDefinitionEntity = $processDefinitionEntity;
@@ -53,12 +53,12 @@ class CorrelationHandlerResult
         return $this->processDefinitionEntity;
     }
 
-    public function getStartEventActivityId(): string
+    public function getStartEventActivityId(): ?string
     {
         return $this->startEventActivityId;
     }
 
-    public function getResultType(): string
+    public function getResultType(): ?string
     {
         return $this->resultType;
     }

@@ -18,6 +18,7 @@ use Jabe\Impl\Persistence\Entity\{
     PropertyChange,
     UserOperationLogManager
 };
+use Jabe\Impl\Util\EnsureUtil;
 
 class DeleteDeploymentCmd implements CommandInterface, \Serializable
 {
@@ -29,7 +30,7 @@ class DeleteDeploymentCmd implements CommandInterface, \Serializable
     protected $skipCustomListeners;
     protected $skipIoMappings;
 
-    public function __construct(string $deploymentId, bool $cascade, bool $skipCustomListeners, bool $skipIoMappings)
+    public function __construct(?string $deploymentId, bool $cascade, bool $skipCustomListeners, bool $skipIoMappings)
     {
         $this->deploymentId = $deploymentId;
         $this->cascade = $cascade;
@@ -58,7 +59,7 @@ class DeleteDeploymentCmd implements CommandInterface, \Serializable
 
     public function execute(CommandContext $commandContext)
     {
-        EnsureUtil::ensureNotNull("deploymentId", $this->deploymentId);
+        EnsureUtil::ensureNotNull("deploymentId", "deploymentId", $this->deploymentId);
 
         foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
             $checker->checkDeleteDeployment($this->deploymentId);
@@ -102,5 +103,10 @@ class DeleteDeploymentCmd implements CommandInterface, \Serializable
         }
 
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

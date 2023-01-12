@@ -2,6 +2,10 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
+use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface
+};
 use Jabe\Impl\{
     Direction,
     ExternalTaskQueryImpl,
@@ -41,7 +45,7 @@ class ExternalTaskManager extends AbstractManager
         return self::$EXT_TASK_PRIORITY_ORDERING_PROPERTY;
     }
 
-    public function findExternalTaskById(string $id): ExternalTaskEntity
+    public function findExternalTaskById(?string $id): ExternalTaskEntity
     {
         return $this->getDbEntityManager()->selectById(ExternalTaskEntity::class, $this->id);
     }
@@ -57,12 +61,12 @@ class ExternalTaskManager extends AbstractManager
         $this->getDbEntityManager()->delete($externalTask);
     }
 
-    public function findExternalTasksByExecutionId(string $id): array
+    public function findExternalTasksByExecutionId(?string $id): array
     {
         return $this->getDbEntityManager()->selectList("selectExternalTasksByExecutionId", $id);
     }
 
-    public function findExternalTasksByProcessInstanceId(string $processInstanceId): array
+    public function findExternalTasksByProcessInstanceId(?string $processInstanceId): array
     {
         return $this->getDbEntityManager()->selectList("selectExternalTasksByProcessInstanceId", $processInstanceId);
     }
@@ -120,9 +124,9 @@ class ExternalTaskManager extends AbstractManager
     }
 
     protected function updateExternalTaskSuspensionState(
-        string $processInstanceId,
-        string $processDefinitionId,
-        string $processDefinitionKey,
+        ?string $processInstanceId,
+        ?string $processDefinitionId,
+        ?string $processDefinitionKey,
         SuspensionState $suspensionState
     ): void {
         $parameters = [];
@@ -138,22 +142,22 @@ class ExternalTaskManager extends AbstractManager
         );
     }
 
-    public function updateExternalTaskSuspensionStateByProcessInstanceId(string $processInstanceId, SuspensionState $suspensionState): void
+    public function updateExternalTaskSuspensionStateByProcessInstanceId(?string $processInstanceId, SuspensionState $suspensionState): void
     {
         $this->updateExternalTaskSuspensionState($processInstanceId, null, null, $suspensionState);
     }
 
-    public function updateExternalTaskSuspensionStateByProcessDefinitionId(string $processDefinitionId, SuspensionState $suspensionState): void
+    public function updateExternalTaskSuspensionStateByProcessDefinitionId(?string $processDefinitionId, SuspensionState $suspensionState): void
     {
         $this->updateExternalTaskSuspensionState(null, $processDefinitionId, null, $suspensionState);
     }
 
-    public function updateExternalTaskSuspensionStateByProcessDefinitionKey(string $processDefinitionKey, SuspensionState $suspensionState): void
+    public function updateExternalTaskSuspensionStateByProcessDefinitionKey(?string $processDefinitionKey, SuspensionState $suspensionState): void
     {
         $this->updateExternalTaskSuspensionState(null, null, $processDefinitionKey, $suspensionState);
     }
 
-    public function updateExternalTaskSuspensionStateByProcessDefinitionKeyAndTenantId(string $processDefinitionKey, string $processDefinitionTenantId, SuspensionState $suspensionState): void
+    public function updateExternalTaskSuspensionStateByProcessDefinitionKeyAndTenantId(?string $processDefinitionKey, ?string $processDefinitionTenantId, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processDefinitionKey"] = $processDefinitionKey;
@@ -163,7 +167,7 @@ class ExternalTaskManager extends AbstractManager
         $this->getDbEntityManager()->update(ExternalTaskEntity::class, "updateExternalTaskSuspensionStateByParameters", $this->configureParameterizedQuery($parameters));
     }
 
-    protected function configureQuery(ExternalTaskQueryImpl $query): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         if ($query instanceof ExternalTaskQueryImpl) {
             $this->getAuthorizationManager()->configureExternalTaskQuery($query);

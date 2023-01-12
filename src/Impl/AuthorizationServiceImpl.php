@@ -33,12 +33,12 @@ class AuthorizationServiceImpl extends ServiceImpl implements AuthorizationServi
         return $this->commandExecutor->execute(new SaveAuthorizationCmd($authorization));
     }
 
-    public function deleteAuthorization(string $authorizationId): void
+    public function deleteAuthorization(?string $authorizationId): void
     {
         $this->commandExecutor->execute(new DeleteAuthorizationCmd($authorizationId));
     }
 
-    public function isUserAuthorized(string $userId, array $groupIds, PermissionInterface $permission, ResourceInterface $resource, string $resourceId = null): bool
+    public function isUserAuthorized(?string $userId, array $groupIds, PermissionInterface $permission, ResourceInterface $resource, ?string $resourceId = null): bool
     {
         return $this->commandExecutor->execute(new AuthorizationCheckCmd($userId, $groupIds, $permission, $resource, $resourceId));
     }

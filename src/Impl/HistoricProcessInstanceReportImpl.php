@@ -35,14 +35,14 @@ class HistoricProcessInstanceReportImpl implements HistoricProcessInstanceReport
         $this->commandExecutor = $commandExecutor;
     }
 
-    public function startedAfter(string $startedAfter): HistoricProcessInstanceReportInterface
+    public function startedAfter(?string $startedAfter): HistoricProcessInstanceReportInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "startedAfter", $startedAfter);
         $this->startedAfter = $startedAfter;
         return $this;
     }
 
-    public function startedBefore(string $startedBefore): HistoricProcessInstanceReportInterface
+    public function startedBefore(?string $startedBefore): HistoricProcessInstanceReportInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "startedBefore", $startedBefore);
         $this->startedBefore = $startedBefore;
@@ -63,7 +63,7 @@ class HistoricProcessInstanceReportImpl implements HistoricProcessInstanceReport
         return $this;
     }
 
-    public function duration(string $periodUnit): array
+    public function duration(?string $periodUnit): array
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "periodUnit", $periodUnit);
         $this->durationPeriodUnit = $periodUnit;
@@ -123,12 +123,12 @@ class HistoricProcessInstanceReportImpl implements HistoricProcessInstanceReport
         }
     }
 
-    public function getStartedAfter(): string
+    public function getStartedAfter(): ?string
     {
         return $this->startedAfter;
     }
 
-    public function getStartedBefore(): string
+    public function getStartedBefore(): ?string
     {
         return $this->startedBefore;
     }
@@ -148,7 +148,7 @@ class HistoricProcessInstanceReportImpl implements HistoricProcessInstanceReport
         return $this->tenantCheck;
     }
 
-    public function getReportPeriodUnitName(): string
+    public function getReportPeriodUnitName(): ?string
     {
         return $this->durationPeriodUnit;
     }

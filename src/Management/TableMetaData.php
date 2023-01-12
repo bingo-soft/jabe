@@ -15,18 +15,18 @@ class TableMetaData
         $this->tableName = $tableName;
     }
 
-    public function addColumnMetaData(string $columnName, string $columnType): void
+    public function addColumnMetaData(?string $columnName, ?string $columnType): void
     {
         $this->columnNames[] = $columnName;
         $this->columnTypes[] = $columnType;
     }
 
-    public function getTableName(): string
+    public function getTableName(): ?string
     {
         return $this->tableName;
     }
 
-    public function setTableName(string $tableName): void
+    public function setTableName(?string $tableName): void
     {
         $this->tableName = $tableName;
     }

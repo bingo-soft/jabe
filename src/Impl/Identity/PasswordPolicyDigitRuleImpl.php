@@ -15,7 +15,7 @@ class PasswordPolicyDigitRuleImpl implements PasswordPolicyRuleInterface
         $this->minDigit = $minDigit;
     }
 
-    public function getPlaceholder(): string
+    public function getPlaceholder(): ?string
     {
         return PasswordPolicyDigitRuleImpl::PLACEHOLDER;
     }

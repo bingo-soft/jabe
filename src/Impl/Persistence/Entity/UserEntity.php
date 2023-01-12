@@ -16,7 +16,7 @@ use Jabe\Impl\Util\ClassNameUtil;
 class UserEntity implements UserInterface, \Serializable, DbEntityInterface, HasDbRevisionInterface
 {
     protected $id;
-    protected $revision;
+    protected int $revision = 0;
     protected $firstName;
     protected $lastName;
     protected $email;
@@ -24,7 +24,7 @@ class UserEntity implements UserInterface, \Serializable, DbEntityInterface, Has
     protected $newPassword;
     protected $salt;
     protected $lockExpirationTime;
-    protected $attempts;
+    protected int $attempts = 0;
 
     public function __construct(?string $id = null)
     {
@@ -52,57 +52,57 @@ class UserEntity implements UserInterface, \Serializable, DbEntityInterface, Has
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getFirstName(): string
+    public function getFirstName(): ?string
     {
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName): void
+    public function setFirstName(?string $firstName): void
     {
         $this->firstName = $firstName;
     }
 
-    public function getLastName(): string
+    public function getLastName(): ?string
     {
         return $this->lastName;
     }
 
-    public function setLastName(string $lastName): void
+    public function setLastName(?string $lastName): void
     {
         $this->lastName = $lastName;
     }
 
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setEmail(string $email): void
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): void
+    public function setPassword(?string $password): void
     {
         $this->newPassword = $password;
     }
 
-    public function getSalt(): string
+    public function getSalt(): ?string
     {
         return $this->salt;
     }
 
-    public function setSalt(string $salt): void
+    public function setSalt(?string $salt): void
     {
         $this->salt = $salt;
     }
@@ -110,12 +110,12 @@ class UserEntity implements UserInterface, \Serializable, DbEntityInterface, Has
     /**
      * Special setter for MyBatis.
      */
-    public function setDbPassword(string $password): void
+    public function setDbPassword(?string $password): void
     {
         $this->password = $password;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }
@@ -125,12 +125,12 @@ class UserEntity implements UserInterface, \Serializable, DbEntityInterface, Has
         $this->revision = $revision;
     }
 
-    public function getLockExpirationTime(): string
+    public function getLockExpirationTime(): ?string
     {
         return $this->lockExpirationTime;
     }
 
-    public function setLockExpirationTime(string $lockExpirationTime): void
+    public function setLockExpirationTime(?string $lockExpirationTime): void
     {
         $this->lockExpirationTime = $lockExpirationTime;
     }
@@ -162,7 +162,7 @@ class UserEntity implements UserInterface, \Serializable, DbEntityInterface, Has
         }
     }
 
-    protected function generateSalt(): string
+    protected function generateSalt(): ?string
     {
         return Context::getProcessEngineConfiguration()
             ->getSaltGenerator()

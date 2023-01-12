@@ -16,7 +16,10 @@ use Jabe\Impl\Interceptor\{
     CommandContext,
     CommandExecutorInterface
 };
-use Jabe\Impl\JobExecutor\JobDeclaration;
+use Jabe\Impl\JobExecutor\{
+    JobDeclaration,
+    JobHandlerConfigurationInterface
+};
 use Jabe\Impl\Json\JsonObjectConverter;
 use Jabe\Impl\Persistence\Entity\{
     ByteArrayEntity,
@@ -30,7 +33,7 @@ class RestartProcessInstancesJobHandler extends AbstractBatchJobHandler
 {
     private static $JOB_DECLARATION;
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return BatchInterface::TYPE_PROCESS_INSTANCE_RESTART;
     }
@@ -45,7 +48,7 @@ class RestartProcessInstancesJobHandler extends AbstractBatchJobHandler
         }
     }
 
-    public function execute(BatchJobConfiguration $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId)
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
     {
         $configurationEntity = $commandContext
             ->getDbEntityManager()

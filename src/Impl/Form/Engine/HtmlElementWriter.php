@@ -13,7 +13,7 @@ class HtmlElementWriter
     protected $textContent;
     protected $attributes = [];
 
-    public function __construct(string $tagName, ?bool $isSelfClosing = false)
+    public function __construct(?string $tagName, ?bool $isSelfClosing = false)
     {
         $this->tagName = $tagName;
         $this->isSelfClosing = $isSelfClosing;
@@ -83,7 +83,7 @@ class HtmlElementWriter
         }
     }
 
-    protected function escapeQuotes(string $attributeValue): string
+    protected function escapeQuotes(?string $attributeValue): ?string
     {
         $escapedHtmlQuote = "&quot;";
         $escapedJavaQuote = "\"";
@@ -116,13 +116,13 @@ class HtmlElementWriter
 
     // builder /////////////////////////////////////
 
-    public function attribute(string $name, string $value): HtmlElementWriter
+    public function attribute(?string $name, ?string $value): HtmlElementWriter
     {
         $this->attributes[$name] = $value;
         return $this;
     }
 
-    public function textContent(string $text): HtmlElementWriter
+    public function textContent(?string $text): HtmlElementWriter
     {
         if ($this->isSelfClosing) {
             throw new \Exception("Self-closing element cannot have text content.");

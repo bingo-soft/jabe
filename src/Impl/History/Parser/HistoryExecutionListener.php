@@ -20,7 +20,7 @@ abstract class HistoryExecutionListener implements ExecutionListenerInterface
         $this->eventProducer = $historyEventProducer;
     }
 
-    public function notify(DelegateExecutionInterface $execution): void
+    public function notify(/*DelegateExecutionInterface*/$execution): void
     {
         // get the event handler
         $historyEventHandler = Context::getProcessEngineConfiguration()
@@ -42,5 +42,5 @@ abstract class HistoryExecutionListener implements ExecutionListenerInterface
         }
     }
 
-    abstract protected function createHistoryEvent(DelegateExecutionInterface $execution): HistoryEvent;
+    abstract protected function createHistoryEvent(DelegateExecutionInterface $execution): ?HistoryEvent;
 }

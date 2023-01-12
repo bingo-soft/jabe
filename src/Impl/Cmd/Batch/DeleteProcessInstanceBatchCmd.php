@@ -46,7 +46,7 @@ class DeleteProcessInstanceBatchCmd implements CommandInterface
         array $processInstances,
         ProcessInstanceQueryInterface $processInstanceQuery,
         HistoricProcessInstanceQueryInterface $historicProcessInstanceQuery,
-        string $deleteReason,
+        ?string $deleteReason,
         bool $skipCustomListeners,
         bool $skipSubprocesses
     ) {
@@ -132,7 +132,8 @@ class DeleteProcessInstanceBatchCmd implements CommandInterface
                 null,
                 null,
                 null,
-                $propertyChanges
+                $propertyChanges,
+                null
             );
     }
 
@@ -146,5 +147,10 @@ class DeleteProcessInstanceBatchCmd implements CommandInterface
             $this->skipSubprocesses,
             false
         );
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

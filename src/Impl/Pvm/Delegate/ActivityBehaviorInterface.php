@@ -6,5 +6,5 @@ use Jabe\Impl\Core\Delegate\CoreActivityBehaviorInterface;
 
 interface ActivityBehaviorInterface extends CoreActivityBehaviorInterface
 {
-    public function execute(ActivityExecutionInterface $execution): void;
+    public function execute(/*ActivityExecutionInterface*/$execution): void;
 }

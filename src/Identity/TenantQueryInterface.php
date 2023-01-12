@@ -6,19 +6,19 @@ use Jabe\Query\QueryInterface;
 
 interface TenantQueryInterface extends QueryInterface
 {
-    public function tenantId(string $tenantId): TenantQueryInterface;
+    public function tenantId(?string $tenantId): TenantQueryInterface;
 
     public function tenantIdIn(array $ids): TenantQueryInterface;
 
-    public function tenantName(string $tenantName): TenantQueryInterface;
+    public function tenantName(?string $tenantName): TenantQueryInterface;
 
-    public function tenantNameLike(string $tenantNameLike): TenantQueryInterface;
+    public function tenantNameLike(?string $tenantNameLike): TenantQueryInterface;
 
-    public function userMember(string $userId): TenantQueryInterface;
+    public function userMember(?string $userId): TenantQueryInterface;
 
-    public function groupMember(string $groupId): TenantQueryInterface;
+    public function groupMember(?string $groupId): TenantQueryInterface;
 
-    public function includingGroups(string $groupId): TenantQueryInterface;
+    public function includingGroupsOfUser(bool $includingGroups): TenantQueryInterface;
 
     public function orderByTenantId(): TenantQueryInterface;
 

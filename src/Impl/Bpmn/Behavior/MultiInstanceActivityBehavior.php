@@ -162,29 +162,29 @@ abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivityBehavio
         throw new ProcessEngineException("inner activity of multi instance body activity '" . $miBodyActivity->getId() . "' not found");
     }
 
-    protected function setLoopVariable(ActivityExecutionInterface $execution, string $variableName, $value): void
+    protected function setLoopVariable(ActivityExecutionInterface $execution, ?string $variableName, $value): void
     {
         $execution->setVariableLocal($variableName, $value);
     }
 
-    protected function getLoopVariable(ActivityExecutionInterface $execution, string $variableName): int
+    protected function getLoopVariable(ActivityExecutionInterface $execution, ?string $variableName): int
     {
         $value = $execution->getVariableLocalTyped($variableName);
         EnsureUtil::ensureNotNull("The variable \"" . $variableName . "\" could not be found in execution with id " . $execution->getId(), "value", $value);
         return $value->getValue();
     }
 
-    protected function getLocalLoopVariable(ActivityExecutionInterface $execution, string $variableName): int
+    protected function getLocalLoopVariable(ActivityExecutionInterface $execution, ?string $variableName): int
     {
         return $execution->getVariableLocal($variableName);
     }
 
-    public function hasLoopVariable(ActivityExecutionInterface $execution, string $variableName): bool
+    public function hasLoopVariable(ActivityExecutionInterface $execution, ?string $variableName): bool
     {
         return $execution->hasVariableLocal($variableName);
     }
 
-    public function removeLoopVariable(ActivityExecutionInterface $execution, string $variableName): void
+    public function removeLoopVariable(ActivityExecutionInterface $execution, ?string $variableName): void
     {
         $execution->removeVariableLocal($variableName);
     }
@@ -226,7 +226,7 @@ abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivityBehavio
         return $this->collectionVariable;
     }
 
-    public function setCollectionVariable(string $collectionVariable): void
+    public function setCollectionVariable(?string $collectionVariable): void
     {
         $this->collectionVariable = $collectionVariable;
     }
@@ -236,7 +236,7 @@ abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivityBehavio
         return $this->collectionElementVariable;
     }
 
-    public function setCollectionElementVariable(string $collectionElementVariable): void
+    public function setCollectionElementVariable(?string $collectionElementVariable): void
     {
         $this->collectionElementVariable = $collectionElementVariable;
     }

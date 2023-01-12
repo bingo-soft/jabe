@@ -27,7 +27,7 @@ interface ProcessApplicationInterface
     /**
      * @return string the name of this process application
      */
-    public function getName(): string;
+    public function getName(): ?string;
 
     /**
      * <p>Returns a globally sharable reference to this process application. This reference may be safely passed
@@ -94,7 +94,7 @@ interface ProcessApplicationInterface
      * @param deploymentBuilder the DeploymentBuilder used to construct the deployment.
      * @param processArchiveName the name of the processArchive which is currently being deployed.
      */
-    public function createDeployment(string $processArchiveName, DeploymentBuilderInterface $deploymentBuilder): void;
+    public function createDeployment(?string $processArchiveName, DeploymentBuilderInterface $deploymentBuilder): void;
 
 
     /**

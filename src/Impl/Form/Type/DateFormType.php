@@ -14,18 +14,18 @@ class DateFormType extends AbstractFormFieldType
     protected $datePattern;
     protected $dateFormat;
 
-    public function __construct(string $datePattern)
+    public function __construct(?string $datePattern)
     {
         $this->datePattern = $datePattern;
-        $this->dateFormat = new SimpleDateFormat($datePattern);
+        //$this->dateFormat = new SimpleDateFormat($datePattern);
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return self::TYPE_NAME;
     }
 
-    public function getInformation(string $key)
+    public function getInformation(?string $key)
     {
         if ("datePattern" == $key) {
             return $this->datePattern;

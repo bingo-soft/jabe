@@ -25,12 +25,12 @@ class TelemetryDataImpl implements TelemetryDataInterface
         }
     }
 
-    public function getInstallation(): string
+    public function getInstallation(): ?string
     {
         return $this->installation;
     }
 
-    public function setInstallation(string $installation): void
+    public function setInstallation(?string $installation): void
     {
         $this->installation = $installation;
     }

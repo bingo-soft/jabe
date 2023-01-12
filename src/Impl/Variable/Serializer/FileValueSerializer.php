@@ -32,7 +32,7 @@ class FileValueSerializer extends PrimitiveValueSerializer
         parent::__construct(ValueType::getFile());
     }
 
-    public function writeValue(FileValueInterface $value, ValueFieldsInterface $valueFields): void
+    public function writeValue($value, ValueFieldsInterface $valueFields): void
     {
         $data = $value->getByteArray();
         $valueFields->setByteArrayValue($data);
@@ -78,7 +78,7 @@ class FileValueSerializer extends PrimitiveValueSerializer
         return $builder->create();
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->valueType->getName();
     }

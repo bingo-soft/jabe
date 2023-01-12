@@ -23,7 +23,7 @@ class SetAnnotationForIncidentCmd implements CommandInterface
     protected $incidentId;
     protected $annotation;
 
-    public function __construct(string $incidentId, string $annotation)
+    public function __construct(?string $incidentId, ?string $annotation)
     {
         $this->incidentId = $incidentId;
         $this->annotation = $annotation;
@@ -83,5 +83,10 @@ class SetAnnotationForIncidentCmd implements CommandInterface
                 }
             });
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

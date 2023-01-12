@@ -46,42 +46,42 @@ class HistoricJobLogQueryImpl extends AbstractQuery implements HistoricJobLogQue
         parent::__construct($commandExecutor);
     }
 
-    public function logId(string $historicJobLogId): HistoricJobLogQueryInterface
+    public function logId(?string $historicJobLogId): HistoricJobLogQueryInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "historicJobLogId", $historicJobLogId);
         $this->id = $historicJobLogId;
         return $this;
     }
 
-    public function jobId(string $jobId): HistoricJobLogQueryInterface
+    public function jobId(?string $jobId): HistoricJobLogQueryInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "jobId", $jobId);
         $this->jobId = $jobId;
         return $this;
     }
 
-    public function jobExceptionMessage(string $jobExceptionMessage): HistoricJobLogQueryInterface
+    public function jobExceptionMessage(?string $jobExceptionMessage): HistoricJobLogQueryInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "jobExceptionMessage", $jobExceptionMessage);
         $this->jobExceptionMessage = $jobExceptionMessage;
         return $this;
     }
 
-    public function jobDefinitionId(string $jobDefinitionId): HistoricJobLogQueryInterface
+    public function jobDefinitionId(?string $jobDefinitionId): HistoricJobLogQueryInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "jobDefinitionId", $jobDefinitionId);
         $this->jobDefinitionId = $jobDefinitionId;
         return $this;
     }
 
-    public function jobDefinitionType(string $jobDefinitionType): HistoricJobLogQueryInterface
+    public function jobDefinitionType(?string $jobDefinitionType): HistoricJobLogQueryInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "jobDefinitionType", $jobDefinitionType);
         $this->jobDefinitionType = $jobDefinitionType;
         return $this;
     }
 
-    public function jobDefinitionConfiguration(string $jobDefinitionConfiguration): HistoricJobLogQueryInterface
+    public function jobDefinitionConfiguration(?string $jobDefinitionConfiguration): HistoricJobLogQueryInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "jobDefinitionConfiguration", $jobDefinitionConfiguration);
         $this->jobDefinitionConfiguration = $jobDefinitionConfiguration;
@@ -115,28 +115,28 @@ class HistoricJobLogQueryImpl extends AbstractQuery implements HistoricJobLogQue
         return $this;
     }
 
-    public function processInstanceId(string $processInstanceId): HistoricJobLogQueryInterface
+    public function processInstanceId(?string $processInstanceId): HistoricJobLogQueryInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "processInstanceId", $processInstanceId);
         $this->processInstanceId = $processInstanceId;
         return $this;
     }
 
-    public function processDefinitionId(string $processDefinitionId): HistoricJobLogQueryInterface
+    public function processDefinitionId(?string $processDefinitionId): HistoricJobLogQueryInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "processDefinitionId", $processDefinitionId);
         $this->processDefinitionId = $processDefinitionId;
         return $this;
     }
 
-    public function processDefinitionKey(string $processDefinitionKey): HistoricJobLogQueryInterface
+    public function processDefinitionKey(?string $processDefinitionKey): HistoricJobLogQueryInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "processDefinitionKey", $processDefinitionKey);
         $this->processDefinitionKey = $processDefinitionKey;
         return $this;
     }
 
-    public function deploymentId(string $deploymentId): HistoricJobLogQueryInterface
+    public function deploymentId(?string $deploymentId): HistoricJobLogQueryInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "deploymentId", $deploymentId);
         $this->deploymentId = $deploymentId;
@@ -170,7 +170,7 @@ class HistoricJobLogQueryImpl extends AbstractQuery implements HistoricJobLogQue
         return $this;
     }
 
-    public function hostname(string $hostname): HistoricJobLogQueryInterface
+    public function hostname(?string $hostname): HistoricJobLogQueryInterface
     {
         EnsureUtil::ensureNotEmpty("hostName", "hostname", $hostname);
         $this->hostname = $hostname;
@@ -303,7 +303,7 @@ class HistoricJobLogQueryImpl extends AbstractQuery implements HistoricJobLogQue
             ->findHistoricJobLogsCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         return $commandContext
@@ -316,27 +316,27 @@ class HistoricJobLogQueryImpl extends AbstractQuery implements HistoricJobLogQue
         return $this->isTenantIdSet;
     }
 
-    public function getJobId(): string
+    public function getJobId(): ?string
     {
         return $this->jobId;
     }
 
-    public function getJobExceptionMessage(): string
+    public function getJobExceptionMessage(): ?string
     {
         return $this->jobExceptionMessage;
     }
 
-    public function getJobDefinitionId(): string
+    public function getJobDefinitionId(): ?string
     {
         return $this->jobDefinitionId;
     }
 
-    public function getJobDefinitionType(): string
+    public function getJobDefinitionType(): ?string
     {
         return $this->jobDefinitionType;
     }
 
-    public function getJobDefinitionConfiguration(): string
+    public function getJobDefinitionConfiguration(): ?string
     {
         return $this->jobDefinitionConfiguration;
     }
@@ -356,22 +356,22 @@ class HistoricJobLogQueryImpl extends AbstractQuery implements HistoricJobLogQue
         return $this->executionIds;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }
 
-    public function getDeploymentId(): string
+    public function getDeploymentId(): ?string
     {
         return $this->deploymentId;
     }
@@ -386,7 +386,7 @@ class HistoricJobLogQueryImpl extends AbstractQuery implements HistoricJobLogQue
         return $this->tenantIds;
     }
 
-    public function getHostname(): string
+    public function getHostname(): ?string
     {
         return $this->hostname;
     }

@@ -15,7 +15,7 @@ class DeleteDeploymentFailListener implements TransactionListenerInterface
     protected $processApplicationReference;
     protected $commandExecutor;
 
-    public function __construct(string $deploymentId, ProcessApplicationReferenceInterface $processApplicationReference, CommandExecutorInterface $commandExecutor)
+    public function __construct(?string $deploymentId, ?ProcessApplicationReferenceInterface $processApplicationReference, CommandExecutorInterface $commandExecutor)
     {
         $this->deploymentId = $deploymentId;
         $this->processApplicationReference = $processApplicationReference;

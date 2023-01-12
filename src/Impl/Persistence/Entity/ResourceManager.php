@@ -12,12 +12,12 @@ class ResourceManager extends AbstractManager
         $this->getDbEntityManager()->insert($resource);
     }
 
-    public function deleteResourcesByDeploymentId(string $deploymentId): void
+    public function deleteResourcesByDeploymentId(?string $deploymentId): void
     {
         $this->getDbEntityManager()->delete(ResourceEntity::class, "deleteResourcesByDeploymentId", $deploymentId);
     }
 
-    public function findResourceByDeploymentIdAndResourceName(string $deploymentId, string $resourceName): ?ResourceEntity
+    public function findResourceByDeploymentIdAndResourceName(?string $deploymentId, ?string $resourceName): ?ResourceEntity
     {
         $params = [];
         $params["deploymentId"] = $deploymentId;
@@ -25,7 +25,7 @@ class ResourceManager extends AbstractManager
         return $this->getDbEntityManager()->selectOne("selectResourceByDeploymentIdAndResourceName", $params);
     }
 
-    public function findResourceByDeploymentIdAndResourceNames(string $deploymentId, array $resourceNames): array
+    public function findResourceByDeploymentIdAndResourceNames(?string $deploymentId, array $resourceNames): array
     {
         $params = [];
         $params["deploymentId"] = $deploymentId;
@@ -33,7 +33,7 @@ class ResourceManager extends AbstractManager
         return $this->getDbEntityManager()->selectList("selectResourceByDeploymentIdAndResourceNames", $params);
     }
 
-    public function findResourceByDeploymentIdAndResourceId(string $deploymentId, string $resourceId): ?ResourceEntity
+    public function findResourceByDeploymentIdAndResourceId(?string $deploymentId, ?string $resourceId): ?ResourceEntity
     {
         $params = [];
         $params["deploymentId"] = $deploymentId;
@@ -41,7 +41,7 @@ class ResourceManager extends AbstractManager
         return $this->getDbEntityManager()->selectOne("selectResourceByDeploymentIdAndResourceId", $params);
     }
 
-    public function findResourceByDeploymentIdAndResourceIds(string $deploymentId, array $resourceIds): array
+    public function findResourceByDeploymentIdAndResourceIds(?string $deploymentId, array $resourceIds): array
     {
         $params = [];
         $params["deploymentId"] = $deploymentId;
@@ -49,12 +49,12 @@ class ResourceManager extends AbstractManager
         return $this->getDbEntityManager()->selectList("selectResourceByDeploymentIdAndResourceIds", $params);
     }
 
-    public function findResourcesByDeploymentId(string $deploymentId): array
+    public function findResourcesByDeploymentId(?string $deploymentId): array
     {
         return $this->getDbEntityManager()->selectList("selectResourcesByDeploymentId", $deploymentId);
     }
 
-    public function findLatestResourcesByDeploymentName(string $deploymentName, array $resourcesToFind, string $source, string $tenantId): array
+    public function findLatestResourcesByDeploymentName(?string $deploymentName, array $resourcesToFind, ?string $source, ?string $tenantId): array
     {
         $params = [];
         $params["deploymentName"] = $deploymentName;

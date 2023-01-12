@@ -10,7 +10,7 @@ interface TelemetryDataInterface
      * same database will have the same installation ID. The ID is used to
      * identify a single installation of Camunda Platform.
      */
-    public function getInstallation(): string;
+    public function getInstallation(): ?string;
 
     /**
      * Returns a data object that stores information about the used Camunda

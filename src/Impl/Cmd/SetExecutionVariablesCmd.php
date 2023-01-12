@@ -12,7 +12,7 @@ use Jabe\Impl\Util\EnsureUtil;
 class SetExecutionVariablesCmd extends AbstractSetVariableCmd
 {
     public function __construct(
-        string $executionId,
+        ?string $executionId,
         array $variables,
         bool $isLocal,
         bool $skipPhpSerializationFormatCheck = false

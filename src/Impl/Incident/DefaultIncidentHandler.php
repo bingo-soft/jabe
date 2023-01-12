@@ -10,22 +10,22 @@ class DefaultIncidentHandler implements IncidentHandlerInterface
 {
     protected $type;
 
-    public function __construct(string $type)
+    public function __construct(?string $type)
     {
         $this->type = $type;
     }
 
-    public function getIncidentHandlerType(): string
+    public function getIncidentHandlerType(): ?string
     {
         return $this->type;
     }
 
-    public function handleIncident(IncidentContext $context, string $message): IncidentInterface
+    public function handleIncident(IncidentContext $context, ?string $message): IncidentInterface
     {
         return $this->createIncident($context, $message);
     }
 
-    public function createIncident(IncidentContext $context, string $message): IncidentInterface
+    public function createIncident(IncidentContext $context, ?string $message): IncidentInterface
     {
         $newIncident = IncidentEntity::createAndInsertIncident($this->type, $context, $message);
 

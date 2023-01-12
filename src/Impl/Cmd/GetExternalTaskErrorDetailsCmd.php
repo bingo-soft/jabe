@@ -12,7 +12,7 @@ class GetExternalTaskErrorDetailsCmd implements CommandInterface, \Serializable
 {
     private $externalTaskId;
 
-    public function __construct(string $externalTaskId)
+    public function __construct(?string $externalTaskId)
     {
         $this->externalTaskId = $externalTaskId;
     }
@@ -45,5 +45,10 @@ class GetExternalTaskErrorDetailsCmd implements CommandInterface, \Serializable
         }
 
         return $externalTask->getErrorDetails();
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

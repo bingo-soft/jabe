@@ -8,7 +8,7 @@ use Jabe\Task\IdentityLinkType;
 
 class AssignTaskCmd extends AddIdentityLinkCmd
 {
-    public function __construct(string $taskId, string $userId)
+    public function __construct(?string $taskId, ?string $userId)
     {
         parent::__construct($taskId, $userId, null, IdentityLinkType::ASSIGNEE);
     }

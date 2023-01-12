@@ -12,7 +12,7 @@ class GetHistoricJobLogExceptionStacktraceCmd implements CommandInterface
 {
     protected $historicJobLogId;
 
-    public function __construct(string $historicJobLogId)
+    public function __construct(?string $historicJobLogId)
     {
         $this->historicJobLogId = $historicJobLogId;
     }
@@ -32,5 +32,10 @@ class GetHistoricJobLogExceptionStacktraceCmd implements CommandInterface
         }
 
         return $job->getExceptionStacktrace();
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

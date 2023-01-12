@@ -70,4 +70,9 @@ class GetTaskVariableCmd implements CommandInterface, \Serializable
             $checker->checkReadTaskVariable($task);
         }
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

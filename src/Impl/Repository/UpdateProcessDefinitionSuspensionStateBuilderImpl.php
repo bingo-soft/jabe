@@ -25,25 +25,25 @@ class UpdateProcessDefinitionSuspensionStateBuilderImpl implements UpdateProcess
     protected $processDefinitionKey;
     protected $processDefinitionId;
 
-    protected $includeProcessInstances = false;
+    protected bool $includeProcessInstances = false;
     protected $executionDate;
 
     protected $processDefinitionTenantId;
-    protected $isTenantIdSet = false;
+    protected bool $isTenantIdSet = false;
 
     public function __construct(CommandExecutorInterface $commandExecutor = null)
     {
         $this->commandExecutor = $commandExecutor;
     }
 
-    public function byProcessDefinitionId(string $processDefinitionId): UpdateProcessDefinitionSuspensionStateBuilderImpl
+    public function byProcessDefinitionId(?string $processDefinitionId): UpdateProcessDefinitionSuspensionStateBuilderImpl
     {
         EnsureUtil::ensureNotNull("processDefinitionId", "processDefinitionId", $processDefinitionId);
         $this->processDefinitionId = $processDefinitionId;
         return $this;
     }
 
-    public function byProcessDefinitionKey(string $processDefinitionKey): UpdateProcessDefinitionSuspensionStateBuilderImpl
+    public function byProcessDefinitionKey(?string $processDefinitionKey): UpdateProcessDefinitionSuspensionStateBuilderImpl
     {
         EnsureUtil::ensureNotNull("processDefinitionKey", "processDefinitionKey", $processDefinitionKey);
         $this->processDefinitionKey = $processDefinitionKey;
@@ -56,7 +56,7 @@ class UpdateProcessDefinitionSuspensionStateBuilderImpl implements UpdateProcess
         return $this;
     }
 
-    public function executionDate(string $date): UpdateProcessDefinitionSuspensionStateBuilderImpl
+    public function executionDate(?string $date): UpdateProcessDefinitionSuspensionStateBuilderImpl
     {
         $this->executionDate = $date;
         return $this;
@@ -69,7 +69,7 @@ class UpdateProcessDefinitionSuspensionStateBuilderImpl implements UpdateProcess
         return $this;
     }
 
-    public function processDefinitionTenantId(string $tenantId): UpdateProcessDefinitionSuspensionStateBuilderImpl
+    public function processDefinitionTenantId(?string $tenantId): UpdateProcessDefinitionSuspensionStateBuilderImpl
     {
         EnsureUtil::ensureNotNull("tenantId", "tenantId", $tenantId);
 
@@ -106,12 +106,12 @@ class UpdateProcessDefinitionSuspensionStateBuilderImpl implements UpdateProcess
         EnsureUtil::ensureNotNull("commandExecutor", "commandExecutor", $this->commandExecutor);
     }
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
@@ -121,12 +121,12 @@ class UpdateProcessDefinitionSuspensionStateBuilderImpl implements UpdateProcess
         return $this->includeProcessInstances;
     }
 
-    public function getExecutionDate(): string
+    public function getExecutionDate(): ?string
     {
         return $this->executionDate;
     }
 
-    public function getProcessDefinitionTenantId(): string
+    public function getProcessDefinitionTenantId(): ?string
     {
         return $this->processDefinitionTenantId;
     }

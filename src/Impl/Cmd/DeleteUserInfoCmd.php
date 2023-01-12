@@ -12,7 +12,7 @@ class DeleteUserInfoCmd implements CommandInterface, \Serializable
     protected $userId;
     protected $key;
 
-    public function __construct(string $userId, string $key)
+    public function __construct(?string $userId, ?string $key)
     {
         $this->userId = $userId;
         $this->key = $key;
@@ -39,5 +39,10 @@ class DeleteUserInfoCmd implements CommandInterface, \Serializable
             ->getIdentityInfoManager()
             ->deleteUserInfoByUserIdAndKey($this->userId, $this->key);
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

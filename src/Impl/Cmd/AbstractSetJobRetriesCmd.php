@@ -14,7 +14,7 @@ class AbstractSetJobRetriesCmd
 {
     protected const RETRIES = "retries";
 
-    protected function setJobRetriesByJobId(string $jobId, int $retries, CommandContext $commandContext): void
+    protected function setJobRetriesByJobId(?string $jobId, int $retries, CommandContext $commandContext): void
     {
         $job = $commandContext
             ->getJobManager()
@@ -45,7 +45,7 @@ class AbstractSetJobRetriesCmd
         }
     }
 
-    protected function getLogEntryOperation(): string
+    protected function getLogEntryOperation(): ?string
     {
         return UserOperationLogEntryInterface::OPERATION_TYPE_SET_JOB_RETRIES;
     }

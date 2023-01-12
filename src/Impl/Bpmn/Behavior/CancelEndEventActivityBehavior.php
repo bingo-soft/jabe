@@ -37,7 +37,7 @@ class CancelEndEventActivityBehavior extends AbstractBpmnActivityBehavior
         $boundaryEventScopeExecution->executeActivity($this->cancelBoundaryEvent);
     }
 
-    public function signal(ActivityExecutionInterface $execution, string $signalName, $signalData): void
+    public function signal(ActivityExecutionInterface $execution, ?string $signalName, $signalData): void
     {
         // join compensating executions
         if (!$execution->hasChildren()) {

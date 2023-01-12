@@ -21,4 +21,9 @@ class MetricsQueryIntervalCmd implements CommandInterface
         return $commandContext->getMeterLogManager()
             ->executeSelectInterval($metricsQuery);
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

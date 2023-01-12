@@ -42,7 +42,7 @@ class ExternalTaskQueryImpl extends AbstractQuery implements ExternalTaskQueryIn
         parent::__construct($commandExecutor);
     }
 
-    public function externalTaskId(string $externalTaskId): ExternalTaskQueryInterface
+    public function externalTaskId(?string $externalTaskId): ExternalTaskQueryInterface
     {
         EnsureUtil::ensureNotNull("externalTaskId", "externalTaskId", $externalTaskId);
         $this->externalTaskId = $externalTaskId;
@@ -56,28 +56,28 @@ class ExternalTaskQueryImpl extends AbstractQuery implements ExternalTaskQueryIn
         return $this;
     }
 
-    public function workerId(string $workerId): ExternalTaskQueryInterface
+    public function workerId(?string $workerId): ExternalTaskQueryInterface
     {
         EnsureUtil::ensureNotNull("workerId", "workerId", $workerId);
         $this->workerId = $workerId;
         return $this;
     }
 
-    public function lockExpirationBefore(string $lockExpirationDate): ExternalTaskQueryInterface
+    public function lockExpirationBefore(?string $lockExpirationDate): ExternalTaskQueryInterface
     {
         EnsureUtil::ensureNotNull("lockExpirationBefore", "lockExpirationDate", $lockExpirationDate);
         $this->lockExpirationBefore = $lockExpirationDate;
         return $this;
     }
 
-    public function lockExpirationAfter(string $lockExpirationDate): ExternalTaskQueryInterface
+    public function lockExpirationAfter(?string $lockExpirationDate): ExternalTaskQueryInterface
     {
         EnsureUtil::ensureNotNull("lockExpirationAfter", "lockExpirationDate", $lockExpirationDate);
         $this->lockExpirationAfter = $lockExpirationDate;
         return $this;
     }
 
-    public function topicName(string $topicName): ExternalTaskQueryInterface
+    public function topicName(?string $topicName): ExternalTaskQueryInterface
     {
         EnsureUtil::ensureNotNull("topicName", "topicName", $topicName);
         $this->topicName = $topicName;
@@ -96,14 +96,14 @@ class ExternalTaskQueryImpl extends AbstractQuery implements ExternalTaskQueryIn
         return $this;
     }
 
-    public function executionId(string $executionId): ExternalTaskQueryInterface
+    public function executionId(?string $executionId): ExternalTaskQueryInterface
     {
         EnsureUtil::ensureNotNull("executionId", "executionId", $executionId);
         $this->executionId = $executionId;
         return $this;
     }
 
-    public function processInstanceId(string $processInstanceId): ExternalTaskQueryInterface
+    public function processInstanceId(?string $processInstanceId): ExternalTaskQueryInterface
     {
         EnsureUtil::ensureNotNull("processInstanceId", "processInstanceId", $processInstanceId);
         $this->processInstanceId = $processInstanceId;
@@ -117,14 +117,14 @@ class ExternalTaskQueryImpl extends AbstractQuery implements ExternalTaskQueryIn
         return $this;
     }
 
-    public function processDefinitionId(string $processDefinitionId): ExternalTaskQueryInterface
+    public function processDefinitionId(?string $processDefinitionId): ExternalTaskQueryInterface
     {
         EnsureUtil::ensureNotNull("processDefinitionId", "processDefinitionId", $processDefinitionId);
         $this->processDefinitionId = $processDefinitionId;
         return $this;
     }
 
-    public function activityId(string $activityId): ExternalTaskQueryInterface
+    public function activityId(?string $activityId): ExternalTaskQueryInterface
     {
         EnsureUtil::ensureNotNull("activityId", "activityId", $activityId);
         $this->activityId = $activityId;
@@ -230,7 +230,7 @@ class ExternalTaskQueryImpl extends AbstractQuery implements ExternalTaskQueryIn
             ->findExternalTaskCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         return $commandContext
@@ -254,27 +254,27 @@ class ExternalTaskQueryImpl extends AbstractQuery implements ExternalTaskQueryIn
             ->findDeploymentIdMappingsByQueryCriteria($this);
     }
 
-    public function getExternalTaskId(): string
+    public function getExternalTaskId(): ?string
     {
         return $this->externalTaskId;
     }
 
-    public function getWorkerId(): string
+    public function getWorkerId(): ?string
     {
         return $this->workerId;
     }
 
-    public function getLockExpirationBefore(): string
+    public function getLockExpirationBefore(): ?string
     {
         return $this->lockExpirationBefore;
     }
 
-    public function getLockExpirationAfter(): string
+    public function getLockExpirationAfter(): ?string
     {
         return $this->lockExpirationAfter;
     }
 
-    public function getTopicName(): string
+    public function getTopicName(): ?string
     {
         return $this->topicName;
     }
@@ -289,22 +289,22 @@ class ExternalTaskQueryImpl extends AbstractQuery implements ExternalTaskQueryIn
         return $this->notLocked;
     }
 
-    public function getExecutionId(): string
+    public function getExecutionId(): ?string
     {
         return $this->executionId;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
@@ -319,7 +319,7 @@ class ExternalTaskQueryImpl extends AbstractQuery implements ExternalTaskQueryIn
         return $this->retriesLeft;
     }
 
-    public function getNow(): string
+    public function getNow(): ?string
     {
         return ClockUtil::getCurrentTime()->format('c');
     }

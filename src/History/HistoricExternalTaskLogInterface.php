@@ -7,17 +7,17 @@ interface HistoricExternalTaskLogInterface
     /**
      * Returns the unique identifier for <code>this</code> historic external task log.
      */
-    public function getId(): string;
+    public function getId(): ?string;
 
     /**
      * Returns the time when <code>this</code> log occurred.
      */
-    public function getTimestamp(): string;
+    public function getTimestamp(): ?string;
 
     /**
      * Returns the id of the associated external task.
      */
-    public function getExternalTaskId(): string;
+    public function getExternalTaskId(): ?string;
 
     /**
      * Returns the retries of the associated external task before the associated external task has
@@ -33,12 +33,12 @@ interface HistoricExternalTaskLogInterface
     /**
      * Returns the topic name of the associated external task.
      */
-    public function getTopicName(): string;
+    public function getTopicName(): ?string;
 
     /**
      * Returns the id of the worker that fetched the external task most recently.
      */
-    public function getWorkerId(): string;
+    public function getWorkerId(): ?string;
 
     /**
      * Returns the message of the error that occurred by executing the associated external task.
@@ -46,43 +46,43 @@ interface HistoricExternalTaskLogInterface
      * To get the full error details,
      * use HistoryService#getHistoricExternalTaskLogErrorDetails(String)
      */
-    public function getErrorMessage(): string;
+    public function getErrorMessage(): ?string;
 
     /**
      * Returns the id of the activity which the external task associated with.
      */
-    public function getActivityId(): string;
+    public function getActivityId(): ?string;
 
     /**
      * Returns the id of the activity instance on which the associated external task was created.
      */
-    public function getActivityInstanceId(): string;
+    public function getActivityInstanceId(): ?string;
 
     /**
      * Returns the specific execution id on which the associated external task was created.
      */
-    public function getExecutionId(): string;
+    public function getExecutionId(): ?string;
 
     /**
      * Returns the specific root process instance id of the process instance
      * on which the associated external task was created.
      */
-    public function getRootProcessInstanceId(): string;
+    public function getRootProcessInstanceId(): ?string;
 
     /**
      * Returns the specific process instance id on which the associated external task was created.
      */
-    public function getProcessInstanceId(): string;
+    public function getProcessInstanceId(): ?string;
 
     /**
      * Returns the specific process definition id on which the associated external task was created.
      */
-    public function getProcessDefinitionId(): string;
+    public function getProcessDefinitionId(): ?string;
 
     /**
      * Returns the specific process definition key on which the associated external task was created.
      */
-    public function getProcessDefinitionKey(): string;
+    public function getProcessDefinitionKey(): ?string;
 
     /**
      * Returns the id of the tenant this external task log entry belongs to. Can be <code>null</code>
@@ -115,5 +115,5 @@ interface HistoricExternalTaskLogInterface
     public function isDeletionLog(): bool;
 
     /** The time the historic external task log will be removed. */
-    public function getRemovalTime(): string;
+    public function getRemovalTime(): ?string;
 }

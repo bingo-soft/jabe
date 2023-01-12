@@ -44,7 +44,7 @@ class DbEntityCache
      * @return mixed the object or 'null' if the object is not in the cache
      * @throws ProcessEngineException if an object for the given id can be found but is of the wrong type.
      */
-    public function get(string $type, string $id)
+    public function get(?string $type, ?string $id = null)
     {
         $cacheKey = $this->cacheKeyMapping->getEntityCacheKey($type);
         $cachedDbEntity = $this->getCachedEntity($cacheKey, $id);
@@ -65,7 +65,7 @@ class DbEntityCache
         }
     }
 
-    public function getEntitiesByType(string $type): array
+    public function getEntitiesByType(?string $type): array
     {
         $cacheKey = $this->cacheKeyMapping->getEntityCacheKey($type);
         if (array_key_exists($cacheKey, $this->cachedEntites)) {
@@ -100,13 +100,16 @@ class DbEntityCache
      * @param id the id of the CachedEntity to lookup
      * @return CachedDbEntity the cached entity or null if the entity does not exist.
      */
-    public function getCachedEntity($typeOrEntity, string $id = null): ?CachedDbEntity
+    public function getCachedEntity($typeOrEntity, ?string $id = null): ?CachedDbEntity
     {
         if (is_string($typeOrEntity)) {
             $cacheKey = $this->cacheKeyMapping->getEntityCacheKey($typeOrEntity);
             if (array_key_exists($cacheKey, $this->cachedEntites)) {
                 $entitiesByType = $this->cachedEntites[$cacheKey];
-                return $entitiesByType[$id];
+                if (array_key_exists($id, $entitiesByType)) {
+                    return $entitiesByType[$id];
+                }
+                return null;
             } else {
                 return null;
             }
@@ -164,17 +167,17 @@ class DbEntityCache
         $cacheKey = $this->cacheKeyMapping->getEntityCacheKey($type);
 
         if (array_key_exists($cacheKey, $this->cachedEntites)) {
-            $map = $this->cachedEntites[$cacheKey];
+            $map = &$this->cachedEntites[$cacheKey];
         } else {
             $map = [];
-            $this->cachedEntites[$cacheKey] = $map;
+            $this->cachedEntites[$cacheKey] = &$map;
         }
 
         // check whether this object is already present in the cache
         $id = $entityToAdd->getEntity()->getId();
         if (!array_key_exists($id, $map)) {
             // no such entity exists -> put it into the cache
-            $this->cachedEntites[$cacheKey][$id] = $entityToAdd;
+            $map[$id] = $entityToAdd;
         } else {
             $existingCachedEntity = $map[$id];
             // the same entity is already cached
@@ -184,16 +187,16 @@ class DbEntityCache
                     if ($existingCachedEntity->getEntityState() == DbEntityState::TRANSIENT) {
                         //throw LOG.entityCacheDuplicateEntryException("TRANSIENT", entityToAdd.getEntity().getId(),
                         //entityToAdd.getEntity().getClass(), existingCachedEntity.getEntityState());
-                        throw new \Exception("entityCacheDuplicateEntryException");
+                        throw new \Exception("entityCacheDuplicateEntryException, entity id: " . $entityToAdd->getEntity()->getId());
                     } else {
                         //throw LOG.alreadyMarkedEntityInEntityCacheException(entityToAdd.getEntity().getId(),
                         //entityToAdd.getEntity().getClass(), existingCachedEntity.getEntityState());
-                        throw new \Exception("alreadyMarkedEntityInEntityCacheException");
+                        throw new \Exception("alreadyMarkedEntityInEntityCacheException, entity id: " . $entityToAdd->getEntity()->getId());
                     }
                 case DbEntityState::PERSISTENT:
                     if ($existingCachedEntity->getEntityState() == DbEntityState::PERSISTENT) {
                         // use new entity state, replacing the existing one.
-                        $this->cachedEntites[$cacheKey][$id] = $entityToAdd;
+                        $map[$id] = $entityToAdd;
                         break;
                     }
                     if (
@@ -213,7 +216,7 @@ class DbEntityCache
                         $existingCachedEntity->getEntityState() == DbEntityState::MERGED
                     ) {
                         // use new entity state, replacing the existing one.
-                        $this->cachedEntites[$cacheKey][$id] = $entityToAdd;
+                        $map[$id] = $entityToAdd;
                         break;
                     }
                     if (
@@ -230,7 +233,7 @@ class DbEntityCache
                     throw new \Exception("entityCacheDuplicateEntryException");
                 default:
                     // deletes are always added
-                    $this->cachedEntites[$cacheKey][$id] = $entityToAdd;
+                    $map[$id] = $entityToAdd;
                     break;
             }
         }
@@ -241,7 +244,7 @@ class DbEntityCache
      * @param e the entity to remove
      * @return
      */
-    public function remove(DbEntityInterface $e)
+    public function remove(DbEntityInterface | CachedDbEntity $e)
     {
         if ($e instanceof DbEntityInterface) {
             $cacheKey = $this->cacheKeyMapping->getEntityCacheKey(get_class($e));

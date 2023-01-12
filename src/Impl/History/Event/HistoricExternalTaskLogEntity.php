@@ -39,44 +39,44 @@ class HistoricExternalTaskLogEntity extends HistoryEvent implements HistoricExte
     protected $activityInstanceId;
     protected $tenantId;
 
-    protected $state;
+    protected int $state = 0;
 
-    public function getTimestamp(): string
+    public function getTimestamp(): ?string
     {
         return $this->timestamp;
     }
 
-    public function setTimestamp(string $timestamp): void
+    public function setTimestamp(?string $timestamp): void
     {
         $this->timestamp = $timestamp;
     }
 
-    public function getExternalTaskId(): string
+    public function getExternalTaskId(): ?string
     {
         return $this->externalTaskId;
     }
 
-    public function setExternalTaskId(string $externalTaskId): void
+    public function setExternalTaskId(?string $externalTaskId): void
     {
         $this->externalTaskId = $externalTaskId;
     }
 
-    public function getTopicName(): string
+    public function getTopicName(): ?string
     {
         return $this->topicName;
     }
 
-    public function setTopicName(string $topicName): void
+    public function setTopicName(?string $topicName): void
     {
         $this->topicName = $topicName;
     }
 
-    public function getWorkerId(): string
+    public function getWorkerId(): ?string
     {
         return $this->workerId;
     }
 
-    public function setWorkerId(string $workerId): void
+    public function setWorkerId(?string $workerId): void
     {
         $this->workerId = $workerId;
     }
@@ -91,7 +91,7 @@ class HistoricExternalTaskLogEntity extends HistoryEvent implements HistoricExte
         $this->retries = $retries;
     }
 
-    public function getErrorMessage(): string
+    public function getErrorMessage(): ?string
     {
         return $this->errorMessage;
     }
@@ -109,23 +109,23 @@ class HistoricExternalTaskLogEntity extends HistoryEvent implements HistoricExte
         }
     }
 
-    public function getErrorDetailsByteArrayId(): string
+    public function getErrorDetailsByteArrayId(): ?string
     {
         return $this->errorDetailsByteArrayId;
     }
 
-    public function setErrorDetailsByteArrayId(string $errorDetailsByteArrayId): void
+    public function setErrorDetailsByteArrayId(?string $errorDetailsByteArrayId): void
     {
         $this->errorDetailsByteArrayId = $errorDetailsByteArrayId;
     }
 
-    public function getErrorDetails(): string
+    public function getErrorDetails(): ?string
     {
         $byteArray = $this->getErrorByteArray();
         return ExceptionUtil::getExceptionStacktrace($byteArray);
     }
 
-    public function setErrorDetails(string $exception): void
+    public function setErrorDetails(?string $exception): void
     {
         EnsureUtil::ensureNotNull("exception", "exception", $exception);
 
@@ -147,22 +147,22 @@ class HistoricExternalTaskLogEntity extends HistoryEvent implements HistoricExte
         return null;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
 
-    public function setActivityId(string $activityId): void
+    public function setActivityId(?string $activityId): void
     {
         $this->activityId = $activityId;
     }
 
-    public function getActivityInstanceId(): string
+    public function getActivityInstanceId(): ?string
     {
         return $this->activityInstanceId;
     }
 
-    public function setActivityInstanceId(string $activityInstanceId): void
+    public function setActivityInstanceId(?string $activityInstanceId): void
     {
         $this->activityInstanceId = $activityInstanceId;
     }
@@ -217,12 +217,12 @@ class HistoricExternalTaskLogEntity extends HistoryEvent implements HistoricExte
         return $this->state == ExternalTaskStateImpl::deleted()->getStateCode();
     }
 
-    public function getRootProcessInstanceId(): string
+    public function getRootProcessInstanceId(): ?string
     {
         return $this->rootProcessInstanceId;
     }
 
-    public function setRootProcessInstanceId(string $rootProcessInstanceId): void
+    public function setRootProcessInstanceId(?string $rootProcessInstanceId): void
     {
         $this->rootProcessInstanceId = $rootProcessInstanceId;
     }

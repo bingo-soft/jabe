@@ -17,7 +17,7 @@ class GetIdentityLinksForTaskCmd implements CommandInterface, \Serializable
 {
     protected $taskId;
 
-    public function __construct(string $taskId)
+    public function __construct(?string $taskId)
     {
         $this->taskId = $taskId;
     }
@@ -75,5 +75,10 @@ class GetIdentityLinksForTaskCmd implements CommandInterface, \Serializable
         foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
             $checker->checkReadTask($task);
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

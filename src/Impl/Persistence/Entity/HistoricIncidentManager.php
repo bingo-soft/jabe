@@ -2,6 +2,10 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
+use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface
+};
 use Jabe\Impl\{
     HistoricIncidentQueryImpl,
     Page
@@ -23,18 +27,18 @@ class HistoricIncidentManager extends AbstractHistoricManager
         return $this->getDbEntityManager()->selectOne("selectHistoricIncidentCountByQueryCriteria", $query);
     }
 
-    public function findHistoricIncidentById(string $id): ?HistoricIncidentEntity
+    public function findHistoricIncidentById(?string $id): ?HistoricIncidentEntity
     {
         return $this->getDbEntityManager()->selectOne("selectHistoricIncidentById", $id);
     }
 
-    public function findHistoricIncidentByQueryCriteria(HistoricIncidentQueryImpl $query, Page $page): array
+    public function findHistoricIncidentByQueryCriteria(HistoricIncidentQueryImpl $query, ?Page $page): array
     {
         $this->configureQuery($query);
         return $this->getDbEntityManager()->selectList("selectHistoricIncidentByQueryCriteria", $query, $page);
     }
 
-    public function addRemovalTimeToIncidentsByRootProcessInstanceId(string $rootProcessInstanceId, string $removalTime): void
+    public function addRemovalTimeToIncidentsByRootProcessInstanceId(?string $rootProcessInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["rootProcessInstanceId"] = $rootProcessInstanceId;
@@ -44,7 +48,7 @@ class HistoricIncidentManager extends AbstractHistoricManager
             ->updatePreserveOrder(HistoricIncidentEventEntity::class, "updateHistoricIncidentsByRootProcessInstanceId", $parameters);
     }
 
-    public function addRemovalTimeToIncidentsByProcessInstanceId(string $processInstanceId, string $removalTime): void
+    public function addRemovalTimeToIncidentsByProcessInstanceId(?string $processInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["processInstanceId"] = $processInstanceId;
@@ -59,14 +63,14 @@ class HistoricIncidentManager extends AbstractHistoricManager
         $this->getDbEntityManager()->deletePreserveOrder(HistoricIncidentEntity::class, "deleteHistoricIncidentsByProcessInstanceIds", $processInstanceIds);
     }
 
-    public function deleteHistoricIncidentsByProcessDefinitionId(string $processDefinitionId): void
+    public function deleteHistoricIncidentsByProcessDefinitionId(?string $processDefinitionId): void
     {
         if ($this->isHistoryEventProduced()) {
             $this->getDbEntityManager()->delete(HistoricIncidentEntity::class, "deleteHistoricIncidentsByProcessDefinitionId", $processDefinitionId);
         }
     }
 
-    public function deleteHistoricIncidentsByJobDefinitionId(string $jobDefinitionId): void
+    public function deleteHistoricIncidentsByJobDefinitionId(?string $jobDefinitionId): void
     {
         if ($this->isHistoryEventProduced()) {
             $this->getDbEntityManager()->delete(HistoricIncidentEntity::class, "deleteHistoricIncidentsByJobDefinitionId", $jobDefinitionId);
@@ -80,7 +84,7 @@ class HistoricIncidentManager extends AbstractHistoricManager
         }
     }
 
-    protected function configureQuery(HistoricIncidentQueryImpl $query): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         $this->getAuthorizationManager()->configureHistoricIncidentQuery($query);
         $this->getTenantManager()->configureQuery($query);
@@ -95,7 +99,7 @@ class HistoricIncidentManager extends AbstractHistoricManager
                 $historyLevel->isHistoryEventProduced(HistoryEventTypes::incidentResolve(), null);
     }
 
-    public function deleteHistoricIncidentsByRemovalTime(string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
+    public function deleteHistoricIncidentsByRemovalTime(?string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
     {
         $parameters = [];
         $parameters["removalTime"] = $removalTime;
@@ -113,7 +117,7 @@ class HistoricIncidentManager extends AbstractHistoricManager
             );
     }
 
-    public function addRemovalTimeToHistoricIncidentsByBatchId(string $batchId, string $removalTime): void
+    public function addRemovalTimeToHistoricIncidentsByBatchId(?string $batchId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["batchId"] = $batchId;

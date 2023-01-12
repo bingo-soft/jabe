@@ -67,7 +67,7 @@ class DefaultConditionHandler implements ConditionHandlerInterface
     protected function evaluateConditionStartByProcessDefinitionId(
         CommandContext $commandContext,
         ConditionSet $conditionSet,
-        string $processDefinitionId
+        ?string $processDefinitionId
     ): array {
         $deploymentCache = $commandContext->getProcessEngineConfiguration()->getDeploymentCache();
         $processDefinition = $deploymentCache->findDeployedProcessDefinitionById($processDefinitionId);

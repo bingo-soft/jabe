@@ -9,12 +9,12 @@ class HistoricFormPropertyEventEntity extends HistoricDetailEventEntity
     protected $propertyId;
     protected $propertyValue;
 
-    public function getPropertyId(): string
+    public function getPropertyId(): ?string
     {
         return $this->propertyId;
     }
 
-    public function setPropertyId(string $propertyId): void
+    public function setPropertyId(?string $propertyId): void
     {
         $this->propertyId = $propertyId;
     }
@@ -24,12 +24,12 @@ class HistoricFormPropertyEventEntity extends HistoricDetailEventEntity
         return $this->propertyValue;
     }
 
-    public function setPropertyValue(string $propertyValue): void
+    public function setPropertyValue(?string $propertyValue): void
     {
         $this->propertyValue = $propertyValue;
     }
 
-    public function getTime(): string
+    public function getTime(): ?string
     {
         return $this->timestamp;
     }

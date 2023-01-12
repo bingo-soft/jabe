@@ -10,7 +10,7 @@ interface ProcessApplicationInfoInterface
     /**
      * @return string the name of the process application
      */
-    public function getName(): string;
+    public function getName(): ?string;
 
     /**
      * @return a list of ProcessApplicationDeploymentInfo objects that

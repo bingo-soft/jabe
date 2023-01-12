@@ -37,7 +37,7 @@ class MessageCorrelationResultImpl implements MessageCorrelationResultWithVariab
         $this->processInstance = $processInstance;
     }
 
-    public function getResultType(): string
+    public function getResultType(): ?string
     {
         return $this->resultType;
     }

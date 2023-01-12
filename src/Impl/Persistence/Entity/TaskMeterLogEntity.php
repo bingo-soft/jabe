@@ -40,7 +40,7 @@ class TaskMeterLogEntity implements DbEntityInterface, HasDbReferencesInterface,
         $this->assigneeHash = $json->assigneeHash;
     }
 
-    protected function createHashAsLong(string $assignee): int
+    protected function createHashAsLong(?string $assignee): int
     {
         $res = base64_encode(md5($assignee));
         $ar = unpack("C*", $res);
@@ -52,17 +52,17 @@ class TaskMeterLogEntity implements DbEntityInterface, HasDbReferencesInterface,
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getTimestamp(): string
+    public function getTimestamp(): ?string
     {
         return $this->timestamp;
     }
 
-    public function setTimestamp(string $timestamp): void
+    public function setTimestamp(?string $timestamp): void
     {
         $this->timestamp = $timestamp;
     }
@@ -93,5 +93,10 @@ class TaskMeterLogEntity implements DbEntityInterface, HasDbReferencesInterface,
     {
         $referenceIdAndClass = [];
         return $referenceIdAndClass;
+    }
+
+    public function getDependentEntities(): array
+    {
+        return [];
     }
 }

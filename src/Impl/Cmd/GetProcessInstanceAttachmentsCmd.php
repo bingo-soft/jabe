@@ -11,7 +11,7 @@ class GetProcessInstanceAttachmentsCmd implements CommandInterface, \Serializabl
 {
     protected $processInstanceId;
 
-    public function __construct(string $taskId)
+    public function __construct(?string $taskId)
     {
         $this->processInstanceId = $taskId;
     }
@@ -34,5 +34,10 @@ class GetProcessInstanceAttachmentsCmd implements CommandInterface, \Serializabl
         return $commandContext
             ->getAttachmentManager()
             ->findAttachmentsByProcessInstanceId($this->processInstanceId);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

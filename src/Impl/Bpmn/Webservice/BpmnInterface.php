@@ -15,7 +15,7 @@ class BpmnInterface
      */
     protected $operations = [];
 
-    public function __construct(string $id = null, string $name = null)
+    public function __construct(?string $id = null, ?string $name = null)
     {
         if ($id !== null) {
             $this->setId($id);
@@ -28,7 +28,7 @@ class BpmnInterface
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
@@ -38,7 +38,7 @@ class BpmnInterface
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
@@ -48,7 +48,7 @@ class BpmnInterface
         $this->operations[$operation->getId()] = $operation;
     }
 
-    public function getOperation(string $operationId): ?Operation
+    public function getOperation(?string $operationId): ?Operation
     {
         if (array_key_exists($operationId, $this->operations)) {
             return $this->operations[$operationId];

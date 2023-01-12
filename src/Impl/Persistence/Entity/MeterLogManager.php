@@ -8,7 +8,10 @@ use Jabe\Impl\{
     QueryPropertyImpl
 };
 use Jabe\Impl\Context\Context;
-use Jabe\Impl\Db\ListQueryParameterObject;
+use Jabe\Impl\Db\{
+    DbEntityInterface,
+    ListQueryParameterObject
+};
 use Jabe\Impl\Db\EntityManager\Operation\DbOperation;
 use Jabe\Impl\Metrics\{
     Meter,
@@ -30,7 +33,7 @@ class MeterLogManager extends AbstractManager
     public const DELETE_TASK_METER_BY_REMOVAL_TIME = "deleteTaskMetricsByRemovalTime";
     public const DELETE_TASK_METER_BY_IDS = "deleteTaskMeterLogEntriesByIds";
 
-    public function insert(MeterLogEntity $meterLogEntity): void
+    public function insert(DbEntityInterface $meterLogEntity): void
     {
         $this->getDbEntityManager()
         ->insert($meterLogEntity);
@@ -109,7 +112,7 @@ class MeterLogManager extends AbstractManager
         $this->getDbEntityManager()->delete(MeterLogEntity::class, self::DELETE_ALL_METER, null);
     }
 
-    public function deleteByTimestampAndReporter(?string $timestamp, string $reporter): void
+    public function deleteByTimestampAndReporter(?string $timestamp, ?string $reporter): void
     {
         $parameters = [];
         if ($timestamp !== null) {
@@ -121,7 +124,7 @@ class MeterLogManager extends AbstractManager
     }
 
     // TASK METER LOG
-    public function findUniqueTaskWorkerCount(string $startTime, string $endTime): int
+    public function findUniqueTaskWorkerCount(?string $startTime, ?string $endTime): int
     {
         $parameters = [];
         $parameters["startTime"] = $startTime;
@@ -130,7 +133,7 @@ class MeterLogManager extends AbstractManager
         return $this->getDbEntityManager()->selectOne(self::SELECT_UNIQUE_TASK_WORKER, $parameters);
     }
 
-    public function deleteTaskMetricsByTimestamp(string $timestamp): void
+    public function deleteTaskMetricsByTimestamp(?string $timestamp): void
     {
         $parameters = ["timestamp" => $timestamp];
         $this->getDbEntityManager()->delete(TaskMeterLogEntity::class, self::DELETE_TASK_METER_BY_TIMESTAMP, $parameters);
@@ -141,7 +144,7 @@ class MeterLogManager extends AbstractManager
         $this->getDbEntityManager()->deletePreserveOrder(TaskMeterLogEntity::class, self::DELETE_TASK_METER_BY_IDS, $taskMetricIds);
     }
 
-    public function deleteTaskMetricsByRemovalTime(string $currentTimestamp, int $timeToLive, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
+    public function deleteTaskMetricsByRemovalTime(?string $currentTimestamp, int $timeToLive, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
     {
         $parameters = [];
         // data inserted prior to now minus timeToLive-days can be removed

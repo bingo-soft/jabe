@@ -18,7 +18,7 @@ class DeleteAuthorizationCmd implements CommandInterface
 {
     protected $authorizationId;
 
-    public function __construct(string $authorizationId)
+    public function __construct(?string $authorizationId)
     {
         $this->authorizationId = $authorizationId;
     }
@@ -37,5 +37,10 @@ class DeleteAuthorizationCmd implements CommandInterface
         $commandContext->getOperationLogManager()->logAuthorizationOperation(UserOperationLogEntryInterface::OPERATION_TYPE_DELETE, $authorization, null);
 
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

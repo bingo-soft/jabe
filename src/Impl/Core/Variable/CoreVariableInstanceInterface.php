@@ -6,7 +6,7 @@ use Jabe\Variable\Value\TypedValueInterface;
 
 interface CoreVariableInstanceInterface
 {
-    public function getName(): string;
+    public function getName(): ?string;
 
     public function getTypedValue(bool $deserializeValue): TypedValueInterface;
 

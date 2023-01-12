@@ -21,7 +21,7 @@ class VariableInstanceEntityFactory implements VariableInstanceFactoryInterface
     {
     }
 
-    public function build(string $name, TypedValueInterface $value, bool $isTransient): VariableInstanceEntity
+    public function build(?string $name, TypedValueInterface $value, bool $isTransient): VariableInstanceEntity
     {
         return VariableInstanceEntity::create($name, $value, $isTransient);
     }

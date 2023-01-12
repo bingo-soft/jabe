@@ -63,4 +63,9 @@ class DeleteIdentityLinkForProcessDefinitionCmd implements CommandInterface, \Se
 
         return null;
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

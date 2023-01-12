@@ -58,7 +58,7 @@ class MetricsCollectionTask extends TimerTask
         return $this->reporterId;
     }
 
-    public function setReporter(string $reporterId): void
+    public function setReporter(?string $reporterId): void
     {
         $this->reporterId = $reporterId;
     }

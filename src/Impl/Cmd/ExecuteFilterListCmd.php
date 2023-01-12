@@ -10,7 +10,7 @@ use Jabe\Query\QueryInterface;
 
 class ExecuteFilterListCmd extends AbstractExecuteFilterCmd implements CommandInterface
 {
-    public function __construct(string $filterId, ?QueryInterface $extendingQuery)
+    public function __construct(?string $filterId, ?QueryInterface $extendingQuery)
     {
         parent::__construct($filterId, $extendingQuery);
     }
@@ -20,5 +20,10 @@ class ExecuteFilterListCmd extends AbstractExecuteFilterCmd implements CommandIn
         $query = $this->getFilterQuery($commandContext);
         $query->enableMaxResultsLimit();
         return $query->list();
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

@@ -22,7 +22,7 @@ class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefinitionInt
     protected $laneSets = [];
     protected $participantProcess;
 
-    public function __construct(string $id)
+    public function __construct(?string $id)
     {
         parent::__construct($id, null);
         $this->processDefinition = $this;
@@ -37,7 +37,7 @@ class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefinitionInt
         }
     }
 
-    public function createProcessInstance(?string $businessKey = null, ?string $caseInstanceId = null, ?ActivityImpl $initial = null): PvmProcessInstance
+    public function createProcessInstance(?string $businessKey = null, ?string $caseInstanceId = null, ?ActivityImpl $initial = null): PvmProcessInstanceInterface
     {
         $this->ensureDefaultInitialExists();
         if ($initial === null) {
@@ -52,7 +52,7 @@ class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefinitionInt
     }
 
     /** creates a process instance using the provided activity as initial */
-    public function createProcessInstanceForInitial(ActivityImpl $initial): PvmProcessInstance
+    public function createProcessInstanceForInitial(ActivityImpl $initial): PvmProcessInstanceInterface
     {
         if ($initial === null) {
             throw new \Exception("Cannot start process instance, initial activity where the process instance should start is null");
@@ -113,7 +113,7 @@ class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefinitionInt
         $this->laneSets[] = $newLaneSet;
     }
 
-    public function getLaneForId(string $id): ?Lane
+    public function getLaneForId(?string $id): ?Lane
     {
         foreach ($this->laneSets as $set) {
             $lane = $set->getLaneForId($id);

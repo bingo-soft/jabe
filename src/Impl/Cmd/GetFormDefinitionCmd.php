@@ -15,7 +15,7 @@ class GetFormDefinitionCmd implements CommandInterface
     protected $formRef;
     protected $deploymentId;
 
-    public function __construct(FormRefInterface $formRef, string $deploymentId)
+    public function __construct(FormRefInterface $formRef, ?string $deploymentId)
     {
         $this->formRef = $formRef;
         $this->deploymentId = $deploymentId;
@@ -39,5 +39,10 @@ class GetFormDefinitionCmd implements CommandInterface
         }
 
         return $definition;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

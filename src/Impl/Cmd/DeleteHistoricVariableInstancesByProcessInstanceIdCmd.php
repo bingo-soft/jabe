@@ -22,7 +22,7 @@ class DeleteHistoricVariableInstancesByProcessInstanceIdCmd implements CommandIn
 {
     private $processInstanceId;
 
-    public function __construct(string $processInstanceId)
+    public function __construct(?string $processInstanceId)
     {
         $this->processInstanceId = $processInstanceId;
     }

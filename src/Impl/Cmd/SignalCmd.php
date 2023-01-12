@@ -15,7 +15,7 @@ class SignalCmd implements CommandInterface, \Serializable
     protected $signalData;
     protected $processVariables = [];
 
-    public function __construct(?string $executionId, string $signalName, $signalData, array $processVariables)
+    public function __construct(?string $executionId, ?string $signalName, $signalData, array $processVariables)
     {
         $this->executionId = $executionId;
         $this->signalName = $signalName;
@@ -42,5 +42,10 @@ class SignalCmd implements CommandInterface, \Serializable
 
         $execution->signal($this->signalName, $this->signalData);
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

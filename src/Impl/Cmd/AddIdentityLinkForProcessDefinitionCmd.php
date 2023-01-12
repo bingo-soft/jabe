@@ -18,7 +18,7 @@ class AddIdentityLinkForProcessDefinitionCmd implements CommandInterface, \Seria
 
     protected $groupId;
 
-    public function __construct(string $processDefinitionId, string $userId, string $groupId)
+    public function __construct(?string $processDefinitionId, ?string $userId, ?string $groupId)
     {
         $this->validateParams($userId, $groupId, $processDefinitionId);
         $this->processDefinitionId = $processDefinitionId;
@@ -43,9 +43,9 @@ class AddIdentityLinkForProcessDefinitionCmd implements CommandInterface, \Seria
         $this->groupId = $json->groupId;
     }
 
-    protected function validateParams(?string $userId, ?string $groupId, string $processDefinitionId): void
+    protected function validateParams(?string $userId, ?string $groupId, ?string $processDefinitionId): void
     {
-        EnsureUtil::ensureNotNull("processDefinitionId", $processDefinitionId);
+        EnsureUtil::ensureNotNull("processDefinitionId", "processDefinitionId", $processDefinitionId);
 
         if ($userId === null && $groupId === null) {
             throw new ProcessEngineException("userId and groupId cannot both be null");
@@ -62,5 +62,10 @@ class AddIdentityLinkForProcessDefinitionCmd implements CommandInterface, \Seria
 
         $processDefinition->addIdentityLink($this->userId, $this->groupId);
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

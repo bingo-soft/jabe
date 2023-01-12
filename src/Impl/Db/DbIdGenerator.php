@@ -8,9 +8,9 @@ use Jabe\Impl\Interceptor\CommandExecutorInterface;
 
 class DbIdGenerator implements IdGeneratorInterface
 {
-    protected $idBlockSize;
-    protected $nextId;
-    protected $lastId;
+    protected int $idBlockSize = 0;
+    protected int $nextId = 0;
+    protected int $lastId = 0;
 
     protected $commandExecutor;
 
@@ -19,7 +19,7 @@ class DbIdGenerator implements IdGeneratorInterface
         $this->reset();
     }
 
-    public function getNextId(): string
+    public function getNextId(): ?string
     {
         if ($this->lastId < $this->nextId) {
             $this->getNewBlock();

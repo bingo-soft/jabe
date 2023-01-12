@@ -66,13 +66,13 @@ interface UserOperationLogEntryInterface
     public const CATEGORY_TASK_WORKER = "TaskWorker";
 
     /** The unique identifier of this log entry. */
-    public function getId(): string;
+    public function getId(): ?string;
 
     /** Deployment reference */
     public function getDeploymentId(): ?string;
 
     /** Process definition reference. */
-    public function getProcessDefinitionId(): string;
+    public function getProcessDefinitionId(): ?string;
 
     /**
      * Key of the process definition this log entry belongs to; <code>null</code> means any.
@@ -80,40 +80,40 @@ interface UserOperationLogEntryInterface
     public function getProcessDefinitionKey(): ?string;
 
     /** Root process instance reference. */
-    public function getRootProcessInstanceId(): string;
+    public function getRootProcessInstanceId(): ?string;
 
     /** Process instance reference. */
-    public function getProcessInstanceId(): string;
+    public function getProcessInstanceId(): ?string;
 
     /** Execution reference. */
-    public function getExecutionId(): string;
+    public function getExecutionId(): ?string;
 
     /** Case definition reference. */
-    //public function getCaseDefinitionId(): string;
+    //public function getCaseDefinitionId(): ?string;
 
     /** Case instance reference. */
-    //public function getCaseInstanceId(): string;
+    //public function getCaseInstanceId(): ?string;
 
     /** Case execution reference. */
-    //public function getCaseExecutionId(): string;
+    //public function getCaseExecutionId(): ?string;
 
     /** Task instance reference. */
-    public function getTaskId(): string;
+    public function getTaskId(): ?string;
 
     /** Job instance reference. */
-    public function getJobId(): string;
+    public function getJobId(): ?string;
 
     /** Job definition reference. */
-    public function getJobDefinitionId(): string;
+    public function getJobDefinitionId(): ?string;
 
     /** Batch reference. */
-    public function getBatchId(): string;
+    public function getBatchId(): ?string;
 
     /** The User who performed the operation */
-    public function getUserId(): string;
+    public function getUserId(): ?string;
 
     /** Timestamp of this change. */
-    public function getTimestamp(): string;
+    public function getTimestamp(): ?string;
 
     /**
      * The unique identifier of this operation.
@@ -121,40 +121,40 @@ interface UserOperationLogEntryInterface
      * If an operation modifies multiple properties, multiple UserOperationLogEntry instances will be
      * created with a common operationId. This allows grouping multiple entries which are part of a composite operation.
      */
-    public function getOperationId(): string;
+    public function getOperationId(): ?string;
 
     /** External task reference. */
-    public function getExternalTaskId(): string;
+    public function getExternalTaskId(): ?string;
 
     /**
      * Type of this operation, like create, assign, claim and so on.
      *
      * @see #OPERATION_TYPE_ASSIGN and other fields beginning with OPERATION_TYPE
      */
-    public function getOperationType(): string;
+    public function getOperationType(): ?string;
 
     /**
      * The type of the entity on which this operation was executed.
      *
      * @see #ENTITY_TYPE_TASK and other fields beginning with ENTITY_TYPE
      */
-    public function getEntityType(): string;
+    public function getEntityType(): ?string;
 
     /** The property changed by this operation. */
-    public function getProperty(): string;
+    public function getProperty(): ?string;
 
     /** The original value of the property. */
-    public function getOrgValue(): string;
+    public function getOrgValue(): ?string;
 
     /** The new value of the property. */
-    public function getNewValue(): string;
+    public function getNewValue(): ?string;
 
     /** The time the historic user operation log will be removed. */
-    public function getRemovalTime(): string;
+    public function getRemovalTime(): ?string;
 
     /** The category this entry is associated with */
-    public function getCategory(): string;
+    public function getCategory(): ?string;
 
     /** An arbitrary annotation set by a user for auditing reasons */
-    public function getAnnotation(): string;
+    public function getAnnotation(): ?string;
 }

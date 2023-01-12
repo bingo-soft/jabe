@@ -40,7 +40,7 @@ class PvmAtomicOperationDeleteCascadeFireActivityEnd extends PvmAtomicOperationA
         }
     }
 
-    protected function getEventName(): string
+    protected function getEventName(): ?string
     {
         return ExecutionListenerInterface::EVENTNAME_END;
     }
@@ -115,7 +115,7 @@ class PvmAtomicOperationDeleteCascadeFireActivityEnd extends PvmAtomicOperationA
         return $flowScopeActivity;
     }
 
-    public function getCanonicalName(): string
+    public function getCanonicalName(): ?string
     {
         return "delete-cascade-fire-activity-end";
     }

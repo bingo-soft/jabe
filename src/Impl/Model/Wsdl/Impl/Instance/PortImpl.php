@@ -58,22 +58,22 @@ class PortImpl extends BaseElementImpl implements PortInterface
         $typeBuilder->build();
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return self::$nameAttribute->getValue($this);
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         self::$nameAttribute->setValue($this, $name);
     }
 
-    public function getBinding(): string
+    public function getBinding(): ?string
     {
         return self::$bindingAttribute->getValue($this);
     }
 
-    public function setBinding(string $binding): void
+    public function setBinding(?string $binding): void
     {
         self::$bindingAttribute->setValue($this, $binding);
     }

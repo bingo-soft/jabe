@@ -44,4 +44,9 @@ class SetJobsRetriesCmd extends AbstractSetJobRetriesCmd implements CommandInter
         }
         return null;
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

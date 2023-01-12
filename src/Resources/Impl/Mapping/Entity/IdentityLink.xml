@@ -21,13 +21,13 @@
   
   <insert id="insertIdentityLink" parameterType="Jabe\Impl\Persistence\Entity\IdentityLinkEntity">
     insert into ${prefix}ACT_RU_IDENTITYLINK (ID_, TYPE_, USER_ID_, GROUP_ID_, TASK_ID_, PROC_DEF_ID_, TENANT_ID_, REV_ )
-    values (#{id, dbalType=VARCHAR},
-            #{type, dbalType=VARCHAR},
-            #{userId, dbalType=VARCHAR},
-            #{groupId, dbalType=VARCHAR},
-            #{taskId, dbalType=VARCHAR},
-            #{processDefId, dbalType=VARCHAR},
-            #{tenantId, dbalType=VARCHAR},
+    values (#{id:VARCHAR},
+            #{type:VARCHAR},
+            #{userId:VARCHAR},
+            #{groupId:VARCHAR},
+            #{taskId:VARCHAR},
+            #{processDefId:VARCHAR},
+            #{tenantId:VARCHAR},
             1
            )
             

@@ -18,5 +18,5 @@ interface DeleteProcessDefinitionsSelectBuilderInterface
      * @param processDefinitionKey process definition key
      * @return DeleteProcessDefinitionsTenantBuilderInterface the builder
      */
-    public function byKey(string $processDefinitionKey): DeleteProcessDefinitionsTenantBuilderInterface;
+    public function byKey(?string $processDefinitionKey): DeleteProcessDefinitionsTenantBuilderInterface;
 }

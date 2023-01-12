@@ -19,7 +19,7 @@ class SetRemovalTimeToHistoricProcessInstancesBuilderImpl implements SetRemovalT
     protected $ids = [];
     protected $mode;
     protected $removalTime;
-    protected $isHierarchical = false;
+    protected bool $isHierarchical = false;
 
     protected $commandExecutor;
 
@@ -40,7 +40,7 @@ class SetRemovalTimeToHistoricProcessInstancesBuilderImpl implements SetRemovalT
         return $this;
     }
 
-    public function absoluteRemovalTime(string $removalTime): SetRemovalTimeToHistoricProcessInstancesBuilderInterface
+    public function absoluteRemovalTime(?string $removalTime): SetRemovalTimeToHistoricProcessInstancesBuilderInterface
     {
         EnsureUtil::ensureNull(BadUserRequestException::class, "The removal time modes are mutually exclusive", "mode", $this->mode);
         $this->mode = Mode::ABSOLUTE_REMOVAL_TIME;
@@ -77,7 +77,7 @@ class SetRemovalTimeToHistoricProcessInstancesBuilderImpl implements SetRemovalT
         return $this->ids;
     }
 
-    public function getRemovalTime(): string
+    public function getRemovalTime(): ?string
     {
         return $this->removalTime;
     }

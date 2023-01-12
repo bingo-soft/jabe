@@ -13,14 +13,14 @@ class ExtendLockOnExternalTaskCmd extends HandleExternalTaskCmd
 {
     private $newLockTime;
 
-    public function __construct(string $externalTaskId, string $workerId, int $newLockTime)
+    public function __construct(?string $externalTaskId, ?string $workerId, int $newLockTime)
     {
         parent::__construct($externalTaskId, $workerId);
         EnsureUtil::ensurePositive(BadUserRequestException::class, "lockTime", $newLockTime);
         $this->newLockTime = $newLockTime;
     }
 
-    public function getErrorMessageOnWrongWorkerAccess(): string
+    public function getErrorMessageOnWrongWorkerAccess(): ?string
     {
         return "The lock of the External Task " . $this->externalTaskId . " cannot be extended by worker '" . $this->workerId . "'";
     }

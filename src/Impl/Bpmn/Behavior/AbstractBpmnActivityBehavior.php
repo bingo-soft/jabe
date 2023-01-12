@@ -83,7 +83,7 @@ class AbstractBpmnActivityBehavior extends FlowNodeActivityBehavior
         }
     }
 
-    public function signal(ActivityExecutionInterface $execution, string $signalName, $signalData): void
+    public function signal(ActivityExecutionInterface $execution, ?string $signalName, $signalData): void
     {
         if (CompensationUtil::SIGNAL_COMPENSATION_DONE == $signalName) {
             $this->signalCompensationDone($execution);

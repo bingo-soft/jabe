@@ -18,7 +18,7 @@ class ProcessElementInstanceImpl implements ProcessElementInstanceInterface
     {
         return $this->id;
     }
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
@@ -26,23 +26,23 @@ class ProcessElementInstanceImpl implements ProcessElementInstanceInterface
     {
         return $this->parentActivityInstanceId;
     }
-    public function setParentActivityInstanceId(string $parentActivityInstanceId): void
+    public function setParentActivityInstanceId(?string $parentActivityInstanceId): void
     {
         $this->parentActivityInstanceId = $parentActivityInstanceId;
     }
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
-    public function setProcessInstanceId(string $processInstanceId): void
+    public function setProcessInstanceId(?string $processInstanceId): void
     {
         $this->processInstanceId = $processInstanceId;
     }
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
-    public function setProcessDefinitionId(string $processDefinitionId): void
+    public function setProcessDefinitionId(?string $processDefinitionId): void
     {
         $this->processDefinitionId = $processDefinitionId;
     }

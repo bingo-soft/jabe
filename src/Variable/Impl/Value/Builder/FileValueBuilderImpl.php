@@ -11,7 +11,7 @@ class FileValueBuilderImpl implements FileValueBuilderInterface
 {
     protected $fileValue;
 
-    public function __construct(string $filename)
+    public function __construct(?string $filename)
     {
         $this->fileValue = new FileValueImpl(ValueType::getFile(), $filename);
     }
@@ -21,7 +21,7 @@ class FileValueBuilderImpl implements FileValueBuilderInterface
         return $this->fileValue;
     }
 
-    public function mimeType(string $mimeType): FileValueBuilderInterface
+    public function mimeType(?string $mimeType): FileValueBuilderInterface
     {
         $this->fileValue->setMimeType($mimeType);
         return $this;
@@ -39,7 +39,7 @@ class FileValueBuilderImpl implements FileValueBuilderInterface
         }
     }
 
-    public function encoding(string $encoding): FileValueBuilderInterface
+    public function encoding(?string $encoding): FileValueBuilderInterface
     {
         $this->fileValue->setEncoding($encoding);
         return $this;

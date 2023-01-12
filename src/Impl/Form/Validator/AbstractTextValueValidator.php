@@ -19,7 +19,7 @@ abstract class AbstractTextValueValidator implements FormFieldValidatorInterface
         throw new FormFieldValidationException("String validator " .  get_class($this) . " cannot be used on non-string value ");
     }
 
-    abstract protected function validateString(string $submittedValue, string $configuration): bool;
+    abstract protected function validateString(?string $submittedValue, ?string $configuration): bool;
 
     protected function isNullValid(): bool
     {

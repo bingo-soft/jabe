@@ -8,7 +8,7 @@ interface ExpressionManagerInterface
      * @param expression
      * @return a parsed expression
      */
-    public function createExpression(string $expression): ExpressionInterface;
+    public function createExpression(?string $expression): ExpressionInterface;
 
     /**
      * <p>
@@ -21,5 +21,5 @@ interface ExpressionManagerInterface
      * @param name
      * @param function
      */
-    public function addFunction(string $name, \ReflectionMethod $function): void;
+    public function addFunction(?string $name, \ReflectionMethod $function): void;
 }

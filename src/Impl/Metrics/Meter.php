@@ -8,7 +8,7 @@ class Meter
 
     protected $name;
 
-    public function __construct(string $name)
+    public function __construct(?string $name)
     {
         $this->name = $name;
         $this->counter = new \Swoole\Atomic\Long(0);
@@ -24,12 +24,12 @@ class Meter
         $this->counter->add($times);
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }

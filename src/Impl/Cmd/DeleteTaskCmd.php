@@ -66,7 +66,7 @@ class DeleteTaskCmd implements CommandInterface, \Serializable
         return null;
     }
 
-    protected function deleteTask(string $taskId, CommandContext $commandContext): void
+    protected function deleteTask(?string $taskId, CommandContext $commandContext): void
     {
         $taskManager = $commandContext->getTaskManager();
         $task = $taskManager->findTaskById($taskId);
@@ -95,5 +95,10 @@ class DeleteTaskCmd implements CommandInterface, \Serializable
         foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
             $checker->checkDeleteTask($task);
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

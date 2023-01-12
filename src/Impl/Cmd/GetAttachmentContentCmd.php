@@ -15,7 +15,7 @@ class GetAttachmentContentCmd implements CommandInterface, \Serializable
 {
     protected $attachmentId;
 
-    public function __construct(string $attachmentId)
+    public function __construct(?string $attachmentId)
     {
         $this->attachmentId = $attachmentId;
     }
@@ -47,5 +47,10 @@ class GetAttachmentContentCmd implements CommandInterface, \Serializable
         $bytes = $byteArray->getBytes();
 
         return $bytes;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

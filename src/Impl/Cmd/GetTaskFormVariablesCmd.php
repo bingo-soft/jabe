@@ -15,7 +15,7 @@ use Jabe\Variable\Impl\VariableMapImpl;
 
 class GetTaskFormVariablesCmd extends AbstractGetFormVariablesCmd
 {
-    public function __construct(string $taskId, array $variableNames, bool $deserializeObjectValues)
+    public function __construct(?string $taskId, array $variableNames, bool $deserializeObjectValues)
     {
         parent::__construct($taskId, $variableNames, $deserializeObjectValues);
     }

@@ -31,7 +31,7 @@ class ModificationBuilderImpl implements ModificationBuilderInterface
     protected $skipIoMappings;
     protected $annotation;
 
-    public function __construct(CommandExecutorInterface $commandExecutor, string $processDefinitionId)
+    public function __construct(CommandExecutorInterface $commandExecutor, ?string $processDefinitionId)
     {
         $this->commandExecutor = $commandExecutor;
         EnsureUtil::ensureNotNull(NotValidException::class, "processDefinitionId", $processDefinitionId);
@@ -40,28 +40,28 @@ class ModificationBuilderImpl implements ModificationBuilderInterface
         $this->instructions = [];
     }
 
-    public function startBeforeActivity(string $activityId): ModificationBuilderInterface
+    public function startBeforeActivity(?string $activityId): ModificationBuilderInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "activityId", $activityId);
         $this->instructions[] = new ActivityBeforeInstantiationCmd(null, $activityId);
         return $this;
     }
 
-    public function startAfterActivity(string $activityId): ModificationBuilderInterface
+    public function startAfterActivity(?string $activityId): ModificationBuilderInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "activityId", $activityId);
         $this->instructions[] = new ActivityAfterInstantiationCmd($activityId);
         return $this;
     }
 
-    public function startTransition(string $transitionId): ModificationBuilder
+    public function startTransition(?string $transitionId): ModificationBuilder
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "transitionId", $transitionId);
         $this->instructions[] = new TransitionInstantiationCmd($transitionId);
         return $this;
     }
 
-    public function cancelAllForActivity(string $activityId, bool $cancelCurrentActiveActivityInstances = false): ModificationBuilderInterface
+    public function cancelAllForActivity(?string $activityId, bool $cancelCurrentActiveActivityInstances = false): ModificationBuilderInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "activityId", $activityId);
         $activityCancellationCmd = new ActivityCancellationCmd($activityId);
@@ -98,7 +98,7 @@ class ModificationBuilderImpl implements ModificationBuilderInterface
         return $this;
     }
 
-    public function setAnnotation(string $annotation): ModificationBuilderInterface
+    public function setAnnotation(?string $annotation): ModificationBuilderInterface
     {
         $this->annotation = $annotation;
         return $this;
@@ -129,12 +129,12 @@ class ModificationBuilderImpl implements ModificationBuilderInterface
         return $this->processInstanceIds;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function setProcessDefinitionId(string $processDefinitionId): void
+    public function setProcessDefinitionId(?string $processDefinitionId): void
     {
         $this->processDefinitionId = $processDefinitionId;
     }
@@ -159,12 +159,12 @@ class ModificationBuilderImpl implements ModificationBuilderInterface
         return $this->skipIoMappings;
     }
 
-    public function getAnnotation(): string
+    public function getAnnotation(): ?string
     {
         return $this->annotation;
     }
 
-    public function setAnnotationInternal(string $annotation): void
+    public function setAnnotationInternal(?string $annotation): void
     {
         $this->annotation = $annotation;
     }

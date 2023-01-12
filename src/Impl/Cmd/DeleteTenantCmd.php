@@ -14,7 +14,7 @@ class DeleteTenantCmd extends AbstractWritableIdentityServiceCmd implements Comm
 
     public function __construct(?string $tenantId)
     {
-        EnsureUtil::ensureNotNull("tenantId", $tenantId);
+        EnsureUtil::ensureNotNull("tenantId", "tenantId", $tenantId);
         $this->tenantId = $tenantId;
     }
 

@@ -20,14 +20,14 @@ abstract class AbstractNativeQuery implements CommandInterface, NativeQueryInter
     protected $commandExecutor;
     protected $commandContext;
 
-    protected $maxResults = PHP_INT_MAX;
-    protected $firstResult = 0;
+    protected int $maxResults = PHP_INT_MAX;
+    protected int $firstResult = 0;
     protected $resultType;
 
     private $parameters = [];
     private $sqlStatement;
 
-    protected function __construct($command)
+    public function __construct($command)
     {
         if ($command instanceof CommandExecutorInterface) {
             $this->commandExecutor = $command;
@@ -42,13 +42,13 @@ abstract class AbstractNativeQuery implements CommandInterface, NativeQueryInter
         return $this;
     }
 
-    public function sql(string $sqlStatement): NativeQueryInterface
+    public function sql(?string $sqlStatement): NativeQueryInterface
     {
         $this->sqlStatement = $sqlStatement;
         return $this;
     }
 
-    public function parameter(string $name, $value): NativeQueryInterface
+    public function parameter(?string $name, $value): NativeQueryInterface
     {
         $this->parameters[$name] = $value;
         return $this;
@@ -154,5 +154,10 @@ abstract class AbstractNativeQuery implements CommandInterface, NativeQueryInter
     public function getParameters(): array
     {
         return $this->parameters;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

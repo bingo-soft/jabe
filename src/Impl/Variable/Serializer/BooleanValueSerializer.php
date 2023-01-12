@@ -35,7 +35,7 @@ class BooleanValueSerializer extends PrimitiveValueSerializer
         return Variables::booleanValue($boolValue, $asTransientValue);
     }
 
-    public function writeValue(BooleanValueInterface $variableValue, ValueFieldsInterface $valueFields): void
+    public function writeValue($variableValue, ValueFieldsInterface $valueFields): void
     {
         $intValue = null;
         $boolValue = $variableValue->getValue();

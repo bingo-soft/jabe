@@ -12,7 +12,7 @@ abstract class AbstractSetVariableCmd extends AbstractVariableCmd
     protected $skipSerializationFormatCheck;
 
     public function __construct(
-        string $entityId,
+        ?string $entityId,
         array $variables,
         bool $isLocal,
         ?bool $skipSerializationFormatCheck = null
@@ -30,7 +30,7 @@ abstract class AbstractSetVariableCmd extends AbstractVariableCmd
         }
     }
 
-    protected function getLogEntryOperation(): string
+    protected function getLogEntryOperation(): ?string
     {
         return UserOperationLogEntryInterface::OPERATION_TYPE_SET_VARIABLE;
     }

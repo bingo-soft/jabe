@@ -81,7 +81,7 @@ class ProcessInstanceModificationBatchCmd extends AbstractModificationCmd
             ->build();
     }
 
-    public function getConfiguration(array $instanceIds, string $deploymentId): BatchConfiguration
+    public function getConfiguration(array $instanceIds, ?string $deploymentId): BatchConfiguration
     {
         return new ModificationBatchConfiguration(
             $instanceIds,

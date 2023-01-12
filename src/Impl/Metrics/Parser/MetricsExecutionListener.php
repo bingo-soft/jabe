@@ -13,7 +13,7 @@ class MetricsExecutionListener implements ExecutionListenerInterface
     protected $metricsName;
     protected $condition;
 
-    public function __construct(string $metricsName, callable $condition = null)
+    public function __construct(?string $metricsName, callable $condition = null)
     {
         $this->metricsName = $metricsName;
         if ($condition == null) {

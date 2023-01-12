@@ -4,5 +4,5 @@ namespace Jabe\Impl\Webservice;
 
 interface SyncWebServiceClientInterface
 {
-    public function send(string $methodName, array $arguments, array $overriddenEndpointAddresses);
+    public function send(?string $methodName, array $arguments, array $overriddenEndpointAddresses);
 }

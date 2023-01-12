@@ -13,7 +13,7 @@ class VariableCollectionProvider implements VariablesProviderInterface
 
     public function provideVariables(?array $variablesNames = []): array
     {
-        if (vempty($variablesNames)) {
+        if (empty($variablesNames)) {
             return $this->variables;
         }
 

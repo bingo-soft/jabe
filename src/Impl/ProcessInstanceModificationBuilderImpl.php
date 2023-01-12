@@ -35,9 +35,9 @@ class ProcessInstanceModificationBuilderImpl implements ProcessInstanceModificat
     protected $commandContext;
     protected $processInstanceId;
     protected $modificationReason;
-    protected $skipCustomListeners = false;
-    protected $skipIoMappings = false;
-    protected $externallyTerminated = false;
+    protected bool $skipCustomListeners = false;
+    protected bool $skipIoMappings = false;
+    protected bool $externallyTerminated = false;
     protected $annotation;
 
     protected $operations = [];
@@ -45,7 +45,7 @@ class ProcessInstanceModificationBuilderImpl implements ProcessInstanceModificat
     // variables not associated with an activity that are to be set on the instance itself
     protected $processVariables;
 
-    public function __construct($contextOrExecutorOrProcessInstanceId = null, string $processInstanceId = null, string $modificationReason = null)
+    public function __construct($contextOrExecutorOrProcessInstanceId = null, ?string $processInstanceId = null, ?string $modificationReason = null)
     {
         if ($contextOrExecutorOrProcessInstanceId instanceof CommandExecutorInterface) {
             $this->commandExecutor = $contextOrExecutorOrProcessInstanceId;
@@ -64,21 +64,21 @@ class ProcessInstanceModificationBuilderImpl implements ProcessInstanceModificat
         $this->processVariables = new VariableMapImpl();
     }
 
-    public function cancelActivityInstance(string $activityInstanceId): ProcessInstanceModificationBuilderInterface
+    public function cancelActivityInstance(?string $activityInstanceId): ProcessInstanceModificationBuilderInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "activityInstanceId", $activityInstanceId);
         $this->operations[] = new ActivityInstanceCancellationCmd($this->processInstanceId, $activityInstanceId, $this->modificationReason);
         return $this;
     }
 
-    public function cancelTransitionInstance(string $transitionInstanceId): ProcessInstanceModificationBuilderInterface
+    public function cancelTransitionInstance(?string $transitionInstanceId): ProcessInstanceModificationBuilderInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "transitionInstanceId", $transitionInstanceId);
         $this->operations[] = new TransitionInstanceCancellationCmd($this->processInstanceId, $transitionInstanceId);
         return $this;
     }
 
-    public function cancelAllForActivity(string $activityId): ProcessInstanceModificationBuilderInterface
+    public function cancelAllForActivity(?string $activityId): ProcessInstanceModificationBuilderInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "activityId", $activityId);
         $this->operations[] = new ActivityCancellationCmd($this->processInstanceId, $activityId);
@@ -91,7 +91,7 @@ class ProcessInstanceModificationBuilderImpl implements ProcessInstanceModificat
         return $this;
     }
 
-    public function startBeforeActivity(string $activityId, ?string $ancestorActivityInstanceId = null): ProcessInstanceModificationInstantiationBuilderInterface
+    public function startBeforeActivity(?string $activityId, ?string $ancestorActivityInstanceId = null): ProcessInstanceModificationInstantiationBuilderInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "activityId", $activityId);
         //EnsureUtil::ensureNotNull(NotValidException::class, "ancestorActivityInstanceId", $ancestorActivityInstanceId);
@@ -100,7 +100,7 @@ class ProcessInstanceModificationBuilderImpl implements ProcessInstanceModificat
         return $this;
     }
 
-    public function startAfterActivity(string $activityId, ?string $ancestorActivityInstanceId = null): ProcessInstanceModificationInstantiationBuilderInterface
+    public function startAfterActivity(?string $activityId, ?string $ancestorActivityInstanceId = null): ProcessInstanceModificationInstantiationBuilderInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "activityId", $activityId);
         //EnsureUtil::ensureNotNull(NotValidException::class, "ancestorActivityInstanceId", $ancestorActivityInstanceId);
@@ -109,7 +109,7 @@ class ProcessInstanceModificationBuilderImpl implements ProcessInstanceModificat
         return $this;
     }
 
-    public function startTransition(string $transitionId, ?string $ancestorActivityInstanceId = null): ProcessInstanceModificationInstantiationBuilderInterface
+    public function startTransition(?string $transitionId, ?string $ancestorActivityInstanceId = null): ProcessInstanceModificationInstantiationBuilderInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "transitionId", $transitionId);
         EnsureUtil::ensureNotNull(NotValidException::class, "ancestorActivityInstanceId", $ancestorActivityInstanceId);
@@ -134,7 +134,7 @@ class ProcessInstanceModificationBuilderImpl implements ProcessInstanceModificat
         return $lastInstantiationCmd;
     }
 
-    public function setVariable(string $name, $value): ProcessInstanceModificationInstantiationBuilderInterface
+    public function setVariable(?string $name, $value): ProcessInstanceModificationInstantiationBuilderInterface
     {
         EnsureUtil::ensureNotNull("Variable name must not be null", "name", $name);
 
@@ -148,7 +148,7 @@ class ProcessInstanceModificationBuilderImpl implements ProcessInstanceModificat
         return $this;
     }
 
-    public function setVariableLocal(string $name, $value): ProcessInstanceModificationInstantiationBuilderInterface
+    public function setVariableLocal(?string $name, $value): ProcessInstanceModificationInstantiationBuilderInterface
     {
         EnsureUtil::ensureNotNull("Variable name must not be null", "name", $name);
 
@@ -188,14 +188,14 @@ class ProcessInstanceModificationBuilderImpl implements ProcessInstanceModificat
         return $this;
     }
 
-    public function setAnnotation(string $annotation): ProcessInstanceModificationBuilderInterface
+    public function setAnnotation(?string $annotation): ProcessInstanceModificationBuilderInterface
     {
         EnsureUtil::ensureNotNull("Annotation must not be null", "annotation", $annotation);
         $this->annotation = $annotation;
         return $this;
     }
 
-    public function execute(bool $writeUserOperationLog = true, bool $skipCustomListeners = false, bool $skipIoMappings = false): void
+    public function execute(?bool $writeUserOperationLog = true, ?bool $skipCustomListeners = false, ?bool $skipIoMappings = false): void
     {
         $this->skipCustomListeners = $skipCustomListeners;
         $this->skipIoMappings = $skipIoMappings;
@@ -226,7 +226,7 @@ class ProcessInstanceModificationBuilderImpl implements ProcessInstanceModificat
         return $this->commandContext;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
@@ -271,22 +271,22 @@ class ProcessInstanceModificationBuilderImpl implements ProcessInstanceModificat
         return $this->processVariables;
     }
 
-    public function getModificationReason(): string
+    public function getModificationReason(): ?string
     {
         return $this->modificationReason;
     }
 
-    public function setModificationReason(string $modificationReason): void
+    public function setModificationReason(?string $modificationReason): void
     {
         $this->modificationReason = $modificationReason;
     }
 
-    public function getAnnotation(): string
+    public function getAnnotation(): ?string
     {
         return $this->annotation;
     }
 
-    public function setAnnotationInternal(string $annotation): void
+    public function setAnnotationInternal(?string $annotation): void
     {
         $this->annotation = $annotation;
     }

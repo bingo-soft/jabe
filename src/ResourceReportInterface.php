@@ -5,7 +5,7 @@ namespace Jabe;
 interface ResourceReportInterface
 {
     /** Returns the resource name where the problems occurred. */
-    public function getResourceName(): string;
+    public function getResourceName(): ?string;
 
     /** Returns list of errors in this report */
     public function getErrors(): array;

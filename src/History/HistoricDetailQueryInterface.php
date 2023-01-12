@@ -12,38 +12,38 @@ interface HistoricDetailQueryInterface extends QueryInterface
      * @param id the historic detail to select
      * @return HistoricDetailQueryInterface the query builder
      */
-    public function detailId(string $id): HistoricDetailQueryInterface;
+    public function detailId(?string $id): HistoricDetailQueryInterface;
 
     /** Only select historic variable updates with the given process instance.
      * ProcessInstance ids and HistoricProcessInstance ids match. */
-    public function processInstanceId(string $processInstanceId): HistoricDetailQueryInterface;
+    public function processInstanceId(?string $processInstanceId): HistoricDetailQueryInterface;
 
     /** Only select historic variable updates with the given case instance.
      * CaseInstance ids and HistoricCaseInstance ids match. */
-    //public function caseInstanceId(string $caseInstanceId): HistoricDetailQueryInterface;
+    //public function caseInstanceId(?string $caseInstanceId): HistoricDetailQueryInterface;
 
     /** Only select historic variable updates with the given execution.
      * Note that Execution ids are not stored in the history as first class citizen,
      * only process instances are.*/
-    public function executionId(string $executionId): HistoricDetailQueryInterface;
+    public function executionId(?string $executionId): HistoricDetailQueryInterface;
 
     /** Only select historic variable updates with the given case execution.
      * Note that CaseExecution ids are not stored in the history as first class citizen,
      * only case instances are.*/
-    //public function caseExecutionId(string $caseExecutionId): HistoricDetailQueryInterface;
+    //public function caseExecutionId(?string $caseExecutionId): HistoricDetailQueryInterface;
 
     /** Only select historic variable updates associated to the given {@link HistoricActivityInstance activity instance}.
      * @deprecated since 5.2, use {@link #activityInstanceId(String)} instead */
-    public function activityId(string $activityId): HistoricDetailQueryInterface;
+    public function activityId(?string $activityId): HistoricDetailQueryInterface;
 
     /** Only select historic variable updates associated to the given {@link HistoricActivityInstance activity instance}. */
-    public function activityInstanceId(string $activityInstanceId): HistoricDetailQueryInterface;
+    public function activityInstanceId(?string $activityInstanceId): HistoricDetailQueryInterface;
 
     /** Only select historic variable updates associated to the given {@link HistoricTaskInstance historic task instance}. */
-    public function taskId(string $taskId): HistoricDetailQueryInterface;
+    public function taskId(?string $taskId): HistoricDetailQueryInterface;
 
     /** Only select historic variable updates associated to the given {@link HistoricVariableInstance historic variable instance}. */
-    public function variableInstanceId(string $variableInstanceId): HistoricDetailQueryInterface;
+    public function variableInstanceId(?string $variableInstanceId): HistoricDetailQueryInterface;
 
     /** Only select historic process variables which match one of the given variable types. */
     public function variableTypeIn(array $variableTypes): HistoricDetailQueryInterface;
@@ -89,13 +89,13 @@ interface HistoricDetailQueryInterface extends QueryInterface
     /**
      * Select historic details related with given userOperationId.
      */
-    public function userOperationId(string $userOperationId): HistoricDetailQueryInterface;
+    public function userOperationId(?string $userOperationId): HistoricDetailQueryInterface;
 
     /** Only select historic details that have occurred before the given date (inclusive). */
-    public function occurredBefore(string $date): HistoricDetailQueryInterface;
+    public function occurredBefore(?string $date): HistoricDetailQueryInterface;
 
     /** Only select historic details that have occurred after the given date (inclusive). */
-    public function occurredAfter(string $date): HistoricDetailQueryInterface;
+    public function occurredAfter(?string $date): HistoricDetailQueryInterface;
 
     /** Only select historic details that were set during the process start. */
     public function initial(): HistoricDetailQueryInterface;

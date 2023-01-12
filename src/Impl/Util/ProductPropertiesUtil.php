@@ -19,7 +19,7 @@ class ProductPropertiesUtil
     /**
      * @return the current version of the product
      */
-    public static function getProductVersion(): string
+    public static function getProductVersion(): ?string
     {
         return self::instance()[self::VERSION_PROPERTY];
     }

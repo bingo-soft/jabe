@@ -8,7 +8,7 @@ class DueDateBusinessCalendar implements BusinessCalendarInterface
 {
     public const NAME = "dueDate";
 
-    public function resolveDuedate(string $duedateDescription, $startDate = null, int $repeatOffset = 0): ?\DateTime
+    public function resolveDuedate(?string $duedateDescription, $startDate = null, int $repeatOffset = 0): ?\DateTime
     {
         try {
             if ($startDate === null) {

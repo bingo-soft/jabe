@@ -7,19 +7,19 @@ use Jabe\Query\QueryInterface;
 interface HistoricExternalTaskLogQueryInterface extends QueryInterface
 {
     /** Only select historic external task log entries with the id. */
-    public function logId(string $historicExternalTaskLogId): HistoricExternalTaskLogQueryInterface;
+    public function logId(?string $historicExternalTaskLogId): HistoricExternalTaskLogQueryInterface;
 
     /** Only select historic external task log entries with the given external task id. */
-    public function externalTaskId(string $taskId): HistoricExternalTaskLogQueryInterface;
+    public function externalTaskId(?string $taskId): HistoricExternalTaskLogQueryInterface;
 
     /** Only select historic external task log entries with the given topic name. */
-    public function topicName(string $topicName): HistoricExternalTaskLogQueryInterface;
+    public function topicName(?string $topicName): HistoricExternalTaskLogQueryInterface;
 
     /** Only select historic external task log entries with the given worker id. */
-    public function workerId(string $workerId): HistoricExternalTaskLogQueryInterface;
+    public function workerId(?string $workerId): HistoricExternalTaskLogQueryInterface;
 
     /** Only select historic external task log entries with the given error message. */
-    public function errorMessage(string $errorMessage): HistoricExternalTaskLogQueryInterface;
+    public function errorMessage(?string $errorMessage): HistoricExternalTaskLogQueryInterface;
 
     /** Only select historic external task log entries which are associated with one of the given activity ids. **/
     public function activityIdIn(array $activityIds): HistoricExternalTaskLogQueryInterface;
@@ -31,13 +31,13 @@ interface HistoricExternalTaskLogQueryInterface extends QueryInterface
     public function executionIdIn(array $executionIds): HistoricExternalTaskLogQueryInterface;
 
     /** Only select historic external task log entries with the process instance id. */
-    public function processInstanceId(string $processInstanceId): HistoricExternalTaskLogQueryInterface;
+    public function processInstanceId(?string $processInstanceId): HistoricExternalTaskLogQueryInterface;
 
     /** Only select historic external task log entries with the process definition id. */
-    public function processDefinitionId(string $processDefinitionId): HistoricExternalTaskLogQueryInterface;
+    public function processDefinitionId(?string $processDefinitionId): HistoricExternalTaskLogQueryInterface;
 
     /** Only select historic external task log entries with the process instance key. */
-    public function processDefinitionKey(string $processDefinitionKey): HistoricExternalTaskLogQueryInterface;
+    public function processDefinitionKey(?string $processDefinitionKey): HistoricExternalTaskLogQueryInterface;
 
     /** Only select historic external task log entries that beint $to one of the given tenant ids. */
     public function tenantIdIn(array $tenantIds): HistoricExternalTaskLogQueryInterface;

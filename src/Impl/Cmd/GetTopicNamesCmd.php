@@ -32,4 +32,9 @@ class GetTopicNamesCmd implements CommandInterface
             ->getExternalTaskManager()
             ->selectTopicNamesByQuery($this->externalTaskQuery);
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

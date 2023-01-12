@@ -8,29 +8,29 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
 {
     /** Only select historic process instances with the given process instance.
      * {@link ProcessInstance) ids and HistoricProcessInstance ids match. */
-    public function processInstanceId(string $processInstanceId): HistoricProcessInstanceQueryInterface;
+    public function processInstanceId(?string $processInstanceId): QueryInterface;
 
     /** Only select historic process instances whose id is in the given set of ids.
      * {@link ProcessInstance) ids and HistoricProcessInstance ids match. */
-    public function processInstanceIds(array $processInstanceIds): HistoricProcessInstanceQueryInterface;
+    public function processInstanceIds(array $processInstanceIds): QueryInterface;
 
     /** Only select historic process instances for the given process definition */
-    public function processDefinitionId(string $processDefinitionId): HistoricProcessInstanceQueryInterface;
+    public function processDefinitionId(?string $processDefinitionId): QueryInterface;
 
     /** Only select historic process instances that are defined by a process
      * definition with the given key.  */
-    public function processDefinitionKey(string $processDefinitionKey): HistoricProcessInstanceQueryInterface;
+    public function processDefinitionKey(?string $processDefinitionKey): QueryInterface;
 
     /** Only select historic process instances that are defined by any given process
      * definition key.  */
-    public function processDefinitionKeyIn(array $processDefinitionKeys): HistoricProcessInstanceQueryInterface;
+    public function processDefinitionKeyIn(array $processDefinitionKeys): QueryInterface;
 
     /** Only select historic process instances that don't have a process-definition of which the key is present in the given list */
-    public function processDefinitionKeyNotIn(array $processDefinitionKeys): HistoricProcessInstanceQueryInterface;
+    public function processDefinitionKeyNotIn(array $processDefinitionKeys): QueryInterface;
 
     /** Only select historic process instances that are defined by a process
      * definition with the given name.  */
-    public function processDefinitionName(string $processDefinitionName): HistoricProcessInstanceQueryInterface;
+    public function processDefinitionName(?string $processDefinitionName): QueryInterface;
 
     /**
      * Only select historic process instances that are defined by process definition which name
@@ -39,10 +39,10 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
      * @param nameLike The string can include the wildcard character '%' to express
      *    like-strategy: starts with (string%), ends with (%string) or contains (%string%).
      */
-    public function processDefinitionNameLike(string $nameLike): HistoricProcessInstanceQueryInterface;
+    public function processDefinitionNameLike(?string $nameLike): QueryInterface;
 
     /** Only select historic process instances with the given business key */
-    public function processInstanceBusinessKey(string $processInstanceBusinessKey): HistoricProcessInstanceQueryInterface;
+    public function processInstanceBusinessKey(?string $processInstanceBusinessKey): QueryInterface;
 
     /**
      * Only select historic process instances which had a business key like the given value.
@@ -50,27 +50,27 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
      * @param processInstanceBusinessKeyLike The string can include the wildcard character '%' to express
      *    like-strategy: starts with (string%), ends with (%string) or contains (%string%).
      */
-    public function processInstanceBusinessKeyLike(string $processInstanceBusinessKeyLike): HistoricProcessInstanceQueryInterface;
+    public function processInstanceBusinessKeyLike(?string $processInstanceBusinessKeyLike): QueryInterface;
 
     /** Only select historic process instances that are completely finished. */
-    public function finished(): HistoricProcessInstanceQueryInterface;
+    public function finished(): QueryInterface;
 
     /** Only select historic process instance that are not yet finished. */
-    public function unfinished(): HistoricProcessInstanceQueryInterface;
+    public function unfinished(): QueryInterface;
 
     /**
      * Only select historic process instances with incidents
      *
      * @return HistoricProcessInstanceQuery
      */
-    public function withIncidents(): HistoricProcessInstanceQueryInterface;
+    public function withIncidents(): QueryInterface;
 
     /**
      * Only select historic process instances with root incidents
      *
      * @return HistoricProcessInstanceQuery
      */
-    public function withRootIncidents(): HistoricProcessInstanceQueryInterface;
+    public function withRootIncidents(): QueryInterface;
 
     /** Only select historic process instances with incident status either 'open' or 'resolved'.
      * To get all process instances with incidents, use HistoricProcessInstanceQuery#withIncidents().
@@ -78,12 +78,12 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
      * @param status indicates the incident status, which is either 'open' or 'resolved'
      * @return HistoricProcessInstanceQuery
      */
-    public function incidentStatus(string $status): HistoricProcessInstanceQueryInterface;
+    public function incidentStatus(?string $status): QueryInterface;
 
     /**
      * Only selects process instances with the given incident type.
      */
-    public function incidentType(string $incidentType): HistoricProcessInstanceQueryInterface;
+    public function incidentType(?string $incidentType): QueryInterface;
 
     /**
      * Only select historic process instances with the given incident message.
@@ -92,7 +92,7 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
      *
      * @return HistoricProcessInstanceQuery
      */
-    public function incidentMessage(string $incidentMessage): HistoricProcessInstanceQueryInterface;
+    public function incidentMessage(?string $incidentMessage): QueryInterface;
 
     /**
      * Only select historic process instances which had an incident message like the given value.
@@ -102,17 +102,17 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
      *
      * @return HistoricProcessInstanceQuery
      */
-    public function incidentMessageLike(string $incidentMessageLike): HistoricProcessInstanceQueryInterface;
+    public function incidentMessageLike(?string $incidentMessageLike): QueryInterface;
 
     /**
      * The query will match the names of variables in a case-insensitive way.
      */
-    public function matchVariableNamesIgnoreCase(): HistoricProcessInstanceQueryInterface;
+    public function matchVariableNamesIgnoreCase(): QueryInterface;
 
     /**
      * The query will match the values of variables in a case-insensitive way.
      */
-    public function matchVariableValuesIgnoreCase(): HistoricProcessInstanceQueryInterface;
+    public function matchVariableValuesIgnoreCase(): QueryInterface;
 
     /** Only select process instances which had a global variable with the given value
      * when they ended. Only select process instances which have a variable value
@@ -123,7 +123,7 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
      * Serializable objects (which are not primitive type wrappers) are
      * not supported.
      * @param name of the variable, cannot be null. */
-    public function variableValueEquals(string $name, $value): HistoricProcessInstanceQueryInterface;
+    public function variableValueEquals(?string $name, $value): QueryInterface;
 
     /** Only select process instances which had a global variable with the given name, but
      * with a different value than the passed value when they ended. Only select
@@ -131,7 +131,7 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
      * value. Byte-arrays and Serializable objects (which are not
      * primitive type wrappers) are not supported.
      * @param name of the variable, cannot be null. */
-    public function variableValueNotEquals(string $name, $value): HistoricProcessInstanceQueryInterface;
+    public function variableValueNotEquals(?string $name, $value): QueryInterface;
 
     /** Only select process instances which had a global variable value greater than the
      * passed value when they ended. Booleans, Byte-arrays and
@@ -140,7 +140,7 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
      * greater than the passed value.
      * @param name cannot be null.
      * @param value cannot be null. */
-    public function variableValueGreaterThan(string $name, $value): HistoricProcessInstanceQueryInterface;
+    public function variableValueGreaterThan(?string $name, $value): QueryInterface;
 
     /** Only select process instances which had a global variable value greater than or
      * equal to the passed value when they ended. Booleans, Byte-arrays and
@@ -149,7 +149,7 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
      * use a ProcessInstanceQuery instead!
      * @param name cannot be null.
      * @param value cannot be null. */
-    public function variableValueGreaterThanOrEqual(string $name, $value): HistoricProcessInstanceQueryInterface;
+    public function variableValueGreaterThanOrEqual(?string $name, $value): QueryInterface;
 
     /** Only select process instances which had a global variable value less than the
      * passed value when the ended. Only applies to already ended process
@@ -158,7 +158,7 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
      * wrappers) are not supported.
      * @param name cannot be null.
      * @param value cannot be null. */
-    public function variableValueLessThan(string $name, $value): HistoricProcessInstanceQueryInterface;
+    public function variableValueLessThan(?string $name, $value): QueryInterface;
 
     /** Only select process instances which has a global variable value less than or equal
      * to the passed value when they ended. Only applies to already ended process
@@ -167,7 +167,7 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
      * wrappers) are not supported.
      * @param name cannot be null.
      * @param value cannot be null. */
-    public function variableValueLessThanOrEqual(string $name, $value): HistoricProcessInstanceQueryInterface;
+    public function variableValueLessThanOrEqual(?string $name, $value): QueryInterface;
 
     /** Only select process instances which had global variable value like the given value
      * when they ended. Only applies to already ended process instances, otherwise
@@ -177,57 +177,57 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
      * @param value cannot be null. The string can include the
      *          wildcard character '%' to express like-strategy: starts with
      *          (string%), ends with (%string) or contains (%string%). */
-    public function variableValueLike(string $name, string $value): HistoricProcessInstanceQueryInterface;
+    public function variableValueLike(?string $name, ?string $value): QueryInterface;
 
     /** Only select historic process instances that were started before the given date. */
-    public function startedBefore(string $date): HistoricProcessInstanceQueryInterface;
+    public function startedBefore(?string $date): QueryInterface;
 
     /** Only select historic process instances that were started after the given date. */
-    public function startedAfter(string $date): HistoricProcessInstanceQueryInterface;
+    public function startedAfter(?string $date): QueryInterface;
 
     /** Only select historic process instances that were started before the given date. */
-    public function finishedBefore(string $date): HistoricProcessInstanceQueryInterface;
+    public function finishedBefore(?string $date): QueryInterface;
 
     /** Only select historic process instances that were started after the given date. */
-    public function finishedAfter(string $date): HistoricProcessInstanceQueryInterface;
+    public function finishedAfter(?string $date): QueryInterface;
 
     /** Only select historic process instance that are started by the given user. */
-    public function startedBy(string $userId): HistoricProcessInstanceQueryInterface;
+    public function startedBy(?string $userId): QueryInterface;
 
     /** Order by the process instance id (needs to be followed by {@link #asc()} or {@link #desc()}). */
-    public function orderByProcessInstanceId(): HistoricProcessInstanceQueryInterface;
+    public function orderByProcessInstanceId(): QueryInterface;
 
     /** Order by the process definition id (needs to be followed by {@link #asc()} or {@link #desc()}). */
-    public function orderByProcessDefinitionId(): HistoricProcessInstanceQueryInterface;
+    public function orderByProcessDefinitionId(): QueryInterface;
 
     /** Order by the process definition key (needs to be followed by {@link #asc()} or {@link #desc()}). */
-    public function orderByProcessDefinitionKey(): HistoricProcessInstanceQueryInterface;
+    public function orderByProcessDefinitionKey(): QueryInterface;
 
     /** Order by the process definition name (needs to be followed by {@link #asc()} or {@link #desc()}). */
-    public function orderByProcessDefinitionName(): HistoricProcessInstanceQueryInterface;
+    public function orderByProcessDefinitionName(): QueryInterface;
 
     /** Order by the process definition version (needs to be followed by {@link #asc()} or {@link #desc()}). */
-    public function orderByProcessDefinitionVersion(): HistoricProcessInstanceQueryInterface;
+    public function orderByProcessDefinitionVersion(): QueryInterface;
 
     /** Order by the business key (needs to be followed by {@link #asc()} or {@link #desc()}). */
-    public function orderByProcessInstanceBusinessKey(): HistoricProcessInstanceQueryInterface;
+    public function orderByProcessInstanceBusinessKey(): QueryInterface;
 
     /** Order by the start time (needs to be followed by {@link #asc()} or {@link #desc()}). */
-    public function orderByProcessInstanceStartTime(): HistoricProcessInstanceQueryInterface;
+    public function orderByProcessInstanceStartTime(): QueryInterface;
 
     /** Order by the end time (needs to be followed by {@link #asc()} or {@link #desc()}). */
-    public function orderByProcessInstanceEndTime(): HistoricProcessInstanceQueryInterface;
+    public function orderByProcessInstanceEndTime(): QueryInterface;
 
     /** Order by the duration of the process instance (needs to be followed by {@link #asc()} or {@link #desc()}). */
-    public function orderByProcessInstanceDuration(): HistoricProcessInstanceQueryInterface;
+    public function orderByProcessInstanceDuration(): QueryInterface;
 
     /** Only select historic process instances that are top level process instances. */
-    public function rootProcessInstances(): HistoricProcessInstanceQueryInterface;
+    public function rootProcessInstances(): QueryInterface;
 
     /** Only select historic process instances started by the given process
      * instance. {@link ProcessInstance) ids and HistoricProcessInstance
      * ids match. */
-    public function superProcessInstanceId(string $superProcessInstanceId): HistoricProcessInstanceQueryInterface;
+    public function superProcessInstanceId(?string $superProcessInstanceId): QueryInterface;
 
     /** Only select historic process instances having a sub process instance
      * with the given process instance id.
@@ -235,11 +235,11 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
      * Note that there will always be maximum only <b>one</b>
      * such process instance that can be the result of this query.
      */
-    public function subProcessInstanceId(string $subProcessInstanceId): HistoricProcessInstanceQueryInterface;
+    public function subProcessInstanceId(?string $subProcessInstanceId): QueryInterface;
 
     /** Only select historic process instances started by the given case
      * instance. */
-    //public function superCaseInstanceId(string $superCaseInstanceId): HistoricProcessInstanceQueryInterface;
+    //public function superCaseInstanceId(?string $superCaseInstanceId): QueryInterface;
 
     /** Only select historic process instances having a sub case instance
      * with the given case instance id.
@@ -247,52 +247,52 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
      * Note that there will always be maximum only <b>one</b>
      * such process instance that can be the result of this query.
      */
-    //public function subCaseInstanceId(string $subCaseInstanceId): HistoricProcessInstanceQueryInterface;
+    //public function subCaseInstanceId(?string $subCaseInstanceId): QueryInterface;
 
     /** Only select historic process instances with one of the given tenant ids. */
-    public function tenantIdIn(array $tenantIds): HistoricProcessInstanceQueryInterface;
+    public function tenantIdIn(array $tenantIds): QueryInterface;
 
     /** Only selects historic process instances which have no tenant id. */
-    public function withoutTenantId(): HistoricProcessInstanceQueryInterface;
+    public function withoutTenantId(): QueryInterface;
 
     /**
      * Order by tenant id (needs to be followed by {@link #asc()} or {@link #desc()}).
      * Note that the ordering of historic process instances without tenant id is database-specific.
      */
-    public function orderByTenantId(): HistoricProcessInstanceQueryInterface;
+    public function orderByTenantId(): QueryInterface;
 
     /** Only select historic process instances that executed an activity after the given date. */
-    public function executedActivityAfter(string $date): HistoricProcessInstanceQueryInterface;
+    public function executedActivityAfter(?string $date): QueryInterface;
 
     /** Only select historic process instances that executed an activity before the given date. */
-    public function executedActivityBefore(string $date): HistoricProcessInstanceQueryInterface;
+    public function executedActivityBefore(?string $date): QueryInterface;
 
     /** Only select historic process instances that executed activities with given ids. */
-    public function executedActivityIdIn(array $ids): HistoricProcessInstanceQueryInterface;
+    public function executedActivityIdIn(array $ids): QueryInterface;
 
     /** Only select historic process instances that have active activities with given ids. */
-    public function activeActivityIdIn(array $ids): HistoricProcessInstanceQueryInterface;
+    public function activeActivityIdIn(array $ids): QueryInterface;
 
     /** Only select historic process instances that executed an job after the given date. */
-    public function executedJobAfter(string $date): HistoricProcessInstanceQueryInterface;
+    public function executedJobAfter(?string $date): QueryInterface;
 
     /** Only select historic process instances that executed an job before the given date. */
-    public function executedJobBefore(string $date): HistoricProcessInstanceQueryInterface;
+    public function executedJobBefore(?string $date): QueryInterface;
 
     /** Only select historic process instances that are active. */
-    public function active(): HistoricProcessInstanceQueryInterface;
+    public function active(): QueryInterface;
 
     /** Only select historic process instances that are suspended. */
-    public function suspended(): HistoricProcessInstanceQueryInterface;
+    public function suspended(): QueryInterface;
 
     /** Only select historic process instances that are completed. */
-    public function completed(): HistoricProcessInstanceQueryInterface;
+    public function completed(): QueryInterface;
 
     /** Only select historic process instances that are externallyTerminated. */
-    public function externallyTerminated(): HistoricProcessInstanceQueryInterface;
+    public function externallyTerminated(): QueryInterface;
 
     /** Only select historic process instances that are internallyTerminated. */
-    public function internallyTerminated(): HistoricProcessInstanceQueryInterface;
+    public function internallyTerminated(): QueryInterface;
 
     /**
      * <p>After calling or(), a chain of several filter criteria could follow. Each filter criterion that follows or()
@@ -306,7 +306,7 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
      * criteria. To prevent throwing this exception, {@link #endOr()} must be invoked after a chain of filter criteria to
      * mark the end of the OR query.
      * */
-    public function or(): HistoricProcessInstanceQueryInterface;
+    public function or(): QueryInterface;
 
     /**
      * <p>endOr() terminates an OR query on which an arbitrary amount of filter criteria were applied. To terminate the
@@ -319,5 +319,5 @@ interface HistoricProcessInstanceQueryInterface extends QueryInterface
      * @throws ProcessEngineException when endOr() has been invoked before {@link #or()} was invoked. To prevent throwing
      * this exception, {@link #or()} must be invoked first.
      * */
-    public function endOr(): HistoricProcessInstanceQueryInterface;
+    public function endOr(): QueryInterface;
 }

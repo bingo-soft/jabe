@@ -9,19 +9,19 @@ interface VariableInstanceInterface
     /**
      * @return string the id of this variable instance
      */
-    public function getId(): string;
+    public function getId(): ?string;
 
     /**
      * Returns the name of this variable instance.
      */
-    public function getName(): string;
+    public function getName(): ?string;
 
     /**
      * Returns the name of the type of this variable instance
      *
      * @return string the type name of the variable
      */
-    public function getTypeName(): string;
+    public function getTypeName(): ?string;
 
     /**
      * Returns the value of this variable instance.
@@ -36,48 +36,48 @@ interface VariableInstanceInterface
     /**
      * Returns the corresponding process instance id.
      */
-    public function getProcessInstanceId(): string;
+    public function getProcessInstanceId(): ?string;
 
     /**
      * Returns the corresponding execution id.
      */
-    public function getExecutionId(): string;
+    public function getExecutionId(): ?string;
 
     /**
      * Return the corresponding process definition id.
      */
-    public function getProcessDefinitionId(): string;
+    public function getProcessDefinitionId(): ?string;
 
     /**
      * Returns the corresponding case instance id.
      */
-    //public function getCaseInstanceId(): string;
+    //public function getCaseInstanceId(): ?string;
 
     /**
      * Returns the corresponding case execution id.
      */
-    //public function getCaseExecutionId(): string;
+    //public function getCaseExecutionId(): ?string;
 
     /**
      * Returns the corresponding task id.
      */
-    public function getTaskId(): string;
+    public function getTaskId(): ?string;
 
     /**
      * Returns the corresponding batch id.
      */
-    public function getBatchId(): string;
+    public function getBatchId(): ?string;
 
     /**
      * Returns the corresponding activity instance id.
      */
-    public function getActivityInstanceId(): string;
+    public function getActivityInstanceId(): ?string;
 
     /**
      * If the variable value could not be loaded, this returns the error message.
      * @return an error message indicating why the variable value could not be loaded.
      */
-    public function getErrorMessage(): string;
+    public function getErrorMessage(): ?string;
 
     /**
      * The id of the tenant this variable belongs to. Can be <code>null</code>

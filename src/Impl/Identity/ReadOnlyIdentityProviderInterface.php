@@ -24,7 +24,7 @@ interface ReadOnlyIdentityProviderInterface extends SessionInterface
      * @return a User object for the given user id or null if no such user exists.
      * @throws IdentityProviderException in case an error occurs
      */
-    public function findUserById(string $userId): ?UserInterface;
+    public function findUserById(?string $userId): ?UserInterface;
 
     /**
      * @return a UserQuery object which can be used for querying for users.
@@ -42,7 +42,7 @@ interface ReadOnlyIdentityProviderInterface extends SessionInterface
      * @return 'true' if the password matches the
      * @throws IdentityProviderException in case an error occurs
      */
-    public function checkPassword(string $userId, string $password): bool;
+    public function checkPassword(?string $userId, ?string $password): bool;
 
     // groups //////////////////////////////////////
 
@@ -50,7 +50,7 @@ interface ReadOnlyIdentityProviderInterface extends SessionInterface
      * @return a Group object for the given group id or null if no such group exists.
      * @throws IdentityProviderException in case an error occurs
      */
-    public function findGroupById(string $groupId): ?GroupInterface;
+    public function findGroupById(?string $groupId): ?GroupInterface;
 
     /**
      * @return a GroupQuery object which can be used for querying for groups.
@@ -65,7 +65,7 @@ interface ReadOnlyIdentityProviderInterface extends SessionInterface
      * @throws IdentityProviderException
      *           in case an error occurs
      */
-    public function findTenantById(string $tenantId): TenantInterface;
+    public function findTenantById(?string $tenantId): TenantInterface;
 
     /**
      * @return a TenantQuery object which can be used for querying for

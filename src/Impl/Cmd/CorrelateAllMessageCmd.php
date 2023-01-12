@@ -58,4 +58,9 @@ class CorrelateAllMessageCmd extends AbstractCorrelateMessageCmd implements Comm
 
         return $results;
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

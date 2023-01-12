@@ -15,7 +15,7 @@ class PvmAtomicOperationActivityStart extends PvmAtomicOperationActivityInstance
         $execution->dispatchDelayedEventsAndPerformOperation(self::activityExecute());
     }
 
-    protected function getEventName(): string
+    protected function getEventName(): ?string
     {
         return ExecutionListenerInterface::EVENTNAME_START;
     }
@@ -25,7 +25,7 @@ class PvmAtomicOperationActivityStart extends PvmAtomicOperationActivityInstance
         return $execution->getActivity();
     }
 
-    public function getCanonicalName(): string
+    public function getCanonicalName(): ?string
     {
         return "activity-start";
     }

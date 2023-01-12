@@ -18,7 +18,7 @@ class HistoricBatchQueryImpl extends AbstractQuery implements HistoricBatchQuery
     protected $batchId;
     protected $type;
     protected $completed;
-    protected $isTenantIdSet = false;
+    protected bool $isTenantIdSet = false;
     protected $tenantIds = [];
 
     public function __construct(CommandExecutorInterface $commandExecutor)
@@ -26,19 +26,19 @@ class HistoricBatchQueryImpl extends AbstractQuery implements HistoricBatchQuery
         parent::__construct($commandExecutor);
     }
 
-    public function batchId(string $batchId): HistoricBatchQueryInterface
+    public function batchId(?string $batchId): HistoricBatchQueryInterface
     {
         EnsureUtil::ensureNotNull("Batch id", "Batch id", $batchId);
         $this->batchId = $batchId;
         return $this;
     }
 
-    public function getBatchId(): string
+    public function getBatchId(): ?string
     {
         return $this->batchId;
     }
 
-    public function type(string $type): HistoricBatchQueryInterface
+    public function type(?string $type): HistoricBatchQueryInterface
     {
         EnsureUtil::ensureNotNull("Type", "Type", $type);
         $this->type = $type;
@@ -76,7 +76,7 @@ class HistoricBatchQueryImpl extends AbstractQuery implements HistoricBatchQuery
         return $this;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -109,7 +109,7 @@ class HistoricBatchQueryImpl extends AbstractQuery implements HistoricBatchQuery
             ->findBatchCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         return $commandContext

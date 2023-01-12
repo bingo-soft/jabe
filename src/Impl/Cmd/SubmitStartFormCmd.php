@@ -16,7 +16,7 @@ class SubmitStartFormCmd implements CommandInterface, \Serializable
     protected $businessKey;
     protected $variables;
 
-    public function __construct(string $processDefinitionId, ?string $businessKey, array $properties)
+    public function __construct(?string $processDefinitionId, ?string $businessKey, array $properties)
     {
         $this->processDefinitionId = $processDefinitionId;
         $this->businessKey = $businessKey;
@@ -61,5 +61,10 @@ class SubmitStartFormCmd implements CommandInterface, \Serializable
         $processInstance->startWithFormProperties($this->variables);
 
         return $processInstance;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

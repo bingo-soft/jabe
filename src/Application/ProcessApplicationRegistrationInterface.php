@@ -9,5 +9,5 @@ interface ProcessApplicationRegistrationInterface
     /**
      * @return string the name of the process engine to which the deployment was made
      */
-    public function getProcessEngineName(): string;
+    public function getProcessEngineName(): ?string;
 }

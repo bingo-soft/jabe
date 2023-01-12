@@ -18,7 +18,7 @@ abstract class IoParameter
      */
     protected $valueProvider;
 
-    public function __construct(string $name, ParameterValueProviderInterface $valueProvider)
+    public function __construct(?string $name, ParameterValueProviderInterface $valueProvider)
     {
         $this->name = $name;
         $this->valueProvider = $valueProvider;
@@ -37,12 +37,12 @@ abstract class IoParameter
      */
     abstract protected function execute(AbstractVariableScope $innerScope, ?AbstractVariableScope $outerScope = null): void;
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }

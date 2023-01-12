@@ -31,10 +31,10 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
     protected $businessKey;
     protected $businessKeyIn = [];
     protected $businessKeyLike;
-    protected $finished = false;
-    protected $unfinished = false;
-    protected $withIncidents = false;
-    protected $withRootIncidents = false;
+    protected bool $finished = false;
+    protected bool $unfinished = false;
+    protected bool $withIncidents = false;
+    protected bool $withRootIncidents = false;
     protected $incidentType;
     protected $incidentStatus;
     protected $incidentMessage;
@@ -62,9 +62,9 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
     protected $executedActivityIds = [];
     protected $activeActivityIds = [];
     protected $state;
-    protected $caseInstanceId;
+    //protected $caseInstanceId;
     protected $queries = [];
-    protected $isOrQueryActive = false;
+    protected bool $isOrQueryActive = false;
     protected $queryVariableNameToValuesMap = [];
 
     public function __construct(CommandExecutorInterface $commandExecutor = null)
@@ -73,7 +73,7 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         $this->queries[] = $this;
     }
 
-    public function processInstanceId(string $processInstanceId): HistoricProcessInstanceQueryImpl
+    public function processInstanceId(?string $processInstanceId): HistoricProcessInstanceQueryImpl
     {
         $this->processInstanceId = $processInstanceId;
         return $this;
@@ -86,13 +86,13 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         return $this;
     }
 
-    public function processDefinitionId(string $processDefinitionId): HistoricProcessInstanceQueryImpl
+    public function processDefinitionId(?string $processDefinitionId): HistoricProcessInstanceQueryImpl
     {
         $this->processDefinitionId = $processDefinitionId;
         return $this;
     }
 
-    public function processDefinitionKey(string $processDefinitionKey): HistoricProcessInstanceQueryInterface
+    public function processDefinitionKey(?string $processDefinitionKey): HistoricProcessInstanceQueryInterface
     {
         $this->processDefinitionKey = $processDefinitionKey;
         return $this;
@@ -105,19 +105,19 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         return $this;
     }
 
-    public function processDefinitionName(string $processDefinitionName): HistoricProcessInstanceQueryInterface
+    public function processDefinitionName(?string $processDefinitionName): HistoricProcessInstanceQueryInterface
     {
         $this->processDefinitionName = $processDefinitionName;
         return $this;
     }
 
-    public function processDefinitionNameLike(string $nameLike): HistoricProcessInstanceQueryInterface
+    public function processDefinitionNameLike(?string $nameLike): HistoricProcessInstanceQueryInterface
     {
         $this->processDefinitionNameLike = $nameLike;
         return $this;
     }
 
-    public function processInstanceBusinessKey(string $businessKey): HistoricProcessInstanceQueryInterface
+    public function processInstanceBusinessKey(?string $businessKey): HistoricProcessInstanceQueryInterface
     {
         $this->businessKey = $businessKey;
         return $this;
@@ -129,7 +129,7 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         return $this;
     }
 
-    public function processInstanceBusinessKeyLike(string $businessKeyLike): HistoricProcessInstanceQueryInterface
+    public function processInstanceBusinessKeyLike(?string $businessKeyLike): HistoricProcessInstanceQueryInterface
     {
         $this->businessKeyLike = $businessKeyLike;
         return $this;
@@ -159,34 +159,34 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         return $this;
     }
 
-    public function incidentType(string $incidentType): HistoricProcessInstanceQueryInterface
+    public function incidentType(?string $incidentType): HistoricProcessInstanceQueryInterface
     {
         EnsureUtil::ensureNotNull("incident type", "incidentType", $incidentType);
         $this->incidentType = $incidentType;
         return $this;
     }
 
-    public function incidentStatus(string $status): HistoricProcessInstanceQueryInterface
+    public function incidentStatus(?string $status): HistoricProcessInstanceQueryInterface
     {
         $this->incidentStatus = $status;
         return $this;
     }
 
-    public function incidentMessage(string $incidentMessage): HistoricProcessInstanceQueryInterface
+    public function incidentMessage(?string $incidentMessage): HistoricProcessInstanceQueryInterface
     {
         EnsureUtil::ensureNotNull("incidentMessage", "incidentMessage", $incidentMessage);
         $this->incidentMessage = $incidentMessage;
         return $this;
     }
 
-    public function incidentMessageLike(string $incidentMessageLike): HistoricProcessInstanceQueryInterface
+    public function incidentMessageLike(?string $incidentMessageLike): HistoricProcessInstanceQueryInterface
     {
         EnsureUtil::ensureNotNull("incidentMessageLike", "incidentMessageLike", $incidentMessageLike);
         $this->incidentMessageLike = $incidentMessageLike;
         return $this;
     }
 
-    public function startedBy(string $userId): HistoricProcessInstanceQueryInterface
+    public function startedBy(?string $userId): HistoricProcessInstanceQueryInterface
     {
         $this->startedBy = $userId;
         return $this;
@@ -200,26 +200,26 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         return $this;
     }
 
-    public function startedAfter(string $date): HistoricProcessInstanceQueryInterface
+    public function startedAfter(?string $date): HistoricProcessInstanceQueryInterface
     {
         $this->startedAfter = $date;
         return $this;
     }
 
-    public function startedBefore(string $date): HistoricProcessInstanceQueryInterface
+    public function startedBefore(?string $date): HistoricProcessInstanceQueryInterface
     {
         $this->startedBefore = $date;
         return $this;
     }
 
-    public function finishedAfter(string $date): HistoricProcessInstanceQueryInterface
+    public function finishedAfter(?string $date): HistoricProcessInstanceQueryInterface
     {
         $this->finishedAfter = $date;
         $this->finished = true;
         return $this;
     }
 
-    public function finishedBefore(string $date): HistoricProcessInstanceQueryInterface
+    public function finishedBefore(?string $date): HistoricProcessInstanceQueryInterface
     {
         $this->finishedBefore = $date;
         $this->finished = true;
@@ -238,7 +238,7 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         return $this;
     }
 
-    public function superProcessInstanceId(string $superProcessInstanceId): HistoricProcessInstanceQueryInterface
+    public function superProcessInstanceId(?string $superProcessInstanceId): HistoricProcessInstanceQueryInterface
     {
         if ($this->isRootProcessInstances) {
             throw new BadUserRequestException("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId");
@@ -247,13 +247,13 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         return $this;
     }
 
-    public function subProcessInstanceId(string $subProcessInstanceId): HistoricProcessInstanceQueryInterface
+    public function subProcessInstanceId(?string $subProcessInstanceId): HistoricProcessInstanceQueryInterface
     {
         $this->subProcessInstanceId = $subProcessInstanceId;
         return $this;
     }
 
-    /*public function superCaseInstanceId(string $superCaseInstanceId): HistoricProcessInstanceQueryInterface
+    /*public function superCaseInstanceId(?string $superCaseInstanceId): HistoricProcessInstanceQueryInterface
     {
         if ($this->isRootProcessInstances) {
             throw new BadUserRequestException("Invalid query usage: cannot set both rootProcessInstances and superCaseInstanceId");
@@ -262,12 +262,12 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         return $this;
     }
 
-    public HistoricProcessInstanceQueryInterface subCaseInstanceId(string $subCaseInstanceId) {
+    public HistoricProcessInstanceQueryInterface subCaseInstanceId(?string $subCaseInstanceId) {
         $this->subCaseInstanceId = subCaseInstanceId;
         return $this;
     }
 
-    public HistoricProcessInstanceQueryInterface caseInstanceId(string $caseInstanceId) {
+    public HistoricProcessInstanceQueryInterface caseInstanceId(?string $caseInstanceId) {
         $this->caseInstanceId = caseInstanceId;
         return $this;
     }*/
@@ -386,7 +386,7 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
             ->findHistoricProcessInstanceCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         EnsureUtil::ensureVariablesInitialized();
@@ -440,7 +440,7 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         }
     }
 
-    protected function addVariable(string $name, $value, string $operator, bool $processInstanceScope): void
+    protected function addVariable(?string $name, $value, ?string $operator, bool $processInstanceScope): void
     {
         $queryVariableValue = $this->createQueryVariableValue($name, $value, $operator, $processInstanceScope);
         if (!array_key_exists($name, $this->queryVariableNameToValuesMap)) {
@@ -476,7 +476,7 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         return $this->activeActivityIds;
     }
 
-    public function getBusinessKey(): string
+    public function getBusinessKey(): ?string
     {
         return $this->businessKey;
     }
@@ -486,7 +486,7 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         return $this->businessKeyIn;
     }
 
-    public function getBusinessKeyLike(): string
+    public function getBusinessKeyLike(): ?string
     {
         return $this->businessKeyLike;
     }
@@ -496,22 +496,22 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         return $this->executedActivityIds;
     }
 
-    public function getExecutedActivityAfter(): string
+    public function getExecutedActivityAfter(): ?string
     {
         return $this->executedActivityAfter;
     }
 
-    public function getExecutedActivityBefore(): string
+    public function getExecutedActivityBefore(): ?string
     {
         return $this->executedActivityBefore;
     }
 
-    public function getExecutedJobAfter(): string
+    public function getExecutedJobAfter(): ?string
     {
         return $this->executedJobAfter;
     }
 
-    public function getExecutedJobBefore(): string
+    public function getExecutedJobBefore(): ?string
     {
         return $this->executedJobBefore;
     }
@@ -531,12 +531,12 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         return $this->finished;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }
@@ -546,22 +546,22 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         return $this->processDefinitionKeys;
     }
 
-    public function getProcessDefinitionIdLike(): string
+    public function getProcessDefinitionIdLike(): ?string
     {
         return $this->processDefinitionKey . ":%:%";
     }
 
-    public function getProcessDefinitionName(): string
+    public function getProcessDefinitionName(): ?string
     {
         return $this->processDefinitionName;
     }
 
-    public function getProcessDefinitionNameLike(): string
+    public function getProcessDefinitionNameLike(): ?string
     {
         return $this->processDefinitionNameLike;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
@@ -571,17 +571,17 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         return $this->processInstanceIds;
     }
 
-    public function getStartedBy(): string
+    public function getStartedBy(): ?string
     {
         return $this->startedBy;
     }
 
-    public function getSuperProcessInstanceId(): string
+    public function getSuperProcessInstanceId(): ?string
     {
         return $this->superProcessInstanceId;
     }
 
-    public function setSuperProcessInstanceId(string $superProcessInstanceId): void
+    public function setSuperProcessInstanceId(?string $superProcessInstanceId): void
     {
         $this->superProcessInstanceId = $superProcessInstanceId;
     }
@@ -591,22 +591,22 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         return $this->processKeyNotIn;
     }
 
-    public function getStartedAfter(): string
+    public function getStartedAfter(): ?string
     {
         return $this->startedAfter;
     }
 
-    public function getStartedBefore(): string
+    public function getStartedBefore(): ?string
     {
         return $this->startedBefore;
     }
 
-    public function getFinishedAfter(): string
+    public function getFinishedAfter(): ?string
     {
         return $this->finishedAfter;
     }
 
-    public function getFinishedBefore(): string
+    public function getFinishedBefore(): ?string
     {
         return $this->finishedBefore;
     }
@@ -615,67 +615,67 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         return caseInstanceId;
     }*/
 
-    public function getIncidentType(): string
+    public function getIncidentType(): ?string
     {
         return $this->incidentType;
     }
 
-    public function getIncidentMessage(): string
+    public function getIncidentMessage(): ?string
     {
         return $this->incidentMessage;
     }
 
-    public function getIncidentMessageLike(): string
+    public function getIncidentMessageLike(): ?string
     {
         return $this->incidentMessageLike;
     }
 
-    public function getIncidentStatus(): string
+    public function getIncidentStatus(): ?string
     {
         return $this->incidentStatus;
     }
 
-    public function getState(): string
+    public function getState(): ?string
     {
         return $this->state;
     }
 
-    public function getFinishDateBy(): string
+    public function getFinishDateBy(): ?string
     {
         return $this->finishDateBy;
     }
 
-    public function getStartDateBy(): string
+    public function getStartDateBy(): ?string
     {
         return $this->startDateBy;
     }
 
-    public function getStartDateOn(): string
+    public function getStartDateOn(): ?string
     {
         return $this->startDateOn;
     }
 
-    public function getStartDateOnBegin(): string
+    public function getStartDateOnBegin(): ?string
     {
         return $this->startDateOnBegin;
     }
 
-    public function getStartDateOnEnd(): string
+    public function getStartDateOnEnd(): ?string
     {
         return $this->startDateOnEnd;
     }
 
-    public function getFinishDateOn(): string
+    public function getFinishDateOn(): ?string
     {
         return $this->finishDateOn;
     }
 
-    public function getFinishDateOnBegin(): string
+    public function getFinishDateOnBegin(): ?string
     {
         return $this->finishDateOnBegin;
     }
 
-    public function getFinishDateOnEnd(): string
+    public function getFinishDateOnEnd(): ?string
     {
         return $this->finishDateOnEnd;
     }
@@ -709,13 +709,13 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
     protected $finishDateOnBegin;
     protected $finishDateOnEnd;
 
-    public function startDateBy(string $date): HistoricProcessInstanceQueryInterface
+    public function startDateBy(?string $date): HistoricProcessInstanceQueryInterface
     {
         $this->startDateBy = $this->calculateMidnight($date);
         return $this;
     }
 
-    public function startDateOn(string $date): HistoricProcessInstanceQueryInterface
+    public function startDateOn(?string $date): HistoricProcessInstanceQueryInterface
     {
         $this->startDateOn = $date;
         $this->startDateOnBegin = $this->calculateMidnight($date);
@@ -723,13 +723,13 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         return $this;
     }
 
-    public function finishDateBy(string $date): HistoricProcessInstanceQueryInterface
+    public function finishDateBy(?string $date): HistoricProcessInstanceQueryInterface
     {
         $this->finishDateBy = $this->calculateBeforeMidnight($date);
         return $this;
     }
 
-    public function finishDateOn(string $date): HistoricProcessInstanceQueryInterface
+    public function finishDateOn(?string $date): HistoricProcessInstanceQueryInterface
     {
         $this->finishDateOn = $date;
         $this->finishDateOnBegin = $this->calculateMidnight($date);
@@ -737,12 +737,12 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         return $this;
     }
 
-    private function calculateBeforeMidnight(string $date): string
+    private function calculateBeforeMidnight(?string $date): ?string
     {
         return (new \DateTime())->setTimestamp(strtotime("+1 day -1 second", strtotime($date)))->format('c');
     }
 
-    private function calculateMidnight(string $date): string
+    private function calculateMidnight(?string $date): ?string
     {
         $date = new \DateTime($date);
         $date->setTime(0, 0, 0, 0);
@@ -754,7 +754,7 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         return $this->isRootProcessInstances;
     }
 
-    public function getSubProcessInstanceId(): string
+    public function getSubProcessInstanceId(): ?string
     {
         return $this->subProcessInstanceId;
     }
@@ -772,25 +772,25 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
         return $this->tenantIds;
     }
 
-    public function executedActivityAfter(string $date): HistoricProcessInstanceQueryInterface
+    public function executedActivityAfter(?string $date): HistoricProcessInstanceQueryInterface
     {
         $this->executedActivityAfter = $date;
         return $this;
     }
 
-    public function executedActivityBefore(string $date): HistoricProcessInstanceQueryInterface
+    public function executedActivityBefore(?string $date): HistoricProcessInstanceQueryInterface
     {
         $this->executedActivityBefore = $date;
         return $this;
     }
 
-    public function executedJobAfter(string $date): HistoricProcessInstanceQueryInterface
+    public function executedJobAfter(?string $date): HistoricProcessInstanceQueryInterface
     {
         $this->executedJobAfter = $date;
         return $this;
     }
 
-    public function executedJobBefore(string $date): HistoricProcessInstanceQueryInterface
+    public function executedJobBefore(?string $date): HistoricProcessInstanceQueryInterface
     {
         $this->executedJobBefore = $date;
         return $this;

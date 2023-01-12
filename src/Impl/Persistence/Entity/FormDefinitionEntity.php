@@ -9,17 +9,17 @@ use Jabe\Impl\Db\{
 use Jabe\Impl\Repository\ResourceDefinitionEntityInterface;
 use Jabe\Repository\FormDefinitionInterface;
 
-class FormDefinitionEntity implements FormDefinitionInterface, ResourceDefinitionEntityInterface, DbEntity, HasDbRevision, \Serializable
+class FormDefinitionEntity implements FormDefinitionInterface, ResourceDefinitionEntityInterface, DbEntityInterface, HasDbRevisionInterface, \Serializable
 {
     protected $id;
-    protected $revision = 1;
+    protected int $revision = 1;
     protected $key;
-    protected $version;
+    protected int $version = 0;
     protected $deploymentId;
     protected $resourceName;
     protected $tenantId;
 
-    public function __construct(string $key, string $deploymentId, string $resourceName, string $tenantId)
+    public function __construct(?string $key, ?string $deploymentId, ?string $resourceName, ?string $tenantId)
     {
         $this->key = $key;
         $this->deploymentId = $deploymentId;
@@ -57,12 +57,12 @@ class FormDefinitionEntity implements FormDefinitionInterface, ResourceDefinitio
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }
@@ -77,12 +77,12 @@ class FormDefinitionEntity implements FormDefinitionInterface, ResourceDefinitio
         return $this->revision + 1;
     }
 
-    public function getKey(): string
+    public function getKey(): ?string
     {
         return $this->key;
     }
 
-    public function setKey(string $key): void
+    public function setKey(?string $key): void
     {
         $this->key = $key;
     }
@@ -102,17 +102,17 @@ class FormDefinitionEntity implements FormDefinitionInterface, ResourceDefinitio
         return $this->deploymentId;
     }
 
-    public function setDeploymentId(string $deploymentId): void
+    public function setDeploymentId(?string $deploymentId): void
     {
         $this->deploymentId = $deploymentId;
     }
 
-    public function getResourceName(): string
+    public function getResourceName(): ?string
     {
         return $this->resourceName;
     }
 
-    public function setResourceName(string $resourceName): void
+    public function setResourceName(?string $resourceName): void
     {
         $this->resourceName = $resourceName;
     }
@@ -127,7 +127,7 @@ class FormDefinitionEntity implements FormDefinitionInterface, ResourceDefinitio
         $this->tenantId = $tenantId;
     }
 
-    public function getCategory(): string
+    public function getCategory(): ?string
     {
         throw new \Exception("Unsupported operation");
     }
@@ -137,27 +137,27 @@ class FormDefinitionEntity implements FormDefinitionInterface, ResourceDefinitio
         throw new \Exception("Unsupported operation");
     }
 
-    public function setCategory(string $category): void
+    public function setCategory(?string $category): void
     {
         throw new \Exception("Unsupported operation");
     }
 
-    public function getDiagramResourceName(): string
+    public function getDiagramResourceName(): ?string
     {
         throw new \Exception("Unsupported operation");
     }
 
-    public function setDiagramResourceName(string $diagramResourceName): void
+    public function setDiagramResourceName(?string $diagramResourceName): void
     {
         throw new \Exception("Unsupported operation");
     }
 
-    public function getHistoryTimeToLive(): int
+    public function getHistoryTimeToLive(): ?int
     {
         throw new \Exception("Unsupported operation");
     }
 
-    public function setHistoryTimeToLive(int $historyTimeToLive): void
+    public function setHistoryTimeToLive(?int $historyTimeToLive): void
     {
         throw new \Exception("Unsupported operation");
     }
@@ -168,17 +168,17 @@ class FormDefinitionEntity implements FormDefinitionInterface, ResourceDefinitio
         return FormDefinitionEntity::class;
     }
 
-    public function updateModifiableFieldsFromEntity(FormDefinitionEntity $updatingDefinition): void
+    public function updateModifiableFieldsFromEntity(/*FormDefinitionEntity*/$updatingDefinition): void
     {
         throw new \Exception("Unsupported operation");
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         throw new \Exception("Unsupported operation");
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         throw new \Exception("Unsupported operation");
     }

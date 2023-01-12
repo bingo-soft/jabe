@@ -45,7 +45,7 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
 
     protected $valueFields;
 
-    protected $notifyOnImplicitUpdates = false;
+    protected bool $notifyOnImplicitUpdates = false;
     protected $updateListeners;
 
     public function __construct(ValueFieldsInterface $valueFields, bool $notifyOnImplicitUpdates)
@@ -218,7 +218,7 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
         }
     }
 
-    public static function getFallbackSerializer(string $serializerName): ?TypedValueSerializerInterface
+    public static function getFallbackSerializer(?string $serializerName): ?TypedValueSerializerInterface
     {
         if (Context::getProcessEngineConfiguration() !== null) {
             $fallbackSerializerFactory = Context::getProcessEngineConfiguration()->getFallbackSerializerFactory();
@@ -255,12 +255,12 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
         }
     }
 
-    public function getSerializerName(): string
+    public function getSerializerName(): ?string
     {
         return $this->serializerName;
     }
 
-    public function setSerializerName(string $serializerName): void
+    public function setSerializerName(?string $serializerName): void
     {
         $this->serializerName = $serializerName;
     }
@@ -273,7 +273,7 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
     /**
      * @return string the type name of the value
      */
-    public function getTypeName(): string
+    public function getTypeName(): ?string
     {
         if ($this->serializerName === null) {
             return ValueType::null()->getName();
@@ -287,7 +287,7 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
      *
      * @return an error message indicating why the variable value could not be loaded.
      */
-    public function getErrorMessage(): string
+    public function getErrorMessage(): ?string
     {
         return $this->errorMessage;
     }

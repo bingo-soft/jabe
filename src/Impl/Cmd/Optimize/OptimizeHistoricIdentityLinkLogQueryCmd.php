@@ -13,7 +13,7 @@ class OptimizeHistoricIdentityLinkLogQueryCmd implements CommandInterface
     protected $occurreAt;
     protected $maxResults;
 
-    public function __construct(string $occurreAfter, string $occurreAt, int $maxResults)
+    public function __construct(?string $occurreAfter, ?string $occurreAt, int $maxResults)
     {
         $this->occurreAfter = $occurreAfter;
         $this->occurreAt = $occurreAt;
@@ -23,5 +23,10 @@ class OptimizeHistoricIdentityLinkLogQueryCmd implements CommandInterface
     public function execute(CommandContext $commandContext)
     {
         return $commandContext->getOptimizeManager()->getHistoricIdentityLinkLogs($this->occurreAfter, $this->occurreAt, $this->maxResults);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

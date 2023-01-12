@@ -43,7 +43,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
      *
      * @see #findLatestProcessDefinitionByKeyAndTenantId(String, String)
      */
-    public function findLatestProcessDefinitionByKey(string $processDefinitionKey): ?ProcessDefinitionEntity
+    public function findLatestProcessDefinitionByKey(?string $processDefinitionKey): ?ProcessDefinitionEntity
     {
         $processDefinitions = $this->findLatestProcessDefinitionsByKey($processDefinitionKey);
 
@@ -64,7 +64,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
      *
      * @see #findLatestProcessDefinitionByKey(String)
      */
-    public function findLatestProcessDefinitionsByKey(string $processDefinitionKey): array
+    public function findLatestProcessDefinitionsByKey(?string $processDefinitionKey): array
     {
         return $this->getDbEntityManager()->selectList("selectLatestProcessDefinitionByKey", $this->configureParameterizedQuery($processDefinitionKey));
     }
@@ -74,7 +74,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
      *
      * @see #findLatestProcessDefinitionByKeyAndTenantId(String, String)
      */
-    public function findLatestProcessDefinitionByKeyAndTenantId(string $processDefinitionKey, ?string $tenantId): ?ProcessDefinitionEntity
+    public function findLatestProcessDefinitionByKeyAndTenantId(?string $processDefinitionKey, ?string $tenantId): ?ProcessDefinitionEntity
     {
         $parameters = [];
         $parameters["processDefinitionKey"] = $processDefinitionKey;
@@ -87,12 +87,12 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
         }
     }
 
-    public function findLatestProcessDefinitionById(string $processDefinitionId): ?ProcessDefinitionEntity
+    public function findLatestProcessDefinitionById(?string $processDefinitionId): ?ProcessDefinitionEntity
     {
         return $this->getDbEntityManager()->selectById(ProcessDefinitionEntity::class, $processDefinitionId);
     }
 
-    public function findProcessDefinitionsByQueryCriteria(ProcessDefinitionQueryImpl $processDefinitionQuery, Page $page): array
+    public function findProcessDefinitionsByQueryCriteria(ProcessDefinitionQueryImpl $processDefinitionQuery, ?Page $page): array
     {
         $this->configureProcessDefinitionQuery($processDefinitionQuery);
         return $this->getDbEntityManager()->selectList("selectProcessDefinitionsByQueryCriteria", $processDefinitionQuery, $page);
@@ -104,7 +104,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
         return $this->getDbEntityManager()->selectOne("selectProcessDefinitionCountByQueryCriteria", $processDefinitionQuery);
     }
 
-    public function findProcessDefinitionByDeploymentAndKey(string $deploymentId, string $processDefinitionKey): ?ProcessDefinitionEntity
+    public function findProcessDefinitionByDeploymentAndKey(?string $deploymentId, ?string $processDefinitionKey): ?ProcessDefinitionEntity
     {
         $parameters = [];
         $parameters["deploymentId"] = $deploymentId;
@@ -112,20 +112,20 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
         return $this->getDbEntityManager()->selectOne("selectProcessDefinitionByDeploymentAndKey", $parameters);
     }
 
-    public function findProcessDefinitionByKeyVersionAndTenantId(string $processDefinitionKey, int $processDefinitionVersion, ?string $tenantId): ?ProcessDefinitionEntity
+    public function findProcessDefinitionByKeyVersionAndTenantId(?string $processDefinitionKey, int $processDefinitionVersion, ?string $tenantId): ?ProcessDefinitionEntity
     {
         return $this->findProcessDefinitionByKeyVersionOrVersionTag($processDefinitionKey, $processDefinitionVersion, null, $tenantId);
     }
 
-    public function findProcessDefinitionByKeyVersionTagAndTenantId(string $processDefinitionKey, string $processDefinitionVersionTag, ?string $tenantId): ?ProcessDefinitionEntity
+    public function findProcessDefinitionByKeyVersionTagAndTenantId(?string $processDefinitionKey, ?string $processDefinitionVersionTag, ?string $tenantId): ?ProcessDefinitionEntity
     {
         return $this->findProcessDefinitionByKeyVersionOrVersionTag($processDefinitionKey, null, $processDefinitionVersionTag, $tenantId);
     }
 
     protected function findProcessDefinitionByKeyVersionOrVersionTag(
-        string $processDefinitionKey,
+        ?string $processDefinitionKey,
         int $processDefinitionVersion,
-        string $processDefinitionVersionTag,
+        ?string $processDefinitionVersionTag,
         ?string $tenantId
     ): ?ProcessDefinitionEntity {
         $parameters = [];
@@ -152,7 +152,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
         return null;
     }
 
-    public function findProcessDefinitionsByKey(string $processDefinitionKey): array
+    public function findProcessDefinitionsByKey(?string $processDefinitionKey): array
     {
         $processDefinitionQuery = (new ProcessDefinitionQueryImpl())
           ->processDefinitionKey($processDefinitionKey);
@@ -164,7 +164,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
         return (new ProcessDefinitionQueryImpl())->startableByUser($user)->list();
     }
 
-    public function findPreviousProcessDefinitionId(string $processDefinitionKey, int $version, ?string $tenantId): string
+    public function findPreviousProcessDefinitionId(?string $processDefinitionKey, int $version, ?string $tenantId): ?string
     {
         $params = [];
         $params["key"] = $processDefinitionKey;
@@ -173,7 +173,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
         return $this->getDbEntityManager()->selectOne("selectPreviousProcessDefinitionId", $params);
     }
 
-    public function findProcessDefinitionsByDeploymentId(string $deploymentId): array
+    public function findProcessDefinitionsByDeploymentId(?string $deploymentId): array
     {
         return $this->getDbEntityManager()->selectList("selectProcessDefinitionByDeploymentId", $deploymentId);
     }
@@ -183,7 +183,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
         return $this->getDbEntityManager()->selectList("selectProcessDefinitionByKeyIn", $keys);
     }
 
-    public function findDefinitionsByKeyAndTenantId(string $processDefinitionKey, ?string $tenantId, bool $isTenantIdSet): array
+    public function findDefinitionsByKeyAndTenantId(?string $processDefinitionKey, ?string $tenantId, bool $isTenantIdSet): array
     {
         $parameters = [];
         $parameters["processDefinitionKey"] = $processDefinitionKey;
@@ -204,7 +204,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
 
     // update ///////////////////////////////////////////////////////////
 
-    public function updateProcessDefinitionSuspensionStateById(string $processDefinitionId, SuspensionState $suspensionState): void
+    public function updateProcessDefinitionSuspensionStateById(?string $processDefinitionId, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processDefinitionId"] = $processDefinitionId;
@@ -212,7 +212,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
         $this->getDbEntityManager()->update(ProcessDefinitionEntity::class, "updateProcessDefinitionSuspensionStateByParameters", $this->configureParameterizedQuery($parameters));
     }
 
-    public function updateProcessDefinitionSuspensionStateByKey(string $processDefinitionKey, SuspensionState $suspensionState): void
+    public function updateProcessDefinitionSuspensionStateByKey(?string $processDefinitionKey, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processDefinitionKey"] = $processDefinitionKey;
@@ -221,7 +221,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
         $this->getDbEntityManager()->update(ProcessDefinitionEntity::class, "updateProcessDefinitionSuspensionStateByParameters", $this->configureParameterizedQuery($parameters));
     }
 
-    public function updateProcessDefinitionSuspensionStateByKeyAndTenantId(string $processDefinitionKey, ?string $tenantId, SuspensionState $suspensionState): void
+    public function updateProcessDefinitionSuspensionStateByKeyAndTenantId(?string $processDefinitionKey, ?string $tenantId, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processDefinitionKey"] = $processDefinitionKey;
@@ -241,7 +241,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
      * @param skipCustomListeners true if the custom listeners should be skipped at process instance deletion
      * @param skipIoMappings specifies whether input/output mappings for tasks should be invoked
      */
-    protected function cascadeDeleteProcessInstancesForProcessDefinition(string $processDefinitionId, bool $skipCustomListeners, bool $skipIoMappings): void
+    protected function cascadeDeleteProcessInstancesForProcessDefinition(?string $processDefinitionId, bool $skipCustomListeners, bool $skipIoMappings): void
     {
         $this->getProcessInstanceManager()
             ->deleteProcessInstancesByProcessDefinition($processDefinitionId, "deleted process definition", true, $skipCustomListeners, $skipIoMappings);
@@ -252,7 +252,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
      *
      * @param processDefinitionId the process definition id
      */
-    protected function cascadeDeleteHistoryForProcessDefinition(string $processDefinitionId): void
+    protected function cascadeDeleteHistoryForProcessDefinition(?string $processDefinitionId): void
     {
         // remove historic incidents which are not referenced to a process instance
         $this->getHistoricIncidentManager()->deleteHistoricIncidentsByProcessDefinitionId($processDefinitionId);
@@ -290,7 +290,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
      *
      * @param processDefinitionId the id of the process definition
      */
-    public function deleteSubscriptionsForProcessDefinition(string $processDefinitionId): void
+    public function deleteSubscriptionsForProcessDefinition(?string $processDefinitionId): void
     {
         $eventSubscriptionsToRemove = [];
         // remove message event subscriptions:
@@ -342,7 +342,7 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
     * @param skipCustomListeners if true skips the custom listeners on deletion of instances
     * @param skipIoMappings specifies whether input/output mappings for tasks should be invoked
     */
-    public function deleteProcessDefinition(ProcessDefinitionInterface $processDefinition, string $processDefinitionId, bool $cascadeToHistory, bool $cascadeToInstances, bool $skipCustomListeners, bool $skipIoMappings): void
+    public function deleteProcessDefinition(ProcessDefinitionInterface $processDefinition, ?string $processDefinitionId, bool $cascadeToHistory, bool $cascadeToInstances, bool $skipCustomListeners, bool $skipIoMappings): void
     {
         if ($cascadeToHistory) {
             $this->cascadeDeleteHistoryForProcessDefinition($processDefinitionId);
@@ -391,8 +391,10 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
 
     protected function configureProcessDefinitionQuery(ProcessDefinitionQueryImpl $query): void
     {
-        $this->getAuthorizationManager()->configureProcessDefinitionQuery($query);
-        $this->getTenantManager()->configureQuery($query);
+        $manager = $this->getAuthorizationManager();
+        $manager->configureProcessDefinitionQuery($query);
+        $manager = $this->getTenantManager();
+        $manager->configureQuery($query);
     }
 
     protected function configureParameterizedQuery($parameter): ListQueryParameterObject
@@ -400,37 +402,37 @@ class ProcessDefinitionManager extends AbstractManager implements AbstractResour
         return $this->getTenantManager()->configureQuery($parameter);
     }
 
-    public function findLatestDefinitionByKey(string $key)
+    public function findLatestDefinitionByKey(?string $key)
     {
         return $this->findLatestProcessDefinitionByKey($key);
     }
 
-    public function findLatestDefinitionById(string $id)
+    public function findLatestDefinitionById(?string $id)
     {
         return $this->findLatestProcessDefinitionById($id);
     }
 
-    public function getCachedResourceDefinitionEntity(string $definitionId)
+    public function getCachedResourceDefinitionEntity(?string $definitionId)
     {
         return $this->getDbEntityManager()->getCachedEntity(ProcessDefinitionEntity::class, $definitionId);
     }
 
-    public function findLatestDefinitionByKeyAndTenantId(string $definitionKey, ?string $tenantId)
+    public function findLatestDefinitionByKeyAndTenantId(?string $definitionKey, ?string $tenantId)
     {
         return $this->findLatestProcessDefinitionByKeyAndTenantId($definitionKey, $tenantId);
     }
 
-    public function findDefinitionByKeyVersionAndTenantId(string $definitionKey, int $definitionVersion, ?string $tenantId)
+    public function findDefinitionByKeyVersionAndTenantId(?string $definitionKey, int $definitionVersion, ?string $tenantId)
     {
         return $this->findProcessDefinitionByKeyVersionAndTenantId($definitionKey, $definitionVersion, $tenantId);
     }
 
-    public function findDefinitionByKeyVersionTagAndTenantId(string $definitionKey, string $definitionVersionTag, ?string $tenantId)
+    public function findDefinitionByKeyVersionTagAndTenantId(?string $definitionKey, ?string $definitionVersionTag, ?string $tenantId)
     {
         return $this->findProcessDefinitionByKeyVersionTagAndTenantId($definitionKey, $definitionVersionTag, $tenantId);
     }
 
-    public function findDefinitionByDeploymentAndKey(string $deploymentId, string $definitionKey)
+    public function findDefinitionByDeploymentAndKey(?string $deploymentId, ?string $definitionKey)
     {
         return $this->findProcessDefinitionByDeploymentAndKey($deploymentId, $definitionKey);
     }

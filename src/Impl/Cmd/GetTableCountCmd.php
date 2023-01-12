@@ -17,4 +17,9 @@ class GetTableCountCmd implements CommandInterface
             ->getTableDataManager()
             ->getTableCount();
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

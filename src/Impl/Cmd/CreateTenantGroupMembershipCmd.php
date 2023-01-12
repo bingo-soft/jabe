@@ -13,7 +13,7 @@ class CreateTenantGroupMembershipCmd extends AbstractWritableIdentityServiceCmd 
     protected $tenantId;
     protected $groupId;
 
-    public function __construct(string $tenantId, string $groupId)
+    public function __construct(?string $tenantId, ?string $groupId)
     {
         $this->tenantId = $tenantId;
         $this->groupId = $groupId;
@@ -36,8 +36,8 @@ class CreateTenantGroupMembershipCmd extends AbstractWritableIdentityServiceCmd 
 
     protected function executeCmd(CommandContext $commandContext)
     {
-        EnsureUtil::ensureNotNull("tenantId", $this->tenantId);
-        EnsureUtil::ensureNotNull("groupId", $this->groupId);
+        EnsureUtil::ensureNotNull("tenantId", "tenantId", $this->tenantId);
+        EnsureUtil::ensureNotNull("groupId", "groupId", $this->groupId);
 
         $operationResult = $commandContext
             ->getWritableIdentityProvider()

@@ -25,7 +25,7 @@ class DbEntityCacheKeyMapping
         $this->entityCacheKeys = [];
     }
 
-    public function getEntityCacheKey(string $entityType): string
+    public function getEntityCacheKey(?string $entityType): ?string
     {
         if (array_key_exists($entityType, $this->entityCacheKeys)) {
             return $this->entityCacheKeys[$entityType];
@@ -33,7 +33,7 @@ class DbEntityCacheKeyMapping
         return $entityType;
     }
 
-    public function registerEntityCacheKey(string $entityType, string $cacheKey): void
+    public function registerEntityCacheKey(?string $entityType, ?string $cacheKey): void
     {
         $this->entityCacheKeys[$entityType] = $cacheKey;
     }

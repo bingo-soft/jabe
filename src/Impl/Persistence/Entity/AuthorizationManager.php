@@ -119,17 +119,17 @@ class AuthorizationManager extends AbstractManager
         return $this->getDbEntityManager()->selectOne("selectAuthorizationCountByQueryCriteria", $authorizationQuery);
     }
 
-    public function findAuthorizationByUserIdAndResourceId(int $type, string $userId, ResourceInterface $resource, string $resourceId): ?AuthorizationEntity
+    public function findAuthorizationByUserIdAndResourceId(int $type, ?string $userId, ResourceInterface $resource, ?string $resourceId): ?AuthorizationEntity
     {
         return $this->findAuthorization($type, $userId, null, $resource, $resourceId);
     }
 
-    public function findAuthorizationByGroupIdAndResourceId(int $type, string $groupId, ResourceInterface $resource, string $resourceId): ?AuthorizationEntity
+    public function findAuthorizationByGroupIdAndResourceId(int $type, ?string $groupId, ResourceInterface $resource, ?string $resourceId): ?AuthorizationEntity
     {
         return $this->findAuthorization($type, null, $groupId, $resource, $resourceId);
     }
 
-    public function findAuthorization(int $type, ?string $userId, ?string $groupId, ?ResourceInterface $resource, string $resourceId): ?AuthorizationEntity
+    public function findAuthorization(int $type, ?string $userId, ?string $groupId, ?ResourceInterface $resource, ?string $resourceId): ?AuthorizationEntity
     {
         $params = [];
 
@@ -252,7 +252,7 @@ class AuthorizationManager extends AbstractManager
         }
     }
 
-    protected function isRevokeAuthCheckEnabled(string $userId, array $groupIds): bool
+    protected function isRevokeAuthCheckEnabled(?string $userId, array $groupIds): bool
     {
         $isRevokeAuthCheckEnabled = $this->isRevokeAuthCheckUsed;
 
@@ -328,12 +328,8 @@ class AuthorizationManager extends AbstractManager
         $authCheck->setRevokeAuthorizationCheckEnabled($this->isRevokeAuthCheckEnabled($authUserId, $authGroupIds));
     }
 
-    public function configureQuery(
-        $query,
-        ?ResourceInterface $resource = null,
-        ?string $queryParam = "RES.ID_",
-        ?PermissionInterface $permission = null
-    ): void {
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
+    {
         if ($query instanceof AbstractQuery) {
             if ($resource === null) {
                 $authCheck = $query->getAuthCheck();
@@ -425,7 +421,7 @@ class AuthorizationManager extends AbstractManager
         }
     }
 
-    public function deleteAuthorizationsByResourceIdAndUserId(ResourceInterface $resource, ?string $resourceId, string $userId): void
+    public function deleteAuthorizationsByResourceIdAndUserId(ResourceInterface $resource, ?string $resourceId, ?string $userId): void
     {
         if (empty($resourceId)) {
             throw new \Exception("Resource id cannot be null");
@@ -440,7 +436,7 @@ class AuthorizationManager extends AbstractManager
         }
     }
 
-    public function deleteAuthorizationsByResourceIdAndGroupId(ResourceInterface $resource, ?string $resourceId, string $groupId): void
+    public function deleteAuthorizationsByResourceIdAndGroupId(ResourceInterface $resource, ?string $resourceId, ?string $groupId): void
     {
         if (empty($resourceId)) {
             throw new \Exception("Resource id cannot be null");
@@ -474,6 +470,37 @@ class AuthorizationManager extends AbstractManager
             && $currentAuthentication !== null  && !$this->isAdmin($currentAuthentication)
         ) {
             //throw LOG.requiredCamundaAdminException();
+        }
+    }
+
+    public function checkAdminOrPermission(?string $permissionCheck): void
+    {
+        if ($this->isAuthorizationEnabled() && $this->getCommandContext()->isAuthorizationCheckEnabled()) {
+            $authorizationException = null;
+            $adminException = null;
+            try {
+                foreach ($this->getCommandContext()->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
+                    //@TODO. cfg/auth to be implemented
+                    if (method_exists($checker, $permissionCheck)) {
+                        $checker->$permissionCheck();
+                    }
+                }
+            } catch (\Exception $e) {
+                $authorizationException = $e;
+            }
+
+            try {
+                $this->checkAdmin();
+            } catch (\Exception $e) {
+                $adminException = $e;
+            }
+
+            if ($authorizationException !== null && $adminException != null) {
+                // throw combined exception
+                //$info = $authorizationException->getMissingAuthorizations();
+                //throw LOG.requiredAdminOrPermissionException(info);
+                throw new \Exception("requiredAdminOrPermissionException");
+            }
         }
     }
 
@@ -1119,8 +1146,8 @@ class AuthorizationManager extends AbstractManager
     }
 
     public function addRemovalTimeToAuthorizationsByRootProcessInstanceId(
-        string $rootProcessInstanceId,
-        string $removalTime
+        ?string $rootProcessInstanceId,
+        ?string $removalTime
     ): void {
         $parameters = [];
         $parameters["rootProcessInstanceId"] = $rootProcessInstanceId;
@@ -1135,8 +1162,8 @@ class AuthorizationManager extends AbstractManager
     }
 
     public function addRemovalTimeToAuthorizationsByProcessInstanceId(
-        string $processInstanceId,
-        string $removalTime
+        ?string $processInstanceId,
+        ?string $removalTime
     ): void {
         $parameters = [];
         $parameters["processInstanceId"] = $processInstanceId;
@@ -1151,7 +1178,7 @@ class AuthorizationManager extends AbstractManager
     }
 
     public function deleteAuthorizationsByRemovalTime(
-        string $removalTime,
+        ?string $removalTime,
         int $minuteFrom,
         int $minuteTo,
         int $batchSize

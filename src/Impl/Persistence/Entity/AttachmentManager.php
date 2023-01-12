@@ -9,19 +9,19 @@ use Jabe\Task\AttachmentInterface;
 
 class AttachmentManager extends AbstractHistoricManager
 {
-    public function findAttachmentsByProcessInstanceId(string $processInstanceId): array
+    public function findAttachmentsByProcessInstanceId(?string $processInstanceId): array
     {
         $this->checkHistoryEnabled();
         return $this->getDbEntityManager()->selectList("selectAttachmentsByProcessInstanceId", $processInstanceId);
     }
 
-    public function findAttachmentsByTaskId(string $taskId): array
+    public function findAttachmentsByTaskId(?string $taskId): array
     {
         $this->checkHistoryEnabled();
         return $this->getDbEntityManager()->selectList("selectAttachmentsByTaskId", $taskId);
     }
 
-    public function addRemovalTimeToAttachmentsByRootProcessInstanceId(string $rootProcessInstanceId, string $removalTime): void
+    public function addRemovalTimeToAttachmentsByRootProcessInstanceId(?string $rootProcessInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["rootProcessInstanceId"] = $rootProcessInstanceId;
@@ -31,7 +31,7 @@ class AttachmentManager extends AbstractHistoricManager
             ->updatePreserveOrder(AttachmentEntity::class, "updateAttachmentsByRootProcessInstanceId", $parameters);
     }
 
-    public function addRemovalTimeToAttachmentsByProcessInstanceId(string $processInstanceId, string $removalTime): void
+    public function addRemovalTimeToAttachmentsByProcessInstanceId(?string $processInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["processInstanceId"] = $processInstanceId;
@@ -41,7 +41,7 @@ class AttachmentManager extends AbstractHistoricManager
             ->updatePreserveOrder(AttachmentEntity::class, "updateAttachmentsByProcessInstanceId", $parameters);
     }
 
-    public function deleteAttachmentsByTaskId(string $taskId): void
+    public function deleteAttachmentsByTaskId(?string $taskId): void
     {
         $this->checkHistoryEnabled();
         $attachments = $this->getDbEntityManager()->selectList("selectAttachmentsByTaskId", $taskId);
@@ -81,7 +81,7 @@ class AttachmentManager extends AbstractHistoricManager
         $this->getDbEntityManager()->deletePreserveOrder(AttachmentEntity::class, "deleteAttachmentByIds", $parameters);
     }
 
-    public function findAttachmentByTaskIdAndAttachmentId(string $taskId, string $attachmentId): ?AttachmentInterface
+    public function findAttachmentByTaskIdAndAttachmentId(?string $taskId, ?string $attachmentId): ?AttachmentInterface
     {
         $this->checkHistoryEnabled();
 
@@ -92,7 +92,7 @@ class AttachmentManager extends AbstractHistoricManager
         return $this->getDbEntityManager()->selectOne("selectAttachmentByTaskIdAndAttachmentId", $parameters);
     }
 
-    public function deleteAttachmentsByRemovalTime(string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): ?DbOperation
+    public function deleteAttachmentsByRemovalTime(?string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): ?DbOperation
     {
         $parameters = [];
         $parameters["removalTime"] = $removalTime;

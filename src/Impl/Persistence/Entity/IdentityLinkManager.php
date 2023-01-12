@@ -6,17 +6,17 @@ use Jabe\Impl\Persistence\AbstractManager;
 
 class IdentityLinkManager extends AbstractManager
 {
-    public function findIdentityLinksByTaskId(string $taskId): array
+    public function findIdentityLinksByTaskId(?string $taskId): array
     {
         return $this->getDbEntityManager()->selectList("selectIdentityLinksByTask", $taskId);
     }
 
-    public function findIdentityLinksByProcessDefinitionId(string $processDefinitionId): array
+    public function findIdentityLinksByProcessDefinitionId(?string $processDefinitionId): array
     {
         return $this->getDbEntityManager()->selectList("selectIdentityLinksByProcessDefinition", $processDefinitionId);
     }
 
-    public function findIdentityLinkByTaskUserGroupAndType(string $taskId, string $userId, string $groupId, string $type): array
+    public function findIdentityLinkByTaskUserGroupAndType(?string $taskId, ?string $userId, ?string $groupId, ?string $type): array
     {
         $parameters = [];
         $parameters["taskId"] = $taskId;
@@ -26,7 +26,7 @@ class IdentityLinkManager extends AbstractManager
         return $this->getDbEntityManager()->selectList("selectIdentityLinkByTaskUserGroupAndType", $parameters);
     }
 
-    public function findIdentityLinkByProcessDefinitionUserAndGroup(string $processDefinitionId, string $userId, string $groupId): array
+    public function findIdentityLinkByProcessDefinitionUserAndGroup(?string $processDefinitionId, ?string $userId, ?string $groupId): array
     {
         $parameters = [];
         $parameters["processDefinitionId"] = $processDefinitionId;
@@ -35,7 +35,7 @@ class IdentityLinkManager extends AbstractManager
         return $this->getDbEntityManager()->selectList("selectIdentityLinkByProcessDefinitionUserAndGroup", $parameters);
     }
 
-    public function deleteIdentityLinksByProcDef(string $processDefId): void
+    public function deleteIdentityLinksByProcDef(?string $processDefId): void
     {
         $this->getDbEntityManager()->delete(IdentityLinkEntity::class, "deleteIdentityLinkByProcDef", $processDefId);
     }

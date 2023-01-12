@@ -11,7 +11,7 @@ class PasswordPolicyUserDataRuleImpl implements PasswordPolicyRuleInterface
 {
     public const PLACEHOLDER = DefaultPasswordPolicyImpl::PLACEHOLDER_PREFIX . "USER_DATA";
 
-    public function getPlaceholder(): string
+    public function getPlaceholder(): ?string
     {
         return PasswordPolicyUserDataRuleImpl::PLACEHOLDER;
     }
@@ -21,7 +21,7 @@ class PasswordPolicyUserDataRuleImpl implements PasswordPolicyRuleInterface
         return [];
     }
 
-    public function execute(string $candidatePassword, ?UserInterface $user = null): bool
+    public function execute(?string $candidatePassword, ?UserInterface $user = null): bool
     {
         if (empty($candidatePassword) || $user === null) {
             return true;

@@ -6,17 +6,17 @@ class EventSubscriptionJobConfiguration implements JobHandlerConfigurationInterf
 {
     protected $eventSubscriptionId;
 
-    public function __construct(string $eventSubscriptionId)
+    public function __construct(?string $eventSubscriptionId)
     {
         $this->eventSubscriptionId = $eventSubscriptionId;
     }
 
-    public function getEventSubscriptionId(): string
+    public function getEventSubscriptionId(): ?string
     {
         return $this->eventSubscriptionId;
     }
 
-    public function toCanonicalString(): string
+    public function toCanonicalString(): ?string
     {
         return $this->eventSubscriptionId;
     }

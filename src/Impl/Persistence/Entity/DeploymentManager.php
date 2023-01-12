@@ -2,7 +2,11 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
-use Jabe\Authorization\Resources;
+use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface,
+    Resources
+};
 use Jabe\Impl\{
     DeploymentQueryImpl,
     Page
@@ -38,7 +42,7 @@ class DeploymentManager extends AbstractManager
             ->deploy($deployment);
     }
 
-    public function deleteDeployment(string $deploymentId, bool $cascade, ?bool $skipCustomListeners = false, ?bool $skipIoMappings = false): void
+    public function deleteDeployment(?string $deploymentId, bool $cascade, ?bool $skipCustomListeners = false, ?bool $skipIoMappings = false): void
     {
         $processDefinitions = $this->getProcessDefinitionManager()->findProcessDefinitionsByDeploymentId($deploymentId);
         if ($cascade) {
@@ -92,7 +96,7 @@ class DeploymentManager extends AbstractManager
                     $skipCustomListeners,
                     false
                 );
-                $cmd->execute();
+                $cmd->execute($commandContext);
             });
         }
 
@@ -101,7 +105,7 @@ class DeploymentManager extends AbstractManager
         //deleteDecisionDeployment(deploymentId, cascade);
         //deleteDecisionRequirementDeployment(deploymentId);
 
-        $this->deleteCamundaFormDefinitionDeployment($deploymentId);
+        $this->deleteFormDefinitionDeployment($deploymentId);
 
         $this->getResourceManager()->deleteResourcesByDeploymentId($deploymentId);
 
@@ -192,7 +196,7 @@ class DeploymentManager extends AbstractManager
         }
     }*/
 
-    protected function deleteFormDefinitionDeployment(string $deploymentId): void
+    protected function deleteFormDefinitionDeployment(?string $deploymentId): void
     {
         $manager = $this->getFormDefinitionManager();
 
@@ -209,7 +213,7 @@ class DeploymentManager extends AbstractManager
         }
     }
 
-    public function findLatestDeploymentByName(string $deploymentName): ?DeploymentEntity
+    public function findLatestDeploymentByName(?string $deploymentName): ?DeploymentEntity
     {
         $list = $this->getDbEntityManager()->selectList("selectDeploymentsByName", $deploymentName, 0, 1);
         if (!empty($list)) {
@@ -218,7 +222,7 @@ class DeploymentManager extends AbstractManager
         return null;
     }
 
-    public function findDeploymentById(string $deploymentId): ?DeploymentEntity
+    public function findDeploymentById(?string $deploymentId): ?DeploymentEntity
     {
         return $this->getDbEntityManager()->selectById(DeploymentEntity::class, $deploymentId);
     }
@@ -234,13 +238,13 @@ class DeploymentManager extends AbstractManager
         return $this->getDbEntityManager()->selectOne("selectDeploymentCountByQueryCriteria", $deploymentQuery);
     }
 
-    public function findDeploymentsByQueryCriteria(DeploymentQueryImpl $deploymentQuery, Page $page): array
+    public function findDeploymentsByQueryCriteria(DeploymentQueryImpl $deploymentQuery, ?Page $page): array
     {
         $this->configureQuery($deploymentQuery);
         return $this->getDbEntityManager()->selectList("selectDeploymentsByQueryCriteria", $deploymentQuery, $page);
     }
 
-    public function getDeploymentResourceNames(string $deploymentId): array
+    public function getDeploymentResourceNames(?string $deploymentId): array
     {
         return $this->getDbEntityManager()->selectList("selectResourceNamesByDeploymentId", $deploymentId);
     }
@@ -269,7 +273,7 @@ class DeploymentManager extends AbstractManager
         }
     }
 
-    protected function configureQuery(DeploymentQueryImpl $query): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         $this->getAuthorizationManager()->configureDeploymentQuery($query);
         $this->getTenantManager()->configureQuery($query);

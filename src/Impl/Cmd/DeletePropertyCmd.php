@@ -20,7 +20,7 @@ class DeletePropertyCmd implements CommandInterface
     /**
      * @param name
      */
-    public function __construct(string $name)
+    public function __construct(?string $name)
     {
         $this->name = $name;
     }
@@ -43,5 +43,10 @@ class DeletePropertyCmd implements CommandInterface
         }
 
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

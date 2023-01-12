@@ -11,7 +11,7 @@ class GetFilterCmd implements CommandInterface, \Serializable
 {
     protected $filterId;
 
-    public function __construct(string $filterId)
+    public function __construct(?string $filterId)
     {
         $this->filterId = $filterId;
     }
@@ -34,5 +34,10 @@ class GetFilterCmd implements CommandInterface, \Serializable
         return $commandContext
             ->getFilterManager()
             ->findFilterById($this->filterId);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

@@ -2,12 +2,15 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
+use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface
+};
 use Jabe\ExternalTask\ExternalTaskInterface;
 use Jabe\Impl\{
     HistoricExternalTaskLogQueryImpl,
     Page
 };
-use Jabe\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Impl\Context\Context;
 use Jabe\Impl\Db\ListQueryParameterObject;
 use Jabe\Impl\Db\EntityManager\Operation\DbOperation;
@@ -24,12 +27,12 @@ use Jabe\Impl\Util\EnsureUtil;
 
 class HistoricExternalTaskLogManager extends AbstractManager
 {
-    public function findHistoricExternalTaskLogById(string $historicExternalTaskLogId): ?HistoricExternalTaskLogEntity
+    public function findHistoricExternalTaskLogById(?string $historicExternalTaskLogId): ?HistoricExternalTaskLogEntity
     {
         return $this->getDbEntityManager()->selectOne("selectHistoricExternalTaskLog", $historicExternalTaskLogId);
     }
 
-    public function findHistoricExternalTaskLogsByQueryCriteria(HistoricExternalTaskLogQueryImpl $query, Page $page): array
+    public function findHistoricExternalTaskLogsByQueryCriteria(HistoricExternalTaskLogQueryImpl $query, ?Page $page): array
     {
         $this->configureQuery($query);
         return $this->getDbEntityManager()->selectList("selectHistoricExternalTaskLogByQueryCriteria", $query, $page);
@@ -41,7 +44,7 @@ class HistoricExternalTaskLogManager extends AbstractManager
         return $this->getDbEntityManager()->selectOne("selectHistoricExternalTaskLogCountByQueryCriteria", $query);
     }
 
-    public function addRemovalTimeToExternalTaskLogByRootProcessInstanceId(string $rootProcessInstanceId, string $removalTime): void
+    public function addRemovalTimeToExternalTaskLogByRootProcessInstanceId(?string $rootProcessInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["rootProcessInstanceId"] = $rootProcessInstanceId;
@@ -51,7 +54,7 @@ class HistoricExternalTaskLogManager extends AbstractManager
             ->updatePreserveOrder(HistoricExternalTaskLogEntity::class, "updateExternalTaskLogByRootProcessInstanceId", $parameters);
     }
 
-    public function addRemovalTimeToExternalTaskLogByProcessInstanceId(string $processInstanceId, string $removalTime): void
+    public function addRemovalTimeToExternalTaskLogByProcessInstanceId(?string $processInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["processInstanceId"] = $processInstanceId;
@@ -67,7 +70,7 @@ class HistoricExternalTaskLogManager extends AbstractManager
         $this->getDbEntityManager()->deletePreserveOrder(HistoricExternalTaskLogEntity::class, "deleteHistoricExternalTaskLogByProcessInstanceIds", $processInstanceIds);
     }
 
-    public function deleteExternalTaskLogByRemovalTime(string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
+    public function deleteExternalTaskLogByRemovalTime(?string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
     {
         $parameters = [];
         $parameters["removalTime"] = $removalTime;
@@ -85,7 +88,7 @@ class HistoricExternalTaskLogManager extends AbstractManager
             );
     }
 
-    protected function deleteExceptionByteArrayByParameterMap(string $key, $value): void
+    protected function deleteExceptionByteArrayByParameterMap(?string $key, $value): void
     {
         EnsureUtil::ensureNotNull($key, $key, $value);
         $parameterMap = [];
@@ -181,7 +184,7 @@ class HistoricExternalTaskLogManager extends AbstractManager
         return $historyLevel->isHistoryEventProduced($eventType, $externalTask);
     }
 
-    protected function configureQuery(HistoricExternalTaskLogQueryImpl $query): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         $this->getAuthorizationManager()->configureHistoricExternalTaskLogQuery($query);
         $this->getTenantManager()->configureQuery($query);

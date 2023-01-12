@@ -13,7 +13,7 @@ class CompositeFunctionMapper extends FunctionMapper
         $this->delegateMappers = $delegateMappers;
     }
 
-    public function resolveFunction(string $prefix, string $localName): ?\ReflectionMethod
+    public function resolveFunction(?string $prefix, ?string $localName): ?\ReflectionMethod
     {
         foreach ($this->delegateMappers as $mapper) {
             $resolvedFunction = $mapper->resolveFunction($prefix, $localName);

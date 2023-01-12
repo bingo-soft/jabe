@@ -35,7 +35,7 @@
     <result property="suspensionState" column="SUSPENSION_STATE_" dbalType="INTEGER"/>
     <result property="tenantId" column="TENANT_ID_" dbalType="VARCHAR" />
     <result property="versionTag" column="VERSION_TAG_" dbalType="VARCHAR" />
-    <collection property="incidentStatistics" javaType="ArrayList" ofType="Jabe\Impl\Persistence\Entity\IncidentStatisticsEntity">
+    <collection property="incidentStatistics" phpType="array" ofType="Jabe\Impl\Persistence\Entity\IncidentStatisticsEntity">
       <result property="incidentType" column="INCIDENT_TYPE_" dbalType="VARCHAR" />
       <result property="incidentCount" column="INCIDENT_COUNT_" dbalType="INTEGER"/>
     </collection>
@@ -48,7 +48,7 @@
     <result property="tenantId" column="TENANT_ID_" dbalType="VARCHAR" />
     <result property="instances" column="INSTANCE_COUNT_" dbalType="INTEGER" />
     <result property="failedJobs" column="FAILED_JOBS_COUNT_" dbalType="INTEGER" />
-    <collection property="incidentStatistics" javaType="ArrayList" ofType="Jabe\Impl\Persistence\Entity\IncidentStatisticsEntity">
+    <collection property="incidentStatistics" phpType="array" ofType="Jabe\Impl\Persistence\Entity\IncidentStatisticsEntity">
       <result property="incidentType" column="INCIDENT_TYPE_" dbalType="VARCHAR" />
       <result property="incidentCount" column="INCIDENT_COUNT_" dbalType="INTEGER"/>
     </collection>
@@ -58,7 +58,7 @@
     <id property="id" column="ID_" dbalType="VARCHAR" />
     <result property="instances" column="INSTANCE_COUNT_" dbalType="INTEGER" />
     <result property="failedJobs" column="FAILED_JOBS_COUNT_" dbalType="INTEGER" />
-    <collection property="incidentStatistics" javaType="ArrayList" ofType="Jabe\Impl\Persistence\Entity\IncidentStatisticsEntity">
+    <collection property="incidentStatistics" phpType="array" ofType="Jabe\Impl\Persistence\Entity\IncidentStatisticsEntity">
       <result property="incidentType" column="INCIDENT_TYPE_" dbalType="VARCHAR" />
       <result property="incidentCount" column="INCIDENT_COUNT_" dbalType="INTEGER"/>
     </collection>
@@ -757,14 +757,14 @@
           and RES.TYPE_ = #{type}
         </if>
         <if test="isTenantIdSet">
-          <if test="tenantIds != null and count(tenantIds) > 0">
+          <if test="!empty(tenantIds)">
             and RES.TENANT_ID_ in
             <foreach item="tenantId" index="index" collection="tenantIds"
                      open="(" separator="," close=")">
               #{tenantId}
             </foreach>
           </if>
-          <if test="tenantIds == null">
+          <if test="empty(tenantIds)">
             and RES.TENANT_ID_ is null
           </if>
        </if>
@@ -775,10 +775,10 @@
          and RES.CREATE_USER_ID_ = #{userId}
        </if>
        <if test="startedBefore != null">
-         and RES.START_TIME_ <= #{startedBefore}
+         and RES.START_TIME_ &lt;= #{startedBefore}
        </if>
        <if test="startedAfter != null">
-         and RES.START_TIME_ >= #{startedAfter}
+         and RES.START_TIME_ &gt;= #{startedAfter}
        </if>
        <if test="hasFailure == true">
          and JOB.FAILED_JOBS_COUNT_ != 0
@@ -822,9 +822,9 @@
       from
         ${prefix}ACT_HI_DECINST RES
       where
-        RES.DEC_REQ_ID_ = #{decisionRequirementsDefinitionId, dbalType=VARCHAR}
+        RES.DEC_REQ_ID_ = #{decisionRequirementsDefinitionId:VARCHAR}
         <if test="decisionInstanceId != null">
-          and (RES.ID_ = #{decisionInstanceId} or RES.ROOT_DEC_INST_ID_ = #{decisionInstanceId, dbalType=VARCHAR})
+          and (RES.ID_ = #{decisionInstanceId} or RES.ROOT_DEC_INST_ID_ = #{decisionInstanceId:VARCHAR})
         </if>
         <include refid="Jabe\Impl\Persistence\Entity\TenantEntity.queryTenantCheck" />
       group by

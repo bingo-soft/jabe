@@ -21,7 +21,7 @@ class CallableElementUtil
 
     public static function getProcessDefinitionToCall(
         VariableScopeInterface $execution,
-        string $defaultTenantId,
+        ?string $defaultTenantId,
         BaseCallableElement $callableElement
     ): ProcessDefinitionImpl {
         $processDefinitionKey = $callableElement->getDefinitionKey($execution);
@@ -31,8 +31,8 @@ class CallableElementUtil
     }
 
     public static function getStaticallyBoundProcessDefinition(
-        string $callingProcessDefinitionId,
-        string $activityId,
+        ?string $callingProcessDefinitionId,
+        ?string $activityId,
         BaseCallableElement $callableElement,
         ?string $tenantId
     ): ?ProcessDefinitionInterface {
@@ -56,8 +56,8 @@ class CallableElementUtil
     private static function getCalledProcessDefinition(
         VariableScopeInterface $execution,
         BaseCallableElement $callableElement,
-        string $processDefinitionKey,
-        string $tenantId
+        ?string $processDefinitionKey,
+        ?string $tenantId
     ): ProcessDefinitionEntity {
 
         $deploymentCache = getDeploymentCache();

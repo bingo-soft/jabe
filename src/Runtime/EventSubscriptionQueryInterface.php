@@ -7,24 +7,24 @@ use Jabe\Query\QueryInterface;
 interface EventSubscriptionQueryInterface extends QueryInterface
 {
     /** Only select subscriptions with the given id. **/
-    public function eventSubscriptionId(string $id): EventSubscriptionQueryInterface;
+    public function eventSubscriptionId(?string $id): EventSubscriptionQueryInterface;
 
     /** Only select subscriptions for events with the given name. **/
-    public function eventName(string $eventName): EventSubscriptionQueryInterface;
+    public function eventName(?string $eventName): EventSubscriptionQueryInterface;
 
     /** Only select subscriptions for events with the given type. "message" selects message event subscriptions,
      * "signal" selects signal event subscriptions, "compensation" selects compensation event subscriptions,
      * "conditional" selects conditional event subscriptions.**/
-    public function eventType(string $eventType): EventSubscriptionQueryInterface;
+    public function eventType(?string $eventType): EventSubscriptionQueryInterface;
 
     /** Only select subscriptions that belong to an execution with the given id. **/
-    public function executionId(string $executionId): EventSubscriptionQueryInterface;
+    public function executionId(?string $executionId): EventSubscriptionQueryInterface;
 
     /** Only select subscriptions that belong to a process instance with the given id. **/
-    public function processInstanceId(string $processInstanceId): EventSubscriptionQueryInterface;
+    public function processInstanceId(?string $processInstanceId): EventSubscriptionQueryInterface;
 
     /** Only select subscriptions that belong to an activity with the given id. **/
-    public function activityId(string $activityId): EventSubscriptionQueryInterface;
+    public function activityId(?string $activityId): EventSubscriptionQueryInterface;
 
     /** Only select subscriptions that belong to one of the given tenant ids. */
     public function tenantIdIn(array $tenantIds): EventSubscriptionQueryInterface;

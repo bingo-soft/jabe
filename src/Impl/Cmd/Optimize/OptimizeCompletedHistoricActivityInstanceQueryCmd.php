@@ -13,7 +13,7 @@ class OptimizeCompletedHistoricActivityInstanceQueryCmd implements CommandInterf
     protected $finishedAt;
     protected $maxResults;
 
-    public function __construct(string $finishedAfter, string $finishedAt, int $maxResults)
+    public function __construct(?string $finishedAfter, ?string $finishedAt, int $maxResults)
     {
         $this->finishedAfter = $finishedAfter;
         $this->finishedAt = $finishedAt;
@@ -23,5 +23,10 @@ class OptimizeCompletedHistoricActivityInstanceQueryCmd implements CommandInterf
     public function execute(CommandContext $commandContext)
     {
         return $commandContext->getOptimizeManager()->getCompletedHistoricActivityInstances($this->finishedAfter, $this->finishedAt, $this->maxResults);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

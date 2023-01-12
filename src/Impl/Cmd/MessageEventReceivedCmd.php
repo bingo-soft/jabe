@@ -15,9 +15,9 @@ class MessageEventReceivedCmd implements CommandInterface, \Serializable
     protected $processVariables = [];
     protected $processVariablesLocal = [];
     protected $messageName;
-    protected $exclusive = false;
+    protected bool $exclusive = false;
 
-    public function __construct(?string $messageName, string $executionId, array $processVariables, array $processVariablesLocal = [], bool $exclusive = false)
+    public function __construct(?string $messageName, ?string $executionId, array $processVariables, array $processVariablesLocal = [], bool $exclusive = false)
     {
         $this->executionId = $executionId;
         $this->messageName = $messageName;
@@ -82,5 +82,10 @@ class MessageEventReceivedCmd implements CommandInterface, \Serializable
         $eventSubscriptionEntity->eventReceived($this->processVariables, $this->processVariablesLocal, null, false);
 
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

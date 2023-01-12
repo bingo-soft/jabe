@@ -101,10 +101,10 @@
     <choose>
       <when test="queryVariableValue.operatorName.equals('EQUALS')">=</when>
       <when test="queryVariableValue.operatorName.equals('NOT_EQUALS')">=</when><!-- Note: NOT_EQUALS is handled by negating the condition -->
-      <when test="queryVariableValue.operatorName.equals('GREATER_THAN')">></when>
-      <when test="queryVariableValue.operatorName.equals('GREATER_THAN_OR_EQUAL')">>=</when>
-      <when test="queryVariableValue.operatorName.equals('LESS_THAN')"><</when>
-      <when test="queryVariableValue.operatorName.equals('LESS_THAN_OR_EQUAL')"><=</when>
+      <when test="queryVariableValue.operatorName.equals('GREATER_THAN')">&gt;</when>
+      <when test="queryVariableValue.operatorName.equals('GREATER_THAN_OR_EQUAL')">&gt;=</when>
+      <when test="queryVariableValue.operatorName.equals('LESS_THAN')">&lt;</when>
+      <when test="queryVariableValue.operatorName.equals('LESS_THAN_OR_EQUAL')">&lt;=</when>
    </choose>
   </sql>
   
@@ -115,14 +115,14 @@
   <!-- Example Output: V0_TEXT_ asc, RES.ID_ desc, RES.NAME_ asc -->
   <sql id="bindOrderBy">
     <choose>
-      <when test="count(orderingProperties) > 0">
+      <when test="!empty(orderingProperties)">
         <foreach collection="orderingProperties" item="orderingProperty" index="index">
           <bind name="newOrderBy" value="@Jabe\Impl\Db\sql.MybatisJoinHelper::orderBy(orderingProperty, index)" />
 
           <if test="index == 0">
             <bind name="internalOrderBy" value="newOrderBy"/>
           </if>
-          <if test="index > 0">
+          <if test="index &gt; 0">
             <bind name="internalOrderBy" value="internalOrderBy + ', ' + newOrderBy"/>
           </if>
         </foreach>
@@ -179,7 +179,7 @@
 	<foreach item="id" index="index" collection="listOfIds" open = "(" separator="" close=")">
 	  #{id}
 	  <choose>
-	  <when test="index != 0 and (index+1)%1000 == 0 and (index+1) < sizeOfIds">
+	  <when test="index != 0 and (index+1)%1000 == 0 and (index+1) &lt; sizeOfIds">
 		) or ${fieldName} IN (
 	  </when>
 	  <when test="index == sizeOfIds -1"></when>

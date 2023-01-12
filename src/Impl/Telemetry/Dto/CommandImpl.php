@@ -29,4 +29,9 @@ class CommandImpl implements CommandInterface
     {
         $this->count = $count;
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

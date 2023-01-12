@@ -12,7 +12,7 @@ class CreateTenantCmd extends AbstractWritableIdentityServiceCmd implements Comm
 {
     protected $tenantId;
 
-    public function __construct(string $tenantId)
+    public function __construct(?string $tenantId)
     {
         EnsureUtil::ensureNotNull("tenantId", "tenantId", $tenantId);
         $this->tenantId = $tenantId;

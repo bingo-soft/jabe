@@ -30,7 +30,7 @@ class SetProcessDefinitionVersionCmd implements CommandInterface, \Serializable
     private $processInstanceId;
     private $processDefinitionVersion;
 
-    public function __construct(string $processInstanceId, int $processDefinitionVersion)
+    public function __construct(?string $processInstanceId, int $processDefinitionVersion)
     {
         EnsureUtil::ensureNotEmpty("The process instance id is mandatory", "processInstanceId", $processInstanceId);
         EnsureUtil::ensureNotNull("The process definition version is mandatory", "processDefinitionVersion", $processDefinitionVersion);
@@ -126,7 +126,8 @@ class SetProcessDefinitionVersionCmd implements CommandInterface, \Serializable
             $this->processInstanceId,
             null,
             null,
-            [$change]
+            [$change],
+            null
         );
 
         return null;
@@ -210,5 +211,10 @@ class SetProcessDefinitionVersionCmd implements CommandInterface, \Serializable
         foreach ($tasks as $taskEntity) {
             $taskEntity->setProcessDefinitionId($newProcessDefinition->getId());
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

@@ -6,7 +6,7 @@ use Jabe\Impl\Util\ClassNameUtil;
 
 class HistoricVariableUpdateEventEntity extends HistoricDetailEventEntity
 {
-    protected $revision;
+    protected int $revision = 0;
 
     protected $variableName;
     protected $variableInstanceId;
@@ -14,34 +14,34 @@ class HistoricVariableUpdateEventEntity extends HistoricDetailEventEntity
 
     protected $serializerName;
 
-    protected $longValue;
-    protected $doubleValue;
+    protected int $longValue;
+    protected float $doubleValue;
     protected $textValue;
     protected $textValue2;
     protected $byteValue;
 
     protected $byteArrayId;
 
-    protected $isInitial = false;
+    protected bool $isInitial = false;
 
     // getter / setters ////////////////////////////
 
-    public function getSerializerName(): string
+    public function getSerializerName(): ?string
     {
         return $this->serializerName;
     }
 
-    public function setSerializerName(string $serializerName): void
+    public function setSerializerName(?string $serializerName): void
     {
         $this->serializerName = $serializerName;
     }
 
-    public function getVariableName(): string
+    public function getVariableName(): ?string
     {
         return $this->variableName;
     }
 
-    public function setVariableName(string $variableName): void
+    public function setVariableName(?string $variableName): void
     {
         $this->variableName = $variableName;
     }
@@ -66,37 +66,37 @@ class HistoricVariableUpdateEventEntity extends HistoricDetailEventEntity
         $this->doubleValue = $doubleValue;
     }
 
-    public function getTextValue(): string
+    public function getTextValue(): ?string
     {
         return $this->textValue;
     }
 
-    public function setTextValue(string $textValue): void
+    public function setTextValue(?string $textValue): void
     {
         $this->textValue = $textValue;
     }
 
-    public function getTextValue2(): string
+    public function getTextValue2(): ?string
     {
         return $this->textValue2;
     }
 
-    public function setTextValue2(string $textValue2): void
+    public function setTextValue2(?string $textValue2): void
     {
         $this->textValue2 = $textValue2;
     }
 
-    public function getByteValue(): string
+    public function getByteValue(): ?string
     {
         return $this->byteValue;
     }
 
-    public function setByteValue(string $byteValue): void
+    public function setByteValue(?string $byteValue): void
     {
         $this->byteValue = $byteValue;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }
@@ -106,32 +106,32 @@ class HistoricVariableUpdateEventEntity extends HistoricDetailEventEntity
         $this->revision = $revision;
     }
 
-    public function setByteArrayId(string $id): void
+    public function setByteArrayId(?string $id): void
     {
         $this->byteArrayId = $id;
     }
 
-    public function getByteArrayId(): string
+    public function getByteArrayId(): ?string
     {
         return $this->byteArrayId;
     }
 
-    public function getVariableInstanceId(): string
+    public function getVariableInstanceId(): ?string
     {
         return $this->variableInstanceId;
     }
 
-    public function setVariableInstanceId(string $variableInstanceId): void
+    public function setVariableInstanceId(?string $variableInstanceId): void
     {
         $this->variableInstanceId = $variableInstanceId;
     }
 
-    public function getScopeActivityInstanceId(): string
+    public function getScopeActivityInstanceId(): ?string
     {
         return $this->scopeActivityInstanceId;
     }
 
-    public function setScopeActivityInstanceId(string $scopeActivityInstanceId): void
+    public function setScopeActivityInstanceId(?string $scopeActivityInstanceId): void
     {
         $this->scopeActivityInstanceId = $scopeActivityInstanceId;
     }

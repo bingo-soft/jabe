@@ -17,7 +17,7 @@ class UnlockJobCmd implements CommandInterface
 
     protected $jobId;
 
-    public function __construct(string $jobId)
+    public function __construct(?string $jobId)
     {
         $this->jobId = $jobId;
     }
@@ -45,5 +45,10 @@ class UnlockJobCmd implements CommandInterface
         $job->unlock();
 
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

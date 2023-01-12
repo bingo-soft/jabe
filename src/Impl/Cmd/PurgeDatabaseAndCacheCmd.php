@@ -99,4 +99,9 @@ class PurgeDatabaseAndCacheCmd implements CommandInterface
         }
         return $databasePurgeReport;
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

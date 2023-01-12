@@ -13,7 +13,7 @@ use Jabe\Impl\Task\Delegate\TaskListenerInvocation;
 
 class ClassDelegateTaskListener extends ClassDelegate implements TaskListenerInterface
 {
-    public function __construct(string $className, array $fieldDeclarations)
+    public function __construct(?string $className, array $fieldDeclarations)
     {
         parent::__construct($className, $fieldDeclarations);
     }

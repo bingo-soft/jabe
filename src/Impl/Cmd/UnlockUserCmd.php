@@ -11,7 +11,7 @@ class UnlockUserCmd implements CommandInterface, \Serializable
 {
     private $userId;
 
-    public function __construct(string $userId)
+    public function __construct(?string $userId)
     {
         $this->userId = $userId;
     }
@@ -37,5 +37,10 @@ class UnlockUserCmd implements CommandInterface, \Serializable
 
         $commandContext->getOperationLogManager()->logUserOperation($operationResult, $this->userId);
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

@@ -80,7 +80,7 @@ interface MessageCorrelationAsyncBuilderInterface
      * @throws NullValueException
      *           when <code>variableName</code> is <code>null</code>
      */
-    public function setVariable(string $variableName, $variableValue): MessageCorrelationAsyncBuilderInterface;
+    public function setVariable(?string $variableName, $variableValue): MessageCorrelationAsyncBuilderInterface;
 
     /**
      * <p>

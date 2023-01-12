@@ -25,7 +25,7 @@ class DbTenantQueryImpl extends TenantQueryImpl
         return $identityProvider->findTenantCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         $identityProvider = $this->getIdentityProvider($commandContext);

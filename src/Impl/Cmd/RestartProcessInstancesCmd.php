@@ -119,7 +119,7 @@ class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCmd
             ->checkAuthorization(Permissions::readHistory(), Resources::processDefinition(), $processDefinition->getKey());
     }
 
-    public function getHistoricProcessInstance(CommandContext $commandContext, string $processInstanceId): HistoricProcessInstanceInterface
+    public function getHistoricProcessInstance(CommandContext $commandContext, ?string $processInstanceId): HistoricProcessInstanceInterface
     {
         $historyService = $commandContext->getProcessEngineConfiguration()->getHistoryService();
         return $historyService->createHistoricProcessInstanceQuery()
@@ -127,7 +127,7 @@ class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCmd
             ->singleResult();
     }
 
-    public function ensureSameProcessDefinition(HistoricProcessInstanceInterface $instance, string $processDefinitionId): void
+    public function ensureSameProcessDefinition(HistoricProcessInstanceInterface $instance, ?string $processDefinitionId): void
     {
         if ($processDefinitionId != $instance->getProcessDefinitionId()) {
             //throw LOG.processDefinitionOfHistoricInstanceDoesNotMatchTheGivenOne(
@@ -143,7 +143,7 @@ class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCmd
         }
     }
 
-    public function getProcessInstantiationBuilder(CommandExecutorInterface $commandExecutor, string $processDefinitionId): ProcessInstantiationBuilderImpl
+    public function getProcessInstantiationBuilder(CommandExecutorInterface $commandExecutor, ?string $processDefinitionId): ProcessInstantiationBuilderImpl
     {
         return ProcessInstantiationBuilderImpl::createProcessInstanceById($commandExecutor, $processDefinitionId);
     }

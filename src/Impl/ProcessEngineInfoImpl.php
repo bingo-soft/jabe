@@ -10,7 +10,7 @@ class ProcessEngineInfoImpl implements \Serializable, ProcessEngineInfoInterface
     private $resourceUrl;
     private $exception;
 
-    public function __construct(string $name, string $resourceUrl, string $exception)
+    public function __construct(?string $name, ?string $resourceUrl, ?string $exception)
     {
         $this->name = $name;
         $this->resourceUrl = $resourceUrl;
@@ -34,17 +34,17 @@ class ProcessEngineInfoImpl implements \Serializable, ProcessEngineInfoInterface
         $this->exception = $json->exception;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getResourceUrl(): string
+    public function getResourceUrl(): ?string
     {
         return $this->resourceUrl;
     }
 
-    public function getException(): string
+    public function getException(): ?string
     {
         return $this->exception;
     }

@@ -27,7 +27,7 @@ class DeleteHistoricProcessInstancesJobHandler extends AbstractBatchJobHandler
 {
     public static $JOB_DECLARATION;
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return BatchInterface::TYPE_HISTORIC_PROCESS_INSTANCE_DELETION;
     }

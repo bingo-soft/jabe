@@ -12,7 +12,7 @@ class HistoryLevelFull extends AbstractHistoryLevel
         return 3;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return ProcessEngineConfiguration::HISTORY_FULL;
     }

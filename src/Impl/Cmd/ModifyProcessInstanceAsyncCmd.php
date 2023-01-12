@@ -79,7 +79,7 @@ class ModifyProcessInstanceAsyncCmd implements CommandInterface
             ->build();
     }
 
-    protected function ensureProcessInstanceExists(string $processInstanceId, ?ExecutionEntity $processInstance): void
+    protected function ensureProcessInstanceExists(?string $processInstanceId, ?ExecutionEntity $processInstance): void
     {
         if ($processInstance === null) {
             //throw LOG.processInstanceDoesNotExist(processInstanceId);
@@ -87,7 +87,7 @@ class ModifyProcessInstanceAsyncCmd implements CommandInterface
         }
     }
 
-    protected function getLogEntryOperation(): string
+    protected function getLogEntryOperation(): ?string
     {
         return UserOperationLogEntryInterface::OPERATION_TYPE_MODIFY_PROCESS_INSTANCE;
     }
@@ -104,7 +104,7 @@ class ModifyProcessInstanceAsyncCmd implements CommandInterface
         );
     }
 
-    public function getConfiguration(string $processDefinitionId, string $deploymentId): BatchConfiguration
+    public function getConfiguration(?string $processDefinitionId, ?string $deploymentId): BatchConfiguration
     {
         return new ModificationBatchConfiguration(
             [$this->builder->getProcessInstanceId()],
@@ -114,5 +114,10 @@ class ModifyProcessInstanceAsyncCmd implements CommandInterface
             $this->builder->isSkipCustomListeners(),
             $this->builder->isSkipIoMappings()
         );
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

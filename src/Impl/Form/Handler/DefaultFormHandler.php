@@ -379,7 +379,7 @@ class DefaultFormHandler implements FormHandlerInterface
         return $this->deploymentId;
     }
 
-    public function setDeploymentId(string $deploymentId): void
+    public function setDeploymentId(?string $deploymentId): void
     {
         $this->deploymentId = $deploymentId;
     }
@@ -394,12 +394,12 @@ class DefaultFormHandler implements FormHandlerInterface
         $this->formPropertyHandlers = $formPropertyHandlers;
     }
 
-    public function getBusinessKeyFieldId(): string
+    public function getBusinessKeyFieldId(): ?string
     {
         return $this->businessKeyFieldId;
     }
 
-    public function setBusinessKeyFieldId(string $businessKeyFieldId): void
+    public function setBusinessKeyFieldId(?string $businessKeyFieldId): void
     {
         $this->businessKeyFieldId = $businessKeyFieldId;
     }

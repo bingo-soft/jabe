@@ -9,13 +9,13 @@ class QueryPropertyImpl implements QueryPropertyInterface, \Serializable
     protected $name;
     protected $function;
 
-    public function __construct(string $name, ?string $function = null)
+    public function __construct(?string $name, ?string $function = null)
     {
         $this->name = $name;
         $this->function = $function;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }

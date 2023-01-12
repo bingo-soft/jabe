@@ -2,6 +2,10 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
+use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface
+};
 use Jabe\Impl\{
     EventSubscriptionQueryImpl,
     Page,
@@ -9,7 +13,8 @@ use Jabe\Impl\{
 };
 use Jabe\Impl\Db\{
     EnginePersistenceLogger,
-    ListQueryParameterObject
+    ListQueryParameterObject,
+    DbEntityInterface
 };
 use Jabe\Impl\Event\EventType;
 use Jabe\Impl\JobExecutor\ProcessEventJobHandler;
@@ -23,7 +28,7 @@ class EventSubscriptionManager extends AbstractManager
     /** keep track of subscriptions created in the current command */
     protected $createdSignalSubscriptions = [];
 
-    public function insert(EventSubscriptionEntity $persistentObject): void
+    public function insert(/*EventSubscriptionEntity*/DbEntityInterface $persistentObject): void
     {
         parent::insert($persistentObject);
         if ($persistentObject->isSubscriptionForEventType(EventType::signal())) {
@@ -59,7 +64,7 @@ class EventSubscriptionManager extends AbstractManager
         $this->getDbEntityManager()->flushEntity($persistentObject);
     }
 
-    public function findEventSubscriptionById(string $id): ?EventSubscriptionEntity
+    public function findEventSubscriptionById(?string $id): ?EventSubscriptionEntity
     {
         return $this->getDbEntityManager()->selectOne("selectEventSubscription", $id);
     }
@@ -70,7 +75,7 @@ class EventSubscriptionManager extends AbstractManager
         return $this->getDbEntityManager()->selectOne("selectEventSubscriptionCountByQueryCriteria", $eventSubscriptionQueryImpl);
     }
 
-    public function findEventSubscriptionsByQueryCriteria(EventSubscriptionQueryImpl $eventSubscriptionQueryImpl, Page $page): array
+    public function findEventSubscriptionsByQueryCriteria(EventSubscriptionQueryImpl $eventSubscriptionQueryImpl, ?Page $page): array
     {
         $this->configureQuery($eventSubscriptionQueryImpl);
         return $this->getDbEntityManager()->selectList("selectEventSubscriptionByQueryCriteria", $eventSubscriptionQueryImpl, $page);
@@ -81,7 +86,7 @@ class EventSubscriptionManager extends AbstractManager
      *
      * @see #findSignalEventSubscriptionsByEventNameAndTenantId(String, String)
      */
-    public function findSignalEventSubscriptionsByEventName(string $eventName): array
+    public function findSignalEventSubscriptionsByEventName(?string $eventName): array
     {
         $query = "selectSignalEventSubscriptionsByEventName";
         $eventSubscriptions = $this->getDbEntityManager()->selectList($query, $this->configureParameterizedQuery($eventName));
@@ -98,7 +103,7 @@ class EventSubscriptionManager extends AbstractManager
     /**
      * Find all signal event subscriptions with the given event name and tenant.
      */
-    public function findSignalEventSubscriptionsByEventNameAndTenantId(string $eventName, ?string $tenantId): array
+    public function findSignalEventSubscriptionsByEventNameAndTenantId(?string $eventName, ?string $tenantId): array
     {
         $query = "selectSignalEventSubscriptionsByEventNameAndTenantId";
 
@@ -119,7 +124,7 @@ class EventSubscriptionManager extends AbstractManager
     /**
      * Find all signal event subscriptions with the given event name which belongs to the given tenant or no tenant.
      */
-    public function findSignalEventSubscriptionsByEventNameAndTenantIdIncludeWithoutTenantId(string $eventName, ?string $tenantId): array
+    public function findSignalEventSubscriptionsByEventNameAndTenantIdIncludeWithoutTenantId(?string $eventName, ?string $tenantId): array
     {
         $query = "selectSignalEventSubscriptionsByEventNameAndTenantIdIncludeWithoutTenantId";
 
@@ -146,7 +151,7 @@ class EventSubscriptionManager extends AbstractManager
         }
     }
 
-    public function findSignalEventSubscriptionsByExecution(string $executionId): array
+    public function findSignalEventSubscriptionsByExecution(?string $executionId): array
     {
         $query = "selectSignalEventSubscriptionsByExecution";
         $selectList = $this->getDbEntityManager()->selectList($query, $executionId);
@@ -160,7 +165,7 @@ class EventSubscriptionManager extends AbstractManager
         return $selectList;
     }
 
-    public function findSignalEventSubscriptionsByNameAndExecution(string $name, string $executionId): array
+    public function findSignalEventSubscriptionsByNameAndExecution(?string $name, ?string $executionId): array
     {
         $query = "selectSignalEventSubscriptionsByNameAndExecution";
         $params = [];
@@ -177,7 +182,7 @@ class EventSubscriptionManager extends AbstractManager
         return $selectList;
     }
 
-    public function findEventSubscriptionsByExecutionAndType(string $executionId, string $type, bool $lockResult): array
+    public function findEventSubscriptionsByExecutionAndType(?string $executionId, ?string $type, bool $lockResult): array
     {
         $query = "selectEventSubscriptionsByExecutionAndType";
         $params = [];
@@ -187,13 +192,13 @@ class EventSubscriptionManager extends AbstractManager
         return $this->getDbEntityManager()->selectList($query, $params);
     }
 
-    public function findEventSubscriptionsByExecution(string $executionId): array
+    public function findEventSubscriptionsByExecution(?string $executionId): array
     {
         $query = "selectEventSubscriptionsByExecution";
         return $this->getDbEntityManager()->selectList($query, $executionId);
     }
 
-    public function findEventSubscriptions(string $executionId, string $type, string $activityId): array
+    public function findEventSubscriptions(?string $executionId, ?string $type, ?string $activityId): array
     {
         $query = "selectEventSubscriptionsByExecutionTypeAndActivity";
         $params = [];
@@ -203,7 +208,7 @@ class EventSubscriptionManager extends AbstractManager
         return $this->getDbEntityManager()->selectList($query, $params);
     }
 
-    public function findEventSubscriptionsByConfiguration(string $type, string $configuration): array
+    public function findEventSubscriptionsByConfiguration(?string $type, ?string $configuration): array
     {
         $query = "selectEventSubscriptionsByConfiguration";
         $params = [];
@@ -212,7 +217,7 @@ class EventSubscriptionManager extends AbstractManager
         return $this->getDbEntityManager()->selectList($query, $params);
     }
 
-    public function findEventSubscriptionsByNameAndTenantId(string $type, string $eventName, ?string $tenantId): array
+    public function findEventSubscriptionsByNameAndTenantId(?string $type, ?string $eventName, ?string $tenantId): array
     {
         $query = "selectEventSubscriptionsByNameAndTenantId";
         $params = [];
@@ -222,7 +227,7 @@ class EventSubscriptionManager extends AbstractManager
         return $this->getDbEntityManager()->selectList($query, $params);
     }
 
-    public function findEventSubscriptionsByNameAndExecution(string $type, string $eventName, string $executionId, bool $lockResult): array
+    public function findEventSubscriptionsByNameAndExecution(?string $type, ?string $eventName, ?string $executionId, bool $lockResult): array
     {
         // first check cache in case entity is already loaded
         $cachedExecution = $this->getDbEntityManager()->getCachedEntity(ExecutionEntity::class, $executionId);
@@ -246,7 +251,7 @@ class EventSubscriptionManager extends AbstractManager
         }
     }
 
-    public function findEventSubscriptionsByProcessInstanceId(string $processInstanceId): array
+    public function findEventSubscriptionsByProcessInstanceId(?string $processInstanceId): array
     {
         return $this->getDbEntityManager()->selectList("selectEventSubscriptionsByProcessInstanceId", $processInstanceId);
     }
@@ -256,7 +261,7 @@ class EventSubscriptionManager extends AbstractManager
      *
      * @see #findMessageStartEventSubscriptionByNameAndTenantId(String, String)
      */
-    public function findMessageStartEventSubscriptionByName(string $messageName): array
+    public function findMessageStartEventSubscriptionByName(?string $messageName): array
     {
         return $this->getDbEntityManager()->selectList("selectMessageStartEventSubscriptionByName", $this->configureParameterizedQuery($messageName));
     }
@@ -266,7 +271,7 @@ class EventSubscriptionManager extends AbstractManager
      *
      * @see #findMessageStartEventSubscriptionByName(String)
      */
-    public function findMessageStartEventSubscriptionByNameAndTenantId(string $messageName, string $tenantId): ?EventSubscriptionEntity
+    public function findMessageStartEventSubscriptionByNameAndTenantId(?string $messageName, ?string $tenantId): ?EventSubscriptionEntity
     {
         $parameters = [];
         $parameters["messageName"] = $messageName;
@@ -280,7 +285,7 @@ class EventSubscriptionManager extends AbstractManager
      * @return array the conditional start event subscriptions with the given tenant id
      *
      */
-    public function findConditionalStartEventSubscriptionByTenantId(string $tenantId): array
+    public function findConditionalStartEventSubscriptionByTenantId(?string $tenantId): array
     {
         $parameters = [];
         $parameters["tenantId"] = $tenantId;
@@ -307,7 +312,7 @@ class EventSubscriptionManager extends AbstractManager
         $this->getTenantManager()->configureQuery($parameter);
     }
 
-    protected function configureQuery(EventSubscriptionQueryImpl $query): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         $this->getAuthorizationManager()->configureEventSubscriptionQuery($query);
         $this->getTenantManager()->configureQuery($query);
@@ -318,7 +323,7 @@ class EventSubscriptionManager extends AbstractManager
         return $this->getTenantManager()->configureQuery($parameter);
     }
 
-    protected function matchesSubscription(EventSubscriptionEntity $subscription, string $type, string $eventName): bool
+    protected function matchesSubscription(EventSubscriptionEntity $subscription, ?string $type, ?string $eventName): bool
     {
         EnsureUtil::ensureNotNull("event type", "type", $type);
         $subscriptionEventName = $subscription->getEventName();

@@ -5,6 +5,7 @@ namespace Jabe\Impl\JobExecutor;
 use Jabe\Impl\ProcessEngineLogger;
 use Jabe\Impl\Context\Context;
 use Jabe\Impl\Interceptor\CommandContext;
+use Jabe\Impl\JobExecutor\JobHandlerConfigurationInterface;
 use Jabe\Impl\Persistence\Entity\ExecutionEntity;
 use Jabe\Repository\ProcessDefinitionInterface;
 
@@ -14,12 +15,12 @@ class TimerStartEventJobHandler extends TimerEventJobHandler
 
     public const TYPE = "timer-start-event";
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return self::TYPE;
     }
 
-    public function execute(TimerJobConfiguration $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
     {
         $deploymentCache = Context::getProcessEngineConfiguration()
                 ->getDeploymentCache();

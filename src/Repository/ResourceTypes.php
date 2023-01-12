@@ -39,7 +39,7 @@ class ResourceTypes implements ResourceTypeInterface
     private $name;
     private $id;
 
-    private function __construct(string $name, int $id)
+    private function __construct(?string $name, int $id)
     {
         $this->name = $name;
         $this->id = $id;
@@ -50,7 +50,7 @@ class ResourceTypes implements ResourceTypeInterface
         return $this->name;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -60,7 +60,7 @@ class ResourceTypes implements ResourceTypeInterface
         return $this->id;
     }
 
-    public static function forName(string $name): ?ResourceTypeInterface
+    public static function forName(?string $name): ?ResourceTypeInterface
     {
         switch (strtolower($name)) {
             case "repository":

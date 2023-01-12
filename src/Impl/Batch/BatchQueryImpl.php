@@ -21,7 +21,7 @@ class BatchQueryImpl extends AbstractQuery implements BatchQueryInterface
 {
     protected $batchId;
     protected $type;
-    protected $isTenantIdSet = false;
+    protected bool $isTenantIdSet = false;
     protected $tenantIds = [];
     protected $suspensionState;
 
@@ -30,26 +30,26 @@ class BatchQueryImpl extends AbstractQuery implements BatchQueryInterface
         parent::__construct($commandExecutor);
     }
 
-    public function batchId(string $batchId): BatchQueryInterface
+    public function batchId(?string $batchId): BatchQueryInterface
     {
         EnsureUtil::ensureNotNull("Batch id", "batchId", $batchId);
         $this->batchId = $batchId;
         return $this;
     }
 
-    public function getBatchId(): string
+    public function getBatchId(): ?string
     {
         return $this->batchId;
     }
 
-    public function type(string $type): BatchQueryInterface
+    public function type(?string $type): BatchQueryInterface
     {
         EnsureUtil::ensureNotNull("Type", "type", $type);
         $this->type = $type;
         return $this;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -113,7 +113,7 @@ class BatchQueryImpl extends AbstractQuery implements BatchQueryInterface
             ->findBatchCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         return $commandContext->getBatchManager()

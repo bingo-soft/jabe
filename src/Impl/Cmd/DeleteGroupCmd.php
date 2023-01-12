@@ -12,7 +12,7 @@ class DeleteGroupCmd extends AbstractWritableIdentityServiceCmd implements Comma
 {
     private $groupId;
 
-    public function __construct(string $groupId)
+    public function __construct(?string $groupId)
     {
         $this->groupId = $groupId;
     }
@@ -32,7 +32,7 @@ class DeleteGroupCmd extends AbstractWritableIdentityServiceCmd implements Comma
 
     protected function executeCmd(CommandContext $commandContext)
     {
-        EnsureUtil::ensureNotNull("groupId", $this->groupId);
+        EnsureUtil::ensureNotNull("groupId", "groupId", $this->groupId);
 
         $operationResult = $commandContext
             ->getWritableIdentityProvider()

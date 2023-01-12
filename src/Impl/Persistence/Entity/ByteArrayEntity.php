@@ -14,9 +14,9 @@ class ByteArrayEntity implements \Serializable, DbEntityInterface, HasDbRevision
     private static $PERSISTENTSTATE_NULL;
 
     protected $id;
-    protected $revision;
+    protected int $revision = 0;
     protected $name;
-    protected $bytes;
+    protected ?string $bytes;
     protected $deploymentId;
     protected $tenantId;
     protected $type;
@@ -65,17 +65,17 @@ class ByteArrayEntity implements \Serializable, DbEntityInterface, HasDbRevision
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
@@ -85,17 +85,17 @@ class ByteArrayEntity implements \Serializable, DbEntityInterface, HasDbRevision
         return $this->deploymentId;
     }
 
-    public function setDeploymentId(string $deploymentId): void
+    public function setDeploymentId(?string $deploymentId): void
     {
         $this->deploymentId = $deploymentId;
     }
 
-    public function setBytes(string $bytes): void
+    public function setBytes(/*string|resource*/$bytes): void
     {
-        $this->bytes = $bytes;
+        $this->bytes = is_resource($bytes) ? stream_get_contents($bytes) : $bytes;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }
@@ -125,32 +125,32 @@ class ByteArrayEntity implements \Serializable, DbEntityInterface, HasDbRevision
         $this->type = $type;
     }
 
-    public function getCreateTime(): string
+    public function getCreateTime(): ?string
     {
         return $this->createTime;
     }
 
-    public function setCreateTime(string $createTime): void
+    public function setCreateTime(?string $createTime): void
     {
         $this->createTime = $createTime;
     }
 
-    public function getRootProcessInstanceId(): string
+    public function getRootProcessInstanceId(): ?string
     {
         return $this->rootProcessInstanceId;
     }
 
-    public function setRootProcessInstanceId(string $rootProcessInstanceId): void
+    public function setRootProcessInstanceId(?string $rootProcessInstanceId): void
     {
         $this->rootProcessInstanceId = $rootProcessInstanceId;
     }
 
-    public function getRemovalTime(): string
+    public function getRemovalTime(): ?string
     {
         return $this->removalTime;
     }
 
-    public function setRemovalTime(string $removalTime): void
+    public function setRemovalTime(?string $removalTime): void
     {
         $this->removalTime = $removalTime;
     }

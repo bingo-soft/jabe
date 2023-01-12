@@ -8,5 +8,5 @@ interface JobAcquisitionStrategyInterface
 
     public function getWaitTime(): int;
 
-    public function getNumJobsToAcquire(string $processEngine): int;
+    public function getNumJobsToAcquire(?string $processEngine): int;
 }

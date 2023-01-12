@@ -18,8 +18,8 @@ class FailedJobListener implements CommandInterface
     //private final static JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
     protected $commandExecutor;
     protected $jobFailureCollector;
-    protected $countRetries = 0;
-    protected $totalRetries = ProcessEngineConfigurationImpl::DEFAULT_FAILED_JOB_LISTENER_MAX_RETRIES;
+    protected int $countRetries = 0;
+    protected int $totalRetries = ProcessEngineConfigurationImpl::DEFAULT_FAILED_JOB_LISTENER_MAX_RETRIES;
 
     public function __construct(CommandExecutorInterface $commandExecutor, JobFailureCollector $jobFailureCollector)
     {
@@ -82,5 +82,10 @@ class FailedJobListener implements CommandInterface
     public function getRetriesLeft(): int
     {
         return max([0, $this->totalRetries - $this->countRetries]);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

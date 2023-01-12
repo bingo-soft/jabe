@@ -12,7 +12,7 @@ use Jabe\Impl\Calendar\{
     DueDateBusinessCalendar
 };
 use Jabe\Impl\Context\Context;
-use Jabe\Impl\El\ExpressionManager;
+use Jabe\Impl\El\ExpressionManagerInterface;
 use Jabe\Impl\Persistence\Entity\TaskEntity;
 
 class TaskDecorator
@@ -20,7 +20,7 @@ class TaskDecorator
     protected $taskDefinition;
     protected $expressionManager;
 
-    public function __construct(TaskDefinition $taskDefinition, ExpressionManager $expressionManager)
+    public function __construct(TaskDefinition $taskDefinition, ExpressionManagerInterface $expressionManager)
     {
         $this->taskDefinition = $taskDefinition;
         $this->expressionManager = $expressionManager;
@@ -102,7 +102,7 @@ class TaskDecorator
 
     protected function initializeTaskPriority(TaskEntity $task, VariableScopeInterface $variableScope): void
     {
-        $priorityExpression = $taskDefinition->getPriorityExpression();
+        $priorityExpression = $this->taskDefinition->getPriorityExpression();
         if ($priorityExpression !== null) {
             $priority = $priorityExpression->getValue($variableScope);
             if ($priority !== null) {
@@ -177,7 +177,7 @@ class TaskDecorator
     /**
      * Extract a candidate list from a string.
      */
-    protected function extractCandidates(string $str): array
+    protected function extractCandidates(?string $str): array
     {
         return preg_split("/[\s]*,[\s]*/", $str);
     }
@@ -189,7 +189,7 @@ class TaskDecorator
         return $this->taskDefinition;
     }
 
-    public function getExpressionManager(): ExpressionManager
+    public function getExpressionManager(): ExpressionManagerInterface
     {
         return $this->expressionManager;
     }

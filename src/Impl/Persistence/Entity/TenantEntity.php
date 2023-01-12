@@ -13,7 +13,7 @@ class TenantEntity implements TenantInterface, \Serializable, DbEntityInterface,
     protected $id;
     protected $name;
 
-    protected $revision;
+    protected int $revision = 0;
 
     public function __construct(?string $id = null)
     {
@@ -37,22 +37,22 @@ class TenantEntity implements TenantInterface, \Serializable, DbEntityInterface,
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }

@@ -48,12 +48,12 @@ class AddressImpl extends ModelElementInstanceImpl implements AddressInterface
         $typeBuilder->build();
     }
 
-    public function getLocation(): string
+    public function getLocation(): ?string
     {
         return self::$locationAttribute->getValue($this);
     }
 
-    public function setLocation(string $location): void
+    public function setLocation(?string $location): void
     {
         self::$locationAttribute->setValue($this, $location);
     }

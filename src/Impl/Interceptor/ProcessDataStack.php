@@ -14,7 +14,7 @@ class ProcessDataStack
     /**
      * @param mdcName is optional. If present, any additions to a stack will also be reflected in the MDC context
      */
-    public function __construct(string $mdcName)
+    public function __construct(?string $mdcName)
     {
         $this->mdcName = $mdcName;
     }

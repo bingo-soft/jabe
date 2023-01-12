@@ -18,7 +18,7 @@ class WSService implements BpmnInterfaceImplementationInterface
 
     protected $client;
 
-    public function __construct(string $name, string $location, $data)
+    public function __construct(?string $name, ?string $location, $data)
     {
         $this->name = $name;
         $this->location = $location;
@@ -45,12 +45,12 @@ class WSService implements BpmnInterfaceImplementationInterface
         return $this->client;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getLocation(): string
+    public function getLocation(): ?string
     {
         return $this->location;
     }

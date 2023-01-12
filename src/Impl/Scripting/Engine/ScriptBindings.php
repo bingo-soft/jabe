@@ -86,7 +86,7 @@ class ScriptBindings implements BindingsInterface
         return $result;
     }
 
-    public function put(string $name, $value)
+    public function put(?string $name, $value)
     {
 
         if ($this->autoStoreScriptVariables) {

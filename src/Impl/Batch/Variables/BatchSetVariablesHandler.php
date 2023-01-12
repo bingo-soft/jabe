@@ -13,7 +13,10 @@ use Jabe\Impl\Batch\{
 use Jabe\Impl\Cmd\SetExecutionVariablesCmd;
 use Jabe\Impl\Core\Variable\VariableUtil;
 use Jabe\Impl\Interceptor\CommandContext;
-use Jabe\Impl\JobExecutor\JobDeclaration;
+use Jabe\Impl\JobExecutor\{
+    JobDeclaration,
+    JobHandlerConfigurationInterface
+};
 use Jabe\Impl\Json\JsonObjectConverter;
 use Jabe\Impl\Persistence\Entity\{
     ByteArrayEntity,
@@ -26,7 +29,7 @@ class BatchSetVariablesHandler extends AbstractBatchJobHandler
 {
     public static $JOB_DECLARATION;
 
-    public function execute(BatchJobConfiguration $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId)
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
     {
         $byteArrayId = $configuration->getConfigurationByteArrayId();
         $byteArray = $this->findByteArrayById($byteArrayId, $commandContext);
@@ -66,7 +69,7 @@ class BatchSetVariablesHandler extends AbstractBatchJobHandler
         return SetVariablesJsonConverter::instance();
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return BatchInterface::TYPE_SET_VARIABLES;
     }
@@ -79,7 +82,7 @@ class BatchSetVariablesHandler extends AbstractBatchJobHandler
         }
     }
 
-    protected function findByteArrayById(string $byteArrayId, CommandContext $commandContext): ?ByteArrayEntity
+    protected function findByteArrayById(?string $byteArrayId, CommandContext $commandContext): ?ByteArrayEntity
     {
         return $commandContext->getDbEntityManager()
             ->selectById(ByteArrayEntity::class, $byteArrayId);

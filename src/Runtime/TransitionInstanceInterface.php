@@ -7,11 +7,11 @@ interface TransitionInstanceInterface extends ProcessElementInstanceInterface
     /**
      * returns the id of the activity a transition is made from/to
      */
-    public function getActivityId(): string;
+    public function getActivityId(): ?string;
 
     /** returns the id of of the execution that is
      * executing this transition instance */
-    public function getExecutionId(): string;
+    public function getExecutionId(): ?string;
 
     /**
      * returns the type of the activity a transition is made from/to.
@@ -19,12 +19,12 @@ interface TransitionInstanceInterface extends ProcessElementInstanceInterface
      * The type of the root activity instance (the one corresponding to the process instance)
      * is 'processDefinition'.
      */
-    public function getActivityType(): string;
+    public function getActivityType(): ?string;
 
     /**
      * returns the name of the activity a transition is made from/to
      */
-    public function getActivityName(): string;
+    public function getActivityName(): ?string;
 
     /** the ids of currently open incidents */
     public function getIncidentIds(): array;

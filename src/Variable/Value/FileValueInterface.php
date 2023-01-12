@@ -4,7 +4,7 @@ namespace Jabe\Variable\Value;
 
 interface FileValueInterface extends TypedValueInterface
 {
-    public function getFilename(): string;
+    public function getFilename(): ?string;
 
     public function getMimeType(): ?string;
 

@@ -12,7 +12,7 @@ class GetDeploymentResourceNamesCmd implements CommandInterface, \Serializable
 {
     protected $deploymentId;
 
-    public function __construct(string $deploymentId)
+    public function __construct(?string $deploymentId)
     {
         $this->deploymentId = $deploymentId;
     }
@@ -41,5 +41,10 @@ class GetDeploymentResourceNamesCmd implements CommandInterface, \Serializable
         return Context::getCommandContext()
             ->getDeploymentManager()
             ->getDeploymentResourceNames($this->deploymentId);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

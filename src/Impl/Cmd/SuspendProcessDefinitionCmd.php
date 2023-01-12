@@ -21,7 +21,7 @@ class SuspendProcessDefinitionCmd extends AbstractSetProcessDefinitionStateCmd
         return SuspensionState::suspended();
     }
 
-    protected function getDelayedExecutionJobHandlerType(): string
+    protected function getDelayedExecutionJobHandlerType(): ?string
     {
         return TimerSuspendProcessDefinitionHandler::TYPE;
     }
@@ -36,7 +36,7 @@ class SuspendProcessDefinitionCmd extends AbstractSetProcessDefinitionStateCmd
         return new SuspendProcessInstanceCmd($processInstanceCommandBuilder);
     }
 
-    protected function getLogEntryOperation(): string
+    protected function getLogEntryOperation(): ?string
     {
         return UserOperationLogEntryInterface::OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION;
     }

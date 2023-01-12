@@ -7,7 +7,7 @@ use Jabe\Runtime\IncidentInterface;
 interface DelegateExecutionInterface extends BaseDelegateExecutionInterface, BpmnModelExecutionContextInterface, ProcessEngineServicesAwareInterface
 {
     /** Reference to the overall process instance */
-    public function getProcessInstanceId(): string;
+    public function getProcessInstanceId(): ?string;
 
     /**
      * The business key for the process instance this execution is associated
@@ -21,13 +21,13 @@ interface DelegateExecutionInterface extends BaseDelegateExecutionInterface, Bpm
      *
      * @param businessKey the new business key
      */
-    public function setProcessBusinessKey(string $businessKey): void;
+    public function setProcessBusinessKey(?string $businessKey): void;
 
     /**
      * The process definition key for the process instance this execution is
      * associated with.
      */
-    public function getProcessDefinitionId(): string;
+    public function getProcessDefinitionId(): ?string;
 
     /**
      * Gets the id of the parent of this execution. If null, the execution
@@ -38,7 +38,7 @@ interface DelegateExecutionInterface extends BaseDelegateExecutionInterface, Bpm
     /**
      * Gets the id of the current activity.
      */
-    public function getCurrentActivityId(): string;
+    public function getCurrentActivityId(): ?string;
 
     /**
      * Gets the name of the current activity.
@@ -48,7 +48,7 @@ interface DelegateExecutionInterface extends BaseDelegateExecutionInterface, Bpm
     /**
      * return the Id of the activity instance currently executed by this execution
      */
-    public function getActivityInstanceId(): string;
+    public function getActivityInstanceId(...$args): ?string;
 
     /**
      * return the Id of the parent activity instance currently executed by this
@@ -57,7 +57,7 @@ interface DelegateExecutionInterface extends BaseDelegateExecutionInterface, Bpm
     public function getParentActivityInstanceId(): ?string;
 
     /** return the Id of the current transition */
-    public function getCurrentTransitionId(): string;
+    public function getCurrentTransitionId(): ?string;
 
     /**
      * Return the process instance execution for this execution. In case this
@@ -94,7 +94,7 @@ interface DelegateExecutionInterface extends BaseDelegateExecutionInterface, Bpm
      *                   if not existing - exception will be thrown
      * @throws ProcessEngineException if scope with specified activity ID is not found
      */
-    public function setVariable(string $variableName, $value, string $activityId): void;
+    public function setVariable(?string $variableName, $value, ...$args): void;
 
     /**
      * Create an incident associated with this execution
@@ -103,12 +103,12 @@ interface DelegateExecutionInterface extends BaseDelegateExecutionInterface, Bpm
      * @param configuration
      * @return a new incident
      */
-    public function createIncident(string $incidentType, string $configuration, ?string $message): IncidentInterface;
+    public function createIncident(?string $incidentType, ?string $configuration, ?string $message): IncidentInterface;
 
     /**
      * Resolve and remove an incident with given id
      *
      * @param incidentId
      */
-    public function resolveIncident(string $incidentId): void;
+    public function resolveIncident(?string $incidentId): void;
 }

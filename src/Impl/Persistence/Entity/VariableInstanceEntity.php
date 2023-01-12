@@ -39,7 +39,7 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
     //protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
     protected $id;
-    protected $revision;
+    protected int $revision = 0;
 
     protected $name;
 
@@ -51,6 +51,7 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
     /*protected $caseInstanceId;
     protected $caseExecutionId;*/
     protected $activityInstanceId;
+
     protected $tenantId;
 
     protected $longValue;
@@ -67,7 +68,7 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
 
     protected $configuration;
 
-    protected $sequenceCounter = 1;
+    protected int $sequenceCounter = 1;
 
     /**
      * <p>Determines whether this variable is supposed to be a local variable
@@ -91,17 +92,21 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
      *   stay in the scope execution
      * </p>
      */
-    protected $isConcurrentLocal = false;
+    protected bool $isConcurrentLocal = false;
 
     /**
      * Determines whether this variable is stored in the data base.
      */
-    protected $isTransient = false;
+    protected bool $isTransient = false;
 
     // transient properties
     protected $execution;
 
-    public function __construct(string $name, TypedValueInterface $value, bool $isTransient)
+    protected $activityId;
+    protected $isActive;
+    protected $isConcurrencyScope;
+
+    public function __construct(?string $name, TypedValueInterface $value, bool $isTransient)
     {
         $this->byteArrayField = new ByteArrayField($this, ResourceTypes::runtime());
         $this->typedValueField = new TypedValueField($this, true);
@@ -112,7 +117,7 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
         $this->typedValueField->setValue($value);
     }
 
-    public static function createAndInsert(string $name, TypedValueInterface $value): VariableInstanceEntity
+    public static function createAndInsert(?string $name, TypedValueInterface $value): VariableInstanceEntity
     {
         $variableInstance = self::create($name, $value, $value->isTransient());
         self::insert($variableInstance);
@@ -128,7 +133,7 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
         }
     }
 
-    public static function create(string $name, TypedValueInterface $value, bool $isTransient): VariableInstanceEntity
+    public static function create(?string $name, TypedValueInterface $value, bool $isTransient): VariableInstanceEntity
     {
         return new VariableInstanceEntity($name, $value, $isTransient);
     }
@@ -191,26 +196,26 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
 
     // lazy initialized relations ///////////////////////////////////////////////
 
-    public function setProcessInstanceId(string $processInstanceId): void
+    public function setProcessInstanceId(?string $processInstanceId): void
     {
         $this->processInstanceId = $processInstanceId;
     }
 
-    public function setProcessDefinitionId(string $processDefinitionId): void
+    public function setProcessDefinitionId(?string $processDefinitionId): void
     {
         $this->processDefinitionId = $processDefinitionId;
     }
 
-    public function setExecutionId(string $executionId): void
+    public function setExecutionId(?string $executionId): void
     {
         $this->executionId = $executionId;
     }
 
-    /*public void setCaseInstanceId(string $caseInstanceId) {
+    /*public void setCaseInstanceId(?string $caseInstanceId) {
         $this->caseInstanceId = caseInstanceId;
     }
 
-    public void setCaseExecutionId(string $caseExecutionId) {
+    public void setCaseExecutionId(?string $caseExecutionId) {
         $this->caseExecutionId = caseExecutionId;
     }
 
@@ -232,22 +237,22 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
     // into a common class.  therefor it's duplicated in VariableInstanceEntity,
     // HistoricVariableInstance and HistoricDetailVariableInstanceUpdateEntity
 
-    public function getByteArrayValueId(): string
+    public function getByteArrayValueId(): ?string
     {
         return $this->byteArrayField->getByteArrayId();
     }
 
-    public function setByteArrayValueId(string $byteArrayValueId): void
+    public function setByteArrayValueId(?string $byteArrayValueId): void
     {
         $this->byteArrayField->setByteArrayId($byteArrayValueId);
     }
 
-    public function getByteArrayValue(): string
+    public function getByteArrayValue(): ?string
     {
         return $this->byteArrayField->getByteArrayValue();
     }
 
-    public function setByteArrayValue(string $bytes): void
+    public function setByteArrayValue($bytes): void
     {
         $this->byteArrayField->setByteArrayValue($bytes, $this->isTransient);
     }
@@ -291,7 +296,7 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
         }
     }
 
-    public function getTypeName(): string
+    public function getTypeName(): ?string
     {
         return $this->typedValueField->getTypeName();
     }
@@ -356,27 +361,27 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getTextValue(): string
+    public function getTextValue(): ?string
     {
         return $this->textValue;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function getExecutionId(): string
+    public function getExecutionId(): ?string
     {
         return $this->executionId;
     }
@@ -409,22 +414,22 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
         $this->doubleValue = $doubleValue;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    public function setTextValue(string $textValue): void
+    public function setTextValue(?string $textValue): void
     {
         $this->textValue = $textValue;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }
@@ -439,7 +444,7 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
         $this->typedValueField->setSerializerName($serializer->getName());
     }
 
-    public function setSerializerName(string $type): void
+    public function setSerializerName(?string $type): void
     {
         $this->typedValueField->setSerializerName($type);
     }
@@ -449,32 +454,32 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
         return $this->typedValueField->getSerializer();
     }
 
-    public function getTextValue2(): string
+    public function getTextValue2(): ?string
     {
         return $this->textValue2;
     }
 
-    public function setTextValue2(string $textValue2): void
+    public function setTextValue2(?string $textValue2): void
     {
         $this->textValue2 = $textValue2;
     }
 
-    public function getTaskId(): string
+    public function getTaskId(): ?string
     {
         return $this->taskId;
     }
 
-    public function setTaskId(string $taskId): void
+    public function setTaskId(?string $taskId): void
     {
         $this->taskId = $taskId;
     }
 
-    public function getBatchId(): string
+    public function getBatchId(): ?string
     {
         return $this->batchId;
     }
 
-    public function setBatchId(string $batchId): void
+    public function setBatchId(?string $batchId): void
     {
         $this->batchId = $batchId;
     }
@@ -499,22 +504,22 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
         }
     }
 
-    public function getActivityInstanceId(): string
+    public function getActivityInstanceId(): ?string
     {
         return $this->activityInstanceId;
     }
 
-    public function setActivityInstanceId(string $activityInstanceId): void
+    public function setActivityInstanceId(?string $activityInstanceId): void
     {
         $this->activityInstanceId = $activityInstanceId;
     }
 
-    public function getSerializerName(): string
+    public function getSerializerName(): ?string
     {
         return $this->typedValueField->getSerializerName();
     }
 
-    public function getErrorMessage(): string
+    public function getErrorMessage(): ?string
     {
         return $this->typedValueField->getErrorMessage();
     }
@@ -536,7 +541,7 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
         //return caseExecutionId;
     }
 
-    public function setVariableScopeId(string $variableScopeId): void
+    public function setVariableScopeId(?string $variableScopeId): void
     {
         $this->variableScopeId = $variableScopeId;
     }
@@ -775,5 +780,10 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
         }
 
         return $referenceIdAndClass;
+    }
+
+    public function getDependentEntities(): array
+    {
+        return [];
     }
 }

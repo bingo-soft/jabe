@@ -15,7 +15,7 @@ class SetExternalTaskPriorityCmd extends ExternalTaskCmd
      */
     protected $priority;
 
-    public function __construct(string $externalTaskId, int $priority)
+    public function __construct(?string $externalTaskId, int $priority)
     {
         parent::__construct($externalTaskId);
         $this->priority = $priority;
@@ -30,7 +30,7 @@ class SetExternalTaskPriorityCmd extends ExternalTaskCmd
     {
     }
 
-    protected function getUserOperationLogOperationType(): string
+    protected function getUserOperationLogOperationType(): ?string
     {
         return UserOperationLogEntryInterface::OPERATION_TYPE_SET_PRIORITY;
     }

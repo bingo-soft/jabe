@@ -10,7 +10,7 @@ use Jabe\Impl\History\Event\{
 use Jabe\Impl\History\Producer\HistoryEventProducerInterface;
 use Jabe\Impl\Persistence\Entity\ExecutionEntity;
 
-class ActivityInstanceUpdateListener extends HistoryExecutionListener
+class ActivityInstanceUpdateListener extends HistoryTaskListener
 {
     public function __construct(HistoryEventProducerInterface $historyEventProducer)
     {

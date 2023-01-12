@@ -11,7 +11,7 @@ class DatabasePurgeReport implements PurgeReportingInterface
     private $deletedEntities = [];
     private $dbContainsLicenseKey;
 
-    public function addPurgeInformation(string $key, $value): void
+    public function addPurgeInformation(?string $key, $value): void
     {
         $this->deletedEntities[$key] = $value;
     }
@@ -21,7 +21,7 @@ class DatabasePurgeReport implements PurgeReportingInterface
         return $this->deletedEntities;
     }
 
-    public function getPurgeReportAsString(): string
+    public function getPurgeReportAsString(): ?string
     {
         $builder = "";
         foreach ($this->deletedEntities as $key => $value) {
@@ -32,7 +32,7 @@ class DatabasePurgeReport implements PurgeReportingInterface
         return $builder;
     }
 
-    public function getReportValue(string $key)
+    public function getReportValue(?string $key)
     {
         if (array_key_exists($key, $this->deletedEntities)) {
             return $this->deletedEntities[$key];
@@ -40,7 +40,7 @@ class DatabasePurgeReport implements PurgeReportingInterface
         return null;
     }
 
-    public function containsReport(string $key): bool
+    public function containsReport(?string $key): bool
     {
         return array_key_exists($key, $this->deletedEntities);
     }

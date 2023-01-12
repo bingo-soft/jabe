@@ -26,7 +26,7 @@ class ExecutionQueryImpl extends AbstractVariableQueryImpl implements ExecutionQ
     protected $incidentMessage;
     protected $incidentMessageLike;
 
-    protected $isTenantIdSet = false;
+    protected bool $isTenantIdSet = false;
     protected $tenantIds = [];
 
     public function __construct(CommandExecutorInterface $commandExecutor)
@@ -34,58 +34,58 @@ class ExecutionQueryImpl extends AbstractVariableQueryImpl implements ExecutionQ
         parent::__construct($commandExecutor);
     }
 
-    public function processDefinitionId(string $processDefinitionId): ExecutionQueryImpl
+    public function processDefinitionId(?string $processDefinitionId): ExecutionQueryImpl
     {
         EnsureUtil::ensureNotNull("Process definition id", "processDefinitionId", $processDefinitionId);
         $this->processDefinitionId = $processDefinitionId;
         return $this;
     }
 
-    public function processDefinitionKey(string $processDefinitionKey): ExecutionQueryImpl
+    public function processDefinitionKey(?string $processDefinitionKey): ExecutionQueryImpl
     {
         EnsureUtil::ensureNotNull("Process definition key", "processDefinitionKey", $processDefinitionKey);
         $this->processDefinitionKey = $processDefinitionKey;
         return $this;
     }
 
-    public function processInstanceId(string $processInstanceId): ExecutionQueryImpl
+    public function processInstanceId(?string $processInstanceId): ExecutionQueryImpl
     {
         EnsureUtil::ensureNotNull("Process instance id", "processInstanceId", $processInstanceId);
         $this->processInstanceId = $processInstanceId;
         return $this;
     }
 
-    public function processInstanceBusinessKey(string $businessKey): ExecutionQueryInterface
+    public function processInstanceBusinessKey(?string $businessKey): ExecutionQueryInterface
     {
         EnsureUtil::ensureNotNull("Business key", "businessKey", $businessKey);
         $this->businessKey = $businessKey;
         return $this;
     }
 
-    public function executionId(string $executionId): ExecutionQueryImpl
+    public function executionId(?string $executionId): ExecutionQueryImpl
     {
         EnsureUtil::ensureNotNull("Execution id", "executionId", $executionId);
         $this->executionId = $executionId;
         return $this;
     }
 
-    public function activityId(string $activityId): ExecutionQueryImpl
+    public function activityId(?string $activityId): ExecutionQueryImpl
     {
         $this->activityId = $activityId;
         return $this;
     }
 
-    public function signalEventSubscription(string $signalName): ExecutionQueryInterface
+    public function signalEventSubscription(?string $signalName): ExecutionQueryInterface
     {
         return $this->eventSubscription(EventType::signal(), $signalName);
     }
 
-    public function signalEventSubscriptionName(string $signalName): ExecutionQueryInterface
+    public function signalEventSubscriptionName(?string $signalName): ExecutionQueryInterface
     {
         return $this->eventSubscription(EventType::signal(), $signalName);
     }
 
-    public function messageEventSubscriptionName(string $messageName): ExecutionQueryInterface
+    public function messageEventSubscriptionName(?string $messageName): ExecutionQueryInterface
     {
         return $this->eventSubscription(EventType::message(), $messageName);
     }
@@ -95,7 +95,7 @@ class ExecutionQueryImpl extends AbstractVariableQueryImpl implements ExecutionQ
         return $this->eventSubscription(EventType::message(), null);
     }
 
-    public function eventSubscription(EventType $eventType, string $eventName): ExecutionQueryInterface
+    public function eventSubscription(EventType $eventType, ?string $eventName): ExecutionQueryInterface
     {
         EnsureUtil::ensureNotNull("event type", "eventType", $eventType);
         if (EventType::message() != $eventType) {
@@ -121,40 +121,40 @@ class ExecutionQueryImpl extends AbstractVariableQueryImpl implements ExecutionQ
         return $this;
     }
 
-    public function processVariableValueEquals(string $variableName, $variableValue): ExecutionQueryInterface
+    public function processVariableValueEquals(?string $variableName, $variableValue): ExecutionQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::EQUALS, false);
         return $this;
     }
 
-    public function processVariableValueNotEquals(string $variableName, $variableValue): ExecutionQueryInterface
+    public function processVariableValueNotEquals(?string $variableName, $variableValue): ExecutionQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::NOT_EQUALS, false);
         return $this;
     }
 
-    public function incidentType(string $incidentType): ExecutionQueryInterface
+    public function incidentType(?string $incidentType): ExecutionQueryInterface
     {
         EnsureUtil::ensureNotNull("incident type", "incidentType", $incidentType);
         $this->incidentType = $incidentType;
         return $this;
     }
 
-    public function incidentId(string $incidentId): ExecutionQueryInterface
+    public function incidentId(?string $incidentId): ExecutionQueryInterface
     {
         EnsureUtil::ensureNotNull("incident id", "incidentId", $incidentId);
         $this->incidentId = $incidentId;
         return $this;
     }
 
-    public function incidentMessage(string $incidentMessage): ExecutionQueryInterface
+    public function incidentMessage(?string $incidentMessage): ExecutionQueryInterface
     {
         EnsureUtil::ensureNotNull("incident message", "incidentMessage", $incidentMessage);
         $this->incidentMessage = $incidentMessage;
         return $this;
     }
 
-    public function incidentMessageLike(string $incidentMessageLike): ExecutionQueryInterface
+    public function incidentMessageLike(?string $incidentMessageLike): ExecutionQueryInterface
     {
         EnsureUtil::ensureNotNull("incident messageLike", "incidentMessageLike", $incidentMessageLike);
         $this->incidentMessageLike = $incidentMessageLike;
@@ -212,7 +212,7 @@ class ExecutionQueryImpl extends AbstractVariableQueryImpl implements ExecutionQ
         ->findExecutionCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         $this->ensureVariablesInitialized();
@@ -223,22 +223,22 @@ class ExecutionQueryImpl extends AbstractVariableQueryImpl implements ExecutionQ
 
     //getters ////////////////////////////////////////////////////
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
@@ -248,12 +248,12 @@ class ExecutionQueryImpl extends AbstractVariableQueryImpl implements ExecutionQ
         return [];
     }
 
-    public function getBusinessKey(): string
+    public function getBusinessKey(): ?string
     {
         return $this->businessKey;
     }
 
-    public function getExecutionId(): string
+    public function getExecutionId(): ?string
     {
         return $this->executionId;
     }
@@ -278,22 +278,22 @@ class ExecutionQueryImpl extends AbstractVariableQueryImpl implements ExecutionQ
         $this->eventSubscriptions = $eventSubscriptions;
     }
 
-    public function getIncidentId(): string
+    public function getIncidentId(): ?string
     {
         return $this->incidentId;
     }
 
-    public function getIncidentType(): string
+    public function getIncidentType(): ?string
     {
         return $this->incidentType;
     }
 
-    public function getIncidentMessage(): string
+    public function getIncidentMessage(): ?string
     {
         return $this->incidentMessage;
     }
 
-    public function getIncidentMessageLike(): string
+    public function getIncidentMessageLike(): ?string
     {
         return $this->incidentMessageLike;
     }

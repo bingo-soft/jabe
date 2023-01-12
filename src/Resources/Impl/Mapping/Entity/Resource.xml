@@ -31,14 +31,14 @@
         CREATE_TIME_,
         REV_)
     values (
-        #{id, dbalType=VARCHAR},
-        #{name, dbalType=VARCHAR},
-        #{bytes, dbalType=BLOB},
-        #{deploymentId, dbalType=VARCHAR},
-        #{generated, dbalType=BOOLEAN},
-        #{tenantId, dbalType=VARCHAR},
-        #{type, dbalType=INTEGER},
-        #{createTime, dbalType=VARCHAR},
+        #{id:VARCHAR},
+        #{name:VARCHAR},
+        #{bytes:BLOB},
+        #{deploymentId:VARCHAR},
+        #{generated},
+        #{tenantId:VARCHAR},
+        #{type},
+        #{createTime:VARCHAR},
         1)
   </insert>
   
@@ -129,7 +129,7 @@
           ${prefix}ACT_GE_BYTEARRAY
     where
           DEPLOYMENT_ID_ = #{parameter.deploymentId}
-    <if test="parameter.resourceIds != null">
+    <if test="!empty(parameter.resourceIds)">
     and
           ID_ in
             <foreach item="resourceId"
@@ -164,7 +164,7 @@
       from ${prefix}ACT_GE_BYTEARRAY B
         inner join ${prefix}ACT_RE_DEPLOYMENT D
         on B.DEPLOYMENT_ID_ = D.ID_
-      where D.NAME_ = #{parameter.deploymentName, dbalType=VARCHAR}
+      where D.NAME_ = #{parameter.deploymentName:VARCHAR}
         and
         <if test="processApplicationSource.equals(parameter.source)">
           (D.SOURCE_ is null or
@@ -173,7 +173,7 @@
         <if test="processApplicationSource.equals(parameter.source)">
           )
         </if>
-      <if test="parameter.resourcesToFind != null and count(parameter.resourcesToFind) > 0">
+      <if test="!empty(parameter.resourcesToFind)">
         and B.NAME_ in 
         <foreach item="resourceName" index="index" collection="parameter.resourcesToFind"
                  open="(" separator="," close=")">
@@ -186,7 +186,7 @@
     inner join ${prefix}ACT_RE_DEPLOYMENT D
     on B.DEPLOYMENT_ID_ = D.ID_
     and D.DEPLOY_TIME_ = LAST_RESOURCE.DEPLOY_TIME_ 
-    and D.NAME_ = #{parameter.deploymentName, dbalType=VARCHAR}
+    and D.NAME_ = #{parameter.deploymentName:VARCHAR}
     and
     <if test="processApplicationSource.equals(parameter.source)">
       (D.SOURCE_ is null or
@@ -236,7 +236,7 @@
           <if test="count(parameter.resourceNames) == 1">
           NAME_ = #{parameter.resourceNames[0]}
           </if>
-          <if test="count(parameter.resourceNames) > 1">
+          <if test="count(parameter.resourceNames) &gt; 1">
           NAME_ in
             <foreach item="resourceName"
                       collection="parameter.resourceNames"
@@ -264,12 +264,12 @@
           ${prefix}ACT_GE_BYTEARRAY
     where
           DEPLOYMENT_ID_ = #{parameter.deploymentId}
-    <if test="parameter.resourceIds != null">
+    <if test="!empty(parameter.resourceIds)">
     and
           <if test="count(parameter.resourceIds) == 1">
           ID_ = #{parameter.resourceIds[0]}
           </if>
-          <if test="count(parameter.resourceIds) > 1">
+          <if test="count(parameter.resourceIds) &gt; 1">
           ID_ in
             <foreach item="resourceId"
                       collection="parameter.resourceIds"

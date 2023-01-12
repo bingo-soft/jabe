@@ -5,15 +5,15 @@ namespace Jabe\Impl\Core\Model;
 class PropertyMapKey
 {
     protected $name;
-    protected $allowOverwrite = true;
+    protected bool $allowOverwrite = true;
 
-    public function __construct(string $name, ?bool $allowOverwrite = true)
+    public function __construct(?string $name, ?bool $allowOverwrite = true)
     {
         $this->name = $name;
         $this->allowOverwrite = $allowOverwrite;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }

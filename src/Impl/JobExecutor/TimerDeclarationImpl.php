@@ -31,7 +31,7 @@ class TimerDeclarationImpl extends JobDeclaration
 
     protected $rawJobHandlerConfiguration;
 
-    public function __construct(?ExpressionInterface $expression, string $type, string $jobHandlerType)
+    public function __construct(?ExpressionInterface $expression, ?string $type, ?string $jobHandlerType)
     {
         parent::__construct($jobHandlerType);
         $this->description = $expression;
@@ -48,12 +48,12 @@ class TimerDeclarationImpl extends JobDeclaration
         $this->isInterruptingTimer = $isInterruptingTimer;
     }
 
-    public function getRepeat(): string
+    public function getRepeat(): ?string
     {
         return $this->repeat;
     }
 
-    public function setEventScopeActivityId(string $eventScopeActivityId): void
+    public function setEventScopeActivityId(?string $eventScopeActivityId): void
     {
         $this->eventScopeActivityId = $eventScopeActivityId;
     }
@@ -72,7 +72,7 @@ class TimerDeclarationImpl extends JobDeclaration
         return $timer;
     }
 
-    public function setRawJobHandlerConfiguration(string $rawJobHandlerConfiguration): void
+    public function setRawJobHandlerConfiguration(?string $rawJobHandlerConfiguration): void
     {
         $this->rawJobHandlerConfiguration = $rawJobHandlerConfiguration;
     }
@@ -95,7 +95,7 @@ class TimerDeclarationImpl extends JobDeclaration
         }
     }
 
-    public function resolveAndSetDuedate(ExecutionEntity $context, TimerEntity $job, bool $creationDateBased): string
+    public function resolveAndSetDuedate(ExecutionEntity $context, TimerEntity $job, bool $creationDateBased): ?string
     {
         $businessCalendar = Context::getProcessEngineConfiguration()
             ->getBusinessCalendarManager()
@@ -139,12 +139,12 @@ class TimerDeclarationImpl extends JobDeclaration
         return $dueDateString;
     }
 
-    protected function postInitialize(ExecutionEntity $execution, TimerEntity $timer): void
+    protected function postInitialize(/*ExecutionEntity*/$execution, /*TimerEntity*/$timer): void
     {
         $this->initializeConfiguration($execution, $timer);
     }
 
-    protected function prepareRepeat(string $dueDate): string
+    protected function prepareRepeat(?string $dueDate): ?string
     {
         if (str_starts_with($dueDate, "R") && count(explode("/", $dueDate)) == 2) {
             return str_replace("/", "/" . ClockUtil::getCurrentTime()->format("c")  . "/", $dueDate);
@@ -157,7 +157,7 @@ class TimerDeclarationImpl extends JobDeclaration
         return $this->createTimer($execution);
     }
 
-    public function createStartTimerInstance(string $deploymentId): TimerEntity
+    public function createStartTimerInstance(?string $deploymentId): TimerEntity
     {
         return $this->createTimer($deploymentId);
     }
@@ -201,8 +201,8 @@ class TimerDeclarationImpl extends JobDeclaration
         }
 
         $props = $scope->getProperties();
-        if (array_key_exists(BpmnProperties::TIMER_DECLARATIONS, $props)) {
-            return $props[BpmnProperties::TIMER_DECLARATIONS];
+        if ($props->contains(BpmnProperties::timerDeclarations())) {
+            return $props->get(BpmnProperties::timerDeclarations());
         } else {
             return [];
         }
@@ -218,8 +218,8 @@ class TimerDeclarationImpl extends JobDeclaration
         }
 
         $props = $scope->getProperties();
-        if (array_key_exists(BpmnProperties::TIMEOUT_LISTENER_DECLARATIONS, $props)) {
-            return $props[BpmnProperties::TIMEOUT_LISTENER_DECLARATIONS];
+        if ($props->contains(BpmnProperties::timeoutListenerDeclarations())) {
+            return $props->get(BpmnProperties::timeoutListenerDeclarations());
         } else {
             return [];
         }

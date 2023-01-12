@@ -47,7 +47,7 @@ class ExceptionUtil
      * @param type resource type of the exception
      * @return persisted entity
      */
-    public static function createExceptionByteArray(string $name, ?string $byteArray, ResourceTypeInterface $type): ?ByteArrayEntity
+    public static function createExceptionByteArray(?string $name, ?string $byteArray, ResourceTypeInterface $type): ?ByteArrayEntity
     {
         $result = null;
 
@@ -282,12 +282,12 @@ class ExceptionUtil
     {
         try {
             return $supplier();
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             throw self::wrapPersistenceException($ex);
         }
     }
 
-    public static function wrapPersistenceException(\Exception $ex): ProcessEngineException
+    public static function wrapPersistenceException(\Throwable $ex): ProcessEngineException
     {
         return new ProcessEngineException(self::PERSISTENCE_EXCEPTION_MESSAGE, $ex);
     }

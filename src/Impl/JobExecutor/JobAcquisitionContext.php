@@ -17,17 +17,17 @@ class JobAcquisitionContext
     {
     }
 
-    public function submitRejectedBatch(string $engineName, array $jobIds): void
+    public function submitRejectedBatch(?string $engineName, array $jobIds): void
     {
         CollectionUtil::addToMapOfLists($this->rejectedJobBatchesByEngine, $engineName, $jobIds);
     }
 
-    public function submitAcquiredJobs(string $engineName, AcquiredJobs $acquiredJobs): void
+    public function submitAcquiredJobs(?string $engineName, AcquiredJobs $acquiredJobs): void
     {
         $this->acquiredJobsByEngine[$engineName] = $acquiredJobs;
     }
 
-    public function submitAdditionalJobBatch(string $engineName, array $jobIds): void
+    public function submitAdditionalJobBatch(?string $engineName, array $jobIds): void
     {
         CollectionUtil::addToMapOfLists($this->additionalJobBatchesByEngine, $engineName, $jobIds);
     }

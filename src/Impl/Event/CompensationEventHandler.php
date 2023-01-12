@@ -15,7 +15,7 @@ use Jabe\Impl\Util\EnsureUtil;
 
 class CompensationEventHandler implements EventHandlerInterface
 {
-    public function getEventHandlerType(): string
+    public function getEventHandlerType(): ?string
     {
         return EventType::compensate()->name();
     }

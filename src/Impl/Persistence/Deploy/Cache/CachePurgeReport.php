@@ -18,7 +18,7 @@ class CachePurgeReport implements PurgeReporting
      */
     private $deletedCache = [];
 
-    public function addPurgeInformation(string $key, $value): void
+    public function addPurgeInformation(?string $key, $value): void
     {
         $this->deletedCache[$key] = $value;
     }
@@ -28,7 +28,7 @@ class CachePurgeReport implements PurgeReporting
         return $this->deletedCache;
     }
 
-    public function getPurgeReportAsString(): string
+    public function getPurgeReportAsString(): ?string
     {
         $builder = "";
         foreach ($this->deletedCache as $key => $value) {
@@ -39,7 +39,7 @@ class CachePurgeReport implements PurgeReporting
         return $builder;
     }
 
-    public function getReportValue(string $key)
+    public function getReportValue(?string $key)
     {
         if (array_key_exists($key, $this->deletedCache)) {
             return $this->deletedCache[$key];
@@ -47,7 +47,7 @@ class CachePurgeReport implements PurgeReporting
         return [];
     }
 
-    public function containsReport(string $key): bool
+    public function containsReport(?string $key): bool
     {
         return array_key_exists($key, $this->deletedCache);
     }

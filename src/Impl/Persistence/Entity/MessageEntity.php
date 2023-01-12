@@ -15,12 +15,12 @@ class MessageEntity extends JobEntity
         return $this->repeat;
     }
 
-    public function setRepeat(string $repeat): void
+    public function setRepeat(?string $repeat): void
     {
         $this->repeat = $repeat;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return self::TYPE;
     }

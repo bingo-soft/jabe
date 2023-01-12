@@ -9,25 +9,25 @@ interface HistoricVariableInstanceQueryInterface extends QueryInterface
     /** Only select the variable with the given Id
      * @param id of the variable to select
      * @return HistoricVariableInstanceQueryInterface the query object */
-    public function variableId(string $id): HistoricVariableInstanceQueryInterface;
+    public function variableId(?string $id): HistoricVariableInstanceQueryInterface;
 
     /** Only select historic process variables with the given process instance. */
-    public function processInstanceId(string $processInstanceId): HistoricVariableInstanceQueryInterface;
+    public function processInstanceId(?string $processInstanceId): HistoricVariableInstanceQueryInterface;
 
     /** Only select historic process variables for the given process definition */
-    public function processDefinitionId(string $processDefinitionId): HistoricVariableInstanceQueryInterface;
+    public function processDefinitionId(?string $processDefinitionId): HistoricVariableInstanceQueryInterface;
 
     /** Only select historic process variables for the given process definition key */
-    public function processDefinitionKey(string $processDefinitionKey): HistoricVariableInstanceQueryInterface;
+    public function processDefinitionKey(?string $processDefinitionKey): HistoricVariableInstanceQueryInterface;
 
     /** Only select historic case variables with the given case instance. */
-    //public function caseInstanceId(string $caseInstanceId): HistoricVariableInstanceQueryInterface;
+    //public function caseInstanceId(?string $caseInstanceId): HistoricVariableInstanceQueryInterface;
 
     /** Only select historic process variables with the given variable name. */
-    public function variableName(string $variableName): HistoricVariableInstanceQueryInterface;
+    public function variableName(?string $variableName): HistoricVariableInstanceQueryInterface;
 
     /** Only select historic process variables where the given variable name is like. */
-    public function variableNameLike(string $variableNameLike): HistoricVariableInstanceQueryInterface;
+    public function variableNameLike(?string $variableNameLike): HistoricVariableInstanceQueryInterface;
 
     /** Only select historic process variables which match one of the given variable types. */
     public function variableTypeIn(array $variableTypes): HistoricVariableInstanceQueryInterface;
@@ -39,7 +39,7 @@ interface HistoricVariableInstanceQueryInterface extends QueryInterface
     public function matchVariableValuesIgnoreCase(): HistoricVariableInstanceQueryInterface;
 
     /** only select historic process variables with the given name and value */
-    public function variableValueEquals(string $variableName, $variableValue): HistoricVariableInstanceQueryInterface;
+    public function variableValueEquals(?string $variableName, $variableValue): HistoricVariableInstanceQueryInterface;
 
     public function orderByProcessInstanceId(): HistoricVariableInstanceQueryInterface;
 

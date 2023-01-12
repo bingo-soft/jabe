@@ -17,7 +17,7 @@ class DeleteDeploymentFailCmd extends AbstractCommand
     private $deploymentId;
     private $processApplicationReference;
 
-    public function __construct(string $deploymentId, ProcessApplicationReferenceInterface $processApplicationReference)
+    public function __construct(?string $deploymentId, ?ProcessApplicationReferenceInterface $processApplicationReference)
     {
         $this->deploymentId = $deploymentId;
         $this->processApplicationReference = $processApplicationReference;

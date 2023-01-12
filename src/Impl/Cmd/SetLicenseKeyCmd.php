@@ -14,7 +14,7 @@ class SetLicenseKeyCmd extends LicenseCmd implements CommandInterface
 {
     protected $licenseKey;
 
-    public function __construct(string $licenseKey)
+    public function __construct(?string $licenseKey)
     {
         $this->licenseKey = $licenseKey;
     }
@@ -59,5 +59,10 @@ class SetLicenseKeyCmd extends LicenseCmd implements CommandInterface
         }
 
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

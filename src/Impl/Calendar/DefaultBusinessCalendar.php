@@ -6,7 +6,7 @@ use Jabe\Impl\Util\ClockUtil;
 
 class DefaultBusinessCalendar implements BusinessCalendarInterface
 {
-    public function resolveDuedate(string $duedateDescription, $startDate = null, int $repeatOffset = 0): ?\DateTime
+    public function resolveDuedate(?string $duedateDescription, $startDate = null, int $repeatOffset = 0): ?\DateTime
     {
         if (is_string($startDate)) {
             $startDate = new \DateTime($startDate);

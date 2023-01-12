@@ -108,7 +108,7 @@ class HtmlFormEngine implements FormEngineInterface
     protected const TYPE_FIELD_MESSAGE = "Only a %s value is allowed";
     protected const INVALID_DATE_FIELD_MESSAGE = "Invalid date format: the date should have the pattern '" . self::DATE_FORMAT . "'";
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return "html";
     }
@@ -123,7 +123,7 @@ class HtmlFormEngine implements FormEngineInterface
         return $this->renderFormData($taskForm);
     }
 
-    protected function renderFormData(FormDataInterface $formData): string
+    protected function renderFormData(FormDataInterface $formData): ?string
     {
         if (
             $formData === null
@@ -324,7 +324,7 @@ class HtmlFormEngine implements FormEngineInterface
                 ->attribute(self::VALUE_ATTRIBUTE, $key)
                 ->textContent($value);
 
-            $documentBuilder->startElement(option)->endElement();
+            $documentBuilder->startElement($option)->endElement();
         }
     }
 

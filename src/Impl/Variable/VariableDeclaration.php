@@ -19,7 +19,7 @@ class VariableDeclaration implements \Serializable
     protected $link;
     protected $linkExpression;
 
-    public function __construct(string $name, string $type)
+    public function __construct(?string $name, ?string $type)
     {
         $this->name = $name;
         $this->type = $type;
@@ -114,22 +114,22 @@ class VariableDeclaration implements \Serializable
         $this->type = $json->type;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function setType(string $type): void
+    public function setType(?string $type): void
     {
         $this->type = $type;
     }
@@ -139,7 +139,7 @@ class VariableDeclaration implements \Serializable
         return $this->sourceVariableName;
     }
 
-    public function setSourceVariableName(string $sourceVariableName): void
+    public function setSourceVariableName(?string $sourceVariableName): void
     {
         $this->sourceVariableName = $sourceVariableName;
     }
@@ -159,7 +159,7 @@ class VariableDeclaration implements \Serializable
         return $this->destinationVariableName;
     }
 
-    public function setDestinationVariableName(string $destinationVariableName): void
+    public function setDestinationVariableName(?string $destinationVariableName): void
     {
         $this->destinationVariableName = $destinationVariableName;
     }
@@ -179,7 +179,7 @@ class VariableDeclaration implements \Serializable
         return $this->link;
     }
 
-    public function setLink(string $link): void
+    public function setLink(?string $link): void
     {
         $this->link = $link;
     }

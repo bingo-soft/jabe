@@ -76,7 +76,7 @@ class JobQueryProperty
         if (self::$TYPE === null) {
             self::$TYPE = new QueryPropertyImpl("TYPE_");
         }
-        return self::$RETRIES;
+        return self::$TYPE;
     }
 
     public static function priority(): QueryPropertyImpl

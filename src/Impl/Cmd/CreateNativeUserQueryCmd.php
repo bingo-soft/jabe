@@ -13,4 +13,9 @@ class CreateNativeUserQueryCmd implements CommandInterface
     {
         return $commandContext->getReadOnlyIdentityProvider()->createNativeUserQuery();
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

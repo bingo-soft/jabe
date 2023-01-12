@@ -12,7 +12,7 @@ class CreateTaskCmd implements CommandInterface
 {
     protected $taskId;
 
-    public function __construct(string $taskId)
+    public function __construct(?string $taskId)
     {
         $this->taskId = $taskId;
     }
@@ -29,5 +29,10 @@ class CreateTaskCmd implements CommandInterface
         foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
             $checker->checkCreateTask();
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

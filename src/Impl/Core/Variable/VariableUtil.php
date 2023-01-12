@@ -64,7 +64,7 @@ class VariableUtil
         return false;
     }
 
-    public static function checkPhpSerialization(string $variableName, TypedValueInterface $value)
+    public static function checkPhpSerialization(?string $variableName, TypedValueInterface $value)
     {
         if (self::isPhpSerializationProhibited($value)) {
             //throw CORE_LOGGER.javaSerializationProhibitedException(variableName);
@@ -89,24 +89,24 @@ class VariableUtil
         }
     }
 
-    public static function setVariablesByBatchId(&$variables, string $batchId): void
+    public static function setVariablesByBatchId(&$variables, ?string $batchId): void
     {
         self::setVariables($variables, new class ($batchId) implements SetVariableFunctionInterface {
             private $batchId;
 
-            public function __construct(string $batchId)
+            public function __construct(?string $batchId)
             {
                 $this->batchId = $batchId;
             }
 
-            public function apply(string $variableName, $variableValue): void
+            public function apply(?string $variableName, $variableValue): void
             {
                 VariableUtil::setVariableByBatchId($this->batchId, $variableName, $variableValue);
             }
         });
     }
 
-    public static function setVariableByBatchId(string $batchId, string $variableName, $variableValue): void
+    public static function setVariableByBatchId(?string $batchId, ?string $variableName, $variableValue): void
     {
         $variableTypedValue = Variables::untypedValue($variableValue);
 
@@ -123,7 +123,7 @@ class VariableUtil
         $variableInstance->setBatchId($batchId);
     }
 
-    public static function findBatchVariablesSerialized(string $batchId, CommandContext $commandContext): array
+    public static function findBatchVariablesSerialized(?string $batchId, CommandContext $commandContext): array
     {
         $variableInstances = $commandContext->getVariableInstanceManager()->findVariableInstancesByBatchId($batchId);
         $result = [];

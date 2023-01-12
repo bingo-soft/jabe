@@ -15,7 +15,7 @@ class VariableScopeLocalAdapter implements VariableScopeInterface
         $this->wrappedScope = $wrappedScope;
     }
 
-    public function getVariableScopeKey(): string
+    public function getVariableScopeKey(): ?string
     {
         return $this->wrappedScope->getVariableScopeKey();
     }
@@ -40,22 +40,22 @@ class VariableScopeLocalAdapter implements VariableScopeInterface
         return $this->wrappedScope->getVariablesLocalTyped($deserializeValues);
     }
 
-    public function getVariable(string $variableName)
+    public function getVariable(?string $variableName)
     {
         return $this->getVariableLocal($variableName);
     }
 
-    public function getVariableLocal(string $variableName)
+    public function getVariableLocal(?string $variableName)
     {
         return $this->wrappedScope->getVariableLocal($variableName);
     }
 
-    public function getVariableTyped(string $variableName, ?bool $deserializeValue = null): ?TypedValueInterface
+    public function getVariableTyped(?string $variableName, ?bool $deserializeValue = null): ?TypedValueInterface
     {
         return $this->getVariableLocalTyped($variableName, $deserializeValue);
     }
 
-    public function getVariableLocalTyped(string $variableName, ?bool $deserializeValue = null): ?TypedValueInterface
+    public function getVariableLocalTyped(?string $variableName, ?bool $deserializeValue = null): ?TypedValueInterface
     {
         return $this->wrappedScope->getVariableLocalTyped($variableName, $deserializeValue);
     }
@@ -70,12 +70,12 @@ class VariableScopeLocalAdapter implements VariableScopeInterface
         return $this->wrappedScope->getVariableNamesLocal();
     }
 
-    public function setVariable(string $variableName, $value): void
+    public function setVariable(?string $variableName, $value): void
     {
         $this->setVariableLocal($variableName, $value);
     }
 
-    public function setVariableLocal(string $variableName, $value): void
+    public function setVariableLocal(?string $variableName, $value): void
     {
         $this->wrappedScope->setVariableLocal($variableName, $value);
     }
@@ -100,22 +100,22 @@ class VariableScopeLocalAdapter implements VariableScopeInterface
         return $this->wrappedScope->hasVariablesLocal();
     }
 
-    public function hasVariable(string $variableName): bool
+    public function hasVariable(?string $variableName): bool
     {
         return $this->hasVariableLocal($variableName);
     }
 
-    public function hasVariableLocal(string $variableName): bool
+    public function hasVariableLocal(?string $variableName): bool
     {
         return $this->wrappedScope->hasVariableLocal($variableName);
     }
 
-    public function removeVariable(string $variableName): void
+    public function removeVariable(?string $variableName): void
     {
         $this->removeVariableLocal($variableName);
     }
 
-    public function removeVariableLocal(string $variableName): void
+    public function removeVariableLocal(?string $variableName): void
     {
         $this->wrappedScope->removeVariableLocal($variableName);
     }

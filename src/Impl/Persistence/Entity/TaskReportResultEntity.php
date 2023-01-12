@@ -24,42 +24,42 @@ class TaskReportResultEntity implements HistoricTaskInstanceReportResultInterfac
         $this->count = $count;
     }
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }
 
-    public function setProcessDefinitionKey(string $processDefinitionKey): void
+    public function setProcessDefinitionKey(?string $processDefinitionKey): void
     {
         $this->processDefinitionKey = $processDefinitionKey;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function setProcessDefinitionId(string $processDefinitionId): void
+    public function setProcessDefinitionId(?string $processDefinitionId): void
     {
         $this->processDefinitionId = $processDefinitionId;
     }
 
-    public function getProcessDefinitionName(): string
+    public function getProcessDefinitionName(): ?string
     {
         return $this->processDefinitionName;
     }
 
-    public function setProcessDefinitionName(string $processDefinitionName): void
+    public function setProcessDefinitionName(?string $processDefinitionName): void
     {
         $this->processDefinitionName = $processDefinitionName;
     }
 
-    public function getTaskName(): string
+    public function getTaskName(): ?string
     {
         return $this->taskName;
     }
 
-    public function setTaskName(string $taskName): void
+    public function setTaskName(?string $taskName): void
     {
         $this->taskName = $taskName;
     }

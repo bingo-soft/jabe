@@ -8,7 +8,7 @@ use Jabe\Impl\Core\Instance\CoreExecution;
 
 class PvmAtomicOperationFireActivityEnd extends AbstractPvmEventAtomicOperation
 {
-    public function getCanonicalName(): string
+    public function getCanonicalName(): ?string
     {
         return "fire-activity-end";
     }
@@ -18,7 +18,7 @@ class PvmAtomicOperationFireActivityEnd extends AbstractPvmEventAtomicOperation
         return $execution->getActivity();
     }
 
-    protected function getEventName(): string
+    protected function getEventName(): ?string
     {
         return ExecutionListenerInterface::EVENTNAME_END;
     }

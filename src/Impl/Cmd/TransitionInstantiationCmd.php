@@ -13,7 +13,7 @@ class TransitionInstantiationCmd extends AbstractInstantiationCmd
 {
     protected $transitionId;
 
-    public function __construct(?string $processInstanceId, string $transitionId, ?string $ancestorActivityInstanceId = null)
+    public function __construct(?string $processInstanceId, ?string $transitionId, ?string $ancestorActivityInstanceId = null)
     {
         parent::__construct($processInstanceId, $ancestorActivityInstanceId);
         $this->transitionId = $transitionId;
@@ -31,12 +31,12 @@ class TransitionInstantiationCmd extends AbstractInstantiationCmd
         return $transition;
     }
 
-    public function getTargetElementId(): string
+    public function getTargetElementId(): ?string
     {
         return $this->transitionId;
     }
 
-    protected function describe(): string
+    protected function describe(): ?string
     {
         $sb = "";
         $sb .= "Start transition '";

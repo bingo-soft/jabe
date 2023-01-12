@@ -21,12 +21,12 @@ class EmptyVariableContext implements VariableContextInterface
     {
     }
 
-    public function resolve(string $variableName): ?TypedValueInterface
+    public function resolve(?string $variableName): ?TypedValueInterface
     {
         return null;
     }
 
-    public function containsVariable(string $variableName): bool
+    public function containsVariable(?string $variableName): bool
     {
         return false;
     }

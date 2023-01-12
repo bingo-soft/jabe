@@ -89,7 +89,7 @@ class TimerEntity extends JobEntity
         return new RepeatingFailedJobListener($commandExecutor, $this->getId());
     }
 
-    public function createNewTimerJob(string $dueDate): void
+    public function createNewTimerJob(?string $dueDate): void
     {
         // create new timer job
         $newTimer = new TimerEntity($this);
@@ -99,7 +99,7 @@ class TimerEntity extends JobEntity
             ->schedule($newTimer);
     }
 
-    public function calculateRepeat(): string
+    public function calculateRepeat(): ?string
     {
         $businessCalendar = Context::getProcessEngineConfiguration()
             ->getBusinessCalendarManager()
@@ -107,12 +107,12 @@ class TimerEntity extends JobEntity
         return $businessCalendar->resolveDuedate($this->repeat, null, $this->repeatOffset);
     }
 
-    public function getRepeat(): string
+    public function getRepeat(): ?string
     {
         return $this->repeat;
     }
 
-    public function setRepeat(string $repeat): void
+    public function setRepeat(?string $repeat): void
     {
         $this->repeat = $repeat;
     }
@@ -127,7 +127,7 @@ class TimerEntity extends JobEntity
         $this->repeatOffset = $repeatOffset;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return self::TYPE;
     }

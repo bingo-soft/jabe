@@ -14,18 +14,18 @@ abstract class AbstractSerializableValueSerializer extends AbstractTypedValueSer
 {
     protected $serializationDataFormat;
 
-    public function __construct(SerializableValueTypeInterface $type, string $serializationDataFormat)
+    public function __construct(SerializableValueTypeInterface $type, ?string $serializationDataFormat)
     {
-        parebt::__construct($type);
+        parent::__construct($type);
         $this->serializationDataFormat = $serializationDataFormat;
     }
 
-    public function getSerializationDataformat(): string
+    public function getSerializationDataformat(): ?string
     {
         return $this->serializationDataFormat;
     }
 
-    public function writeValue(SerializableValueInterface $value, ValueFieldsInterface $valueFields): void
+    public function writeValue($value, ValueFieldsInterface $valueFields): void
     {
         $serializedStringValue = $value->getValueSerialized();
         $serializedByteValue = null;
@@ -75,15 +75,15 @@ abstract class AbstractSerializableValueSerializer extends AbstractTypedValueSer
         }
     }
 
-    abstract protected function createDeserializedValue($deserializedObject, string $serializedStringValue, ValueFieldsInterface $valueFields, bool $asTransientValue): SerializableValueInterface;
+    abstract protected function createDeserializedValue($deserializedObject, ?string $serializedStringValue, ValueFieldsInterface $valueFields, bool $asTransientValue): SerializableValueInterface;
 
-    abstract protected function createSerializedValue(string $serializedStringValue, ValueFieldsInterface $valueFields, bool $asTransientValue): SerializableValueInterface;
+    abstract protected function createSerializedValue(?string $serializedStringValue, ValueFieldsInterface $valueFields, bool $asTransientValue): SerializableValueInterface;
 
-    abstract protected function writeToValueFields(SerializableValueInterface $value, ValueFieldsInterface $valueFields, string $serializedValue): void;
+    abstract protected function writeToValueFields(/*SerializableValueInterface*/$value, ValueFieldsInterface $valueFields, ?string $serializedValue): void;
 
-    abstract protected function updateTypedValue(SerializableValueInterface $value, string $serializedStringValue): void;
+    abstract protected function updateTypedValue(/*SerializableValueInterface*/$value, ?string $serializedStringValue): void;
 
-    protected function readSerializedValueFromFields(ValueFieldsInterface $valueFields): string
+    protected function readSerializedValueFromFields(ValueFieldsInterface $valueFields): ?string
     {
         return $valueFields->getByteArrayValue();
     }
@@ -127,7 +127,7 @@ abstract class AbstractSerializableValueSerializer extends AbstractTypedValueSer
      * @return string the byte array value of the object
      * @throws exception in case the object cannot be serialized
      */
-    abstract protected function serializeToByteArray($deserializedObject): string;
+    abstract protected function serializeToByteArray($deserializedObject): ?string;
 
     /**
      * Deserialize the object from a byte array.
@@ -137,7 +137,7 @@ abstract class AbstractSerializableValueSerializer extends AbstractTypedValueSer
      * @return mixed the deserialized object
      * @throws exception in case the object cannot be deserialized
      */
-    abstract protected function deserializeFromByteArray(string $object, ValueFieldsInterface $valueFields);
+    abstract protected function deserializeFromByteArray(?string $object, /*ValueFieldsInterface*/$valueFields);
 
     /**
      * Return true if the serialization is text based. Return false otherwise

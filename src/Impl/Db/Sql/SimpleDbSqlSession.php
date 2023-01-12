@@ -16,14 +16,14 @@ use Jabe\Impl\Util\EnsureUtil;
 
 class SimpleDbSqlSession extends DbSqlSession
 {
-    public function __construct(DbSqlSessionFactory $dbSqlSessionFactory, Connection $connection = null, string $catalog = null, string $schema = null)
+    public function __construct(DbSqlSessionFactory $dbSqlSessionFactory, Connection $connection = null, ?string $catalog = null, ?string $schema = null)
     {
         parent::__construct($dbSqlSessionFactory, $connection, $catalog, $schema);
     }
 
     // lock ////////////////////////////////////////////
 
-    protected function executeSelectForUpdate(string $statement, array $parameters = []): void
+    protected function executeSelectForUpdate(?string $statement, $parameters = null): void
     {
         $this->update($statement, $parameters);
     }
@@ -32,9 +32,10 @@ class SimpleDbSqlSession extends DbSqlSession
     {
         for ($i = 0; $i < count($operations); $i += 1) {
             $operation = $operations[$i];
-
+        }
+        for ($i = 0; $i < count($operations); $i += 1) {
+            $operation = $operations[$i];
             $this->executeDbOperation($operation);
-
             if ($operation->isFailed()) {
                 $remainingOperations = array_slice($operations, $i + 1, count($operations));
                 return FlushResult::withFailuresAndRemaining([$operation], $remainingOperations);

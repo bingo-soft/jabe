@@ -20,7 +20,7 @@ class ClassDelegateExecutionListener extends ClassDelegate implements ExecutionL
 {
     //protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
-    public function __construct(string $className, array $fieldDeclarations)
+    public function __construct(?string $className, array $fieldDeclarations)
     {
         parent::__construct($className, $fieldDeclarations);
     }

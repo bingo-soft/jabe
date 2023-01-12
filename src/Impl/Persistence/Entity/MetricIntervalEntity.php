@@ -16,7 +16,7 @@ class MetricIntervalEntity implements MetricIntervalValueInterface, DbEntityInte
 
     protected $value;
 
-    public function __construct(string $timestamp, string $name, string $reporter)
+    public function __construct(?string $timestamp, ?string $name, ?string $reporter)
     {
         $this->timestamp = $timestamp;
         $this->name = $name;
@@ -44,32 +44,32 @@ class MetricIntervalEntity implements MetricIntervalValueInterface, DbEntityInte
         $this->timestamp = $json->timestamp;
     }
 
-    public function getTimestamp(): string
+    public function getTimestamp(): ?string
     {
         return $this->timestamp;
     }
 
-    public function setTimestamp(string $timestamp): void
+    public function setTimestamp(?string $timestamp): void
     {
         $this->timestamp = $timestamp;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return MetricsUtil::resolvePublicName($this->name);
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    public function getReporter(): string
+    public function getReporter(): ?string
     {
         return $this->reporter;
     }
 
-    public function setReporter(string $reporter): void
+    public function setReporter(?string $reporter): void
     {
         $this->reporter = $reporter;
     }
@@ -89,7 +89,7 @@ class MetricIntervalEntity implements MetricIntervalValueInterface, DbEntityInte
         return $this->name . $this->reporter . $this->timestamp;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         throw new \Exception("Not supported yet.");
     }

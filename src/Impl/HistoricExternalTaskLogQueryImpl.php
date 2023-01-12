@@ -43,35 +43,35 @@ class HistoricExternalTaskLogQueryImpl extends AbstractQuery implements Historic
 
     // query parameter ////////////////////////////////////////////
 
-    public function logId(string $historicExternalTaskLogId): HistoricExternalTaskLogQueryInterface
+    public function logId(?string $historicExternalTaskLogId): HistoricExternalTaskLogQueryInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "historicExternalTaskLogId", $historicExternalTaskLogId);
         $this->id = $historicExternalTaskLogId;
         return $this;
     }
 
-    public function externalTaskId(string $externalTaskId): HistoricExternalTaskLogQueryInterface
+    public function externalTaskId(?string $externalTaskId): HistoricExternalTaskLogQueryInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "externalTaskId", $externalTaskId);
         $this->externalTaskId = $externalTaskId;
         return $this;
     }
 
-    public function topicName(string $topicName): HistoricExternalTaskLogQueryInterface
+    public function topicName(?string $topicName): HistoricExternalTaskLogQueryInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "topicName", $topicName);
         $this->topicName = $topicName;
         return $this;
     }
 
-    public function workerId(string $workerId): HistoricExternalTaskLogQueryInterface
+    public function workerId(?string $workerId): HistoricExternalTaskLogQueryInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "workerId", $workerId);
         $this->workerId = $workerId;
         return $this;
     }
 
-    public function errorMessage(string $errorMessage): HistoricExternalTaskLogQueryInterface
+    public function errorMessage(?string $errorMessage): HistoricExternalTaskLogQueryInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "errorMessage", $errorMessage);
         $this->errorMessage = $errorMessage;
@@ -108,21 +108,21 @@ class HistoricExternalTaskLogQueryImpl extends AbstractQuery implements Historic
         return $this;
     }
 
-    public function processInstanceId(string $processInstanceId): HistoricExternalTaskLogQueryInterface
+    public function processInstanceId(?string $processInstanceId): HistoricExternalTaskLogQueryInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "processInstanceId", $processInstanceId);
         $this->processInstanceId = $processInstanceId;
         return $this;
     }
 
-    public function processDefinitionId(string $processDefinitionId): HistoricExternalTaskLogQueryInterface
+    public function processDefinitionId(?string $processDefinitionId): HistoricExternalTaskLogQueryInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "processDefinitionId", $processDefinitionId);
         $this->processDefinitionId = $processDefinitionId;
         return $this;
     }
 
-    public function processDefinitionKey(string $processDefinitionKey): HistoricExternalTaskLogQueryInterface
+    public function processDefinitionKey(?string $processDefinitionKey): HistoricExternalTaskLogQueryInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "processDefinitionKey", $processDefinitionKey);
         $this->processDefinitionKey = $processDefinitionKey;
@@ -270,7 +270,7 @@ class HistoricExternalTaskLogQueryImpl extends AbstractQuery implements Historic
             ->findHistoricExternalTaskLogsCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         return $commandContext

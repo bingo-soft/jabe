@@ -53,12 +53,12 @@ class BootstrapEngineCommand implements ProcessEngineBootstrapCommandInterface
             // CAM-9671: avoid transaction rollback due to the OLE being caught in CommandContext#close
             $commandContext->getDbEntityManager()->registerOptimisticLockingListener(new class () implements OptimisticLockingListenerInterface {
 
-                public function getEntityType(): string
+                public function getEntityType(): ?string
                 {
                     return EverLivingJobEntityInterface::class;
                 }
 
-                public function failedOperation(DbOperation $operation): string
+                public function failedOperation(DbOperation $operation): ?string
                 {
 
                     // nothing to do, reconfiguration will be handled later on

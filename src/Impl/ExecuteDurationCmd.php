@@ -21,4 +21,9 @@ class ExecuteDurationCmd implements CommandInterface
     {
         return $this->scope->executeDuration($commandContext);
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

@@ -21,27 +21,31 @@ interface AuthorizationInterface
 
     public function isEveryPermissionRevoked(): bool;
 
-    public function getPermissions(): array;
+    public function getPermissions(): int;
 
-    public function setPermissions(array $permissions): void;
+    public function getPermissionsFromSupplied(array $permissions = []): array;
 
-    public function getId(): string;
+    public function setPermissions(int $permissions): void;
 
-    public function setResourceId(string $resourceId): void;
+    public function setPermissionsFromSupplied(array $permissions): void;
 
-    public function getResourceId(): string;
+    public function getId(): ?string;
 
-    public function setUserId(string $userId): void;
+    public function setResourceId(?string $resourceId): void;
 
-    public function getUserId(): string;
+    public function getResourceId(): ?string;
 
-    public function setGroupId(string $groupId): void;
+    public function setUserId(?string $userId): void;
 
-    public function getGroupId(): string;
+    public function getUserId(): ?string;
+
+    public function setGroupId(?string $groupId): void;
+
+    public function getGroupId(): ?string;
 
     public function getAuthorizationType(): int;
 
-    public function getRemovalTime(): string;
+    public function getRemovalTime(): ?string;
 
-    public function getRootProcessInstanceId(): string;
+    public function getRootProcessInstanceId(): ?string;
 }

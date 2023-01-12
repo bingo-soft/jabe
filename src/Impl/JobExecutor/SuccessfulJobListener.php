@@ -24,4 +24,9 @@ class SuccessfulJobListener implements CommandInterface
             ->markOccurrence(Metrics::JOB_SUCCESSFUL);
         }
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

@@ -118,6 +118,18 @@ class SetRemovalTimeToHistoricProcessInstancesCmd implements CommandInterface
         $propertyChanges[] = new PropertyChange("async", null, true);
 
         $commandContext->getOperationLogManager()
-            ->logProcessInstanceOperation(UserOperationLogEntryInterface::OPERATION_TYPE_SET_REMOVAL_TIME, $propertyChanges);
+            ->logProcessInstanceOperation(
+                UserOperationLogEntryInterface::OPERATION_TYPE_SET_REMOVAL_TIME,
+                null,
+                null,
+                null,
+                $propertyChanges,
+                null
+            );
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

@@ -14,7 +14,7 @@ use Jabe\Impl\Pvm\{
 
 abstract class ScopeImpl extends CoreActivity implements PvmScopeInterface
 {
-    protected $isSubProcessScope = false;
+    protected bool $isSubProcessScope = false;
 
     /** The activities for which the flow scope is this scope  */
     protected $flowActivities = [];
@@ -25,18 +25,18 @@ abstract class ScopeImpl extends CoreActivity implements PvmScopeInterface
 
     protected $processDefinition;
 
-    public function __construct(string $id, ProcessDefinitionImpl $processDefinition)
+    public function __construct(?string $id, ?ProcessDefinitionImpl $processDefinition)
     {
         parent::__construct($id);
         $this->processDefinition = $processDefinition;
     }
 
-    public function findActivity(string $activityId): ?ActivityImpl
+    public function findActivity(?string $activityId): ?ActivityImpl
     {
         return parent::findActivity($activityId);
     }
 
-    public function findTransition(string $transitionId): ?TransitionImpl
+    public function findTransition(?string $transitionId): ?TransitionImpl
     {
         foreach ($this->flowActivities as $childActivity) {
             foreach ($childActivity->getOutgoingTransitions() as $transition) {
@@ -56,7 +56,7 @@ abstract class ScopeImpl extends CoreActivity implements PvmScopeInterface
         return null;
     }
 
-    public function findActivityAtLevelOfSubprocess(string $activityId): ?ActivityImpl
+    public function findActivityAtLevelOfSubprocess(?string $activityId): ?ActivityImpl
     {
         if (!$this->isSubProcessScope()) {
             throw new ProcessEngineException("This is not a sub process scope.");
@@ -69,7 +69,7 @@ abstract class ScopeImpl extends CoreActivity implements PvmScopeInterface
     }
 
     /** searches for the activity locally */
-    public function getChildActivity(string $activityId): ?ActivityImpl
+    public function getChildActivity(?string $activityId): ?ActivityImpl
     {
         if (array_key_exists($activityId, $this->namedFlowActivities)) {
             return $this->namedFlowActivities[$activityId];
@@ -110,12 +110,12 @@ abstract class ScopeImpl extends CoreActivity implements PvmScopeInterface
      * @param activityRef the activity reference which is not read until now
      * @param callback the error callback which should called if activity will not be read
      */
-    public function addToBacklog(string $activityRef, BacklogErrorCallbackInterface $callback): void
+    public function addToBacklog(?string $activityRef, BacklogErrorCallbackInterface $callback): void
     {
         $this->BACKLOG[$activityRef] = $callback;
     }
 
-    public function createActivity(string $activityId): ActivityImpl
+    public function createActivity(?string $activityId = null): ActivityImpl
     {
         $activity = new ActivityImpl($activityId, $this->processDefinition);
         if ($activityId !== null) {
@@ -167,7 +167,7 @@ abstract class ScopeImpl extends CoreActivity implements PvmScopeInterface
         return parent::getListeners($eventName);
     }
 
-    public function addExecutionListener(string $eventName, ExecutionListenerInterface $executionListener, ?int $index = -1): void
+    public function addExecutionListener(?string $eventName, ExecutionListenerInterface $executionListener, ?int $index = -1): void
     {
         parent::addListener($eventName, $executionListener, $index);
     }

@@ -3,6 +3,8 @@
 namespace Jabe\Impl\Persistence\Entity;
 
 use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface,
     Permissions,
     Resources
 };
@@ -24,7 +26,7 @@ use Jabe\Management\{
 
 class StatisticsManager extends AbstractManager
 {
-    public function getStatisticsGroupedByProcessDefinitionVersion(ProcessDefinitionStatisticsQueryImpl $query, Page $page): array
+    public function getStatisticsGroupedByProcessDefinitionVersion(ProcessDefinitionStatisticsQueryImpl $query, ?Page $page): array
     {
         $this->configureQuery($query);
         return $this->getDbEntityManager()->selectList("selectProcessDefinitionStatistics", $query, $page);
@@ -36,7 +38,7 @@ class StatisticsManager extends AbstractManager
         return $this->getDbEntityManager()->selectOne("selectProcessDefinitionStatisticsCount", $query);
     }
 
-    public function getStatisticsGroupedByActivity(ActivityStatisticsQueryImpl $query, Page $page): array
+    public function getStatisticsGroupedByActivity(ActivityStatisticsQueryImpl $query, ?Page $page): array
     {
         $this->configureQuery($query);
         return $this->getDbEntityManager()->selectList("selectActivityStatistics", $query, $page);
@@ -48,7 +50,7 @@ class StatisticsManager extends AbstractManager
         return $this->getDbEntityManager()->selectOne("selectActivityStatisticsCount", $query);
     }
 
-    public function getStatisticsGroupedByDeployment(DeploymentStatisticsQueryImpl $query, Page $page): array
+    public function getStatisticsGroupedByDeployment(DeploymentStatisticsQueryImpl $query, ?Page $page): array
     {
         $this->configureQuery($query);
         return $this->getDbEntityManager()->selectList("selectDeploymentStatistics", $query, $page);
@@ -60,7 +62,7 @@ class StatisticsManager extends AbstractManager
         return $this->getDbEntityManager()->selectOne("selectDeploymentStatisticsCount", $query);
     }
 
-    public function getStatisticsGroupedByBatch(BatchStatisticsQueryImpl $query, Page $page): array
+    public function getStatisticsGroupedByBatch(BatchStatisticsQueryImpl $query, ?Page $page): array
     {
         $this->configureQuery($query);
         return $this->getDbEntityManager()->selectList("selectBatchStatistics", $query, $page);
@@ -78,7 +80,7 @@ class StatisticsManager extends AbstractManager
         $this->getTenantManager()->configureQuery($query);
     }*/
 
-    protected function configureQuery($query): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         if ($query instanceof ActivityStatisticsQueryImpl) {
             $this->checkReadProcessDefinition($query);

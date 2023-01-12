@@ -6,62 +6,82 @@ use Jabe\Impl\Db\{
     DbEntityInterface,
     HasDbReferencesInterface
 };
+use Jabe\Impl\Db\EntityManager\Operation\Comparator\{
+    DbBulkOperationComparator,
+    DbEntityOperationComparator,
+    EntityTypeComparatorForInserts,
+    EntityTypeComparatorForModifications,
+    TreeMap,
+    TreeSet
+};
 
 class DbOperationManager
 {
     // comparators ////////////////
 
-    public $inserts = [];
+    public static $insertTypeComparator;
+    public static $modificationTypeComparator;
+    public static $insertOperationComparator;
+    public static $modificationOperationComparator;
+    public static $bulkOperationComparator;
+
+    public $inserts;
 
     /** UPDATEs of a single entity */
-    public $updates = [];
+    public $updates;
 
     /** DELETEs of a single entity */
-    public $deletes = [];
+    public $deletes;
 
     /** bulk modifications (DELETE, UPDATE) on an entity collection */
-    public $bulkOperations = [];
+    public $bulkOperations;
 
     /** bulk modifications (DELETE, UPDATE) for which order of execution is important */
     public $bulkOperationsInsertionOrder = [];
 
-    public function addOperation(DbEntityOperation $newOperation): bool
+    public function __construct()
     {
-        $clazz = get_class($newOperation);
+        if (self::$insertTypeComparator === null) {
+            self::$insertTypeComparator = new EntityTypeComparatorForInserts();
+            self::$modificationTypeComparator = new EntityTypeComparatorForModifications();
+            self::$insertOperationComparator = self::$modificationOperationComparator = new DbEntityOperationComparator();
+            self::$bulkOperationComparator = new DbBulkOperationComparator();
+        }
+        $this->inserts = new TreeMap(self::$insertTypeComparator);
+        $this->updates = new TreeMap(self::$modificationTypeComparator);
+        $this->deletes = new TreeMap(self::$modificationTypeComparator);
+        $this->bulkOperations = new TreeMap(self::$modificationTypeComparator);
+    }
+
+    public function addOperation(/*DbEntityOperation|DbBulkOperation*/$newOperation): bool
+    {
+        $clazz = $newOperation->getEntityType();
         if ($newOperation instanceof DbEntityOperation) {
             if ($newOperation->getOperationType() == DbOperationType::INSERT) {
-                if (!array_key_exists($clazz, $this->inserts)) {
-                    $this->inserts[$clazz] = [];
+                if ($this->inserts->get($clazz) === null) {
+                    $this->inserts->put($clazz, new TreeSet(self::$insertOperationComparator));
                 }
-                if (!in_array($newOperation, $this->inserts[$clazz])) {
-                    $this->inserts[$clazz][] = $newOperation;
-                    return true;
-                }
+                $this->inserts->get($clazz)->add($newOperation);
+                return true;
             } elseif ($newOperation->getOperationType() == DbOperationType::DELETE) {
-                if (!array_key_exists($clazz, $this->deletes)) {
-                    $this->deletes[$clazz] = [];
+                if ($this->deletes->get($clazz) === null) {
+                    $this->deletes->put($clazz, new TreeSet(self::$modificationOperationComparator));
                 }
-                if (!in_array($newOperation, $this->deletes)) {
-                    $this->deletes[$clazz][] = $newOperation;
-                    return true;
-                }
+                $this->deletes->get($clazz)->add($newOperation);
+                return true;
             } else {// UPDATE
-                if (!array_key_exists($clazz, $this->updates)) {
-                    $this->updates[$clazz] = [];
+                if ($this->updates->get($clazz) === null) {
+                    $this->updates->put($clazz, new TreeSet(self::$modificationOperationComparator));
                 }
-                if (!in_array($newOperation, $this->updates)) {
-                    $this->updates[$clazz][] = $newOperation;
-                    return true;
-                }
-            }
-        } elseif ($newOperation instanceof DbBulkOperation) {
-            if (!array_key_exists($clazz, $this->bulkOperations)) {
-                $this->bulkOperations[$clazz] = [];
-            }
-            if (!in_array($newOperation, $this->bulkOperations)) {
-                $this->bulkOperations[$clazz][] = $newOperation;
+                $this->updates->get($clazz)->add($newOperation);
                 return true;
             }
+        } elseif ($newOperation instanceof DbBulkOperation) {
+            if ($this->bulkOperations->get($clazz) === null) {
+                $this->bulkOperations->put($clazz, new TreeSet(self::$bulkOperationComparator));
+            }
+            $this->bulkOperations->get($clazz)->add($newOperation);
+            return true;
         }
         return false;
     }
@@ -90,13 +110,13 @@ class DbOperationManager
      * @param operationsForFlush */
     protected function addSortedInserts(array &$flush): void
     {
-        foreach ($this->inserts as $clazz => $operationsForType) {
+        foreach ($this->inserts->getArrayCopy() as $clazz => $operationsForType) {
             // add inserts to flush
             if (is_a($clazz, HasDbReferencesInterface::class, true)) {
                 // if this type has self references, we need to resolve the reference order
-                $flush = array_merge($flush, $this->sortByReferences($operationsForType));
+                $flush = array_merge($flush, $this->sortByReferences($operationsForType->getArrayCopy()));
             } else {
-                $flush = array_merge($flush, $operationsForType);
+                $flush = array_merge($flush, $operationsForType->getArrayCopy());
             }
         }
     }
@@ -106,30 +126,37 @@ class DbOperationManager
     protected function addSortedModifications(array &$flush): void
     {
         // calculate sorted set of all modified entity types
-        $modifiedEntityTypes = [];
-        $modifiedEntityTypes = array_keys($this->updates);
-        $modifiedEntityTypes = array_merge($modifiedEntityTypes, array_keys($this->deletes));
-        $modifiedEntityTypes = array_merge($modifiedEntityTypes, array_keys($this->bulkOperations));
+        $modifiedEntityTypes = new TreeSet(self::$modificationTypeComparator);
+        foreach ($this->updates->getArrayCopy() as $key => $val) {
+            $modifiedEntityTypes->add($key);
+        }
+        foreach ($this->deletes->getArrayCopy() as $key => $val) {
+            $modifiedEntityTypes->add($key);
+        }
+        foreach ($this->bulkOperations->getArrayCopy() as $key => $val) {
+            $modifiedEntityTypes->add($key);
+        }
 
         foreach ($modifiedEntityTypes as $type) {
             // first perform entity UPDATES
-            $this->addSortedModificationsForType($type, $this->updates[$type], $flush);
+            if ($this->updates->get($type) !== null) {
+                $this->addSortedModificationsForType($type, $this->updates->get($type)->getArrayCopy(), $flush);
+            }
             // next perform entity DELETES
-            $this->addSortedModificationsForType($type, $this->deletes[$type], $flush);
+            if ($this->deletes->get($type) !== null) {
+                $this->addSortedModificationsForType($type, $this->deletes->get($type)->getArrayCopy(), $flush);
+            }
             // last perform bulk operations
-            if (array_key_exists($type, $this->bulkOperations)) {
-                $bulkOperationsForType = $this->bulkOperations[$type];
-                $flush = array_merge($flush, $bulkOperationsForType);
+            if ($this->bulkOperations->get($type) !== null) {
+                $flush = array_merge($flush, $this->bulkOperations->get($type)->getArrayCopy());
             }
         }
 
         //the very last perform bulk operations for which the order is important
-        if (!empty($this->bulkOperationsInsertionOrder)) {
-            $flush = array_merge($flush, $this->bulkOperationsInsertionOrder);
-        }
+        $flush = array_merge($flush, $this->bulkOperationsInsertionOrder);
     }
 
-    protected function addSortedModificationsForType(string $type, array $preSortedOperations, array &$flush): void
+    protected function addSortedModificationsForType(?string $type, array $preSortedOperations, array &$flush): void
     {
         if (!empty($preSortedOperations)) {
             if (is_a($type, HasDbReferencesInterface::class, true)) {
@@ -199,8 +226,8 @@ class DbOperationManager
                     $dependentEntities = $entity->getDependentEntities();
                     if (!empty($dependentEntities)) {
                         foreach ($dependentEntities as $id => $type) {
-                            if (array_key_exists($type, $this->deletes)) {
-                                foreach ($this->deletes[$type] as $o) {
+                            if ($this->deletes->get($type) !== null) {
+                                foreach ($this->deletes->get($type)->getArrayCopy() as $o) {
                                     if ($id == $o->getEntity()->getId()) {
                                         $o->setDependency($operation);
                                     }

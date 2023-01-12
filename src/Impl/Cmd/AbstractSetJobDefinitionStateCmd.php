@@ -29,7 +29,7 @@ abstract class AbstractSetJobDefinitionStateCmd extends AbstractSetStateCmd
     protected $executionDate;
 
     protected $processDefinitionTenantId;
-    protected $isProcessDefinitionTenantIdSet = false;
+    protected bool $isProcessDefinitionTenantIdSet = false;
 
     public function __construct(UpdateJobDefinitionSuspensionStateBuilderImpl $builder)
     {

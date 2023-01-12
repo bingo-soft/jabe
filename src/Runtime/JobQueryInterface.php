@@ -7,37 +7,37 @@ use Jabe\Query\QueryInterface;
 interface JobQueryInterface extends QueryInterface
 {
     /** Only select jobs with the given id */
-    public function jobId(string $jobId): JobQueryInterface;
+    public function jobId(?string $jobId): JobQueryInterface;
 
     /** Only select jobs whose id is in the given set of ids */
     public function jobIds(array $ids): JobQueryInterface;
 
     /** Only select jobs which exist for the given job definition id. **/
-    public function jobDefinitionId(string $jobDefinitionId): JobQueryInterface;
+    public function jobDefinitionId(?string $jobDefinitionId): JobQueryInterface;
 
     /** Only select jobs which exist for the given process instance. **/
-    public function processInstanceId(string $processInstanceId): JobQueryInterface;
+    public function processInstanceId(?string $processInstanceId): JobQueryInterface;
 
     /** Only select jobs which exist for any of the given process instance ids */
     public function processInstanceIds(array $processInstanceIds): JobQueryInterface;
 
     /** Only select jobs which exist for the given process definition id. **/
-    public function processDefinitionId(string $processDefinitionId): JobQueryInterface;
+    public function processDefinitionId(?string $processDefinitionId): JobQueryInterface;
 
     /** Only select jobs which exist for the given process definition key. **/
-    public function processDefinitionKey(string $processDefinitionKey): JobQueryInterface;
+    public function processDefinitionKey(?string $processDefinitionKey): JobQueryInterface;
 
     /** Only select jobs which exist for the given execution */
-    public function executionId(string $executionId): JobQueryInterface;
+    public function executionId(?string $executionId): JobQueryInterface;
 
     /** Only select jobs which are defined on an activity with the given id. **/
-    public function activityId(string $activityId): JobQueryInterface;
+    public function activityId(?string $activityId): JobQueryInterface;
 
     /** Only select jobs which have retries left */
     public function withRetriesLeft(): JobQueryInterface;
 
     /** Only select jobs which are executable,
-     * ie. retries > 0 and duestring $is null or duestring $is in the past **/
+     * ie. retries > 0 and due?string $is null or due?string $is in the past **/
     public function executable(): JobQueryInterface;
 
     /** Only select jobs that are timers.
@@ -48,36 +48,36 @@ interface JobQueryInterface extends QueryInterface
      * Cannot be used together with timers */
     public function messages(): JobQueryInterface;
 
-    /** Only select jobs where the duestring $is lower than the given date. */
-    public function duedateLowerThan(string $date): JobQueryInterface;
+    /** Only select jobs where the due?string $is lower than the given date. */
+    public function duedateLowerThan(?string $date): JobQueryInterface;
 
-    /** Only select jobs where the duestring $is higher then the given date. */
-    public function duedateHigherThan(string $date): JobQueryInterface;
+    /** Only select jobs where the due?string $is higher then the given date. */
+    public function duedateHigherThan(?string $date): JobQueryInterface;
 
     /** Only select jobs created before the given date. */
-    public function createdBefore(string $date): JobQueryInterface;
+    public function createdBefore(?string $date): JobQueryInterface;
 
     /** Only select jobs created after the given date. */
-    public function createdAfter(string $date): JobQueryInterface;
+    public function createdAfter(?string $date): JobQueryInterface;
 
     /**
      * Only select jobs with a priority that is higher than or equal to the given priority.
      */
-    public function priorityHigherThanOrEquals(float $priority): JobQueryInterface;
+    public function priorityHigherThanOrEquals(int $priority): JobQueryInterface;
 
     /**
      * Only select jobs with a priority that is lower than or equal to the given priority.
      */
-    public function priorityLowerThanOrEquals(float $priority): JobQueryInterface;
+    public function priorityLowerThanOrEquals(int $priority): JobQueryInterface;
 
     /** Only select jobs that failed due to an exception. */
     public function withException(): JobQueryInterface;
 
     /** Only select jobs that failed due to an exception with the given message. */
-    public function exceptionMessage(string $exceptionMessage): JobQueryInterface;
+    public function exceptionMessage(?string $exceptionMessage): JobQueryInterface;
 
     /** Only select jobs that failed due to an exception at an activity with the given id. **/
-    public function failedActivityId(string $activityId): JobQueryInterface;
+    public function failedActivityId(?string $activityId): JobQueryInterface;
 
     /** Only select jobs which have no retries left */
     public function noRetriesLeft(): JobQueryInterface;
@@ -105,7 +105,7 @@ interface JobQueryInterface extends QueryInterface
     /** Order by job id (needs to be followed by asc or desc). */
     public function orderByJobId(): JobQueryInterface;
 
-    /** Order by duestring $(needs to be followed by asc or desc). */
+    /** Order by due?string $(needs to be followed by asc or desc). */
     public function orderByJobDuedate(): JobQueryInterface;
 
     /** Order by retries (needs to be followed by asc or desc). */

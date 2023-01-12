@@ -21,4 +21,9 @@ class TaskCountByCandidateGroupCmd implements CommandInterface
     {
         return $this->scope->createTaskCountByCandidateGroupReport($commandContext);
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

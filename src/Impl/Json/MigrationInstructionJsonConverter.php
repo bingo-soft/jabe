@@ -34,12 +34,12 @@ class MigrationInstructionJsonConverter extends JsonObjectConverter
         );
     }
 
-    protected function readSourceActivityId($json): string
+    protected function readSourceActivityId($json): ?string
     {
         return JsonUtil::getString(JsonUtil::getArray($json, self::SOURCE_ACTIVITY_IDS));
     }
 
-    protected function readTargetActivityId($json): string
+    protected function readTargetActivityId($json): ?string
     {
         return JsonUtil::getString(JsonUtil::getArray($json, self::TARGET_ACTIVITY_IDS));
     }

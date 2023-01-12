@@ -11,13 +11,13 @@ class ActivityInstanceCancellationCmd extends AbstractInstanceCancellationCmd
 {
     protected $activityInstanceId;
 
-    public function __construct(string $processInstanceId, string $activityInstanceId, ?string $cancellationReason = null)
+    public function __construct(?string $processInstanceId, ?string $activityInstanceId, ?string $cancellationReason = null)
     {
         parent::__construct($processInstanceId, $cancellationReason);
         $this->activityInstanceId = $activityInstanceId;
     }
 
-    public function getActivityInstanceId(): string
+    public function getActivityInstanceId(): ?string
     {
         return $this->activityInstanceId;
     }
@@ -46,7 +46,7 @@ class ActivityInstanceCancellationCmd extends AbstractInstanceCancellationCmd
         return $scopeExecution;
     }
 
-    protected function describe(): string
+    protected function describe(): ?string
     {
         return "Cancel activity instance '" . $this->activityInstanceId . "'";
     }

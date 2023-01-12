@@ -12,7 +12,7 @@ class GetHistoricExternalTaskLogErrorDetailsCmd implements CommandInterface
 {
     protected $historicExternalTaskLogId;
 
-    public function __construct(string $historicExternalTaskLogId)
+    public function __construct(?string $historicExternalTaskLogId)
     {
         $this->historicExternalTaskLogId = $historicExternalTaskLogId;
     }
@@ -32,5 +32,10 @@ class GetHistoricExternalTaskLogErrorDetailsCmd implements CommandInterface
         }
 
         return $event->getErrorDetails();
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

@@ -65,7 +65,7 @@ class ObjectTypeImpl extends AbstractValueTypeImpl implements SerializableValueT
         return $valueInfo;
     }
 
-    public function createValueFromSerialized(string $serializedValue, ?array $valueInfo = null): SerializableValueInterface
+    public function createValueFromSerialized(?string $serializedValue, ?array $valueInfo = null): SerializableValueInterface
     {
         $builder = Variables::serializedObjectValue($serializedValue);
 

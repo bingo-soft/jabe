@@ -12,7 +12,7 @@ class GetTaskFormCmd implements CommandInterface, \Serializable
 {
     protected $taskId;
 
-    public function __construct(string $taskId)
+    public function __construct(?string $taskId)
     {
         $this->taskId = $taskId;
     }
@@ -49,5 +49,10 @@ class GetTaskFormCmd implements CommandInterface, \Serializable
             // Standalone task, no TaskFormData available
             return null;
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

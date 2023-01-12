@@ -4,8 +4,8 @@ namespace Jabe\Impl;
 
 class Page
 {
-    protected $firstResult;
-    protected $maxResults;
+    protected int $firstResult = 0;
+    protected int $maxResults = 0;
 
     public function __construct(int $firstResult, int $maxResults)
     {

@@ -17,7 +17,7 @@ class BatchMonitorJobHandler implements JobHandlerInterface
 {
     public const TYPE = "batch-monitor-job";
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return self::TYPE;
     }
@@ -37,7 +37,7 @@ class BatchMonitorJobHandler implements JobHandlerInterface
         }
     }
 
-    public function newConfiguration(string $canonicalString): JobHandlerConfigurationInterface
+    public function newConfiguration(?string $canonicalString): JobHandlerConfigurationInterface
     {
         return new BatchMonitorJobConfiguration($canonicalString);
     }

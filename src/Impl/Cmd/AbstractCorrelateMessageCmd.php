@@ -30,8 +30,8 @@ abstract class AbstractCorrelateMessageCmd
     protected $builder;
 
     protected $variablesListener;
-    protected $variablesEnabled = false;
-    protected $deserializeVariableValues = false;
+    protected bool $variablesEnabled = false;
+    protected bool $deserializeVariableValues = false;
 
     /**
      * Initialize the command with a builder

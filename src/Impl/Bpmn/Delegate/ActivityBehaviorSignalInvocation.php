@@ -15,7 +15,7 @@ class ActivityBehaviorSignalInvocation extends DelegateInvocation
     protected $signalName;
     protected $signalData;
 
-    public function __construct(SignallableActivityBehaviorInterface $behaviorInstance, ActivityExecutionInterface $execution, string $signalName, $signalData)
+    public function __construct(SignallableActivityBehaviorInterface $behaviorInstance, ActivityExecutionInterface $execution, ?string $signalName, $signalData)
     {
         parent::__construct($execution, null);
         $this->behaviorInstance = $behaviorInstance;

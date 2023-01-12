@@ -15,7 +15,7 @@ class SetAnnotationForOperationLog implements CommandInterface
     protected $operationId;
     protected $annotation;
 
-    public function __construct(string $operationId, string $annotation)
+    public function __construct(?string $operationId, ?string $annotation)
     {
         $this->operationId = $operationId;
         $this->annotation = $annotation;
@@ -54,5 +54,10 @@ class SetAnnotationForOperationLog implements CommandInterface
                 ->logSetAnnotationOperation($this->operationId);
         }
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

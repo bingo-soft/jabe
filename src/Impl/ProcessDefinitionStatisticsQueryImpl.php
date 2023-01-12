@@ -14,9 +14,9 @@ use Jabe\Management\{
 
 class ProcessDefinitionStatisticsQueryImpl extends AbstractQuery implements ProcessDefinitionStatisticsQueryInterface
 {
-    protected $includeFailedJobs = false;
-    protected $includeIncidents = false;
-    protected $includeRootIncidents = false;
+    protected bool $includeFailedJobs = false;
+    protected bool $includeIncidents = false;
+    protected bool $includeRootIncidents = false;
     protected $includeIncidentsForType;
 
     public function __construct(CommandExecutorInterface $commandExecutor)
@@ -33,7 +33,7 @@ class ProcessDefinitionStatisticsQueryImpl extends AbstractQuery implements Proc
             ->getStatisticsCountGroupedByProcessDefinitionVersion($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         return
@@ -54,7 +54,7 @@ class ProcessDefinitionStatisticsQueryImpl extends AbstractQuery implements Proc
         return $this;
     }
 
-    public function includeIncidentsForType(string $incidentType): ProcessDefinitionStatisticsQueryInterface
+    public function includeIncidentsForType(?string $incidentType): ProcessDefinitionStatisticsQueryInterface
     {
         $this->includeIncidentsForType = $incidentType;
         return $this;

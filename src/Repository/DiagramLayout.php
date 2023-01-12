@@ -11,7 +11,7 @@ class DiagramLayout
         $this->setElements($elements);
     }
 
-    public function getNode(string $id): ?DiagramNode
+    public function getNode(?string $id): ?DiagramNode
     {
         $elements = $this->getElements();
         if (array_key_exists($id, $elements) && (($element = $elements[$id]) instanceof DiagramNode)) {
@@ -20,7 +20,7 @@ class DiagramLayout
         return null;
     }
 
-    public function getEdge(string $id): ?DiagramEdge
+    public function getEdge(?string $id): ?DiagramEdge
     {
         $elements = $this->getElements();
         if (array_key_exists($id, $elements) && (($element = $elements[$id]) instanceof DiagramEdge)) {

@@ -25,5 +25,5 @@ interface MessageCorrelationResultInterface
      *
      * @return string the result type of the message correlation result
      */
-    public function getResultType(): string;
+    public function getResultType(): ?string;
 }

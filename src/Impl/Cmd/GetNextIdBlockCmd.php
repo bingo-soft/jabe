@@ -10,7 +10,7 @@ use Jabe\Impl\Interceptor\{
 
 class GetNextIdBlockCmd implements CommandInterface
 {
-    protected $idBlockSize;
+    protected int $idBlockSize = 0;
 
     public function __construct(int $idBlockSize)
     {
@@ -26,5 +26,10 @@ class GetNextIdBlockCmd implements CommandInterface
         $newValue = $oldValue + $this->idBlockSize;
         $property->setValue(strval($newValue));
         return new IdBlock($oldValue, $newValue - 1);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

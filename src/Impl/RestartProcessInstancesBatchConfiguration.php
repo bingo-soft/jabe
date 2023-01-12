@@ -20,7 +20,7 @@ class RestartProcessInstancesBatchConfiguration extends BatchConfiguration
         array $processInstanceIds,
         ?DeploymentMappings $mappings,
         array $instructions,
-        string $processDefinitionId,
+        ?string $processDefinitionId,
         bool $initialVariables,
         bool $skipCustomListeners,
         bool $skipIoMappings,
@@ -45,12 +45,12 @@ class RestartProcessInstancesBatchConfiguration extends BatchConfiguration
         $this->instructions = $instructions;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function setProcessDefinitionId(string $processDefinitionId): void
+    public function setProcessDefinitionId(?string $processDefinitionId): void
     {
         $this->processDefinitionId = $processDefinitionId;
     }

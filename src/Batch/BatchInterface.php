@@ -17,16 +17,17 @@ interface BatchInterface
     public const TYPE_DECISION_SET_REMOVAL_TIME = "decision-set-removal-time";
     public const TYPE_BATCH_SET_REMOVAL_TIME = "batch-set-removal-time";
     public const TYPE_SET_VARIABLES = "set-variables";
+    public const TYPE_CORRELATE_MESSAGE = "correlate-message";
 
     /**
      * @return string the id of the batch
      */
-    public function getId(): string;
+    public function getId(): ?string;
 
     /**
      * @return string the type of the batch
      */
-    public function getType(): string;
+    public function getType(): ?string;
 
     /**
      * @return int the number of batch execution jobs required to complete the batch
@@ -51,17 +52,17 @@ interface BatchInterface
     /**
      * @return string the id of the batch seed job definition
      */
-    public function getSeedJobDefinitionId(): string;
+    public function getSeedJobDefinitionId(): ?string;
 
     /**
      * @return string the id of the batch monitor job definition
      */
-    public function getMonitorJobDefinitionId(): string;
+    public function getMonitorJobDefinitionId(): ?string;
 
     /**
      * @return string the id of the batch job definition
      */
-    public function getBatchJobDefinitionId(): string;
+    public function getBatchJobDefinitionId(): ?string;
 
     /**
      * @return string the batch's tenant id or null
@@ -71,7 +72,7 @@ interface BatchInterface
     /**
      * @return string the batch creator's user id
      */
-    public function getCreateUserId(): string;
+    public function getCreateUserId(): ?string;
 
     /**
      * <p>

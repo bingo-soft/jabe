@@ -94,27 +94,27 @@ class IdentityLinkEntity implements \Serializable, IdentityLinkInterface, DbEnti
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function setType(string $type): void
+    public function setType(?string $type): void
     {
         $this->type = $type;
     }
 
-    public function getUserId(): string
+    public function getUserId(): ?string
     {
         return $this->userId;
     }
 
-    public function setUserId(string $userId): void
+    public function setUserId(?string $userId): void
     {
         if ($this->groupId !== null && $userId !== null) {
             //throw LOG.taskIsAlreadyAssignedException("userId", "groupId");
@@ -123,12 +123,12 @@ class IdentityLinkEntity implements \Serializable, IdentityLinkInterface, DbEnti
         $this->userId = $userId;
     }
 
-    public function getGroupId(): string
+    public function getGroupId(): ?string
     {
         return $this->groupId;
     }
 
-    public function setGroupId(string $groupId): void
+    public function setGroupId(?string $groupId): void
     {
         if ($this->userId !== null && $groupId !== null) {
             //throw LOG.taskIsAlreadyAssignedException("groupId", "userId");
@@ -137,22 +137,22 @@ class IdentityLinkEntity implements \Serializable, IdentityLinkInterface, DbEnti
         $this->groupId = $groupId;
     }
 
-    public function getTaskId(): string
+    public function getTaskId(): ?string
     {
         return $this->taskId;
     }
 
-    public function setTaskId(string $taskId): void
+    public function setTaskId(?string $taskId): void
     {
         $this->taskId = $taskId;
     }
 
-    public function getProcessDefId(): string
+    public function getProcessDefId(): ?string
     {
         return $this->processDefId;
     }
 
-    public function setProcessDefId(string $processDefId): void
+    public function setProcessDefId(?string $processDefId): void
     {
         $this->processDefId = $processDefId;
     }
@@ -289,5 +289,10 @@ class IdentityLinkEntity implements \Serializable, IdentityLinkInterface, DbEnti
                 . ", processDef=" . $this->processDef
                 . ", tenantId=" . $this->tenantId
                 . "]";
+    }
+
+    public function getDependentEntities(): array
+    {
+        return [];
     }
 }

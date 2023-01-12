@@ -26,7 +26,7 @@ class ProcessInstanceWithVariablesImpl implements ProcessInstanceWithVariablesIn
         return $this->variables;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->executionEntity->getProcessDefinitionId();
     }
@@ -50,7 +50,7 @@ class ProcessInstanceWithVariablesImpl implements ProcessInstanceWithVariablesIn
         return $this->executionEntity->getId();
     }
 
-    public function getRootProcessInstanceId(): string
+    public function getRootProcessInstanceId(): ?string
     {
         return $this->executionEntity->getRootProcessInstanceId();
     }
@@ -60,7 +60,7 @@ class ProcessInstanceWithVariablesImpl implements ProcessInstanceWithVariablesIn
         return $this->executionEntity->isEnded();
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->executionEntity->getProcessInstanceId();
     }

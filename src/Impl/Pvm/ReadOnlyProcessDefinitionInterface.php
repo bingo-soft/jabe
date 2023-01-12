@@ -4,7 +4,7 @@ namespace Jabe\Impl\Pvm;
 
 interface ReadOnlyProcessDefinitionInterface extends PvmScopeInterface
 {
-    public function getName(): string;
+    public function getName(): ?string;
 
     public function getDescription(): ?string;
 

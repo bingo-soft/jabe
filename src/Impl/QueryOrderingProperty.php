@@ -93,12 +93,12 @@ class QueryOrderingProperty implements \Serializable
         return !empty($this->relationConditions) && !empty($this->relationConditions);
     }
 
-    public function getRelation(): string
+    public function getRelation(): ?string
     {
         return $this->relation;
     }
 
-    public function setRelation(string $relation): void
+    public function setRelation(?string $relation): void
     {
         $this->relation = $relation;
     }
@@ -123,7 +123,7 @@ class QueryOrderingProperty implements \Serializable
             . "]";
     }
 
-    public function getRelationConditionsString(): string
+    public function getRelationConditionsString(): ?string
     {
         $builder = "";
         $builder .= "[";

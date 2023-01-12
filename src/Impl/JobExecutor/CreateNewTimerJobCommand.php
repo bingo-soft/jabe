@@ -11,7 +11,7 @@ class CreateNewTimerJobCommand implements CommandInterface
 {
     protected $jobId;
 
-    public function __construct(string $jobId)
+    public function __construct(?string $jobId)
     {
         $this->jobId = $jobId;
     }
@@ -34,5 +34,10 @@ class CreateNewTimerJobCommand implements CommandInterface
         }
 
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

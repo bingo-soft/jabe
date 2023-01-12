@@ -9,7 +9,7 @@ class Authentication
     protected $authenticatedTenantIds;
 
     public function __construct(
-        string $authenticatedUserId,
+        ?string $authenticatedUserId,
         ?array $authenticatedGroupIds = null,
         ?array $authenticatedTenantIds = null
     ) {
@@ -29,7 +29,7 @@ class Authentication
         return $this->authenticatedGroupIds;
     }
 
-    public function getUserId(): string
+    public function getUserId(): ?string
     {
         return $this->authenticatedUserId;
     }

@@ -22,9 +22,9 @@
   <insert id="insertGroup" parameterType="Jabe\Impl\Persistence\Entity\GroupEntity">
     insert into ${prefix}ACT_ID_GROUP (ID_, NAME_, TYPE_, REV_)
     values (
-      #{id ,dbalType=VARCHAR},
-      #{name ,dbalType=VARCHAR},
-      #{type ,dbalType=VARCHAR},
+      #{id:VARCHAR},
+      #{name:VARCHAR},
+      #{type:VARCHAR},
       1
     )
   </insert>
@@ -33,9 +33,9 @@
   
   <update id="updateGroup" parameterType="Jabe\Impl\Persistence\Entity\GroupEntity">
     update ${prefix}ACT_ID_GROUP set
-      REV_ = #{revisionNext ,dbalType=INTEGER},
-      NAME_ = #{name ,dbalType=VARCHAR},
-      TYPE_ = #{type ,dbalType=VARCHAR}
+      REV_ = #{revisionNext},
+      NAME_ = #{name:VARCHAR},
+      TYPE_ = #{type:VARCHAR}
     where ID_ = #{id}
        and REV_ = #{revision}
   </update>
@@ -111,7 +111,7 @@
       <if test="id != null">
         RES.ID_ = #{id}
       </if>
-      <if test="ids != null and count(ids) > 0">
+      <if test="!empty(ids)">
         and RES.ID_ in
         <foreach item="item" index="index" collection="ids"
                  open="(" separator="," close=")">

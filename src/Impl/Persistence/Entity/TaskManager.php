@@ -2,7 +2,11 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
-use Jabe\Authorization\Resources;
+use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface,
+    Resources
+};
 use Jabe\Impl\{
     Page,
     TaskQueryImpl
@@ -20,7 +24,7 @@ class TaskManager extends AbstractManager
         $this->createDefaultAuthorizations($task);
     }
 
-    public function deleteTasksByProcessInstanceId(string $processInstanceId, string $deleteReason, bool $cascade, bool $skipCustomListeners): void
+    public function deleteTasksByProcessInstanceId(?string $processInstanceId, ?string $deleteReason, bool $cascade, bool $skipCustomListeners): void
     {
         $tasks = $this->getDbEntityManager()
             ->createTaskQuery()
@@ -47,7 +51,7 @@ class TaskManager extends AbstractManager
         }
     }*/
 
-    public function deleteTask(TaskEntity $task, string $deleteReason, bool $cascade, bool $skipCustomListeners): void
+    public function deleteTask(TaskEntity $task, ?string $deleteReason, bool $cascade, bool $skipCustomListeners): void
     {
         if (!$task->isDeleted()) {
             $task->setDeleted(true);
@@ -81,23 +85,23 @@ class TaskManager extends AbstractManager
         }
     }
 
-    public function findTaskById(string $id): ?TaskEntity
+    public function findTaskById(?string $id): ?TaskEntity
     {
         EnsureUtil::ensureNotNull("Invalid task id", "id", $this->id);
         return $this->getDbEntityManager()->selectById(TaskEntity::class, $this->id);
     }
 
-    public function findTasksByExecutionId(string $executionId): array
+    public function findTasksByExecutionId(?string $executionId): array
     {
         return $this->getDbEntityManager()->selectList("selectTasksByExecutionId", $executionId);
     }
 
-    /*public function findTaskByCaseExecutionId(string $caseExecutionId): ?TaskEntity
+    /*public function findTaskByCaseExecutionId(?string $caseExecutionId): ?TaskEntity
     {
         return (TaskEntity) getDbEntityManager().selectOne("selectTaskByCaseExecutionId", caseExecutionId);
     }*/
 
-    public function findTasksByProcessInstanceId(string $processInstanceId): array
+    public function findTasksByProcessInstanceId(?string $processInstanceId): array
     {
         return $this->getDbEntityManager()->selectList("selectTasksByProcessInstanceId", $processInstanceId);
     }
@@ -130,12 +134,12 @@ class TaskManager extends AbstractManager
         return $this->getDbEntityManager()->selectOne("selectTaskCountByNativeQuery", $parameterMap);
     }
 
-    public function findTasksByParentTaskId(string $parentTaskId): array
+    public function findTasksByParentTaskId(?string $parentTaskId): array
     {
         return $this->getDbEntityManager()->selectList("selectTasksByParentTaskId", $parentTaskId);
     }
 
-    public function updateTaskSuspensionStateByProcessDefinitionId(string $processDefinitionId, SuspensionState $suspensionState): void
+    public function updateTaskSuspensionStateByProcessDefinitionId(?string $processDefinitionId, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processDefinitionId"] = $processDefinitionId;
@@ -143,7 +147,7 @@ class TaskManager extends AbstractManager
         $this->getDbEntityManager()->update(TaskEntity::class, "updateTaskSuspensionStateByParameters", $this->configureParameterizedQuery($parameters));
     }
 
-    public function updateTaskSuspensionStateByProcessInstanceId(string $processInstanceId, SuspensionState $suspensionState): void
+    public function updateTaskSuspensionStateByProcessInstanceId(?string $processInstanceId, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processInstanceId"] = $processInstanceId;
@@ -151,7 +155,7 @@ class TaskManager extends AbstractManager
         $this->getDbEntityManager()->update(TaskEntity::class, "updateTaskSuspensionStateByParameters", $this->configureParameterizedQuery($parameters));
     }
 
-    public function updateTaskSuspensionStateByProcessDefinitionKey(string $processDefinitionKey, SuspensionState $suspensionState): void
+    public function updateTaskSuspensionStateByProcessDefinitionKey(?string $processDefinitionKey, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processDefinitionKey"] = $processDefinitionKey;
@@ -160,7 +164,7 @@ class TaskManager extends AbstractManager
         $this->getDbEntityManager()->update(TaskEntity::class, "updateTaskSuspensionStateByParameters", $this->configureParameterizedQuery($parameters));
     }
 
-    public function updateTaskSuspensionStateByProcessDefinitionKeyAndTenantId(string $processDefinitionKey, string $processDefinitionTenantId, SuspensionState $suspensionState): void
+    public function updateTaskSuspensionStateByProcessDefinitionKeyAndTenantId(?string $processDefinitionKey, ?string $processDefinitionTenantId, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processDefinitionKey"] = $processDefinitionKey;
@@ -188,7 +192,7 @@ class TaskManager extends AbstractManager
         }
     }
 
-    protected function configureQuery(TaskQueryImpl $query): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         $this->getAuthorizationManager()->configureTaskQuery($query);
         $this->getTenantManager()->configureQuery($query);

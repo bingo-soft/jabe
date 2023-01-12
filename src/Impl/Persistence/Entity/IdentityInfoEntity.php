@@ -15,7 +15,7 @@ class IdentityInfoEntity implements DbEntityInterface, HasDbRevisionInterface, A
     public const TYPE_USERINFO = "userinfo";
 
     protected $id;
-    protected $revision;
+    protected int $revision = 0;
     protected $type;
     protected $userId;
     protected $key;
@@ -43,12 +43,12 @@ class IdentityInfoEntity implements DbEntityInterface, HasDbRevisionInterface, A
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }
@@ -58,72 +58,72 @@ class IdentityInfoEntity implements DbEntityInterface, HasDbRevisionInterface, A
         $this->revision = $revision;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function setType(string $type): void
+    public function setType(?string $type): void
     {
         $this->type = $type;
     }
 
-    public function getUserId(): string
+    public function getUserId(): ?string
     {
         return $this->userId;
     }
 
-    public function setUserId(string $userId): void
+    public function setUserId(?string $userId): void
     {
         $this->userId = $userId;
     }
 
-    public function getKey(): string
+    public function getKey(): ?string
     {
         return $this->key;
     }
 
-    public function setKey(string $key): void
+    public function setKey(?string $key): void
     {
         $this->key = $key;
     }
 
-    public function getValue(): string
+    public function getValue(): ?string
     {
         return $this->value;
     }
 
-    public function setValue(string $value): void
+    public function setValue(?string $value): void
     {
         $this->value = $value;
     }
 
-    public function getPasswordBytes(): string
+    public function getPasswordBytes(): ?string
     {
         return $this->passwordBytes;
     }
 
-    public function setPasswordBytes(string $passwordBytes): void
+    public function setPasswordBytes(?string $passwordBytes): void
     {
         $this->passwordBytes = $passwordBytes;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): void
+    public function setPassword(?string $password): void
     {
         $this->password = $password;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->key;
     }
 
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->value;
     }
@@ -133,7 +133,7 @@ class IdentityInfoEntity implements DbEntityInterface, HasDbRevisionInterface, A
         return $this->parentId;
     }
 
-    public function setParentId(string $parentId): void
+    public function setParentId(?string $parentId): void
     {
         $this->parentId = $parentId;
     }

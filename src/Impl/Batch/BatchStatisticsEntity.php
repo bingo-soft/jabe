@@ -6,8 +6,10 @@ use Jabe\Batch\BatchStatisticsInterface;
 
 class BatchStatisticsEntity extends BatchEntity implements BatchStatisticsInterface
 {
-    protected $remainingJobs;
-    protected $failedJobs;
+    protected int $remainingJobs = 0;
+    protected int $failedJobs = 0;
+    protected $startTime;
+    protected $executionStartTime;
 
     public function getRemainingJobs(): int
     {

@@ -188,7 +188,7 @@ class ExecutionImpl extends PvmExecutionImpl implements ActivityExecutionInterfa
 
     // process definition ///////////////////////////////////////////////////////
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinition->getId();
     }
@@ -201,7 +201,7 @@ class ExecutionImpl extends PvmExecutionImpl implements ActivityExecutionInterfa
         return $this->processInstance;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->getProcessInstance()->getId();
     }
@@ -211,7 +211,7 @@ class ExecutionImpl extends PvmExecutionImpl implements ActivityExecutionInterfa
         return $this->getProcessInstance()->getBusinessKey();
     }
 
-    public function setBusinessKey(string $businessKey): void
+    public function setBusinessKey(?string $businessKey): void
     {
         $this->businessKey = $businessKey;
     }
@@ -232,7 +232,7 @@ class ExecutionImpl extends PvmExecutionImpl implements ActivityExecutionInterfa
     /**
      * generates an activity instance id
      */
-    protected function generateActivityInstanceId(string $activityId): string
+    protected function generateActivityInstanceId(?string $activityId): ?string
     {
         self::$idGenerator += 1;
         $nextId = self::$idGenerator;
@@ -255,14 +255,14 @@ class ExecutionImpl extends PvmExecutionImpl implements ActivityExecutionInterfa
         }
     }
 
-    protected function getToStringIdentity(): string
+    protected function getToStringIdentity(): ?string
     {
         return spl_object_hash($this);
     }
 
     // allow for subclasses to expose a real id /////////////////////////////////
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return spl_object_hash($this);
     }
@@ -303,7 +303,7 @@ class ExecutionImpl extends PvmExecutionImpl implements ActivityExecutionInterfa
         return $currentActivityName;
     }
 
-    public function getBpmnModelElementInstance(): FlowElementInterface
+    public function getBpmnModelElementInstance(): ?FlowElementInterface
     {
         throw new \Exception(BpmnModelExecutionContextInterface::class . " is unsupported in transient ExecutionImpl");
     }

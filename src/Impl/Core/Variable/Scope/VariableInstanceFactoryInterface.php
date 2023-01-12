@@ -7,5 +7,5 @@ use Jabe\Variable\Value\TypedValueInterface;
 
 interface VariableInstanceFactoryInterface
 {
-    public function build(string $name, TypedValueInterface $value, bool $isTransient): CoreVariableInstanceInterface;
+    public function build(?string $name, TypedValueInterface $value, bool $isTransient): CoreVariableInstanceInterface;
 }

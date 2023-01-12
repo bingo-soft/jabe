@@ -25,8 +25,8 @@
         VALUE_,
         REV_
       ) values (
-        #{name ,dbalType=VARCHAR},
-        #{value, dbalType=VARCHAR},
+        #{name:VARCHAR},
+        #{value:VARCHAR},
         1
       )
   </insert>
@@ -36,11 +36,11 @@
   <update id="updateProperty" parameterType="Jabe\Impl\Persistence\Entity\PropertyEntity">
     update ${prefix}ACT_GE_PROPERTY
     <set>
-      REV_ = #{revisionNext, dbalType=INTEGER},
-      VALUE_ = #{value, dbalType=VARCHAR}
+      REV_ = #{revisionNext},
+      VALUE_ = #{value:VARCHAR}
     </set>
-    where NAME_ = #{name, dbalType=VARCHAR}
-      and REV_ = #{revision, dbalType=INTEGER}
+    where NAME_ = #{name:VARCHAR}
+      and REV_ = #{revision}
   </update>
 
   <!-- PROPERTY DELETE -->

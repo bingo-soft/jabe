@@ -11,7 +11,7 @@ interface TaskQueryInterface extends QueryInterface
      * Only select tasks with the given task id (in practice, there will be
      * maximum one of this kind)
      */
-    public function taskId(string $taskId): TaskQueryInterface;
+    public function taskId(?string $taskId): TaskQueryInterface;
 
     /** Only select tasks with the given task ids. */
     public function taskIdIn(array $taskIds): TaskQueryInterface;
@@ -20,40 +20,40 @@ interface TaskQueryInterface extends QueryInterface
      * Only select tasks with the given name.
      * The query will match the names of tasks in a case-insensitive way.
      */
-    public function taskName(string $name): TaskQueryInterface;
+    public function taskName(?string $name): TaskQueryInterface;
 
     /**
      * Only select tasks with a name not matching the given name/
      * The query will match the names of tasks in a case-insensitive way.
      */
-    public function taskNameNotEqual(string $name): TaskQueryInterface;
+    public function taskNameNotEqual(?string $name): TaskQueryInterface;
 
     /**
      * Only select tasks with a name matching the parameter.
      * The syntax is that of SQL: for example usage: nameLike(%camunda%).
      * The query will match the names of tasks in a case-insensitive way.
      */
-    public function taskNameLike(string $nameLike): TaskQueryInterface;
+    public function taskNameLike(?string $nameLike): TaskQueryInterface;
 
     /**
      * Only select tasks with a name not matching the parameter.
      * The syntax is that of SQL: for example usage: nameNotLike(%camunda%)
      * The query will match the names of tasks in a case-insensitive way.
      */
-    public function taskNameNotLike(string $nameNotLike): TaskQueryInterface;
+    public function taskNameNotLike(?string $nameNotLike): TaskQueryInterface;
 
     /**
      * Only select tasks with the given description.
      * The query will match the descriptions of tasks in a case-insensitive way.
      */
-    public function taskDescription(string $description): TaskQueryInterface;
+    public function taskDescription(?string $description): TaskQueryInterface;
 
     /**
      * Only select tasks with a description matching the parameter .
      * The syntax is that of SQL: for example usage: descriptionLike(%camunda%)
      * The query will match the descriptions of tasks in a case-insensitive way.
      */
-    public function taskDescriptionLike(string $descriptionLike): TaskQueryInterface;
+    public function taskDescriptionLike(?string $descriptionLike): TaskQueryInterface;
 
     /** Only select tasks with the given priority. */
     public function taskPriority(int $priority): TaskQueryInterface;
@@ -65,7 +65,7 @@ interface TaskQueryInterface extends QueryInterface
     public function taskMaxPriority(int $maxPriority): TaskQueryInterface;
 
     /** Only select tasks which are assigned to the given user. */
-    public function taskAssignee(string $assignee): TaskQueryInterface;
+    public function taskAssignee(?string $assignee): TaskQueryInterface;
 
     /**
      *  <p>Only select tasks which are assigned to the user described by the given expression.</p>
@@ -78,11 +78,11 @@ interface TaskQueryInterface extends QueryInterface
      *  <code>enableExpressionsInAdhocQueries</code> (default <code>false</code>) and
      *  <code>enableExpressionsInStoredQueries</code> (default <code>true</code>) to <code>true</code>.
      */
-    public function taskAssigneeExpression(string $assigneeExpression): TaskQueryInterface;
+    public function taskAssigneeExpression(?string $assigneeExpression): TaskQueryInterface;
 
     /** Only select tasks which are matching the given user.
      *  The syntax is that of SQL: for example usage: nameLike(%camunda%)*/
-    public function taskAssigneeLike(string $assignee): TaskQueryInterface;
+    public function taskAssigneeLike(?string $assignee): TaskQueryInterface;
 
     /**
      * <p>Only select tasks which are assigned to the user described by the given expression.
@@ -96,7 +96,7 @@ interface TaskQueryInterface extends QueryInterface
      *  <code>enableExpressionsInAdhocQueries</code> (default <code>false</code>) and
      *  <code>enableExpressionsInStoredQueries</code> (default <code>true</code>) to <code>true</code>.
      */
-    public function taskAssigneeLikeExpression(string $assigneeLikeExpression): TaskQueryInterface;
+    public function taskAssigneeLikeExpression(?string $assigneeLikeExpression): TaskQueryInterface;
 
     /** Only select tasks which are assigned to one of the given users. */
     public function taskAssigneeIn(array $assignees): TaskQueryInterface;
@@ -105,7 +105,7 @@ interface TaskQueryInterface extends QueryInterface
     public function taskAssigneeNotIn(array $assignees): TaskQueryInterface;
 
     /** Only select tasks for which the given user is the owner. */
-    public function taskOwner(string $owner): TaskQueryInterface;
+    public function taskOwner(?string $owner): TaskQueryInterface;
 
     /**
      * <p>Only select tasks for which the described user by the given expression is the owner.</p>
@@ -118,7 +118,7 @@ interface TaskQueryInterface extends QueryInterface
      *  <code>enableExpressionsInAdhocQueries</code> (default <code>false</code>) and
      *  <code>enableExpressionsInStoredQueries</code> (default <code>true</code>) to <code>true</code>.
      */
-    public function taskOwnerExpression(string $ownerExpression): TaskQueryInterface;
+    public function taskOwnerExpression(?string $ownerExpression): TaskQueryInterface;
 
     /** Only select tasks which don't have an assignee. */
     public function taskUnassigned(): TaskQueryInterface;
@@ -127,7 +127,7 @@ interface TaskQueryInterface extends QueryInterface
     public function taskAssigned(): TaskQueryInterface;
 
     /** Only select tasks with the given DelegationState. */
-    public function taskDelegationState(string $delegationState): TaskQueryInterface;
+    public function taskDelegationState(?string $delegationState): TaskQueryInterface;
 
     /**
      * Only select tasks for which the given user or one of his groups is a candidate.
@@ -154,7 +154,7 @@ interface TaskQueryInterface extends QueryInterface
      *  <code>enableExpressionsInStoredQueries</code> (default <code>true</code>) to <code>true</code>.
      *
      */
-    public function taskCandidateUser(string $candidateUser): TaskQueryInterface;
+    public function taskCandidateUser(?string $candidateUser): TaskQueryInterface;
 
     /**
      * Only select tasks for which the described user by the given expression is a candidate.
@@ -178,10 +178,10 @@ interface TaskQueryInterface extends QueryInterface
      *  <code>enableExpressionsInAdhocQueries</code> (default <code>false</code>) and
      *  <code>enableExpressionsInStoredQueries</code> (default <code>true</code>) to <code>true</code>.
      */
-    public function taskCandidateUserExpression(string $candidateUserExpression): TaskQueryInterface;
+    public function taskCandidateUserExpression(?string $candidateUserExpression): TaskQueryInterface;
 
     /** Only select tasks for which there exist an IdentityLink with the given user */
-    public function taskInvolvedUser(string $involvedUser): TaskQueryInterface;
+    public function taskInvolvedUser(?string $involvedUser): TaskQueryInterface;
 
     /**
      * <p>Only select tasks for which there exist an IdentityLink with the
@@ -195,7 +195,7 @@ interface TaskQueryInterface extends QueryInterface
      *  <code>enableExpressionsInAdhocQueries</code> (default <code>false</code>) and
      *  <code>enableExpressionsInStoredQueries</code> (default <code>true</code>) to <code>true</code>.
      */
-    public function taskInvolvedUserExpression(string $involvedUserExpression): TaskQueryInterface;
+    public function taskInvolvedUserExpression(?string $involvedUserExpression): TaskQueryInterface;
 
     /**
      * Only select tasks which have a candidate group
@@ -241,7 +241,7 @@ interface TaskQueryInterface extends QueryInterface
      *   {@link #taskCandidateGroupIn(List)} has been executed on the "or query" instance.</li>
      *   <li>When passed group is <code>null</code>.</li></ul>
      */
-    public function taskCandidateGroup(string $candidateGroup): TaskQueryInterface;
+    public function taskCandidateGroup(?string $candidateGroup): TaskQueryInterface;
 
     /**
      * Only select tasks for which users in the described group by the given expression are candidates.
@@ -265,7 +265,7 @@ interface TaskQueryInterface extends QueryInterface
      *  <code>enableExpressionsInAdhocQueries</code> (default <code>false</code>) and
      *  <code>enableExpressionsInStoredQueries</code> (default <code>true</code>) to <code>true</code>.
      */
-    public function taskCandidateGroupExpression(string $candidateGroupExpression): TaskQueryInterface;
+    public function taskCandidateGroupExpression(?string $candidateGroupExpression): TaskQueryInterface;
 
     /**
      * Only select tasks for which the 'candidateGroup' is one of the given groups.
@@ -306,7 +306,7 @@ interface TaskQueryInterface extends QueryInterface
      *  <code>enableExpressionsInAdhocQueries</code> (default <code>false</code>) and
      *  <code>enableExpressionsInStoredQueries</code> (default <code>true</code>) to <code>true</code>.
      */
-    public function taskCandidateGroupInExpression(string $candidateGroupsExpression): TaskQueryInterface;
+    public function taskCandidateGroupInExpression(?string $candidateGroupsExpression): TaskQueryInterface;
 
     /**
      * Select both assigned and not assigned tasks for candidate user or group queries.
@@ -321,16 +321,16 @@ interface TaskQueryInterface extends QueryInterface
     public function includeAssignedTasks(): TaskQueryInterface;
 
     /** Only select tasks for the given process instance id. */
-    public function processInstanceId(string $processInstanceId): TaskQueryInterface;
+    public function processInstanceId(?string $processInstanceId): TaskQueryInterface;
 
     /** Only select tasks for the given process instance ids. */
     public function processInstanceIdIn(array $processInstanceIds): TaskQueryInterface;
 
     /** Only select tasks for the given process instance business key */
-    public function processInstanceBusinessKey(string $processInstanceBusinessKey): TaskQueryInterface;
+    public function processInstanceBusinessKey(?string $processInstanceBusinessKey): TaskQueryInterface;
 
     /** Only select tasks for the given process instance business key described by the given expression */
-    public function processInstanceBusinessKeyExpression(string $processInstanceBusinessKeyExpression): TaskQueryInterface;
+    public function processInstanceBusinessKeyExpression(?string $processInstanceBusinessKeyExpression): TaskQueryInterface;
 
     /**
      * Only select tasks for any of the given the given process instance business keys.
@@ -339,35 +339,35 @@ interface TaskQueryInterface extends QueryInterface
 
     /** Only select tasks matching the given process instance business key.
      *  The syntax is that of SQL: for example usage: nameLike(%camunda%)*/
-    public function processInstanceBusinessKeyLike(string $processInstanceBusinessKey): TaskQueryInterface;
+    public function processInstanceBusinessKeyLike(?string $processInstanceBusinessKey): TaskQueryInterface;
 
     /** Only select tasks matching the given process instance business key described by the given expression.
      *  The syntax is that of SQL: for example usage: processInstanceBusinessKeyLikeExpression("${ '%camunda%' }")*/
-    public function processInstanceBusinessKeyLikeExpression(string $processInstanceBusinessKeyExpression): TaskQueryInterface;
+    public function processInstanceBusinessKeyLikeExpression(?string $processInstanceBusinessKeyExpression): TaskQueryInterface;
 
     /** Only select tasks for the given execution. */
-    public function executionId(string $executionId): TaskQueryInterface;
+    public function executionId(?string $executionId): TaskQueryInterface;
 
     /** Only select task which have one of the activity instance ids. **/
     public function activityInstanceIdIn(array $activityInstanceIds): TaskQueryInterface;
 
     /** Only select tasks that are created on the given date. **/
-    public function taskCreatedOn(string $createTime): TaskQueryInterface;
+    public function taskCreatedOn(?string $createTime): TaskQueryInterface;
 
     /** Only select tasks that are created on the described date by the given expression. **/
-    public function taskCreatedOnExpression(string $createTimeExpression): TaskQueryInterface;
+    public function taskCreatedOnExpression(?string $createTimeExpression): TaskQueryInterface;
 
     /** Only select tasks that are created before the given date. **/
-    public function taskCreatedBefore(string $before): TaskQueryInterface;
+    public function taskCreatedBefore(?string $before): TaskQueryInterface;
 
     /** Only select tasks that are created before the described date by the given expression. **/
-    public function taskCreatedBeforeExpression(string $beforeExpression): TaskQueryInterface;
+    public function taskCreatedBeforeExpression(?string $beforeExpression): TaskQueryInterface;
 
     /** Only select tasks that are created after the given date. **/
-    public function taskCreatedAfter(string $after): TaskQueryInterface;
+    public function taskCreatedAfter(?string $after): TaskQueryInterface;
 
     /** Only select tasks that are created after the described date by the given expression. **/
-    public function taskCreatedAfterExpression(string $afterExpression): TaskQueryInterface;
+    public function taskCreatedAfterExpression(?string $afterExpression): TaskQueryInterface;
 
     /** Only select tasks that have no parent (i.e. do not select subtasks). **/
     public function excludeSubtasks(): TaskQueryInterface;
@@ -377,7 +377,7 @@ interface TaskQueryInterface extends QueryInterface
      * The task definition key is the id of the userTask:
      * <userTask id="xxx" .../>
      **/
-    public function taskDefinitionKey(string $key): TaskQueryInterface;
+    public function taskDefinitionKey(?string $key): TaskQueryInterface;
 
     /**
      * Only select tasks with a taskDefinitionKey that match the given parameter.
@@ -385,7 +385,7 @@ interface TaskQueryInterface extends QueryInterface
      * The task definition key is the id of the userTask:
      * <userTask id="xxx" .../>
      **/
-    public function taskDefinitionKeyLike(string $keyLike): TaskQueryInterface;
+    public function taskDefinitionKeyLike(?string $keyLike): TaskQueryInterface;
 
     /** Only select tasks which have one of the taskDefinitionKeys. **/
     public function taskDefinitionKeyIn(array $taskDefinitionKeys): TaskQueryInterface;
@@ -393,7 +393,7 @@ interface TaskQueryInterface extends QueryInterface
     /**
      * Select the tasks which are sub tasks of the given parent task.
      */
-    public function taskParentTaskId(string $parentTaskId): TaskQueryInterface;
+    public function taskParentTaskId(?string $parentTaskId): TaskQueryInterface;
 
     /**
      * All queries for task-, process- and case-variables will match the variable names in a case-insensitive way.
@@ -409,7 +409,7 @@ interface TaskQueryInterface extends QueryInterface
      * Only select tasks which have a local task variable with the given name
      * set to the given value.
      */
-    public function taskVariableValueEquals(string $variableName, $variableValue): TaskQueryInterface;
+    public function taskVariableValueEquals(?string $variableName, $variableValue): TaskQueryInterface;
 
     /**
      * Only select tasks which have a local task variable with the given name, but
@@ -417,44 +417,44 @@ interface TaskQueryInterface extends QueryInterface
      * Byte-arrays and Serializable objects (which are not primitive type wrappers)
      * are not supported.
      */
-    public function taskVariableValueNotEquals(string $variableName, $variableValue): TaskQueryInterface;
+    public function taskVariableValueNotEquals(?string $variableName, $variableValue): TaskQueryInterface;
 
     /**
      * Only select tasks which have a local task variable with the given name
      * matching the given value.
      * The syntax is that of SQL: for example usage: valueLike(%value%)
      */
-    public function taskVariableValueLike(string $variableName, string $variableValue): TaskQueryInterface;
+    public function taskVariableValueLike(?string $variableName, ?string $variableValue): TaskQueryInterface;
 
     /**
      * Only select tasks which have a local task variable with the given name
      * and a value greater than the given one.
      */
-    public function taskVariableValueGreaterThan(string $variableName, $variableValue): TaskQueryInterface;
+    public function taskVariableValueGreaterThan(?string $variableName, $variableValue): TaskQueryInterface;
 
     /**
      * Only select tasks which have a local task variable with the given name
      * and a value greater than or equal to the given one.
      */
-    public function taskVariableValueGreaterThanOrEquals(string $variableName, $variableValue): TaskQueryInterface;
+    public function taskVariableValueGreaterThanOrEquals(?string $variableName, $variableValue): TaskQueryInterface;
 
     /**
      * Only select tasks which have a local task variable with the given name
      * and a value less than the given one.
      */
-    public function taskVariableValueLessThan(string $variableName, $variableValue): TaskQueryInterface;
+    public function taskVariableValueLessThan(?string $variableName, $variableValue): TaskQueryInterface;
 
     /**
      * Only select tasks which have a local task variable with the given name
      * and a value less than or equal to the given one.
      */
-    public function taskVariableValueLessThanOrEquals(string $variableName, $variableValue): TaskQueryInterface;
+    public function taskVariableValueLessThanOrEquals(?string $variableName, $variableValue): TaskQueryInterface;
 
     /**
      * Only select tasks which have are part of a process that have a variable
      * with the given name set to the given value.
      */
-    public function processVariableValueEquals(string $variableName, $variableValue): TaskQueryInterface;
+    public function processVariableValueEquals(?string $variableName, $variableValue): TaskQueryInterface;
 
     /**
      * Only select tasks which have a variable with the given name, but
@@ -462,49 +462,49 @@ interface TaskQueryInterface extends QueryInterface
      * Byte-arrays and Serializable objects (which are not primitive type wrappers)
      * are not supported.
      */
-    public function processVariableValueNotEquals(string $variableName, $variableValue): TaskQueryInterface;
+    public function processVariableValueNotEquals(?string $variableName, $variableValue): TaskQueryInterface;
 
     /**
      * Only select tasks which are part of a process that have a variable
      * with the given name and matching the given value.
      * The syntax is that of SQL: for example usage: valueLike(%value%)*/
-    public function processVariableValueLike(string $variableName, string $variableValue): TaskQueryInterface;
+    public function processVariableValueLike(?string $variableName, ?string $variableValue): TaskQueryInterface;
 
     /**
      * Only select tasks which are part of a process that have a variable
      * with the given name and not matching the given value.
      * The syntax is that of SQL: for example usage: valueNotLike(%value%)*/
-    public function processVariableValueNotLike(string $variableName, string $variableValue): TaskQueryInterface;
+    public function processVariableValueNotLike(?string $variableName, ?string $variableValue): TaskQueryInterface;
 
     /**
      * Only select tasks which are part of a process that have a variable
      * with the given name and a value greater than the given one.
      */
-    public function processVariableValueGreaterThan(string $variableName, $variableValue): TaskQueryInterface;
+    public function processVariableValueGreaterThan(?string $variableName, $variableValue): TaskQueryInterface;
 
     /**
      * Only select tasks which are part of a process that have a variable
      * with the given name and a value greater than or equal to the given one.
      */
-    public function processVariableValueGreaterThanOrEquals(string $variableName, $variableValue): TaskQueryInterface;
+    public function processVariableValueGreaterThanOrEquals(?string $variableName, $variableValue): TaskQueryInterface;
 
     /**
      * Only select tasks which are part of a process that have a variable
      * with the given name and a value less than the given one.
      */
-    public function processVariableValueLessThan(string $variableName, $variableValue): TaskQueryInterface;
+    public function processVariableValueLessThan(?string $variableName, $variableValue): TaskQueryInterface;
 
     /**
      * Only select tasks which are part of a process that have a variable
      * with the given name and a value greater than or equal to the given one.
      */
-    public function processVariableValueLessThanOrEquals(string $variableName, $variableValue): TaskQueryInterface;
+    public function processVariableValueLessThanOrEquals(?string $variableName, $variableValue): TaskQueryInterface;
 
    /**
      * Only select tasks which are part of a process instance which has the given
      * process definition key.
      */
-    public function processDefinitionKey(string $processDefinitionKey): TaskQueryInterface;
+    public function processDefinitionKey(?string $processDefinitionKey): TaskQueryInterface;
 
     /**
      * Only select tasks which are part of a process instance which has one of the
@@ -516,24 +516,24 @@ interface TaskQueryInterface extends QueryInterface
      * Only select tasks which are part of a process instance which has the given
      * process definition id.
      */
-    public function processDefinitionId(string $processDefinitionId): TaskQueryInterface;
+    public function processDefinitionId(?string $processDefinitionId): TaskQueryInterface;
 
     /**
      * Only select tasks which are part of a process instance which has the given
      * process definition name.
      */
-    public function processDefinitionName(string $processDefinitionName): TaskQueryInterface;
+    public function processDefinitionName(?string $processDefinitionName): TaskQueryInterface;
 
     /**
      * Only select tasks which are part of a process instance which process definition
      * name  is like the given parameter.
      * The syntax is that of SQL: for example usage: nameLike(%processDefinitionName%)*/
-    public function processDefinitionNameLike(string $processDefinitionName): TaskQueryInterface;
+    public function processDefinitionNameLike(?string $processDefinitionName): TaskQueryInterface;
 
     /**
      * Only select tasks with the given due date.
      */
-    public function dueDate(string $dueDate): TaskQueryInterface;
+    public function dueDate(?string $dueDate): TaskQueryInterface;
 
     /**
      * <p>Only select tasks with the described due date by the given expression.</p>
@@ -546,12 +546,12 @@ interface TaskQueryInterface extends QueryInterface
      *  <code>enableExpressionsInAdhocQueries</code> (default <code>false</code>) and
      *  <code>enableExpressionsInStoredQueries</code> (default <code>true</code>) to <code>true</code>.
      */
-    public function dueDateExpression(string $dueDateExpression): TaskQueryInterface;
+    public function dueDateExpression(?string $dueDateExpression): TaskQueryInterface;
 
     /**
      * Only select tasks which have a due date before the given date.
      */
-    public function dueBefore(string $dueDate): TaskQueryInterface;
+    public function dueBefore(?string $dueDate): TaskQueryInterface;
 
     /**
      * <p>Only select tasks which have a due date before the described date by the given expression.</p>
@@ -564,12 +564,12 @@ interface TaskQueryInterface extends QueryInterface
      *  <code>enableExpressionsInAdhocQueries</code> (default <code>false</code>) and
      *  <code>enableExpressionsInStoredQueries</code> (default <code>true</code>) to <code>true</code>.
      */
-    public function dueBeforeExpression(string $dueDateExpression): TaskQueryInterface;
+    public function dueBeforeExpression(?string $dueDateExpression): TaskQueryInterface;
 
     /**
      * Only select tasks which have a due date after the given date.
      */
-    public function dueAfter(string $dueDate): TaskQueryInterface;
+    public function dueAfter(?string $dueDate): TaskQueryInterface;
 
     /**
      * <p>Only select tasks which have a due date after the described date by the given expression.</p>
@@ -582,12 +582,12 @@ interface TaskQueryInterface extends QueryInterface
      *  <code>enableExpressionsInAdhocQueries</code> (default <code>false</code>) and
      *  <code>enableExpressionsInStoredQueries</code> (default <code>true</code>) to <code>true</code>.
      */
-    public function dueAfterExpression(string $dueDateExpression): TaskQueryInterface;
+    public function dueAfterExpression(?string $dueDateExpression): TaskQueryInterface;
 
     /**
      * Only select tasks with the given follow-up date.
      */
-    public function followUpDate(string $followUpDate): TaskQueryInterface;
+    public function followUpDate(?string $followUpDate): TaskQueryInterface;
 
     /**
      * <p>Only select tasks with the described follow-up date by the given expression.</p>
@@ -600,12 +600,12 @@ interface TaskQueryInterface extends QueryInterface
      *  <code>enableExpressionsInAdhocQueries</code> (default <code>false</code>) and
      *  <code>enableExpressionsInStoredQueries</code> (default <code>true</code>) to <code>true</code>.
      */
-    public function followUpDateExpression(string $followUpDateExpression): TaskQueryInterface;
+    public function followUpDateExpression(?string $followUpDateExpression): TaskQueryInterface;
 
     /**
      * Only select tasks which have a follow-up date before the given date.
      */
-    public function followUpBefore(string $followUpDate): TaskQueryInterface;
+    public function followUpBefore(?string $followUpDate): TaskQueryInterface;
 
     /**
      * <p>Only select tasks which have a follow-up date before the described date by the given expression.</p>
@@ -618,13 +618,13 @@ interface TaskQueryInterface extends QueryInterface
      *  <code>enableExpressionsInAdhocQueries</code> (default <code>false</code>) and
      *  <code>enableExpressionsInStoredQueries</code> (default <code>true</code>) to <code>true</code>.
      */
-    public function followUpBeforeExpression(string $followUpDateExpression): TaskQueryInterface;
+    public function followUpBeforeExpression(?string $followUpDateExpression): TaskQueryInterface;
 
     /**
      * Only select tasks which have no follow-up date or a follow-up date before the given date.
      * Serves the typical use case "give me all tasks without follow-up or follow-up date which is already due"
      */
-    public function followUpBeforeOrNotExistent(string $followUpDate): TaskQueryInterface;
+    public function followUpBeforeOrNotExistent(?string $followUpDate): TaskQueryInterface;
 
     /**
      * <p>Only select tasks which have no follow-up date or a follow-up date before the described date by the given expression.
@@ -638,12 +638,12 @@ interface TaskQueryInterface extends QueryInterface
      *  <code>enableExpressionsInAdhocQueries</code> (default <code>false</code>) and
      *  <code>enableExpressionsInStoredQueries</code> (default <code>true</code>) to <code>true</code>.
      */
-    public function followUpBeforeOrNotExistentExpression(string $followUpDateExpression): TaskQueryInterface;
+    public function followUpBeforeOrNotExistentExpression(?string $followUpDateExpression): TaskQueryInterface;
 
     /**
      * Only select tasks which have a follow-up date after the given date.
      */
-    public function followUpAfter(string $followUpDate): TaskQueryInterface;
+    public function followUpAfter(?string $followUpDate): TaskQueryInterface;
 
     /**
      * <p>Only select tasks which have a follow-up date after the described date by the given expression.</p>
@@ -656,7 +656,7 @@ interface TaskQueryInterface extends QueryInterface
      *  <code>enableExpressionsInAdhocQueries</code> (default <code>false</code>) and
      *  <code>enableExpressionsInStoredQueries</code> (default <code>true</code>) to <code>true</code>.
      */
-    public function followUpAfterExpression(string $followUpDateExpression): TaskQueryInterface;
+    public function followUpAfterExpression(?string $followUpDateExpression): TaskQueryInterface;
 
     /**
      * Only select tasks which are suspended, because its process instance was suspended.
@@ -793,7 +793,7 @@ interface TaskQueryInterface extends QueryInterface
      *
      * @throws ProcessEngineException When method has been executed within "or query".
      * */
-    public function orderByProcessVariable(string $variableName, ValueTypeInterface $valueType): TaskQueryInterface;
+    public function orderByProcessVariable(?string $variableName, ValueTypeInterface $valueType): TaskQueryInterface;
 
     /**
      * Order by an execution variable value of a certain type. Calling this method multiple times
@@ -802,7 +802,7 @@ interface TaskQueryInterface extends QueryInterface
      *
      * @throws ProcessEngineException When method has been executed within "or query".
      * */
-    public function orderByExecutionVariable(string $variableName, ValueTypeInterface $valueType): TaskQueryInterface;
+    public function orderByExecutionVariable(?string $variableName, ValueTypeInterface $valueType): TaskQueryInterface;
 
     /**
      * Order by a task variable value of a certain type. Calling this method multiple times
@@ -811,7 +811,7 @@ interface TaskQueryInterface extends QueryInterface
      *
      * @throws ProcessEngineException When method has been executed within "or query".
      * */
-    public function orderByTaskVariable(string $variableName, ValueTypeInterface $valueType): TaskQueryInterface;
+    public function orderByTaskVariable(?string $variableName, ValueTypeInterface $valueType): TaskQueryInterface;
 
     /**
      * Order by a task variable value of a certain type. Calling this method multiple times
@@ -820,7 +820,7 @@ interface TaskQueryInterface extends QueryInterface
      *
      * @throws ProcessEngineException When method has been executed within "or query".
      * */
-    public function orderByCaseExecutionVariable(string $variableName, ValueTypeInterface $valueType): TaskQueryInterface;
+    public function orderByCaseExecutionVariable(?string $variableName, ValueTypeInterface $valueType): TaskQueryInterface;
 
     /**
      * Order by a task variable value of a certain type. Calling this method multiple times
@@ -829,7 +829,7 @@ interface TaskQueryInterface extends QueryInterface
      *
      * @throws ProcessEngineException When method has been executed within "or query".
      * */
-    public function orderByCaseInstanceVariable(string $variableName, ValueTypeInterface $valueType): TaskQueryInterface;
+    public function orderByCaseInstanceVariable(?string $variableName, ValueTypeInterface $valueType): TaskQueryInterface;
 
     /**
      * Order by tenant id (needs to be followed by {@link #asc()} or {@link #desc()}).

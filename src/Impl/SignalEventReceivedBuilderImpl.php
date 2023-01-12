@@ -19,11 +19,11 @@ class SignalEventReceivedBuilderImpl implements SignalEventReceivedBuilderInterf
     protected $signalName;
     protected $executionId = null;
     protected $tenantId = null;
-    protected $isTenantIdSet = false;
+    protected bool $isTenantIdSet = false;
 
     protected $variables = null;
 
-    public function __construct(CommandExecutorInterface $commandExecutor, string $signalName)
+    public function __construct(CommandExecutorInterface $commandExecutor, ?string $signalName)
     {
         $this->commandExecutor = $commandExecutor;
         $this->signalName = $signalName;
@@ -40,14 +40,14 @@ class SignalEventReceivedBuilderImpl implements SignalEventReceivedBuilderInterf
         return $this;
     }
 
-    public function executionId(string $executionId): SignalEventReceivedBuilderInterface
+    public function executionId(?string $executionId): SignalEventReceivedBuilderInterface
     {
         EnsureUtil::ensureNotNull("executionId", "executionId", $executionId);
         $this->executionId = $executionId;
         return $this;
     }
 
-    public function tenantId(string $tenantId): SignalEventReceivedBuilderInterface
+    public function tenantId(?string $tenantId): SignalEventReceivedBuilderInterface
     {
         EnsureUtil::ensureNotNull(
             "The tenant-id cannot be null. Use 'withoutTenantId()' if you want to send the signal to a process definition or an execution which has no tenant-id.",
@@ -79,12 +79,12 @@ class SignalEventReceivedBuilderImpl implements SignalEventReceivedBuilderInterf
         $this->commandExecutor->execute($command);
     }
 
-    public function getSignalName(): string
+    public function getSignalName(): ?string
     {
         return $this->signalName;
     }
 
-    public function getExecutionId(): string
+    public function getExecutionId(): ?string
     {
         return $this->executionId;
     }

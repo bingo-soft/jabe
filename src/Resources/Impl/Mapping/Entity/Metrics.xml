@@ -22,12 +22,12 @@
   <insert id="insertMeterLog" parameterType="Jabe\Impl\Persistence\Entity\MeterLogEntity">
     insert into ${prefix}ACT_RU_METER_LOG (ID_, NAME_, REPORTER_, VALUE_, TIMESTAMP_, MILLISECONDS_)
     values (
-    #{id ,dbalType=VARCHAR},
-    #{name ,dbalType=VARCHAR},
-    #{reporter, dbalType=VARCHAR},
-    #{value ,dbalType=BIGINT},
-    #{timestamp, dbalType=VARCHAR},
-    #{milliseconds ,dbalType=BIGINT}
+    #{id:VARCHAR},
+    #{name:VARCHAR},
+    #{reporter:VARCHAR},
+    #{value },
+    #{timestamp:VARCHAR},
+    #{milliseconds }
     )
   </insert>
 
@@ -41,10 +41,10 @@
     delete from ${prefix}ACT_RU_METER_LOG
     <where>
       <if test="reporter != null">
-        and REPORTER_ = #{reporter, dbalType=VARCHAR}
+        and REPORTER_ = #{reporter:VARCHAR}
       </if>
       <if test="milliseconds != null">
-        and MILLISECONDS_ <= #{milliseconds, dbalType=BIGINT}
+        and MILLISECONDS_ &lt;= #{milliseconds}
       </if>
 
     </where>
@@ -80,10 +80,10 @@
         and RES.REPORTER_ = #{reporter}
       </if>
       <if test="startDate != null">
-        and RES.TIMESTAMP_ >= #{startDate}
+        and RES.TIMESTAMP_ &gt;= #{startDate}
       </if>
       <if test="endDate != null">
-        and RES.TIMESTAMP_ < #{endDate}
+        and RES.TIMESTAMP_ &lt; #{endDate}
       </if>
     </where>
   </sql>
@@ -98,10 +98,10 @@
         and RES.REPORTER_ = #{reporter}
       </if>
       <if test="startDate != null">
-        and RES.MILLISECONDS_ >= #{startDateMilliseconds}
+        and RES.MILLISECONDS_ &gt;= #{startDateMilliseconds}
       </if>
       <if test="endDate != null">
-        and RES.MILLISECONDS_ < #{endDateMilliseconds}
+        and RES.MILLISECONDS_ &lt; #{endDateMilliseconds}
       </if>
     </where>
   </sql>
@@ -109,9 +109,9 @@
 
   <resultMap id="meterResultIntervallMap" type="Jabe\Impl\Persistence\Entity\MetricIntervalEntity">
     <constructor>
-      <idArg column="INTERVAL_" dbalType="BIGINT" javaType="java.lang.Long"/>
-      <idArg column="NAME_" javaType="java.lang.String" dbalType="VARCHAR" />
-      <idArg column="REPORTER_" javaType="java.lang.String" dbalType="VARCHAR"/>
+      <idArg column="INTERVAL_" dbalType="BIGINT" phpType="int"/>
+      <idArg column="NAME_" phpType="string" dbalType="VARCHAR" />
+      <idArg column="REPORTER_" phpType="string" dbalType="VARCHAR"/>
     </constructor>
     <result property="value" column="VALUE_" dbalType="BIGINT" />
   </resultMap>

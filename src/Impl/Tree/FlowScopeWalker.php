@@ -9,7 +9,7 @@ use Jabe\Impl\Pvm\Process\{
 
 class FlowScopeWalker extends SingleReferenceWalker
 {
-    public function __construct(ScopeImpl $startActivity)
+    public function __construct(?ScopeImpl $startActivity)
     {
         parent::__construct($startActivity);
     }

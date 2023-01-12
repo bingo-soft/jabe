@@ -6,7 +6,7 @@ interface ValueTypeResolverInterface
 {
     public function addType(ValueTypeInterface $type): void;
 
-    public function typeForName(string $typeName): ValueTypeInterface;
+    public function typeForName(?string $typeName): ValueTypeInterface;
 
     /**
      * Returns all (transitive) sub types of the provided type

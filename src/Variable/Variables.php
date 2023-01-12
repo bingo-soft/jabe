@@ -71,7 +71,7 @@ class Variables
     /**
      * Shortcut for {@code Variables.createVariables().putValue(name, value)}
      */
-    public static function putValue(string $name, $value): VariableMapInterface
+    public static function putValue(?string $name, $value): VariableMapInterface
     {
         return self::createVariables()->putValue($name, $value);
     }
@@ -79,7 +79,7 @@ class Variables
     /**
      * Shortcut for {@code Variables.createVariables().putValueTyped(name, value)}
      */
-    public static function putValueTyped(string $name, TypedValueInterface $value): VariableMapInterface
+    public static function putValueTyped(?string $name, TypedValueInterface $value): VariableMapInterface
     {
         return self::createVariables()->putValueTyped($name, $value);
     }
@@ -141,7 +141,7 @@ class Variables
     /**
      * Creates a new BytesValue that encapsulates the given <code>bytes</code>
      */
-    public static function byteArrayValue(string $bytes, ?bool $isTransient = null): BytesValueInterface
+    public static function byteArrayValue(?string $bytes, ?bool $isTransient = null): BytesValueInterface
     {
         return new BytesValueImpl($bytes, $isTransient ?? false);
     }
@@ -211,7 +211,7 @@ class Variables
      * Returns a builder to create a new FileValue with the given
      * {@code filename}.
      */
-    public static function fileValue(string $filename, ?bool $isTransient = null): FileValueBuilderInterface
+    public static function fileValue(?string $filename, ?bool $isTransient = null): FileValueBuilderInterface
     {
         if ($isTransient !== null) {
             return (new FileValueBuilderImpl($filename))->setTransient($isTransient ?? false);

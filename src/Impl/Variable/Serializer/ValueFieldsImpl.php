@@ -20,7 +20,7 @@ class ValueFieldsImpl implements ValueFieldsInterface
         return $this->text;
     }
 
-    public function setTextValue(string $textValue): void
+    public function setTextValue(?string $textValue): void
     {
         $this->text = $textValue;
     }
@@ -30,7 +30,7 @@ class ValueFieldsImpl implements ValueFieldsInterface
         return $this->text2;
     }
 
-    public function setTextValue2(string $textValue2): void
+    public function setTextValue2(?string $textValue2): void
     {
         $this->text2 = $textValue2;
     }

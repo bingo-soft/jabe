@@ -24,25 +24,25 @@ class TablePageQueryImpl extends ListQueryParameterObject implements TablePageQu
         $this->commandExecutor = $commandExecutor;
     }
 
-    public function tableName(string $tableName): TablePageQueryImpl
+    public function tableName(?string $tableName): TablePageQueryImpl
     {
         $this->tableName = $tableName;
         return $this;
     }
 
-    public function orderAsc(string $column): TablePageQueryImpl
+    public function orderAsc(?string $column): TablePageQueryImpl
     {
         $this->orderingProperties[] = new QueryOrderingProperty(new QueryPropertyImpl($column), Direction::ascending());
         return $this;
     }
 
-    public function orderDesc(string $column): TablePageQueryImpl
+    public function orderDesc(?string $column): TablePageQueryImpl
     {
         $this->orderingProperties[] = new QueryOrderingProperty(new QueryPropertyImpl($column), Direction::descending());
         return $this;
     }
 
-    public function getTableName(): string
+    public function getTableName(): ?string
     {
         return $this->tableName;
     }
@@ -62,8 +62,13 @@ class TablePageQueryImpl extends ListQueryParameterObject implements TablePageQu
             ->getTablePage($this);
     }
 
-    public function getOrder(): string
+    public function getOrder(): ?string
     {
         return $this->order;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

@@ -12,22 +12,22 @@ class CleanableHistoricBatchesReportResultEntity implements CleanableHistoricBat
     protected $finishedBatchesCount;
     protected $cleanableBatchesCount;
 
-    public function getBatchType(): string
+    public function getBatchType(): ?string
     {
         return $this->batchType;
     }
 
-    public function setBatchType(string $batchType): void
+    public function setBatchType(?string $batchType): void
     {
         $this->batchType = $batchType;
     }
 
-    public function getHistoryTimeToLive(): int
+    public function getHistoryTimeToLive(): ?int
     {
         return $this->historyTimeToLive;
     }
 
-    public function setHistoryTimeToLive(int $historyTimeToLive): void
+    public function setHistoryTimeToLive(?int $historyTimeToLive): void
     {
         $this->historyTimeToLive = $historyTimeToLive;
     }

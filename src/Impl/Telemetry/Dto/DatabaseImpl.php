@@ -9,7 +9,7 @@ class DatabaseImpl implements DatabaseInterface
     protected $vendor;
     protected $version;
 
-    public function __construct(string $vendor, string $version)
+    public function __construct(?string $vendor, ?string $version)
     {
         $this->vendor = $vendor;
         $this->version = $version;
@@ -23,22 +23,22 @@ class DatabaseImpl implements DatabaseInterface
         ]);
     }
 
-    public function getVendor(): string
+    public function getVendor(): ?string
     {
         return $this->vendor;
     }
 
-    public function setVendor(string $vendor): void
+    public function setVendor(?string $vendor): void
     {
         $this->vendor = $vendor;
     }
 
-    public function getVersion(): string
+    public function getVersion(): ?string
     {
         return $this->version;
     }
 
-    public function setVersion(string $version): void
+    public function setVersion(?string $version): void
     {
         $this->version = $version;
     }

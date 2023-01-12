@@ -8,7 +8,7 @@ class ExtensionErrorEventDefinition extends ErrorEventDefinition
 {
     private $expression;
 
-    public function __construct(string $handlerActivityId, ExpressionInterface $expression)
+    public function __construct(?string $handlerActivityId, ExpressionInterface $expression)
     {
         parent::__construct($handlerActivityId);
         $this->expression = $expression;

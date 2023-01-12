@@ -17,9 +17,9 @@ use Jabe\Impl\Util\EnsureUtil;
 class SetTaskVariablesCmd extends AbstractSetVariableCmd implements VariableInstanceLifecycleListenerInterface
 {
 
-    protected $taskLocalVariablesUpdated = false;
+    protected bool $taskLocalVariablesUpdated = false;
 
-    public function __construct(string $taskId, array $variables, bool $isLocal)
+    public function __construct(?string $taskId, array $variables, bool $isLocal)
     {
         parent::__construct($taskId, $variables, $isLocal);
     }

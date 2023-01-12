@@ -2,6 +2,10 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
+use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface
+};
 use Jabe\History\{
     HistoricVariableInstanceInterface,
     HistoricVariableInstanceQueryInterface
@@ -16,7 +20,7 @@ use Jabe\Impl\Persistence\AbstractHistoricManager;
 
 class HistoricVariableInstanceManager extends AbstractHistoricManager
 {
-    public function deleteHistoricVariableInstanceByVariableInstanceId(string $historicVariableInstanceId): void
+    public function deleteHistoricVariableInstanceByVariableInstanceId(?string $historicVariableInstanceId): void
     {
         if ($this->isHistoryEnabled()) {
             $historicVariableInstance = $this->findHistoricVariableInstanceByVariableInstanceId($historicVariableInstanceId);
@@ -40,7 +44,7 @@ class HistoricVariableInstanceManager extends AbstractHistoricManager
         $this->deleteHistoricVariableInstances($parameters);
     }
 
-    /*public function deleteHistoricVariableInstanceByCaseInstanceId(string $historicCaseInstanceId) {
+    /*public function deleteHistoricVariableInstanceByCaseInstanceId(?string $historicCaseInstanceId) {
         $this->deleteHistoricVariableInstancesByProcessCaseInstanceId(null, $historicCaseInstanceId);
     }
 
@@ -57,7 +61,7 @@ class HistoricVariableInstanceManager extends AbstractHistoricManager
         $this->getDbEntityManager()->deletePreserveOrder(HistoricVariableInstanceEntity::class, "deleteHistoricVariableInstanceByIds", $parameters);
     }
 
-    /*protected function deleteHistoricVariableInstancesByProcessCaseInstanceId(string $historicProcessInstanceId, string $historicCaseInstanceId): void
+    /*protected function deleteHistoricVariableInstancesByProcessCaseInstanceId(?string $historicProcessInstanceId, ?string $historicCaseInstanceId): void
     {
         ensureOnlyOneNotNull("Only the process instance or case instance id should be set", historicProcessInstanceId, historicCaseInstanceId);
         if ($this->isHistoryEnabled()) {
@@ -86,12 +90,12 @@ class HistoricVariableInstanceManager extends AbstractHistoricManager
         }
     }*/
 
-    public function findHistoricVariableInstancesByProcessInstanceId(string $processInstanceId): array
+    public function findHistoricVariableInstancesByProcessInstanceId(?string $processInstanceId): array
     {
         return $this->getDbEntityManager()->selectList("selectHistoricVariablesByProcessInstanceId", $processInstanceId);
     }
 
-    /*public List<HistoricVariableInstance> findHistoricVariableInstancesByCaseInstanceId(string $caseInstanceId) {
+    /*public List<HistoricVariableInstance> findHistoricVariableInstancesByCaseInstanceId(?string $caseInstanceId) {
         return getDbEntityManager().selectList("selectHistoricVariablesByCaseInstanceId", caseInstanceId);
     }*/
 
@@ -101,18 +105,18 @@ class HistoricVariableInstanceManager extends AbstractHistoricManager
         return $this->getDbEntityManager()->selectOne("selectHistoricVariableInstanceCountByQueryCriteria", $historicProcessVariableQuery);
     }
 
-    public function findHistoricVariableInstancesByQueryCriteria(HistoricVariableInstanceQueryImpl $historicProcessVariableQuery, Page $page): array
+    public function findHistoricVariableInstancesByQueryCriteria(HistoricVariableInstanceQueryImpl $historicProcessVariableQuery, ?Page $page): array
     {
         $this->configureQuery($historicProcessVariableQuery);
         return $this->getDbEntityManager()->selectList("selectHistoricVariableInstanceByQueryCriteria", $historicProcessVariableQuery, $page);
     }
 
-    public function findHistoricVariableInstanceByVariableInstanceId(string $variableInstanceId): ?HistoricVariableInstanceEntity
+    public function findHistoricVariableInstanceByVariableInstanceId(?string $variableInstanceId): ?HistoricVariableInstanceEntity
     {
         return $this->getDbEntityManager()->selectOne("selectHistoricVariableInstanceByVariableInstanceId", $variableInstanceId);
     }
 
-    public function deleteHistoricVariableInstancesByTaskId(string $taskId): void
+    public function deleteHistoricVariableInstancesByTaskId(?string $taskId): void
     {
         if ($this->isHistoryEnabled()) {
             $historicProcessVariableQuery = (new HistoricVariableInstanceQueryImpl())->taskIdIn($taskId);
@@ -123,7 +127,7 @@ class HistoricVariableInstanceManager extends AbstractHistoricManager
         }
     }
 
-    public function addRemovalTimeToVariableInstancesByRootProcessInstanceId(string $rootProcessInstanceId, string $removalTime): void
+    public function addRemovalTimeToVariableInstancesByRootProcessInstanceId(?string $rootProcessInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["rootProcessInstanceId"] = $rootProcessInstanceId;
@@ -133,7 +137,7 @@ class HistoricVariableInstanceManager extends AbstractHistoricManager
             ->updatePreserveOrder(HistoricVariableInstanceEntity::class, "updateHistoricVariableInstancesByRootProcessInstanceId", $parameters);
     }
 
-    public function addRemovalTimeToVariableInstancesByProcessInstanceId(string $processInstanceId, string $removalTime): void
+    public function addRemovalTimeToVariableInstancesByProcessInstanceId(?string $processInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["processInstanceId"] = $processInstanceId;
@@ -153,13 +157,13 @@ class HistoricVariableInstanceManager extends AbstractHistoricManager
         return $this->getDbEntityManager()->selectOne("selectHistoricVariableInstanceCountByNativeQuery", $parameterMap);
     }
 
-    protected function configureQuery(HistoricVariableInstanceQueryImpl $query): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         $this->getAuthorizationManager()->configureHistoricVariableInstanceQuery($query);
         $this->getTenantManager()->configureQuery($query);
     }
 
-    public function deleteHistoricVariableInstancesByRemovalTime(string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
+    public function deleteHistoricVariableInstancesByRemovalTime(?string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
     {
         $parameters = [];
         $parameters["removalTime"] = $removalTime;

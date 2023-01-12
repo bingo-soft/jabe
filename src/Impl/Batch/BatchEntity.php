@@ -34,10 +34,10 @@ class BatchEntity implements BatchInterface, DbEntityInterface, HasDbReferencesI
     protected $id;
     protected $type;
 
-    protected $totalJobs;
-    protected $jobsCreated;
-    protected $batchJobsPerSeed;
-    protected $invocationsPerBatchJob;
+    protected int $totalJobs = 0;
+    protected int $jobsCreated = 0;
+    protected int $batchJobsPerSeed = 0;
+    protected int $invocationsPerBatchJob = 0;
 
     protected $seedJobDefinitionId;
     protected $monitorJobDefinitionId;
@@ -50,7 +50,7 @@ class BatchEntity implements BatchInterface, DbEntityInterface, HasDbReferencesI
 
     protected $suspensionState;
 
-    protected $revision;
+    protected int $revision = 0;
 
     // transient
     protected $seedJobDefinition;
@@ -58,6 +58,9 @@ class BatchEntity implements BatchInterface, DbEntityInterface, HasDbReferencesI
     protected $batchJobDefinition;
 
     protected $batchJobHandler;
+
+    protected $startTime;
+    protected $executionStartTime;
 
     public function __construct()
     {
@@ -71,27 +74,27 @@ class BatchEntity implements BatchInterface, DbEntityInterface, HasDbReferencesI
         $this->suspensionState = SuspensionState::active()->getStateCode();
     }
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->id;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function setType(string $type): void
+    public function setType(?string $type): void
     {
         $this->type = $type;
     }
@@ -136,32 +139,32 @@ class BatchEntity implements BatchInterface, DbEntityInterface, HasDbReferencesI
         $this->invocationsPerBatchJob = $invocationsPerBatchJob;
     }
 
-    public function getSeedJobDefinitionId(): string
+    public function getSeedJobDefinitionId(): ?string
     {
         return $this->seedJobDefinitionId;
     }
 
-    public function setSeedJobDefinitionId(string $seedJobDefinitionId): void
+    public function setSeedJobDefinitionId(?string $seedJobDefinitionId): void
     {
         $this->seedJobDefinitionId = $seedJobDefinitionId;
     }
 
-    public function getMonitorJobDefinitionId(): string
+    public function getMonitorJobDefinitionId(): ?string
     {
         return $this->monitorJobDefinitionId;
     }
 
-    public function setMonitorJobDefinitionId(string $monitorJobDefinitionId): void
+    public function setMonitorJobDefinitionId(?string $monitorJobDefinitionId): void
     {
         $this->monitorJobDefinitionId = $monitorJobDefinitionId;
     }
 
-    public function getBatchJobDefinitionId(): string
+    public function getBatchJobDefinitionId(): ?string
     {
         return $this->batchJobDefinitionId;
     }
 
-    public function setBatchJobDefinitionId(string $batchJobDefinitionId): void
+    public function setBatchJobDefinitionId(?string $batchJobDefinitionId): void
     {
         $this->batchJobDefinitionId = $batchJobDefinitionId;
     }
@@ -176,22 +179,22 @@ class BatchEntity implements BatchInterface, DbEntityInterface, HasDbReferencesI
         $this->tenantId = $tenantId;
     }
 
-    public function getCreateUserId(): string
+    public function getCreateUserId(): ?string
     {
         return $this->createUserId;
     }
 
-    public function setCreateUserId(string $createUserId): void
+    public function setCreateUserId(?string $createUserId): void
     {
         $this->createUserId = $createUserId;
     }
 
-    public function getConfiguration(): string
+    public function getConfiguration(): ?string
     {
         return $this->configuration->getByteArrayId();
     }
 
-    public function setConfiguration(string $configuration): void
+    public function setConfiguration(?string $configuration): void
     {
         $this->configuration->setByteArrayId($configuration);
     }
@@ -216,7 +219,7 @@ class BatchEntity implements BatchInterface, DbEntityInterface, HasDbReferencesI
         $this->revision = $revision;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }
@@ -253,12 +256,12 @@ class BatchEntity implements BatchInterface, DbEntityInterface, HasDbReferencesI
         return $this->batchJobDefinition;
     }
 
-    public function getConfigurationBytes(): string
+    public function getConfigurationBytes(): ?string
     {
         return $this->configuration->getByteArrayValue();
     }
 
-    public function setConfigurationBytes(string $configuration): void
+    public function setConfigurationBytes(?string $configuration): void
     {
         $this->configuration->setByteArrayValue($configuration);
     }
@@ -278,7 +281,7 @@ class BatchEntity implements BatchInterface, DbEntityInterface, HasDbReferencesI
         return $persistentState;
     }
 
-    public function createSeedJobDefinition(string $deploymentId): JobDefinitionEntity
+    public function createSeedJobDefinition(?string $deploymentId): JobDefinitionEntity
     {
         $this->seedJobDefinition = new JobDefinitionEntity(self::$BATCH_SEED_JOB_DECLARATION);
         $this->seedJobDefinition->setJobConfiguration($this->id);
@@ -352,7 +355,7 @@ class BatchEntity implements BatchInterface, DbEntityInterface, HasDbReferencesI
         return $monitorJob;
     }
 
-    protected function calculateMonitorJobDueDate(): string
+    protected function calculateMonitorJobDueDate(): ?string
     {
         $pollTime = Context::getCommandContext()
             ->getProcessEngineConfiguration()
@@ -488,5 +491,10 @@ class BatchEntity implements BatchInterface, DbEntityInterface, HasDbReferencesI
         }
 
         return $referenceIdAndClass;
+    }
+
+    public function getDependentEntities(): array
+    {
+        return [];
     }
 }

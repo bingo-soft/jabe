@@ -23,4 +23,9 @@ class GetPropertiesCmd implements CommandInterface
         }
         return $properties;
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

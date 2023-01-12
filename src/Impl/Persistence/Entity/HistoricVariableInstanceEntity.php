@@ -47,7 +47,7 @@ class HistoricVariableInstanceEntity implements ValueFieldsInterface, HistoricVa
     protected $caseExecutionId;*/
 
     protected $name;
-    protected $revision;
+    protected int $revision = 0;
     protected $createTime;
 
     protected $longValue;
@@ -148,22 +148,22 @@ class HistoricVariableInstanceEntity implements ValueFieldsInterface, HistoricVa
         return $this->typedValueField->getSerializer();
     }
 
-    public function getByteArrayValueId(): string
+    public function getByteArrayValueId(): ?string
     {
         return $this->byteArrayField->getByteArrayId();
     }
 
-    public function getByteArrayId(): string
+    public function getByteArrayId(): ?string
     {
         return $this->byteArrayField->getByteArrayId();
     }
 
-    public function setByteArrayId(string $byteArrayId): void
+    public function setByteArrayId(?string $byteArrayId): void
     {
         $this->byteArrayField->setByteArrayId($byteArrayId);
     }
 
-    public function getByteArrayValue(): string
+    public function getByteArrayValue(): ?string
     {
         return $this->byteArrayField->getByteArrayValue();
     }
@@ -178,32 +178,32 @@ class HistoricVariableInstanceEntity implements ValueFieldsInterface, HistoricVa
 
     // getters and setters //////////////////////////////////////////////////////
 
-    public function getSerializerName(): string
+    public function getSerializerName(): ?string
     {
         return $this->typedValueField->getSerializerName();
     }
 
-    public function setSerializerName(string $serializerName): void
+    public function setSerializerName(?string $serializerName): void
     {
         $this->typedValueField->setSerializerName($serializerName);
     }
 
-    public function getTypeName(): string
+    public function getTypeName(): ?string
     {
         return $this->typedValueField->getTypeName();
     }
 
-    public function getVariableTypeName(): string
+    public function getVariableTypeName(): ?string
     {
         return $this->getTypeName();
     }
 
-    public function getVariableName(): string
+    public function getVariableName(): ?string
     {
         return $this->name;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }
@@ -213,12 +213,12 @@ class HistoricVariableInstanceEntity implements ValueFieldsInterface, HistoricVa
         $this->revision = $revision;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
@@ -243,22 +243,22 @@ class HistoricVariableInstanceEntity implements ValueFieldsInterface, HistoricVa
         $this->doubleValue = $doubleValue;
     }
 
-    public function getTextValue(): string
+    public function getTextValue(): ?string
     {
         return $this->textValue;
     }
 
-    public function setTextValue(string $textValue): void
+    public function setTextValue(?string $textValue): void
     {
         $this->textValue = $textValue;
     }
 
-    public function getTextValue2(): string
+    public function getTextValue2(): ?string
     {
         return $this->textValue2;
     }
 
-    public function setTextValue2(string $textValue2): void
+    public function setTextValue2(?string $textValue2): void
     {
         $this->textValue2 = $textValue2;
     }
@@ -273,67 +273,67 @@ class HistoricVariableInstanceEntity implements ValueFieldsInterface, HistoricVa
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }
 
-    public function setProcessDefinitionKey(string $processDefinitionKey): void
+    public function setProcessDefinitionKey(?string $processDefinitionKey): void
     {
         $this->processDefinitionKey = $processDefinitionKey;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function setProcessDefinitionId(string $processDefinitionId): void
+    public function setProcessDefinitionId(?string $processDefinitionId): void
     {
         $this->processDefinitionId = $processDefinitionId;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
 
-    public function setProcessInstanceId(string $processInstanceId): void
+    public function setProcessInstanceId(?string $processInstanceId): void
     {
         $this->processInstanceId = $processInstanceId;
     }
 
-    public function getTaskId(): string
+    public function getTaskId(): ?string
     {
         return $this->taskId;
     }
 
-    public function setTaskId(string $taskId): void
+    public function setTaskId(?string $taskId): void
     {
         $this->taskId = $taskId;
     }
 
-    public function getExecutionId(): string
+    public function getExecutionId(): ?string
     {
         return $this->executionId;
     }
 
-    public function setExecutionId(string $executionId): void
+    public function setExecutionId(?string $executionId): void
     {
         $this->executionId = $executionId;
     }
 
-    public function getActivityInstanceId(): string
+    public function getActivityInstanceId(): ?string
     {
         return $this->activityInstanceId;
     }
 
-    public function setActivityInstanceId(string $activityInstanceId): void
+    public function setActivityInstanceId(?string $activityInstanceId): void
     {
         $this->activityInstanceId = $activityInstanceId;
     }
@@ -371,7 +371,7 @@ class HistoricVariableInstanceEntity implements ValueFieldsInterface, HistoricVa
       $this->caseExecutionId = caseExecutionId;
     }*/
 
-    public function getErrorMessage(): string
+    public function getErrorMessage(): ?string
     {
         return $this->typedValueField->getErrorMessage();
     }
@@ -386,42 +386,42 @@ class HistoricVariableInstanceEntity implements ValueFieldsInterface, HistoricVa
         $this->tenantId = $tenantId;
     }
 
-    public function getState(): string
+    public function getState(): ?string
     {
         return $this->state;
     }
 
-    public function setState(string $state): void
+    public function setState(?string $state): void
     {
         $this->state = $state;
     }
 
-    public function getCreateTime(): string
+    public function getCreateTime(): ?string
     {
         return $this->createTime;
     }
 
-    public function setCreateTime(string $createTime): void
+    public function setCreateTime(?string $createTime): void
     {
         $this->createTime = $createTime;
     }
 
-    public function getRootProcessInstanceId(): string
+    public function getRootProcessInstanceId(): ?string
     {
         return $this->rootProcessInstanceId;
     }
 
-    public function setRootProcessInstanceId(string $rootProcessInstanceId): void
+    public function setRootProcessInstanceId(?string $rootProcessInstanceId): void
     {
         $this->rootProcessInstanceId = $rootProcessInstanceId;
     }
 
-    public function getRemovalTime(): string
+    public function getRemovalTime(): ?string
     {
         return $this->removalTime;
     }
 
-    public function setRemovalTime(string $removalTime): void
+    public function setRemovalTime(?string $removalTime): void
     {
         $this->removalTime = $removalTime;
     }

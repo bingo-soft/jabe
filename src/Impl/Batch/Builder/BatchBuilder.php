@@ -33,7 +33,7 @@ class BatchBuilder
         $this->commandContext = $commandContext;
     }
 
-    public function tenantId(string $tenantId): BatchBuilder
+    public function tenantId(?string $tenantId): BatchBuilder
     {
         $this->tenantId = $tenantId;
         return $this;
@@ -45,7 +45,7 @@ class BatchBuilder
         return $this;
     }
 
-    public function type(string $batchType): BatchBuilder
+    public function type(?string $batchType): BatchBuilder
     {
         $this->type = $batchType;
         return $this;
@@ -197,7 +197,7 @@ class BatchBuilder
         return ($instanceCount / $invocationPerBatchJobCount) + 1;
     }
 
-    protected function calculateInvocationsPerBatchJob(string $batchType): int
+    protected function calculateInvocationsPerBatchJob(?string $batchType): int
     {
         $engineConfig = $this->commandContext->getProcessEngineConfiguration();
 

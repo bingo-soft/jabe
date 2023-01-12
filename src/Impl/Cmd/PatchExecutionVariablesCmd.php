@@ -7,7 +7,7 @@ use Jabe\Impl\Persistence\Entity\PropertyChange;
 
 class PatchExecutionVariablesCmd extends AbstractPatchVariablesCmd
 {
-    public function __construct(string $executionId, array $modifications, array $deletions, bool $isLocal)
+    public function __construct(?string $executionId, array $modifications, array $deletions, bool $isLocal)
     {
         parent::__construct($executionId, $modifications, $deletions, $isLocal);
     }

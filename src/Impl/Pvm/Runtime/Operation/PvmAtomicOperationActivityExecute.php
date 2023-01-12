@@ -68,7 +68,7 @@ class PvmAtomicOperationActivityExecute implements PvmAtomicOperationInterface
         return ActivityBehaviorUtil::getActivityBehavior($execution);
     }
 
-    public function getCanonicalName(): string
+    public function getCanonicalName(): ?string
     {
         return "activity-execute";
     }

@@ -19,7 +19,7 @@ class DefaultVariableSerializers implements VariableSerializersInterface
         }
     }
 
-    public function getSerializerByName(string $serializerName): ?TypedValueSerializerInterface
+    public function getSerializerByName(?string $serializerName): ?TypedValueSerializerInterface
     {
         if (array_key_exists($serializerName, $this->serializerMap)) {
             return $this->serializerMap[$serializerName];
@@ -27,7 +27,7 @@ class DefaultVariableSerializers implements VariableSerializersInterface
         return null;
     }
 
-    public function findSerializerForValue(TypedValueInterface $value, VariableSerializerFactoryInterface $fallBackSerializerFactory): ?TypedValueSerializerInterface
+    public function findSerializerForValue(TypedValueInterface $value, ?VariableSerializerFactoryInterface $fallBackSerializerFactory = null): ?TypedValueSerializerInterface
     {
         $defaultSerializationFormat = Context::getProcessEngineConfiguration()->getDefaultSerializationFormat();
 
@@ -74,7 +74,7 @@ class DefaultVariableSerializers implements VariableSerializersInterface
         }
     }
 
-    public function addSerializer(TypedValueSerializerInterface $serializer, ?int $index = null): DefaultVariableSerializers
+    public function addSerializer(TypedValueSerializerInterface $serializer, ?int $index = null)
     {
         if ($index === null) {
             $index = count($this->serializerList);
@@ -105,7 +105,7 @@ class DefaultVariableSerializers implements VariableSerializersInterface
         return -1;
     }
 
-    public function getSerializerIndexByName(string $serializerName): int
+    public function getSerializerIndexByName(?string $serializerName): int
     {
         $serializer = $this->serializerMap[$serializerName];
         return $this->getSerializerIndex($serializer);

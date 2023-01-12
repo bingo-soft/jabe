@@ -214,7 +214,7 @@ class LegacyBehavior
      * This is relevant for GetActivityInstanceCmd where in case of legacy multi-instance execution trees, the default
      * algorithm omits multi-instance activity instances.
      */
-    public static function repairParentRelationships(array $values, string $processInstanceId): void
+    public static function repairParentRelationships(array $values, ?string $processInstanceId): void
     {
     }
 
@@ -244,7 +244,7 @@ class LegacyBehavior
      * With prior versions, the boundary event was already executed when compensation was performed; Thus, after
      * compensation completes, the execution is signalled waiting at the boundary event.
      */
-    public static function signalCancelBoundaryEvent(string $signalName): bool
+    public static function signalCancelBoundaryEvent(?string $signalName): bool
     {
         return false;
     }

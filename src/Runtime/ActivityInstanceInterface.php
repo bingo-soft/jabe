@@ -5,16 +5,16 @@ namespace Jabe\Runtime;
 interface ActivityInstanceInterface extends ProcessElementInstanceInterface
 {
     /** the id of the activity */
-    public function getActivityId(): string;
+    public function getActivityId(): ?string;
 
     /** the name of the activity */
-    public function getActivityName(): string;
+    public function getActivityName(): ?string;
 
     /**
      * Type of the activity, corresponds to BPMN element name in XML (e.g. 'userTask').
      * The type of the Root activity instance (the one corresponding to the process instance will be 'processDefinition'.
      */
-    public function getActivityType(): string;
+    public function getActivityType(): ?string;
 
     /** Returns the child activity instances.
      * Returns an empty list if there are no child instances */
@@ -30,12 +30,12 @@ interface ActivityInstanceInterface extends ProcessElementInstanceInterface
     /**
      * all descendant (children, grandchildren, etc.) activity instances that are instances of the supplied activity
      */
-    public function getActivityInstances(string $activityId): array;
+    public function getActivityInstances(?string $activityId): array;
 
     /**
      * all descendant (children, grandchildren, etc.) transition instances that are leaving or entering the supplied activity
      */
-    public function getTransitionInstances(string $activityId): array;
+    public function getTransitionInstances(?string $activityId): array;
 
     /** the ids of currently open incidents */
     public function getIncidentIds(): array;

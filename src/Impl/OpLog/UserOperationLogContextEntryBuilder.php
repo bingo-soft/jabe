@@ -23,7 +23,7 @@ class UserOperationLogContextEntryBuilder
 {
     protected $entry;
 
-    public static function entry(string $operationType, string $entityType): UserOperationLogContextEntryBuilder
+    public static function entry(?string $operationType, ?string $entityType): UserOperationLogContextEntryBuilder
     {
         $builder = new UserOperationLogContextEntryBuilder();
         $builder->entry = new UserOperationLogContextEntry($operationType, $entityType);
@@ -237,71 +237,71 @@ class UserOperationLogContextEntryBuilder
         return $this->entry;
     }
 
-    public function jobId(string $jobId): UserOperationLogContextEntryBuilder
+    public function jobId(?string $jobId): UserOperationLogContextEntryBuilder
     {
         $this->entry->setJobId($jobId);
         return $this;
     }
 
-    public function jobDefinitionId(string $jobDefinitionId): UserOperationLogContextEntryBuilder
+    public function jobDefinitionId(?string $jobDefinitionId): UserOperationLogContextEntryBuilder
     {
         $this->entry->setJobDefinitionId($jobDefinitionId);
         return $this;
     }
 
-    public function processDefinitionId(string $processDefinitionId): UserOperationLogContextEntryBuilder
+    public function processDefinitionId(?string $processDefinitionId): UserOperationLogContextEntryBuilder
     {
         $this->entry->setProcessDefinitionId($processDefinitionId);
         return $this;
     }
 
-    public function processDefinitionKey(string $processDefinitionKey): UserOperationLogContextEntryBuilder
+    public function processDefinitionKey(?string $processDefinitionKey): UserOperationLogContextEntryBuilder
     {
         $this->entry->setProcessDefinitionKey($processDefinitionKey);
         return $this;
     }
 
-    public function processInstanceId(string $processInstanceId): UserOperationLogContextEntryBuilder
+    public function processInstanceId(?string $processInstanceId): UserOperationLogContextEntryBuilder
     {
         $this->entry->setProcessInstanceId($processInstanceId);
         return $this;
     }
 
-    /*public UserOperationLogContextEntryBuilder caseDefinitionId(string $caseDefinitionId) {
+    /*public UserOperationLogContextEntryBuilder caseDefinitionId(?string $caseDefinitionId) {
         $this->entry->setCaseDefinitionId(caseDefinitionId);
         return $this;
     }*/
 
-    public function deploymentId(string $deploymentId): UserOperationLogContextEntryBuilder
+    public function deploymentId(?string $deploymentId): UserOperationLogContextEntryBuilder
     {
         $this->entry->setDeploymentId($deploymentId);
         return $this;
     }
 
-    public function batchId(string $batchId): UserOperationLogContextEntryBuilder
+    public function batchId(?string $batchId): UserOperationLogContextEntryBuilder
     {
         $this->entry->setBatchId($batchId);
         return $this;
     }
 
-    public function taskId(string $taskId): UserOperationLogContextEntryBuilder
+    public function taskId(?string $taskId): UserOperationLogContextEntryBuilder
     {
         $this->entry->setTaskId($taskId);
         return $this;
     }
 
-    /*public UserOperationLogContextEntryBuilder caseInstanceId(string $caseInstanceId) {
+    /*public UserOperationLogContextEntryBuilder caseInstanceId(?string $caseInstanceId) {
         $this->entry->setCaseInstanceId(caseInstanceId);
         return $this;
     }*/
 
-    public function category(string $category): UserOperationLogContextEntryBuilder
+    public function category(?string $category): UserOperationLogContextEntryBuilder
     {
         $this->entry->setCategory($category);
         return $this;
     }
 
-    public function annotation(string $annotation): UserOperationLogContextEntryBuilder
+    public function annotation(?string $annotation): UserOperationLogContextEntryBuilder
     {
         $this->entry->setAnnotation($annotation);
         return $this;

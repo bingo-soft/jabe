@@ -43,27 +43,27 @@
         ANNOTATION_,
         REMOVAL_TIME_
       ) values (
-        #{id ,dbalType=VARCHAR},
-        #{processDefinitionKey, dbalType=VARCHAR},
-        #{processDefinitionId, dbalType=VARCHAR},
-        #{rootProcessInstanceId, dbalType=VARCHAR},
-        #{processInstanceId, dbalType=VARCHAR},
-        #{executionId, dbalType=VARCHAR},
-        #{createTime, dbalType=VARCHAR},
-        #{endTime, dbalType=VARCHAR},
-        #{incidentMessage, dbalType=VARCHAR},
-        #{incidentType, dbalType=VARCHAR},
-        #{activityId ,dbalType=VARCHAR},
-        #{failedActivityId ,dbalType=VARCHAR},
-        #{causeIncidentId ,dbalType=VARCHAR},
-        #{rootCauseIncidentId ,dbalType=VARCHAR},
-        #{configuration, dbalType=VARCHAR},
-        #{historyConfiguration, dbalType=VARCHAR},
-        #{incidentState, dbalType=INTEGER},
-        #{tenantId, dbalType=VARCHAR},
-        #{jobDefinitionId, dbalType=VARCHAR},
-        #{annotation, dbalType=VARCHAR},
-        #{removalTime, dbalType=VARCHAR}
+        #{id:VARCHAR},
+        #{processDefinitionKey:VARCHAR},
+        #{processDefinitionId:VARCHAR},
+        #{rootProcessInstanceId:VARCHAR},
+        #{processInstanceId:VARCHAR},
+        #{executionId:VARCHAR},
+        #{createTime:VARCHAR},
+        #{endTime:VARCHAR},
+        #{incidentMessage:VARCHAR},
+        #{incidentType:VARCHAR},
+        #{activityId:VARCHAR},
+        #{failedActivityId:VARCHAR},
+        #{causeIncidentId:VARCHAR},
+        #{rootCauseIncidentId:VARCHAR},
+        #{configuration:VARCHAR},
+        #{historyConfiguration:VARCHAR},
+        #{incidentState},
+        #{tenantId:VARCHAR},
+        #{jobDefinitionId:VARCHAR},
+        #{annotation:VARCHAR},
+        #{removalTime:VARCHAR}
       )
   </insert>
 
@@ -75,18 +75,18 @@
     set
       <!-- MySQL requires timestamps to always be part of the 
       UPDATE statement or else it is going to update them to the current time -->
-      CREATE_TIME_ = #{createTime, dbalType=VARCHAR},
-      END_TIME_ = #{endTime, dbalType=VARCHAR},
-      INCIDENT_STATE_ = #{incidentState, dbalType=INTEGER},
-      PROC_DEF_KEY_ = #{processDefinitionKey, dbalType=VARCHAR},
-      PROC_DEF_ID_ = #{processDefinitionId, dbalType=VARCHAR},
-      EXECUTION_ID_ = #{executionId, dbalType=VARCHAR},
-      ACTIVITY_ID_ = #{activityId, dbalType=VARCHAR},
-      FAILED_ACTIVITY_ID_ = #{failedActivityId, dbalType=VARCHAR},
-      JOB_DEF_ID_ = #{jobDefinitionId, dbalType=VARCHAR},
-      ANNOTATION_ = #{annotation, dbalType=VARCHAR}
+      CREATE_TIME_ = #{createTime:VARCHAR},
+      END_TIME_ = #{endTime:VARCHAR},
+      INCIDENT_STATE_ = #{incidentState},
+      PROC_DEF_KEY_ = #{processDefinitionKey:VARCHAR},
+      PROC_DEF_ID_ = #{processDefinitionId:VARCHAR},
+      EXECUTION_ID_ = #{executionId:VARCHAR},
+      ACTIVITY_ID_ = #{activityId:VARCHAR},
+      FAILED_ACTIVITY_ID_ = #{failedActivityId:VARCHAR},
+      JOB_DEF_ID_ = #{jobDefinitionId:VARCHAR},
+      ANNOTATION_ = #{annotation:VARCHAR}
     where
-      ID_ = #{id, dbalType=VARCHAR}
+      ID_ = #{id:VARCHAR}
   </update>
   
   <update id="updateHistoricIncident" parameterType="Jabe\Impl\Persistence\Entity\HistoricIncidentEntity">
@@ -95,64 +95,64 @@
     set
       <!-- MySQL requires timestamps to always be part of the 
       UPDATE statement or else it is going to update them to the current time -->
-      CREATE_TIME_ = #{createTime, dbalType=VARCHAR},
-      HISTORY_CONFIGURATION_ = #{historyConfiguration, dbalType=VARCHAR}
+      CREATE_TIME_ = #{createTime:VARCHAR},
+      HISTORY_CONFIGURATION_ = #{historyConfiguration:VARCHAR}
     where
-      ID_ = #{id, dbalType=VARCHAR}
+      ID_ = #{id:VARCHAR}
   </update>
   
   <update id="updateHistoricIncidentsByRootProcessInstanceId"
           parameterType="array">
     update ${prefix}ACT_HI_INCIDENT set
-    REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    REMOVAL_TIME_ = #{removalTime:VARCHAR}
 
-    where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+    where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateHistoricIncidentsByRootProcessInstanceId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_HI_INCIDENT RES WITH (FORCESEEK)
-    where RES.ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+    where RES.ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateHistoricIncidentsByRootProcessInstanceId_mysql"
           parameterType="array">
     update ${prefix}ACT_HI_INCIDENT set
-    REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR},
+    REMOVAL_TIME_ = #{removalTime:VARCHAR},
     CREATE_TIME_ = CREATE_TIME_
 
-    where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+    where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateHistoricIncidentsByProcessInstanceId"
           parameterType="array">
     update ${prefix}ACT_HI_INCIDENT
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
-      where PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR}
+      where PROC_INST_ID_ = #{processInstanceId:VARCHAR}
   </update>
 
   <update id="updateHistoricIncidentsByProcessInstanceId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_HI_INCIDENT RES WITH (FORCESEEK)
-    where PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+    where PROC_INST_ID_ = #{processInstanceId:VARCHAR}
   </update>
 
   <update id="updateHistoricIncidentsByProcessInstanceId_mysql"
           parameterType="array">
     update ${prefix}ACT_HI_INCIDENT
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR},
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR},
           CREATE_TIME_ = CREATE_TIME_
-      where PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      where PROC_INST_ID_ = #{processInstanceId:VARCHAR}
   </update>
 
   <update id="updateHistoricIncidentsByBatchId"
           parameterType="array">
     update ${prefix}ACT_HI_INCIDENT set
-    REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    REMOVAL_TIME_ = #{removalTime:VARCHAR}
 
     where ID_ in (SELECT HI.ID_ from ${prefix}ACT_HI_INCIDENT HI
       inner join ${prefix}ACT_HI_BATCH HB
@@ -166,7 +166,7 @@
   <update id="updateHistoricIncidentsByBatchId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_HI_INCIDENT RES WITH (FORCESEEK)
     where RES.ID_ in (SELECT HI.ID_ from ${prefix}ACT_HI_INCIDENT HI
       inner join ${prefix}ACT_HI_BATCH HB
@@ -187,7 +187,7 @@
           (HB.SEED_JOB_DEF_ID_,
           HB.MONITOR_JOB_DEF_ID_,
           HB.BATCH_JOB_DEF_ID_)
-      set I.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR},
+      set I.REMOVAL_TIME_ = #{removalTime:VARCHAR},
           I.CREATE_TIME_ = I.CREATE_TIME_
       where HB.ID_ = #{batchId}
   </update>
@@ -228,14 +228,14 @@
   <sql id="andWhereMinuteInDateBetweenSql">
     <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
       AND ${datepart1}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart2}${date}${datepart3}
-      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+      between #{parameter.minuteFrom} and #{parameter.minuteTo}
     </if>
   </sql>
 
   <sql id="andWhereMinuteInDateBetweenSql_oracle">
     <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
       AND ${datepart1}${date}${datepart2}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart3}
-      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+      between #{parameter.minuteFrom} and #{parameter.minuteTo}
     </if>
   </sql>
 
@@ -244,7 +244,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_INCIDENT
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql"/>
     ${limitAfterWithoutOffset}
   </delete>
@@ -254,7 +254,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_INCIDENT
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql_oracle"/>
     ${limitAfterWithoutOffset}
   </delete>
@@ -267,7 +267,7 @@
     where ID_ IN
       (SELECT ID_
        FROM ${prefix}ACT_HI_INCIDENT
-       WHERE REMOVAL_TIME_ <= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
+       WHERE REMOVAL_TIME_ &lt;= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
        ${limitAfterWithoutOffset})
   </delete>
 
@@ -358,16 +358,16 @@
         and RES.ACTIVITY_ID_ = #{activityId}
       </if>
       <if test="createTimeAfter != null">
-        and RES.CREATE_TIME_ > #{createTimeAfter}
+        and RES.CREATE_TIME_ &gt; #{createTimeAfter}
       </if>
       <if test="createTimeBefore != null">
-        and RES.CREATE_TIME_ < #{createTimeBefore}
+        and RES.CREATE_TIME_ &lt; #{createTimeBefore}
       </if>
       <if test="endTimeAfter != null">
-        and RES.END_TIME_ > #{endTimeAfter}
+        and RES.END_TIME_ &gt; #{endTimeAfter}
       </if>
       <if test="endTimeBefore != null">
-        and RES.END_TIME_ < #{endTimeBefore}
+        and RES.END_TIME_ &lt; #{endTimeBefore}
       </if>
       <if test="failedActivityId != null">
         and RES.FAILED_ACTIVITY_ID_ = #{failedActivityId}
@@ -381,7 +381,7 @@
       <if test="processDefinitionKey != null">
         and RES.PROC_DEF_KEY_ = #{processDefinitionKey}
       </if>
-      <if test="processDefinitionKeys != null and count(processDefinitionKeys) > 0">
+      <if test="!empty(processDefinitionKeys)">
         and RES.PROC_DEF_KEY_ in
         <foreach item="item" index="index" collection="processDefinitionKeys"
                  open="(" separator="," close=")">
@@ -401,18 +401,18 @@
         and RES.INCIDENT_STATE_ = #{incidentState.stateCode}
       </if>
       <if test="isTenantIdSet">
-        <if test="tenantIds != null and count(tenantIds) > 0">
+        <if test="!empty(tenantIds)">
           and RES.TENANT_ID_ in
           <foreach item="tenantId" index="index" collection="tenantIds"
                    open="(" separator="," close=")">
             #{tenantId}
           </foreach>
         </if>
-        <if test="tenantIds == null">
+        <if test="empty(tenantIds)">
           and RES.TENANT_ID_ is null
         </if>
       </if>
-      <if test="jobDefinitionIds != null and count(jobDefinitionIds) > 0">
+      <if test="!empty(jobDefinitionIds)">
         and RES.JOB_DEF_ID_ in
         <foreach item="jobDefinitionId" index="index" collection="jobDefinitionIds"
                  open="(" separator="," close=")">
@@ -466,7 +466,7 @@
 
     <where>
       <if test="parameter.finishedAfter != null">
-        and RES.END_TIME_ > #{parameter.finishedAfter}
+        and RES.END_TIME_ &gt; #{parameter.finishedAfter}
       </if>
       <if test="parameter.finishedAt != null">
         and RES.END_TIME_ = #{parameter.finishedAt}
@@ -487,7 +487,7 @@
 
     <where>
       <if test="parameter.createdAfter != null">
-        and RES.CREATE_TIME_ > #{parameter.createdAfter}
+        and RES.CREATE_TIME_ &gt; #{parameter.createdAfter}
       </if>
       <if test="parameter.createdAt != null">
         and RES.CREATE_TIME_ = #{parameter.createdAt}

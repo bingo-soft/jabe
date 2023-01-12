@@ -12,27 +12,27 @@ interface JobInterface
     /**
      * Returns the date on which this job is supposed to be processed.
      */
-    public function getDuedate(): string;
+    public function getDuedate(): ?string;
 
     /**
      * Returns the id of the process instance which execution created the job.
      */
-    public function getProcessInstanceId(): string;
+    public function getProcessInstanceId(): ?string;
 
     /**
      * Returns the id of the process definition which created the job.
      */
-    public function getProcessDefinitionId(): string;
+    public function getProcessDefinitionId(): ?string;
 
     /**
      * Returns the key of the process definition which created the job.
      */
-    public function getProcessDefinitionKey(): string;
+    public function getProcessDefinitionKey(): ?string;
 
     /**
      * Returns the specific execution on which the job was created.
      */
-    public function getExecutionId(): string;
+    public function getExecutionId(): ?string;
 
     /**
      * Returns the number of retries this job has left.
@@ -75,7 +75,7 @@ interface JobInterface
     /**
      * The job's priority that is a hint to job acquisition.
      */
-    public function getPriority(): float;
+    public function getPriority(): int;
 
     /**
      * The id of the tenant this job belongs to. Can be <code>null</code>
@@ -84,5 +84,5 @@ interface JobInterface
     public function getTenantId(): ?string;
 
     /** The date/time when this job has been created */
-    public function getCreateTime(): string;
+    public function getCreateTime(): ?string;
 }

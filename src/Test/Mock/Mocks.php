@@ -20,7 +20,7 @@ class Mocks
      * @param value
      *          the mock object
      */
-    public static function register(string $key, $value): void
+    public static function register(?string $key, $value): void
     {
         self::$mockContainer[$key] = $value;
     }
@@ -34,7 +34,7 @@ class Mocks
      * @return mixed the mock object registered under the provided key or null if there
      *         is no object for the provided key
      */
-    public static function get(string $key)
+    public static function get(?string $key)
     {
         if (array_key_exists($key, self::$mockContainer)) {
             return self::$mockContainer[$key];

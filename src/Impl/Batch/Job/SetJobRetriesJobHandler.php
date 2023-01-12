@@ -1,10 +1,11 @@
 <?php
 
-namespace Jabe\Impl\Batch\ExternalTask;
+namespace Jabe\Impl\Batch\Job;
 
 use Jabe\Batch\BatchInterface;
 use Jabe\Impl\Batch\{
     AbstractBatchJobHandler,
+    BatchConfiguration,
     BatchJobConfiguration,
     BatchJobContext,
     BatchJobDeclaration,
@@ -27,7 +28,7 @@ class SetJobRetriesJobHandler extends AbstractBatchJobHandler
 {
     public static $JOB_DECLARATION;
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return BatchInterface::TYPE_SET_JOB_RETRIES;
     }

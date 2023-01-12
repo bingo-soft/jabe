@@ -36,7 +36,7 @@ class CreateAttachmentCmd implements CommandInterface
     private $task;
     protected $processInstance;
 
-    public function __construct(string $attachmentType, string $taskId, string $processInstanceId, string $attachmentName, string $attachmentDescription, $content = null, string $url = null)
+    public function __construct(?string $attachmentType, ?string $taskId, ?string $processInstanceId, ?string $attachmentName, ?string $attachmentDescription, $content = null, ?string $url = null)
     {
         $this->attachmentType = $attachmentType;
         $this->taskId = $taskId;
@@ -114,13 +114,13 @@ class CreateAttachmentCmd implements CommandInterface
         return ProcessEngineConfiguration::HISTORY_REMOVAL_TIME_STRATEGY_START == $this->getHistoryRemovalTimeStrategy();
     }
 
-    protected function getHistoryRemovalTimeStrategy(): string
+    protected function getHistoryRemovalTimeStrategy(): ?string
     {
         return Context::getProcessEngineConfiguration()
             ->getHistoryRemovalTimeStrategy();
     }
 
-    protected function getHistoricRootProcessInstance(string $rootProcessInstanceId): HistoricProcessInstanceEventEntity
+    protected function getHistoricRootProcessInstance(?string $rootProcessInstanceId): HistoricProcessInstanceEventEntity
     {
         return Context::getCommandContext()->getDbEntityManager()
             ->selectById(HistoricProcessInstanceEventEntity::class, $rootProcessInstanceId);
@@ -136,5 +136,10 @@ class CreateAttachmentCmd implements CommandInterface
                 $attachment->setRemovalTime($removalTime);
             }
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

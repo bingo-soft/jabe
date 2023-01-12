@@ -18,13 +18,13 @@ class DurationHelper
 
     private $period;
 
-    private $isRepeat;
+    private bool $isRepeat = false;
 
-    private $times;
+    private int $times = 0;
 
-    private $repeatOffset = 0;
+    private int $repeatOffset = 0;
 
-    public function __construct(string $expressions, $startDate = null)
+    public function __construct(?string $expressions, $startDate = null)
     {
         $expression = [];
         if (!empty($expressions)) {
@@ -125,7 +125,7 @@ class DurationHelper
         return $next->getTimestamp() < $date->getTimestamp() ? null : $next;
     }
 
-    private function isDuration(string $time): bool
+    private function isDuration(?string $time): bool
     {
         return strpos($time, "P") === 0;
     }

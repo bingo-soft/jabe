@@ -11,7 +11,7 @@ use Jabe\Impl\Pvm\Process\{
 use Sax\Element;
 use Jabe\Impl\Variable\VariableDeclaration;
 
-interface BpmnParseListener
+interface BpmnParseListenerInterface
 {
     public function parseProcess(Element $processElement, ProcessDefinitionEntity $processDefinition): void;
     public function parseStartEvent(Element $startEventElement, ScopeImpl $scope, ActivityImpl $startEventActivity): void;

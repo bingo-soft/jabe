@@ -12,7 +12,7 @@ class DbMetricsReporter
     protected $commandExecutor;
     protected $reporterId;
     // log every 15 minutes...
-    protected $reportingIntervalInSeconds = 60 * 15;
+    protected int $reportingIntervalInSeconds = 60 * 15;
     protected $metricsCollectionTask;
     private $timer;
 
@@ -57,7 +57,7 @@ class DbMetricsReporter
         }
     }
 
-    public function reportValueAtOnce(string $name, int $value): void
+    public function reportValueAtOnce(?string $name, int $value): void
     {
         $this->commandExecutor->execute(new ReportDbMetricsValueCmd($this->reporterId, $name, $value));
     }
@@ -92,7 +92,7 @@ class DbMetricsReporter
         $this->metricsCollectionTask = $metricsCollectionTask;
     }
 
-    public function setReporterId(string $reporterId): void
+    public function setReporterId(?string $reporterId): void
     {
         $this->reporterId = $reporterId;
         if ($this->metricsCollectionTask !== null) {

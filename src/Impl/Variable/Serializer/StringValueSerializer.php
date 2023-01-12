@@ -21,7 +21,7 @@ class StringValueSerializer extends PrimitiveValueSerializer
         return Variables::stringValue($untypedValue->getValue(), $untypedValue->isTransient());
     }
 
-    public function writeValue(StringValueInterface $variableValue, ValueFieldsInterface $valueFields): void
+    public function writeValue($variableValue, ValueFieldsInterface $valueFields): void
     {
         $value = $variableValue->getValue();
         $valueFields->setTextValue($value);

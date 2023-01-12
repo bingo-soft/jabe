@@ -22,12 +22,12 @@
   <insert id="insertUser" parameterType="Jabe\Impl\Persistence\Entity\UserEntity">
     insert into ${prefix}ACT_ID_USER (ID_, FIRST_, LAST_, EMAIL_, PWD_, SALT_, REV_)
     values (
-      #{id ,dbalType=VARCHAR},
-      #{firstName ,dbalType=VARCHAR},
-      #{lastName ,dbalType=VARCHAR},
-      #{email ,dbalType=VARCHAR},
-      #{password ,dbalType=VARCHAR},
-      #{salt ,dbalType=VARCHAR},
+      #{id:VARCHAR},
+      #{firstName:VARCHAR},
+      #{lastName:VARCHAR},
+      #{email:VARCHAR},
+      #{password:VARCHAR},
+      #{salt:VARCHAR},
       1
     )
   </insert>
@@ -36,21 +36,21 @@
 
   <update id="updateUser" parameterType="Jabe\Impl\Persistence\Entity\UserEntity">
     update ${prefix}ACT_ID_USER set
-      REV_ = #{revisionNext ,dbalType=INTEGER},
-      FIRST_ = #{firstName ,dbalType=VARCHAR},
-      LAST_ = #{lastName ,dbalType=VARCHAR},
-      EMAIL_ = #{email ,dbalType=VARCHAR},
-      PWD_ = #{password ,dbalType=VARCHAR},
-      SALT_ = #{salt ,dbalType=VARCHAR}
+      REV_ = #{revisionNext},
+      FIRST_ = #{firstName:VARCHAR},
+      LAST_ = #{lastName:VARCHAR},
+      EMAIL_ = #{email:VARCHAR},
+      PWD_ = #{password:VARCHAR},
+      SALT_ = #{salt:VARCHAR}
     where ID_ = #{id}
       and REV_ = #{revision}
   </update>
   
   <update id="updateUserLock" parameterType="Jabe\Impl\Persistence\Entity\UserEntity">
     update ${prefix}ACT_ID_USER set
-      REV_ = #{revisionNext ,dbalType=INTEGER},
-      LOCK_EXP_TIME_ = #{lockExpirationTime ,dbalType=VARCHAR},
-      ATTEMPTS_ = #{attempts ,dbalType=INTEGER}
+      REV_ = #{revisionNext},
+      LOCK_EXP_TIME_ = #{lockExpirationTime:VARCHAR},
+      ATTEMPTS_ = #{attempts}
     where ID_ = #{id}
       and REV_ = #{revision}
   </update>
@@ -78,7 +78,7 @@
   <!-- USER SELECT -->
 
   <select id="selectUser" parameterType="string" resultMap="userResultMap">
-    select * from ${prefix}ACT_ID_USER where ID_ = #{id,dbalType=VARCHAR}
+    select * from ${prefix}ACT_ID_USER where ID_ = #{id:VARCHAR}
   </select>
     
   <select id="selectUserByQueryCriteria" parameterType="Jabe\Impl\UserQueryImpl" resultMap="userResultMap">
@@ -114,7 +114,7 @@
       <if test="id != null">
         RES.ID_ = #{id}
       </if>
-      <if test="ids != null and count(ids) > 0">
+      <if test="!empty(ids)">
         and RES.ID_ in
         <foreach item="item" index="index" collection="ids"
                  open="(" separator="," close=")">

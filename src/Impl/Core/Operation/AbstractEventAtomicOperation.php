@@ -26,10 +26,9 @@ abstract class AbstractEventAtomicOperation implements CoreAtomicOperationInterf
         if ($listenerIndex == 0) {
             $execution = $this->eventNotificationsStarted($execution);
         }
-
         if (!$this->isSkipNotifyListeners($execution)) {
             if (count($listeners) > $listenerIndex) {
-                $execution->setEventName(getEventName());
+                $execution->setEventName($this->getEventName());
                 $execution->setEventSource($scope);
                 $listener = $listeners[$listenerIndex];
                 $execution->setListenerIndex($listenerIndex + 1);
@@ -79,7 +78,7 @@ abstract class AbstractEventAtomicOperation implements CoreAtomicOperationInterf
     }
 
     abstract protected function getScope(CoreExecution $execution): CoreModelElement;
-    abstract protected function getEventName(): string;
+    abstract protected function getEventName(): ?string;
     abstract protected function eventNotificationsCompleted(CoreExecution $execution): void;
 
     protected function eventNotificationsFailed(CoreExecution $execution, \Exception $exception): void

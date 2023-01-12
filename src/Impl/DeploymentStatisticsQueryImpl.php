@@ -11,8 +11,8 @@ use Jabe\Management\DeploymentStatisticsQueryInterface;
 
 class DeploymentStatisticsQueryImpl extends AbstractQuery implements DeploymentStatisticsQueryInterface
 {
-    protected $includeFailedJobs = false;
-    protected $includeIncidents = false;
+    protected bool $includeFailedJobs = false;
+    protected bool $includeIncidents = false;
     protected $includeIncidentsForType;
 
     // for internal use
@@ -37,7 +37,7 @@ class DeploymentStatisticsQueryImpl extends AbstractQuery implements DeploymentS
         return $this;
     }
 
-    public function includeIncidentsForType(string $incidentType): DeploymentStatisticsQueryInterface
+    public function includeIncidentsForType(?string $incidentType): DeploymentStatisticsQueryInterface
     {
         $this->includeIncidentsForType = $incidentType;
         return $this;
@@ -52,7 +52,7 @@ class DeploymentStatisticsQueryImpl extends AbstractQuery implements DeploymentS
             ->getStatisticsCountGroupedByDeployment($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         return

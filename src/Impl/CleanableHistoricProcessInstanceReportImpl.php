@@ -19,8 +19,8 @@ class CleanableHistoricProcessInstanceReportImpl extends AbstractQuery implement
     protected $processDefinitionIdIn = [];
     protected $processDefinitionKeyIn = [];
     protected $tenantIdIn = [];
-    protected $isTenantIdSet = false;
-    protected $isCompact = false;
+    protected bool $isTenantIdSet = false;
+    protected bool $isCompact = false;
 
     protected $currentTimestamp;
 
@@ -81,7 +81,7 @@ class CleanableHistoricProcessInstanceReportImpl extends AbstractQuery implement
             ->findCleanableHistoricProcessInstancesReportCountByCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->provideHistoryCleanupStrategy($commandContext);
         $this->checkQueryOk();
@@ -90,7 +90,7 @@ class CleanableHistoricProcessInstanceReportImpl extends AbstractQuery implement
             ->findCleanableHistoricProcessInstancesReportByCriteria($this, $page);
     }
 
-    public function getCurrentTimestamp(): string
+    public function getCurrentTimestamp(): ?string
     {
         return $this->currentTimestamp;
     }

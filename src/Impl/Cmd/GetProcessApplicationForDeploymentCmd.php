@@ -12,7 +12,7 @@ class GetProcessApplicationForDeploymentCmd implements CommandInterface
 {
     protected $deploymentId;
 
-    public function __construct(string $deploymentId)
+    public function __construct(?string $deploymentId)
     {
         $this->deploymentId = $deploymentId;
     }
@@ -30,5 +30,10 @@ class GetProcessApplicationForDeploymentCmd implements CommandInterface
         } else {
             return null;
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

@@ -26,7 +26,7 @@ abstract class AddIdentityLinkCmd implements CommandInterface, \Serializable
 
     protected $task;
 
-    public function __construct(string $taskId, string $userId, string $groupId, string $type)
+    public function __construct(?string $taskId, ?string $userId, ?string $groupId, ?string $type)
     {
         $this->validateParams($userId, $groupId, $type, $taskId);
         $this->taskId = $taskId;
@@ -54,7 +54,7 @@ abstract class AddIdentityLinkCmd implements CommandInterface, \Serializable
         $this->type = $json->type;
     }
 
-    protected function validateParams(?string $userId, ?string $groupId, string $type, string $taskId): void
+    protected function validateParams(?string $userId, ?string $groupId, ?string $type, ?string $taskId): void
     {
         EnsureUtil::ensureNotNull("taskId", "taskId", $taskId);
         EnsureUtil::ensureNotNull("type is required when adding a new task identity link", "type", $type);
@@ -74,7 +74,7 @@ abstract class AddIdentityLinkCmd implements CommandInterface, \Serializable
 
     public function execute(CommandContext $commandContext)
     {
-        EnsureUtil::ensureNotNull("taskId", $this->taskId);
+        EnsureUtil::ensureNotNull("taskId", "taskId", $this->taskId);
 
         $taskManager = $commandContext->getTaskManager();
         $task = $taskManager->findTaskById($this->taskId);
@@ -99,5 +99,10 @@ abstract class AddIdentityLinkCmd implements CommandInterface, \Serializable
         foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
             $checker->checkTaskAssign($task);
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

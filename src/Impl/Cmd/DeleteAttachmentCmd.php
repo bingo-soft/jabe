@@ -17,7 +17,7 @@ class DeleteAttachmentCmd implements CommandInterface, \Serializable
 {
     protected $attachmentId;
 
-    public function __construct(string $attachmentId)
+    public function __construct(?string $attachmentId)
     {
         $this->attachmentId = $attachmentId;
     }
@@ -65,5 +65,10 @@ class DeleteAttachmentCmd implements CommandInterface, \Serializable
         }
 
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

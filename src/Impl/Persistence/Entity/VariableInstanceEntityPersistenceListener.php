@@ -6,6 +6,7 @@ use Jabe\Impl\Core\Variable\Scope\{
     AbstractVariableScope,
     VariableInstanceLifecycleListenerInterface
 };
+use Jabe\Impl\Core\Variable\CoreVariableInstanceInterface;
 
 class VariableInstanceEntityPersistenceListener implements VariableInstanceLifecycleListenerInterface
 {
@@ -23,17 +24,17 @@ class VariableInstanceEntityPersistenceListener implements VariableInstanceLifec
     {
     }
 
-    public function onCreate(VariableInstanceEntity $variable, AbstractVariableScope $sourceScope): void
+    public function onCreate(CoreVariableInstanceInterface $variable, AbstractVariableScope $sourceScope): void
     {
         VariableInstanceEntity::insert($variable);
     }
 
-    public function onDelete(VariableInstanceEntity $variable, AbstractVariableScope $sourceScope): void
+    public function onDelete(CoreVariableInstanceInterface $variable, AbstractVariableScope $sourceScope): void
     {
         $variable->delete();
     }
 
-    public function onUpdate(VariableInstanceEntity $variable, AbstractVariableScope $sourceScope): void
+    public function onUpdate(CoreVariableInstanceInterface $variable, AbstractVariableScope $sourceScope): void
     {
     }
 }

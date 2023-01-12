@@ -24,5 +24,5 @@ interface ProcessDefinitionStatisticsQueryInterface extends QueryInterface
     /**
      * Include an aggregation of incidents of the assigned incidentType in the result.
      */
-    public function includeIncidentsForType(string $incidentType): ProcessDefinitionStatisticsQueryInterface;
+    public function includeIncidentsForType(?string $incidentType): ProcessDefinitionStatisticsQueryInterface;
 }

@@ -15,7 +15,7 @@ class DeleteBatchCmd implements CommandInterface
     protected $cascadeToHistory;
     protected $batchId;
 
-    public function __construct(string $batchId, bool $cascadeToHistory)
+    public function __construct(?string $batchId, bool $cascadeToHistory)
     {
         $this->batchId = $batchId;
         $this->cascadeToHistory = $cascadeToHistory;
@@ -50,5 +50,10 @@ class DeleteBatchCmd implements CommandInterface
                 $this->batchId,
                 new PropertyChange("cascadeToHistory", null, $this->cascadeToHistory)
             );
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

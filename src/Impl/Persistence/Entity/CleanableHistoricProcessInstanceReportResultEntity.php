@@ -10,38 +10,38 @@ class CleanableHistoricProcessInstanceReportResultEntity implements CleanableHis
     protected $processDefinitionId;
     protected $processDefinitionKey;
     protected $processDefinitionName;
-    protected $processDefinitionVersion;
+    protected int $processDefinitionVersion = 0;
     protected $historyTimeToLive;
     protected $finishedProcessInstanceCount;
     protected $cleanableProcessInstanceCount;
     protected $tenantId;
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function setProcessDefinitionId(string $processDefinitionId): void
+    public function setProcessDefinitionId(?string $processDefinitionId): void
     {
         $this->processDefinitionId = $processDefinitionId;
     }
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }
 
-    public function setProcessDefinitionKey(string $processDefinitionKey): void
+    public function setProcessDefinitionKey(?string $processDefinitionKey): void
     {
         $this->processDefinitionKey = $processDefinitionKey;
     }
 
-    public function getProcessDefinitionName(): string
+    public function getProcessDefinitionName(): ?string
     {
         return $this->processDefinitionName;
     }
 
-    public function setProcessDefinitionName(string $processDefinitionName): void
+    public function setProcessDefinitionName(?string $processDefinitionName): void
     {
         $this->processDefinitionName = $processDefinitionName;
     }
@@ -56,12 +56,12 @@ class CleanableHistoricProcessInstanceReportResultEntity implements CleanableHis
         $this->processDefinitionVersion = $processDefinitionVersion;
     }
 
-    public function getHistoryTimeToLive(): int
+    public function getHistoryTimeToLive(): ?int
     {
         return $this->historyTimeToLive;
     }
 
-    public function setHistoryTimeToLive(int $historyTimeToLive): void
+    public function setHistoryTimeToLive(?int $historyTimeToLive): void
     {
         $this->historyTimeToLive = $historyTimeToLive;
     }

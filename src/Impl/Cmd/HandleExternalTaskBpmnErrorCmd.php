@@ -14,7 +14,7 @@ class HandleExternalTaskBpmnErrorCmd extends HandleExternalTaskCmd
     protected $errorMessage;
     protected $variables = [];
 
-    public function __construct(string $externalTaskId, string $workerId, string $errorCode, string $errorMessage = null, array $variables = [])
+    public function __construct(?string $externalTaskId, ?string $workerId, ?string $errorCode, ?string $errorMessage = null, array $variables = [])
     {
         parent::__construct($externalTaskId, $workerId);
         $this->errorCode = $errorCode;
@@ -28,7 +28,7 @@ class HandleExternalTaskBpmnErrorCmd extends HandleExternalTaskCmd
         EnsureUtil::ensureNotNull("errorCode", "errorCode", $this->errorCode);
     }
 
-    public function getErrorMessageOnWrongWorkerAccess(): string
+    public function getErrorMessageOnWrongWorkerAccess(): ?string
     {
         return "Bpmn error of External Task " . $this->externalTaskId . " cannot be reported by worker '" . $this->workerId;
     }

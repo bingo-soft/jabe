@@ -7,10 +7,10 @@ interface ApplicationServerInterface
     /**
      * The vendor of the installed application server.
      */
-    public function getVendor(): string;
+    public function getVendor(): ?string;
 
     /**
      * The version of the installed application server.
      */
-    public function getVersion(): string;
+    public function getVersion(): ?string;
 }

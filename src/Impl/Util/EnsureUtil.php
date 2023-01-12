@@ -12,7 +12,7 @@ use Jabe\Impl\Interceptor\CommandContext;
 
 class EnsureUtil
 {
-    public static function ensureNotNull(string $message, string $variableName, $variable = null, ...$variables): void
+    public static function ensureNotNull(?string $message, ?string $variableName, $variable = null, ...$variables): void
     {
         if ($variable === null) {
             throw self::generateException($message, $variableName, "is null");
@@ -26,49 +26,49 @@ class EnsureUtil
         }
     }
 
-    public static function ensureNotEmpty(string $message, string $variableName, array $variable = []): void
+    public static function ensureNotEmpty(?string $message, ?string $variableName, $variable = []): void
     {
         if (empty($variable)) {
             throw self::generateException($message, $variableName, "is empty");
         }
     }
 
-    public static function ensureEquals(string $message, string $variableName, $obj1, $obj2): void
+    public static function ensureEquals(?string $message, ?string $variableName, $obj1, $obj2): void
     {
         if ($obj1 != $obj2) {
             throw self::generateException($message, $variableName, "value differs from expected");
         }
     }
 
-    public static function ensurePositive(string $message, string $variableName, $value): void
+    public static function ensurePositive(?string $message, ?string $variableName, $value): void
     {
         if ($value <= 0) {
             throw self::generateException($message, $variableName, "is not greater than 0");
         }
     }
 
-    public static function ensureLessThan(string $message, string $variableName, $value1, $value2): void
+    public static function ensureLessThan(?string $message, ?string $variableName, $value1, $value2): void
     {
         if ($value1 >= $value2) {
             throw self::generateException($message, $variableName, "is not less than" . $value2);
         }
     }
 
-    public static function ensureGreaterThanOrEqual(string $message, string $variableName, $value1, $value2): void
+    public static function ensureGreaterThanOrEqual(?string $message, ?string $variableName, $value1, $value2): void
     {
         if ($value1 < $value2) {
             throw self::generateException($message, $variableName, "is not greater than or equal to " . $value2);
         }
     }
 
-    public static function ensureInstanceOf($instance, string $type): void
+    public static function ensureInstanceOf($instance, ?string $type): void
     {
         if (!($instance instanceof $type)) {
             throw new \Exception(sprintf("Object of class %s is not instance of type %s", get_class($instance), $type));
         }
     }
 
-    public static function ensureOnlyOneNotNull(string $message, ...$values): void
+    public static function ensureOnlyOneNotNull(?string $message, ...$values): void
     {
         $oneNotNull = false;
         foreach ($values as $value) {
@@ -84,7 +84,7 @@ class EnsureUtil
         }
     }
 
-    public static function ensureAtLeastOneNotNull(string $message, ...$values): void
+    public static function ensureAtLeastOneNotNull(?string $message, ...$values): void
     {
         foreach ($values as $value) {
             if ($value !== null) {
@@ -94,7 +94,7 @@ class EnsureUtil
         throw self::generateException($message);
     }
 
-    public static function ensureAtLeastOneNotEmpty(string $message, ...$values): void
+    public static function ensureAtLeastOneNotEmpty(?string $message, ...$values): void
     {
         foreach ($values as $value) {
             if (!empty($value)) {
@@ -104,7 +104,7 @@ class EnsureUtil
         throw self::generateException($message);
     }
 
-    public static function ensureNotContainsEmptyString(string $message, string $variableName, array $variables = []): void
+    public static function ensureNotContainsEmptyString(?string $message, ?string $variableName, array $variables = []): void
     {
         foreach ($variables as $value) {
             if (empty($value)) {
@@ -113,7 +113,7 @@ class EnsureUtil
         }
     }
 
-    public static function ensureNotContainsNull(string $message, string $variableName, array $variables = []): void
+    public static function ensureNotContainsNull(?string $message, ?string $variableName, array $variables = []): void
     {
         foreach ($variables as $value) {
             if ($value === null) {
@@ -122,14 +122,14 @@ class EnsureUtil
         }
     }
 
-    public static function ensureNumberOfElements(string $message, string $variableName, array $collection, int $elements): void
+    public static function ensureNumberOfElements(?string $message, ?string $variableName, array $collection, int $elements): void
     {
         if (count($collection) != $elements) {
             throw self::generateException($message, $variableName, "does not have " . $elements . " elements");
         }
     }
 
-    public static function ensureValidIndividualResourceId(string $message, string $id): void
+    public static function ensureValidIndividualResourceId(?string $message, ?string $id): void
     {
         self::ensureNotNull($message, "id", $id);
         if (AuthorizationInterface::ANY === $id) {
@@ -137,7 +137,7 @@ class EnsureUtil
         }
     }
 
-    public static function ensureValidIndividualResourceIds(string $message, string $ids): void
+    public static function ensureValidIndividualResourceIds(?string $message, ?string $ids): void
     {
         self::ensureNotNull($message, "id", $ids);
         foreach ($ids as $id) {
@@ -145,7 +145,7 @@ class EnsureUtil
         }
     }
 
-    public static function ensureWhitelistedResourceId(CommandContext $commandContext, string $resourceType, string $resourceId): void
+    public static function ensureWhitelistedResourceId(CommandContext $commandContext, ?string $resourceType, ?string $resourceId): void
     {
         $resourcePattern = self::determineResourceWhitelistPattern($commandContext->getProcessEngineConfiguration(), $resourceType);
 
@@ -154,19 +154,19 @@ class EnsureUtil
         }
     }
 
-    public static function ensureTrue(string $message, bool $value): void
+    public static function ensureTrue(?string $message, bool $value): void
     {
         if (!$value) {
             throw new ProcessEngineException($message);
         }
     }
 
-    public static function ensureFalse(string $message, bool $value): void
+    public static function ensureFalse(?string $message, bool $value): void
     {
         self::ensureTrue($message, !$value);
     }
 
-    public static function ensureActiveCommandContext(string $operation): void
+    public static function ensureActiveCommandContext(?string $operation): void
     {
         if (Context::getCommandContext() == null) {
             //throw LOG.notInsideCommandContext(operation);
@@ -174,7 +174,7 @@ class EnsureUtil
         }
     }
 
-    protected static function determineResourceWhitelistPattern(ProcessEngineConfiguration $processEngineConfiguration, string $resourceType): string
+    protected static function determineResourceWhitelistPattern(ProcessEngineConfiguration $processEngineConfiguration, ?string $resourceType): ?string
     {
         $resourcePattern = null;
 
@@ -197,13 +197,13 @@ class EnsureUtil
         return $processEngineConfiguration->getGeneralResourceWhitelistPattern();
     }
 
-    protected static function generateException(string $message, string $variableName = null, string $description = null): \Exception
+    protected static function generateException(?string $message, ?string $variableName = null, ?string $description = null): \Exception
     {
         $formattedMessage = self::formatMessage($message, $variableName, $description);
         return new \Exception($formattedMessage);
     }
 
-    protected static function formatMessage(string $message, string $variableName = null, string $description = null): string
+    protected static function formatMessage(?string $message, ?string $variableName = null, ?string $description = null): ?string
     {
         if ($variableName !== null && $description !== null) {
             return sprintf("%s: %s %s", $message, $variableName, $description);

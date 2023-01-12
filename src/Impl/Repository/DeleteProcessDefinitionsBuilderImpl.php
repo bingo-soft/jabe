@@ -43,7 +43,7 @@ class DeleteProcessDefinitionsBuilderImpl implements DeleteProcessDefinitionsBui
         return $this;
     }
 
-    public function byKey(string $processDefinitionKey): DeleteProcessDefinitionsBuilderImpl
+    public function byKey(?string $processDefinitionKey): DeleteProcessDefinitionsBuilderImpl
     {
         $this->processDefinitionKey = $processDefinitionKey;
         return $this;
@@ -55,7 +55,7 @@ class DeleteProcessDefinitionsBuilderImpl implements DeleteProcessDefinitionsBui
         return $this;
     }
 
-    public function withTenantId(string $tenantId): DeleteProcessDefinitionsBuilderImpl
+    public function withTenantId(?string $tenantId): DeleteProcessDefinitionsBuilderImpl
     {
         EnsureUtil::ensureNotNull("tenantId", "tenantId", $tenantId);
         $this->isTenantIdSet = true;

@@ -3,6 +3,7 @@
 namespace Jabe;
 
 use Bpmn\BpmnModelInstanceInterface;
+use Jabe\Application\ProcessApplicationReferenceInterface;
 use Jabe\Authorization\{
     Permissions,
     ProcessDefinitionPermissions,
@@ -34,7 +35,7 @@ interface RepositoryServiceInterface
      *
      * @see ProcessApplicationDeploymentBuilder
      */
-    public function createDeployment(ProcessApplicationReference $processApplication = null): ProcessApplicationDeploymentBuilderInterface;
+    public function createDeployment(ProcessApplicationReferenceInterface $processApplication = null): DeploymentBuilderInterface;
 
     /**
      * Deletes the given deployment.
@@ -46,7 +47,7 @@ interface RepositoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no Permissions#DELETE permission on Resources#DEPLOYMENT.
      */
-    public function deleteDeployment(string $deploymentId, bool $cascade = false, bool $skipCustomListeners = false, bool $skipIoMappings = false): void;
+    public function deleteDeployment(?string $deploymentId, bool $cascade = false, bool $skipCustomListeners = false, bool $skipIoMappings = false): void;
 
     /**
      * Deletes the process definition which belongs to the given process definition id.
@@ -66,7 +67,7 @@ interface RepositoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no Permissions#DELETE permission on Resources#PROCESS_DEFINITION.
      */
-    public function deleteProcessDefinition(string $processDefinitionId, bool $cascade = false, bool $skipCustomListeners = false, bool $skipIoMappings = false): void;
+    public function deleteProcessDefinition(?string $processDefinitionId, bool $cascade = false, bool $skipCustomListeners = false, bool $skipIoMappings = false): void;
 
     /**
      * Fluent builder to delete process definitions.
@@ -84,7 +85,7 @@ interface RepositoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no Permissions#READ permission on Resources#DEPLOYMENT.
      */
-    public function getDeploymentResourceNames(string $deploymentId): array;
+    public function getDeploymentResourceNames(?string $deploymentId): array;
 
     /**
      * Retrieves a list of deployment resources for the given deployment,
@@ -95,7 +96,7 @@ interface RepositoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no Permissions#READ permission on Resources#DEPLOYMENT.
      */
-    public function getDeploymentResources(string $deploymentId): array;
+    public function getDeploymentResources(?string $deploymentId): array;
 
     /**
      * Gives access to a deployment resource through a stream of bytes.
@@ -109,7 +110,7 @@ interface RepositoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no Permissions#READ permission on Resources#DEPLOYMENT.
      */
-    public function getResourceAsStream(string $deploymentId, string $resourceName);
+    public function getResourceAsStream(?string $deploymentId, ?string $resourceName);
 
     /**
      * Gives access to a deployment resource through a stream of bytes.
@@ -123,7 +124,7 @@ interface RepositoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no Permissions#READ permission on Resources#DEPLOYMENT.
      */
-    public function getResourceAsStreamById(string $deploymentId, string $resourceId);
+    public function getResourceAsStreamById(?string $deploymentId, ?string $resourceId);
 
     /**
      * Query process definitions.
@@ -163,7 +164,7 @@ interface RepositoryServiceInterface
      *
      * @see RuntimeService#suspendProcessInstanceById(String)
      */
-    public function suspendProcessDefinitionById(string $processDefinitionId, bool $suspendProcessInstances = null, string $suspensionDate = null): void;
+    public function suspendProcessDefinitionById(?string $processDefinitionId, bool $suspendProcessInstances = null, ?string $suspensionDate = null): void;
 
     /**
      * Suspends the <strong>all</strong> process definitions with the given key (= id in the bpmn20.xml file).
@@ -193,7 +194,7 @@ interface RepositoryServiceInterface
      *
      * @see RuntimeService#suspendProcessInstanceById(String)
      */
-    public function suspendProcessDefinitionByKey(string $processDefinitionKey, bool $suspendProcessInstances = null, string $suspensionDate = null): void;
+    public function suspendProcessDefinitionByKey(?string $processDefinitionKey, bool $suspendProcessInstances = null, ?string $suspensionDate = null): void;
 
     /**
      * Activates the process definition with the given id.
@@ -220,7 +221,7 @@ interface RepositoryServiceInterface
      *
      * @see RuntimeService#activateProcessInstanceById(String)
      */
-    public function activateProcessDefinitionById(string $processDefinitionId, bool $activateProcessInstances = null, string $activationDate = null): void;
+    public function activateProcessDefinitionById(?string $processDefinitionId, bool $activateProcessInstances = null, ?string $activationDate = null): void;
 
     /**
      * Activates the process definition with the given key (=id in the bpmn20.xml file).
@@ -247,7 +248,7 @@ interface RepositoryServiceInterface
      *
      * @see RuntimeService#activateProcessInstanceById(String)
      */
-    public function activateProcessDefinitionByKey(string $processDefinitionKey, bool $activateProcessInstances = null, string $activationDate = null): void;
+    public function activateProcessDefinitionByKey(?string $processDefinitionKey, bool $activateProcessInstances = null, ?string $activationDate = null): void;
 
     /**
      * Activate or suspend process definitions using a fluent builder. Specify the
@@ -267,7 +268,7 @@ interface RepositoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_DEFINITION.
      */
-    public function updateProcessDefinitionHistoryTimeToLive(string $processDefinitionId, int $historyTimeToLive): void;
+    public function updateProcessDefinitionHistoryTimeToLive(?string $processDefinitionId, int $historyTimeToLive): void;
 
     /**
      * Gives access to a deployed process model, e.g., a BPMN 2.0 XML file,
@@ -281,7 +282,7 @@ interface RepositoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no Permissions#READ permission on Resources#PROCESS_DEFINITION.
      */
-    public function getProcessModel(string $processDefinitionId);
+    public function getProcessModel(?string $processDefinitionId);
 
     /**
      * Gives access to a deployed process diagram, e.g., a PNG image, through a
@@ -296,7 +297,7 @@ interface RepositoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no Permissions#READ permission on Resources#PROCESS_DEFINITION.
      */
-    public function getProcessDiagram(string $processDefinitionId);
+    public function getProcessDiagram(?string $processDefinitionId);
 
     /**
      * Returns the ProcessDefinition including all BPMN information like additional
@@ -305,7 +306,7 @@ interface RepositoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no Permissions#READ permission on Resources#PROCESS_DEFINITION.
      */
-    public function getProcessDefinition(string $processDefinitionId): ProcessDefinitionInterface;
+    public function getProcessDefinition(?string $processDefinitionId): ProcessDefinitionInterface;
 
     /**
      * Provides positions and dimensions of elements in a process diagram as
@@ -323,7 +324,7 @@ interface RepositoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no Permissions#READ permission on Resources#PROCESS_DEFINITION.
      */
-    public function getProcessDiagramLayout(string $processDefinitionId): ?DiagramLayout;
+    public function getProcessDiagramLayout(?string $processDefinitionId): ?DiagramLayout;
 
     /**
      * Returns the BpmnModelInstance for the given processDefinitionId.
@@ -336,5 +337,5 @@ interface RepositoryServiceInterface
      * @throws AuthorizationException
      *          If the user has no Permissions#READ permission on Resources#PROCESS_DEFINITION.
      */
-    public function getBpmnModelInstance(string $processDefinitionId): BpmnModelInstanceInterface;
+    public function getBpmnModelInstance(?string $processDefinitionId): BpmnModelInstanceInterface;
 }

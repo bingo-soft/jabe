@@ -53,7 +53,7 @@ create table ACT_GE_SCHEMA_LOG (
 );
 
 insert into ACT_GE_SCHEMA_LOG
-values ('0', CURRENT_TIMESTAMP, '1.0.0');
+values ('0', CURRENT_TIMESTAMP, '7.19.0');
 
 create table ACT_RE_DEPLOYMENT (
     ID_ varchar(64),
@@ -182,6 +182,7 @@ create table ACT_RU_TASK (
     DELEGATION_ varchar(64),
     PRIORITY_ integer,
     CREATE_TIME_ timestamp,
+    LAST_UPDATED_ timestamp,
     DUE_DATE_ timestamp,
     FOLLOW_UP_DATE_ timestamp,
     SUSPENSION_STATE_ integer,
@@ -338,6 +339,8 @@ create table ACT_RU_BATCH (
   CONFIGURATION_ varchar(255),
   TENANT_ID_ varchar(64),
   CREATE_USER_ID_ varchar(255),
+  START_TIME_ timestamp,
+  EXEC_START_TIME_ timestamp,
   primary key (ID_)
 );
 
@@ -345,6 +348,7 @@ create index ACT_IDX_EXE_ROOT_PI on ACT_RU_EXECUTION(ROOT_PROC_INST_ID_);
 create index ACT_IDX_EXEC_BUSKEY on ACT_RU_EXECUTION(BUSINESS_KEY_);
 create index ACT_IDX_EXEC_TENANT_ID on ACT_RU_EXECUTION(TENANT_ID_);
 create index ACT_IDX_TASK_CREATE on ACT_RU_TASK(CREATE_TIME_);
+create index ACT_IDX_TASK_LAST_UPDATED on ACT_RU_TASK(LAST_UPDATED_);
 create index ACT_IDX_TASK_ASSIGNEE on ACT_RU_TASK(ASSIGNEE_);
 create index ACT_IDX_TASK_OWNER on ACT_RU_TASK(OWNER_);
 create index ACT_IDX_TASK_TENANT_ID on ACT_RU_TASK(TENANT_ID_);
@@ -871,6 +875,7 @@ create table ACT_HI_BATCH (
     START_TIME_ timestamp not null,
     END_TIME_ timestamp,
     REMOVAL_TIME_ timestamp,
+    EXEC_START_TIME_ timestamp,
     primary key (ID_)
 );
 
@@ -1108,8 +1113,6 @@ alter table ACT_ID_TENANT_MEMBER
 
 -- case engine
 
--- create case definition table --
-
 create table ACT_RE_CASE_DEF (
     ID_ varchar(64) NOT NULL,
     REV_ integer,
@@ -1276,52 +1279,6 @@ create index ACT_IDX_HI_CAS_A_I_TENANT_ID on ACT_HI_CASEACTINST(TENANT_ID_);
 
 -- decision engine
 
--- create decision definition table --
-create table ACT_RE_DECISION_DEF (
-    ID_ varchar(64) NOT NULL,
-    REV_ integer,
-    CATEGORY_ varchar(255),
-    NAME_ varchar(255),
-    KEY_ varchar(255) NOT NULL,
-    VERSION_ integer NOT NULL,
-    DEPLOYMENT_ID_ varchar(64),
-    RESOURCE_NAME_ varchar(4000),
-    DGRM_RESOURCE_NAME_ varchar(4000),
-    DEC_REQ_ID_ varchar(64),
-    DEC_REQ_KEY_ varchar(255),
-    TENANT_ID_ varchar(64),
-    HISTORY_TTL_ integer,
-    VERSION_TAG_ varchar(64),
-    primary key (ID_)
-);
-
--- create decision requirements definition table --
-create table ACT_RE_DECISION_REQ_DEF (
-    ID_ varchar(64) NOT NULL,
-    REV_ integer,
-    CATEGORY_ varchar(255),
-    NAME_ varchar(255),
-    KEY_ varchar(255) NOT NULL,
-    VERSION_ integer NOT NULL,
-    DEPLOYMENT_ID_ varchar(64),
-    RESOURCE_NAME_ varchar(4000),
-    DGRM_RESOURCE_NAME_ varchar(4000),
-    TENANT_ID_ varchar(64),
-    primary key (ID_)
-);
-
-alter table ACT_RE_DECISION_DEF
-    add constraint ACT_FK_DEC_REQ
-    foreign key (DEC_REQ_ID_)
-    references ACT_RE_DECISION_REQ_DEF(ID_);
-
-create index ACT_IDX_DEC_DEF_TENANT_ID on ACT_RE_DECISION_DEF(TENANT_ID_);
-create index ACT_IDX_DEC_DEF_REQ_ID on ACT_RE_DECISION_DEF(DEC_REQ_ID_);
-create index ACT_IDX_DEC_REQ_DEF_TENANT_ID on ACT_RE_DECISION_REQ_DEF(TENANT_ID_);
-
--- decision history
-
--- create history decision instance table --
 create table ACT_HI_DECINST (
     ID_ varchar(64) NOT NULL,
     DEC_DEF_ID_ varchar(64) NOT NULL,
@@ -1412,4 +1369,3 @@ create index ACT_IDX_HI_DEC_OUT_INST on ACT_HI_DEC_OUT(DEC_INST_ID_);
 create index ACT_IDX_HI_DEC_OUT_RULE on ACT_HI_DEC_OUT(RULE_ORDER_, CLAUSE_ID_);
 create index ACT_IDX_HI_DEC_OUT_ROOT_PI on ACT_HI_DEC_OUT(ROOT_PROC_INST_ID_);
 create index ACT_IDX_HI_DEC_OUT_RM_TIME on ACT_HI_DEC_OUT(REMOVAL_TIME_);
-

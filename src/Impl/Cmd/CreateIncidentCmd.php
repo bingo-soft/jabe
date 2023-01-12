@@ -21,7 +21,7 @@ class CreateIncidentCmd implements CommandInterface
     protected $configuration;
     protected $message;
 
-    public function __construct(string $incidentType, string $executionId, string $configuration, string $message)
+    public function __construct(?string $incidentType, ?string $executionId, ?string $configuration, ?string $message)
     {
         $this->incidentType = $incidentType;
         $this->executionId = $executionId;
@@ -59,9 +59,15 @@ class CreateIncidentCmd implements CommandInterface
             $execution->getProcessInstanceId(),
             $execution->getProcessDefinitionId(),
             null,
-            $propertyChanges
+            $propertyChanges,
+            null
         );
 
         return $execution->createIncident($this->incidentType, $this->configuration, $this->message);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

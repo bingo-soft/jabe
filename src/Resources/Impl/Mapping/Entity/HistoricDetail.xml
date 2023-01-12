@@ -40,22 +40,22 @@
       REMOVAL_TIME_
     )
     values (
-      #{id, dbalType=VARCHAR},
+      #{id:VARCHAR},
       'FormProperty',
-      #{processDefinitionKey, dbalType=VARCHAR},
-      #{processDefinitionId, dbalType=VARCHAR},
-      #{rootProcessInstanceId, dbalType=VARCHAR},
-      #{processInstanceId, dbalType=VARCHAR},
-      #{activityInstanceId, dbalType=VARCHAR},
-      #{executionId, dbalType=VARCHAR},
-      #{taskId, dbalType=VARCHAR},
-      #{timestamp, dbalType=VARCHAR},
-      #{propertyId, dbalType=VARCHAR},
-      #{propertyValue, dbalType=VARCHAR},
-      #{sequenceCounter, dbalType=BIGINT},
-      #{tenantId, dbalType=VARCHAR},
-      #{userOperationId, dbalType=VARCHAR},
-      #{removalTime, dbalType=VARCHAR}
+      #{processDefinitionKey:VARCHAR},
+      #{processDefinitionId:VARCHAR},
+      #{rootProcessInstanceId:VARCHAR},
+      #{processInstanceId:VARCHAR},
+      #{activityInstanceId:VARCHAR},
+      #{executionId:VARCHAR},
+      #{taskId:VARCHAR},
+      #{timestamp:VARCHAR},
+      #{propertyId:VARCHAR},
+      #{propertyValue:VARCHAR},
+      #{sequenceCounter},
+      #{tenantId:VARCHAR},
+      #{userOperationId:VARCHAR},
+      #{removalTime:VARCHAR}
     )
   </insert>
 
@@ -71,10 +71,10 @@
       PROC_INST_ID_,
       EXECUTION_ID_,
       ACT_INST_ID_,
-      CASE_DEF_KEY_,
+      <!-- CASE_DEF_KEY_,
       CASE_DEF_ID_,
       CASE_INST_ID_,
-      CASE_EXECUTION_ID_,
+      CASE_EXECUTION_ID_,-->
       TASK_ID_,
       NAME_,
       REV_,
@@ -93,34 +93,34 @@
       INITIAL_
     )
     values (
-      #{id, dbalType=VARCHAR},
+      #{id:VARCHAR},
       'VariableUpdate',
-      #{processDefinitionKey, dbalType=VARCHAR},
-      #{processDefinitionId, dbalType=VARCHAR},
-      #{rootProcessInstanceId, dbalType=VARCHAR},
-      #{processInstanceId, dbalType=VARCHAR},
-      #{executionId, dbalType=VARCHAR},
-      #{activityInstanceId, dbalType=VARCHAR},
-      #{caseDefinitionKey, dbalType=VARCHAR},
-      #{caseDefinitionId, dbalType=VARCHAR},
-      #{caseInstanceId, dbalType=VARCHAR},
-      #{caseExecutionId, dbalType=VARCHAR},
-      #{taskId, dbalType=VARCHAR},
-      #{variableName, dbalType=VARCHAR},
-      #{revision, dbalType=VARCHAR},
-      #{variableInstanceId, dbalType=VARCHAR},
-      #{serializerName, dbalType=VARCHAR},
-      #{timestamp, dbalType=VARCHAR},
-      #{byteArrayId, dbalType=VARCHAR},
-      #{doubleValue, dbalType=FLOAT},
-      #{longValue, dbalType=BIGINT},
-      #{textValue, dbalType=VARCHAR},
-      #{textValue2, dbalType=VARCHAR},
-      #{sequenceCounter, dbalType=BIGINT},
-      #{tenantId, dbalType=VARCHAR},
-      #{userOperationId, dbalType=VARCHAR},
-      #{removalTime, dbalType=VARCHAR},
-      #{initial, dbalType=BOOLEAN}
+      #{processDefinitionKey:VARCHAR},
+      #{processDefinitionId:VARCHAR},
+      #{rootProcessInstanceId:VARCHAR},
+      #{processInstanceId:VARCHAR},
+      #{executionId:VARCHAR},
+      #{activityInstanceId:VARCHAR},
+      <!-- #{caseDefinitionKey:VARCHAR},
+      #{caseDefinitionId:VARCHAR},
+      #{caseInstanceId:VARCHAR},
+      #{caseExecutionId:VARCHAR},-->
+      #{taskId:VARCHAR},
+      #{variableName:VARCHAR},
+      #{revision:VARCHAR},
+      #{variableInstanceId:VARCHAR},
+      #{serializerName:VARCHAR},
+      #{timestamp:VARCHAR},
+      #{byteArrayId:VARCHAR},
+      #{doubleValue},
+      #{longValue},
+      #{textValue:VARCHAR},
+      #{textValue2:VARCHAR},
+      #{sequenceCounter},
+      #{tenantId:VARCHAR},
+      #{userOperationId:VARCHAR},
+      #{removalTime:VARCHAR},
+      #{initial}
     )
   </insert>
 
@@ -129,32 +129,32 @@
   <update id="updateHistoricDetailsByRootProcessInstanceId"
           parameterType="array">
     update ${prefix}ACT_HI_DETAIL set
-    REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    REMOVAL_TIME_ = #{removalTime:VARCHAR}
 
-    where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+    where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateHistoricDetailsByRootProcessInstanceId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_HI_DETAIL RES WITH (FORCESEEK)
-    where RES.ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+    where RES.ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateHistoricDetailsByProcessInstanceId"
           parameterType="array">
     update ${prefix}ACT_HI_DETAIL
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
-      where PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR}
+      where PROC_INST_ID_ = #{processInstanceId:VARCHAR}
   </update>
 
   <update id="updateHistoricDetailsByProcessInstanceId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_HI_DETAIL RES WITH (FORCESEEK)
-    where PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+    where PROC_INST_ID_ = #{processInstanceId:VARCHAR}
   </update>
 
   <!-- HISTORIC DETAILS DELETE -->
@@ -179,7 +179,7 @@
       <include refid="selectHistoricDetailsProcessAndCaseInstanceByIdsSql"/>
       <!-- https://app.camunda.com/jira/browse/CAM-9436 -->
       <!-- null filter to speed up the history cleanup -->
-      <if test="taskProcessInstanceIds != null and count(taskProcessInstanceIds) > 0">
+      <if test="!empty(taskProcessInstanceIds)">
         and D.TASK_ID_ is not null
       </if>
       <include refid="selectHistoricDetailsVariableInstanceByIdSql"/>
@@ -214,14 +214,14 @@
   <sql id="andWhereMinuteInDateBetweenSql">
     <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
       AND ${datepart1}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart2}${date}${datepart3}
-      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+      between #{parameter.minuteFrom} and #{parameter.minuteTo}
     </if>
   </sql>
 
   <sql id="andWhereMinuteInDateBetweenSql_oracle">
     <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
       AND ${datepart1}${date}${datepart2}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart3}
-      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+      between #{parameter.minuteFrom} and #{parameter.minuteTo}
     </if>
   </sql>
 
@@ -230,7 +230,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_DETAIL
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql"/>
     ${limitAfterWithoutOffset}
   </delete>
@@ -240,7 +240,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_DETAIL
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql_oracle"/>
     ${limitAfterWithoutOffset}
   </delete>
@@ -253,7 +253,7 @@
     where ID_ IN
       (SELECT ID_
        FROM ${prefix}ACT_HI_DETAIL
-       WHERE REMOVAL_TIME_ <= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
+       WHERE REMOVAL_TIME_ &lt;= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
        ${limitAfterWithoutOffset})
   </delete>
 
@@ -265,10 +265,10 @@
     <result property="rootProcessInstanceId" column="ROOT_PROC_INST_ID_" dbalType="VARCHAR" />
     <result property="processInstanceId" column="PROC_INST_ID_" dbalType="VARCHAR" />
     <result property="executionId" column="EXECUTION_ID_" dbalType="VARCHAR" />
-    <result property="caseDefinitionKey" column="CASE_DEF_KEY_" dbalType="VARCHAR" />
+    <!--<result property="caseDefinitionKey" column="CASE_DEF_KEY_" dbalType="VARCHAR" />
     <result property="caseDefinitionId" column="CASE_DEF_ID_" dbalType="VARCHAR" />
     <result property="caseInstanceId" column="CASE_INST_ID_" dbalType="VARCHAR" />
-    <result property="caseExecutionId" column="CASE_EXECUTION_ID_" dbalType="VARCHAR" />
+    <result property="caseExecutionId" column="CASE_EXECUTION_ID_" dbalType="VARCHAR" />-->
     <result property="timestamp" column="TIME_" dbalType="VARCHAR" />
     <result property="activityInstanceId" column="ACT_INST_ID_" dbalType="VARCHAR" />
     <result property="taskId" column="TASK_ID_" dbalType="VARCHAR" />
@@ -276,16 +276,16 @@
     <result property="tenantId" column="TENANT_ID_" dbalType="VARCHAR" />
     <result property="userOperationId" column="OPERATION_ID_" dbalType="VARCHAR" />
     <result property="removalTime" column="REMOVAL_TIME_" dbalType="VARCHAR"/>
-    <result property="initial" column="INITIAL_" javaType="java.lang.Boolean" dbalType="BOOLEAN"/>
-    <discriminator javaType="string" column="TYPE_">
+    <result property="initial" column="INITIAL_" phpType="bool" dbalType="BOOLEAN"/>
+    <discriminator phpType="string" column="TYPE_">
       <case value="VariableUpdate" resultMap="historicVariableUpdateResultMap"/>
       <case value="FormProperty" resultMap="historicFormPropertyResultMap"/>
     </discriminator>
   </resultMap>
 
   <resultMap id="historicVariableUpdateResultMap" extends="historicDetailResultMap" type="Jabe\Impl\Persistence\Entity\HistoricDetailVariableInstanceUpdateEntity">
-    <result property="variableName" column="NAME_" javaType="String" dbalType="VARCHAR" />
-    <result property="variableInstanceId" column="VAR_INST_ID_" javaType="String" dbalType="VARCHAR" />
+    <result property="variableName" column="NAME_" phpType="string" dbalType="VARCHAR" />
+    <result property="variableInstanceId" column="VAR_INST_ID_" phpType="string" dbalType="VARCHAR" />
     <result property="revision" column="REV_" dbalType="INTEGER" />
     <result property="serializerName" column="VAR_TYPE_" dbalType="VARCHAR"/>
     <result property="byteArrayId" column="BYTEARRAY_ID_" dbalType="VARCHAR" />
@@ -297,15 +297,15 @@
   </resultMap>
 
   <resultMap id="historicFormPropertyResultMap" extends="historicDetailResultMap" type="Jabe\Impl\Persistence\Entity\HistoricFormPropertyEntity">
-    <result property="propertyId" column="NAME_" javaType="String" dbalType="VARCHAR" />
-    <result property="propertyValue" column="TEXT_" javaType="String" dbalType="VARCHAR"/>
+    <result property="propertyId" column="NAME_" phpType="string" dbalType="VARCHAR" />
+    <result property="propertyValue" column="TEXT_" phpType="string" dbalType="VARCHAR"/>
   </resultMap>
 
   <!-- HISTORIC VARIABLE UPDATE SELECT -->
 
   <select id="selectHistoricDetailsByTaskId" parameterType="Jabe\Impl\Db\ListQueryParameterObject" resultMap="historicDetailResultMap">
     select * from ${prefix}ACT_HI_DETAIL
-    where TASK_ID_ = #{parameter, dbalType=VARCHAR}
+    where TASK_ID_ = #{parameter:VARCHAR}
   </select>
 
   <select id="selectHistoricDetailsByQueryCriteria" parameterType="Jabe\Impl\HistoricDetailQueryImpl" resultMap="historicDetailResultMap">
@@ -353,9 +353,9 @@
       <if test="processInstanceId != null">
         and RES.PROC_INST_ID_ = #{processInstanceId}
       </if>
-      <if test="caseInstanceId != null">
+      <!--<if test="caseInstanceId != null">
         and RES.CASE_INST_ID_ = #{caseInstanceId}
-      </if>
+      </if>-->
       <if test="executionId != null">
         and RES.EXECUTION_ID_ = #{executionId}
       </if>
@@ -373,7 +373,7 @@
       </if>
 
       <!-- variableTypes -->
-      <if test="variableTypes != null and count(variableTypes) > 0">
+      <if test="!empty(variableTypes)">
         and lower(RES.VAR_TYPE_) in
         <foreach item="item" index="index" collection="variableTypes"
                  open="(" separator="," close=")">
@@ -382,7 +382,7 @@
       </if>
 
       <!-- processInstanceIds -->
-      <if test="processInstanceIds != null and processInstanceIds) > 0">
+      <if test="!empty(processInstanceIds)">
         and RES.PROC_INST_ID_ in
         <foreach item="item" index="index" collection="processInstanceIds"
                  open="(" separator="," close=")">
@@ -406,14 +406,14 @@
       </if>
 
       <if test="isTenantIdSet">
-        <if test="tenantIds != null and count(tenantIds) > 0">
+        <if test="!empty(tenantIds)">
           and RES.TENANT_ID_ in
           <foreach item="tenantId" index="index" collection="tenantIds"
                    open="(" separator="," close=")">
             #{tenantId}
           </foreach>
         </if>
-        <if test="tenantIds == null">
+        <if test="empty(tenantIds)">
           and RES.TENANT_ID_ is null
         </if>
       </if>
@@ -427,10 +427,10 @@
       </if>
 
       <if test="occurredBefore != null">
-        and RES.TIME_ <= #{occurredBefore}
+        and RES.TIME_ &lt;= #{occurredBefore}
       </if>
       <if test="occurredAfter != null">
-        and RES.TIME_ >= #{occurredAfter}
+        and RES.TIME_ &gt;= #{occurredAfter}
       </if>
 
       <if test="initial">
@@ -460,22 +460,22 @@
   </sql>
 
   <sql id="selectHistoricDetailsProcessAndCaseInstanceByIdsSql">
-    <if test="processInstanceIds != null and count(processInstanceIds) > 0">
+    <if test="!empty(processInstanceIds)">
       and
         <bind name="listOfIds" value="processInstanceIds"/>
         <bind name="fieldName" value="'PROC_INST_ID_'"/>
         <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedCollection"/>
     </if>
-    <if test="caseInstanceIds != null and count(caseInstanceIds) > 0">
+    <!--<if test="caseInstanceIds != null and count(caseInstanceIds) &gt; 0">
       and
         <bind name="listOfIds" value="caseInstanceIds"/>
         <bind name="fieldName" value="'CASE_INST_ID_'"/>
         <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedCollection"/>
-    </if>
+    </if>-->
   </sql>
 
   <sql id="selectHistoricDetailsTaskProcessAndCaseInstanceByIdsSql">
-    <if test="taskProcessInstanceIds != null and count(taskProcessInstanceIds) > 0">
+    <if test="!empty(taskProcessInstanceIds)">
       and TASK_ID_ in (
         select ID_
         from ${prefix}ACT_HI_TASKINST
@@ -485,7 +485,7 @@
           <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedCollection"/>
       )
     </if>
-    <if test="taskCaseInstanceIds != null and count(taskCaseInstanceIds) > 0">
+    <!-- <if test="taskCaseInstanceIds != null and count(taskCaseInstanceIds) &gt; 0">
       and TASK_ID_ in (
         select ID_
         from ${prefix}ACT_HI_TASKINST
@@ -494,11 +494,11 @@
           <bind name="fieldName" value="'CASE_INST_ID_'"/>
           <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedCollection"/>
       )
-    </if>
+    </if> -->
   </sql>
 
   <sql id="selectHistoricDetailsTaskProcessAndCaseInstanceByIdsSql_mysql">
-    <if test="taskProcessInstanceIds != null and count(taskProcessInstanceIds) > 0">
+    <if test="!empty(taskProcessInstanceIds)">
       inner join ${prefix}ACT_HI_TASKINST T
         on TASK_ID_ = T.ID_
         and
@@ -506,7 +506,7 @@
           <bind name="fieldName" value="'T.PROC_INST_ID_'"/>
           <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedCollection"/>
     </if>
-    <if test="taskCaseInstanceIds != null and count(taskCaseInstanceIds) > 0">
+    <if test="!empty(taskCaseInstanceIds)">
       inner join ${prefix}ACT_HI_TASKINST T
         on TASK_ID_ = T.ID_
         and
@@ -514,7 +514,7 @@
           <bind name="fieldName" value="'T.CASE_INST_ID_'"/>
           <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedCollection"/>
     </if>
-  </sql>
+  </sql>-->
   
   <sql id="selectHistoricDetailsVariableInstanceByIdSql">
     <if test="variableInstanceId != null">
@@ -528,7 +528,7 @@
     select ${limitBeforeWithoutOffset} * from ${prefix}ACT_HI_DETAIL RES
     <where>
       <if test="parameter.occurredAfter != null">
-        RES.TIME_ > #{parameter.occurredAfter}
+        RES.TIME_ &gt; #{parameter.occurredAfter}
       </if>
       <if test="parameter.occurredAt != null">
         and RES.TIME_ = #{parameter.occurredAt}

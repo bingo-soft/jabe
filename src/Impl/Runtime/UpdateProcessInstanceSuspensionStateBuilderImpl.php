@@ -33,7 +33,7 @@ class UpdateProcessInstanceSuspensionStateBuilderImpl implements UpdateProcessIn
     protected $processDefinitionId;
 
     protected $processDefinitionTenantId;
-    protected $isProcessDefinitionTenantIdSet = false;
+    protected bool $isProcessDefinitionTenantIdSet = false;
 
     public function __construct(?CommandExecutorInterface $commandExecutor)
     {
@@ -50,19 +50,19 @@ class UpdateProcessInstanceSuspensionStateBuilderImpl implements UpdateProcessIn
         return (new UpdateProcessInstancesSuspensionStateBuilderImpl($this->commandExecutor))->byHistoricProcessInstanceQuery($historicProcessInstanceQuery);
     }
 
-    public function byProcessInstanceId(string $processInstanceId): UpdateProcessInstanceSuspensionStateBuilderImpl
+    public function byProcessInstanceId(?string $processInstanceId): UpdateProcessInstanceSuspensionStateBuilderImpl
     {
         $this->processInstanceId = $processInstanceId;
         return $this;
     }
 
-    public function byProcessDefinitionId(string $processDefinitionId): UpdateProcessInstanceSuspensionStateBuilderImpl
+    public function byProcessDefinitionId(?string $processDefinitionId): UpdateProcessInstanceSuspensionStateBuilderImpl
     {
         $this->processDefinitionId = $processDefinitionId;
         return $this;
     }
 
-    public function byProcessDefinitionKey(string $processDefinitionKey): UpdateProcessInstanceSuspensionStateBuilderImpl
+    public function byProcessDefinitionKey(?string $processDefinitionKey): UpdateProcessInstanceSuspensionStateBuilderImpl
     {
         $this->processDefinitionKey = $processDefinitionKey;
         return $this;
@@ -75,7 +75,7 @@ class UpdateProcessInstanceSuspensionStateBuilderImpl implements UpdateProcessIn
         return $this;
     }
 
-    public function processDefinitionTenantId(string $tenantId): UpdateProcessInstanceSuspensionStateBuilderImpl
+    public function processDefinitionTenantId(?string $tenantId): UpdateProcessInstanceSuspensionStateBuilderImpl
     {
         $this->processDefinitionTenantId = $tenantId;
         $this->isProcessDefinitionTenantIdSet = true;

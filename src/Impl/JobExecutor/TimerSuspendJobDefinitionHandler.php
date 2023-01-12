@@ -11,7 +11,7 @@ class TimerSuspendJobDefinitionHandler extends TimerChangeJobDefinitionSuspensio
 {
     public const TYPE = "suspend-job-definition";
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return self::TYPE;
     }

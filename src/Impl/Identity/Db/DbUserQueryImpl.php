@@ -25,7 +25,7 @@ class DbUserQueryImpl extends UserQueryImpl
         return $identityProvider->findUserCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         $identityProvider = $this->getIdentityProvider($commandContext);

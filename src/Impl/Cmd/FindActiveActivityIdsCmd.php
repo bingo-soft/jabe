@@ -16,7 +16,7 @@ class FindActiveActivityIdsCmd implements CommandInterface, \Serializable
 {
     protected $executionId;
 
-    public function __construct(string $executionId)
+    public function __construct(?string $executionId)
     {
         $this->executionId = $executionId;
     }
@@ -54,5 +54,10 @@ class FindActiveActivityIdsCmd implements CommandInterface, \Serializable
         foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
             $checker->checkReadProcessInstance($execution);
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

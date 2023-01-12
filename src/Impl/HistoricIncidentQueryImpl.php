@@ -45,98 +45,98 @@ class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl implements His
         parent::__construct($commandExecutor);
     }
 
-    public function incidentId(string $incidentId): HistoricIncidentQueryInterface
+    public function incidentId(?string $incidentId): HistoricIncidentQueryInterface
     {
         EnsureUtil::ensureNotNull("incidentId", "incidentId", $incidentId);
         $this->id = $incidentId;
         return $this;
     }
 
-    public function incidentType(string $incidentType): HistoricIncidentQueryInterface
+    public function incidentType(?string $incidentType): HistoricIncidentQueryInterface
     {
         EnsureUtil::ensureNotNull("incidentType", "incidentType", $incidentType);
         $this->incidentType = $incidentType;
         return $this;
     }
 
-    public function incidentMessage(string $incidentMessage): HistoricIncidentQueryInterface
+    public function incidentMessage(?string $incidentMessage): HistoricIncidentQueryInterface
     {
         EnsureUtil::ensureNotNull("incidentMessage", "incidentMessage", $incidentMessage);
         $this->incidentMessage = $incidentMessage;
         return $this;
     }
 
-    public function incidentMessageLike(string $incidentMessageLike): HistoricIncidentQueryInterface
+    public function incidentMessageLike(?string $incidentMessageLike): HistoricIncidentQueryInterface
     {
         EnsureUtil::ensureNotNull("incidentMessageLike", "incidentMessageLike", $incidentMessageLike);
         $this->incidentMessageLike = $incidentMessageLike;
         return $this;
     }
 
-    public function executionId(string $executionId): HistoricIncidentQueryInterface
+    public function executionId(?string $executionId): HistoricIncidentQueryInterface
     {
         EnsureUtil::ensureNotNull("executionId", "executionId", $executionId);
         $this->executionId = $executionId;
         return $this;
     }
 
-    public function createTimeBefore(string $createTimeBefore): HistoricIncidentQueryInterface
+    public function createTimeBefore(?string $createTimeBefore): HistoricIncidentQueryInterface
     {
         EnsureUtil::ensureNotNull("createTimeBefore", "createTimeBefore", $createTimeBefore);
         $this->createTimeBefore = $createTimeBefore;
         return $this;
     }
 
-    public function createTimeAfter(string $createTimeAfter): HistoricIncidentQueryInterface
+    public function createTimeAfter(?string $createTimeAfter): HistoricIncidentQueryInterface
     {
         EnsureUtil::ensureNotNull("createTimeAfter", "createTimeAfter", $createTimeAfter);
         $this->createTimeAfter = $createTimeAfter;
         return $this;
     }
 
-    public function endTimeBefore(string $endTimeBefore): HistoricIncidentQueryInterface
+    public function endTimeBefore(?string $endTimeBefore): HistoricIncidentQueryInterface
     {
         EnsureUtil::ensureNotNull("endTimeBefore", "endTimeBefore", $endTimeBefore);
         $this->endTimeBefore = $endTimeBefore;
         return $this;
     }
 
-    public function endTimeAfter(string $endTimeAfter): HistoricIncidentQueryInterface
+    public function endTimeAfter(?string $endTimeAfter): HistoricIncidentQueryInterface
     {
         EnsureUtil::ensureNotNull("endTimeAfter", "endTimeAfter", $endTimeAfter);
         $this->endTimeAfter = $endTimeAfter;
         return $this;
     }
 
-    public function activityId(string $activityId): HistoricIncidentQueryInterface
+    public function activityId(?string $activityId): HistoricIncidentQueryInterface
     {
         EnsureUtil::ensureNotNull("activityId", "activityId", $activityId);
         $this->activityId = $activityId;
         return $this;
     }
 
-    public function failedActivityId(string $activityId): HistoricIncidentQueryInterface
+    public function failedActivityId(?string $activityId): HistoricIncidentQueryInterface
     {
         EnsureUtil::ensureNotNull("failedActivityId", "activityId", $activityId);
         $this->failedActivityId = $activityId;
         return $this;
     }
 
-    public function processInstanceId(string $processInstanceId): HistoricIncidentQueryInterface
+    public function processInstanceId(?string $processInstanceId): HistoricIncidentQueryInterface
     {
         EnsureUtil::ensureNotNull("processInstanceId", "processInstanceId", $processInstanceId);
         $this->processInstanceId = $processInstanceId;
         return $this;
     }
 
-    public function processDefinitionId(string $processDefinitionId): HistoricIncidentQueryInterface
+    public function processDefinitionId(?string $processDefinitionId): HistoricIncidentQueryInterface
     {
         EnsureUtil::ensureNotNull("processDefinitionId", "processDefinitionId", $processDefinitionId);
         $this->processDefinitionId = $processDefinitionId;
         return $this;
     }
 
-    public function processDefinitionKey(string $processDefinitionKey): HistoricIncidentQueryInterface
+    public function processDefinitionKey(?string $processDefinitionKey): HistoricIncidentQueryInterface
     {
         EnsureUtil::ensureNotNull("processDefinitionKey", "processDefinitionKey", $processDefinitionKey);
         $this->processDefinitionKey = $processDefinitionKey;
@@ -150,14 +150,14 @@ class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl implements His
         return $this;
     }
 
-    public function causeIncidentId(string $causeIncidentId): HistoricIncidentQueryInterface
+    public function causeIncidentId(?string $causeIncidentId): HistoricIncidentQueryInterface
     {
         EnsureUtil::ensureNotNull("causeIncidentId", "causeIncidentId", $causeIncidentId);
         $this->causeIncidentId = $causeIncidentId;
         return $this;
     }
 
-    public function rootCauseIncidentId(string $rootCauseIncidentId): HistoricIncidentQueryInterface
+    public function rootCauseIncidentId(?string $rootCauseIncidentId): HistoricIncidentQueryInterface
     {
         EnsureUtil::ensureNotNull("rootCauseIncidentId", "rootCauseIncidentId", $rootCauseIncidentId);
         $this->rootCauseIncidentId = $rootCauseIncidentId;
@@ -179,14 +179,14 @@ class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl implements His
         return $this;
     }
 
-    public function configuration(string $configuration): HistoricIncidentQueryInterface
+    public function configuration(?string $configuration): HistoricIncidentQueryInterface
     {
         EnsureUtil::ensureNotNull("configuration", "configuration", $configuration);
         $this->configuration = $configuration;
         return $this;
     }
 
-    public function historyConfiguration(string $historyConfiguration): HistoricIncidentQueryInterface
+    public function historyConfiguration(?string $historyConfiguration): HistoricIncidentQueryInterface
     {
         EnsureUtil::ensureNotNull("historyConfiguration", "historyConfiguration", $historyConfiguration);
         $this->historyConfiguration = $historyConfiguration;
@@ -334,7 +334,7 @@ class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl implements His
             ->findHistoricIncidentCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         return $commandContext
@@ -344,42 +344,42 @@ class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl implements His
 
     // getters /////////////////////////////////////////////////////
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function getIncidentType(): string
+    public function getIncidentType(): ?string
     {
         return $this->incidentType;
     }
 
-    public function getIncidentMessage(): string
+    public function getIncidentMessage(): ?string
     {
         return $this->incidentMessage;
     }
 
-    public function getExecutionId(): string
+    public function getExecutionId(): ?string
     {
         return $this->executionId;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
 
-    public function getFailedActivityId(): string
+    public function getFailedActivityId(): ?string
     {
         return $this->failedActivityId;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
@@ -389,22 +389,22 @@ class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl implements His
         return $this->processDefinitionKeys;
     }
 
-    public function getCauseIncidentId(): string
+    public function getCauseIncidentId(): ?string
     {
         return $this->causeIncidentId;
     }
 
-    public function getRootCauseIncidentId(): string
+    public function getRootCauseIncidentId(): ?string
     {
         return $this->rootCauseIncidentId;
     }
 
-    public function getConfiguration(): string
+    public function getConfiguration(): ?string
     {
         return $this->configuration;
     }
 
-    public function getHistoryConfiguration(): string
+    public function getHistoryConfiguration(): ?string
     {
         return $this->historyConfiguration;
     }

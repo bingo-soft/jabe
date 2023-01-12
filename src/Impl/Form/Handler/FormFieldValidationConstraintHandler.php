@@ -41,17 +41,17 @@ class FormFieldValidationConstraintHandler
 
     // getter / setter ////////////////////////
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    public function setConfig(string $config): void
+    public function setConfig(?string $config): void
     {
         $this->config = $config;
     }

@@ -28,12 +28,12 @@ class ByteArrayField
         $this->rootProcessInstanceId = $rootProcessInstanceId;
     }
 
-    public function getByteArrayId(): string
+    public function getByteArrayId(): ?string
     {
         return $this->byteArrayId;
     }
 
-    public function setByteArrayId(string $byteArrayId): void
+    public function setByteArrayId(?string $byteArrayId): void
     {
         $this->byteArrayId = $byteArrayId;
         $this->byteArrayValue = null;
@@ -110,12 +110,12 @@ class ByteArrayField
         }
     }
 
-    public function setRootProcessInstanceId(string $rootProcessInstanceId): void
+    public function setRootProcessInstanceId(?string $rootProcessInstanceId): void
     {
         $this->rootProcessInstanceId = $rootProcessInstanceId;
     }
 
-    public function setRemovalTime(string $removalTime): void
+    public function setRemovalTime(?string $removalTime): void
     {
         $this->removalTime = $removalTime;
     }

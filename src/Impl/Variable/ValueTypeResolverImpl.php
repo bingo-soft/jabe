@@ -21,7 +21,7 @@ class ValueTypeResolverImpl implements ValueTypeResolverInterface
         $this->addType(ValueType::getNull());
         $this->addType(ValueType::getString());
         $this->addType(ValueType::getObject());
-        $this->addType(ValueType::getNumber());
+        $this->addType(ValueType::getLong());
         $this->addType(ValueType::getFile());
     }
 
@@ -30,7 +30,7 @@ class ValueTypeResolverImpl implements ValueTypeResolverInterface
         $this->knownTypes[$type->getName()] = $type;
     }
 
-    public function typeForName(string $typeName): ValueTypeInterface
+    public function typeForName(?string $typeName): ValueTypeInterface
     {
         return $this->knownTypes[$typeName];
     }

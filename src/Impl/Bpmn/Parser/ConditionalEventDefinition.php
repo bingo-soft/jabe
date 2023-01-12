@@ -45,12 +45,12 @@ class ConditionalEventDefinition extends EventSubscriptionDeclaration
         $this->interrupting = $interrupting;
     }
 
-    public function getVariableName(): string
+    public function getVariableName(): ?string
     {
         return $this->variableName;
     }
 
-    public function setVariableName(string $variableName): void
+    public function setVariableName(?string $variableName): void
     {
         $this->variableName = $variableName;
     }
@@ -65,12 +65,12 @@ class ConditionalEventDefinition extends EventSubscriptionDeclaration
         $this->variableEvents = $variableEvents;
     }
 
-    public function getConditionAsString(): string
+    public function getConditionAsString(): ?string
     {
         return $this->conditionAsString;
     }
 
-    public function setConditionAsString(string $conditionAsString): void
+    public function setConditionAsString(?string $conditionAsString): void
     {
         $this->conditionAsString = $conditionAsString;
     }

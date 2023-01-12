@@ -52,17 +52,17 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
 {
     protected $deploymentCharset;
 
-    public function getDeploymentCharset(): string
+    public function getDeploymentCharset(): ?string
     {
         return $this->deploymentCharset;
     }
 
-    public function setDeploymentCharset(string $deploymentCharset): void
+    public function setDeploymentCharset(?string $deploymentCharset): void
     {
         $this->deploymentCharset = $deploymentCharset;
     }
 
-    public function createDeployment(ProcessApplicationReferenceInterface $processApplication = null): ProcessApplicationDeploymentBuilderInterface
+    public function createDeployment(ProcessApplicationReferenceInterface $processApplication = null): DeploymentBuilderInterface
     {
         if ($processApplication === null) {
             return new DeploymentBuilderImpl($this);
@@ -76,17 +76,17 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
         return $this->commandExecutor->execute(new DeployCmd($deploymentBuilder));
     }
 
-    public function deleteDeploymentCascade(string $deploymentId): void
+    public function deleteDeploymentCascade(?string $deploymentId): void
     {
         $this->commandExecutor->execute(new DeleteDeploymentCmd($deploymentId, true, false, false));
     }
 
-    public function deleteDeployment(string $deploymentId, bool $cascade = false, bool $skipCustomListeners = false, bool $skipIoMappings = false): void
+    public function deleteDeployment(?string $deploymentId, bool $cascade = false, bool $skipCustomListeners = false, bool $skipIoMappings = false): void
     {
         $this->commandExecutor->execute(new DeleteDeploymentCmd($deploymentId, $cascade, $skipCustomListeners, $skipIoMappings));
     }
 
-    public function deleteProcessDefinition(string $processDefinitionId, bool $cascade = false, bool $skipCustomListeners = false, bool $skipIoMappings = false): void
+    public function deleteProcessDefinition(?string $processDefinitionId, bool $cascade = false, bool $skipCustomListeners = false, bool $skipIoMappings = false): void
     {
         $builder = $this->deleteProcessDefinitions()->byIds($processDefinitionId);
 
@@ -127,22 +127,22 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
         return new DecisionRequirementsDefinitionQueryImpl(commandExecutor);
     }*/
 
-    public function getDeploymentResourceNames(string $deploymentId): array
+    public function getDeploymentResourceNames(?string $deploymentId): array
     {
         return $this->commandExecutor->execute(new GetDeploymentResourceNamesCmd($deploymentId));
     }
 
-    public function getDeploymentResources(string $deploymentId): array
+    public function getDeploymentResources(?string $deploymentId): array
     {
         return $this->commandExecutor->execute(new GetDeploymentResourcesCmd($deploymentId));
     }
 
-    public function getResourceAsStream(string $deploymentId, string $resourceName)
+    public function getResourceAsStream(?string $deploymentId, ?string $resourceName)
     {
         return $this->commandExecutor->execute(new GetDeploymentResourceCmd($deploymentId, $resourceName));
     }
 
-    public function getResourceAsStreamById(string $deploymentId, string $resourceId)
+    public function getResourceAsStreamById(?string $deploymentId, ?string $resourceId)
     {
         return $this->commandExecutor->execute(new GetDeploymentResourceForIdCmd($deploymentId, $resourceId));
     }
@@ -152,17 +152,17 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
         return new DeploymentQueryImpl(commandExecutor);
     }
 
-    public function getProcessDefinition(string $processDefinitionId): ProcessDefinitionInterface
+    public function getProcessDefinition(?string $processDefinitionId): ProcessDefinitionInterface
     {
         return $this->commandExecutor->execute(new GetDeployedProcessDefinitionCmd($processDefinitionId, true));
     }
 
-    public function getDeployedProcessDefinition(string $processDefinitionId): ReadOnlyProcessDefinitionInterface
+    public function getDeployedProcessDefinition(?string $processDefinitionId): ReadOnlyProcessDefinitionInterface
     {
         return $this->commandExecutor->execute(new GetDeployedProcessDefinitionCmd($processDefinitionId, true));
     }
 
-    public function suspendProcessDefinitionById(string $processDefinitionId, bool $suspendProcessInstances = null, string $suspensionDate = null): void
+    public function suspendProcessDefinitionById(?string $processDefinitionId, bool $suspendProcessInstances = null, ?string $suspensionDate = null): void
     {
         if ($suspendProcessInstances === null) {
             $this->updateProcessDefinitionSuspensionState()
@@ -177,7 +177,7 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
         }
     }
 
-    public function suspendProcessDefinitionByKey(string $processDefinitionKey, bool $suspendProcessInstances = null, string $suspensionDate = null): void
+    public function suspendProcessDefinitionByKey(?string $processDefinitionKey, bool $suspendProcessInstances = null, ?string $suspensionDate = null): void
     {
         if ($suspendProcessInstances === null) {
             $this->updateProcessDefinitionSuspensionState()
@@ -192,7 +192,7 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
         }
     }
 
-    public function activateProcessDefinitionById(string $processDefinitionId, bool $activateProcessInstances = null, string $activationDate = null): void
+    public function activateProcessDefinitionById(?string $processDefinitionId, bool $activateProcessInstances = null, ?string $activationDate = null): void
     {
         if ($activateProcessInstances === null) {
             $this->updateProcessDefinitionSuspensionState()
@@ -207,7 +207,7 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
         }
     }
 
-    public function activateProcessDefinitionByKey(string $processDefinitionKey, bool $activateProcessInstances = null, string $activationDate = null): void
+    public function activateProcessDefinitionByKey(?string $processDefinitionKey, bool $activateProcessInstances = null, ?string $activationDate = null): void
     {
         if ($activateProcessInstances === null) {
             $this->updateProcessDefinitionSuspensionState()
@@ -227,45 +227,45 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
         return new UpdateProcessDefinitionSuspensionStateBuilderImpl($this->commandExecutor);
     }
 
-    public function updateProcessDefinitionHistoryTimeToLive(string $processDefinitionId, int $historyTimeToLive): void
+    public function updateProcessDefinitionHistoryTimeToLive(?string $processDefinitionId, int $historyTimeToLive): void
     {
         $this->commandExecutor->execute(new UpdateProcessDefinitionHistoryTimeToLiveCmd($processDefinitionId, $historyTimeToLive));
     }
 
-    /*public void updateDecisionDefinitionHistoryTimeToLive(string $decisionDefinitionId, Integer historyTimeToLive){
+    /*public void updateDecisionDefinitionHistoryTimeToLive(?string $decisionDefinitionId, Integer historyTimeToLive){
         $this->commandExecutor->execute(new UpdateDecisionDefinitionHistoryTimeToLiveCmd(decisionDefinitionId, historyTimeToLive));
     }
 
-    public function updateCaseDefinitionHistoryTimeToLive(string $caseDefinitionId, Integer historyTimeToLive): void
+    public function updateCaseDefinitionHistoryTimeToLive(?string $caseDefinitionId, Integer historyTimeToLive): void
     {
         $this->commandExecutor->execute(new UpdateCaseDefinitionHistoryTimeToLiveCmd(caseDefinitionId, historyTimeToLive));
     }*/
 
-    public function getProcessModel(string $processDefinitionId)
+    public function getProcessModel(?string $processDefinitionId)
     {
         return $this->commandExecutor->execute(new GetDeploymentProcessModelCmd($processDefinitionId));
     }
 
-    public function getProcessDiagram(string $processDefinitionId)
+    public function getProcessDiagram(?string $processDefinitionId)
     {
         return $this->commandExecutor->execute(new GetDeploymentProcessDiagramCmd($processDefinitionId));
     }
 
-    /*public InputStream getCaseDiagram(string $caseDefinitionId) {
+    /*public InputStream getCaseDiagram(?string $caseDefinitionId) {
         return $this->commandExecutor->execute(new GetDeploymentCaseDiagramCmd(caseDefinitionId));
     }*/
 
-    public function getProcessDiagramLayout(string $processDefinitionId): ?DiagramLayout
+    public function getProcessDiagramLayout(?string $processDefinitionId): ?DiagramLayout
     {
         return $this->commandExecutor->execute(new GetDeploymentProcessDiagramLayoutCmd($processDefinitionId));
     }
 
-    public function getBpmnModelInstance(string $processDefinitionId): BpmnModelInstanceInterface
+    public function getBpmnModelInstance(?string $processDefinitionId): BpmnModelInstanceInterface
     {
         return $this->commandExecutor->execute(new GetDeploymentBpmnModelInstanceCmd($processDefinitionId));
     }
 
-    /*public CmmnModelInstance getCmmnModelInstance(string $caseDefinitionId) {
+    /*public CmmnModelInstance getCmmnModelInstance(?string $caseDefinitionId) {
         try {
             return $this->commandExecutor->execute(new GetDeploymentCmmnModelInstanceCmd(caseDefinitionId));
         } catch (NullValueException e) {
@@ -277,7 +277,7 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
         }
     }
 
-    public DmnModelInstance getDmnModelInstance(string $decisionDefinitionId) {
+    public DmnModelInstance getDmnModelInstance(?string $decisionDefinitionId) {
         try {
             return $this->commandExecutor->execute(new GetDeploymentDmnModelInstanceCmd(decisionDefinitionId));
         } catch (NullValueException e) {
@@ -289,32 +289,32 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
         }
     }*/
 
-    public function addCandidateStarterUser(string $processDefinitionId, string $userId): void
+    public function addCandidateStarterUser(?string $processDefinitionId, ?string $userId): void
     {
         $this->commandExecutor->execute(new AddIdentityLinkForProcessDefinitionCmd($processDefinitionId, $userId, null));
     }
 
-    public function addCandidateStarterGroup(string $processDefinitionId, string $groupId): void
+    public function addCandidateStarterGroup(?string $processDefinitionId, ?string $groupId): void
     {
         $this->commandExecutor->execute(new AddIdentityLinkForProcessDefinitionCmd($processDefinitionId, null, $groupId));
     }
 
-    public function deleteCandidateStarterGroup(string $processDefinitionId, string $groupId): void
+    public function deleteCandidateStarterGroup(?string $processDefinitionId, ?string $groupId): void
     {
         $this->commandExecutor->execute(new DeleteIdentityLinkForProcessDefinitionCmd($processDefinitionId, null, $groupId));
     }
 
-    public function deleteCandidateStarterUser(string $processDefinitionId, string $userId): void
+    public function deleteCandidateStarterUser(?string $processDefinitionId, ?string $userId): void
     {
         $this->commandExecutor->execute(new DeleteIdentityLinkForProcessDefinitionCmd($processDefinitionId, $userId, null));
     }
 
-    public function getIdentityLinksForProcessDefinition(string $processDefinitionId): array
+    public function getIdentityLinksForProcessDefinition(?string $processDefinitionId): array
     {
         return $this->commandExecutor->execute(new GetIdentityLinksForProcessDefinitionCmd($processDefinitionId));
     }
 
-    /*public CaseDefinition getCaseDefinition(string $caseDefinitionId) {
+    /*public CaseDefinition getCaseDefinition(?string $caseDefinitionId) {
         try {
             return $this->commandExecutor->execute(new GetDeploymentCaseDefinitionCmd(caseDefinitionId));
         } catch (NullValueException e) {
@@ -324,7 +324,7 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
         }
     }
 
-    public InputStream getCaseModel(string $caseDefinitionId) {
+    public InputStream getCaseModel(?string $caseDefinitionId) {
         try {
             return $this->commandExecutor->execute(new GetDeploymentCaseModelCmd(caseDefinitionId));
         } catch (NullValueException e) {
@@ -336,7 +336,7 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
         }
     }
 
-    public DecisionDefinition getDecisionDefinition(string $decisionDefinitionId) {
+    public DecisionDefinition getDecisionDefinition(?string $decisionDefinitionId) {
         try {
             return $this->commandExecutor->execute(new GetDeploymentDecisionDefinitionCmd(decisionDefinitionId));
         } catch (NullValueException e) {
@@ -346,7 +346,7 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
         }
     }
 
-    public DecisionRequirementsDefinition getDecisionRequirementsDefinition(string $decisionRequirementsDefinitionId) {
+    public DecisionRequirementsDefinition getDecisionRequirementsDefinition(?string $decisionRequirementsDefinitionId) {
         try {
             return $this->commandExecutor->execute(new GetDeploymentDecisionRequirementsDefinitionCmd(decisionRequirementsDefinitionId));
         } catch (NullValueException e) {
@@ -356,7 +356,7 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
         }
     }
 
-    public InputStream getDecisionModel(string $decisionDefinitionId) {
+    public InputStream getDecisionModel(?string $decisionDefinitionId) {
         try {
             return $this->commandExecutor->execute(new GetDeploymentDecisionModelCmd(decisionDefinitionId));
         } catch (NullValueException e) {
@@ -368,7 +368,7 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
         }
     }
 
-    public InputStream getDecisionRequirementsModel(string $decisionRequirementsDefinitionId) {
+    public InputStream getDecisionRequirementsModel(?string $decisionRequirementsDefinitionId) {
         try {
             return $this->commandExecutor->execute(new GetDeploymentDecisionRequirementsModelCmd(decisionRequirementsDefinitionId));
         } catch (NullValueException e) {
@@ -380,15 +380,15 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
         }
     }
 
-    public InputStream getDecisionDiagram(string $decisionDefinitionId) {
+    public InputStream getDecisionDiagram(?string $decisionDefinitionId) {
         return $this->commandExecutor->execute(new GetDeploymentDecisionDiagramCmd(decisionDefinitionId));
     }
 
-    public InputStream getDecisionRequirementsDiagram(string $decisionRequirementsDefinitionId) {
+    public InputStream getDecisionRequirementsDiagram(?string $decisionRequirementsDefinitionId) {
         return $this->commandExecutor->execute(new GetDeploymentDecisionRequirementsDiagramCmd(decisionRequirementsDefinitionId));
     }*/
 
-    public function getStaticCalledProcessDefinitions(string $processDefinitionId): array
+    public function getStaticCalledProcessDefinitions(?string $processDefinitionId): array
     {
         return $this->commandExecutor->execute(new GetStaticCalledProcessDefinitionCmd($processDefinitionId));
     }

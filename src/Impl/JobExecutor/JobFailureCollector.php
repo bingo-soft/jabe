@@ -15,7 +15,7 @@ class JobFailureCollector implements CommandContextListenerInterface
     protected $jobId;
     protected $failedActivityId;
 
-    public function __construct(string $jobId)
+    public function __construct(?string $jobId)
     {
         $this->jobId = $jobId;
     }
@@ -53,17 +53,17 @@ class JobFailureCollector implements CommandContextListenerInterface
         return $this->job;
     }
 
-    public function getJobId(): string
+    public function getJobId(): ?string
     {
         return $this->jobId;
     }
 
-    public function getFailedActivityId(): string
+    public function getFailedActivityId(): ?string
     {
         return $this->failedActivityId;
     }
 
-    public function setFailedActivityId(string $activityId): void
+    public function setFailedActivityId(?string $activityId): void
     {
         $this->failedActivityId = $activityId;
     }

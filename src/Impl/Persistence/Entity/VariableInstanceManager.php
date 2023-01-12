@@ -2,6 +2,10 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
+use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface
+};
 use Jabe\Impl\{
     Page,
     VariableInstanceQueryImpl
@@ -10,12 +14,12 @@ use Jabe\Impl\Persistence\AbstractManager;
 
 class VariableInstanceManager extends AbstractManager
 {
-    public function findVariableInstancesByTaskId(string $taskId): array
+    public function findVariableInstancesByTaskId(?string $taskId): array
     {
         return $this->findVariableInstancesByTaskIdAndVariableNames($taskId, null);
     }
 
-    public function findVariableInstancesByTaskIdAndVariableNames(string $taskId, array $variableNames): array
+    public function findVariableInstancesByTaskIdAndVariableNames(?string $taskId, array $variableNames): array
     {
         $parameter = [];
         $parameter["taskId"] = $taskId;
@@ -23,12 +27,12 @@ class VariableInstanceManager extends AbstractManager
         return $this->getDbEntityManager()->selectList("selectVariablesByTaskId", $parameter);
     }
 
-    public function findVariableInstancesByExecutionId(string $executionId): array
+    public function findVariableInstancesByExecutionId(?string $executionId): array
     {
         return $this->findVariableInstancesByExecutionIdAndVariableNames($executionId, null);
     }
 
-    public function findVariableInstancesByExecutionIdAndVariableNames(string $executionId, array $variableNames): array
+    public function findVariableInstancesByExecutionIdAndVariableNames(?string $executionId, array $variableNames): array
     {
         $parameter = [];
         $parameter["executionId"] = $executionId;
@@ -36,7 +40,7 @@ class VariableInstanceManager extends AbstractManager
         return $this->getDbEntityManager()->selectList("selectVariablesByExecutionId", $parameter);
     }
 
-    public function findVariableInstancesByProcessInstanceId(string $processInstanceId): array
+    public function findVariableInstancesByProcessInstanceId(?string $processInstanceId): array
     {
         return $this->getDbEntityManager()->selectList("selectVariablesByProcessInstanceId", $processInstanceId);
     }
@@ -66,19 +70,19 @@ class VariableInstanceManager extends AbstractManager
         return $this->getDbEntityManager()->selectOne("selectVariableInstanceCountByQueryCriteria", $variableInstanceQuery);
     }
 
-    public function findVariableInstanceByQueryCriteria(VariableInstanceQueryImpl $variableInstanceQuery, Page $page): array
+    public function findVariableInstanceByQueryCriteria(VariableInstanceQueryImpl $variableInstanceQuery, ?Page $page): array
     {
         $this->configureQuery($variableInstanceQuery);
         return $this->getDbEntityManager()->selectList("selectVariableInstanceByQueryCriteria", $variableInstanceQuery, $page);
     }
 
-    protected function configureQuery(VariableInstanceQueryImpl $query): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         $this->getAuthorizationManager()->configureVariableInstanceQuery($query);
         $this->getTenantManager()->configureQuery($query);
     }
 
-    public function findVariableInstancesByBatchId(string $batchId): array
+    public function findVariableInstancesByBatchId(?string $batchId): array
     {
         $parameters = ["batchId" => $batchId];
         return $this->getDbEntityManager()->selectList("selectVariableInstancesByBatchId", $parameters);

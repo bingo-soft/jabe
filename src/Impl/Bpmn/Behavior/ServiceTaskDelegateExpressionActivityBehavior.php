@@ -38,7 +38,7 @@ class ServiceTaskDelegateExpressionActivityBehavior extends TaskActivityBehavior
         $this->fieldDeclarations = $fieldDeclarations;
     }
 
-    public function signal(ActivityExecutionInterface $execution, string $signalName, $signalData): void
+    public function signal(ActivityExecutionInterface $execution, ?string $signalName, $signalData): void
     {
         $targetProcessApplication = ProcessApplicationContextUtil::getTargetProcessApplication($execution);
         if (ProcessApplicationContextUtil::requiresContextSwitch($targetProcessApplication)) {
@@ -52,7 +52,7 @@ class ServiceTaskDelegateExpressionActivityBehavior extends TaskActivityBehavior
         }
     }
 
-    public function doSignal(ActivityExecutionInterface $execution, string $signalName, $signalData): void
+    public function doSignal(ActivityExecutionInterface $execution, ?string $signalName, $signalData): void
     {
         $delegate = $this->expression->getValue($execution);
         $this->applyFieldDeclaration($this->fieldDeclarations, $delegate);

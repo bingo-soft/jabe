@@ -22,6 +22,7 @@ use Jabe\Task\{
     TaskInterface,
     TaskQueryInterface
 };
+use Jabe\Query\QueryInterface;
 use Jabe\Variable\Type\ValueTypeInterface;
 
 class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
@@ -82,7 +83,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
     protected $owner;
     protected $unassigned;
     protected $assigned;
-    protected $noDelegationState = false;
+    protected bool $noDelegationState = false;
     protected $delegationState;
     protected $candidateUser;
     protected $candidateGroup;
@@ -99,6 +100,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
     protected $createTime;
     protected $createTimeBefore;
     protected $createTimeAfter;
+    protected $updatedAfter;
     protected $key;
     protected $keyLike;
     protected $taskDefinitionKeys = [];
@@ -116,19 +118,19 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
     protected $dueAfter;
     protected $followUpDate;
     protected $followUpBefore;
-    protected $followUpNullAccepted = false;
+    protected bool $followUpNullAccepted = false;
     protected $followUpAfter;
-    protected $excludeSubtasks = false;
+    protected bool $excludeSubtasks = false;
     protected $suspensionState;
-    protected $initializeFormKeys = false;
-    protected $taskNameCaseInsensitive = false;
+    protected bool $initializeFormKeys = false;
+    protected bool $taskNameCaseInsensitive = false;
 
     protected $variableNamesIgnoreCase;
     protected $variableValuesIgnoreCase;
 
     protected $parentTaskId;
-    protected $isWithoutTenantId = false;
-    protected $isWithoutDueDate = false;
+    protected bool $isWithoutTenantId = false;
+    protected bool $isWithoutDueDate = false;
 
     protected $tenantIds = [];
     // case management /////////////////////////////
@@ -146,7 +148,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
 
     // or query /////////////////////////////
     protected $queries;
-    protected $isOrQueryActive = false;
+    protected bool $isOrQueryActive = false;
 
     public function __construct(CommandExecutorInterface $commandExecutor = null)
     {
@@ -154,7 +156,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         $this->queries = [$this];
     }
 
-    public function taskId(string $taskId): TaskQueryImpl
+    public function taskId(?string $taskId): TaskQueryImpl
     {
         EnsureUtil::ensureNotNull("Task id", "taskId", $taskId);
         $this->taskId = $taskId;
@@ -168,27 +170,27 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function taskName(string $name): TaskQueryImpl
+    public function taskName(?string $name): TaskQueryImpl
     {
         $this->name = $name;
         return $this;
     }
 
-    public function taskNameLike(string $nameLike): TaskQueryImpl
+    public function taskNameLike(?string $nameLike): TaskQueryImpl
     {
         EnsureUtil::ensureNotNull("Task nameLike", "nameLike", $nameLike);
         $this->nameLike = $nameLike;
         return $this;
     }
 
-    public function taskDescription(string $description): TaskQueryImpl
+    public function taskDescription(?string $description): TaskQueryImpl
     {
         EnsureUtil::ensureNotNull("Description", "description", $description);
         $this->description = $description;
         return $this;
     }
 
-    public function taskDescriptionLike(string $descriptionLike): TaskQueryInterface
+    public function taskDescriptionLike(?string $descriptionLike): TaskQueryInterface
     {
         EnsureUtil::ensureNotNull("Task descriptionLike", "descriptionLike", $descriptionLike);
         $this->descriptionLike = $descriptionLike;
@@ -204,34 +206,34 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
 
     public function taskMinPriority(int $minPriority): TaskQueryInterface
     {
-        EnsureUtil::ensureNotNull("Min Priority", $minPriority);
+        EnsureUtil::ensureNotNull("Min Priority", "minPriority", $minPriority);
         $this->minPriority = $minPriority;
         return $this;
     }
 
     public function taskMaxPriority(int $maxPriority): TaskQueryInterface
     {
-        EnsureUtil::ensureNotNull("Max Priority", $maxPriority);
+        EnsureUtil::ensureNotNull("Max Priority", "maxPriority", $maxPriority);
         $this->maxPriority = $maxPriority;
         return $this;
     }
 
-    public function taskAssignee(string $assignee): TaskQueryImpl
+    public function taskAssignee(?string $assignee): TaskQueryImpl
     {
-        EnsureUtil::ensureNotNull("Assignee", $assignee);
+        EnsureUtil::ensureNotNull("Assignee", "assignee", $assignee);
         $this->assignee = $assignee;
         unset($this->expressions["taskAssignee"]);
         return $this;
     }
 
-    public function taskAssigneeExpression(string $assigneeExpression): TaskQueryInterface
+    public function taskAssigneeExpression(?string $assigneeExpression): TaskQueryInterface
     {
         EnsureUtil::ensureNotNull("Assignee expression", "assigneeExpression", $assigneeExpression);
         $this->expressions["taskAssignee"] = $assigneeExpression;
         return $this;
     }
 
-    public function taskAssigneeLike(string $assignee): TaskQueryInterface
+    public function taskAssigneeLike(?string $assignee): TaskQueryInterface
     {
         EnsureUtil::ensureNotNull("Assignee", "assignee", $assignee);
         $this->assigneeLike = $assignee;
@@ -239,7 +241,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function taskAssigneeLikeExpression(string $assigneeLikeExpression): TaskQueryInterface
+    public function taskAssigneeLikeExpression(?string $assigneeLikeExpression): TaskQueryInterface
     {
         EnsureUtil::ensureNotNull("Assignee like expression", "assigneeLikeExpression", $assigneeLikeExpression);
         $this->expressions["taskAssigneeLike"] = $assigneeLikeExpression;
@@ -271,7 +273,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function taskOwner(string $owner): TaskQueryImpl
+    public function taskOwner(?string $owner): TaskQueryImpl
     {
         EnsureUtil::ensureNotNull("Owner", "owner", $owner);
         $this->owner = $owner;
@@ -279,7 +281,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function taskOwnerExpression(string $ownerExpression): TaskQueryInterface
+    public function taskOwnerExpression(?string $ownerExpression): TaskQueryInterface
     {
         EnsureUtil::ensureNotNull("Owner expression", "ownerExpression", $ownerExpression);
         $this->expressions["taskOwner"] = $ownerExpression;
@@ -298,7 +300,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function taskDelegationState(string $delegationState): TaskQueryInterface
+    public function taskDelegationState(?string $delegationState): TaskQueryInterface
     {
         if ($delegationState === null) {
             $this->noDelegationState = true;
@@ -308,7 +310,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function taskCandidateUser(string $candidateUser): TaskQueryImpl
+    public function taskCandidateUser(?string $candidateUser): TaskQueryImpl
     {
         EnsureUtil::ensureNotNull("Candidate user", "candidateUser", $candidateUser);
         if (!$this->isOrQueryActive) {
@@ -324,7 +326,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function taskCandidateUserExpression(string $candidateUserExpression): TaskQueryInterface
+    public function taskCandidateUserExpression(?string $candidateUserExpression): TaskQueryInterface
     {
         EnsureUtil::ensureNotNull("Candidate user expression", "candidateUserExpression", $candidateUserExpression);
 
@@ -339,7 +341,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function taskInvolvedUser(string $involvedUser): TaskQueryImpl
+    public function taskInvolvedUser(?string $involvedUser): TaskQueryImpl
     {
         EnsureUtil::ensureNotNull("Involved user", "involvedUser", $involvedUser);
         $this->involvedUser = $involvedUser;
@@ -347,7 +349,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function taskInvolvedUserExpression(string $involvedUserExpression): TaskQueryInterface
+    public function taskInvolvedUserExpression(?string $involvedUserExpression): TaskQueryInterface
     {
         EnsureUtil::ensureNotNull("Involved user expression", "involvedUserExpression", $involvedUserExpression);
         $this->expressions["taskInvolvedUser"] = $involvedUserExpression;
@@ -392,7 +394,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function taskCandidateGroup(string $candidateGroup): TaskQueryImpl
+    public function taskCandidateGroup(?string $candidateGroup): TaskQueryImpl
     {
         EnsureUtil::ensureNotNull("Candidate group", "candidateGroup", $candidateGroup);
 
@@ -407,7 +409,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function taskCandidateGroupExpression(string $candidateGroupExpression): TaskQueryInterface
+    public function taskCandidateGroupExpression(?string $candidateGroupExpression): TaskQueryInterface
     {
         EnsureUtil::ensureNotNull("Candidate group expression", "candidateGroupExpression", $candidateGroupExpression);
 
@@ -436,7 +438,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function taskCandidateGroupInExpression(string $candidateGroupsExpression): TaskQueryInterface
+    public function taskCandidateGroupInExpression(?string $candidateGroupsExpression): TaskQueryInterface
     {
         EnsureUtil::ensureNotEmpty("Candidate group list expression", "candidateGroupsExpression", $candidateGroupsExpression);
 
@@ -477,7 +479,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function processInstanceId(string $processInstanceId): TaskQueryImpl
+    public function processInstanceId(?string $processInstanceId): TaskQueryImpl
     {
         $this->processInstanceId = $processInstanceId;
         return $this;
@@ -489,14 +491,14 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function processInstanceBusinessKey(string $processInstanceBusinessKey): TaskQueryImpl
+    public function processInstanceBusinessKey(?string $processInstanceBusinessKey): TaskQueryImpl
     {
         $this->processInstanceBusinessKey = $processInstanceBusinessKey;
         unset($this->expressions["processInstanceBusinessKey"]);
         return $this;
     }
 
-    public function processInstanceBusinessKeyExpression(string $processInstanceBusinessKeyExpression): TaskQueryInterface
+    public function processInstanceBusinessKeyExpression(?string $processInstanceBusinessKeyExpression): TaskQueryInterface
     {
         EnsureUtil::ensureNotNull("processInstanceBusinessKey expression", "processInstanceBusinessKeyExpression", $processInstanceBusinessKeyExpression);
         $this->expressions["processInstanceBusinessKey"] = $processInstanceBusinessKeyExpression;
@@ -509,21 +511,21 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function processInstanceBusinessKeyLike(string $processInstanceBusinessKey): TaskQueryInterface
+    public function processInstanceBusinessKeyLike(?string $processInstanceBusinessKey): TaskQueryInterface
     {
         $this->processInstanceBusinessKeyLike = $processInstanceBusinessKey;
         unset($this->expressions["processInstanceBusinessKeyLike"]);
         return $this;
     }
 
-    public function processInstanceBusinessKeyLikeExpression(string $processInstanceBusinessKeyLikeExpression): TaskQueryInterface
+    public function processInstanceBusinessKeyLikeExpression(?string $processInstanceBusinessKeyLikeExpression): TaskQueryInterface
     {
         EnsureUtil::ensureNotNull("processInstanceBusinessKeyLike expression", "processInstanceBusinessKeyLikeExpression", $processInstanceBusinessKeyLikeExpression);
         $this->expressions["processInstanceBusinessKeyLike"] = $processInstanceBusinessKeyLikeExpression;
         return $this;
     }
 
-    public function executionId(string $executionId): TaskQueryImpl
+    public function executionId(?string $executionId): TaskQueryImpl
     {
         $this->executionId = $executionId;
         return $this;
@@ -565,52 +567,65 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function taskCreatedOn(string $createTime): TaskQueryImpl
+    public function taskCreatedOn(?string $createTime): TaskQueryImpl
     {
         $this->createTime = $createTime;
         unset($this->expressions["taskCreatedOn"]);
         return $this;
     }
 
-    public function taskCreatedOnExpression(string $createTimeExpression): TaskQueryInterface
+    public function taskCreatedOnExpression(?string $createTimeExpression): TaskQueryInterface
     {
         $this->expressions["taskCreatedOn"] = $createTimeExpression;
         return $this;
     }
 
-    public function taskCreatedBefore(string $before): TaskQueryInterface
+    public function taskCreatedBefore(?string $before): TaskQueryInterface
     {
         $this->createTimeBefore = $before;
         unset($this->expressions["taskCreatedBefore"]);
         return $this;
     }
 
-    public function taskCreatedBeforeExpression(string $beforeExpression): TaskQueryInterface
+    public function taskCreatedBeforeExpression(?string $beforeExpression): TaskQueryInterface
     {
         $this->expressions["taskCreatedBefore"] = $beforeExpression;
         return $this;
     }
 
-    public function taskCreatedAfter(string $after): TaskQueryInterface
+    public function taskCreatedAfter(?string $after): TaskQueryInterface
     {
         $this->createTimeAfter = $after;
         unset($this->expressions["taskCreatedAfter"]);
         return $this;
     }
 
-    public function taskCreatedAfterExpression(string $afterExpression): TaskQueryInterface
+    public function taskCreatedAfterExpression(?string $afterExpression): TaskQueryInterface
     {
         $this->expressions["taskCreatedAfter"] = $afterExpression;
         return $this;
     }
 
-    public function taskDefinitionKey(string $key): TaskQueryInterface
+    public function taskUpdatedAfter(?string $after): TaskQueryInterface
+    {
+        $this->updatedAfter = $after;
+        unset($this->expressions["taskUpdatedAfter"]);
+        return $this;
+    }
+
+    public function taskUpdatedAfterExpression(?string $afterExpression): TaskQueryInterface
+    {
+        $this->expressions["taskUpdatedAfter"] = $afterExpression;
+        return $this;
+    }
+
+    public function taskDefinitionKey(?string $key): TaskQueryInterface
     {
         $this->key = $key;
         return $this;
     }
 
-    public function taskDefinitionKeyLike(string $keyLike): TaskQueryInterface
+    public function taskDefinitionKeyLike(?string $keyLike): TaskQueryInterface
     {
         $this->keyLike = $keyLike;
         return $this;
@@ -622,200 +637,200 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function taskParentTaskId(string $taskParentTaskId): TaskQueryInterface
+    public function taskParentTaskId(?string $taskParentTaskId): TaskQueryInterface
     {
         $this->parentTaskId = $taskParentTaskId;
         return $this;
     }
 
     /*
-    public TaskQuery caseInstanceId(string $caseInstanceId) {
+    public TaskQuery caseInstanceId(?string $caseInstanceId) {
       EnsureUtil::ensureNotNull("caseInstanceId", caseInstanceId);
       $this->caseInstanceId = caseInstanceId;
       return $this;
     }
 
-    public TaskQuery caseInstanceBusinessKey(string $caseInstanceBusinessKey) {
+    public TaskQuery caseInstanceBusinessKey(?string $caseInstanceBusinessKey) {
       EnsureUtil::ensureNotNull("caseInstanceBusinessKey", caseInstanceBusinessKey);
       $this->caseInstanceBusinessKey = caseInstanceBusinessKey;
       return $this;
     }
 
-    public TaskQuery caseInstanceBusinessKeyLike(string $caseInstanceBusinessKeyLike) {
+    public TaskQuery caseInstanceBusinessKeyLike(?string $caseInstanceBusinessKeyLike) {
       EnsureUtil::ensureNotNull("caseInstanceBusinessKeyLike", caseInstanceBusinessKeyLike);
       $this->caseInstanceBusinessKeyLike = caseInstanceBusinessKeyLike;
       return $this;
     }
 
-    public TaskQuery caseExecutionId(string $caseExecutionId) {
+    public TaskQuery caseExecutionId(?string $caseExecutionId) {
       EnsureUtil::ensureNotNull("caseExecutionId", caseExecutionId);
       $this->caseExecutionId = caseExecutionId;
       return $this;
     }
 
-    public TaskQuery caseDefinitionId(string $caseDefinitionId) {
+    public TaskQuery caseDefinitionId(?string $caseDefinitionId) {
       EnsureUtil::ensureNotNull("caseDefinitionId", caseDefinitionId);
       $this->caseDefinitionId = caseDefinitionId;
       return $this;
     }
 
-    public TaskQuery caseDefinitionKey(string $caseDefinitionKey) {
+    public TaskQuery caseDefinitionKey(?string $caseDefinitionKey) {
       EnsureUtil::ensureNotNull("caseDefinitionKey", caseDefinitionKey);
       $this->caseDefinitionKey = caseDefinitionKey;
       return $this;
     }
 
-    public TaskQuery caseDefinitionName(string $caseDefinitionName) {
+    public TaskQuery caseDefinitionName(?string $caseDefinitionName) {
       EnsureUtil::ensureNotNull("caseDefinitionName", caseDefinitionName);
       $this->caseDefinitionName = caseDefinitionName;
       return $this;
     }
 
-    public TaskQuery caseDefinitionNameLike(string $caseDefinitionNameLike) {
+    public TaskQuery caseDefinitionNameLike(?string $caseDefinitionNameLike) {
         EnsureUtil::ensureNotNull("caseDefinitionNameLike", caseDefinitionNameLike);
         $this->caseDefinitionNameLike = caseDefinitionNameLike;
         return $this;
     }*/
 
-    public function taskVariableValueEquals(string $variableName, $variableValue): TaskQueryInterface
+    public function taskVariableValueEquals(?string $variableName, $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::EQUALS, true, false);
         return $this;
     }
 
-    public function taskVariableValueNotEquals(string $variableName, $variableValue): TaskQueryInterface
+    public function taskVariableValueNotEquals(?string $variableName, $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::NOT_EQUALS, true, false);
         return $this;
     }
 
-    public function taskVariableValueLike(string $variableName, string $variableValue): TaskQueryInterface
+    public function taskVariableValueLike(?string $variableName, ?string $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::LIKE, true, false);
         return $this;
     }
 
-    public function taskVariableValueGreaterThan(string $variableName, $variableValue): TaskQueryInterface
+    public function taskVariableValueGreaterThan(?string $variableName, $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::GREATER_THAN, true, false);
         return $this;
     }
 
-    public function taskVariableValueGreaterThanOrEquals(string $variableName, $variableValue): TaskQueryInterface
+    public function taskVariableValueGreaterThanOrEquals(?string $variableName, $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::GREATER_THAN_OR_EQUAL, true, false);
         return $this;
     }
 
-    public function taskVariableValueLessThan(string $variableName, $variableValue): TaskQueryInterface
+    public function taskVariableValueLessThan(?string $variableName, $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::LESS_THAN, true, false);
         return $this;
     }
 
-    public function taskVariableValueLessThanOrEquals(string $variableName, $variableValue): TaskQueryInterface
+    public function taskVariableValueLessThanOrEquals(?string $variableName, $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::LESS_THAN_OR_EQUAL, true, false);
         return $this;
     }
 
-    public function processVariableValueEquals(string $variableName, $variableValue): TaskQueryInterface
+    public function processVariableValueEquals(?string $variableName, $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::EQUALS, false, true);
         return $this;
     }
 
-    public function processVariableValueNotEquals(string $variableName, $variableValue): TaskQueryInterface
+    public function processVariableValueNotEquals(?string $variableName, $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::NOT_EQUALS, false, true);
         return $this;
     }
 
-    public function processVariableValueLike(string $variableName, string $variableValue): TaskQueryInterface
+    public function processVariableValueLike(?string $variableName, ?string $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::LIKE, false, true);
         return $this;
     }
 
-    public function processVariableValueNotLike(string $variableName, string $variableValue): TaskQueryInterface
+    public function processVariableValueNotLike(?string $variableName, ?string $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::NOT_LIKE, false, true);
         return $this;
     }
 
-    public function processVariableValueGreaterThan(string $variableName, $variableValue): TaskQueryInterface
+    public function processVariableValueGreaterThan(?string $variableName, $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::GREATER_THAN, false, true);
         return $this;
     }
 
-    public function processVariableValueGreaterThanOrEquals(string $variableName, $variableValue): TaskQueryInterface
+    public function processVariableValueGreaterThanOrEquals(?string $variableName, $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::GREATER_THAN_OR_EQUAL, false, true);
         return $this;
     }
 
-    public function processVariableValueLessThan(string $variableName, $variableValue): TaskQueryInterface
+    public function processVariableValueLessThan(?string $variableName, $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::LESS_THAN, false, true);
         return $this;
     }
 
-    public function processVariableValueLessThanOrEquals(string $variableName, $variableValue): TaskQueryInterface
+    public function processVariableValueLessThanOrEquals(?string $variableName, $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::LESS_THAN_OR_EQUAL, false, true);
         return $this;
     }
 
-    /*public function caseInstanceVariableValueEquals(string $variableName, $variableValue): TaskQueryInterface
+    /*public function caseInstanceVariableValueEquals(?string $variableName, $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::EQUALS, false, false);
         return $this;
     }
 
-    public function caseInstanceVariableValueNotEquals(string $variableName, $variableValue): TaskQueryInterface
+    public function caseInstanceVariableValueNotEquals(?string $variableName, $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::NOT_EQUALS, false, false);
         return $this;
     }
 
-    public function caseInstanceVariableValueLike(string $variableName, string $variableValue): TaskQueryInterface
+    public function caseInstanceVariableValueLike(?string $variableName, ?string $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::LIKE, false, false);
         return $this;
     }
 
-    public function caseInstanceVariableValueNotLike(string $variableName, string $variableValue): TaskQueryInterface
+    public function caseInstanceVariableValueNotLike(?string $variableName, ?string $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::NOT_LIKE, false, false);
         return $this;
     }
 
-    public function caseInstanceVariableValueGreaterThan(string $variableName, $variableValue): TaskQueryInterface
+    public function caseInstanceVariableValueGreaterThan(?string $variableName, $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::GREATER_THAN, false, false);
         return $this;
     }
 
-    public function caseInstanceVariableValueGreaterThanOrEquals(string $variableName, $variableValue): TaskQueryInterface
+    public function caseInstanceVariableValueGreaterThanOrEquals(?string $variableName, $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::GREATER_THAN_OR_EQUAL, false, false);
         return $this;
     }
 
-    public function caseInstanceVariableValueLessThan(string $variableName, $variableValue): TaskQueryInterface
+    public function caseInstanceVariableValueLessThan(?string $variableName, $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::LESS_THAN, false, false);
         return $this;
     }
 
-    public function caseInstanceVariableValueLessThanOrEquals(string $variableName, $variableValue): TaskQueryInterface
+    public function caseInstanceVariableValueLessThanOrEquals(?string $variableName, $variableValue): TaskQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::LESS_THAN_OR_EQUAL, false, false);
         return $this;
     }*/
 
-    public function processDefinitionKey(string $processDefinitionKey): TaskQueryInterface
+    public function processDefinitionKey(?string $processDefinitionKey): TaskQueryInterface
     {
         $this->processDefinitionKey = $processDefinitionKey;
         return $this;
@@ -827,25 +842,25 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function processDefinitionId(string $processDefinitionId): TaskQueryInterface
+    public function processDefinitionId(?string $processDefinitionId): TaskQueryInterface
     {
         $this->processDefinitionId = $processDefinitionId;
         return $this;
     }
 
-    public function processDefinitionName(string $processDefinitionName): TaskQueryInterface
+    public function processDefinitionName(?string $processDefinitionName): TaskQueryInterface
     {
         $this->processDefinitionName = $processDefinitionName;
         return $this;
     }
 
-    public function processDefinitionNameLike(string $processDefinitionName): TaskQueryInterface
+    public function processDefinitionNameLike(?string $processDefinitionName): TaskQueryInterface
     {
         $this->processDefinitionNameLike = $processDefinitionName;
         return $this;
     }
 
-    public function dueDate(string $dueDate): TaskQueryInterface
+    public function dueDate(?string $dueDate): TaskQueryInterface
     {
         // The dueDate filter can't be used in an AND query with
         // the withoutDueDate filter. They can be combined in an OR query
@@ -860,7 +875,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function dueDateExpression(string $dueDateExpression): TaskQueryInterface
+    public function dueDateExpression(?string $dueDateExpression): TaskQueryInterface
     {
         // The dueDateExpression filter can't be used in an AND query with
         // the withoutDueDate filter. They can be combined in an OR query
@@ -874,7 +889,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function dueBefore(string $dueBefore): TaskQueryInterface
+    public function dueBefore(?string $dueBefore): TaskQueryInterface
     {
         // The dueBefore filter can't be used in an AND query with
         // the withoutDueDate filter. They can be combined in an OR query
@@ -889,7 +904,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function dueBeforeExpression(string $dueDate): TaskQueryInterface
+    public function dueBeforeExpression(?string $dueDate): TaskQueryInterface
     {
         // The dueBeforeExpression filter can't be used in an AND query with
         // the withoutDueDate filter. They can be combined in an OR query
@@ -903,7 +918,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function dueAfter(string $dueAfter): TaskQueryInterface
+    public function dueAfter(?string $dueAfter): TaskQueryInterface
     {
         // The dueAfter filter can't be used in an AND query with
         // the withoutDueDate filter. They can be combined in an OR query
@@ -918,7 +933,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function dueAfterExpression(string $dueDateExpression): TaskQueryInterface
+    public function dueAfterExpression(?string $dueDateExpression): TaskQueryInterface
     {
         // The dueAfterExpression filter can't be used in an AND query with
         // the withoutDueDate filter. They can be combined in an OR query
@@ -953,20 +968,20 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function followUpDate(string $followUpDate): TaskQueryInterface
+    public function followUpDate(?string $followUpDate): TaskQueryInterface
     {
         $this->followUpDate = $followUpDate;
         unset($this->expressions["followUpDate"]);
         return $this;
     }
 
-    public function followUpDateExpression(string $followUpDateExpression): TaskQueryInterface
+    public function followUpDateExpression(?string $followUpDateExpression): TaskQueryInterface
     {
         $this->expressions["followUpDate"] = $followUpDateExpression;
         return $this;
     }
 
-    public function followUpBefore(string $followUpBefore): TaskQueryInterface
+    public function followUpBefore(?string $followUpBefore): TaskQueryInterface
     {
         $this->followUpBefore = $followUpBefore;
         $this->followUpNullAccepted = false;
@@ -974,14 +989,14 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function followUpBeforeExpression(string $followUpBeforeExpression): TaskQueryInterface
+    public function followUpBeforeExpression(?string $followUpBeforeExpression): TaskQueryInterface
     {
         $this->followUpNullAccepted = false;
         $this->expressions["followUpBefore"] = $followUpBeforeExpression;
         return $this;
     }
 
-    public function followUpBeforeOrNotExistent(string $followUpDate): TaskQueryInterface
+    public function followUpBeforeOrNotExistent(?string $followUpDate): TaskQueryInterface
     {
         $this->followUpBefore = $followUpDate;
         $this->followUpNullAccepted = true;
@@ -989,7 +1004,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function followUpBeforeOrNotExistentExpression(string $followUpDateExpression): TaskQueryInterface
+    public function followUpBeforeOrNotExistentExpression(?string $followUpDateExpression): TaskQueryInterface
     {
         $this->expressions["followUpBeforeOrNotExistent"] = $followUpDateExpression;
         $this->followUpNullAccepted = true;
@@ -1001,14 +1016,14 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         $this->followUpNullAccepted = $followUpNullAccepted;
     }
 
-    public function followUpAfter(string $followUpAfter): TaskQueryInterface
+    public function followUpAfter(?string $followUpAfter): TaskQueryInterface
     {
         $this->followUpAfter = $followUpAfter;
         unset($this->expressions["followUpAfter"]);
         return $this;
     }
 
-    public function followUpAfterExpression(string $followUpAfterExpression): TaskQueryInterface
+    public function followUpAfterExpression(?string $followUpAfterExpression): TaskQueryInterface
     {
         $this->expressions["followUpAfter"] = $followUpAfterExpression;
         return $this;
@@ -1151,7 +1166,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this->candidateGroups;
     }
 
-    protected function getGroupsForCandidateUser(string $candidateUser): array
+    protected function getGroupsForCandidateUser(?string $candidateUser): array
     {
         $cachedUserGroups = $this->getCachedUserGroups();
         if (array_key_exists($candidateUser, $cachedUserGroups)) {
@@ -1183,7 +1198,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this->queries[0]->cachedUserGroups;
     }
 
-    protected function setCachedUserGroup(string $candidateUser, array $groupIds): void
+    protected function setCachedUserGroup(?string $candidateUser, array $groupIds): void
     {
         $this->getCachedUserGroups();
         $this->queries[0]->cachedUserGroups[$candidateUser] = $groupIds;
@@ -1216,7 +1231,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         }
     }
 
-    public function addVariable($name, $value = null, string $operator = null, bool $isTaskVariable = null, bool $isProcessInstanceVariable = null): void
+    public function addVariable($name, $value = null, ?string $operator = null, bool $isTaskVariable = null, bool $isProcessInstanceVariable = null): void
     {
         if ($name instanceof TaskQueryVariableValue) {
             $this->variables[] = $name;
@@ -1385,7 +1400,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this->orderBy(TaskQueryProperty::followUpDate());
     }
 
-    public function orderByProcessVariable(string $variableName, ValueTypeInterface $valueType): TaskQueryInterface
+    public function orderByProcessVariable(?string $variableName, ValueTypeInterface $valueType): TaskQueryInterface
     {
         if ($this->isOrQueryActive) {
             throw new ProcessEngineException("Invalid query usage: cannot set orderByProcessVariable() within 'or' query");
@@ -1398,7 +1413,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function orderByExecutionVariable(string $variableName, ValueTypeInterface $valueType): TaskQueryInterface
+    public function orderByExecutionVariable(?string $variableName, ValueTypeInterface $valueType): TaskQueryInterface
     {
         if ($this->isOrQueryActive) {
             throw new ProcessEngineException("Invalid query usage: cannot set orderByExecutionVariable() within 'or' query");
@@ -1411,7 +1426,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function orderByTaskVariable(string $variableName, ValueTypeInterface $valueType): TaskQueryInterface
+    public function orderByTaskVariable(?string $variableName, ValueTypeInterface $valueType): TaskQueryInterface
     {
         if ($this->isOrQueryActive) {
             throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskVariable() within 'or' query");
@@ -1424,7 +1439,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function orderByCaseExecutionVariable(string $variableName, ValueTypeInterface $valueType): TaskQueryInterface
+    public function orderByCaseExecutionVariable(?string $variableName, ValueTypeInterface $valueType): TaskQueryInterface
     {
         if ($this->isOrQueryActive) {
             throw new ProcessEngineException("Invalid query usage: cannot set orderByCaseExecutionVariable() within 'or' query");
@@ -1437,7 +1452,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this;
     }
 
-    public function orderByCaseInstanceVariable(string $variableName, ValueTypeInterface $valueType): TaskQueryInterface
+    public function orderByCaseInstanceVariable(?string $variableName, ValueTypeInterface $valueType): TaskQueryInterface
     {
         if ($this->isOrQueryActive) {
             throw new ProcessEngineException("Invalid query usage: cannot set orderByCaseInstanceVariable() within 'or' query");
@@ -1452,7 +1467,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
 
     //results ////////////////////////////////////////////////////////////////
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->ensureOrExpressionsEvaluated();
         $this->ensureVariablesInitialized();
@@ -1518,32 +1533,32 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
 
     //getters ////////////////////////////////////////////////////////////////
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getNameNotEqual(): string
+    public function getNameNotEqual(): ?string
     {
         return $this->nameNotEqual;
     }
 
-    public function getNameLike(): string
+    public function getNameLike(): ?string
     {
         return $this->nameLike;
     }
 
-    public function getNameNotLike(): string
+    public function getNameNotLike(): ?string
     {
         return $this->nameNotLike;
     }
 
-    public function getAssignee(): string
+    public function getAssignee(): ?string
     {
         return $this->assignee;
     }
 
-    public function getAssigneeLike(): string
+    public function getAssigneeLike(): ?string
     {
         return $this->assigneeLike;
     }
@@ -1558,12 +1573,12 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this->assigneeNotIn;
     }
 
-    public function getInvolvedUser(): string
+    public function getInvolvedUser(): ?string
     {
         return $this->involvedUser;
     }
 
-    public function getOwner(): string
+    public function getOwner(): ?string
     {
         return $this->owner;
     }
@@ -1596,7 +1611,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this->unassigned;
     }
 
-    public function getDelegationState(): string
+    public function getDelegationState(): ?string
     {
         return $this->delegationState;
     }
@@ -1611,12 +1626,12 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this->delegationState;
     }
 
-    public function getCandidateUser(): string
+    public function getCandidateUser(): ?string
     {
         return $this->candidateUser;
     }
 
-    public function getCandidateGroup(): string
+    public function getCandidateGroup(): ?string
     {
         return $this->candidateGroup;
     }
@@ -1631,7 +1646,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this->includeAssignedTasks;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
@@ -1641,7 +1656,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this->processInstanceIdIn;
     }
 
-    public function getExecutionId(): string
+    public function getExecutionId(): ?string
     {
         return $this->executionId;
     }
@@ -1656,7 +1671,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this->tenantIds;
     }
 
-    public function getTaskId(): string
+    public function getTaskId(): ?string
     {
         return $this->taskId;
     }
@@ -1666,12 +1681,12 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this->taskIdIn;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function getDescriptionLike(): string
+    public function getDescriptionLike(): ?string
     {
         return $this->descriptionLike;
     }
@@ -1691,22 +1706,27 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this->maxPriority;
     }
 
-    public function getCreateTime(): string
+    public function getCreateTime(): ?string
     {
         return $this->createTime;
     }
 
-    public function getCreateTimeBefore(): string
+    public function getCreateTimeBefore(): ?string
     {
         return $this->createTimeBefore;
     }
 
-    public function getCreateTimeAfter(): string
+    public function getCreateTimeAfter(): ?string
     {
         return $this->createTimeAfter;
     }
 
-    public function getKey(): string
+    public function getUpdatedAfter(): ?string
+    {
+        return $this->updatedAfter;
+    }
+
+    public function getKey(): ?string
     {
         return $this->key;
     }
@@ -1716,12 +1736,12 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this->taskDefinitionKeys;
     }
 
-    public function getKeyLike(): string
+    public function getKeyLike(): ?string
     {
         return $this->keyLike;
     }
 
-    public function getParentTaskId(): string
+    public function getParentTaskId(): ?string
     {
         return $this->parentTaskId;
     }
@@ -1731,7 +1751,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this->variables;
     }
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }
@@ -1741,22 +1761,22 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this->processDefinitionKeys;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function getProcessDefinitionName(): string
+    public function getProcessDefinitionName(): ?string
     {
         return $this->processDefinitionName;
     }
 
-    public function getProcessDefinitionNameLike(): string
+    public function getProcessDefinitionNameLike(): ?string
     {
         return $this->processDefinitionNameLike;
     }
 
-    public function getProcessInstanceBusinessKey(): string
+    public function getProcessInstanceBusinessKey(): ?string
     {
         return $this->processInstanceBusinessKey;
     }
@@ -1766,37 +1786,37 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this->processInstanceBusinessKeys;
     }
 
-    public function getProcessInstanceBusinessKeyLike(): string
+    public function getProcessInstanceBusinessKeyLike(): ?string
     {
         return $this->processInstanceBusinessKeyLike;
     }
 
-    public function getDueDate(): string
+    public function getDueDate(): ?string
     {
         return $this->dueDate;
     }
 
-    public function getDueBefore(): string
+    public function getDueBefore(): ?string
     {
         return $this->dueBefore;
     }
 
-    public function getDueAfter(): string
+    public function getDueAfter(): ?string
     {
         return $this->dueAfter;
     }
 
-    public function getFollowUpDate(): string
+    public function getFollowUpDate(): ?string
     {
         return $this->followUpDate;
     }
 
-    public function getFollowUpBefore(): string
+    public function getFollowUpBefore(): ?string
     {
         return $this->followUpBefore;
     }
 
-    public function getFollowUpAfter(): string
+    public function getFollowUpAfter(): ?string
     {
         return $this->followUpAfter;
     }
@@ -1806,7 +1826,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this->excludeSubtasks;
     }
 
-    public function getSuspensionState(): string
+    public function getSuspensionState(): ?string
     {
         return $this->suspensionState;
     }
@@ -1839,7 +1859,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return caseDefinitionName;
     }*/
 
-    /*public function getCaseDefinitionNameLike(): string
+    /*public function getCaseDefinitionNameLike(): ?string
     {
         return $this->caseDefinitionNameLike;
     }*/
@@ -1905,7 +1925,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         $this->isOrQueryActive = true;
     }
 
-    public function extend(TaskQueryInterface $extending): TaskQueryInterface
+    public function extend(QueryInterface $extending): TaskQueryInterface
     {
         $extendingQuery = $extending;
         $extendedQuery = new TaskQueryImpl();
@@ -2104,6 +2124,12 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
             $extendedQuery->taskCreatedAfter($extendingQuery->getCreateTimeAfter());
         } elseif ($this->getCreateTimeAfter() !== null) {
             $extendedQuery->taskCreatedAfter($this->getCreateTimeAfter());
+        }
+
+        if ($extendingQuery->getUpdatedAfter() !== null) {
+            $extendedQuery->taskUpdatedAfter($extendingQuery->getUpdatedAfter());
+        } elseif ($this->getUpdatedAfter() !== null) {
+            $extendedQuery->taskUpdatedAfter($this->getUpdatedAfter());
         }
 
         if ($extendingQuery->getKey() !== null) {
@@ -2365,13 +2391,13 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this->followUpNullAccepted;
     }
 
-    public function taskNameNotEqual(string $name): TaskQueryInterface
+    public function taskNameNotEqual(?string $name): TaskQueryInterface
     {
         $this->nameNotEqual = $name;
         return $this;
     }
 
-    public function taskNameNotLike(string $nameNotLike): TaskQueryInterface
+    public function taskNameNotLike(?string $nameNotLike): TaskQueryInterface
     {
         EnsureUtil::ensureNotNull("Task nameNotLike", "nameNotLike", $nameNotLike);
         $this->nameNotLike = $nameNotLike;

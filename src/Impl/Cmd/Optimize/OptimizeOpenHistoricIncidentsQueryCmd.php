@@ -13,7 +13,7 @@ class OptimizeOpenHistoricIncidentsQueryCmd implements CommandInterface
     protected $createdAt;
     protected $maxResults;
 
-    public function __construct(string $createdAfter, string $createdAt, int $maxResults)
+    public function __construct(?string $createdAfter, ?string $createdAt, int $maxResults)
     {
         $this->createdAfter = $createdAfter;
         $this->createdAt = $createdAt;
@@ -23,5 +23,10 @@ class OptimizeOpenHistoricIncidentsQueryCmd implements CommandInterface
     public function execute(CommandContext $commandContext)
     {
         return $commandContext->getOptimizeManager()->getOpenHistoricIncidents($this->createdAfter, $this->createdAt, $this->maxResults);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

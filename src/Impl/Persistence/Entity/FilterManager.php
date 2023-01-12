@@ -18,7 +18,7 @@ use Jabe\Impl\Util\EnsureUtil;
 
 class FilterManager extends AbstractManager
 {
-    public function createNewFilter(string $resourceType): FilterInterface
+    public function createNewFilter(?string $resourceType): FilterInterface
     {
         $this->checkAuthorization(Permissions::create(), Resources::filter(), AuthorizationInterface::ANY);
         return new FilterEntity($resourceType);
@@ -41,7 +41,7 @@ class FilterManager extends AbstractManager
         return $filter;
     }
 
-    public function deleteFilter(string $filterId): void
+    public function deleteFilter(?string $filterId): void
     {
         $this->checkAuthorization(Permissions::delete(), Resources::filter(), $filterId);
 
@@ -54,14 +54,14 @@ class FilterManager extends AbstractManager
         $this->getDbEntityManager()->delete($filter);
     }
 
-    public function findFilterById(string $filterId): FilterEntity
+    public function findFilterById(?string $filterId): FilterEntity
     {
         EnsureUtil::ensureNotNull("Invalid filter id", "filterId", $filterId);
         $this->checkAuthorization(Permissions::read(), Resources::filter(), $filterId);
         return $this->findFilterByIdInternal($filterId);
     }
 
-    protected function findFilterByIdInternal(string $filterId): FilterEntity
+    protected function findFilterByIdInternal(?string $filterId): FilterEntity
     {
         return $this->getDbEntityManager()->selectById(FilterEntity::class, $filterId);
     }

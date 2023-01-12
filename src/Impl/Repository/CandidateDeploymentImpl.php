@@ -16,18 +16,18 @@ class CandidateDeploymentImpl implements CandidateDeploymentInterface
     protected $name;
     protected $resources = [];
 
-    public function __construct(string $name, array $resources)
+    public function __construct(?string $name, array $resources)
     {
         $this->name = $name;
         $this->resources = $resources;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }

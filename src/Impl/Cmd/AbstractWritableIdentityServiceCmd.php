@@ -14,12 +14,16 @@ abstract class AbstractWritableIdentityServiceCmd implements CommandInterface
     {
         // check identity service implementation
         if (!array_key_exists(WritableIdentityProviderInterface::class, $commandContext->getSessionFactories())) {
-            throw new UnsupportedOperationException("This identity service implementation is read-only.");
+            throw new \Exception("This identity service implementation is read-only.");
         }
-
         $result = $this->executeCmd($commandContext);
         return $result;
     }
 
     abstract protected function executeCmd(CommandContext $commandContext);
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

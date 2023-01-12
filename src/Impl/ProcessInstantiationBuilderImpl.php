@@ -17,6 +17,7 @@ use Jabe\Runtime\{
     ProcessInstanceWithVariablesInterface,
     ProcessInstantiationBuilderInterface
 };
+use Jabe\Variable\VariableMapInterface;
 
 class ProcessInstantiationBuilderImpl implements ProcessInstantiationBuilderInterface
 {
@@ -26,43 +27,43 @@ class ProcessInstantiationBuilderImpl implements ProcessInstantiationBuilderInte
     protected $processDefinitionId;
     protected $processDefinitionKey;
     protected $businessKey;
-    protected $caseInstanceId;
+    //protected $caseInstanceId;
     protected $tenantId;
     protected $processDefinitionTenantId;
-    protected $isProcessDefinitionTenantIdSet = false;
+    protected bool $isProcessDefinitionTenantIdSet = false;
     protected $modificationBuilder;
 
-    protected function __construct(CommandExecutorInterface $commandExecutor)
+    public function __construct(CommandExecutorInterface $commandExecutor)
     {
         $this->modificationBuilder = new ProcessInstanceModificationBuilderImpl();
         $this->commandExecutor = $commandExecutor;
     }
 
-    public function startBeforeActivity(string $activityId): ProcessInstantiationBuilderInterface
+    public function startBeforeActivity(?string $activityId, ?string $ancestorActivityInstanceId = null): ProcessInstantiationBuilderInterface
     {
         $this->modificationBuilder->startBeforeActivity($activityId);
         return $this;
     }
 
-    public function startAfterActivity(string $activityId): ProcessInstantiationBuilderInterface
+    public function startAfterActivity(?string $activityId, ?string $ancestorActivityInstanceId = null): ProcessInstantiationBuilderInterface
     {
         $this->modificationBuilder->startAfterActivity($activityId);
         return $this;
     }
 
-    public function startTransition(string $transitionId): ProcessInstantiationBuilderInterface
+    public function startTransition(?string $transitionId, ?string $ancestorActivityInstanceId = null): ProcessInstantiationBuilderInterface
     {
         $this->modificationBuilder->startTransition($transitionId);
         return $this;
     }
 
-    public function setVariable(string $name, $value): ProcessInstantiationBuilderInterface
+    public function setVariable(?string $name, $value): ProcessInstantiationBuilderInterface
     {
         $this->modificationBuilder->setVariable($name, $value);
         return $this;
     }
 
-    public function setVariableLocal(string $name, $value): ProcessInstantiationBuilderInterface
+    public function setVariableLocal(?string $name, $value): ProcessInstantiationBuilderInterface
     {
         $this->modificationBuilder->setVariableLocal($name, $value);
         return $this;
@@ -84,25 +85,25 @@ class ProcessInstantiationBuilderImpl implements ProcessInstantiationBuilderInte
         return $this;
     }
 
-    public function businessKey(string $businessKey): ProcessInstantiationBuilderInterface
+    public function businessKey(?string $businessKey): ProcessInstantiationBuilderInterface
     {
         $this->businessKey = $businessKey;
         return $this;
     }
 
-    /*public function caseInstanceId(string $caseInstanceId): ProcessInstantiationBuilderInterface
+    /*public function caseInstanceId(?string $caseInstanceId): ProcessInstantiationBuilderInterface
     {
         $this->caseInstanceId = $caseInstanceId;
         return $this;
     }*/
 
-    public function tenantId(string $tenantId): ProcessInstantiationBuilderInterface
+    public function tenantId(?string $tenantId): ProcessInstantiationBuilderInterface
     {
         $this->tenantId = $tenantId;
         return $this;
     }
 
-    public function processDefinitionTenantId(string $tenantId): ProcessInstantiationBuilderInterface
+    public function processDefinitionTenantId(?string $tenantId): ProcessInstantiationBuilderInterface
     {
         $this->processDefinitionTenantId = $tenantId;
         $this->isProcessDefinitionTenantIdSet = true;
@@ -147,15 +148,15 @@ class ProcessInstantiationBuilderImpl implements ProcessInstantiationBuilderInte
             $command = new StartProcessInstanceAtActivitiesCmd($this);
         }
 
-        return $commandExecutor->execute($command);
+        return $this->commandExecutor->execute($command);
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }
@@ -165,7 +166,7 @@ class ProcessInstantiationBuilderImpl implements ProcessInstantiationBuilderInte
         return $this->modificationBuilder;
     }
 
-    public function getBusinessKey(): string
+    public function getBusinessKey(): ?string
     {
         return $this->businessKey;
     }
@@ -174,7 +175,7 @@ class ProcessInstantiationBuilderImpl implements ProcessInstantiationBuilderInte
         return caseInstanceId;
     }*/
 
-    public function getVariables(): array
+    public function getVariables(): VariableMapInterface
     {
         return $this->modificationBuilder->getProcessVariables();
     }
@@ -184,7 +185,7 @@ class ProcessInstantiationBuilderImpl implements ProcessInstantiationBuilderInte
         return $this->tenantId;
     }
 
-    public function getProcessDefinitionTenantId(): string
+    public function getProcessDefinitionTenantId(): ?string
     {
         return $this->processDefinitionTenantId;
     }
@@ -199,14 +200,14 @@ class ProcessInstantiationBuilderImpl implements ProcessInstantiationBuilderInte
         $this->modificationBuilder = $modificationBuilder;
     }
 
-    public static function createProcessInstanceById(CommandExecutorInterface $commandExecutor, string $processDefinitionId): ProcessInstantiationBuilderInterface
+    public static function createProcessInstanceById(CommandExecutorInterface $commandExecutor, ?string $processDefinitionId): ProcessInstantiationBuilderInterface
     {
         $builder = new ProcessInstantiationBuilderImpl($commandExecutor);
         $builder->processDefinitionId = $processDefinitionId;
         return $builder;
     }
 
-    public static function createProcessInstanceByKey(CommandExecutorInterface $commandExecutor, string $processDefinitionKey): ProcessInstantiationBuilderInterface
+    public static function createProcessInstanceByKey(CommandExecutorInterface $commandExecutor, ?string $processDefinitionKey): ProcessInstantiationBuilderInterface
     {
         $builder = new ProcessInstantiationBuilderImpl($commandExecutor);
         $builder->processDefinitionKey = $processDefinitionKey;

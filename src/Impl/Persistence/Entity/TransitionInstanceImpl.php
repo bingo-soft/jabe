@@ -18,47 +18,47 @@ class TransitionInstanceImpl extends ProcessElementInstanceImpl implements Trans
     protected $incidentIds = [];
     protected $incidents = [];
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
 
-    public function setActivityId(string $activityId): void
+    public function setActivityId(?string $activityId): void
     {
         $this->activityId = $activityId;
     }
 
-    public function getTargetActivityId(): string
+    public function getTargetActivityId(): ?string
     {
         return $this->activityId;
     }
 
-    public function getExecutionId(): string
+    public function getExecutionId(): ?string
     {
         return $this->executionId;
     }
 
-    public function setExecutionId(string $executionId): void
+    public function setExecutionId(?string $executionId): void
     {
         $this->executionId = $executionId;
     }
 
-    public function getActivityType(): string
+    public function getActivityType(): ?string
     {
         return $this->activityType;
     }
 
-    public function setActivityType(string $activityType): void
+    public function setActivityType(?string $activityType): void
     {
         $this->activityType = $activityType;
     }
 
-    public function getActivityName(): string
+    public function getActivityName(): ?string
     {
         return $this->activityName;
     }
 
-    public function setActivityName(string $activityName): void
+    public function setActivityName(?string $activityName): void
     {
         $this->activityName = $activityName;
     }

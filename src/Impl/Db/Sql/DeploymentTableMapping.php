@@ -4,12 +4,12 @@ namespace Jabe\Impl\Db\Sql;
 
 class DeploymentTableMapping implements DoctrineTableMappingInterface
 {
-    public function getTableName(): string
+    public function getTableName(): ?string
     {
         return "ACT_RE_DEPLOYMENT";
     }
 
-    public function getTableAlias(): string
+    public function getTableAlias(): ?string
     {
         return "DEP";
     }

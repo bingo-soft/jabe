@@ -28,51 +28,51 @@ abstract class AbstractVariableQueryImpl extends AbstractQuery
 
     abstract public function executeCount(CommandContext $commandContext): int;
 
-    abstract public function executeList(CommandContext $commandContext, Page $page): array;
+    abstract public function executeList(CommandContext $commandContext, ?Page $page): array;
 
-    public function variableValueEquals(string $name, $value): QueryInterface
+    public function variableValueEquals(?string $name, $value): QueryInterface
     {
         $this->addVariable($name, $value, QueryOperator::EQUALS, true);
         return $this;
     }
 
-    public function variableValueNotEquals(string $name, $value): QueryInterface
+    public function variableValueNotEquals(?string $name, $value): QueryInterface
     {
         $this->addVariable($name, $value, QueryOperator::NOT_EQUALS, true);
         return $this;
     }
 
-    public function variableValueGreaterThan(string $name, $value): QueryInterface
+    public function variableValueGreaterThan(?string $name, $value): QueryInterface
     {
         $this->addVariable($name, $value, QueryOperator::GREATER_THAN, true);
         return $this;
     }
 
-    public function variableValueGreaterThanOrEqual(string $name, $value): QueryInterface
+    public function variableValueGreaterThanOrEqual(?string $name, $value): QueryInterface
     {
         $this->addVariable($name, $value, QueryOperator::GREATER_THAN_OR_EQUAL, true);
         return $this;
     }
 
-    public function variableValueLessThan(string $name, $value): QueryInterface
+    public function variableValueLessThan(?string $name, $value): QueryInterface
     {
         $this->addVariable($name, $value, QueryOperator::LESS_THAN, true);
         return $this;
     }
 
-    public function variableValueLessThanOrEqual(string $name, $value): QueryInterface
+    public function variableValueLessThanOrEqual(?string $name, $value): QueryInterface
     {
         $this->addVariable($name, $value, QueryOperator::LESS_THAN_OR_EQUAL, true);
         return $this;
     }
 
-    public function variableValueLike(string $name, string $value): QueryInterface
+    public function variableValueLike(?string $name, ?string $value): QueryInterface
     {
         $this->addVariable($name, $value, QueryOperator::LIKE, true);
         return $this;
     }
 
-    public function variableValueNotLike(string $name, string $value): QueryInterface
+    public function variableValueNotLike(?string $name, ?string $value): QueryInterface
     {
         $this->addVariable($name, $value, QueryOperator::NOT_LIKE, true);
         return $this;
@@ -87,7 +87,7 @@ abstract class AbstractVariableQueryImpl extends AbstractQuery
         return $this;
     }
 
-    public function matchVariableValuesIgnoreCase(): QUeryInterface
+    public function matchVariableValuesIgnoreCase(): QueryInterface
     {
         $this->variableValuesIgnoreCase = true;
         foreach ($this->getQueryVariableValues() as $variable) {
@@ -96,13 +96,13 @@ abstract class AbstractVariableQueryImpl extends AbstractQuery
         return $this;
     }
 
-    protected function addVariable(string $name, $value, string $operator, bool $processInstanceScope): void
+    protected function addVariable(?string $name, $value, ?string $operator, bool $processInstanceScope): void
     {
         $queryVariableValue = $this->createQueryVariableValue($name, $value, $operator, $processInstanceScope);
         $this->queryVariableValues[] = $queryVariableValue;
     }
 
-    protected function createQueryVariableValue(string $name, $value, string $operator, bool $processInstanceScope): QueryVariableValue
+    protected function createQueryVariableValue(?string $name, $value, ?string $operator, bool $processInstanceScope): QueryVariableValue
     {
         $this->validateVariable($name, $value, $operator);
 
@@ -112,7 +112,7 @@ abstract class AbstractVariableQueryImpl extends AbstractQuery
         return new QueryVariableValue($name, $value, $operator, $processInstanceScope, $shouldMatchVariableNamesIgnoreCase, $shouldMatchVariableValuesIgnoreCase);
     }
 
-    protected function validateVariable(string $name, $value, string $operator): void
+    protected function validateVariable(?string $name, $value, ?string $operator): void
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "name", $name);
         if ($value === null || $this->isBoolean($value)) {

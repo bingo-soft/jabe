@@ -22,8 +22,8 @@
   <insert id="insertMembership" parameterType="array">
     insert into ${prefix}ACT_ID_MEMBERSHIP (USER_ID_, GROUP_ID_)
     values (
-      #{userId ,dbalType=VARCHAR},
-      #{groupId ,dbalType=VARCHAR}
+      #{userId:VARCHAR},
+      #{groupId:VARCHAR}
     )
   </insert>
   
@@ -35,6 +35,18 @@
     from ${prefix}ACT_ID_MEMBERSHIP
     where USER_ID_ = #{userId}
       and GROUP_ID_ = #{groupId} 
+  </select>
+
+   <resultMap id="membershipResultMap" type="Jabe\Impl\Persistence\Entity\MembershipEntity">
+    <id property="id" column="ID_" dbalType="VARCHAR" />
+    <result property="userId" column="USER_ID_" dbalType="VARCHAR" />
+    <result property="groupId" column="GROUP_ID_" dbalType="VARCHAR" />
+  </resultMap>
+
+  <select id="selectUserMembership" parameterType="Jabe\Impl\Db\ListQueryParameterObject" resultMap="membershipResultMap">
+    select *
+    from ${prefix}ACT_ID_MEMBERSHIP
+    where USER_ID_ = #{parameter:VARCHAR}
   </select>
   
   <!-- MEMBERSHIP DELETE -->

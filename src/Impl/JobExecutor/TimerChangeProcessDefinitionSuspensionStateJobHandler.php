@@ -20,7 +20,7 @@ abstract class TimerChangeProcessDefinitionSuspensionStateJobHandler implements 
 
     abstract protected function getCommand(ProcessDefinitionSuspensionStateConfiguration $configuration): AbstractSetProcessDefinitionStateCmd;
 
-    public function newConfiguration(string $canonicalString): JobHandlerConfigurationInterface
+    public function newConfiguration(?string $canonicalString): JobHandlerConfigurationInterface
     {
         $jsonObject = json_decode($canonicalString);
 

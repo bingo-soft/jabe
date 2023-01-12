@@ -61,7 +61,7 @@ class ScriptingEnvironment
         return $script->execute($scriptEngine, $scope, $bindings);
     }
 
-    protected function getEnv(string $language): array
+    protected function getEnv(?string $language): array
     {
         $config = Context::getProcessEngineConfiguration();
         $processApplication = Context::getCurrentProcessApplication();
@@ -118,7 +118,7 @@ class ScriptingEnvironment
      * @param language the language
      * @return array the list of env scripts. Never null.
      */
-    protected function initEnvForLanguage(string $language): array
+    protected function initEnvForLanguage(?string $language): array
     {
         $scripts = [];
         foreach ($this->envResolvers as $resolver) {

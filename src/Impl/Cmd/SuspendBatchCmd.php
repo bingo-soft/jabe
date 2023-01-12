@@ -10,7 +10,7 @@ use Jabe\Impl\Persistence\Entity\SuspensionState;
 
 class SuspendBatchCmd extends AbstractSetBatchStateCmd
 {
-    public function __construct(string $batchId)
+    public function __construct(?string $batchId)
     {
         parent::__construct($batchId);
     }
@@ -30,7 +30,7 @@ class SuspendBatchCmd extends AbstractSetBatchStateCmd
         return new SuspendJobDefinitionCmd($builder);
     }
 
-    protected function getUserOperationType(): string
+    protected function getUserOperationType(): ?string
     {
         return UserOperationLogEntryInterface::OPERATION_TYPE_SUSPEND_BATCH;
     }

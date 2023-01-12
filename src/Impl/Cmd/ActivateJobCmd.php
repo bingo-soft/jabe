@@ -18,7 +18,7 @@ class ActivateJobCmd extends AbstractSetJobStateCmd
         return SuspensionState::active();
     }
 
-    protected function getLogEntryOperation(): string
+    protected function getLogEntryOperation(): ?string
     {
         return UserOperationLogEntryInterface::OPERATION_TYPE_ACTIVATE_JOB;
     }

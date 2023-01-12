@@ -17,7 +17,7 @@ class PvmAtomicOperationActivityStartCreateScope extends PvmAtomicOperationCreat
         return true;
     }
 
-    public function getCanonicalName(): string
+    public function getCanonicalName(): ?string
     {
         return "activity-start-create-scope";
     }

@@ -8,9 +8,9 @@ use Jabe\Runtime\IncidentInterface;
 class IncidentHandling
 {
     public static function createIncident(
-        string $incidentType,
+        ?string $incidentType,
         IncidentContext $context,
-        string $message
+        ?string $message
     ): IncidentInterface {
         $handler = Context::getProcessEngineConfiguration()
             ->getIncidentHandler($incidentType);
@@ -23,7 +23,7 @@ class IncidentHandling
     }
 
     public static function removeIncidents(
-        string $incidentType,
+        ?string $incidentType,
         IncidentContext $context,
         bool $incidentsResolved
     ): void {

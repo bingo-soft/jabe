@@ -8,14 +8,14 @@ use Jabe\Impl\Util\ClassNameUtil;
 class IncidentStatisticsEntity implements IncidentStatisticsInterface
 {
     protected $incidentType;
-    protected $incidentCount;
+    protected int $incidentCount = 0;
 
-    public function getIncidentType(): string
+    public function getIncidentType(): ?string
     {
         return $this->incidentType;
     }
 
-    public function setIncidenType(string $incidentType): void
+    public function setIncidenType(?string $incidentType): void
     {
         $this->incidentType = $incidentType;
     }

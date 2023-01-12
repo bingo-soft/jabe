@@ -7,57 +7,57 @@ interface ExternalTaskInterface
     /**
      * @return string the id of the task
      */
-    public function getId(): string;
+    public function getId(): ?string;
 
     /**
      * @return string the name of the topic the task belongs to
      */
-    public function getTopicName(): string;
+    public function getTopicName(): ?string;
 
     /**
      * @return string the id of the worker that has locked the task
      */
-    public function getWorkerId(): string;
+    public function getWorkerId(): ?string;
 
     /**
      * @return string the absolute time at which the lock expires
      */
-    public function getLockExpirationTime(): string;
+    public function getLockExpirationTime(): ?string;
 
     /**
      * @return string the id of the process instance the task exists in
      */
-    public function getProcessInstanceId(): string;
+    public function getProcessInstanceId(): ?string;
 
     /**
      * @return string the id of the execution that the task is assigned to
      */
-    public function getExecutionId(): string;
+    public function getExecutionId(): ?string;
 
     /**
      * @return string the id of the activity for which the task is created
      */
-    public function getActivityId(): string;
+    public function getActivityId(): ?string;
 
     /**
      * @return string the id of the activity instance in which context the task exists
      */
-    public function getActivityInstanceId(): string;
+    public function getActivityInstanceId(): ?string;
 
     /**
      * @return string the id of the process definition the tasks activity belongs to
      */
-    public function getProcessDefinitionId(): string;
+    public function getProcessDefinitionId(): ?string;
 
     /**
      * @return string the key of the process definition the tasks activity belongs to
      */
-    public function getProcessDefinitionKey(): string;
+    public function getProcessDefinitionKey(): ?string;
 
     /**
      * @return string the version tag of the process definition the tasks activity belongs to
      */
-    public function getProcessDefinitionVersionTag(): string;
+    public function getProcessDefinitionVersionTag(): ?string;
 
     /**
      * @return int the number of retries left. The number of retries is provided by
@@ -75,7 +75,7 @@ interface ExternalTaskInterface
      * To get the full error details,
      * use ExternalTaskService#getExternalTaskErrorDetails(String)
      */
-    public function getErrorMessage(): string;
+    public function getErrorMessage(): ?string;
 
     /**
      * @return bool - true if the external task is suspended; a suspended external task

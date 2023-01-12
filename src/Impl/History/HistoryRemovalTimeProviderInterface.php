@@ -19,5 +19,5 @@ interface HistoryRemovalTimeProviderInterface
      *
      * @return string the removal time for historic process instances
      */
-    public function calculateRemovalTime($instance, $definition = null): string;
+    public function calculateRemovalTime($instance, $definition = null): ?string;
 }

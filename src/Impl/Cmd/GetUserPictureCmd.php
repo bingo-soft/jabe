@@ -17,7 +17,7 @@ class GetUserPictureCmd implements CommandInterface, \Serializable
 {
     protected $userId;
 
-    public function __construct(string $userId)
+    public function __construct(?string $userId)
     {
         $this->userId = $userId;
     }
@@ -52,5 +52,10 @@ class GetUserPictureCmd implements CommandInterface, \Serializable
         }
 
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

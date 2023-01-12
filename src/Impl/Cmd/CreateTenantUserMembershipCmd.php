@@ -13,7 +13,7 @@ class CreateTenantUserMembershipCmd extends AbstractWritableIdentityServiceCmd i
     protected $tenantId;
     protected $userId;
 
-    public function __construct(string $tenantId, string $userId)
+    public function __construct(?string $tenantId, ?string $userId)
     {
         $this->tenantId = $tenantId;
         $this->userId = $userId;

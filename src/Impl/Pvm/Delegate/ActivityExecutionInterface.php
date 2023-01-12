@@ -34,7 +34,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
     public function setActivityInstanceId(?string $id): void;
 
     /** return the Id of the activity instance currently executed by this execution */
-    public function getActivityInstanceId(): string;
+    public function getActivityInstanceId(...$args): ?string;
 
     /** return the Id of the parent activity instance currently executed by this execution */
     public function getParentActivityInstanceId(): ?string;
@@ -129,7 +129,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
     /**
      * changes the concurrent indicator on this execution.
      */
-    public function setConcurrent(bool $isConcurrent): bool;
+    public function setConcurrent(bool $isConcurrent): void;
 
     /**
      * returns whether this execution is concurrent or not.
@@ -187,7 +187,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
      * Called when an execution is interrupted. This will remove all associated entities
      * such as event subscriptions, jobs, ...
      */
-    public function interrupt(string $reason, ?bool $skipCustomListeners = false, ?bool $skipIoMappings = false, ?bool $externallyTerminated = false): void;
+    public function interrupt(?string $reason, ?bool $skipCustomListeners = false, ?bool $skipIoMappings = false, ?bool $externallyTerminated = false): void;
 
     /** An activity which is to be started next. */
     public function getNextActivity(): ?PvmActivityInterface;
@@ -196,7 +196,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
     public function remove(): void;
     public function destroy(): void;
 
-    public function signal(string $string, $signalData): void;
+    public function signal(?string $string, $signalData): void;
 
     public function setActivity(?PvmActivityInterface $activity = null): void;
 
@@ -204,7 +204,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
 
     public function forceUpdate(): void;
 
-    public function getTransition(): TransitionImpl;
+    public function getTransition(): ?TransitionImpl;
 
     /**
      * Assumption: the current execution is active and executing an activity ({@link #getActivity()} is not null).
@@ -215,7 +215,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
      *   must be an ancestor of the execution's current activity
      * @return
      */
-    public function findExecutionForFlowScope(PvmScopeInterface $targetScope): ActivityExecution;
+    public function findExecutionForFlowScope(/*PvmScopeInterface*/$targetScope): ?ActivityExecutionInterface;
 
     /**
      * Returns a mapping from scope activities to scope executions for all scopes that

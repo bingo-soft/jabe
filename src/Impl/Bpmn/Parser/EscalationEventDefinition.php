@@ -18,7 +18,7 @@ class EscalationEventDefinition
         $this->cancelActivity = $cancelActivity;
     }
 
-    public function getEscalationCode(): string
+    public function getEscalationCode(): ?string
     {
         return $this->escalationCode;
     }
@@ -33,17 +33,17 @@ class EscalationEventDefinition
         return $this->cancelActivity;
     }
 
-    public function setEscalationCode(string $escalationCode): void
+    public function setEscalationCode(?string $escalationCode): void
     {
         $this->escalationCode = $escalationCode;
     }
 
-    public function getEscalationCodeVariable(): string
+    public function getEscalationCodeVariable(): ?string
     {
         return $this->escalationCodeVariable;
     }
 
-    public function setEscalationCodeVariable(string $escalationCodeVariable): void
+    public function setEscalationCodeVariable(?string $escalationCodeVariable): void
     {
         $this->escalationCodeVariable = $escalationCodeVariable;
     }

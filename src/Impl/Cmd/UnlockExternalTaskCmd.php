@@ -7,7 +7,7 @@ use Jabe\Impl\Persistence\Entity\ExternalTaskEntity;
 
 class UnlockExternalTaskCmd extends ExternalTaskCmd
 {
-    public function __construct(string $externalTaskId)
+    public function __construct(?string $externalTaskId)
     {
         parent::__construct($externalTaskId);
     }
@@ -21,7 +21,7 @@ class UnlockExternalTaskCmd extends ExternalTaskCmd
         $externalTask->unlock();
     }
 
-    protected function getUserOperationLogOperationType(): string
+    protected function getUserOperationLogOperationType(): ?string
     {
         return UserOperationLogEntryInterface::OPERATION_TYPE_UNLOCK;
     }

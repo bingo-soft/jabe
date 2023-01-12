@@ -20,7 +20,7 @@ use Jabe\Impl\Core\Model\{
     PropertyMapKey
 };
 use Jabe\Impl\Db\EntityManager\DbEntityManager;
-use Jabe\Impl\El\ExpressionManager;
+use Jabe\Impl\El\ExpressionManagerInterface;
 use Jabe\Impl\Event\EventType;
 use Jabe\Impl\JobExecutor\{
     JobDeclaration,
@@ -76,6 +76,7 @@ class BpmnDeployer extends AbstractDefinitionDeployer
 
         $inputStream = tmpfile();
         fwrite($inputStream, $bytes);
+        fseek($inputStream, 0);
 
         $bpmnParse = $this->bpmnParser
             ->createParse()
@@ -83,41 +84,42 @@ class BpmnDeployer extends AbstractDefinitionDeployer
             ->deployment($deployment)
             ->name($resource->getName());
 
-        if (!$deployment->isValidatingSchema()) {
+        //@TODO. Not implemented in SAX Parser
+        /*isValidatingSchema()) {
             $bpmnParse->setSchemaResource(null);
-        }
+        }*/
 
         $bpmnParse->execute();
 
-        if (!$this->properties->contains(self::$JOB_DECLARATIONS_PROPERTY)) {
-            $this->properties->set(self::$JOB_DECLARATIONS_PROPERTY, []);
+        if (!$properties->contains(self::$JOB_DECLARATIONS_PROPERTY)) {
+            $properties->set(self::$JOB_DECLARATIONS_PROPERTY, []);
         }
-        $this->properties->set(self::$JOB_DECLARATIONS_PROPERTY, array_merge($this->properties->get(self::$JOB_DECLARATIONS_PROPERTY), $bpmnParse->getJobDeclarations()));
+        $properties->set(self::$JOB_DECLARATIONS_PROPERTY, array_merge($properties->get(self::$JOB_DECLARATIONS_PROPERTY), $bpmnParse->getJobDeclarations()));
 
         return $bpmnParse->getProcessDefinitions();
     }
 
-    protected function findDefinitionByDeploymentAndKey(string $deploymentId, string $definitionKey): ProcessDefinitionEntity
+    protected function findDefinitionByDeploymentAndKey(?string $deploymentId, ?string $definitionKey): ?ProcessDefinitionEntity
     {
         return $this->getProcessDefinitionManager()->findProcessDefinitionByDeploymentAndKey($deploymentId, $definitionKey);
     }
 
-    protected function findLatestDefinitionByKeyAndTenantId(string $definitionKey, ?string $tenantId): ProcessDefinitionEntity
+    protected function findLatestDefinitionByKeyAndTenantId(?string $definitionKey, ?string $tenantId): ?ProcessDefinitionEntity
     {
         return $this->getProcessDefinitionManager()->findLatestProcessDefinitionByKeyAndTenantId($definitionKey, $tenantId);
     }
 
-    protected function persistDefinition(ProcessDefinitionEntity $definition): void
+    protected function persistDefinition(/*ProcessDefinitionEntity*/$definition): void
     {
-        getProcessDefinitionManager()->insertProcessDefinition($definition);
+        $this->getProcessDefinitionManager()->insertProcessDefinition($definition);
     }
 
-    protected function addDefinitionToDeploymentCache(DeploymentCache $deploymentCache, ProcessDefinitionEntity $definition): void
+    protected function addDefinitionToDeploymentCache(DeploymentCache $deploymentCache, /*ProcessDefinitionEntity*/$definition): void
     {
         $deploymentCache->addProcessDefinition($definition);
     }
 
-    protected function definitionAddedToDeploymentCache(DeploymentEntity $deployment, ProcessDefinitionEntity $definition, Properties $properties): void
+    protected function definitionAddedToDeploymentCache(DeploymentEntity $deployment, /*ProcessDefinitionEntity*/$definition, Properties $properties): void
     {
         $props = $properties->get(self::$JOB_DECLARATIONS_PROPERTY);
         $declarations = [];
@@ -137,12 +139,12 @@ class BpmnDeployer extends AbstractDefinitionDeployer
         $this->addAuthorizations($definition);
     }
 
-    protected function persistedDefinitionLoaded(DeploymentEntity $deployment, ProcessDefinitionEntity $definition, ProcessDefinitionEntity $persistedDefinition): void
+    protected function persistedDefinitionLoaded(DeploymentEntity $deployment, /*ProcessDefinitionEntity*/$definition, /*ProcessDefinitionEntity*/$persistedDefinition): void
     {
         $definition->setSuspensionState($persistedDefinition->getSuspensionState());
     }
 
-    protected function handlePersistedDefinition(ProcessDefinitionEntity $definition, ?ProcessDefinitionEntity $persistedDefinition, DeploymentEntity $deployment, Properties $properties): void
+    protected function handlePersistedDefinition(/*ProcessDefinitionEntity*/$definition, /*?ProcessDefinitionEntity*/$persistedDefinition, /*DeploymentEntity*/$deployment, Properties $properties): void
     {
         //check if persisted definition is not null, since the process definition can be deleted by the user
         //in such cases we don't want to handle them
@@ -210,7 +212,7 @@ class BpmnDeployer extends AbstractDefinitionDeployer
      * (timer start event, message start event). The default behavior is to remove the old
      * subscriptions and add new ones for the new deployed process definitions.
      */
-    protected function adjustStartEventSubscriptions(ProcessDefinitionEntity $newLatestProcessDefinition, ProcessDefinitionEntity $oldLatestProcessDefinition): void
+    protected function adjustStartEventSubscriptions(ProcessDefinitionEntity $newLatestProcessDefinition, ?ProcessDefinitionEntity $oldLatestProcessDefinition): void
     {
         $this->removeObsoleteTimers($newLatestProcessDefinition);
         $this->addTimerDeclarations($newLatestProcessDefinition);
@@ -240,7 +242,7 @@ class BpmnDeployer extends AbstractDefinitionDeployer
         }
     }
 
-    protected function removeObsoleteEventSubscriptions(ProcessDefinitionEntity $processDefinition, ProcessDefinitionEntity $latestProcessDefinition): void
+    protected function removeObsoleteEventSubscriptions(ProcessDefinitionEntity $processDefinition, ?ProcessDefinitionEntity $latestProcessDefinition): void
     {
         // remove all subscriptions for the previous version
         if ($latestProcessDefinition !== null) {
@@ -299,7 +301,7 @@ class BpmnDeployer extends AbstractDefinitionDeployer
         $newSubscription->insert();
     }
 
-    protected function isSameMessageEventSubscriptionAlreadyPresent(EventSubscriptionDeclaration $eventSubscription, string $tenantId): bool
+    protected function isSameMessageEventSubscriptionAlreadyPresent(EventSubscriptionDeclaration $eventSubscription, ?string $tenantId): bool
     {
         // look for subscriptions for the same name in db:
         $subscriptionsForSameMessageName = $this->getEventSubscriptionManager()
@@ -391,7 +393,7 @@ class BpmnDeployer extends AbstractDefinitionDeployer
         $newSubscription->insert();
     }
 
-    protected function addAuthorizationsFromIterator(array $exprSet, ProcessDefinitionEntity $processDefinition, string $exprType): void
+    protected function addAuthorizationsFromIterator(array $exprSet, ProcessDefinitionEntity $processDefinition, ?string $exprType): void
     {
         if (!empty($exprSet)) {
             foreach ($exprSet as $expr) {
@@ -444,12 +446,12 @@ class BpmnDeployer extends AbstractDefinitionDeployer
 
     // getters/setters ///////////////////////////////////////////////////////////////////////////////////
 
-    public function getExpressionManager(): ExpressionManager
+    public function getExpressionManager(): ExpressionManagerInterface
     {
         return $this->expressionManager;
     }
 
-    public function setExpressionManager(ExpressionManager $expressionManager): void
+    public function setExpressionManager(ExpressionManagerInterface $expressionManager): void
     {
         $this->expressionManager = $expressionManager;
     }

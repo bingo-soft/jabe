@@ -20,7 +20,7 @@ abstract class TimerChangeJobDefinitionSuspensionStateJobHandler implements JobH
 
     abstract protected function getCommand(JobDefinitionSuspensionStateConfiguration $configuration): AbstractSetJobDefinitionStateCmd;
 
-    public function newConfiguration(string $canonicalString): JobHandlerConfigurationInterface
+    public function newConfiguration(?string $canonicalString): JobHandlerConfigurationInterface
     {
         $jsonObject = json_decode($canonicalString);
 

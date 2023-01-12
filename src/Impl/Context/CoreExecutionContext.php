@@ -19,7 +19,7 @@ abstract class CoreExecutionContext
         return $this->execution;
     }
 
-    abstract protected function getDeploymentId(): string;
+    abstract protected function getDeploymentId(): ?string;
 
     public function getDeployment(): ?DeploymentEntity
     {

@@ -39,7 +39,7 @@ class BatchSeedJobDeclaration extends JobDeclaration
         return new BatchSeedJobConfiguration($batch->getId());
     }
 
-    protected function resolveJobDefinitionId(/*BatchEntity*/$batch): string
+    protected function resolveJobDefinitionId(/*BatchEntity*/$batch): ?string
     {
         return $batch->getSeedJobDefinitionId();
     }

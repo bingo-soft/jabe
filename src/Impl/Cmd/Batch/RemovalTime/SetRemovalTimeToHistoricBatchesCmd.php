@@ -126,4 +126,9 @@ class SetRemovalTimeToHistoricBatchesCmd implements CommandInterface
             ->setHasRemovalTime($this->hasRemovalTime())
             ->setRemovalTime($this->builder->getRemovalTime());
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

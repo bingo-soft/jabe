@@ -16,9 +16,9 @@ class HistoricBatchEntity extends HistoryEvent implements HistoricBatchInterface
     protected $id;
     protected $type;
 
-    protected $totalJobs;
-    protected $batchJobsPerSeed;
-    protected $invocationsPerBatchJob;
+    protected int $totalJobs = 0;
+    protected int $batchJobsPerSeed = 0;
+    protected int $invocationsPerBatchJob = 0;
 
     protected $seedJobDefinitionId;
     protected $monitorJobDefinitionId;
@@ -30,12 +30,12 @@ class HistoricBatchEntity extends HistoryEvent implements HistoricBatchInterface
     protected $startTime;
     protected $endTime;
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function setType(string $type): void
+    public function setType(?string $type): void
     {
         $this->type = $type;
     }
@@ -70,32 +70,32 @@ class HistoricBatchEntity extends HistoryEvent implements HistoricBatchInterface
         $this->invocationsPerBatchJob = $invocationsPerBatchJob;
     }
 
-    public function getSeedJobDefinitionId(): string
+    public function getSeedJobDefinitionId(): ?string
     {
         return $this->seedJobDefinitionId;
     }
 
-    public function setSeedJobDefinitionId(string $seedJobDefinitionId): void
+    public function setSeedJobDefinitionId(?string $seedJobDefinitionId): void
     {
         $this->seedJobDefinitionId = $seedJobDefinitionId;
     }
 
-    public function getMonitorJobDefinitionId(): string
+    public function getMonitorJobDefinitionId(): ?string
     {
         return $this->monitorJobDefinitionId;
     }
 
-    public function setMonitorJobDefinitionId(string $monitorJobDefinitionId): void
+    public function setMonitorJobDefinitionId(?string $monitorJobDefinitionId): void
     {
         $this->monitorJobDefinitionId = $monitorJobDefinitionId;
     }
 
-    public function getBatchJobDefinitionId(): string
+    public function getBatchJobDefinitionId(): ?string
     {
         return $this->batchJobDefinitionId;
     }
 
-    public function setBatchJobDefinitionId(string $batchJobDefinitionId): void
+    public function setBatchJobDefinitionId(?string $batchJobDefinitionId): void
     {
         $this->batchJobDefinitionId = $batchJobDefinitionId;
     }
@@ -110,32 +110,32 @@ class HistoricBatchEntity extends HistoryEvent implements HistoricBatchInterface
         $this->tenantId = $tenantId;
     }
 
-    public function getCreateUserId(): string
+    public function getCreateUserId(): ?string
     {
         return $this->createUserId;
     }
 
-    public function setCreateUserId(string $createUserId): void
+    public function setCreateUserId(?string $createUserId): void
     {
         $this->createUserId = $createUserId;
     }
 
-    public function getStartTime(): string
+    public function getStartTime(): ?string
     {
         return $this->startTime;
     }
 
-    public function setStartTime(string $startTime): void
+    public function setStartTime(?string $startTime): void
     {
         $this->startTime = $startTime;
     }
 
-    public function getEndTime(): string
+    public function getEndTime(): ?string
     {
         return $this->endTime;
     }
 
-    public function setEndTime(string $endTime): void
+    public function setEndTime(?string $endTime): void
     {
         $this->endTime = $endTime;
     }

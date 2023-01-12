@@ -17,12 +17,12 @@ interface IncidentInterface
     /**
      * Returns the unique identifier for this incident.
      */
-    public function getId(): string;
+    public function getId(): ?string;
 
     /**
      * Time when the incident happened.
      */
-    public function getIncidentTimestamp(): string;
+    public function getIncidentTimestamp(): ?string;
 
     /**
      * Returns the type of this incident to identify the
@@ -37,24 +37,24 @@ interface IncidentInterface
      * @see Incident#FAILED_JOB_HANDLER_TYPE
      * @see Incident#EXTERNAL_TASK_HANDLER_TYPE
      */
-    public function getIncidentType(): string;
+    public function getIncidentType(): ?string;
 
     /**
      * Returns the incident message.
      */
-    public function getIncidentMessage(): string;
+    public function getIncidentMessage(): ?string;
 
     /**
      * Returns the specific execution on which this
      * incident has happened.
      */
-    public function getExecutionId(): string;
+    public function getExecutionId(): ?string;
 
     /**
      * Returns the id of the activity of the process instance
      * on which this incident has happened.
      */
-    public function getActivityId(): string;
+    public function getActivityId(): ?string;
 
     /**
      * Returns the id of the activity on which the last exception occurred.
@@ -65,30 +65,30 @@ interface IncidentInterface
      * Returns the specific process instance on which this
      * incident has happened.
      */
-    public function getProcessInstanceId(): string;
+    public function getProcessInstanceId(): ?string;
 
     /**
      * Returns the id of the process definition of this
      * process instance on which the incident has happened.
      */
-    public function getProcessDefinitionId(): string;
+    public function getProcessDefinitionId(): ?string;
 
     /**
      * Returns the id of the incident on which this incident
      * has been triggered.
      */
-    public function getCauseIncidentId(): string;
+    public function getCauseIncidentId(): ?string;
 
     /**
      * Returns the id of the root incident on which
      * this transitive incident has been triggered.
      */
-    public function getRootCauseIncidentId(): string;
+    public function getRootCauseIncidentId(): ?string;
 
     /**
      * Returns the payload of this incident.
      */
-    public function getConfiguration(): string;
+    public function getConfiguration(): ?string;
 
     /**
      * Returns the id of the tenant this incident belongs to. Can be <code>null</code>
@@ -100,15 +100,15 @@ interface IncidentInterface
      * Returns the id of the job definition the incident belongs to. Can be <code>null</code>
      * if the incident belongs to no job definition.
      */
-    public function getJobDefinitionId(): string;
+    public function getJobDefinitionId(): ?string;
 
     /**
      * Returns the history payload of this incident.
      */
-    public function getHistoryConfiguration(): string;
+    public function getHistoryConfiguration(): ?string;
 
     /**
      * Returns the annotation of this incident
      */
-    public function getAnnotation(): string;
+    public function getAnnotation(): ?string;
 }

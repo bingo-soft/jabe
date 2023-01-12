@@ -11,7 +11,7 @@ abstract class TimerEventJobHandler implements JobHandlerInterface
     public const JOB_HANDLER_CONFIG_PROPERTY_FOLLOW_UP_JOB_CREATED = "followUpJobCreated";
     public const JOB_HANDLER_CONFIG_TASK_LISTENER_PREFIX = "taskListener~";
 
-    public function newConfiguration(string $canonicalString): JobHandlerConfigurationInterface
+    public function newConfiguration(?string $canonicalString): JobHandlerConfigurationInterface
     {
         $configParts = explode('\\' . self::JOB_HANDLER_CONFIG_PROPERTY_DELIMITER, $canonicalString);
 
@@ -31,7 +31,7 @@ abstract class TimerEventJobHandler implements JobHandlerInterface
         return $configuration;
     }
 
-    protected function adjustConfiguration(TimerJobConfiguration $configuration, string $configPart): void
+    protected function adjustConfiguration(TimerJobConfiguration $configuration, ?string $configPart): void
     {
         if (strpos($configPart, self::JOB_HANDLER_CONFIG_TASK_LISTENER_PREFIX) === 0) {
             $configuration->setTimerElementSecondaryKey(substr($configPart, strlen(self::JOB_HANDLER_CONFIG_TASK_LISTENER_PREFIX)));

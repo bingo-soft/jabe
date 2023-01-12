@@ -27,10 +27,10 @@ class AuthorizationEntity implements AuthorizationInterface, DbEntityInterface, 
     //private static final long serialVersionUID = 1L;
 
     protected $id;
-    protected $revision;
+    protected int $revision = 0;
 
-    protected $authorizationType;
-    protected $permissions;
+    protected int $authorizationType = 0;
+    protected int $permissions = 0;
     protected $userId;
     protected $groupId;
     protected $resourceType;
@@ -124,43 +124,45 @@ class AuthorizationEntity implements AuthorizationInterface, DbEntityInterface, 
         return $this->permissions == 0;
     }
 
-    public function getPermissions($permissions = null)
+    public function getPermissions(): int
     {
-        if (is_array($permissions)) {
-            $result = [];
-
-            foreach ($permissions as $permission) {
-                if (
-                    (self::AUTH_TYPE_GLOBAL == $this->authorizationType || self::AUTH_TYPE_GRANT == $this->authorizationType)
-                    && $this->isPermissionGranted($permission)
-                ) {
-                    $result[] = $permission;
-                } elseif (
-                    self::AUTH_TYPE_REVOKE == $this->authorizationType
-                    && $this->isPermissionRevoked($permission)
-                ) {
-                    $result[] = $permission;
-                }
-            }
-            return $result;
-        } else {
-            return $this->permissions;
-        }
+        return $this->permissions;
     }
 
-    public function setPermissions($permissions): void
+    public function getPermissionsFromSupplied(array $permissions = []): array
     {
-        if (is_array($permissions)) {
-            $this->resetPermissions();
-            foreach ($permissions as $permission) {
-                if (self::AUTH_TYPE_REVOKE == $this->authorizationType) {
-                    $this->removePermission($permission);
-                } else {
-                    $this->addPermission($permission);
-                }
+        $result = [];
+
+        foreach ($permissions as $permission) {
+            if (
+                (self::AUTH_TYPE_GLOBAL == $this->authorizationType || self::AUTH_TYPE_GRANT == $this->authorizationType)
+                && $this->isPermissionGranted($permission)
+            ) {
+                $result[] = $permission;
+            } elseif (
+                self::AUTH_TYPE_REVOKE == $this->authorizationType
+                && $this->isPermissionRevoked($permission)
+            ) {
+                $result[] = $permission;
             }
-        } elseif (is_int($permissions)) {
-            $this->permissions = $permissions;
+        }
+        return $result;
+    }
+
+    public function setPermissions(int $permissions): void
+    {
+        $this->permissions = $permissions;
+    }
+
+    public function setPermissionsFromSupplied(array $permissions): void
+    {
+        $this->resetPermissions();
+        foreach ($permissions as $permission) {
+            if (self::AUTH_TYPE_REVOKE == $this->authorizationType) {
+                $this->removePermission($permission);
+            } else {
+                $this->addPermission($permission);
+            }
         }
     }
 
@@ -176,12 +178,12 @@ class AuthorizationEntity implements AuthorizationInterface, DbEntityInterface, 
         $this->authorizationType = $authorizationType;
     }
 
-    public function getGroupId(): string
+    public function getGroupId(): ?string
     {
         return $this->groupId;
     }
 
-    public function setGroupId(string $groupId): void
+    public function setGroupId(?string $groupId): void
     {
         if ($groupId !== null && $this->authorizationType == self::AUTH_TYPE_GLOBAL) {
             //throw LOG.notUsableGroupIdForGlobalAuthorizationException();
@@ -189,12 +191,12 @@ class AuthorizationEntity implements AuthorizationInterface, DbEntityInterface, 
         $this->groupId = $groupId;
     }
 
-    public function getUserId(): string
+    public function getUserId(): ?string
     {
         return $this->userId;
     }
 
-    public function setUserId(string $userId): void
+    public function setUserId(?string $userId): void
     {
         if ($userId !== null && $this->authorizationType == self::AUTH_TYPE_GLOBAL && self::ANY != $userId) {
             //throw LOG.illegalValueForUserIdException(userId, ANY);
@@ -222,12 +224,12 @@ class AuthorizationEntity implements AuthorizationInterface, DbEntityInterface, 
         $this->resourceType = $resource->resourceType();
     }
 
-    public function getResourceId(): string
+    public function getResourceId(): ?string
     {
         return $this->resourceId;
     }
 
-    public function setResourceId(string $resourceId): void
+    public function setResourceId(?string $resourceId): void
     {
         $this->resourceId = $resourceId;
     }
@@ -237,12 +239,12 @@ class AuthorizationEntity implements AuthorizationInterface, DbEntityInterface, 
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }
@@ -275,22 +277,22 @@ class AuthorizationEntity implements AuthorizationInterface, DbEntityInterface, 
         return $state;
     }
 
-    public function getRemovalTime(): string
+    public function getRemovalTime(): ?string
     {
         return $this->removalTime;
     }
 
-    public function setRemovalTime(string $removalTime): void
+    public function setRemovalTime(?string $removalTime): void
     {
         $this->removalTime = $removalTime;
     }
 
-    public function getRootProcessInstanceId(): string
+    public function getRootProcessInstanceId(): ?string
     {
         return $this->rootProcessInstanceId;
     }
 
-    public function setRootProcessInstanceId(string $rootProcessInstanceId): void
+    public function setRootProcessInstanceId(?string $rootProcessInstanceId): void
     {
         $this->rootProcessInstanceId = $rootProcessInstanceId;
     }
@@ -347,5 +349,10 @@ class AuthorizationEntity implements AuthorizationInterface, DbEntityInterface, 
                 . ", resourceType=" . $this->resourceType
                 . ", resourceId=" . $this->resourceId
                 . "]";
+    }
+
+    public function getDependentEntities(): array
+    {
+        return [];
     }
 }

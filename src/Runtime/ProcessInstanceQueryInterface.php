@@ -7,87 +7,87 @@ use Jabe\Query\QueryInterface;
 interface ProcessInstanceQueryInterface extends QueryInterface
 {
     /** Select the process instance with the given id */
-    public function processInstanceId(string $processInstanceId): ProcessInstanceQueryInterface;
+    public function processInstanceId(?string $processInstanceId): QueryInterface;
 
     /** Select process instances whose id is in the given set of ids */
-    public function processInstanceIds(array $processInstanceIds): ProcessInstanceQueryInterface;
+    public function processInstanceIds(array $processInstanceIds): QueryInterface;
 
     /** Select process instance with the given business key, unique for the given process definition */
-    public function processInstanceBusinessKey(string $processInstanceBusinessKey, string $processDefinitionKey = null): ProcessInstanceQueryInterface;
+    public function processInstanceBusinessKey(?string $processInstanceBusinessKey, ?string $processDefinitionKey = null): QueryInterface;
 
     /**
      * Select process instances with a business key like the given value.
      *
-     * @param processInstanceBusinessKeyLike The string $can include the wildcard character '%' to express
+     * @param processInstanceBusinessKeyLike The ?string $can include the wildcard character '%' to express
      *    like-strategy: starts with (string%), ends with (%string) or contains (%string%).
      */
-    public function processInstanceBusinessKeyLike(string $processInstanceBusinessKeyLike): ProcessInstanceQueryInterface;
+    public function processInstanceBusinessKeyLike(?string $processInstanceBusinessKeyLike): QueryInterface;
 
     /**
      * Select the process instances which are defined by a process definition with
      * the given key.
      */
-    public function processDefinitionKey(string $processDefinitionKey): ProcessInstanceQueryInterface;
+    public function processDefinitionKey(?string $processDefinitionKey): QueryInterface;
 
     /**
      * Select the process instances for any given process definition keys.
      */
-    public function processDefinitionKeyIn(array $processDefinitionKeys): ProcessInstanceQueryInterface;
+    public function processDefinitionKeyIn(array $processDefinitionKeys): QueryInterface;
 
     /** Select historic process instances that don't have a process-definition of which the key is present in the given list */
-    public function processDefinitionKeyNotIn(array $processDefinitionKeys): ProcessInstanceQueryInterface;
+    public function processDefinitionKeyNotIn(array $processDefinitionKeys): QueryInterface;
 
     /**
      * Selects the process instances which are defined by a process definition
      * with the given id.
      */
-    public function processDefinitionId(string $processDefinitionId): ProcessInstanceQueryInterface;
+    public function processDefinitionId(?string $processDefinitionId): QueryInterface;
 
     /**
      * Selects the process instances which belong to the given deployment id.
      */
-    public function deploymentId(string $deploymentId): ProcessInstanceQueryInterface;
+    public function deploymentId(?string $deploymentId): QueryInterface;
 
     /**
      * Select the process instances which are a sub process instance of the given
      * super process instance.
      */
-    public function superProcessInstanceId(string $superProcessInstanceId): ProcessInstanceQueryInterface;
+    public function superProcessInstanceId(?string $superProcessInstanceId): QueryInterface;
 
     /**
      * Select the process instance that have as sub process instance the given
      * process instance. Note that there will always be maximum only <b>one</b>
      * such process instance that can be the result of this query.
      */
-    public function subProcessInstanceId(string $subProcessInstanceId): ProcessInstanceQueryInterface;
+    public function subProcessInstanceId(?string $subProcessInstanceId): QueryInterface;
 
     /**
      * Selects the process instances which are associated with the given case instance id.
      */
-    //public function caseInstanceId(string $caseInstanceId): ProcessInstanceQueryInterface;
+    //public function caseInstanceId(?string $caseInstanceId): QueryInterface;
 
     /**
      * Select the process instances which are a sub process instance of the given
      * super case instance.
      */
-    //public function superCaseInstanceId(string $superCaseInstanceId): ProcessInstanceQueryInterface;
+    //public function superCaseInstanceId(?string $superCaseInstanceId): QueryInterface;
 
     /**
      * Select the process instance that has as sub case instance the given
      * case instance. Note that there will always be at most <b>one</b>
      * such process instance that can be the result of this query.
      */
-    //public function subCaseInstanceId(string $subCaseInstanceId): ProcessInstanceQueryInterface;
+    //public function subCaseInstanceId(?string $subCaseInstanceId): QueryInterface;
 
     /**
      * The query will match the names of process-variables in a case-insensitive way.
      */
-    public function matchVariableNamesIgnoreCase(): ProcessInstanceQueryInterface;
+    public function matchVariableNamesIgnoreCase(): QueryInterface;
 
     /**
      * The query will match the values of process-variables in a case-insensitive way.
      */
-    public function matchVariableValuesIgnoreCase(): ProcessInstanceQueryInterface;
+    public function matchVariableValuesIgnoreCase(): QueryInterface;
 
     /**
      * Only select process instances which have a global variable with the given value. The type
@@ -97,7 +97,7 @@ interface ProcessInstanceQueryInterface extends QueryInterface
      * are not supported.
      * @param name name of the variable, cannot be null.
      */
-    public function variableValueEquals(string $name, $value): ProcessInstanceQueryInterface;
+    public function variableValueEquals(?string $name, $value): QueryInterface;
 
     /**
      * Only select process instances which have a global variable with the given name, but
@@ -106,7 +106,7 @@ interface ProcessInstanceQueryInterface extends QueryInterface
      * are not supported.
      * @param name name of the variable, cannot be null.
      */
-    public function variableValueNotEquals(string $name, $value): ProcessInstanceQueryInterface;
+    public function variableValueNotEquals(?string $name, $value): QueryInterface;
 
 
     /**
@@ -116,7 +116,7 @@ interface ProcessInstanceQueryInterface extends QueryInterface
      * @param name variable name, cannot be null.
      * @param value variable value, cannot be null.
      */
-    public function variableValueGreaterThan(string $name, $value): ProcessInstanceQueryInterface;
+    public function variableValueGreaterThan(?string $name, $value): QueryInterface;
 
     /**
      * Only select process instances which have a global variable value greater than or equal to
@@ -125,7 +125,7 @@ interface ProcessInstanceQueryInterface extends QueryInterface
      * @param name variable name, cannot be null.
      * @param value variable value, cannot be null.
      */
-    public function variableValueGreaterThanOrEqual(string $name, $value): ProcessInstanceQueryInterface;
+    public function variableValueGreaterThanOrEqual(?string $name, $value): QueryInterface;
 
     /**
      * Only select process instances which have a global variable value less than the passed value.
@@ -134,7 +134,7 @@ interface ProcessInstanceQueryInterface extends QueryInterface
      * @param name variable name, cannot be null.
      * @param value variable value, cannot be null.
      */
-    public function variableValueLessThan(string $name, $value): ProcessInstanceQueryInterface;
+    public function variableValueLessThan(?string $name, $value): QueryInterface;
 
     /**
      * Only select process instances which have a global variable value less than or equal to the passed value.
@@ -143,62 +143,62 @@ interface ProcessInstanceQueryInterface extends QueryInterface
      * @param name variable name, cannot be null.
      * @param value variable value, cannot be null.
      */
-    public function variableValueLessThanOrEqual(string $name, $value): ProcessInstanceQueryInterface;
+    public function variableValueLessThanOrEqual(?string $name, $value): QueryInterface;
 
     /**
      * Only select process instances which have a global variable value like the given value.
-     * This be used on string $variables only.
+     * This be used on ?string $variables only.
      * @param name variable name, cannot be null.
-     * @param value variable value, cannot be null. The string $can include the
+     * @param value variable value, cannot be null. The ?string $can include the
      * wildcard character '%' to express like-strategy:
      * starts with (string%), ends with (%string) or contains (%string%).
      */
-    public function variableValueLike(string $name, string $value): ProcessInstanceQueryInterface;
+    public function variableValueLike(?string $name, ?string $value): QueryInterface;
 
     /**
      * Only selects process instances which are suspended, either because the
      * process instance itself is suspended or because the corresponding process
      * definition is suspended
      */
-    public function suspended(): ProcessInstanceQueryInterface;
+    public function suspended(): QueryInterface;
 
     /**
      * Only selects process instances which are active, which means that
      * neither the process instance nor the corresponding process definition
      * are suspended.
      */
-    public function active(): ProcessInstanceQueryInterface;
+    public function active(): QueryInterface;
 
     /**
      * Only selects process instances with at least one incident.
      */
-    public function withIncident(): ProcessInstanceQueryInterface;
+    public function withIncident(): QueryInterface;
 
     /**
      * Only selects process instances with the given incident type.
      */
-    public function incidentType(string $incidentType): ProcessInstanceQueryInterface;
+    public function incidentType(?string $incidentType): QueryInterface;
 
     /**
      * Only selects process instances with the given incident id.
      */
-    public function incidentId(string $incidentId): ProcessInstanceQueryInterface;
+    public function incidentId(?string $incidentId): QueryInterface;
 
     /**
      * Only selects process instances with the given incident message.
      */
-    public function incidentMessage(string $incidentMessage): ProcessInstanceQueryInterface;
+    public function incidentMessage(?string $incidentMessage): QueryInterface;
 
     /**
      * Only selects process instances with an incident message like the given.
      */
-    public function incidentMessageLike(string $incidentMessageLike): ProcessInstanceQueryInterface;
+    public function incidentMessageLike(?string $incidentMessageLike): QueryInterface;
 
     /** Only select process instances with one of the given tenant ids. */
-    public function tenantIdIn(array $tenantIds): ProcessInstanceQueryInterface;
+    public function tenantIdIn(array $tenantIds): QueryInterface;
 
     /** Only selects process instances which have no tenant id. */
-    public function withoutTenantId(): ProcessInstanceQueryInterface;
+    public function withoutTenantId(): QueryInterface;
 
     /**
      * <p>Only selects process instances with leaf activity instances
@@ -209,36 +209,36 @@ interface ProcessInstanceQueryInterface extends QueryInterface
      * of a user task is matched, but not the embedded sub process it is
      * contained in.
      */
-    public function activityIdIn(array $activityIds): ProcessInstanceQueryInterface;
+    public function activityIdIn(array $activityIds): QueryInterface;
 
     /** Only selects process instances which are top level process instances. */
-    public function rootProcessInstances(): ProcessInstanceQueryInterface;
+    public function rootProcessInstances(): QueryInterface;
 
     /** Only selects process instances which don't have subprocesses and thus are leaves of the execution tree. */
-    public function leafProcessInstances(): ProcessInstanceQueryInterface;
+    public function leafProcessInstances(): QueryInterface;
 
     /** Only selects process instances which process definition has no tenant id. */
-    public function processDefinitionWithoutTenantId(): ProcessInstanceQueryInterface;
+    public function processDefinitionWithoutTenantId(): QueryInterface;
 
     //ordering /////////////////////////////////////////////////////////////////
 
     /** Order by id (needs to be followed by {@link #asc()} or {@link #desc()}). */
-    public function orderByProcessInstanceId(): ProcessInstanceQueryInterface;
+    public function orderByProcessInstanceId(): QueryInterface;
 
     /** Order by process definition key (needs to be followed by {@link #asc()} or {@link #desc()}). */
-    public function orderByProcessDefinitionKey(): ProcessInstanceQueryInterface;
+    public function orderByProcessDefinitionKey(): QueryInterface;
 
     /** Order by process definition id (needs to be followed by {@link #asc()} or {@link #desc()}). */
-    public function orderByProcessDefinitionId(): ProcessInstanceQueryInterface;
+    public function orderByProcessDefinitionId(): QueryInterface;
 
     /**
      * Order by tenant id (needs to be followed by {@link #asc()} or {@link #desc()}).
      * Note that the ordering of process instances without tenant id is database-specific.
      */
-    public function orderByTenantId(): ProcessInstanceQueryInterface;
+    public function orderByTenantId(): QueryInterface;
 
     /** Order by the business key (needs to be followed by {@link #asc()} or {@link #desc()}). */
-    public function orderByBusinessKey(): ProcessInstanceQueryInterface;
+    public function orderByBusinessKey(): QueryInterface;
 
     /**
      * <p>After calling or(), a chain of several filter criteria could follow. Each filter criterion that follows or()
@@ -252,7 +252,7 @@ interface ProcessInstanceQueryInterface extends QueryInterface
      * criteria. To prevent throwing this exception, {@link #endOr()} must be invoked after a chain of filter criteria to
      * mark the end of the OR query.
      * */
-    public function or(): ProcessInstanceQueryInterface;
+    public function or(): QueryInterface;
 
     /**
      * <p>endOr() terminates an OR query on which an arbitrary amount of filter criteria were applied. To terminate the
@@ -265,5 +265,5 @@ interface ProcessInstanceQueryInterface extends QueryInterface
      * @throws ProcessEngineException when endOr() has been invoked before {@link #or()} was invoked. To prevent throwing
      * this exception, {@link #or()} must be invoked first.
      * */
-    public function endOr(): ProcessInstanceQueryInterface;
+    public function endOr(): QueryInterface;
 }

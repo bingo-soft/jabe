@@ -2,6 +2,10 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
+use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface
+};
 use Jabe\Impl\Context\Context;
 use Jabe\Impl\Db\{
     ListQueryParameterObject,
@@ -23,7 +27,7 @@ class TenantManager extends AbstractManager
         }
     }
 
-    public function configureQuery($parameters)
+    public function configureQuery(/*ListQueryParameterObjec*/$parameters, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         if ($parameters instanceof ListQueryParameterObject) {
             $tenantCheck = $parameters->getTenantCheck();

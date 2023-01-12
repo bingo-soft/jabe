@@ -33,7 +33,7 @@ abstract class JobDeclaration implements \Serializable
 
     protected $jobPriorityProvider;
 
-    public function __construct(string $jobHandlerType)
+    public function __construct(?string $jobHandlerType)
     {
         $this->jobHandlerType = $jobHandlerType;
     }
@@ -130,7 +130,7 @@ abstract class JobDeclaration implements \Serializable
     /**
      * general callback to override any configuration after the defaults have been applied
      */
-    protected function postInitialize($context, JobEntity $job): void
+    protected function postInitialize($context, /*JobEntity*/$job): void
     {
     }
 
@@ -145,22 +145,22 @@ abstract class JobDeclaration implements \Serializable
 
     // Getter / Setters //////////////////////////////////////////
 
-    public function getJobDefinitionId(): string
+    public function getJobDefinitionId(): ?string
     {
         return $this->jobDefinitionId;
     }
 
-    protected function resolveJobDefinitionId($context): string
+    protected function resolveJobDefinitionId($context): ?string
     {
         return $this->jobDefinitionId;
     }
 
-    public function setJobDefinitionId(string $jobDefinitionId): void
+    public function setJobDefinitionId(?string $jobDefinitionId): void
     {
         $this->jobDefinitionId = $jobDefinitionId;
     }
 
-    public function getJobHandlerType(): string
+    public function getJobHandlerType(): ?string
     {
         return $this->jobHandlerType;
     }
@@ -177,7 +177,7 @@ abstract class JobDeclaration implements \Serializable
         return $jobHandler;
     }
 
-    protected function resolveJobHandlerType($context): string
+    protected function resolveJobHandlerType($context): ?string
     {
         return $this->jobHandlerType;
     }
@@ -194,7 +194,7 @@ abstract class JobDeclaration implements \Serializable
         return Context::getProcessEngineConfiguration()->getDefaultNumberOfRetries();
     }
 
-    public function resolveDueDate($context): string
+    public function resolveDueDate($context): ?string
     {
         $processEngineConfiguration = Context::getProcessEngineConfiguration();
         if ($processEngineConfiguration !== null && ($processEngineConfiguration->isJobExecutorAcquireByDueDate() || $processEngineConfiguration->isEnsureJobDueDateNotNull())) {
@@ -242,12 +242,12 @@ abstract class JobDeclaration implements \Serializable
         }
     }
 
-    public function getJobConfiguration(): string
+    public function getJobConfiguration(): ?string
     {
         return $this->jobConfiguration;
     }
 
-    public function setJobConfiguration(string $jobConfiguration): void
+    public function setJobConfiguration(?string $jobConfiguration): void
     {
         $this->jobConfiguration = $jobConfiguration;
     }

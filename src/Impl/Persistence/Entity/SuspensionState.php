@@ -4,7 +4,7 @@ namespace Jabe\Impl\Persistence\Entity;
 
 class SuspensionState implements \Serializable
 {
-    protected $stateCode;
+    protected int $stateCode = 0;
 
     protected $name;
 
@@ -38,17 +38,17 @@ class SuspensionState implements \Serializable
     public static function suspended(): SuspensionState
     {
         if (self::$SUSPENDED === null) {
-            self::$SUSPENDED = new SuspensionStateImpl(1, "suspended");
+            self::$SUSPENDED = new SuspensionStateImpl(2, "suspended");
         }
         return self::$SUSPENDED;
     }
 
-    protected function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    protected function getStateCode(): int
+    public function getStateCode(): int
     {
         return $this->stateCode;
     }

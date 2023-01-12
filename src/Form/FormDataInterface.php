@@ -8,7 +8,7 @@ interface FormDataInterface
      * it is assumed that the form key specifies a resource in the deployment
      * which is the template for the form.  But users are free to
      * use this property differently. */
-    public function getFormKey(): string;
+    public function getFormKey(): ?string;
 
     /** The deployment id of the process definition to which this form is related
      *  */

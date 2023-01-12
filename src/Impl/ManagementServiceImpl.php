@@ -106,7 +106,7 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
         $this->processEngineConfiguration = $processEngineConfiguration;
     }
 
-    public function registerProcessApplication(string $deploymentId, ProcessApplicationReferenceInterface $reference): ProcessApplicationRegistrationInterface
+    public function registerProcessApplication(?string $deploymentId, ProcessApplicationReferenceInterface $reference): ProcessApplicationRegistrationInterface
     {
         return $this->commandExecutor->execute(new RegisterProcessApplicationCmd($deploymentId, $reference));
     }
@@ -116,7 +116,7 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
         $this->commandExecutor->execute(new UnregisterProcessApplicationCmd($deploymentIds, $removeProcessesFromCache));
     }
 
-    public function getProcessApplicationForDeployment(string $deploymentId): string
+    public function getProcessApplicationForDeployment(?string $deploymentId): ?string
     {
         return $this->commandExecutor->execute(new GetProcessApplicationForDeploymentCmd($deploymentId));
     }
@@ -126,22 +126,22 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
         return $this->commandExecutor->execute(new GetTableCountCmd());
     }
 
-    public function getTableName(string $activitiEntityClass): string
+    public function getTableName(?string $activitiEntityClass): ?string
     {
         return $this->commandExecutor->execute(new GetTableNameCmd($activitiEntityClass));
     }
 
-    public function getTableMetaData(string $tableName): TableMetaData
+    public function getTableMetaData(?string $tableName): TableMetaData
     {
         return $this->commandExecutor->execute(new GetTableMetaDataCmd($tableName));
     }
 
-    public function executeJob(string $jobId): void
+    public function executeJob(?string $jobId): void
     {
         ExecuteJobHelper::executeJob($jobId, $this->commandExecutor);
     }
 
-    public function deleteJob(string $jobId): void
+    public function deleteJob(?string $jobId): void
     {
         $this->commandExecutor->execute(new DeleteJobCmd($jobId));
     }
@@ -168,22 +168,22 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
         }
     }
 
-    public function setJobRetriesByJobDefinitionId(string $jobDefinitionId, int $retries): void
+    public function setJobRetriesByJobDefinitionId(?string $jobDefinitionId, int $retries): void
     {
         $this->commandExecutor->execute(new SetJobRetriesCmd(null, $jobDefinitionId, $retries));
     }
 
-    public function setJobDuedate(string $jobId, string $newDuedate, bool $cascade = false): void
+    public function setJobDuedate(?string $jobId, ?string $newDuedate, bool $cascade = false): void
     {
         $this->commandExecutor->execute(new SetJobDuedateCmd($jobId, $newDuedate, $cascade));
     }
 
-    public function recalculateJobDuedate(string $jobId, bool $creationDateBased): void
+    public function recalculateJobDuedate(?string $jobId, bool $creationDateBased): void
     {
         $this->commandExecutor->execute(new RecalculateJobDuedateCmd($jobId, $creationDateBased));
     }
 
-    public function setJobPriority(string $jobId, int $priority): void
+    public function setJobPriority(?string $jobId, int $priority): void
     {
         $this->commandExecutor->execute(new SetJobPriorityCmd($jobId, $priority));
     }
@@ -203,7 +203,7 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
         return new JobDefinitionQueryImpl($this->commandExecutor);
     }
 
-    public function getJobExceptionStacktrace(string $jobId): string
+    public function getJobExceptionStacktrace(?string $jobId): ?string
     {
         return $this->commandExecutor->execute(new GetJobExceptionStacktraceCmd($jobId));
     }
@@ -213,22 +213,22 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
         return $this->commandExecutor->execute(new GetPropertiesCmd());
     }
 
-    public function setProperty(string $name, string $value): void
+    public function setProperty(?string $name, ?string $value): void
     {
         $this->commandExecutor->execute(new SetPropertyCmd($name, $value));
     }
 
-    public function deleteProperty(string $name): void
+    public function deleteProperty(?string $name): void
     {
         $this->commandExecutor->execute(new DeletePropertyCmd($name));
     }
 
-    public function setLicenseKey(string $licenseKey): void
+    public function setLicenseKey(?string $licenseKey): void
     {
         $this->commandExecutor->execute(new SetLicenseKeyCmd($licenseKey));
     }
 
-    public function getLicenseKey(): string
+    public function getLicenseKey(): ?string
     {
         return $this->commandExecutor->execute(new GetLicenseKeyCmd());
     }
@@ -238,7 +238,7 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
         $this->commandExecutor->execute(new DeleteLicenseKeyCmd(true));
     }
 
-    public function databaseSchemaUpgrade(Connection $connection, string $catalog, string $schema): string
+    public function databaseSchemaUpgrade(Connection $connection, ?string $catalog, ?string $schema): ?string
     {
         return $this->commandExecutor->execute(new DbSchemaUpgradeCmd($connection, $catalog, $schema));
     }
@@ -256,7 +256,7 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
         return new ProcessDefinitionStatisticsQueryImpl($this->commandExecutor);
     }
 
-    public function createActivityStatisticsQuery(string $processDefinitionId): ActivityStatisticsQueryInterface
+    public function createActivityStatisticsQuery(?string $processDefinitionId): ActivityStatisticsQueryInterface
     {
         return new ActivityStatisticsQueryImpl($processDefinitionId, $this->commandExecutor);
     }
@@ -271,17 +271,17 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
         return $this->commandExecutor->execute(new GetRegisteredDeploymentsCmd());
     }
 
-    public function registerDeploymentForJobExecutor(string $deploymentId): void
+    public function registerDeploymentForJobExecutor(?string $deploymentId): void
     {
         $this->commandExecutor->execute(new RegisterDeploymentCmd($deploymentId));
     }
 
-    public function unregisterDeploymentForJobExecutor(string $deploymentId): void
+    public function unregisterDeploymentForJobExecutor(?string $deploymentId): void
     {
         $this->commandExecutor->execute(new UnregisterDeploymentCmd($deploymentId));
     }
 
-    public function activateJobDefinitionById(string $jobDefinitionId, bool $activateJobs = false, string $activationDate = null): void
+    public function activateJobDefinitionById(?string $jobDefinitionId, bool $activateJobs = false, ?string $activationDate = null): void
     {
         if (!$activateJobs && $activationDate === null) {
             $this->updateJobDefinitionSuspensionState()
@@ -301,7 +301,7 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
         }
     }
 
-    public function suspendJobDefinitionById(string $jobDefinitionId, bool $suspendJobs = false, string $suspensionDate = null): void
+    public function suspendJobDefinitionById(?string $jobDefinitionId, bool $suspendJobs = false, ?string $suspensionDate = null): void
     {
         if (!$suspendJobs && $suspensionDate === null) {
             $this->updateJobDefinitionSuspensionState()
@@ -321,7 +321,7 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
         }
     }
 
-    public function activateJobDefinitionByProcessDefinitionId(string $processDefinitionId, bool $activateJobs = false, string $activationDate = null): void
+    public function activateJobDefinitionByProcessDefinitionId(?string $processDefinitionId, bool $activateJobs = false, ?string $activationDate = null): void
     {
         if (!$activateJobs && $activationDate === null) {
             $this->updateJobDefinitionSuspensionState()
@@ -341,7 +341,7 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
         }
     }
 
-    public function suspendJobDefinitionByProcessDefinitionId(string $processDefinitionId, bool $suspendJobs = false, string $suspensionDate = null): void
+    public function suspendJobDefinitionByProcessDefinitionId(?string $processDefinitionId, bool $suspendJobs = false, ?string $suspensionDate = null): void
     {
         if (!$suspendJobs && $suspensionDate === null) {
             $this->updateJobDefinitionSuspensionState()
@@ -361,7 +361,7 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
         }
     }
 
-    public function activateJobDefinitionByProcessDefinitionKey(string $processDefinitionKey, bool $activateJobs = false, string $activationDate = null): void
+    public function activateJobDefinitionByProcessDefinitionKey(?string $processDefinitionKey, bool $activateJobs = false, ?string $activationDate = null): void
     {
         if (!$activateJobs && $activationDate === null) {
             $this->updateJobDefinitionSuspensionState()
@@ -381,7 +381,7 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
         }
     }
 
-    public function suspendJobDefinitionByProcessDefinitionKey(string $processDefinitionKey, bool $suspendJobs = false, string $suspensionDate = null): void
+    public function suspendJobDefinitionByProcessDefinitionKey(?string $processDefinitionKey, bool $suspendJobs = false, ?string $suspensionDate = null): void
     {
         if (!$suspendJobs && $suspensionDate === null) {
             $this->updateJobDefinitionSuspensionState()
@@ -406,70 +406,70 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
         return new UpdateJobDefinitionSuspensionStateBuilderImpl($this->commandExecutor);
     }
 
-    public function activateJobById(string $jobId): void
+    public function activateJobById(?string $jobId): void
     {
         $this->updateJobSuspensionState()
             ->byJobId(jobId)
             ->activate();
     }
 
-    public function activateJobByProcessInstanceId(string $processInstanceId): void
+    public function activateJobByProcessInstanceId(?string $processInstanceId): void
     {
         $this->updateJobSuspensionState()
             ->byProcessInstanceId($processInstanceId)
             ->activate();
     }
 
-    public function activateJobByJobDefinitionId(string $jobDefinitionId): void
+    public function activateJobByJobDefinitionId(?string $jobDefinitionId): void
     {
         $this->updateJobSuspensionState()
             ->byJobDefinitionId($jobDefinitionId)
             ->activate();
     }
 
-    public function activateJobByProcessDefinitionId(string $processDefinitionId): void
+    public function activateJobByProcessDefinitionId(?string $processDefinitionId): void
     {
         $this->updateJobSuspensionState()
             ->byProcessDefinitionId($processDefinitionId)
             ->activate();
     }
 
-    public function activateJobByProcessDefinitionKey(string $processDefinitionKey): void
+    public function activateJobByProcessDefinitionKey(?string $processDefinitionKey): void
     {
         $this->updateJobSuspensionState()
             ->byProcessDefinitionKey($processDefinitionKey)
             ->activate();
     }
 
-    public function suspendJobById(string $jobId): void
+    public function suspendJobById(?string $jobId): void
     {
         $this->updateJobSuspensionState()
             ->byJobId($jobId)
             ->suspend();
     }
 
-    public function suspendJobByJobDefinitionId(string $jobDefinitionId): void
+    public function suspendJobByJobDefinitionId(?string $jobDefinitionId): void
     {
         $this->updateJobSuspensionState()
             ->byJobDefinitionId($jobDefinitionId)
             ->suspend();
     }
 
-    public function suspendJobByProcessInstanceId(string $processInstanceId): void
+    public function suspendJobByProcessInstanceId(?string $processInstanceId): void
     {
         $this->updateJobSuspensionState()
             ->byProcessInstanceId($processInstanceId)
             ->suspend();
     }
 
-    public function suspendJobByProcessDefinitionId(string $processDefinitionId): void
+    public function suspendJobByProcessDefinitionId(?string $processDefinitionId): void
     {
         $this->updateJobSuspensionState()
             ->byProcessDefinitionId($processDefinitionId)
             ->suspend();
     }
 
-    public function suspendJobByProcessDefinitionKey(string $processDefinitionKey): void
+    public function suspendJobByProcessDefinitionKey(?string $processDefinitionKey): void
     {
         $this->updateJobSuspensionState()
             ->byProcessDefinitionKey($processDefinitionKey)
@@ -491,7 +491,7 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
         return new MetricsQueryImpl($this->commandExecutor);
     }
 
-    public function deleteMetrics(string $timestamp = null, string $reporter = null): void
+    public function deleteMetrics(?string $timestamp = null, ?string $reporter = null): void
     {
         $this->commandExecutor->execute(new DeleteMetricsCmd($timestamp, $reporter));
     }
@@ -501,22 +501,22 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
         $this->commandExecutor->execute(new ReportDbMetricsCmd());
     }
 
-    public function getUniqueTaskWorkerCount(string $startTime, string $endTime): int
+    public function getUniqueTaskWorkerCount(?string $startTime = null, ?string $endTime = null): int
     {
         return $this->commandExecutor->execute(new GetUniqueTaskWorkerCountCmd($startTime, $endTime));
     }
 
-    public function deleteTaskMetrics(string $timestamp): void
+    public function deleteTaskMetrics(?string $timestamp = null): void
     {
         $this->commandExecutor->execute(new DeleteTaskMetricsCmd($timestamp));
     }
 
-    public function setOverridingJobPriorityForJobDefinition(string $jobDefinitionId, int $priority, bool $cascade = false): void
+    public function setOverridingJobPriorityForJobDefinition(?string $jobDefinitionId, int $priority, bool $cascade = false): void
     {
         $this->commandExecutor->execute(new SetJobDefinitionPriorityCmd($jobDefinitionId, $priority, $cascade));
     }
 
-    public function clearOverridingJobPriorityForJobDefinition(string $jobDefinitionId): void
+    public function clearOverridingJobPriorityForJobDefinition(?string $jobDefinitionId): void
     {
         $this->commandExecutor->execute(new SetJobDefinitionPriorityCmd($jobDefinitionId, null, false));
     }
@@ -526,17 +526,17 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
         return new BatchQueryImpl($this->commandExecutor);
     }
 
-    public function deleteBatch(string $batchId, bool $cascade): void
+    public function deleteBatch(?string $batchId, bool $cascade): void
     {
         $this->commandExecutor->execute(new DeleteBatchCmd($batchId, $cascade));
     }
 
-    public function suspendBatchById(string $batchId): void
+    public function suspendBatchById(?string $batchId): void
     {
         $this->commandExecutor->execute(new SuspendBatchCmd($batchId));
     }
 
-    public function activateBatchById(string $batchId): void
+    public function activateBatchById(?string $batchId): void
     {
         $this->commandExecutor->execute(new ActivateBatchCmd($batchId));
     }
@@ -573,7 +573,7 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
      *          the web application that is used with the engine
      * @return whether the web application was successfully added or not
      */
-    public function addWebappToTelemetry(string $webapp): bool
+    public function addWebappToTelemetry(?string $webapp): bool
     {
         $telemetryRegistry = $this->processEngineConfiguration->getTelemetryRegistry();
         if ($telemetryRegistry !== null) {
@@ -589,7 +589,7 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
      * @param appServerInfo
      *          a String containing information about the application server
      */
-    public function addApplicationServerInfoToTelemetry(string $appServerInfo): void
+    public function addApplicationServerInfoToTelemetry(?string $appServerInfo): void
     {
         $telemetryRegistry = $this->processEngineConfiguration->getTelemetryRegistry();
         if ($telemetryRegistry !== null) {

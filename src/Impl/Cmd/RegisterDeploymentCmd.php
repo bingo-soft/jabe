@@ -13,7 +13,7 @@ class RegisterDeploymentCmd implements CommandInterface
 {
     protected $deploymentId;
 
-    public function __construct(string $deploymentId)
+    public function __construct(?string $deploymentId)
     {
         $this->deploymentId = $deploymentId;
     }
@@ -28,5 +28,10 @@ class RegisterDeploymentCmd implements CommandInterface
 
         Context::getProcessEngineConfiguration()->registerDeployment($this->deploymentId);
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

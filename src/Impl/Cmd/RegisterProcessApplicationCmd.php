@@ -29,4 +29,9 @@ class RegisterProcessApplicationCmd implements CommandInterface
 
         return $processApplicationManager->registerProcessApplicationForDeployments($this->deploymentsToRegister, $this->reference);
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

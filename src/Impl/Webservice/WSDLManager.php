@@ -14,7 +14,7 @@ class WSDLManager
         $this->parser = new WsdlParser();
     }
 
-    public function getDefinition(string $url): DefinitionsInterface
+    public function getDefinition(?string $url): DefinitionsInterface
     {
         $modelInstance = $this->parser->parseModelFromStream(fopen($url, "r"));
         return $modelInstance->getDocumentElement();

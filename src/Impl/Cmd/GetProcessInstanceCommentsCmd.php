@@ -11,7 +11,7 @@ class GetProcessInstanceCommentsCmd implements CommandInterface, \Serializable
 {
     protected $processInstanceId;
 
-    public function __construct(string $taskId)
+    public function __construct(?string $taskId)
     {
         $this->processInstanceId = $taskId;
     }
@@ -34,5 +34,10 @@ class GetProcessInstanceCommentsCmd implements CommandInterface, \Serializable
         return $commandContext
             ->getAttachmentManager()
             ->findCommentsByProcessInstanceId($this->processInstanceId);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

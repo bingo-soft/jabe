@@ -30,6 +30,7 @@ use Jabe\Impl\History\Event\{
 };
 use Jabe\Impl\Persistence\AbstractManager;
 use Jabe\Impl\Util\DatabaseUtil;
+use Jabe\Filter\FilterInterface;
 use Jabe\Management\{
     TableMetaData,
     TablePage
@@ -44,6 +45,7 @@ use Jabe\Runtime\{
     JobInterface,
     ProcessInstanceInterface
 };
+use Jabe\Task\TaskInterface;
 
 class TableDataManager extends AbstractManager
 {
@@ -132,14 +134,14 @@ class TableDataManager extends AbstractManager
         self::$persistentObjectToTableNameMap[FilterEntity::class] = "ACT_RU_FILTER";
 
         // and now the map for the API types (does not cover all cases)
-        self::$apiTypeToTableNameMap[Task::class] = "ACT_RU_TASK";
-        self::$apiTypeToTableNameMap[Execution::class] = "ACT_RU_EXECUTION";
-        self::$apiTypeToTableNameMap[ProcessInstance::class] = "ACT_RU_EXECUTION";
-        self::$apiTypeToTableNameMap[ProcessDefinition::class] = "ACT_RE_PROCDEF";
-        self::$apiTypeToTableNameMap[Deployment::class] = "ACT_RE_DEPLOYMENT";
-        self::$apiTypeToTableNameMap[Job::class] = "ACT_RU_JOB";
-        self::$apiTypeToTableNameMap[Incident::class] = "ACT_RU_INCIDENT";
-        self::$apiTypeToTableNameMap[Filter::class] = "ACT_RU_FILTER";
+        self::$apiTypeToTableNameMap[TaskInterface::class] = "ACT_RU_TASK";
+        self::$apiTypeToTableNameMap[ExecutionInterface::class] = "ACT_RU_EXECUTION";
+        self::$apiTypeToTableNameMap[ProcessInstanceInterface::class] = "ACT_RU_EXECUTION";
+        self::$apiTypeToTableNameMap[ProcessDefinitionInterface::class] = "ACT_RE_PROCDEF";
+        self::$apiTypeToTableNameMap[DeploymentInterface::class] = "ACT_RE_DEPLOYMENT";
+        self::$apiTypeToTableNameMap[JobInterface::class] = "ACT_RU_JOB";
+        self::$apiTypeToTableNameMap[IncidentInterface::class] = "ACT_RU_INCIDENT";
+        self::$apiTypeToTableNameMap[FilterInterface::class] = "ACT_RU_FILTER";
 
         // history
         self::$apiTypeToTableNameMap[HistoricProcessInstance::class] = "ACT_HI_PROCINST";
@@ -196,7 +198,7 @@ class TableDataManager extends AbstractManager
         return $tablePage;
     }
 
-    public function getEntities(string $tableName): array
+    public function getEntities(?string $tableName): array
     {
         $databaseTablePrefix = $this->getDbSqlSession()->getDbSqlSessionFactory()->getDatabaseTablePrefix();
         $entities = [];
@@ -211,7 +213,7 @@ class TableDataManager extends AbstractManager
         return $entities;
     }
 
-    public function getTableName(string $entityClass, bool $withPrefix): ?string
+    public function getTableName(?string $entityClass, bool $withPrefix): ?string
     {
         $databaseTablePrefix = $this->getDbSqlSession()->getDbSqlSessionFactory()->getDatabaseTablePrefix();
         $tableName = null;
@@ -228,7 +230,7 @@ class TableDataManager extends AbstractManager
         }
     }
 
-    public function getTableMetaData(string $tableName): TableMetaData
+    public function getTableMetaData(?string $tableName): TableMetaData
     {
         $result = new TableMetaData();
         $resultSet = null;

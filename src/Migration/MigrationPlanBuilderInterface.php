@@ -21,7 +21,7 @@ interface MigrationPlanBuilderInterface
      * Adds a migration instruction that maps activity instances of the source activity (of the source process definition)
      * to activity instances of the target activity (of the target process definition)
      */
-    public function mapActivities(string $sourceActivityId, string $targetActivityId): MigrationInstructionBuilderInterface;
+    public function mapActivities(?string $sourceActivityId, ?string $targetActivityId): MigrationInstructionBuilderInterface;
 
     /**
      * @return a migration plan with all previously specified instructions

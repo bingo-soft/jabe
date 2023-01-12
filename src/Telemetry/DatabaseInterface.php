@@ -7,10 +7,10 @@ interface DatabaseInterface
     /**
      * The vendor of the connected database system.
      */
-    public function getVendor(): string;
+    public function getVendor(): ?string;
 
     /**
      * The version of the connected database system.
      */
-    public function getVersion(): string;
+    public function getVersion(): ?string;
 }

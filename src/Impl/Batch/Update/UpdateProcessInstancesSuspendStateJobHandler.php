@@ -1,11 +1,12 @@
 <?php
 
-namespace Jabe\Impl\Batch\RemovalTime;
+namespace Jabe\Impl\Batch\Update;
 
 use Jabe\Batch\BatchInterface;
 use Jabe\Impl\UpdateProcessInstancesSuspensionStateBuilderImpl;
 use Jabe\Impl\Batch\{
     AbstractBatchJobHandler,
+    BatchConfiguration,
     BatchJobConfiguration,
     BatchJobContext,
     BatchJobDeclaration
@@ -15,7 +16,10 @@ use Jabe\Impl\Interceptor\{
     CommandContext,
     CommandExecutorInterface
 };
-use Jabe\Impl\JobExecutor\JobDeclaration;
+use Jabe\Impl\JobExecutor\{
+    JobDeclaration,
+    JobHandlerConfigurationInterface
+};
 use Jabe\Impl\Json\JsonObjectConverter;
 use Jabe\Impl\Persistence\Entity\{
     ByteArrayEntity,
@@ -27,7 +31,7 @@ class UpdateProcessInstancesSuspendStateJobHandler extends AbstractBatchJobHandl
 {
     public static $JOB_DECLARATION;
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return BatchInterface::TYPE_PROCESS_INSTANCE_UPDATE_SUSPENSION_STATE;
     }
@@ -50,7 +54,7 @@ class UpdateProcessInstancesSuspendStateJobHandler extends AbstractBatchJobHandl
         return new UpdateProcessInstancesSuspendStateBatchConfiguration($processIdsForJob, $configuration->getSuspended());
     }
 
-    public function execute(BatchJobConfiguration $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId)
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
     {
         $configurationEntity = $commandContext
             ->getDbEntityManager()

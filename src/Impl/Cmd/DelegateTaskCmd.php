@@ -18,7 +18,7 @@ class DelegateTaskCmd implements CommandInterface, \Serializable
     protected $taskId;
     protected $userId;
 
-    public function __construct(string $taskId, string $userId)
+    public function __construct(?string $taskId, ?string $userId)
     {
         $this->taskId = $taskId;
         $this->userId = $userId;
@@ -62,5 +62,10 @@ class DelegateTaskCmd implements CommandInterface, \Serializable
         foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
             $checker->checkTaskAssign($task);
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

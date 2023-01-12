@@ -13,7 +13,7 @@ class OptimizeRunningHistoricActivityInstanceQueryCmd implements CommandInterfac
     protected $startedAt;
     protected $maxResults;
 
-    public function __construct(string $startedAfter, string $startedAt, int $maxResults)
+    public function __construct(?string $startedAfter, ?string $startedAt, int $maxResults)
     {
         $this->startedAfter = $startedAfter;
         $this->startedAt = $startedAt;
@@ -23,5 +23,10 @@ class OptimizeRunningHistoricActivityInstanceQueryCmd implements CommandInterfac
     public function execute(CommandContext $commandContext)
     {
         return $commandContext->getOptimizeManager()->getRunningHistoricActivityInstances($this->startedAfter, $this->startedAt, $this->maxResults);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

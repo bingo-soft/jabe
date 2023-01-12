@@ -13,7 +13,7 @@ class CreateUserCmd extends AbstractWritableIdentityServiceCmd implements Comman
 {
     protected $userId;
 
-    public function __construct(string $userId)
+    public function __construct(?string $userId)
     {
         EnsureUtil::ensureNotNull("userId", "userId", $userId);
         $this->userId = $userId;

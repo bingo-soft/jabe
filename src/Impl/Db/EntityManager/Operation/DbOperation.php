@@ -11,7 +11,7 @@ abstract class DbOperation implements RecyclableInterface
      */
     protected $operationType;
 
-    protected $rowsAffected;
+    protected int $rowsAffected = 0;
     protected $failure;
     protected $state;
 
@@ -34,7 +34,7 @@ abstract class DbOperation implements RecyclableInterface
         return $this->entityType;
     }
 
-    public function setEntityType(string $entityType): void
+    public function setEntityType(?string $entityType): void
     {
         $this->entityType = $entityType;
     }
@@ -44,7 +44,7 @@ abstract class DbOperation implements RecyclableInterface
         return $this->operationType;
     }
 
-    public function setOperationType(string $operationType): void
+    public function setOperationType(?string $operationType): void
     {
         $this->operationType = $operationType;
     }
@@ -62,7 +62,7 @@ abstract class DbOperation implements RecyclableInterface
     public function isFailed(): bool
     {
         return $this->state == DbOperationState::FAILED_CONCURRENT_MODIFICATION
-            || $this->state == DbOperationState::FAILED_CONCURRENT_MODIFICATION_CRDB
+            //|| $this->state == DbOperationState::FAILED_CONCURRENT_MODIFICATION_CRDB
             || $this->state == DbOperationState::FAILED_ERROR;
     }
 
@@ -71,7 +71,7 @@ abstract class DbOperation implements RecyclableInterface
         return $this->state;
     }
 
-    public function setState(string $state): void
+    public function setState(?string $state): void
     {
         $this->state = $state;
     }

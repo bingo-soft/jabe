@@ -20,7 +20,7 @@ abstract class DelegateFormHandler
     protected $deploymentId;
     protected $formHandler;
 
-    public function __construct(FormHandlerInterface $formHandler, string $deploymentId)
+    public function __construct(FormHandlerInterface $formHandler, ?string $deploymentId)
     {
         $this->formHandler = $formHandler;
         $this->deploymentId = $deploymentId;

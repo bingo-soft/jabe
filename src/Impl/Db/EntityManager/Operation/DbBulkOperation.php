@@ -7,7 +7,7 @@ class DbBulkOperation extends DbOperation
     protected $statement;
     protected $parameter;
 
-    public function __construct(string $operationType, string $entityType, string $statement, $parameter)
+    public function __construct(?string $operationType = null, ?string $entityType = null, ?string $statement = null, $parameter = null)
     {
         $this->operationType = $operationType;
         $this->entityType = $entityType;
@@ -32,12 +32,12 @@ class DbBulkOperation extends DbOperation
         $this->parameter = $parameter;
     }
 
-    public function getStatement(): string
+    public function getStatement(): ?string
     {
         return $this->statement;
     }
 
-    public function setStatement(string $statement): void
+    public function setStatement(?string $statement): void
     {
         $this->statement = $statement;
     }

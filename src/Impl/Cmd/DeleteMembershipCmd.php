@@ -13,7 +13,7 @@ class DeleteMembershipCmd extends AbstractWritableIdentityServiceCmd implements 
     private $userId;
     private $groupId;
 
-    public function __construct(string $userId, string $groupId)
+    public function __construct(?string $userId, ?string $groupId)
     {
         $this->userId = $userId;
         $this->groupId = $groupId;

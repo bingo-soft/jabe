@@ -9,12 +9,12 @@ interface BatchStatisticsQueryInterface extends QueryInterface
     /**
      * Only select batch statistics for the given batch id.
      */
-    public function batchId(string $batchId): BatchStatisticsQueryInterface;
+    public function batchId(?string $batchId): BatchStatisticsQueryInterface;
 
     /**
      * Only select batch statistics of the given type.
      */
-    public function type(string $type): BatchStatisticsQueryInterface;
+    public function type(?string $type): BatchStatisticsQueryInterface;
 
     /** Only selects batch statistics with one of the given tenant ids. */
     public function tenantIdIn(array $tenantIds): BatchStatisticsQueryInterface;

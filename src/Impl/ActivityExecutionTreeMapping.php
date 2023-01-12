@@ -22,7 +22,7 @@ class ActivityExecutionTreeMapping
     protected $processInstanceId;
     protected $processDefinition;
 
-    public function __construct(CommandContext $commandContext, string $processInstanceId)
+    public function __construct(CommandContext $commandContext, ?string $processInstanceId)
     {
         $this->commandContext = $commandContext;
         $this->processInstanceId = $processInstanceId;

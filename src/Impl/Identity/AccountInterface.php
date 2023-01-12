@@ -9,8 +9,8 @@ interface AccountInterface
     public const NAME_SKYPE = "Skype";
     public const NAME_MAIL = "Mail";
 
-    public function getName(): string;
-    public function getUsername(): string;
-    public function getPassword(): string;
+    public function getName(): ?string;
+    public function getUsername(): ?string;
+    public function getPassword(): ?string;
     public function getDetails(): array;
 }

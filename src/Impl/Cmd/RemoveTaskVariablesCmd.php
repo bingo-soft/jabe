@@ -11,7 +11,7 @@ use Jabe\Impl\Util\EnsureUtil;
 
 class RemoveTaskVariablesCmd extends AbstractRemoveVariableCmd
 {
-    public function __construct(string $taskId, array $variableNames, bool $isLocal)
+    public function __construct(?string $taskId, array $variableNames, bool $isLocal)
     {
         parent__construct($taskId, $variableNames, $isLocal);
     }

@@ -39,7 +39,7 @@ class BatchMonitorJobDeclaration extends JobDeclaration
         return new BatchMonitorJobConfiguration($batch->getId());
     }
 
-    protected function resolveJobDefinitionId(/*BatchEntity*/$batch): string
+    protected function resolveJobDefinitionId(/*BatchEntity*/$batch): ?string
     {
         return $batch->getMonitorJobDefinitionId();
     }

@@ -34,12 +34,12 @@ class ObjectValueImpl extends AbstractTypedValue implements ObjectValueInterface
         }
     }
 
-    public function getSerializationDataFormat(): string
+    public function getSerializationDataFormat(): ?string
     {
         return $this->serializationDataFormat;
     }
 
-    public function setSerializationDataFormat(string $serializationDataFormat): void
+    public function setSerializationDataFormat(?string $serializationDataFormat): void
     {
         $this->serializationDataFormat = $serializationDataFormat;
     }
@@ -49,17 +49,17 @@ class ObjectValueImpl extends AbstractTypedValue implements ObjectValueInterface
         return $this->objectTypeName;
     }
 
-    public function setObjectTypeName(string $objectTypeName): void
+    public function setObjectTypeName(?string $objectTypeName): void
     {
         $this->objectTypeName = $objectTypeName;
     }
 
-    public function getValueSerialized(): string
+    public function getValueSerialized(): ?string
     {
         return $this->serializedValue;
     }
 
-    public function setSerializedValue(string $serializedValue): void
+    public function setSerializedValue(?string $serializedValue): void
     {
         $this->serializedValue = $serializedValue;
     }

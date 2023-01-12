@@ -57,12 +57,12 @@ class CompositeIncidentHandler implements IncidentHandlerInterface
         $this->incidentHandlers->add($incidentHandler);
     }
 
-    public function getIncidentHandlerType(): string
+    public function getIncidentHandlerType(): ?string
     {
         return $this->mainIncidentHandler->getIncidentHandlerType();
     }
 
-    public function handleIncident(IncidentContext $context, string $message): IncidentInterface
+    public function handleIncident(IncidentContext $context, ?string $message): IncidentInterface
     {
         $incident = $this->mainIncidentHandler->handleIncident($context, $message);
         foreach ($this->incidentHandlers as $incidentHandler) {

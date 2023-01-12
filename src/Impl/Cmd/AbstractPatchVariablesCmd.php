@@ -15,7 +15,7 @@ abstract class AbstractPatchVariablesCmd implements CommandInterface, \Serializa
     protected $deletions = [];
     protected $isLocal;
 
-    public function __construct(string $entityId, array $variables, array $deletions, bool $isLocal)
+    public function __construct(?string $entityId, array $variables, array $deletions, bool $isLocal)
     {
         $this->entityId = $entityId;
         $this->variables = $variables;
@@ -31,7 +31,7 @@ abstract class AbstractPatchVariablesCmd implements CommandInterface, \Serializa
         return null;
     }
 
-    protected function getLogEntryOperation(): string
+    protected function getLogEntryOperation(): ?string
     {
         return UserOperationLogEntryInterface::OPERATION_TYPE_MODIFY_VARIABLE;
     }
@@ -41,4 +41,9 @@ abstract class AbstractPatchVariablesCmd implements CommandInterface, \Serializa
     abstract protected function getRemoveVariableCmd(): AbstractRemoveVariableCmd;
 
     abstract protected function logVariableOperation(CommandContext $commandContext): void;
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

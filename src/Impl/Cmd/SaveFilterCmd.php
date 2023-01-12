@@ -46,4 +46,9 @@ class SaveFilterCmd implements CommandInterface, \Serializable
 
         return $savedFilter;
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

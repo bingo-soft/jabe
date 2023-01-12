@@ -16,7 +16,7 @@ class DbEntityManagerFactory implements SessionFactoryInterface
         $this->idGenerator = $idGenerator;
     }
 
-    public function getSessionType(): string
+    public function getSessionType(): ?string
     {
         return DbEntityManager::class;
     }

@@ -34,11 +34,11 @@ class FetchExternalTasksCmd implements CommandInterface
     //protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
     protected $workerId;
-    protected $maxResults;
-    protected $usePriority;
+    protected int $maxResults = 0;
+    protected bool $usePriority = false;
     protected $fetchInstructions = [];
 
-    public function __construct(string $workerId, int $maxResults, array $instructions, ?bool $usePriority = false)
+    public function __construct(?string $workerId, int $maxResults, array $instructions, ?bool $usePriority = false)
     {
         $this->workerId = $workerId;
         $this->maxResults = $maxResults;
@@ -102,12 +102,12 @@ class FetchExternalTasksCmd implements CommandInterface
                 $this->tasks = $tasks;
             }
 
-            public function getEntityType(): string
+            public function getEntityType(): ?string
             {
                 return ExternalTaskEntity::class;
             }
 
-            public function failedOperation(DbOperation $operation): string
+            public function failedOperation(DbOperation $operation): ?string
             {
 
                 if ($operation instanceof DbEntityOperation) {

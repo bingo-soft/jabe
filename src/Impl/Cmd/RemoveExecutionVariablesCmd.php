@@ -11,7 +11,7 @@ use Jabe\Impl\Util\EnsureUtil;
 
 class RemoveExecutionVariablesCmd extends AbstractRemoveVariableCmd
 {
-    public function __construct(string $executionId, array $variableNames, bool $isLocal)
+    public function __construct(?string $executionId, array $variableNames, bool $isLocal)
     {
         parent::__construct($executionId, $variableNames, $isLocal);
     }

@@ -6,13 +6,13 @@ use Jabe\{
     ProcessEngineInterface,
     RepositoryServiceInterface
 };
+use Jabe\Authorization\ResourceInterface;
 use Jabe\Impl\Context\Context;
 use Jabe\Repository\{
     CandidateDeploymentInterface,
     DeploymentInterface,
     DeploymentHandlerInterface,
-    ProcessDefinitionInterface,
-    ResourceInterface
+    ProcessDefinitionInterface
 };
 
 class DefaultDeploymentHandler implements DeploymentHandlerInterface
@@ -31,7 +31,7 @@ class DefaultDeploymentHandler implements DeploymentHandlerInterface
         return $this->resourcesDiffer($newResource, $existingResource);
     }
 
-    public function determineDuplicateDeployment(CandidateDeploymentInterface $candidateDeployment): string
+    public function determineDuplicateDeployment(CandidateDeploymentInterface $candidateDeployment): ?string
     {
         return Context::getCommandContext()
             ->getDeploymentManager()

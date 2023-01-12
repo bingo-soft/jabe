@@ -21,4 +21,9 @@ class HistoricTaskInstanceCountByNameCmd implements CommandInterface
     {
         return $this->scope->executeCountByTaskName($commandContext);
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

@@ -47,12 +47,12 @@ class DeploymentCache
 
     // PROCESS DEFINITION ////////////////////////////////////////////////////////////////////////////////
 
-    public function findProcessDefinitionFromCache(string $processDefinitionId): ?ProcessDefinitionEntity
+    public function findProcessDefinitionFromCache(?string $processDefinitionId): ?ProcessDefinitionEntity
     {
         return $this->processDefinitionEntityCache->findDefinitionFromCache($processDefinitionId);
     }
 
-    public function findDeployedProcessDefinitionById(string $processDefinitionId): ?ProcessDefinitionEntity
+    public function findDeployedProcessDefinitionById(?string $processDefinitionId): ?ProcessDefinitionEntity
     {
         return $this->processDefinitionEntityCache->findDeployedDefinitionById($processDefinitionId);
     }
@@ -62,7 +62,7 @@ class DeploymentCache
      * @throws ProcessEngineException if more than one tenant has a process definition with the given key
      * @see #findDeployedLatestProcessDefinitionByKeyAndTenantId(String, String)
      */
-    public function findDeployedLatestProcessDefinitionByKey(string $processDefinitionKey): ?ProcessDefinitionEntity
+    public function findDeployedLatestProcessDefinitionByKey(?string $processDefinitionKey): ?ProcessDefinitionEntity
     {
         return $this->processDefinitionEntityCache->findDeployedLatestDefinitionByKey($processDefinitionKey);
     }
@@ -70,22 +70,22 @@ class DeploymentCache
     /**
      * @return ProcessDefinitionEntity the latest version of the process definition with the given key and tenant id
      */
-    public function findDeployedLatestProcessDefinitionByKeyAndTenantId(string $processDefinitionKey, string $tenantId): ?ProcessDefinitionEntity
+    public function findDeployedLatestProcessDefinitionByKeyAndTenantId(?string $processDefinitionKey, ?string $tenantId): ?ProcessDefinitionEntity
     {
         return $this->processDefinitionEntityCache->findDeployedLatestDefinitionByKeyAndTenantId($processDefinitionKey, $tenantId);
     }
 
-    public function findDeployedProcessDefinitionByKeyVersionAndTenantId(string $processDefinitionKey, int $processDefinitionVersion, string $tenantId): ?ProcessDefinitionEntity
+    public function findDeployedProcessDefinitionByKeyVersionAndTenantId(?string $processDefinitionKey, int $processDefinitionVersion, ?string $tenantId): ?ProcessDefinitionEntity
     {
         return $this->processDefinitionEntityCache->findDeployedDefinitionByKeyVersionAndTenantId($processDefinitionKey, $processDefinitionVersion, $tenantId);
     }
 
-    public function findDeployedProcessDefinitionByKeyVersionTagAndTenantId(string $processDefinitionKey, string $processDefinitionVersionTag, string $tenantId): ?ProcessDefinitionEntity
+    public function findDeployedProcessDefinitionByKeyVersionTagAndTenantId(?string $processDefinitionKey, ?string $processDefinitionVersionTag, ?string $tenantId): ?ProcessDefinitionEntity
     {
         return $this->processDefinitionEntityCache->findDeployedDefinitionByKeyVersionTagAndTenantId($processDefinitionKey, $processDefinitionVersionTag, $tenantId);
     }
 
-    public function findDeployedProcessDefinitionByDeploymentAndKey(string $deploymentId, string $processDefinitionKey): ?ProcessDefinitionEntity
+    public function findDeployedProcessDefinitionByDeploymentAndKey(?string $deploymentId, ?string $processDefinitionKey): ?ProcessDefinitionEntity
     {
         return $this->processDefinitionEntityCache->findDeployedDefinitionByDeploymentAndKey($deploymentId, $processDefinitionKey);
     }
@@ -105,7 +105,7 @@ class DeploymentCache
         $this->processDefinitionEntityCache->addDefinition($processDefinition);
     }
 
-    public function removeProcessDefinition(string $processDefinitionId): void
+    public function removeProcessDefinition(?string $processDefinitionId): void
     {
         $this->processDefinitionEntityCache->removeDefinitionFromCache($processDefinitionId);
         $this->bpmnModelInstanceCache->remove($processDefinitionId);
@@ -153,7 +153,7 @@ class DeploymentCache
         return caseDefinitionCache->findDeployedDefinitionByKeyVersionAndTenantId(caseDefinitionKey, caseDefinitionVersion, tenantId);
     }
 
-    public CaseDefinitionEntity findDeployedCaseDefinitionByDeploymentAndKey(string $deploymentId, String caseDefinitionKey) {
+    public CaseDefinitionEntity findDeployedCaseDefinitionByDeploymentAndKey(?string $deploymentId, String caseDefinitionKey) {
         return caseDefinitionCache->findDeployedDefinitionByDeploymentAndKey($deploymentId, caseDefinitionKey);
     }
 
@@ -201,7 +201,7 @@ class DeploymentCache
         return decisionDefinitionCache->findDeployedLatestDefinitionByKeyAndTenantId(decisionDefinitionKey, tenantId);
     }
 
-    public DecisionDefinition findDeployedDecisionDefinitionByDeploymentAndKey(string $deploymentId, String decisionDefinitionKey) {
+    public DecisionDefinition findDeployedDecisionDefinitionByDeploymentAndKey(?string $deploymentId, String decisionDefinitionKey) {
         return decisionDefinitionCache->findDeployedDefinitionByDeploymentAndKey($deploymentId, decisionDefinitionKey);
     }
 
@@ -302,7 +302,7 @@ class DeploymentCache
         $this->cacheDeployer->setDeployers($deployers);
     }
 
-    public function removeDeployment(string $deploymentId): void
+    public function removeDeployment(?string $deploymentId): void
     {
         $this->bpmnModelInstanceCache->removeAllDefinitionsByDeploymentId($deploymentId);
         /*if (Context::getProcessEngineConfiguration().isCmmnEnabled()) {
@@ -314,7 +314,7 @@ class DeploymentCache
         }*/
     }
 
-    /*protected function removeAllDecisionRequirementsDefinitionsByDeploymentId(string $deploymentId): void
+    /*protected function removeAllDecisionRequirementsDefinitionsByDeploymentId(?string $deploymentId): void
     {
         // remove all decision requirements definitions for a specific deployment
         List<DecisionRequirementsDefinition> allDefinitionsForDeployment = new DecisionRequirementsDefinitionQueryImpl()

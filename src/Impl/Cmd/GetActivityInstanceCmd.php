@@ -35,7 +35,7 @@ class GetActivityInstanceCmd implements CommandInterface
 {
     protected $processInstanceId;
 
-    public function __construct(string $processInstanceId)
+    public function __construct(?string $processInstanceId)
     {
         $this->processInstanceId = $processInstanceId;
     }
@@ -183,7 +183,7 @@ class GetActivityInstanceCmd implements CommandInterface
         return $processActInst;
     }
 
-    protected function checkGetActivityInstance(string $processInstanceId, CommandContext $commandContext): void
+    protected function checkGetActivityInstance(?string $processInstanceId, CommandContext $commandContext): void
     {
         foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
             $checker->checkReadProcessInstance($processInstanceId);
@@ -200,8 +200,8 @@ class GetActivityInstanceCmd implements CommandInterface
     protected function createActivityInstance(
         PvmExecutionImpl $scopeExecution,
         ScopeImpl $scope,
-        string $activityInstanceId,
-        string $parentActivityInstanceId,
+        ?string $activityInstanceId,
+        ?string $parentActivityInstanceId,
         array $incidentsByExecution
     ): ActivityInstanceImpl {
         $actInst = new ActivityInstanceImpl();
@@ -390,7 +390,7 @@ class GetActivityInstanceCmd implements CommandInterface
         return $nonEventScopeExecutions;
     }
 
-    protected function loadProcessInstance(string $processInstanceId, CommandContext $commandContext): array
+    protected function loadProcessInstance(?string $processInstanceId, CommandContext $commandContext): array
     {
         $result = null;
 
@@ -417,7 +417,7 @@ class GetActivityInstanceCmd implements CommandInterface
         return $result;
     }
 
-    protected function loadFromDb(string $processInstanceId, CommandContext $commandContext): array
+    protected function loadFromDb(?string $processInstanceId, CommandContext $commandContext): array
     {
         $executions = $commandContext->getExecutionManager()->findExecutionsByProcessInstanceId($processInstanceId);
         $processInstance = $commandContext->getExecutionManager()->findExecutionById($processInstanceId);
@@ -486,5 +486,10 @@ class GetActivityInstanceCmd implements CommandInterface
             return $incidents[$id];
         }
         return [];
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

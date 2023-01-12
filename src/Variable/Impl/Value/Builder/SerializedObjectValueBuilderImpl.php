@@ -40,13 +40,13 @@ class SerializedObjectValueBuilderImpl implements SerializedObjectValueBuilderIn
         return $this->variableValue;
     }
 
-    public function objectTypeName(string $typeName): SerializedObjectValueBuilderInterface
+    public function objectTypeName(?string $typeName): SerializedObjectValueBuilderInterface
     {
         $this->variableValue->setObjectTypeName($typeName);
         return $this;
     }
 
-    public function serializedValue(string $value): SerializedObjectValueBuilderInterface
+    public function serializedValue(?string $value): SerializedObjectValueBuilderInterface
     {
         $this->variableValue->setSerializedValue($value);
         return $this;

@@ -20,7 +20,7 @@ class DefaultExternalTaskPriorityProvider extends DefaultPriorityProvider
         //LOG.couldNotDeterminePriority(execution, value, e);
     }
 
-    public function getSpecificPriority(ExecutionEntity $execution, ExternalTaskActivityBehavior $param, string $jobDefinitionId): ?int
+    public function getSpecificPriority(ExecutionEntity $execution, /*ExternalTaskActivityBehavior*/$param, ?string $jobDefinitionId): ?int
     {
         $priorityProvider = $param->getPriorityValueProvider();
         if ($priorityProvider !== null) {
@@ -29,7 +29,7 @@ class DefaultExternalTaskPriorityProvider extends DefaultPriorityProvider
         return null;
     }
 
-    protected function getProcessDefinitionPriority(ExecutionEntity $execution, ExternalTaskActivityBehavior $param): int
+    protected function getProcessDefinitionPriority(ExecutionEntity $execution, /*ExternalTaskActivityBehavior*/$param): ?int
     {
         return $this->getProcessDefinedPriority($execution->getProcessDefinition(), BpmnParse::PROPERTYNAME_TASK_PRIORITY, $execution, "");
     }

@@ -17,7 +17,7 @@ class DeleteHistoricTaskInstanceCmd implements CommandInterface, \Serializable
 {
     protected $taskId;
 
-    public function __construct(string $taskId)
+    public function __construct(?string $taskId)
     {
         $this->taskId = $taskId;
     }
@@ -37,7 +37,7 @@ class DeleteHistoricTaskInstanceCmd implements CommandInterface, \Serializable
 
     public function execute(CommandContext $commandContext)
     {
-        EnsureUtil::ensureNotNull("taskId", $this->taskId);
+        EnsureUtil::ensureNotNull("taskId", "taskId", $this->taskId);
 
         $task = $commandContext->getHistoricTaskInstanceManager()->findHistoricTaskInstanceById($this->taskId);
 
@@ -66,5 +66,10 @@ class DeleteHistoricTaskInstanceCmd implements CommandInterface, \Serializable
                 $historicTask,
                 $propertyChanges
             );
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

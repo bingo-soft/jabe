@@ -12,11 +12,14 @@ use Jabe\Variable\Type\{
     ValueTypeInterface,
     ValueType
 };
-use Jabe\Variable\Value\ObjectValueInterface;
+use Jabe\Variable\Value\{
+    ObjectValueInterface,
+    TypedValueInterface
+};
 
 abstract class AbstractObjectValueSerializer extends AbstractSerializableValueSerializer
 {
-    public function __construct(string $serializationDataFormat)
+    public function __construct(?string $serializationDataFormat)
     {
         parent::__construct(ValueType::getObject(), $serializationDataFormat);
     }
@@ -27,14 +30,14 @@ abstract class AbstractObjectValueSerializer extends AbstractSerializableValueSe
         return Variables::objectValue($untypedValue->getValue(), $untypedValue->isTransient())->create();
     }
 
-    protected function writeToValueFields(ObjectValueInterface $value, ValueFieldsInterface $valueFields, string $serializedValue): void
+    protected function writeToValueFields(/*ObjectValueInterface*/$value, ValueFieldsInterface $valueFields, ?string $serializedValue): void
     {
         $objectTypeName = $this->getObjectTypeName($value, $valueFields);
         $valueFields->setByteArrayValue($serializedValue);
         $valueFields->setTextValue2($objectTypeName);
     }
 
-    protected function getObjectTypeName(ObjectValueInterface $value, ValueFieldsInterface $valueFields): string
+    protected function getObjectTypeName(ObjectValueInterface $value, ValueFieldsInterface $valueFields): ?string
     {
         $objectTypeName = $value->getObjectTypeName();
 
@@ -50,7 +53,7 @@ abstract class AbstractObjectValueSerializer extends AbstractSerializableValueSe
         return $objectTypeName;
     }
 
-    protected function updateTypedValue(ObjectValueInterface $value, string $serializedStringValue): void
+    protected function updateTypedValue(/*ObjectValueInterface*/$value, ?string $serializedStringValue): void
     {
         $objectTypeName = $this->getObjectTypeName($value, null);
         $objectValue = $value;
@@ -61,7 +64,7 @@ abstract class AbstractObjectValueSerializer extends AbstractSerializableValueSe
 
     protected function createDeserializedValue(
         $deserializedObject,
-        string $serializedStringValue,
+        ?string $serializedStringValue,
         ValueFieldsInterface $valueFields,
         bool $asTransientValue
     ): ObjectValueInterface {
@@ -73,7 +76,7 @@ abstract class AbstractObjectValueSerializer extends AbstractSerializableValueSe
 
 
     protected function createSerializedValue(
-        string $serializedStringValue,
+        ?string $serializedStringValue,
         ValueFieldsInterface $valueFields,
         bool $asTransientValue
     ): ObjectValueInterface {
@@ -83,12 +86,12 @@ abstract class AbstractObjectValueSerializer extends AbstractSerializableValueSe
         return $objectValue;
     }
 
-    protected function readObjectNameFromFields(ValueFieldsInterface $valueFields): string
+    protected function readObjectNameFromFields(ValueFieldsInterface $valueFields): ?string
     {
         return $valueFields->getTextValue2();
     }
 
-    public function isMutableValue(ObjectValueInterface $typedValue): bool
+    public function isMutableValue(TypedValueInterface $typedValue): bool
     {
         return $typedValue->isDeserialized();
     }
@@ -101,7 +104,7 @@ abstract class AbstractObjectValueSerializer extends AbstractSerializableValueSe
      * @param deserializedObject. Guaranteed not to be null
      * @return string the type name fot the object.
      */
-    abstract protected function getTypeNameForDeserialized($deserializedObject): string;
+    abstract protected function getTypeNameForDeserialized($deserializedObject): ?string;
 
     /**
      * Implementations must return a byte[] representation of the provided object.
@@ -111,7 +114,7 @@ abstract class AbstractObjectValueSerializer extends AbstractSerializableValueSe
      * @return string the byte array value of the object
      * @throws exception in case the object cannot be serialized
      */
-    abstract protected function serializeToByteArray($deserializedObject): string;
+    abstract protected function serializeToByteArray($deserializedObject): ?string;
 
     /**
      * Deserialize the object from a byte array.
@@ -121,7 +124,7 @@ abstract class AbstractObjectValueSerializer extends AbstractSerializableValueSe
      * @return mixed the deserialized object
      * @throws exception in case the object cannot be deserialized
      */
-    abstract protected function deserializeFromByteArray(string $object, string $objectTypeName);
+    abstract protected function deserializeFromByteArray(?string $object, /*string*/$objectTypeName);
 
     /**
      * Return true if the serialization is text based. Return false otherwise

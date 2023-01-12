@@ -14,8 +14,8 @@ class CallableElementParameter
 {
     protected $sourceValueProvider;
     protected $target;
-    protected $allVariables = false;
-    protected $readLocal = false;
+    protected bool $allVariables = false;
+    protected bool $readLocal = false;
 
     public function getSource(VariableScopeInterface $variableScope)
     {
@@ -53,12 +53,12 @@ class CallableElementParameter
         $this->sourceValueProvider = $source;
     }
 
-    public function getTarget(): string
+    public function getTarget(): ?string
     {
         return $this->target;
     }
 
-    public function setTarget(string $target): void
+    public function setTarget(?string $target): void
     {
         $this->target = $target;
     }

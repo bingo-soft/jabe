@@ -13,7 +13,7 @@ use Jabe\Repository\{
 class ProcessApplicationDeploymentBuilderImpl extends DeploymentBuilderImpl implements ProcessApplicationDeploymentBuilderInterface
 {
     protected $processApplicationReference;
-    protected $isResumePreviousVersions = false;
+    protected bool $isResumePreviousVersions = false;
     protected $resumePreviousVersionsBy = ResumePreviousBy::RESUME_BY_PROCESS_DEFINITION_KEY;
 
     public function __construct(RepositoryServiceImpl $repositoryService, ProcessApplicationReferenceInterface $reference)
@@ -29,7 +29,7 @@ class ProcessApplicationDeploymentBuilderImpl extends DeploymentBuilderImpl impl
         return $this;
     }
 
-    public function resumePreviousVersionsBy(string $resumePreviousVersionsBy): ProcessApplicationDeploymentBuilderInterface
+    public function resumePreviousVersionsBy(?string $resumePreviousVersionsBy): ProcessApplicationDeploymentBuilderInterface
     {
         $this->resumePreviousVersionsBy = $resumePreviousVersionsBy;
         return $this;
@@ -46,7 +46,7 @@ class ProcessApplicationDeploymentBuilderImpl extends DeploymentBuilderImpl impl
         return $this->processApplicationReference;
     }
 
-    public function getResumePreviousVersionsBy(): string
+    public function getResumePreviousVersionsBy(): ?string
     {
         return $this->resumePreviousVersionsBy;
     }

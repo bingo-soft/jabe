@@ -13,7 +13,7 @@ use Jabe\Impl\Util\ClassNameUtil;
 class AttachmentEntity implements AttachmentInterface, DbEntityInterface, HasDbRevisionInterface, HistoricEntityInterface, \Serializable
 {
     protected $id;
-    protected $revision;
+    protected int $revision = 0;
     protected $name;
     protected $description;
     protected $type;
@@ -45,12 +45,12 @@ class AttachmentEntity implements AttachmentInterface, DbEntityInterface, HasDbR
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }
@@ -60,12 +60,12 @@ class AttachmentEntity implements AttachmentInterface, DbEntityInterface, HasDbR
         $this->revision = $revision;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
@@ -75,47 +75,47 @@ class AttachmentEntity implements AttachmentInterface, DbEntityInterface, HasDbR
         return $this->description;
     }
 
-    public function setDescription(string $description): void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function setType(string $type): void
+    public function setType(?string $type): void
     {
         $this->type = $type;
     }
 
-    public function getTaskId(): string
+    public function getTaskId(): ?string
     {
         return $this->taskId;
     }
 
-    public function setTaskId(string $taskId): void
+    public function setTaskId(?string $taskId): void
     {
         $this->taskId = $taskId;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
 
-    public function setProcessInstanceId(string $processInstanceId): void
+    public function setProcessInstanceId(?string $processInstanceId): void
     {
         $this->processInstanceId = $processInstanceId;
     }
 
-    public function getUrl(): string
+    public function getUrl(): ?string
     {
         return $this->url;
     }
 
-    public function setUrl(string $url): void
+    public function setUrl(?string $url): void
     {
         $this->url = $url;
     }
@@ -125,7 +125,7 @@ class AttachmentEntity implements AttachmentInterface, DbEntityInterface, HasDbR
         return $this->contentId;
     }
 
-    public function setContentId(string $contentId): void
+    public function setContentId(?string $contentId): void
     {
         $this->contentId = $contentId;
     }
@@ -150,32 +150,32 @@ class AttachmentEntity implements AttachmentInterface, DbEntityInterface, HasDbR
         $this->tenantId = $tenantId;
     }
 
-    public function getCreateTime(): string
+    public function getCreateTime(): ?string
     {
         return $this->createTime;
     }
 
-    public function setCreateTime(string $createTime): void
+    public function setCreateTime(?string $createTime): void
     {
         $this->createTime = $createTime;
     }
 
-    public function getRootProcessInstanceId(): string
+    public function getRootProcessInstanceId(): ?string
     {
         return $this->rootProcessInstanceId;
     }
 
-    public function getRemovalTime(): string
+    public function getRemovalTime(): ?string
     {
         return $this->removalTime;
     }
 
-    public function setRemovalTime(string $removalTime): void
+    public function setRemovalTime(?string $removalTime): void
     {
         $this->removalTime = $removalTime;
     }
 
-    public function setRootProcessInstanceId(string $rootProcessInstanceId): void
+    public function setRootProcessInstanceId(?string $rootProcessInstanceId): void
     {
         $this->rootProcessInstanceId = $rootProcessInstanceId;
     }

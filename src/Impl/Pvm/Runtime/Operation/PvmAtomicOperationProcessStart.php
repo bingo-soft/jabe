@@ -13,7 +13,7 @@ use Jabe\Impl\Pvm\Runtime\{
 
 class PvmAtomicOperationProcessStart extends AbstractPvmEventAtomicOperation
 {
-    public function isAsync(PvmExecutionImpl $execution): bool
+    public function isAsync(CoreExecution $execution): bool
     {
         return $execution->getActivity()->isAsyncBefore();
     }
@@ -28,7 +28,7 @@ class PvmAtomicOperationProcessStart extends AbstractPvmEventAtomicOperation
         return $execution->getProcessDefinition();
     }
 
-    protected function getEventName(): string
+    protected function getEventName(): ?string
     {
         return ExecutionListenerInterface::EVENTNAME_START;
     }
@@ -64,7 +64,7 @@ class PvmAtomicOperationProcessStart extends AbstractPvmEventAtomicOperation
         }, $execution);
     }
 
-    public function getCanonicalName(): string
+    public function getCanonicalName(): ?string
     {
         return "process-start";
     }

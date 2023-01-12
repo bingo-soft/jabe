@@ -138,6 +138,18 @@ class CorrelateAllMessageBatchCmd implements CommandInterface
         $propChanges[] = new PropertyChange("async", null, true);
 
         $commandContext->getOperationLogManager()
-            ->logProcessInstanceOperation(UserOperationLogEntryInterface::OPERATION_TYPE_CORRELATE_MESSAGE, $propChanges);
+            ->logProcessInstanceOperation(
+                UserOperationLogEntryInterface::OPERATION_TYPE_CORRELATE_MESSAGE,
+                null,
+                null,
+                null,
+                $propChanges,
+                null
+            );
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

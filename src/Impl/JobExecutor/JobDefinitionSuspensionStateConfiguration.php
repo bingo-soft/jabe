@@ -21,7 +21,7 @@ class JobDefinitionSuspensionStateConfiguration implements JobHandlerConfigurati
     protected $isTenantIdSet;
     protected $by;
 
-    public function toCanonicalString(): string
+    public function toCanonicalString(): ?string
     {
         $json = [];
         $json[self::JOB_HANDLER_CFG_BY] = $this->by;
@@ -98,7 +98,7 @@ class JobDefinitionSuspensionStateConfiguration implements JobHandlerConfigurati
         return $config;
     }
 
-    public static function byJobDefinitionId(string $jobDefinitionId, bool $includeJobs): JobDefinitionSuspensionStateConfiguration
+    public static function byJobDefinitionId(?string $jobDefinitionId, bool $includeJobs): JobDefinitionSuspensionStateConfiguration
     {
         $configuration = new JobDefinitionSuspensionStateConfiguration();
         $configuration->by = self::JOB_HANDLER_CFG_JOB_DEFINITION_ID;
@@ -108,7 +108,7 @@ class JobDefinitionSuspensionStateConfiguration implements JobHandlerConfigurati
         return $configuration;
     }
 
-    public static function byProcessDefinitionId(string $processDefinitionId, bool $includeJobs): JobDefinitionSuspensionStateConfiguration
+    public static function byProcessDefinitionId(?string $processDefinitionId, bool $includeJobs): JobDefinitionSuspensionStateConfiguration
     {
         $configuration = new JobDefinitionSuspensionStateConfiguration();
 
@@ -119,7 +119,7 @@ class JobDefinitionSuspensionStateConfiguration implements JobHandlerConfigurati
         return $configuration;
     }
 
-    public static function byProcessDefinitionKey(string $processDefinitionKey, bool $includeJobs): JobDefinitionSuspensionStateConfiguration
+    public static function byProcessDefinitionKey(?string $processDefinitionKey, bool $includeJobs): JobDefinitionSuspensionStateConfiguration
     {
         $configuration = new JobDefinitionSuspensionStateConfiguration();
 
@@ -130,7 +130,7 @@ class JobDefinitionSuspensionStateConfiguration implements JobHandlerConfigurati
         return $configuration;
     }
 
-    public static function byProcessDefinitionKeyAndTenantId(string $processDefinitionKey, ?string $tenantId, bool $includeProcessInstances): JobDefinitionSuspensionStateConfiguration
+    public static function byProcessDefinitionKeyAndTenantId(?string $processDefinitionKey, ?string $tenantId, bool $includeProcessInstances): JobDefinitionSuspensionStateConfiguration
     {
         $configuration = self::byProcessDefinitionKey($processDefinitionKey, $includeProcessInstances);
 

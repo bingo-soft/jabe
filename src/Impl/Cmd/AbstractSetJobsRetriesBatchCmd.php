@@ -24,7 +24,7 @@ use Jabe\Impl\Util\EnsureUtil;
 
 abstract class AbstractSetJobsRetriesBatchCmd implements CommandInterface
 {
-    protected $retries;
+    protected int $retries = 0;
 
     public function execute(CommandContext $commandContext)
     {
@@ -85,5 +85,10 @@ abstract class AbstractSetJobsRetriesBatchCmd implements CommandInterface
     public function getConfiguration(BatchElementConfiguration $elementConfiguration): BatchConfiguration
     {
         return new SetRetriesBatchConfiguration($elementConfiguration->getIds(), $elementConfiguration->getMappings(), $this->retries);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

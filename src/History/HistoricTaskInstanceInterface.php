@@ -8,64 +8,64 @@ interface HistoricTaskInstanceInterface
      * The unique identifier of this historic task instance. This is the same identifier as the
      * runtime Task instance.
      */
-    public function getId(): string;
+    public function getId(): ?string;
 
     /** Process definition key reference. */
-    public function getProcessDefinitionKey(): string;
+    public function getProcessDefinitionKey(): ?string;
 
     /** Process definition reference. */
-    public function getProcessDefinitionId(): string;
+    public function getProcessDefinitionId(): ?string;
 
     /** Root process instance reference. */
-    public function getRootProcessInstanceId(): string;
+    public function getRootProcessInstanceId(): ?string;
 
     /** Process instance reference. */
-    public function getProcessInstanceId(): string;
+    public function getProcessInstanceId(): ?string;
 
     /** Execution reference. */
-    public function getExecutionId(): string;
+    public function getExecutionId(): ?string;
 
     /** Activity instance reference. */
-    public function getActivityInstanceId(): string;
+    public function getActivityInstanceId(): ?string;
 
     /** The latest name given to this task. */
-    public function getName(): string;
+    public function getName(): ?string;
 
     /** The latest description given to this task. */
     public function getDescription(): ?string;
 
     /** The reason why this task was deleted {'completed' | 'deleted' | any other user defined string }. */
-    public function getDeleteReason(): string;
+    public function getDeleteReason(): ?string;
 
     /** Task owner */
-    public function getOwner(): string;
+    public function getOwner(): ?string;
 
     /** The latest assignee given to this task. */
-    public function getAssignee(): string;
+    public function getAssignee(): ?string;
 
     /** Time when the task started. */
-    public function getStartTime(): string;
+    public function getStartTime(): ?string;
 
     /** Time when the task was deleted or completed. */
-    public function getEndTime(): string;
+    public function getEndTime(): ?string;
 
     /** Difference between {@link #getEndTime()} and {@link #getStartTime()} in milliseconds.  */
-    public function getDurationInMillis(): int;
+    public function getDurationInMillis(): ?int;
 
     /** Task definition key. */
-    public function getTaskDefinitionKey(): string;
+    public function getTaskDefinitionKey(): ?string;
 
     /** Task priority **/
-    public function getPriority(): string;
+    public function getPriority(): int;
 
     /** Task due date **/
-    public function getDueDate(): string;
+    public function getDueDate(): ?string;
 
     /** The parent task of this task, in case this task was a subtask */
     public function getParentTaskId(): ?string;
 
     /** Task follow-up date */
-    public function getFollowUpDate(): string;
+    public function getFollowUpDate(): ?string;
 
     /**
      * The id of the tenant this historic task instance belongs to. Can be <code>null</code>
@@ -74,5 +74,5 @@ interface HistoricTaskInstanceInterface
     public function getTenantId(): ?string;
 
     /** The time the historic task instance will be removed. */
-    public function getRemovalTime(): string;
+    public function getRemovalTime(): ?string;
 }

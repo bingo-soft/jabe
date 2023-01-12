@@ -11,7 +11,7 @@ class TimerSuspendProcessDefinitionHandler extends TimerChangeProcessDefinitionS
 {
     public const TYPE = "suspend-processdefinition";
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return self::TYPE;
     }

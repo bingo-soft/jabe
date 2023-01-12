@@ -93,7 +93,7 @@ class ResourceTypeUtil
      * Returns a Permission based on the specified <code>permissionName</code> and <code>resourceType</code>
      * @throws BadUserRequestException in case the permission is not valid for the specified resource type
      */
-    public static function getPermissionByNameAndResourceType(string $permissionName, int $resourceType): PermissionInterface
+    public static function getPermissionByNameAndResourceType(?string $permissionName, int $resourceType): PermissionInterface
     {
         foreach (self::getPermissionsByResourceType($resourceType) as $permission) {
             if ($permission->getName() == $permissionName) {

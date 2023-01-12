@@ -8,7 +8,7 @@ use Jabe\Impl\Persistence\Entity\PropertyChange;
 
 class DeleteGroupIdentityLinkCmd extends DeleteIdentityLinkCmd
 {
-    public function __construct(string $taskId, string $groupId, string $type)
+    public function __construct(?string $taskId, ?string $groupId, ?string $type)
     {
         parent::__construct($taskId, null, $groupId, $type);
     }

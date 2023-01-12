@@ -95,7 +95,7 @@ class DefaultFailedJobParseListener extends AbstractBpmnParseListener
 
     public function parseScriptTask(Element $scriptTaskElement, ScopeImpl $scope, ActivityImpl $activity): void
     {
-        $this->parseActivity(scriptTaskElement, activity);
+        $this->parseActivity($scriptTaskElement, $activity);
     }
 
     public function parseServiceTask(Element $serviceTaskElement, ScopeImpl $scope, ActivityImpl $activity): void

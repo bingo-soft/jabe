@@ -11,19 +11,19 @@ class MessageCorrelationBatchConfiguration extends BatchConfiguration
 {
     protected $messageName;
 
-    public function __construct(array $ids, ?DeploymentMappings $mappings, string $messageName, string $batchId = null)
+    public function __construct(array $ids, ?DeploymentMappings $mappings, ?string $messageName, ?string $batchId = null)
     {
         parent::__construct($ids, $mappings);
         $this->messageName = $messageName;
         $this->batchId = $batchId;
     }
 
-    public function getMessageName(): string
+    public function getMessageName(): ?string
     {
         return $this->messageName;
     }
 
-    public function setMessageName(string $messageName): void
+    public function setMessageName(?string $messageName): void
     {
         $this->messageName = $messageName;
     }

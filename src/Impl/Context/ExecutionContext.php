@@ -24,7 +24,7 @@ class ExecutionContext extends CoreExecutionContext
         return $this->execution->getProcessDefinition();
     }
 
-    protected function getDeploymentId(): string
+    protected function getDeploymentId(): ?string
     {
         return $this->getProcessDefinition()->getDeploymentId();
     }

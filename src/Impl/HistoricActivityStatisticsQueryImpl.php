@@ -25,7 +25,7 @@ class HistoricActivityStatisticsQueryImpl extends AbstractQuery implements Histo
 
     protected $processInstanceIds = [];
 
-    public function __construct(string $processDefinitionId, CommandExecutorInterface $commandExecutor)
+    public function __construct(?string $processDefinitionId, CommandExecutorInterface $commandExecutor)
     {
         parent::__construct($commandExecutor);
         $this->processDefinitionId = $processDefinitionId;
@@ -55,25 +55,25 @@ class HistoricActivityStatisticsQueryImpl extends AbstractQuery implements Histo
         return $this;
     }
 
-    public function startedAfter(string $date): HistoricActivityStatisticsQueryInterface
+    public function startedAfter(?string $date): HistoricActivityStatisticsQueryInterface
     {
         $this->startedAfter = $date;
         return $this;
     }
 
-    public function startedBefore(string $date): HistoricActivityStatisticsQueryInterface
+    public function startedBefore(?string $date): HistoricActivityStatisticsQueryInterface
     {
         $this->startedBefore = $date;
         return $this;
     }
 
-    public function finishedAfter(string $date): HistoricActivityStatisticsQueryInterface
+    public function finishedAfter(?string $date): HistoricActivityStatisticsQueryInterface
     {
         $this->finishedAfter = $date;
         return $this;
     }
 
-    public function finishedBefore(string $date): HistoricActivityStatisticsQueryInterface
+    public function finishedBefore(?string $date): HistoricActivityStatisticsQueryInterface
     {
         $this->finishedBefore = $date;
         return $this;
@@ -100,7 +100,7 @@ class HistoricActivityStatisticsQueryImpl extends AbstractQuery implements Histo
             ->getHistoricStatisticsCountGroupedByActivity($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         return
@@ -117,7 +117,7 @@ class HistoricActivityStatisticsQueryImpl extends AbstractQuery implements Histo
 
     // getters /////////////////////////////////////////////////
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }

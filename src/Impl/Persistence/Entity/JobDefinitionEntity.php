@@ -12,7 +12,7 @@ use Jabe\Management\JobDefinitionInterface;
 class JobDefinitionEntity implements JobDefinitionInterface, HasDbRevisionInterface, HasDbReferencesInterface, DbEntityInterface, \Serializable
 {
     protected $id;
-    protected $revision;
+    protected int $revision = 0;
 
     protected $processDefinitionId;
     protected $processDefinitionKey;
@@ -109,12 +109,12 @@ class JobDefinitionEntity implements JobDefinitionInterface, HasDbRevisionInterf
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }
@@ -129,52 +129,52 @@ class JobDefinitionEntity implements JobDefinitionInterface, HasDbRevisionInterf
         return SuspensionStateImpl::suspended()->getStateCode() == $this->suspensionState;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function setProcessDefinitionId(string $processDefinitionId): void
+    public function setProcessDefinitionId(?string $processDefinitionId): void
     {
         $this->processDefinitionId = $processDefinitionId;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
 
-    public function setActivityId(string $activityId): void
+    public function setActivityId(?string $activityId): void
     {
         $this->activityId = $activityId;
     }
 
-    public function getJobType(): string
+    public function getJobType(): ?string
     {
         return $this->jobType;
     }
 
-    public function setJobType(string $jobType): void
+    public function setJobType(?string $jobType): void
     {
         $this->jobType = $jobType;
     }
 
-    public function getJobConfiguration(): string
+    public function getJobConfiguration(): ?string
     {
         return $this->jobConfiguration;
     }
 
-    public function setJobConfiguration(string $jobConfiguration): void
+    public function setJobConfiguration(?string $jobConfiguration): void
     {
         $this->jobConfiguration = $jobConfiguration;
     }
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }
 
-    public function setProcessDefinitionKey(string $processDefinitionKey): void
+    public function setProcessDefinitionKey(?string $processDefinitionKey): void
     {
         $this->processDefinitionKey = $processDefinitionKey;
     }
@@ -214,7 +214,7 @@ class JobDefinitionEntity implements JobDefinitionInterface, HasDbRevisionInterf
         return $this->deploymentId;
     }
 
-    public function setDeploymentId(string $deploymentId): void
+    public function setDeploymentId(?string $deploymentId): void
     {
         $this->deploymentId = $deploymentId;
     }
@@ -229,5 +229,10 @@ class JobDefinitionEntity implements JobDefinitionInterface, HasDbRevisionInterf
     {
         $referenceIdAndClass = [];
         return $referenceIdAndClass;
+    }
+
+    public function getDependentEntities(): array
+    {
+        return [];
     }
 }

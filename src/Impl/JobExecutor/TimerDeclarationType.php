@@ -14,7 +14,7 @@ class TimerDeclarationType
     public const DURATION = DurationBusinessCalendar::NAME;
     public const CYCLE = CycleBusinessCalendar::NAME;
 
-    public static function calendarName(string $type): ?string
+    public static function calendarName(?string $type): ?string
     {
         switch (strtolower($type)) {
             case 'date':

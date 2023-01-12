@@ -62,7 +62,7 @@ class BindingImpl extends RootElementImpl implements BindingInterface
         return self::$nameAttribute->getValue($this);
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         self::$nameAttribute->setValue($this, $name);
     }
@@ -72,7 +72,7 @@ class BindingImpl extends RootElementImpl implements BindingInterface
         return self::$typeAttribute->getValue($this);
     }
 
-    public function setType(string $type): void
+    public function setType(?string $type): void
     {
         self::$typeAttribute->setValue($this, $type);
     }

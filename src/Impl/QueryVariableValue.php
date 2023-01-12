@@ -16,7 +16,7 @@ class QueryVariableValue implements \Serializable
     protected $variableNameIgnoreCase;
     protected $variableValueIgnoreCase;
 
-    public function __construct(string $name, $value, string $operator, bool $local, ?bool $variableNameIgnoreCase = false, ?bool $variableValueIgnoreCase = false)
+    public function __construct(?string $name, $value, ?string $operator, bool $local, ?bool $variableNameIgnoreCase = false, ?bool $variableValueIgnoreCase = false)
     {
         $this->name = $name;
         $this->value = Variables::untypedValue($value);
@@ -26,7 +26,7 @@ class QueryVariableValue implements \Serializable
         $this->variableValueIgnoreCase = $variableValueIgnoreCase;
     }
 
-    public function initialize(VariableSerializersInterface $serializers, string $dbType): void
+    public function initialize(VariableSerializersInterface $serializers, ?string $dbType): void
     {
         if ($this->value->getType() !== null && $this->value->getType()->isAbstract()) {
             $this->valueCondition = new CompositeQueryVariableValueCondition($this);
@@ -42,12 +42,12 @@ class QueryVariableValue implements \Serializable
         return $this->valueCondition->getDisjunctiveConditions();
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getOperator(): string
+    public function getOperator(): ?string
     {
         if ($this->operator !== null) {
             return $this->operator;
@@ -55,7 +55,7 @@ class QueryVariableValue implements \Serializable
         return QueryOperator::EQUALS;
     }
 
-    public function getOperatorName(): string
+    public function getOperatorName(): ?string
     {
         return $this->getOperator();
     }

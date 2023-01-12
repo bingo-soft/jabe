@@ -4,21 +4,21 @@ namespace Jabe\Delegate;
 
 interface DelegateCaseExecutionInterface extends BaseDelegateExecutionInterface, ProcessEngineServicesAwareInterface, CmmnModelExecutionContextInterface
 {
-    public function getId(): string;
+    public function getId(): ?string;
 
-    public function getCaseInstanceId(): string;
+    public function getCaseInstanceId(): ?string;
 
-    public function getEventName(): string;
+    public function getEventName(): ?string;
 
-    public function getCaseBusinessKey(): string;
+    public function getCaseBusinessKey(): ?string;
 
-    public function getCaseDefinitionId(): string;
+    public function getCaseDefinitionId(): ?string;
 
     public function getParentId(): ?string;
 
-    public function getActivityId(): string;
+    public function getActivityId(): ?string;
 
-    public function getActivityName(): string;
+    public function getActivityName(): ?string;
 
     public function getTenantId(): ?string;
 

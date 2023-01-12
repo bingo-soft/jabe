@@ -13,7 +13,7 @@ class OptimizeCompletedHistoricProcessInstanceQueryCmd implements CommandInterfa
     protected $finishedAt;
     protected $maxResults;
 
-    public function __construct(string $finishedAfter, string $finishedAt, int $maxResults)
+    public function __construct(?string $finishedAfter, ?string $finishedAt, int $maxResults)
     {
         $this->finishedAfter = $finishedAfter;
         $this->finishedAt = $finishedAt;
@@ -23,5 +23,10 @@ class OptimizeCompletedHistoricProcessInstanceQueryCmd implements CommandInterfa
     public function execute(CommandContext $commandContext)
     {
         return $commandContext->getOptimizeManager()->getCompletedHistoricProcessInstances($this->finishedAfter, $this->finishedAt, $this->maxResults);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

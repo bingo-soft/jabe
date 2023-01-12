@@ -9,7 +9,7 @@ use Jabe\Impl\Context\Context;
 
 class QueryMaxResultsLimitUtil
 {
-    public static function checkMaxResultsLimit(int $resultsCount, int $maxResultsLimit = null, bool $isUserAuthenticated = null): void
+    public static function checkMaxResultsLimit(?int $resultsCount, int $maxResultsLimit = null, bool $isUserAuthenticated = null): void
     {
         if ($maxResultsLimit === null && $isUserAuthenticated === null) {
             $processEngineConfiguration = Context::getProcessEngineConfiguration();
@@ -48,5 +48,10 @@ class QueryMaxResultsLimitUtil
         } else {
             return $currentAuthentication->getUserId();
         }
+    }
+
+    protected static function getMaxResultsLimit(ProcessEngineConfigurationImpl $processEngineConfig): int
+    {
+        return $processEngineConfig->getQueryMaxResultsLimit();
     }
 }

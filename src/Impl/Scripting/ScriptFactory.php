@@ -6,7 +6,7 @@ use Jabe\Delegate\ExpressionInterface;
 
 class ScriptFactory
 {
-    public function createScriptFromResource(string $language, $resource): ExecutableScript
+    public function createScriptFromResource(?string $language, $resource): ExecutableScript
     {
         if ($resource instanceof ExpressionInterface) {
             return new DynamicResourceExecutableScript($language, $resource);
@@ -14,7 +14,7 @@ class ScriptFactory
         return new ResourceExecutableScript($language, $resource);
     }
 
-    public function createScriptFromSource(string $language, $source): ExecutableScript
+    public function createScriptFromSource(?string $language, $source): ExecutableScript
     {
         if ($source instanceof ExpressionInterface) {
             return new DynamicSourceExecutableScript($language, $source);

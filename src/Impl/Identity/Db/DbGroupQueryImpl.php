@@ -25,7 +25,7 @@ class DbGroupQueryImpl extends GroupQueryImpl
         return $identityProvider->findGroupCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         $identityProvider = $this->getIdentityProvider($commandContext);

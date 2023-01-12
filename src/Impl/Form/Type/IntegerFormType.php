@@ -13,7 +13,7 @@ class IntegerFormType extends SimpleFormFieldType
 {
     public const TYPE_NAME = "int";
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return self::TYPE_NAME;
     }

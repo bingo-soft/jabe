@@ -12,10 +12,10 @@ interface MigrationPlanInterface
     /**
      * @return string the id of the process definition that is migrated from
      */
-    public function getSourceProcessDefinitionId(): string;
+    public function getSourceProcessDefinitionId(): ?string;
 
     /**
      * @return string the id of the process definition that is migrated to
      */
-    public function getTargetProcessDefinitionId(): string;
+    public function getTargetProcessDefinitionId(): ?string;
 }

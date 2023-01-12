@@ -8,7 +8,7 @@ abstract class AbstractPermissions implements PermissionInterface
 {
     use PermissionTrait;
 
-    public function __construct(string $name)
+    public function __construct(?string $name)
     {
         $ref = new \ReflectionClass(__CLASS__);
         $constants = $ref->getConstants();

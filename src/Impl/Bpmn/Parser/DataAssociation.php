@@ -16,7 +16,7 @@ class DataAssociation
 
     protected $businessKeyExpression;
 
-    protected function __construct($source, string $target, string $variables = null, ExpressionInterface $businessKeyExpression = null)
+    public function __construct($source, ?string $target, ?string $variables = null, ExpressionInterface $businessKeyExpression = null)
     {
         if (is_string($source)) {
             $this->source = $source;

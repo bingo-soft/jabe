@@ -18,5 +18,5 @@ interface ProcessApplicationServiceInterface
      *
      * @return ProcessApplicationInfoInterface the object or null if no such process application is deployed.
      */
-    public function getProcessApplicationInfo(string $processApplicationName): ProcessApplicationInfoInterface;
+    public function getProcessApplicationInfo(?string $processApplicationName): ProcessApplicationInfoInterface;
 }

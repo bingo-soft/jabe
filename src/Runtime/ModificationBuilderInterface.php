@@ -25,7 +25,7 @@ interface ModificationBuilderInterface
      * @param activityId the activity for which all instances should be cancelled
      * @param cancelCurrentActiveActivityInstances
      */
-    public function cancelAllForActivity(string $activityId, ?bool $cancelCurrentActiveActivityInstances): ModificationBuilderInterface;
+    public function cancelAllForActivity(?string $activityId, ?bool $cancelCurrentActiveActivityInstances): ModificationBuilderInterface;
 
     /**
      * @param processInstanceIds the process instance ids to modify.
@@ -49,7 +49,7 @@ interface ModificationBuilderInterface
     public function skipIoMappings(): ModificationBuilderInterface;
 
     /** Provides annotation for the current modification. */
-    public function setAnnotation(string $annotation): ModificationBuilderInterface;
+    public function setAnnotation(?string $annotation): ModificationBuilderInterface;
 
     /**
      * Execute the modification synchronously.

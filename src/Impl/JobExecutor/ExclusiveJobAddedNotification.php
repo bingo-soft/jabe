@@ -14,7 +14,7 @@ class ExclusiveJobAddedNotification implements TransactionListenerInterface
     protected $jobId;
     protected $jobExecutorContext;
 
-    public function __construct(string $jobId, JobExecutorContext $jobExecutorContext)
+    public function __construct(?string $jobId, JobExecutorContext $jobExecutorContext)
     {
         $this->jobId = $jobId;
         $this->jobExecutorContext = $jobExecutorContext;

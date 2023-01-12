@@ -4,7 +4,7 @@ namespace Jabe\Impl\Form\Validator;
 
 class MinLengthValidator extends AbstractTextValueValidator
 {
-    protected function validateString(string $submittedValue, string $configuration): bool
+    protected function validateString(?string $submittedValue, ?string $configuration): bool
     {
         $maxLength = null;
         try {

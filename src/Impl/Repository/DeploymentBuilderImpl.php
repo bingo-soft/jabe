@@ -37,8 +37,8 @@ class DeploymentBuilderImpl implements DeploymentBuilderInterface, \Serializable
 
     protected $repositoryService;
     protected $deployment;
-    protected $isDuplicateFilterEnabled = false;
-    protected $deployChangedOnly = false;
+    protected bool $isDuplicateFilterEnabled = false;
+    protected bool $deployChangedOnly = false;
     protected $processDefinitionsActivationDate;
 
     protected $nameFromDeployment;
@@ -79,7 +79,7 @@ class DeploymentBuilderImpl implements DeploymentBuilderInterface, \Serializable
         $this->deploymentResourcesByName = $json->deploymentResourcesByName;
     }
 
-    public function addInputStream(string $resourceName, $inputStream): DeploymentBuilderInterface
+    public function addInputStream(?string $resourceName, $inputStream): DeploymentBuilderInterface
     {
         EnsureUtil::ensureNotNull("inputStream for resource '" . $resourceName . "' is null", "inputStream", $inputStream);
         $bytes = IoUtil::readInputStream($inputStream, $resourceName);
@@ -87,14 +87,14 @@ class DeploymentBuilderImpl implements DeploymentBuilderInterface, \Serializable
         return $this->addBytes($resourceName, $bytes);
     }
 
-    public function addClasspathResource(string $resource): DeploymentBuilderInterface
+    public function addClasspathResource(?string $resource): DeploymentBuilderInterface
     {
         $inputStream = ReflectUtil::getResourceAsStream($resource);
         EnsureUtil::ensureNotNull("resource '" . $resource . "' not found", "inputStream", $inputStream);
         return $this->addInputStream($resource, $inputStream);
     }
 
-    public function addString(string $resourceName, string $text): DeploymentBuilderInterface
+    public function addString(?string $resourceName, ?string $text): DeploymentBuilderInterface
     {
         EnsureUtil::ensureNotNull("text", "text", $text);
 
@@ -103,7 +103,7 @@ class DeploymentBuilderImpl implements DeploymentBuilderInterface, \Serializable
         return $this->addBytes($resourceName, $bytes);
     }
 
-    /*public DeploymentBuilder addModelInstance(string $resourceName, CmmnModelInstance modelInstance) {
+    /*public DeploymentBuilder addModelInstance(?string $resourceName, CmmnModelInstance modelInstance) {
         EnsureUtil::ensureNotNull("modelInstance", modelInstance);
 
         validateResouceName(resourceName, CmmnDeployer.CMMN_RESOURCE_SUFFIXES);
@@ -114,7 +114,7 @@ class DeploymentBuilderImpl implements DeploymentBuilderInterface, \Serializable
         return addBytes(resourceName, outputStream.toByteArray());
     }*/
 
-    public function addModelInstance(string $resourceName, BpmnModelInstanceInterface $modelInstance): DeploymentBuilderInterface
+    public function addModelInstance(?string $resourceName, BpmnModelInstanceInterface $modelInstance): DeploymentBuilderInterface
     {
         EnsureUtil::ensureNotNull("modelInstance", "modelInstance", $modelInstance);
 
@@ -128,7 +128,7 @@ class DeploymentBuilderImpl implements DeploymentBuilderInterface, \Serializable
         return $this->addBytes($resourceName, file_get_contents($path));
     }
 
-    /*public DeploymentBuilder addModelInstance(string $resourceName, DmnModelInstance modelInstance) {
+    /*public DeploymentBuilder addModelInstance(?string $resourceName, DmnModelInstance modelInstance) {
         EnsureUtil::ensureNotNull("modelInstance", modelInstance);
 
         validateResouceName(resourceName, DecisionDefinitionDeployer.DMN_RESOURCE_SUFFIXES);
@@ -139,14 +139,14 @@ class DeploymentBuilderImpl implements DeploymentBuilderInterface, \Serializable
         return addBytes(resourceName, outputStream.toByteArray());
     }*/
 
-    private function validateResouceName(string $resourceName, array $resourceSuffixes): void
+    private function validateResouceName(?string $resourceName, array $resourceSuffixes): void
     {
         if (!StringUtil::hasAnySuffix($resourceName, $resourceSuffixes)) {
             //LOG.warnDeploymentResourceHasWrongName(resourceName, resourceSuffixes);
         }
     }
 
-    protected function addBytes(string $resourceName, string $bytes): DeploymentBuilderInterface
+    protected function addBytes(?string $resourceName, ?string $bytes): DeploymentBuilderInterface
     {
         $resource = new ResourceEntity();
         $resource->setBytes($bytes);
@@ -173,14 +173,14 @@ class DeploymentBuilderImpl implements DeploymentBuilderInterface, \Serializable
         return $this;
     }*/
 
-    public function addDeploymentResources(string $deploymentId): DeploymentBuilderInterface
+    public function addDeploymentResources(?string $deploymentId): DeploymentBuilderInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "deploymentId", $deploymentId);
         $this->deployments[] = $deploymentId;
         return $this;
     }
 
-    public function addDeploymentResourceById(string $deploymentId, string $resourceId): DeploymentBuilderInterface
+    public function addDeploymentResourceById(?string $deploymentId, ?string $resourceId): DeploymentBuilderInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "deploymentId", $deploymentId);
         EnsureUtil::ensureNotNull(NotValidException::class, "resourceId", $resourceId);
@@ -190,7 +190,7 @@ class DeploymentBuilderImpl implements DeploymentBuilderInterface, \Serializable
         return $this;
     }
 
-    public function addDeploymentResourcesById(string $deploymentId, array $resourceIds): DeploymentBuilderInterface
+    public function addDeploymentResourcesById(?string $deploymentId, array $resourceIds): DeploymentBuilderInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "deploymentId", $deploymentId);
 
@@ -203,7 +203,7 @@ class DeploymentBuilderImpl implements DeploymentBuilderInterface, \Serializable
         return $this;
     }
 
-    public function addDeploymentResourceByName(string $deploymentId, string $resourceName): DeploymentBuilderInterface
+    public function addDeploymentResourceByName(?string $deploymentId, ?string $resourceName): DeploymentBuilderInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "deploymentId", $deploymentId);
         EnsureUtil::ensureNotNull(NotValidException::class, "resourceName", $resourceName);
@@ -213,7 +213,7 @@ class DeploymentBuilderImpl implements DeploymentBuilderInterface, \Serializable
         return $this;
     }
 
-    public function addDeploymentResourcesByName(string $deploymentId, array $resourceNames): DeploymentBuilderInterface
+    public function addDeploymentResourcesByName(?string $deploymentId, array $resourceNames): DeploymentBuilderInterface
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "deploymentId", $deploymentId);
 
@@ -226,7 +226,7 @@ class DeploymentBuilderImpl implements DeploymentBuilderInterface, \Serializable
         return $this;
     }
 
-    public function name(string $name): DeploymentBuilderInterface
+    public function name(?string $name): DeploymentBuilderInterface
     {
         if (!empty($this->nameFromDeployment)) {
             $message = sprintf("Cannot set the deployment name to '%s', because the property 'nameForDeployment' has been already set to '%s'.", $name, $this->nameFromDeployment);
@@ -236,7 +236,7 @@ class DeploymentBuilderImpl implements DeploymentBuilderInterface, \Serializable
         return $this;
     }
 
-    public function nameFromDeployment(string $deploymentId): DeploymentBuilderInterface
+    public function nameFromDeployment(?string $deploymentId): DeploymentBuilderInterface
     {
         $name = $this->deployment->getName();
         if (!empty($name)) {
@@ -254,19 +254,19 @@ class DeploymentBuilderImpl implements DeploymentBuilderInterface, \Serializable
         return $this;
     }
 
-    public function activateProcessDefinitionsOn(string $date): DeploymentBuilderInterface
+    public function activateProcessDefinitionsOn(?string $date): DeploymentBuilderInterface
     {
         $this->processDefinitionsActivationDate = $date;
         return $this;
     }
 
-    public function source(string $source): DeploymentBuilderInterface
+    public function source(?string $source): DeploymentBuilderInterface
     {
         $this->deployment->setSource($source);
         return $this;
     }
 
-    public function tenantId(string $tenantId): DeploymentBuilderInterface
+    public function tenantId(?string $tenantId): DeploymentBuilderInterface
     {
         $this->deployment->setTenantId($tenantId);
         return $this;
@@ -308,12 +308,12 @@ class DeploymentBuilderImpl implements DeploymentBuilderInterface, \Serializable
         return $this->deployChangedOnly;
     }
 
-    public function getProcessDefinitionsActivationDate(): string
+    public function getProcessDefinitionsActivationDate(): ?string
     {
         return $this->processDefinitionsActivationDate;
     }
 
-    public function getNameFromDeployment(): string
+    public function getNameFromDeployment(): ?string
     {
         return $this->nameFromDeployment;
     }

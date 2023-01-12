@@ -58,11 +58,10 @@ class BpmnActivityBehavior
     protected function performOutgoingBehavior(
         ActivityExecutionInterface $execution,
         bool $checkConditions,
-        array $reusableExecutions
+        ?array $reusableExecutions = []
     ): void {
 
         //LOG.leavingActivity(execution.getActivity().getId());
-
         $defaultSequenceFlow = $execution->getActivity()->getProperty("default");
         $transitionsToTake = [];
 
@@ -78,7 +77,7 @@ class BpmnActivityBehavior
         if (count($transitionsToTake) == 1) {
             $execution->leaveActivityViaTransition($transitionsToTake[0]);
         } elseif (count($transitionsToTake) > 1) {
-            if ($reusableExecutions === null || empty($reusableExecutions)) {
+            if (empty($reusableExecutions)) {
                 $execution->leaveActivityViaTransitions($transitionsToTake, [$execution]);
             } else {
                 $execution->leaveActivityViaTransitions($transitionsToTake, $reusableExecutions);

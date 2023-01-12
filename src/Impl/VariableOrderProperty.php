@@ -10,7 +10,7 @@ use Jabe\Variable\Type\{
 
 class VariableOrderProperty extends QueryOrderingProperty
 {
-    public function __construct(string $name = null, ValueTypeInterface $valueType = null)
+    public function __construct(?string $name = null, ValueTypeInterface $valueType = null)
     {
         if ($name !== null && $valueType !== null) {
             parent::__construct(QueryOrderingProperty::RELATION_VARIABLE, $this->typeToQueryProperty($valueType));
@@ -21,7 +21,7 @@ class VariableOrderProperty extends QueryOrderingProperty
         }
     }
 
-    public static function forProcessInstanceVariable(string $variableName, ValueTypeInterface $valueType): VariableOrderProperty
+    public static function forProcessInstanceVariable(?string $variableName, ValueTypeInterface $valueType): VariableOrderProperty
     {
         $orderingProperty = new VariableOrderProperty($variableName, $valueType);
         $orderingProperty->relationConditions[] =
@@ -31,7 +31,7 @@ class VariableOrderProperty extends QueryOrderingProperty
         return $orderingProperty;
     }
 
-    public static function forExecutionVariable(string $variableName, ValueTypeInterface $valueType): VariableOrderProperty
+    public static function forExecutionVariable(?string $variableName, ValueTypeInterface $valueType): VariableOrderProperty
     {
         $orderingProperty = new VariableOrderProperty($variableName, $valueType);
         $orderingProperty->relationConditions[] =
@@ -41,7 +41,7 @@ class VariableOrderProperty extends QueryOrderingProperty
         return $orderingProperty;
     }
 
-    public static function forTaskVariable(string $variableName, ValueTypeInterface $valueType): VariableOrderProperty
+    public static function forTaskVariable(?string $variableName, ValueTypeInterface $valueType): VariableOrderProperty
     {
         $orderingProperty = new VariableOrderProperty($variableName, $valueType);
         $orderingProperty->relationConditions[] =
@@ -50,7 +50,7 @@ class VariableOrderProperty extends QueryOrderingProperty
         return $orderingProperty;
     }
 
-    /*public static function forCaseInstanceVariable(string $variableName, ValueTypeInterface $valueType): VariableOrderProperty
+    /*public static function forCaseInstanceVariable(?string $variableName, ValueTypeInterface $valueType): VariableOrderProperty
     {
         $orderingProperty = new VariableOrderProperty($variableName, $valueType);
         $orderingProperty->relationConditions[] =
@@ -60,7 +60,7 @@ class VariableOrderProperty extends QueryOrderingProperty
         return orderingProperty;
     }
 
-    public static VariableOrderProperty forCaseExecutionVariable(string $variableName, ValueTypeInterface valueType) {
+    public static VariableOrderProperty forCaseExecutionVariable(?string $variableName, ValueTypeInterface valueType) {
         VariableOrderProperty orderingProperty = new VariableOrderProperty(variableName, valueType);
         orderingProperty.relationConditions.add(
             new QueryEntityRelationCondition(VariableInstanceQueryProperty.CASE_EXECUTION_ID, TaskQueryProperty.CASE_EXECUTION_ID));

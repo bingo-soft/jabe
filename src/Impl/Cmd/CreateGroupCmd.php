@@ -12,9 +12,9 @@ class CreateGroupCmd extends AbstractWritableIdentityServiceCmd implements Comma
 {
     protected $groupId;
 
-    public function __construct(string $groupId)
+    public function __construct(?string $groupId)
     {
-        EnsureUtil::ensureNotNull("groupId", $groupId);
+        EnsureUtil::ensureNotNull("groupId", "groupId", $groupId);
         $this->groupId = $groupId;
     }
 

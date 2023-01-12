@@ -2,6 +2,10 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
+use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface
+};
 use Jabe\Impl\Page;
 use Jabe\Impl\Batch\{
     BatchEntity,
@@ -18,7 +22,7 @@ class BatchManager extends AbstractManager
         $this->getDbEntityManager()->insert($batch);
     }
 
-    public function findBatchById(string $id): BatchEntity
+    public function findBatchById(?string $id): BatchEntity
     {
         return $this->getDbEntityManager()->selectById(BatchEntity::class, $id);
     }
@@ -29,13 +33,13 @@ class BatchManager extends AbstractManager
         return $this->getDbEntityManager()->selectOne("selectBatchCountByQueryCriteria", $batchQuery);
     }
 
-    public function findBatchesByQueryCriteria(BatchQueryImpl $batchQuery, Page $page): array
+    public function findBatchesByQueryCriteria(BatchQueryImpl $batchQuery, ?Page $page): array
     {
         $this->configureQuery($batchQuery);
         return $this->getDbEntityManager()->selectList("selectBatchesByQueryCriteria", $batchQuery, $page);
     }
 
-    public function updateBatchSuspensionStateById(string $batchId, SuspensionState $suspensionState): void
+    public function updateBatchSuspensionStateById(?string $batchId, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["batchId"] = $batchId;
@@ -47,7 +51,7 @@ class BatchManager extends AbstractManager
         $this->getDbEntityManager()->update(BatchEntity::class, "updateBatchSuspensionStateByParameters", $queryParameter);
     }
 
-    protected function configureQuery(BatchQueryImpl $batchQuery): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         $this->getAuthorizationManager()->configureBatchQuery($batchQuery);
         $this->getTenantManager()->configureQuery($batchQuery);

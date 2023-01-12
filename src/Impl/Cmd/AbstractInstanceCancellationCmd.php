@@ -10,7 +10,7 @@ abstract class AbstractInstanceCancellationCmd extends AbstractProcessInstanceMo
 {
     protected $cancellationReason;
 
-    public function __construct(string $processInstanceId, string $cancellationReason)
+    public function __construct(?string $processInstanceId, ?string $cancellationReason)
     {
         parent::__construct($processInstanceId);
         $this->cancellationReason = $cancellationReason ?? "Cancellation due to process instance modifcation";

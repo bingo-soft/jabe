@@ -22,7 +22,7 @@ class Bpmn20NamespaceContext
         $this->namespaceUris[self::OMGDI] = 'http://www.omg.org/spec/DD/20100524/DC';
     }
 
-    public function getNamespaceURI(string $prefix): ?string
+    public function getNamespaceURI(?string $prefix): ?string
     {
         if (array_key_exists($prefix, $this->namespaceUris)) {
             return $this->namespaceUris[$prefix];
@@ -30,7 +30,7 @@ class Bpmn20NamespaceContext
         return null;
     }
 
-    public function getPrefix(string $namespaceURI): ?string
+    public function getPrefix(?string $namespaceURI): ?string
     {
         $index = array_search($namespaceURI, $this->namespaceUris);
         if ($index !== false) {
@@ -39,7 +39,7 @@ class Bpmn20NamespaceContext
         return null;
     }
 
-    public function getPrefixes(string $namespaceURI): array
+    public function getPrefixes(?string $namespaceURI): array
     {
         return self::getKeysByValue($this->namespaceUris, $namespaceURI);
     }

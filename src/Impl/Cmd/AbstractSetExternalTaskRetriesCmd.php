@@ -105,4 +105,9 @@ abstract class AbstractSetExternalTaskRetriesCmd implements CommandInterface
     {
         $this->writeUserOperationLog($commandContext, $numInstances, true);
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

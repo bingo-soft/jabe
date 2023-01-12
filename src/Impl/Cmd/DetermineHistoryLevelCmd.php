@@ -41,4 +41,9 @@ class DetermineHistoryLevelCmd implements CommandInterface
             return null;
         }
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

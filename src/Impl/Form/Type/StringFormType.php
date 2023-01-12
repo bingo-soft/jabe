@@ -12,7 +12,7 @@ class StringFormType extends SimpleFormFieldType
 {
     public const TYPE_NAME = "string";
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return self::TYPE_NAME;
     }

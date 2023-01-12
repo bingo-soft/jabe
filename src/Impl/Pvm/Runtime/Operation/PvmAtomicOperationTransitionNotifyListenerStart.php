@@ -17,7 +17,7 @@ class PvmAtomicOperationTransitionNotifyListenerStart extends PvmAtomicOperation
         return $execution->getActivity();
     }
 
-    protected function getEventName(): string
+    protected function getEventName(): ?string
     {
         return ExecutionListenerInterface::EVENTNAME_START;
     }
@@ -46,7 +46,7 @@ class PvmAtomicOperationTransitionNotifyListenerStart extends PvmAtomicOperation
         $execution->dispatchDelayedEventsAndPerformOperation(self::activityExecute());
     }
 
-    public function getCanonicalName(): string
+    public function getCanonicalName(): ?string
     {
         return "transition-notifiy-listener-start";
     }

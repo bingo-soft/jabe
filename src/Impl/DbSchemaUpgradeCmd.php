@@ -15,7 +15,7 @@ class DbSchemaUpgradeCmd implements CommandInterface
     protected $catalog;
     protected $schema;
 
-    public function __construct(Connection $connection, string $catalog, string $schema)
+    public function __construct(Connection $connection, ?string $catalog, ?string $schema)
     {
         $this->connection = $connection;
         $this->catalog = $catalog;
@@ -30,5 +30,10 @@ class DbSchemaUpgradeCmd implements CommandInterface
         $commandContext->addSession(DbSqlSession::class, $dbSqlSession);
         $dbSqlSession->dbSchemaUpdate();
         return "";
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

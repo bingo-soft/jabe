@@ -2,7 +2,7 @@
 
 namespace Jabe\Impl\History;
 
-use Jabe\Impl\Event\HistoryEventTypeInterface;
+use Jabe\Impl\History\Event\HistoryEventTypeInterface;
 
 abstract class AbstractHistoryLevel implements HistoryLevelInterface
 {
@@ -11,7 +11,7 @@ abstract class AbstractHistoryLevel implements HistoryLevelInterface
     private static $HISTORY_LEVEL_AUDIT;
     private static $HISTORY_LEVEL_FULL;
 
-    public static function none(): AbstractHistoryLevel
+    public static function none(): HistoryLevelInterface
     {
         if (self::$HISTORY_LEVEL_NONE === null) {
             self::$HISTORY_LEVEL_NONE = new HistoryLevelNone();
@@ -19,7 +19,7 @@ abstract class AbstractHistoryLevel implements HistoryLevelInterface
         return self::$HISTORY_LEVEL_NONE;
     }
 
-    public static function activity(): AbstractHistoryLevel
+    public static function activity(): HistoryLevelInterface
     {
         if (self::$HISTORY_LEVEL_ACTIVITY === null) {
             self::$HISTORY_LEVEL_ACTIVITY = new HistoryLevelActivity();
@@ -27,7 +27,7 @@ abstract class AbstractHistoryLevel implements HistoryLevelInterface
         return self::$HISTORY_LEVEL_ACTIVITY;
     }
 
-    public static function audit(): AbstractHistoryLevel
+    public static function audit(): HistoryLevelInterface
     {
         if (self::$HISTORY_LEVEL_AUDIT === null) {
             self::$HISTORY_LEVEL_AUDIT = new HistoryLevelAudit();
@@ -35,7 +35,7 @@ abstract class AbstractHistoryLevel implements HistoryLevelInterface
         return self::$HISTORY_LEVEL_AUDIT;
     }
 
-    public static function full(): AbstractHistoryLevel
+    public static function full(): HistoryLevelInterface
     {
         if (self::$HISTORY_LEVEL_FULL === null) {
             self::$HISTORY_LEVEL_FULL = new HistoryLevelFull();
@@ -52,7 +52,7 @@ abstract class AbstractHistoryLevel implements HistoryLevelInterface
      * The name of the history level can be used when configuring the process engine.
      * @see ProcessEngineConfiguration#setHistory(String)
      */
-    abstract public function getName(): string;
+    abstract public function getName(): ?string;
 
     /**
      * Returns true if a given history event should be produced.

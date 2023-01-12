@@ -7,7 +7,7 @@ use Jabe\Impl\Pvm\Runtime\PvmExecutionImpl;
 
 class PvmAtomicOperationsTransitionInterruptFlowScope extends PvmAtomicOperationInterruptScope
 {
-    public function getCanonicalName(): string
+    public function getCanonicalName(): ?string
     {
         return "transition-interrupt-scope";
     }

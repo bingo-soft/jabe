@@ -3,6 +3,7 @@
 namespace Jabe\Impl\Cmd;
 
 use Jabe\History\UserOperationLogEntryInterface;
+use Jabe\Impl\ProcessInstantiationBuilderImpl;
 use Jabe\Impl\Interceptor\{
     CommandInterface,
     CommandContext
@@ -50,9 +51,15 @@ class StartProcessInstanceCmd implements CommandInterface
             $processInstance->getId(),
             $processInstance->getProcessDefinitionId(),
             $processInstance->getProcessDefinition()->getKey(),
-            [PropertyChange::emptyChange()]
+            [PropertyChange::emptyChange()],
+            null
         );
 
         return new ProcessInstanceWithVariablesImpl($processInstance, $variablesListener->getVariables());
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

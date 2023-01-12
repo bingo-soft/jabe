@@ -12,7 +12,7 @@ class LockExternalTaskCmd extends HandleExternalTaskCmd
 {
     protected $lockDuration;
 
-    public function __construct(string $externalTaskId, string $workerId, int $lockDuration)
+    public function __construct(?string $externalTaskId, ?string $workerId, int $lockDuration)
     {
         parent::__construct($externalTaskId, $workerId);
         $this->lockDuration = $lockDuration;
@@ -23,7 +23,7 @@ class LockExternalTaskCmd extends HandleExternalTaskCmd
         $externalTask->lock($this->workerId, $this->lockDuration);
     }
 
-    public function getErrorMessageOnWrongWorkerAccess(): string
+    public function getErrorMessageOnWrongWorkerAccess(): ?string
     {
         return "External Task " . $this->externalTaskId . " cannot be locked by worker '" . $this->workerId;
     }

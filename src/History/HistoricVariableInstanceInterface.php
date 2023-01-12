@@ -12,19 +12,19 @@ interface HistoricVariableInstanceInterface
     /**
      * @return string the id of this variable instance
      */
-    public function getId(): string;
+    public function getId(): ?string;
 
     /**
      * Returns the name of this variable instance.
      */
-    public function getName(): string;
+    public function getName(): ?string;
 
     /**
      * Returns the name of the type of this variable instance
      *
      * @return string the type name of the variable
      */
-    public function getTypeName(): string;
+    public function getTypeName(): ?string;
 
     /**
      * Returns the value of this variable instance.
@@ -39,43 +39,43 @@ interface HistoricVariableInstanceInterface
     /**
      * The process definition key reference.
      */
-    public function getProcessDefinitionKey(): string;
+    public function getProcessDefinitionKey(): ?string;
 
     /**
      * The process definition reference.
      */
-    public function getProcessDefinitionId(): string;
+    public function getProcessDefinitionId(): ?string;
 
     /**
      * The root process instance reference.
      */
-    public function getRootProcessInstanceId(): string;
+    public function getRootProcessInstanceId(): ?string;
 
     /**
      * The process instance reference.
      */
-    public function getProcessInstanceId(): string;
+    public function getProcessInstanceId(): ?string;
 
     /**
      * Return the corresponding execution id.
      */
-    public function getExecutionId(): string;
+    public function getExecutionId(): ?string;
 
     /**
      * Returns the corresponding activity instance id.
      */
-    public function getActivityInstanceId(): string;
+    public function getActivityInstanceId(): ?string;
 
     /**
      * Return the corresponding task id.
      */
-    public function getTaskId(): string;
+    public function getTaskId(): ?string;
 
     /**
      * If the variable value could not be loaded, this returns the error message.
      * @return an error message indicating why the variable value could not be loaded.
      */
-    public function getErrorMessage(): string;
+    public function getErrorMessage(): ?string;
 
     /**
      * The id of the tenant this variable belongs to. Can be <code>null</code>
@@ -86,13 +86,13 @@ interface HistoricVariableInstanceInterface
     /**
      * The current state of the variable. Can be 'CREATED' or 'DELETED'
      */
-    public function getState(): string;
+    public function getState(): ?string;
 
     /**
      * The time when the variable was created.
      */
-    public function getCreateTime(): string;
+    public function getCreateTime(): ?string;
 
     /** The time when the historic variable instance will be removed. */
-    public function getRemovalTime(): string;
+    public function getRemovalTime(): ?string;
 }

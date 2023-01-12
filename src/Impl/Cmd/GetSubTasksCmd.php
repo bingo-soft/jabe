@@ -12,7 +12,7 @@ class GetSubTasksCmd implements CommandInterface, \Serializable
 {
     protected $parentTaskId;
 
-    public function __construct(string $parentTaskId)
+    public function __construct(?string $parentTaskId)
     {
         $this->parentTaskId = $parentTaskId;
     }
@@ -35,5 +35,10 @@ class GetSubTasksCmd implements CommandInterface, \Serializable
         return (new TaskQueryImpl())
             ->taskParentTaskId($this->parentTaskId)
             ->list();
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

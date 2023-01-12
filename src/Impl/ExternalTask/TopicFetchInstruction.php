@@ -17,17 +17,17 @@ class TopicFetchInstruction implements \Serializable
     protected $processDefinitionKey;
     protected $processDefinitionKeys = [];
     protected $processDefinitionVersionTag;
-    protected $isTenantIdSet = false;
+    protected bool $isTenantIdSet = false;
     protected $tenantIds = [];
     protected $variablesToFetch = [];
 
     protected $filterVariables = [];
     protected $lockDuration;
-    protected $deserializeVariables = false;
-    protected $localVariables = false;
-    protected $includeExtensionProperties = false;
+    protected bool $deserializeVariables = false;
+    protected bool $localVariables = false;
+    protected bool $includeExtensionProperties = false;
 
-    public function __construct(string $topicName, int $lockDuration)
+    public function __construct(?string $topicName, int $lockDuration)
     {
         $this->topicName = $topicName;
         $this->lockDuration = $lockDuration;
@@ -82,22 +82,22 @@ class TopicFetchInstruction implements \Serializable
         $this->variablesToFetch = $variablesToFetch;
     }
 
-    public function setBusinessKey(string $businessKey): void
+    public function setBusinessKey(?string $businessKey): void
     {
         $this->businessKey = $businessKey;
     }
 
-    public function getBusinessKey(): string
+    public function getBusinessKey(): ?string
     {
         return $this->businessKey;
     }
 
-    public function setProcessDefinitionId(string $processDefinitionId): void
+    public function setProcessDefinitionId(?string $processDefinitionId): void
     {
         $this->processDefinitionId = $processDefinitionId;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
@@ -112,12 +112,12 @@ class TopicFetchInstruction implements \Serializable
         return $this->processDefinitionIds;
     }
 
-    public function setProcessDefinitionKey(string $processDefinitionKey): void
+    public function setProcessDefinitionKey(?string $processDefinitionKey): void
     {
         $this->processDefinitionKey = $processDefinitionKey;
     }
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }
@@ -132,12 +132,12 @@ class TopicFetchInstruction implements \Serializable
         return $this->processDefinitionKeys;
     }
 
-    public function setProcessDefinitionVersionTag(string $processDefinitionVersionTag): void
+    public function setProcessDefinitionVersionTag(?string $processDefinitionVersionTag): void
     {
         $this->processDefinitionVersionTag = $processDefinitionVersionTag;
     }
 
-    public function getProcessDefinitionVersionTag(): string
+    public function getProcessDefinitionVersionTag(): ?string
     {
         return $this->processDefinitionVersionTag;
     }
@@ -176,7 +176,7 @@ class TopicFetchInstruction implements \Serializable
         }
     }
 
-    public function addFilterVariable(string $name, $value): void
+    public function addFilterVariable(?string $name, $value): void
     {
         $variableValue = new QueryVariableValue($name, $value, QueryOperator::EQUALS, true);
         $this->filterVariables[] = $variableValue;
@@ -187,7 +187,7 @@ class TopicFetchInstruction implements \Serializable
         return $this->lockDuration;
     }
 
-    public function getTopicName(): string
+    public function getTopicName(): ?string
     {
         return $this->topicName;
     }

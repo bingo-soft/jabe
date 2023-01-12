@@ -12,7 +12,7 @@ use Jabe\Impl\Interceptor\{
 class DbSqlPersistenceProviderFactory implements SessionFactoryInterface
 {
 
-    public function getSessionType(): string
+    public function getSessionType(): ?string
     {
         return PersistenceSessionInterface::class;
     }

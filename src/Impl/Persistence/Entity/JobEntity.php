@@ -49,7 +49,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
     protected $retries = self::DEFAULT_RETRIES;
 
     // entity is active by default
-    protected $suspensionState = 1;
+    protected int $suspensionState = 1;
 
     protected $jobHandlerType = null;
     protected $jobHandlerConfiguration = null;
@@ -75,7 +75,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
     protected $execution;
 
     // sequence counter //////////////////////////
-    protected $sequenceCounter = 1;
+    protected int $sequenceCounter = 1;
 
     // last failure log id ///////////////////////
     protected $lastFailureLogId;
@@ -225,12 +225,12 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
     // getters and setters //////////////////////////////////////////////////////
 
-    public function getExecutionId(): string
+    public function getExecutionId(): ?string
     {
         return $this->executionId;
     }
 
-    public function setExecutionId(string $executionId): void
+    public function setExecutionId(?string $executionId): void
     {
         $this->executionId = $executionId;
     }
@@ -342,7 +342,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         return $incidentContext;
     }
 
-    public function getExceptionStacktrace(): string
+    public function getExceptionStacktrace(): ?string
     {
         $byteArray = $this->getExceptionByteArray();
         return ExceptionUtil::getExceptionStacktrace($byteArray);
@@ -363,27 +363,27 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         return $this->suspensionState == SuspensionState::suspended()->getStateCode();
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function setProcessDefinitionId(string $processDefinitionId): void
+    public function setProcessDefinitionId(?string $processDefinitionId): void
     {
         $this->processDefinitionId = $processDefinitionId;
     }
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }
 
-    public function setProcessDefinitionKey(string $processDefinitionKey): void
+    public function setProcessDefinitionKey(?string $processDefinitionKey): void
     {
         $this->processDefinitionKey = $processDefinitionKey;
     }
 
-    public function setExceptionStacktrace(string $exception): void
+    public function setExceptionStacktrace(?string $exception): void
     {
         $exceptionBytes = $exception;
 
@@ -421,22 +421,22 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         $this->jobHandlerConfiguration = $configuration->toCanonicalString();
     }
 
-    public function getJobHandlerType(): string
+    public function getJobHandlerType(): ?string
     {
         return $this->jobHandlerType;
     }
 
-    public function setJobHandlerType(string $jobHandlerType): void
+    public function setJobHandlerType(?string $jobHandlerType): void
     {
         $this->jobHandlerType = $jobHandlerType;
     }
 
-    public function getJobHandlerConfigurationRaw(): string
+    public function getJobHandlerConfigurationRaw(): ?string
     {
         return $this->jobHandlerConfiguration;
     }
 
-    public function setJobHandlerConfigurationRaw(string $jobHandlerConfiguration): void
+    public function setJobHandlerConfigurationRaw(?string $jobHandlerConfiguration): void
     {
         $this->jobHandlerConfiguration = $jobHandlerConfiguration;
     }
@@ -451,7 +451,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         return $this->jobDefinitionId;
     }
 
-    public function setJobDefinitionId(string $jobDefinitionId): void
+    public function setJobDefinitionId(?string $jobDefinitionId): void
     {
         $this->jobDefinitionId = $jobDefinitionId;
     }
@@ -481,7 +481,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         }
     }
 
-    public function setExceptionMessage(string $exceptionMessage): void
+    public function setExceptionMessage(?string $exceptionMessage): void
     {
         $this->exceptionMessage = StringUtil::trimToMaximumLengthAllowed($exceptionMessage);
     }
@@ -527,7 +527,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         return $this->deploymentId;
     }
 
-    public function setDeploymentId(string $deploymentId): void
+    public function setDeploymentId(?string $deploymentId): void
     {
         $this->deploymentId = $this->deploymentId;
     }
@@ -544,13 +544,13 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         $this->lockExpirationTime = null;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         $this->ensureActivityIdInitialized();
         return $this->activityId;
     }
 
-    public function setActivityId(string $activityId): void
+    public function setActivityId(?string $activityId): void
     {
         $this->activityId = $activityId;
     }
@@ -575,12 +575,12 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         $this->tenantId = $tenantId;
     }
 
-    public function getCreateTime(): string
+    public function getCreateTime(): ?string
     {
         return $this->createTime;
     }
 
-    public function setCreateTime(string $createTime): void
+    public function setCreateTime(?string $createTime): void
     {
         $this->createTime = $createTime;
     }
@@ -611,9 +611,9 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         $this->lockExpirationTime = null;
     }
 
-    abstract public function getType(): string;
+    abstract public function getType(): ?string;
 
-    public function equals($obj): bool
+    public function equals($obj = null): bool
     {
         if ($this == $obj) {
             return true;
@@ -670,7 +670,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         return $this->lastFailureLogId;
     }
 
-    public function setLastFailureLogId(string $lastFailureLogId): void
+    public function setLastFailureLogId(?string $lastFailureLogId): void
     {
         $this->lastFailureLogId = $lastFailureLogId;
     }
@@ -680,7 +680,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         return $this->failedActivityId;
     }
 
-    public function setFailedActivityId(string $failedActivityId): void
+    public function setFailedActivityId(?string $failedActivityId): void
     {
         $this->failedActivityId = $failedActivityId;
     }

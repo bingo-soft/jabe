@@ -18,9 +18,9 @@ class EventSubscriptionQueryImpl extends AbstractQuery implements \Serializable,
     protected $processInstanceId;
     protected $activityId;
 
-    protected $isTenantIdSet = false;
+    protected bool $isTenantIdSet = false;
     protected $tenantIds = [];
-    protected $includeEventSubscriptionsWithoutTenantId = false;
+    protected bool $includeEventSubscriptionsWithoutTenantId = false;
 
     public function __construct(CommandExecutorInterface $commandExecutor)
     {
@@ -56,35 +56,35 @@ class EventSubscriptionQueryImpl extends AbstractQuery implements \Serializable,
         $this->includeEventSubscriptionsWithoutTenantId = $json->includeEventSubscriptionsWithoutTenantId;
     }
 
-    public function eventSubscriptionId(string $id): EventSubscriptionQueryInterface
+    public function eventSubscriptionId(?string $id): EventSubscriptionQueryInterface
     {
         EnsureUtil::ensureNotNull("event subscription id", "id", $id);
         $this->eventSubscriptionId = $id;
         return $this;
     }
 
-    public function eventName(string $eventName): EventSubscriptionQueryInterface
+    public function eventName(?string $eventName): EventSubscriptionQueryInterface
     {
         EnsureUtil::ensureNotNull("event name", "eventName", $eventName);
         $this->eventName = $eventName;
         return $this;
     }
 
-    public function executionId(string $executionId): EventSubscriptionQueryInterface
+    public function executionId(?string $executionId): EventSubscriptionQueryInterface
     {
         EnsureUtil::ensureNotNull("execution id", "executionId", $executionId);
         $this->executionId = $executionId;
         return $this;
     }
 
-    public function processInstanceId(string $processInstanceId): EventSubscriptionQueryInterface
+    public function processInstanceId(?string $processInstanceId): EventSubscriptionQueryInterface
     {
         EnsureUtil::ensureNotNull("process instance id", "processInstanceId", $processInstanceId);
         $this->processInstanceId = $processInstanceId;
         return $this;
     }
 
-    public function activityId(string $activityId): EventSubscriptionQueryInterface
+    public function activityId(?string $activityId): EventSubscriptionQueryInterface
     {
         EnsureUtil::ensureNotNull("activity id", "activityId", $activityId);
         $this->activityId = $activityId;
@@ -112,7 +112,7 @@ class EventSubscriptionQueryImpl extends AbstractQuery implements \Serializable,
         return $this;
     }
 
-    public function eventType(string $eventType): EventSubscriptionQueryInterface
+    public function eventType(?string $eventType): EventSubscriptionQueryInterface
     {
         EnsureUtil::ensureNotNull("event type", "eventType", $eventType);
         $this->eventType = $eventType;
@@ -139,7 +139,7 @@ class EventSubscriptionQueryImpl extends AbstractQuery implements \Serializable,
             ->findEventSubscriptionCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         return $commandContext
@@ -149,32 +149,32 @@ class EventSubscriptionQueryImpl extends AbstractQuery implements \Serializable,
 
     //getters //////////////////////////////////////////
 
-    public function getEventSubscriptionId(): string
+    public function getEventSubscriptionId(): ?string
     {
         return $this->eventSubscriptionId;
     }
 
-    public function getEventName(): string
+    public function getEventName(): ?string
     {
         return $this->eventName;
     }
 
-    public function getEventType(): string
+    public function getEventType(): ?string
     {
         return $this->eventType;
     }
 
-    public function getExecutionId(): string
+    public function getExecutionId(): ?string
     {
         return $this->executionId;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }

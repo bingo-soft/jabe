@@ -46,30 +46,30 @@
             SEQUENCE_COUNTER_,
             REMOVAL_TIME_
           )
-    values (#{id, dbalType=VARCHAR},
-            #{timestamp, dbalType=VARCHAR},
-            #{jobId, dbalType=VARCHAR},
-            #{jobDueDate, dbalType=VARCHAR},
-            #{jobRetries, dbalType=INTEGER},
-            #{jobPriority, dbalType=BIGINT},
-            #{jobExceptionMessage, dbalType=VARCHAR},
-            #{exceptionByteArrayId, dbalType=VARCHAR},
-            #{state, dbalType=INTEGER},
-            #{jobDefinitionId, dbalType=VARCHAR},
-            #{jobDefinitionType, dbalType=VARCHAR},
-            #{jobDefinitionConfiguration, dbalType=VARCHAR},
-            #{activityId, dbalType=VARCHAR},
-            #{failedActivityId, dbalType=VARCHAR},
-            #{executionId, dbalType=VARCHAR},
-            #{rootProcessInstanceId, dbalType=VARCHAR},
-            #{processInstanceId, dbalType=VARCHAR},
-            #{processDefinitionId, dbalType=VARCHAR},
-            #{processDefinitionKey, dbalType=VARCHAR},
-            #{deploymentId, dbalType=VARCHAR},
-            #{tenantId, dbalType=VARCHAR},
-            #{hostname, dbalType=VARCHAR},
-            #{sequenceCounter, dbalType=BIGINT},
-            #{removalTime, dbalType=VARCHAR}
+    values (#{id:VARCHAR},
+            #{timestamp:VARCHAR},
+            #{jobId:VARCHAR},
+            #{jobDueDate:VARCHAR},
+            #{jobRetries},
+            #{jobPriority},
+            #{jobExceptionMessage:VARCHAR},
+            #{exceptionByteArrayId:VARCHAR},
+            #{state},
+            #{jobDefinitionId:VARCHAR},
+            #{jobDefinitionType:VARCHAR},
+            #{jobDefinitionConfiguration:VARCHAR},
+            #{activityId:VARCHAR},
+            #{failedActivityId:VARCHAR},
+            #{executionId:VARCHAR},
+            #{rootProcessInstanceId:VARCHAR},
+            #{processInstanceId:VARCHAR},
+            #{processDefinitionId:VARCHAR},
+            #{processDefinitionKey:VARCHAR},
+            #{deploymentId:VARCHAR},
+            #{tenantId:VARCHAR},
+            #{hostname:VARCHAR},
+            #{sequenceCounter},
+            #{removalTime:VARCHAR}
     )
   </insert>
 
@@ -78,49 +78,49 @@
   <update id="updateJobLogByRootProcessInstanceId"
           parameterType="array">
       update ${prefix}ACT_HI_JOB_LOG set
-      REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      REMOVAL_TIME_ = #{removalTime:VARCHAR}
 
-      where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+      where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateJobLogByRootProcessInstanceId_mssql"
           parameterType="array">
       update RES set
-      RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
       FROM ${prefix}ACT_HI_JOB_LOG RES WITH (FORCESEEK)
-      where RES.ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+      where RES.ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateJobLogByProcessInstanceId"
           parameterType="array">
     update ${prefix}ACT_HI_JOB_LOG
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
-      where PROCESS_INSTANCE_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR}
+      where PROCESS_INSTANCE_ID_ = #{processInstanceId:VARCHAR}
   </update>
 
   <update id="updateJobLogByProcessInstanceId_mssql"
           parameterType="array">
     update RES set
-      RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
       FROM ${prefix}ACT_HI_JOB_LOG RES WITH (FORCESEEK)
-      where RES.PROCESS_INSTANCE_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      where RES.PROCESS_INSTANCE_ID_ = #{processInstanceId:VARCHAR}
   </update>
 
   <update id="updateJobLogByBatchId"
           parameterType="array">
       update ${prefix}ACT_HI_JOB_LOG set
-      REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      REMOVAL_TIME_ = #{removalTime:VARCHAR}
 
-      where JOB_DEF_CONFIGURATION_ = #{batchId, dbalType=VARCHAR}
+      where JOB_DEF_CONFIGURATION_ = #{batchId:VARCHAR}
   </update>
 
   <update id="updateJobLogByBatchId_mssql"
           parameterType="array">
       update RES set
-      RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
       FROM ${prefix}ACT_HI_JOB_LOG RES WITH (FORCESEEK)
 
-      where RES.JOB_DEF_CONFIGURATION_ = #{batchId, dbalType=VARCHAR}
+      where RES.JOB_DEF_CONFIGURATION_ = #{batchId:VARCHAR}
   </update>
 
   <!-- DELETE -->
@@ -169,14 +169,14 @@
   <sql id="andWhereMinuteInDateBetweenSql">
     <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
       AND ${datepart1}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart2}${date}${datepart3}
-      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+      between #{parameter.minuteFrom} and #{parameter.minuteTo}
     </if>
   </sql>
 
   <sql id="andWhereMinuteInDateBetweenSql_oracle">
     <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
       AND ${datepart1}${date}${datepart2}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart3}
-      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+      between #{parameter.minuteFrom} and #{parameter.minuteTo}
     </if>
   </sql>
 
@@ -185,7 +185,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_JOB_LOG
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql"/>
     ${limitAfterWithoutOffset}
   </delete>
@@ -195,7 +195,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_JOB_LOG
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql_oracle"/>
     ${limitAfterWithoutOffset}
   </delete>
@@ -208,7 +208,7 @@
     where ID_ IN
       (SELECT ID_
        FROM ${prefix}ACT_HI_JOB_LOG
-       WHERE REMOVAL_TIME_ <= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
+       WHERE REMOVAL_TIME_ &lt;= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
        ${limitAfterWithoutOffset})
   </delete>
 
@@ -267,39 +267,39 @@
   <sql id="selectExceptionByteArrayIds">
     and J.JOB_EXCEPTION_STACK_ID_ is not null
     <if test="id != null">
-      and J.ID_ = #{id, dbalType=VARCHAR}
+      and J.ID_ = #{id:VARCHAR}
     </if>
     <if test="jobId != null">
-      and J.JOB_ID_ = #{jobId, dbalType=VARCHAR}
+      and J.JOB_ID_ = #{jobId:VARCHAR}
     </if>
     <if test="jobDefinitionId != null">
-      and J.JOB_DEF_ID_ = #{jobDefinitionId, dbalType=VARCHAR}
+      and J.JOB_DEF_ID_ = #{jobDefinitionId:VARCHAR}
     </if>
     <if test="executionId != null">
-      and J.EXECUTION_ID_ = #{executionId, dbalType=VARCHAR}
+      and J.EXECUTION_ID_ = #{executionId:VARCHAR}
     </if>
     <if test="processInstanceId != null">
-      and J.PROCESS_INSTANCE_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      and J.PROCESS_INSTANCE_ID_ = #{processInstanceId:VARCHAR}
     </if>
-    <if test="processInstanceIdIn != null and count(processInstanceIdIn) > 0">
+    <if test="!empty(processInstanceIdIn)">
       and
         <bind name="listOfIds" value="processInstanceIdIn"/>
         <bind name="fieldName" value="'J.PROCESS_INSTANCE_ID_'"/>
         <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedArray"/>
     </if>
     <if test="processDefinitionId != null">
-      and J.PROCESS_DEF_ID_ = #{processDefinitionId, dbalType=VARCHAR}
+      and J.PROCESS_DEF_ID_ = #{processDefinitionId:VARCHAR}
     </if>
     <if test="processDefinitionKey != null">
-      and J.PROCESS_DEF_KEY_ = #{processDefinitionKey, dbalType=VARCHAR}
+      and J.PROCESS_DEF_KEY_ = #{processDefinitionKey:VARCHAR}
     </if>
     <if test="deploymentId != null">
-      and J.DEPLOYMENT_ID_ = #{deploymentId, dbalType=VARCHAR}
+      and J.DEPLOYMENT_ID_ = #{deploymentId:VARCHAR}
     </if>
     <if test="jobDefinitionType != null">
-      and J.JOB_DEF_TYPE_ = #{jobDefinitionType, dbalType=VARCHAR}
+      and J.JOB_DEF_TYPE_ = #{jobDefinitionType:VARCHAR}
     </if>
-    <if test="historicBatchIdIn != null and count(historicBatchIdIn) > 0">
+    <if test="!empty(historicBatchIdIn)">
       and
         <bind name="listOfIds" value="historicBatchIdIn"/>
         <bind name="fieldName" value="'J.JOB_DEF_CONFIGURATION_'"/>
@@ -353,7 +353,7 @@
       <if test="jobExceptionMessage != null">
         and RES.JOB_EXCEPTION_MSG_ = #{jobExceptionMessage}
       </if>
-      <if test="failedActivityIds != null and count(failedActivityIds) > 0">
+      <if test="!empty(failedActivityIds)">
         and RES.FAILED_ACT_ID_ in
         <foreach item="item" index="index" collection="failedActivityIds"
                  open="(" separator="," close=")">
@@ -369,14 +369,14 @@
       <if test="jobDefinitionConfiguration">
         and RES.JOB_DEF_CONFIGURATION_ = #{jobDefinitionConfiguration}
       </if>
-      <if test="activityIds != null and count(activityIds) > 0">
+      <if test="!empty(activityIds)">
         and RES.ACT_ID_ in
         <foreach item="item" index="index" collection="activityIds"
                  open="(" separator="," close=")">
           #{item}
         </foreach>
       </if>
-      <if test="executionIds != null and count(executionIds) > 0">
+      <if test="!empty(executionIds)">
         and RES.EXECUTION_ID_ in
         <foreach item="item" index="index" collection="executionIds"
                  open="(" separator="," close=")">
@@ -399,25 +399,25 @@
         and RES.JOB_STATE_ = #{state.stateCode}
       </if>
       <if test="jobPriorityHigherThanOrEqual != null">
-        and RES.JOB_PRIORITY_ >= #{jobPriorityHigherThanOrEqual}
+        and RES.JOB_PRIORITY_ &gt;= #{jobPriorityHigherThanOrEqual}
       </if>
       <if test="jobPriorityLowerThanOrEqual != null">
-        and RES.JOB_PRIORITY_ <= #{jobPriorityLowerThanOrEqual}
+        and RES.JOB_PRIORITY_ &lt;= #{jobPriorityLowerThanOrEqual}
       </if>
       <if test="isTenantIdSet">
-        <if test="tenantIds != null and count(tenantIds) > 0">
+        <if test="!empty(tenantIds)">
           and RES.TENANT_ID_ in
           <foreach item="tenantId" index="index" collection="tenantIds"
                    open="(" separator="," close=")">
             #{tenantId}
           </foreach>
         </if>
-        <if test="tenantIds == null">
+        <if test="empty(tenantIds)">
           and RES.TENANT_ID_ is null
         </if>
       </if>
       <if test="hostname != null">
-        and RES.HOSTNAME_ = #{hostname, dbalType=VARCHAR}
+        and RES.HOSTNAME_ = #{hostname:VARCHAR}
       </if>
 
       <if test="authCheck.shouldPerformAuthorizatioCheck and authCheck.authUserId != null">

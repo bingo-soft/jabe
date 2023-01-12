@@ -8,18 +8,18 @@ class PrimitiveStructureDefinition implements StructureDefinitionInterface
 
     protected $primitiveClass;
 
-    public function __construct(string $id, string $primitiveClass)
+    public function __construct(?string $id, ?string $primitiveClass)
     {
         $this->id = $id;
         $this->primitiveClass = $primitiveClass;
     }
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function getPrimitiveClass(): string
+    public function getPrimitiveClass(): ?string
     {
         return $this->primitiveClass;
     }

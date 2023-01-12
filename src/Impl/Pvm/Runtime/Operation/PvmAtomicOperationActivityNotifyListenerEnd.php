@@ -17,7 +17,7 @@ class PvmAtomicOperationActivityNotifyListenerEnd extends PvmAtomicOperationActi
         return $execution->getActivity();
     }
 
-    protected function getEventName(): string
+    protected function getEventName(): ?string
     {
         return ExecutionListenerInterface::EVENTNAME_END;
     }
@@ -36,7 +36,7 @@ class PvmAtomicOperationActivityNotifyListenerEnd extends PvmAtomicOperationActi
         });
     }
 
-    public function getCanonicalName(): string
+    public function getCanonicalName(): ?string
     {
         return "activity-notify-listener-end";
     }

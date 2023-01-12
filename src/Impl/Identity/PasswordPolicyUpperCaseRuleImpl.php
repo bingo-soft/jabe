@@ -15,7 +15,7 @@ class PasswordPolicyUpperCaseRuleImpl implements PasswordPolicyRuleInterface
         $this->minUpperCase = $minUpperCase;
     }
 
-    public function getPlaceholder(): string
+    public function getPlaceholder(): ?string
     {
         return PasswordPolicyUpperCaseRuleImpl::PLACEHOLDER;
     }
@@ -27,7 +27,7 @@ class PasswordPolicyUpperCaseRuleImpl implements PasswordPolicyRuleInterface
         return $parameter;
     }
 
-    public function execute(string $password): bool
+    public function execute(?string $password): bool
     {
         $upperCaseCount = 0;
         foreach (str_split($password) as $c) {

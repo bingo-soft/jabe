@@ -19,7 +19,7 @@ class ThreadPoolJobExecutor extends JobExecutor
         $this->stopJobAcquisitionThread();
     }
 
-    public function executeJobs(array $jobIds, ProcessEngineImpl $processEngine): void
+    public function executeJobs(array $jobIds, ?ProcessEngineImpl $processEngine = null): void
     {
         try {
             $this->threadPoolExecutor->execute($this->getExecuteJobsRunnable($jobIds, $processEngine));

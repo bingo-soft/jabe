@@ -25,7 +25,7 @@ class JuelExpressionManager implements ExpressionManagerInterface, ElProviderCom
     protected $functions = [];
     protected $expressionFactory;
     protected $beans = [];
-    protected $initialized = false;
+    protected bool $initialized = false;
     protected $elResolver;
     protected $functionMapper;
     // Default implementation (does nothing)
@@ -40,25 +40,24 @@ class JuelExpressionManager implements ExpressionManagerInterface, ElProviderCom
         $this->beans = $beans;
     }
 
-    public function createExpression(string $expression): ExpressionInterface
+    public function createExpression(?string $expression): ExpressionInterface
     {
         $this->ensureInitialized();
         $valueExpression = $this->createValueExpression($expression);
         return new JuelExpression($valueExpression, $this, $expression);
     }
 
-    public function addFunction(string $name, \ReflectionMethod $function): void
+    public function addFunction(?string $name, \ReflectionMethod $function): void
     {
         EnsureUtil::ensureNotEmpty("name", "name", $name);
         EnsureUtil::ensureNotNull("function", "function", $function);
         $this->functions[$name] = $function;
     }
 
-    public function createValueExpression(string $expression): ValueExpression
+    public function createValueExpression(?string $expression): ValueExpression
     {
         $this->ensureInitialized();
-        $instance = new \stdClass();
-        return $this->expressionFactory->createValueExpression($parsingElContext, $expression, $instance);
+        return $this->expressionFactory->createValueExpression($this->parsingElContext, $expression, null, "object");
     }
 
     public function setExpressionFactory(ExpressionFactory $expressionFactory): void
@@ -137,7 +136,7 @@ class JuelExpressionManager implements ExpressionManagerInterface, ElProviderCom
 
     protected function createFunctionMapper(): FunctionMapper
     {
-        $function = $this->functions;
+        $functions = $this->functions;
         $functionMapper = new class ($functions) extends FunctionMapper {
             private $functions;
 
@@ -146,7 +145,7 @@ class JuelExpressionManager implements ExpressionManagerInterface, ElProviderCom
                 $this->functions = $functions;
             }
 
-            public function resolveFunction(string $prefix, string $localName): \ReflectionMethod
+            public function resolveFunction(?string $prefix, ?string $localName): \ReflectionMethod
             {
                 return $this->functions[$localName];
             }

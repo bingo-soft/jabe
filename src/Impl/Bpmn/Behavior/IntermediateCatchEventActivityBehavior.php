@@ -27,7 +27,7 @@ class IntermediateCatchEventActivityBehavior extends AbstractBpmnActivityBehavio
         return $this->isAfterEventBasedGateway;
     }
 
-    public function signal(ActivityExecutionInterface $execution, string $signalName, $signalData): void
+    public function signal(ActivityExecutionInterface $execution, ?string $signalName, $signalData): void
     {
         $this->leave($execution);
     }

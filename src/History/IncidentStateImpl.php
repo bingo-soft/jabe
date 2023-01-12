@@ -4,10 +4,10 @@ namespace Jabe\History;
 
 class IncidentStateImpl implements IncidentStateInterface
 {
-    public $stateCode;
-    protected $name;
+    public int $stateCode = 0;
+    protected ?string $name;
 
-    public function __construct(int $suspensionCode, string $string)
+    public function __construct(int $suspensionCode, ?string $string)
     {
         $this->stateCode = $suspensionCode;
         $this->name = $string;

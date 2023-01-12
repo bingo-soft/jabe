@@ -32,15 +32,15 @@
       REV_
       )
     values (
-      #{id ,dbalType=VARCHAR},
-      #{authorizationType ,dbalType=INTEGER},
-      #{groupId ,dbalType=VARCHAR},
-      #{userId ,dbalType=VARCHAR},
-      #{resourceType ,dbalType=INTEGER},
-      #{resourceId ,dbalType=VARCHAR},
-      #{permissions, dbalType=INTEGER},
-      #{rootProcessInstanceId, dbalType=VARCHAR},
-      #{removalTime, dbalType=VARCHAR},
+      #{id:VARCHAR},
+      #{authorizationType},
+      #{groupId:VARCHAR},
+      #{userId:VARCHAR},
+      #{resourceType},
+      #{resourceId:VARCHAR},
+      #{permissions},
+      #{rootProcessInstanceId:VARCHAR},
+      #{removalTime:VARCHAR},
       1
     )
   </insert>
@@ -49,65 +49,65 @@
 
   <update id="updateAuthorization" parameterType="Jabe\Impl\Persistence\Entity\AuthorizationEntity">
     update ${prefix}ACT_RU_AUTHORIZATION set
-      REV_ = #{revisionNext, dbalType=INTEGER},
-      TYPE_ = #{authorizationType, dbalType=INTEGER},
-      GROUP_ID_ = #{groupId, dbalType=VARCHAR},
-      USER_ID_ = #{userId, dbalType=VARCHAR},
-      RESOURCE_TYPE_ = #{resourceType, dbalType=INTEGER},
-      RESOURCE_ID_ = #{resourceId, dbalType=VARCHAR},
-      PERMS_ = #{permissions, dbalType=INTEGER},
-      REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR},
-      ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
-    where ID_ = #{id, dbalType=VARCHAR}
-      and REV_ = #{revision, dbalType=INTEGER}
+      REV_ = #{revisionNext},
+      TYPE_ = #{authorizationType},
+      GROUP_ID_ = #{groupId:VARCHAR},
+      USER_ID_ = #{userId:VARCHAR},
+      RESOURCE_TYPE_ = #{resourceType},
+      RESOURCE_ID_ = #{resourceId:VARCHAR},
+      PERMS_ = #{permissions},
+      REMOVAL_TIME_ = #{removalTime:VARCHAR},
+      ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
+    where ID_ = #{id:VARCHAR}
+      and REV_ = #{revision}
   </update>
 
   <update id="updateAuthorizationsByRootProcessInstanceId"
           parameterType="array">
     update ${prefix}ACT_RU_AUTHORIZATION set
-    REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    REMOVAL_TIME_ = #{removalTime:VARCHAR}
 
-    where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+    where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateAuthorizationsByRootProcessInstanceId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_RU_AUTHORIZATION RES WITH (FORCESEEK)
-    where RES.ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+    where RES.ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateAuthorizationsByProcessInstanceId"
           parameterType="array">
     update ${prefix}ACT_RU_AUTHORIZATION set
-    REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    REMOVAL_TIME_ = #{removalTime:VARCHAR}
 
     where
       <!-- task instances -->
       RESOURCE_ID_ IN (
         SELECT ID_
         FROM ${prefix}ACT_HI_TASKINST
-        WHERE PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+        WHERE PROC_INST_ID_ = #{processInstanceId:VARCHAR}
       )
       <!-- process instances -->
-      or RESOURCE_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      or RESOURCE_ID_ = #{processInstanceId:VARCHAR}
   </update>
 
   <update id="updateAuthorizationsByProcessInstanceId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_RU_AUTHORIZATION RES WITH (FORCESEEK)
     where
       <!-- task instances -->
       RES.RESOURCE_ID_ IN (
         SELECT ID_
         FROM ${prefix}ACT_HI_TASKINST
-        WHERE PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+        WHERE PROC_INST_ID_ = #{processInstanceId:VARCHAR}
       )
       <!-- process instances -->
-      or RES.RESOURCE_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      or RES.RESOURCE_ID_ = #{processInstanceId:VARCHAR}
   </update>
 
   <!-- AUTHORIZATION DELETE -->
@@ -148,7 +148,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_RU_AUTHORIZATION
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql"/>
     ${limitAfterWithoutOffset}
   </delete>
@@ -158,7 +158,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_RU_AUTHORIZATION
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql_oracle"/>
     ${limitAfterWithoutOffset}
   </delete>
@@ -171,21 +171,21 @@
     where ID_ IN
     (SELECT ID_
     FROM ${prefix}ACT_RU_AUTHORIZATION
-    WHERE REMOVAL_TIME_ <= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
+    WHERE REMOVAL_TIME_ &lt;= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
     ${limitAfterWithoutOffset})
   </delete>
 
   <sql id="andWhereMinuteInDateBetweenSql">
     <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
       AND ${datepart1}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart2}${date}${datepart3}
-      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+      between #{parameter.minuteFrom} and #{parameter.minuteTo}
     </if>
   </sql>
 
   <sql id="andWhereMinuteInDateBetweenSql_oracle">
     <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
       AND ${datepart1}${date}${datepart2}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart3}
-      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+      between #{parameter.minuteFrom} and #{parameter.minuteTo}
     </if>
   </sql>
 
@@ -246,9 +246,9 @@
       FROM ${prefix}ACT_RU_AUTHORIZATION 
       WHERE TYPE_ = 2
       AND (
-        USER_ID_ IN (#{userId, dbalType=VARCHAR}, '*')
-        <if test="authGroupIds != null and count(authGroupIds) > 0">
-        OR GROUP_ID_ IN <foreach item="item" index="index" collection="authGroupIds" open="(" separator="," close=")">#{item, dbalType=VARCHAR}</foreach>
+        USER_ID_ IN (#{userId:VARCHAR}, '*')
+        <if test="!empty(authGroupIds)">
+        OR GROUP_ID_ IN <foreach item="item" index="index" collection="authGroupIds" open="(" separator="," close=")">#{item:VARCHAR}</foreach>
         </if>
       )
     ) THEN 1 ELSE 0 END ${dbSpecificDummyTable}
@@ -285,7 +285,7 @@
       </if>
 
       <!-- userIds -->
-      <if test="userIds != null and count(userIds) > 0">
+      <if test="!empty(userIds)">
         and RES.USER_ID_ in
         <foreach item="item" index="index" collection="userIds"
                  open="(" separator="," close=")">
@@ -294,7 +294,7 @@
       </if>
 
       <!-- groupIds -->
-      <if test="groupIds != null and count(groupIds) > 0">
+      <if test="!empty(groupIds)">
         and RES.GROUP_ID_ in
         <foreach item="item" index="index" collection="groupIds"
                  open="(" separator="," close=")">
@@ -312,7 +312,7 @@
         and ${bitand1}RES.PERMS_${bitand2}#{permission}${bitand3} = #{permission}  
       </if>
 
-      <if test="!queryByResourceType and resourcesIntersection != null and count(resourcesIntersection) > 0">
+      <if test="!queryByResourceType and !empty(resourcesIntersection)">
         and RES.RESOURCE_TYPE_ in
         <foreach item="key"
                 collection="resourcesIntersection"
@@ -330,13 +330,13 @@
 
   <select id="isUserAuthorizedForResource" resultType="integer">
 
-  <if test="permissionChecks != null and count(permissionChecks.atomicChecks) > 1">
+  <if test="permissionChecks != null and count(permissionChecks.atomicChecks) &gt; 1">
     SELECT
   </if>
 
   <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.authorizationCheck" />
 
-  <if test="permissionChecks != null and count(permissionChecks.atomicChecks) > 1">
+  <if test="permissionChecks != null and count(permissionChecks.atomicChecks) &gt; 1">
     ${dbSpecificDummyTable}
   </if>
 
@@ -362,13 +362,13 @@
              WHERE
                     A.TYPE_ = 1
              AND
-                    A.USER_ID_ = #{authUserId, dbalType=VARCHAR}
+                    A.USER_ID_ = #{authUserId:VARCHAR}
              AND
-                    ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} = #{permCheck.perms,  dbalType=INTEGER}
+                    ${bitand1}A.PERMS_${bitand2}#{permCheck.perms}${bitand3} = #{permCheck.perms}
              AND
-                    A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+                    A.RESOURCE_TYPE_ = #{permCheck.resourceType}
              AND
-                    A.RESOURCE_ID_ = <if test="permCheck.resourceIdQueryParam != null">${permCheck.resourceIdQueryParam}</if><if test="permCheck.resourceId != null">#{permCheck.resourceId, dbalType=VARCHAR}</if>)
+                    A.RESOURCE_ID_ = <if test="permCheck.resourceIdQueryParam != null">${permCheck.resourceIdQueryParam}</if><if test="permCheck.resourceId != null">#{permCheck.resourceId:VARCHAR}</if>)
         THEN 1
       </if>
 
@@ -388,13 +388,13 @@
              WHERE
                     A.TYPE_ = 2
              AND
-                    A.USER_ID_ = #{authUserId, dbalType=VARCHAR}
+                    A.USER_ID_ = #{authUserId:VARCHAR}
              AND
-                    ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} != #{permCheck.perms,  dbalType=INTEGER}
+                    ${bitand1}A.PERMS_${bitand2}#{permCheck.perms}${bitand3} != #{permCheck.perms}
              AND
-                    A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+                    A.RESOURCE_TYPE_ = #{permCheck.resourceType}
              AND
-                    A.RESOURCE_ID_ = <if test="permCheck.resourceIdQueryParam != null">${permCheck.resourceIdQueryParam}</if><if test="permCheck.resourceId != null">#{permCheck.resourceId, dbalType=VARCHAR}</if>)
+                    A.RESOURCE_ID_ = <if test="permCheck.resourceIdQueryParam != null">${permCheck.resourceIdQueryParam}</if><if test="permCheck.resourceId != null">#{permCheck.resourceId:VARCHAR}</if>)
         THEN 0
       </if>
 
@@ -408,11 +408,11 @@
            WHERE
                   A.TYPE_ = 1
            AND
-                  A.USER_ID_ = #{authUserId, dbalType=VARCHAR}
+                  A.USER_ID_ = #{authUserId:VARCHAR}
            AND
-                  ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} = #{permCheck.perms, dbalType=INTEGER}
+                  ${bitand1}A.PERMS_${bitand2}#{permCheck.perms}${bitand3} = #{permCheck.perms}
            AND
-                  A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+                  A.RESOURCE_TYPE_ = #{permCheck.resourceType}
            AND
                   A.RESOURCE_ID_ = '*')
         THEN 1
@@ -428,11 +428,11 @@
            WHERE
                   A.TYPE_ = 2
            AND
-                  A.USER_ID_ = #{authUserId, dbalType=VARCHAR}
+                  A.USER_ID_ = #{authUserId:VARCHAR}
            AND
-                  ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} != #{permCheck.perms, dbalType=INTEGER}
+                  ${bitand1}A.PERMS_${bitand2}#{permCheck.perms}${bitand3} != #{permCheck.perms}
            AND
-                  A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+                  A.RESOURCE_TYPE_ = #{permCheck.resourceType}
            AND
                   A.RESOURCE_ID_ = '*')
       THEN 0
@@ -442,10 +442,10 @@
           (
           SELECT
             CASE
-              <if test="authGroupIds != null and count(authGroupIds) > 0">
+              <if test="!empty(authGroupIds)">
 
                 <!-- Group GRANTS -->
-                <if test="permCheck.resourceIdQueryParam != null || (permCheck.resourceId != null and !permCheck.resourceId.equals('*')) ">
+                <if test="permCheck.resourceIdQueryParam != null || (permCheck.resourceId != null and permCheck.resourceId != '*') ">
                   WHEN
                     <if test="permCheck.resourceIdQueryParam != null">
                     ${permCheck.resourceIdQueryParam} IN
@@ -462,11 +462,11 @@
                        AND
                               A.GROUP_ID_ IN <foreach item="item" index="index" collection="authGroupIds" open="(" separator="," close=")">#{item}</foreach>
                        AND
-                              ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} = #{permCheck.perms,  dbalType=INTEGER}
+                              ${bitand1}A.PERMS_${bitand2}#{permCheck.perms}${bitand3} = #{permCheck.perms}
                        AND
-                              A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+                              A.RESOURCE_TYPE_ = #{permCheck.resourceType}
                        AND
-                              A.RESOURCE_ID_ = <if test="permCheck.resourceIdQueryParam != null">${permCheck.resourceIdQueryParam}</if><if test="permCheck.resourceId != null">#{permCheck.resourceId, dbalType=VARCHAR}</if>)
+                              A.RESOURCE_ID_ = <if test="permCheck.resourceIdQueryParam != null">${permCheck.resourceIdQueryParam}</if><if test="permCheck.resourceId != null">#{permCheck.resourceId:VARCHAR}</if>)
                   THEN 1
                 </if>
 
@@ -488,11 +488,11 @@
                        AND
                               A.GROUP_ID_ IN <foreach item="item" index="index" collection="authGroupIds" open="(" separator="," close=")">#{item}</foreach>
                        AND
-                              ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} != #{permCheck.perms,  dbalType=INTEGER}
+                              ${bitand1}A.PERMS_${bitand2}#{permCheck.perms}${bitand3} != #{permCheck.perms}
                        AND
-                              A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+                              A.RESOURCE_TYPE_ = #{permCheck.resourceType}
                        AND
-                              A.RESOURCE_ID_ = <if test="permCheck.resourceIdQueryParam != null">${permCheck.resourceIdQueryParam}</if><if test="permCheck.resourceId != null">#{permCheck.resourceId, dbalType=VARCHAR}</if>)
+                              A.RESOURCE_ID_ = <if test="permCheck.resourceIdQueryParam != null">${permCheck.resourceIdQueryParam}</if><if test="permCheck.resourceId != null">#{permCheck.resourceId:VARCHAR}</if>)
                   THEN 0
                 </if>
 
@@ -508,9 +508,9 @@
                      AND
                             A.GROUP_ID_ IN <foreach item="item" index="index" collection="authGroupIds" open="(" separator="," close=")">#{item}</foreach>
                      AND
-                            ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} = #{permCheck.perms, dbalType=INTEGER}
+                            ${bitand1}A.PERMS_${bitand2}#{permCheck.perms}${bitand3} = #{permCheck.perms}
                      AND
-                            A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+                            A.RESOURCE_TYPE_ = #{permCheck.resourceType}
                      AND
                             A.RESOURCE_ID_ = '*')
                   THEN 1
@@ -528,9 +528,9 @@
                      AND
                             A.GROUP_ID_ IN <foreach item="item" index="index" collection="authGroupIds" open="(" separator="," close=")">#{item}</foreach>
                      AND
-                            ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} != #{permCheck.perms, dbalType=INTEGER}
+                            ${bitand1}A.PERMS_${bitand2}#{permCheck.perms}${bitand3} != #{permCheck.perms}
                      AND
-                            A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+                            A.RESOURCE_TYPE_ = #{permCheck.resourceType}
                      AND
                             A.RESOURCE_ID_ = '*')
                   THEN 0
@@ -558,11 +558,11 @@
                                  AND
                                         A.USER_ID_ = '*'
                                  AND
-                                        ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} = #{permCheck.perms,  dbalType=INTEGER}
+                                        ${bitand1}A.PERMS_${bitand2}#{permCheck.perms}${bitand3} = #{permCheck.perms}
                                  AND
-                                        A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+                                        A.RESOURCE_TYPE_ = #{permCheck.resourceType}
                                  AND
-                                        A.RESOURCE_ID_ = <if test="permCheck.resourceIdQueryParam != null">${permCheck.resourceIdQueryParam}</if><if test="permCheck.resourceId != null">#{permCheck.resourceId, dbalType=VARCHAR}</if>)
+                                        A.RESOURCE_ID_ = <if test="permCheck.resourceIdQueryParam != null">${permCheck.resourceIdQueryParam}</if><if test="permCheck.resourceId != null">#{permCheck.resourceId:VARCHAR}</if>)
                             THEN 1
                           </if>
 
@@ -584,11 +584,11 @@
                                  AND
                                         A.USER_ID_ = '*'
                                  AND
-                                        ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} != #{permCheck.perms,  dbalType=INTEGER}
+                                        ${bitand1}A.PERMS_${bitand2}#{permCheck.perms}${bitand3} != #{permCheck.perms}
                                  AND
-                                        A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+                                        A.RESOURCE_TYPE_ = #{permCheck.resourceType}
                                  AND
-                                        A.RESOURCE_ID_ = <if test="permCheck.resourceIdQueryParam != null">${permCheck.resourceIdQueryParam}</if><if test="permCheck.resourceId != null">#{permCheck.resourceId, dbalType=VARCHAR}</if>)
+                                        A.RESOURCE_ID_ = <if test="permCheck.resourceIdQueryParam != null">${permCheck.resourceIdQueryParam}</if><if test="permCheck.resourceId != null">#{permCheck.resourceId:VARCHAR}</if>)
                             THEN 0
                           </if>
 
@@ -604,9 +604,9 @@
                                AND
                                       A.USER_ID_ = '*'
                                AND
-                                      ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} = #{permCheck.perms, dbalType=INTEGER}
+                                      ${bitand1}A.PERMS_${bitand2}#{permCheck.perms}${bitand3} = #{permCheck.perms}
                                AND
-                                      A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+                                      A.RESOURCE_TYPE_ = #{permCheck.resourceType}
                                AND
                                       A.RESOURCE_ID_ = '*')
                             THEN 1
@@ -624,9 +624,9 @@
                                AND
                                       A.USER_ID_ = '*'
                                AND
-                                      ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} != #{permCheck.perms, dbalType=INTEGER}
+                                      ${bitand1}A.PERMS_${bitand2}#{permCheck.perms}${bitand3} != #{permCheck.perms}
                                AND
-                                      A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER}
+                                      A.RESOURCE_TYPE_ = #{permCheck.resourceType}
                                AND
                                       A.RESOURCE_ID_ = '*')
                             THEN 0
@@ -641,7 +641,7 @@
                             null
                           </if>
 
-              <if test="authGroupIds != null and count(authGroupIds) > 0">
+              <if test="!empty(authGroupIds)">
                         END ${dbSpecificDummyTable}
                 )
               </if>
@@ -669,10 +669,10 @@
           </when> 
           <otherwise>
             AUTH.RESOURCE_ID_ IS NOT NULL 
-            <if test="authCheck.permissionChecks.compositeChecks != null and count(authCheck.permissionChecks.compositeChecks) > 0"> 
+            <if test="!empty(authCheck.permissionChecks.compositeChecks)"> 
               AND
               <foreach item="permCheck" index="index" collection="authCheck.permissionChecks.compositeChecks" separator="AND">
-                <if test="index > 0">
+                <if test="index &gt; 0">
                   AUTH${index}.RESOURCE_ID_ IS NOT NULL
                 </if>
               </foreach>
@@ -733,22 +733,22 @@
     (
     SELECT A.*
     FROM ${prefix}ACT_RU_AUTHORIZATION A
-    WHERE A.TYPE_ < 2     
-    AND ( A.USER_ID_ in ( #{authCheck.authUserId, dbalType=VARCHAR}, '*')           
-    <if test="authGroupIds != null and count(authGroupIds) > 0">
+    WHERE A.TYPE_ &lt; 2     
+    AND ( A.USER_ID_ in ( #{authCheck.authUserId:VARCHAR}, '*')           
+    <if test="!empty(authGroupIds)">
       OR A.GROUP_ID_ IN <foreach item="item" index="index" collection="authGroupIds" open="(" separator="," close=")">#{item}</foreach>
     </if>
     )
-    <if test="atomicChecks != null and count(atomicChecks) > 0">
+    <if test="!empty(atomicChecks)">
       AND (
       <if test="disjunctive">
         <foreach item="permCheck" index="index" collection="atomicChecks" open="(" separator="OR" close=")">
-          A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER} AND ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} = #{permCheck.perms,  dbalType=INTEGER}
+          A.RESOURCE_TYPE_ = #{permCheck.resourceType} AND ${bitand1}A.PERMS_${bitand2}#{permCheck.perms}${bitand3} = #{permCheck.perms}
         </foreach>
       </if>
       <if test="!disjunctive">
         <foreach item="permCheck" index="index" collection="atomicChecks" open="(" separator="AND" close=")">
-          A.RESOURCE_TYPE_ = #{permCheck.resourceType, dbalType=INTEGER} AND ${bitand1}A.PERMS_${bitand2}#{permCheck.perms, dbalType=INTEGER}${bitand3} = #{permCheck.perms,  dbalType=INTEGER}
+          A.RESOURCE_TYPE_ = #{permCheck.resourceType} AND ${bitand1}A.PERMS_${bitand2}#{permCheck.perms}${bitand3} = #{permCheck.perms}
         </foreach>
       </if>
       )
@@ -767,7 +767,7 @@
 
     </if>
 
-    <if test="permissionChecks.atomicChecks != null and count(permissionChecks.atomicChecks) > 1">
+    <if test="permissionChecks.atomicChecks != null and count(permissionChecks.atomicChecks) &gt; 1">
       <if test="permissionChecks.disjunctive">
         <bind name="atomicChecks" value="permissionChecks.atomicChecks" />
         <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.disjunctiveAtomicChecks" />
@@ -783,7 +783,7 @@
    input: "permissionChecks": an instance of CompositePermissionCheck
   -->
   <sql id="compositeChecks">
-    <if test="permissionChecks.compositeChecks != null and count(permissionChecks.compositeChecks) > 1">
+    <if test="permissionChecks.compositeChecks != null and count(permissionChecks.compositeChecks) &gt; 1">
       <if test="permissionChecks.disjunctive">
         <bind name="compositeChecks" value="permissionChecks.compositeChecks" />
         <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.disjunctiveCompositeChecks"/>
@@ -828,7 +828,7 @@
     <!-- the BITAND function on databases like Oracle and DB2 takes exactly two arguments;
     Instead of BITAND(a, b, c), we generate BITAND(BITAND(a, b), c)) instead -->
     <foreach index="index" collection="atomicChecks">
-      <if test="index < count(atomicChecks) - 1">
+      <if test="index &lt; count(atomicChecks) - 1">
         ${bitand1}
       </if>
     </foreach>
@@ -836,10 +836,10 @@
       ${dbSpecificIfNullFunction}(
         (<include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.authCheck"/>)
       , 0)
-      <if test="i > 0">
+      <if test="i &gt; 0">
         ${bitand3}
       </if>
-      <if test="i < count(atomicChecks) - 1">
+      <if test="i &lt; count(atomicChecks) - 1">
         ${bitand2}
       </if>
     </foreach>
@@ -852,16 +852,16 @@
     <!-- the BITAND function on databases like Oracle and DB2 takes exactly two arguments;
     Instead of BITAND(a, b, c), we generate BITAND(BITAND(a, b), c)) instead -->
     <foreach index="index" collection="compositeChecks">
-      <if test="index < count(compositeChecks) - 1">
+      <if test="index &lt; count(compositeChecks) - 1">
         ${bitand1}
       </if>
     </foreach>
     <foreach  item="permissionChecks" index="i" collection="compositeChecks">
       <include refid="Jabe\Impl\Persistence\Entity\AuthorizationEntity.atomicChecks" />
-      <if test="i > 0">
+      <if test="i &gt; 0">
         ${bitand3}
       </if>
-      <if test="i < count(compositeChecks) - 1">
+      <if test="i &lt; count(compositeChecks) - 1">
         ${bitand2}
       </if>
     </foreach>
@@ -899,10 +899,10 @@
             OR
           </if>
             (AUTH.RESOURCE_ID_ IS NOT NULL)
-            <if test="authCheck.permissionChecks.compositeChecks != null and count(authCheck.permissionChecks.compositeChecks) > 0"> 
+            <if test="!empty(authCheck.permissionChecks.compositeChecks)"> 
               AND
               <foreach item="permCheck" index="index" collection="authCheck.permissionChecks.compositeChecks" separator="AND">
-                <if test="index > 0">
+                <if test="index &gt; 0">
                   AUTH${index}.RESOURCE_ID_ IS NOT NULL
                 </if>
               </foreach>

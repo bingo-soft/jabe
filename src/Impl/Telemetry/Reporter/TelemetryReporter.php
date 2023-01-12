@@ -36,17 +36,17 @@ class TelemetryReporter
 
     protected $commandExecutor;
     protected $telemetryEndpoint;
-    protected $telemetryRequestRetries;
+    protected int $telemetryRequestRetries = 0;
     protected $data;
     protected $httpConnector;
     protected $telemetryRegistry;
     protected $metricsRegistry;
-    protected $telemetryRequestTimeout;
+    protected int $telemetryRequestTimeout = 0;
     protected $timer;
 
     public function __construct(
         CommandExecutorInterface $commandExecutor,
-        string $telemetryEndpoint,
+        ?string $telemetryEndpoint,
         int $telemetryRequestRetries,
         int $telemetryReportingPeriod,
         TelemetryDataImpl $data,
@@ -146,7 +146,7 @@ class TelemetryReporter
         $this->telemetrySendingTask = $telemetrySendingTask;
     }
 
-    public function getTelemetryEndpoint(): string
+    public function getTelemetryEndpoint(): ?string
     {
         return $this->telemetryEndpoint;
     }

@@ -8,7 +8,10 @@ use Jabe\Impl\{
     SchemaOperationsProcessEngineBuild
 };
 use Jabe\Impl\Persistence\Entity\JobEntity;
-use Jabe\Impl\Cfg\StandaloneProcessEngineConfiguration;
+use Jabe\Impl\Cfg\{
+    BeansConfigurationHelper,
+    StandaloneProcessEngineConfiguration
+};
 use Jabe\Variable\Type\ValueTypeResolverInterface;
 use Jabe\Identity\PasswordPolicyInterface;
 use Jabe\Runtime\DeserializationTypeValidatorInterface;
@@ -46,6 +49,8 @@ abstract class ProcessEngineConfiguration
      * This means no details for those entities.
      */
     public const HISTORY_ACTIVITY = "activity";
+
+    public const HISTORY_VARIABLE = "variable";
 
     /**
      * Value for {@link #setHistory(String)} to ensure that only historic process instances,
@@ -125,24 +130,25 @@ abstract class ProcessEngineConfiguration
     public const AUTHORIZATION_CHECK_REVOKE_AUTO = "auto";
 
     protected $processEngineName = ProcessEngines::NAME_DEFAULT;
-    protected $idBlockSize = 100;
+    protected int $idBlockSize = 100;
     protected $history = self::HISTORY_DEFAULT;
-    protected $jobExecutorActivate;
-    protected $jobExecutorDeploymentAware = false;
-    protected $jobExecutorPreferTimerJobs = false;
-    protected $jobExecutorAcquireByDueDate = false;
-    protected $jobExecutorAcquireByPriority = false;
+    //@ATTENTION. JOB ACTIVATION COMES HERE
+    protected bool $jobExecutorActivate = false;
+    protected bool $jobExecutorDeploymentAware = false;
+    protected bool $jobExecutorPreferTimerJobs = false;
+    protected bool $jobExecutorAcquireByDueDate = false;
+    protected bool $jobExecutorAcquireByPriority = false;
 
-    protected $ensureJobDueDateNotNull = false;
-    protected $producePrioritizedJobs = true;
-    protected $producePrioritizedExternalTasks = true;
+    protected bool $ensureJobDueDateNotNull = false;
+    protected bool $producePrioritizedJobs = true;
+    protected bool $producePrioritizedExternalTasks = true;
 
     /**
      * The flag will be used inside the method "JobManager#send()". It will be used to decide whether to notify the
      * job executor that a new job has been created. It will be used for performance improvement, so that the new job could
      * be executed in some situations immediately.
      */
-    protected $hintJobExecutor = true;
+    protected bool $hintJobExecutor = true;
 
     protected $mailServerHost;
     protected $mailServerUsername; // by default no name and password are provided, which
@@ -160,11 +166,11 @@ abstract class ProcessEngineConfiguration
     protected $dbUrl = 'pgsql:host=localhost;port=5432;dbname=engine;';
     protected $dbUsername = 'postgres';
     protected $dbPassword = 'postgres';
-    protected $dbMaxActiveConnections;
-    protected $dbMaxIdleConnections;
-    protected $dbMaxCheckoutTime;
-    protected $dbMaxWaitTime;
-    protected $dbPingEnabled = false;
+    protected int $dbMaxActiveConnections = 0;
+    protected int $dbMaxIdleConnections = 0;
+    protected int $dbMaxCheckoutTime = 0;
+    protected int $dbMaxWaitTime = 0;
+    protected bool $dbPingEnabled = false;
     protected $dbPingQuery = null;
     protected $dbPingConnectionNotUsedFor;
     protected $dataSource;
@@ -172,10 +178,11 @@ abstract class ProcessEngineConfiguration
     protected $schemaOperationsCommand;
     protected $bootstrapCommand;
     protected $historyLevelCommand;
-    protected $transactionsExternallyManaged = false;
+    protected bool $transactionsExternallyManaged = false;
     /** the number of seconds the db driver will wait for a response from the database */
     protected $dbStatementTimeout;
-    protected $dbBatchProcessing = true;
+    //@TODO check batchProcessing to be true by default
+    protected bool $dbBatchProcessing = false;
 
     protected $persistenceUnitName;
     //protected $entityManagerFactory;
@@ -183,7 +190,7 @@ abstract class ProcessEngineConfiguration
     //protected $closeEntityManager;
     protected $defaultNumberOfRetries = JobEntity::DEFAULT_RETRIES;
 
-    protected $createIncidentOnFailedJobEnabled = true;
+    protected bool $createIncidentOnFailedJobEnabled = true;
 
     /**
      * configuration of password policy
@@ -195,7 +202,7 @@ abstract class ProcessEngineConfiguration
      * switch for controlling whether the process engine performs authorization checks.
      * The default value is false.
      */
-    protected $authorizationEnabled = false;
+    protected bool $authorizationEnabled = false;
 
     /**
      * Provides the default task permission for the user related to a task
@@ -220,14 +227,14 @@ abstract class ProcessEngineConfiguration
      * <p>The default value is <code>false</code>.</p>
      *
      */
-    protected $authorizationEnabledForCustomCode = false;
+    protected bool $authorizationEnabledForCustomCode = false;
 
     /**
      * If the value of this flag is set <code>true</code> then the process engine
      * performs tenant checks to ensure that an authenticated user can only access
      * data that belongs to one of his tenants.
      */
-    protected $tenantCheckEnabled = true;
+    protected bool $tenantCheckEnabled = true;
 
     protected $valueTypeResolver;
 
@@ -240,7 +247,7 @@ abstract class ProcessEngineConfiguration
      *
      * <p>By default only alphanumeric values (or 'admin') will be accepted.</p>
      */
-    protected $generalResourceWhitelistPattern =  "[a-zA-Z0-9]+|admin";
+    protected $generalResourceWhitelistPattern =  "/[a-zA-Z0-9]+|admin/";
 
     /**
      * A parameter used for defining acceptable values for the User IDs.
@@ -279,7 +286,7 @@ abstract class ProcessEngineConfiguration
      *
      * <p>The default value is <code>false</code>.</p>
      */
-    protected $enableExceptionsAfterUnhandledBpmnError = false;
+    protected bool $enableExceptionsAfterUnhandledBpmnError = false;
 
     /**
      * If the value of this flag is set to <code>false</code>, OptimisticLockingExceptions
@@ -287,7 +294,7 @@ abstract class ProcessEngineConfiguration
      *
      * <p>The default value is <code>true</code>.</p>
      */
-    protected $skipHistoryOptimisticLockingExceptions = true;
+    protected bool $skipHistoryOptimisticLockingExceptions = true;
 
     /**
      * If the value of this flag is set to <code>true</code>,
@@ -298,7 +305,7 @@ abstract class ProcessEngineConfiguration
      * READ_VARIABLE on Historic Task Instance resource
      * will be required to fetch variables when the authorizations are enabled.
      */
-    protected $enforceSpecificVariablePermission = false;
+    protected bool $enforceSpecificVariablePermission = false;
 
     /**
      * Specifies which permissions will not be taken into account in the
@@ -312,7 +319,7 @@ abstract class ProcessEngineConfiguration
      * multiple logs of the same exception (e.g. exceptions that occur during job execution)
      * but can also hide valuable debugging/rootcausing information.
      */
-    protected $enableCmdExceptionLogging = true;
+    protected bool $enableCmdExceptionLogging = true;
 
     /**
      * If the value of this flag is set to <code>true</code> exceptions that occur
@@ -320,7 +327,7 @@ abstract class ProcessEngineConfiguration
      * If the job does not have any retries left, the exception will still be logged
      * on logging level WARN.
      */
-    protected $enableReducedJobExceptionLogging = false;
+    protected bool $enableReducedJobExceptionLogging = false;
 
     /** Specifies which classes are allowed for deserialization */
     protected $deserializationAllowedClasses;
@@ -332,7 +339,7 @@ abstract class ProcessEngineConfiguration
     protected $deserializationTypeValidator;
 
     /** Indicates whether type validation should be done before deserialization */
-    protected $deserializationTypeValidationEnabled = false;
+    protected bool $deserializationTypeValidationEnabled = false;
 
     /** An unique installation identifier */
     protected $installationId;
@@ -343,9 +350,9 @@ abstract class ProcessEngineConfiguration
      * On failing activities we can skip output mapping. This might be helpful if output mapping uses variables that might not
      * be available on failure (e.g. with external tasks or RPA tasks).
      */
-    protected $skipOutputMappingOnCanceledActivities = false;
+    protected bool $skipOutputMappingOnCanceledActivities = false;
 
-    protected function __construct()
+    public function __construct()
     {
         $this->mailServerHost = getenv('MAIL_HOST', true);
         $this->mailServerUsername = getenv('MAIL_USER', true); // by default no name and password are provided, which
@@ -368,6 +375,22 @@ abstract class ProcessEngineConfiguration
 
     abstract public function buildProcessEngine();
 
+    public static function createProcessEngineConfigurationFromResourceDefault(): ProcessEngineConfiguration
+    {
+        $processEngineConfiguration = self::createProcessEngineConfigurationFromResource("engine.cfg.xml", "processEngineConfiguration");
+        return $processEngineConfiguration;
+    }
+
+    public static function createProcessEngineConfigurationFromResource(?string $resource, ?string $beanName = "processEngineConfiguration"): ProcessEngineConfiguration
+    {
+        return BeansConfigurationHelper::parseProcessEngineConfigurationFromResource($resource, $beanName);
+    }
+
+    public static function createProcessEngineConfigurationFromInputStream($inputStream, ?string $beanName = "processEngineConfiguration"): ProcessEngineConfiguration
+    {
+        return BeansConfigurationHelper::parseProcessEngineConfigurationFromInputStream($inputStream, $beanName);
+    }
+
     public static function createStandaloneProcessEngineConfiguration(): ProcessEngineConfiguration
     {
         return new StandaloneProcessEngineConfiguration();
@@ -375,12 +398,12 @@ abstract class ProcessEngineConfiguration
 
     // getters and setters //////////////////////////////////////////////////////
 
-    public function getProcessEngineName(): string
+    public function getProcessEngineName(): ?string
     {
         return $this->processEngineName;
     }
 
-    public function setProcessEngineName(string $processEngineName): ProcessEngineConfiguration
+    public function setProcessEngineName(?string $processEngineName): ProcessEngineConfiguration
     {
         $this->processEngineName = $processEngineName;
         return $this;
@@ -397,45 +420,45 @@ abstract class ProcessEngineConfiguration
         return $this;
     }
 
-    public function getHistory(): string
+    public function getHistory(): ?string
     {
         return $this->history;
     }
 
-    public function setHistory(string $history): ProcessEngineConfiguration
+    public function setHistory(?string $history): ProcessEngineConfiguration
     {
         $this->history = $history;
         return $this;
     }
 
-    public function getMailServerHost(): string
+    public function getMailServerHost(): ?string
     {
         return $this->mailServerHost;
     }
 
-    public function setMailServerHost(string $mailServerHost): ProcessEngineConfiguration
+    public function setMailServerHost(?string $mailServerHost): ProcessEngineConfiguration
     {
         $this->mailServerHost = $mailServerHost;
         return $this;
     }
 
-    public function getMailServerUsername(): string
+    public function getMailServerUsername(): ?string
     {
         return $this->mailServerUsername;
     }
 
-    public function setMailServerUsername(string $mailServerUsername): ProcessEngineConfiguration
+    public function setMailServerUsername(?string $mailServerUsername): ProcessEngineConfiguration
     {
         $this->mailServerUsername = $mailServerUsername;
         return $this;
     }
 
-    public function getMailServerPassword(): string
+    public function getMailServerPassword(): ?string
     {
         return $this->mailServerPassword;
     }
 
-    public function setMailServerPassword(string $mailServerPassword): ProcessEngineConfiguration
+    public function setMailServerPassword(?string $mailServerPassword): ProcessEngineConfiguration
     {
         $this->mailServerPassword = $mailServerPassword;
         return $this;
@@ -463,56 +486,56 @@ abstract class ProcessEngineConfiguration
         return $this;
     }
 
-    public function getMailServerDefaultFrom(): string
+    public function getMailServerDefaultFrom(): ?string
     {
         return $this->mailServerDefaultFrom;
     }
 
-    public function setMailServerDefaultFrom(string $mailServerDefaultFrom): ProcessEngineConfiguration
+    public function setMailServerDefaultFrom(?string $mailServerDefaultFrom): ProcessEngineConfiguration
     {
         $this->mailServerDefaultFrom = $mailServerDefaultFrom;
         return $this;
     }
 
-    public function getDatabaseType(): string
+    public function getDatabaseType(): ?string
     {
         return $this->databaseType;
     }
 
-    public function setDatabaseType(string $databaseType): ProcessEngineConfiguration
+    public function setDatabaseType(?string $databaseType): ProcessEngineConfiguration
     {
         $this->databaseType = $databaseType;
         return $this;
     }
 
-    public function getDatabaseVendor(): string
+    public function getDatabaseVendor(): ?string
     {
         return $this->databaseVendor;
     }
 
-    public function setDatabaseVendor(string $databaseVendor): ProcessEngineConfiguration
+    public function setDatabaseVendor(?string $databaseVendor): ProcessEngineConfiguration
     {
         $this->databaseVendor = $databaseVendor;
         return $this;
     }
 
-    public function getDatabaseVersion(): string
+    public function getDatabaseVersion(): ?string
     {
         return $this->databaseVersion;
     }
 
-    public function setDatabaseVersion(string $databaseVersion): ProcessEngineConfiguration
+    public function setDatabaseVersion(?string $databaseVersion): ProcessEngineConfiguration
     {
         $this->databaseVersion = $databaseVersion;
         return $this;
     }
 
-    public function getDatabaseSchemaUpdate(): string
+    public function getDatabaseSchemaUpdate(): ?string
     {
         return $this->databaseSchemaUpdate;
     }
 
-    public function setDatabaseSchemaUpdate(string $databaseSchemaUpdate): ProcessEngineConfiguration
+    public function setDatabaseSchemaUpdate(?string $databaseSchemaUpdate): ProcessEngineConfiguration
     {
         $this->databaseSchemaUpdate = $databaseSchemaUpdate;
         return $this;
@@ -529,7 +552,7 @@ abstract class ProcessEngineConfiguration
         return $this;
     }
 
-    public function getSchemaOperationsCommand(): SchemaOperationsCommand
+    public function getSchemaOperationsCommand(): ?SchemaOperationsCommand
     {
         return $this->schemaOperationsCommand;
     }
@@ -559,45 +582,45 @@ abstract class ProcessEngineConfiguration
         $this->historyLevelCommand = $historyLevelCommand;
     }
 
-    public function getDbDriver(): string
+    public function getDbDriver(): ?string
     {
         return $this->dbDriver;
     }
 
-    public function setDbDriver(string $dbDriver): ProcessEngineConfiguration
+    public function setDbDriver(?string $dbDriver): ProcessEngineConfiguration
     {
         $this->dbDriver = $dbDriver;
         return $this;
     }
 
-    public function getDbHost(): string
+    public function getDbHost(): ?string
     {
         return $this->dbHost;
     }
 
-    public function setDbHost(string $dbHost): ProcessEngineConfiguration
+    public function setDbHost(?string $dbHost): ProcessEngineConfiguration
     {
         $this->dbHost = $dbHost;
         return $this;
     }
 
-    public function getDbUsername(): string
+    public function getDbUsername(): ?string
     {
         return $this->dbUsername;
     }
 
-    public function setDbUsername(string $dbUsername): ProcessEngineConfiguration
+    public function setDbUsername(?string $dbUsername): ProcessEngineConfiguration
     {
         $this->dbUsername = $dbUsername;
         return $this;
     }
 
-    public function getDbPassword(): string
+    public function getDbPassword(): ?string
     {
         return $this->dbPassword;
     }
 
-    public function setDbPassword(string $dbPassword): ProcessEngineConfiguration
+    public function setDbPassword(?string $dbPassword): ProcessEngineConfiguration
     {
         $this->dbPassword = $dbPassword;
         return $this;
@@ -614,7 +637,7 @@ abstract class ProcessEngineConfiguration
         return $this;
     }
 
-    public function getDbMaxActiveConnections(): int
+    public function getDbMaxActiveConnections(): ?int
     {
         return $this->dbMaxActiveConnections;
     }
@@ -625,18 +648,18 @@ abstract class ProcessEngineConfiguration
         return $this;
     }
 
-    public function getDbMaxIdleConnections(): int
+    public function getDbMaxIdleConnections(): ?int
     {
         return $this->dbMaxIdleConnections;
     }
 
-    public function setDbMaxIdleConnections(int $dbMaxIdleConnections): int
+    public function setDbMaxIdleConnections(int $dbMaxIdleConnections): ProcessEngineConfiguration
     {
         $this->dbMaxIdleConnections = $dbMaxIdleConnections;
         return $this;
     }
 
-    public function getDbMaxCheckoutTime(): int
+    public function getDbMaxCheckoutTime(): ?int
     {
         return $this->dbMaxCheckoutTime;
     }
@@ -647,7 +670,7 @@ abstract class ProcessEngineConfiguration
         return $this;
     }
 
-    public function getDbMaxWaitTime(): int
+    public function getDbMaxWaitTime(): ?int
     {
         return $this->dbMaxWaitTime;
     }
@@ -669,12 +692,12 @@ abstract class ProcessEngineConfiguration
         return $this;
     }
 
-    public function getDbPingQuery(): string
+    public function getDbPingQuery(): ?string
     {
         return $this->dbPingQuery;
     }
 
-    public function setDbPingQuery(string $dbPingQuery): ProcessEngineConfiguration
+    public function setDbPingQuery(?string $dbPingQuery): ProcessEngineConfiguration
     {
         $this->dbPingQuery = $dbPingQuery;
         return $this;
@@ -792,12 +815,12 @@ abstract class ProcessEngineConfiguration
         return $this;
     }*/
 
-    public function getPersistenceUnitName(): string
+    public function getPersistenceUnitName(): ?string
     {
         return $this->persistenceUnitName;
     }
 
-    public function setPersistenceUnitName(string $persistenceUnitName): void
+    public function setPersistenceUnitName(?string $persistenceUnitName): void
     {
         $this->persistenceUnitName = $persistenceUnitName;
     }
@@ -824,12 +847,12 @@ abstract class ProcessEngineConfiguration
         return $this;
     }
 
-    public function getDefaultUserPermissionNameForTask(): string
+    public function getDefaultUserPermissionNameForTask(): ?string
     {
         return $this->defaultUserPermissionNameForTask;
     }
 
-    public function setDefaultUserPermissionNameForTask(string $defaultUserPermissionNameForTask): ProcessEngineConfiguration
+    public function setDefaultUserPermissionNameForTask(?string $defaultUserPermissionNameForTask): ProcessEngineConfiguration
     {
         $this->defaultUserPermissionNameForTask = $defaultUserPermissionNameForTask;
         return $this;
@@ -857,47 +880,47 @@ abstract class ProcessEngineConfiguration
         return $this;
     }
 
-    public function getGeneralResourceWhitelistPattern(): string
+    public function getGeneralResourceWhitelistPattern(): ?string
     {
         return $this->generalResourceWhitelistPattern;
     }
 
-    public function setGeneralResourceWhitelistPattern(string $generalResourceWhitelistPattern): void
+    public function setGeneralResourceWhitelistPattern(?string $generalResourceWhitelistPattern): void
     {
         $this->generalResourceWhitelistPattern = $generalResourceWhitelistPattern;
     }
 
-    public function getUserResourceWhitelistPattern(): string
+    public function getUserResourceWhitelistPattern(): ?string
     {
         return $this->userResourceWhitelistPattern;
     }
 
-    public function setUserResourceWhitelistPattern(string $userResourceWhitelistPattern): void
+    public function setUserResourceWhitelistPattern(?string $userResourceWhitelistPattern): void
     {
         $this->userResourceWhitelistPattern = $userResourceWhitelistPattern;
     }
 
-    public function getGroupResourceWhitelistPattern(): string
+    public function getGroupResourceWhitelistPattern(): ?string
     {
         return $this->groupResourceWhitelistPattern;
     }
 
-    public function setGroupResourceWhitelistPattern(string $groupResourceWhitelistPattern): void
+    public function setGroupResourceWhitelistPattern(?string $groupResourceWhitelistPattern): void
     {
         $this->groupResourceWhitelistPattern = $groupResourceWhitelistPattern;
     }
 
-    public function getTenantResourceWhitelistPattern(): string
+    public function getTenantResourceWhitelistPattern(): ?string
     {
         return $this->tenantResourceWhitelistPattern;
     }
 
-    public function setTenantResourceWhitelistPattern(string $tenantResourceWhitelistPattern): void
+    public function setTenantResourceWhitelistPattern(?string $tenantResourceWhitelistPattern): void
     {
         $this->tenantResourceWhitelistPattern = $tenantResourceWhitelistPattern;
     }
 
-    public function getDefaultNumberOfRetries(): int
+    public function getDefaultNumberOfRetries(): ?int
     {
         return $this->defaultNumberOfRetries;
     }
@@ -958,12 +981,12 @@ abstract class ProcessEngineConfiguration
         $this->producePrioritizedExternalTasks = $producePrioritizedExternalTasks;
     }
 
-    public function setAuthorizationCheckRevokes(string $authorizationCheckRevokes): bool
+    public function setAuthorizationCheckRevokes(?string $authorizationCheckRevokes): bool
     {
         $this->authorizationCheckRevokes = $authorizationCheckRevokes;
     }
 
-    public function getAuthorizationCheckRevokes(): string
+    public function getAuthorizationCheckRevokes(): ?string
     {
         return $this->authorizationCheckRevokes;
     }
@@ -1053,23 +1076,23 @@ abstract class ProcessEngineConfiguration
         return $this;
     }
 
-    public function getDeserializationAllowedClasses(): string
+    public function getDeserializationAllowedClasses(): ?string
     {
         return $this->deserializationAllowedClasses;
     }
 
-    public function setDeserializationAllowedClasses(string $deserializationAllowedClasses): ProcessEngineConfiguration
+    public function setDeserializationAllowedClasses(?string $deserializationAllowedClasses): ProcessEngineConfiguration
     {
         $this->deserializationAllowedClasses = $deserializationAllowedClasses;
         return $this;
     }
 
-    public function getDeserializationAllowedPackages(): string
+    public function getDeserializationAllowedPackages(): ?string
     {
         return $this->deserializationAllowedPackages;
     }
 
-    public function setDeserializationAllowedPackages(string $deserializationAllowedPackages): ProcessEngineConfiguration
+    public function setDeserializationAllowedPackages(?string $deserializationAllowedPackages): ProcessEngineConfiguration
     {
         $this->deserializationAllowedPackages = $deserializationAllowedPackages;
         return $this;
@@ -1097,12 +1120,12 @@ abstract class ProcessEngineConfiguration
         return $this;
     }
 
-    public function getInstallationId(): string
+    public function getInstallationId(): ?string
     {
         return $this->installationId;
     }
 
-    public function setInstallationId(string $installationId): ProcessEngineConfiguration
+    public function setInstallationId(?string $installationId): ProcessEngineConfiguration
     {
         $this->installationId = $installationId;
         return $this;

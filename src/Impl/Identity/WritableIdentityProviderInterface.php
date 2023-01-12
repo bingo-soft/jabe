@@ -24,7 +24,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
      * @param userId
      * @return an non-persistent user object.
      */
-    public function createNewUser(string $userId): UserInterface;
+    public function createNewUser(?string $userId): UserInterface;
 
     /**
      * Allows saving or updates a User object
@@ -42,7 +42,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
      * @return IdentityOperationResult the operation result object.
      * @throws IdentityProviderException in case an internal error occurs
      */
-    public function deleteUser(string $userId): IdentityOperationResult;
+    public function deleteUser(?string $userId): IdentityOperationResult;
 
     /**
      * Allows unlocking a User object.
@@ -50,7 +50,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
      * @return IdentityOperationResult the operation result object.
      * @throws AuthorizationException if the user is not CAMUNDA_ADMIN
      */
-    public function unlockUser(string $userId): IdentityOperationResult;
+    public function unlockUser(?string $userId): IdentityOperationResult;
 
     // groups /////////////////////////////////////////////////
 
@@ -65,7 +65,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
      * @param groupId
      * @return an non-persistent group object.
      */
-    public function createNewGroup(string $groupId): GroupInterface;
+    public function createNewGroup(?string $groupId): GroupInterface;
 
     /**
      * Allows saving a Group object which is not yet persistent.
@@ -83,7 +83,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
      * @return IdentityOperationResult the operation result object.
      * @throws IdentityProviderException in case an internal error occurs
      */
-    public function deleteGroup(string $groupId): IdentityOperationResult;
+    public function deleteGroup(?string $groupId): IdentityOperationResult;
 
     /**
      * <p>
@@ -100,7 +100,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
      *          the id of the new tenant
      * @return an non-persistent tenant object.
      */
-    public function createNewTenant(string $tenantId): TenantInterface;
+    public function createNewTenant(?string $tenantId): TenantInterface;
 
     /**
      * Allows saving a Tenant object which is not yet persistent.
@@ -122,7 +122,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
      * @throws IdentityProviderException
      *           in case an internal error occurs
      */
-    public function deleteTenant(string $tenantId): IdentityOperationResult;
+    public function deleteTenant(?string $tenantId): IdentityOperationResult;
 
     // Membership ///////////////////////////////////////////////
 
@@ -135,7 +135,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
      * @return IdentityOperationResult the operation result object.
      * @throws IdentityProviderException
      */
-    public function createMembership(string $userId, string $groupId): IdentityOperationResult;
+    public function createMembership(?string $userId, ?string $groupId): IdentityOperationResult;
 
     /**
      * Deletes a membership relation between a user and a group.
@@ -145,7 +145,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
      * @return IdentityOperationResult the operation result object.
      * @throws IdentityProviderException
      */
-    public function deleteMembership(string $userId, string $groupId): IdentityOperationResult;
+    public function deleteMembership(?string $userId, ?string $groupId): IdentityOperationResult;
 
     /**
      * Creates a membership relation between a tenant and a user.
@@ -156,7 +156,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
      *          the id of the user
      * @return IdentityOperationResult the operation result object.
      */
-    public function createTenantUserMembership(string $tenantId, string $userId): IdentityOperationResult;
+    public function createTenantUserMembership(?string $tenantId, ?string $userId): IdentityOperationResult;
 
     /**
      * Creates a membership relation between a tenant and a group.
@@ -167,7 +167,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
      *          the id of the group
      * @return IdentityOperationResult the operation result object.
      */
-    public function createTenantGroupMembership(string $tenantId, string $groupId): IdentityOperationResult;
+    public function createTenantGroupMembership(?string $tenantId, ?string $groupId): IdentityOperationResult;
 
     /**
      * Deletes a membership relation between a tenant and a user.
@@ -178,7 +178,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
      *          the id of the user
      * @return IdentityOperationResult the operation result object
      */
-    public function deleteTenantUserMembership(string $tenantId, string $userId): IdentityOperationResult;
+    public function deleteTenantUserMembership(?string $tenantId, ?string $userId): IdentityOperationResult;
 
     /**
      * Deletes a membership relation between a tenant and a group.
@@ -189,5 +189,5 @@ interface WritableIdentityProviderInterface extends SessionInterface
      *          the id of the group
      * @return IdentityOperationResult the operation result object.
      */
-    public function deleteTenantGroupMembership(string $tenantId, string $groupId): IdentityOperationResult;
+    public function deleteTenantGroupMembership(?string $tenantId, ?string $groupId): IdentityOperationResult;
 }

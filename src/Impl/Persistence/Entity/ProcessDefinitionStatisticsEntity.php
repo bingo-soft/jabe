@@ -10,8 +10,8 @@ use Jabe\Impl\Util\ClassNameUtil;
 
 class ProcessDefinitionStatisticsEntity extends ProcessDefinitionEntity implements ProcessDefinitionStatisticsInterface
 {
-    protected $instances;
-    protected $failedJobs;
+    protected int $instances = 0;
+    protected int $failedJobs = 0;
     protected $incidentStatistics;
 
     public function getInstances(): int

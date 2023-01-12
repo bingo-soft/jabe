@@ -9,13 +9,13 @@ class SimpleIpBasedProvider implements HostnameProviderInterface
 {
     //private final static ProcessEngineLogger LOG = ProcessEngineLogger.INSTANCE;
 
-    public function getHostname(ProcessEngineConfigurationImpl $processEngineConfiguration): string
+    public function getHostname(ProcessEngineConfigurationImpl $processEngineConfiguration): ?string
     {
         $localIp = gethostname();
         return self::createId($localIp, $processEngineConfiguration->getProcessEngineName());
     }
 
-    public static function createId(string $ip, string $engineName): string
+    public static function createId(?string $ip, ?string $engineName): ?string
     {
         return $ip . "$" . $engineName;
     }

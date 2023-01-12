@@ -7,17 +7,17 @@ interface CleanableHistoricProcessInstanceReportResultInterface
     /**
      * Returns the process definition id for the selected definition.
      */
-    public function getProcessDefinitionId(): string;
+    public function getProcessDefinitionId(): ?string;
 
     /**
      * Returns the process definition key for the selected definition.
      */
-    public function getProcessDefinitionKey(): string;
+    public function getProcessDefinitionKey(): ?string;
 
     /**
      * Returns the process definition name for the selected definition.
      */
-    public function getProcessDefinitionName(): string;
+    public function getProcessDefinitionName(): ?string;
 
     /**
      * Returns the process definition version for the selected definition.
@@ -27,7 +27,7 @@ interface CleanableHistoricProcessInstanceReportResultInterface
     /**
      * Returns the history time to live for the selected definition.
      */
-    public function getHistoryTimeToLive(): int;
+    public function getHistoryTimeToLive(): ?int;
 
     /**
      * Returns the amount of finished historic process instances.

@@ -23,7 +23,7 @@ use Jabe\Impl\Util\EnsureUtil;
 
 class JuelFormEngine implements FormEngineInterface
 {
-    public function getName(): string
+    public function getName(): ?string
     {
         return "juel";
     }
@@ -47,7 +47,7 @@ class JuelFormEngine implements FormEngineInterface
         return $this->executeScript($formTemplateString, $task->getExecution());
     }
 
-    protected function executeScript(string $scriptSrc, VariableScopeInterface $scope)
+    protected function executeScript(?string $scriptSrc, VariableScopeInterface $scope)
     {
         $processEngineConfiguration = Context::getProcessEngineConfiguration();
         $scriptFactory = $processEngineConfiguration->getScriptFactory();
@@ -65,7 +65,7 @@ class JuelFormEngine implements FormEngineInterface
         return $invocation->getInvocationResult();
     }
 
-    protected function getFormTemplateString(FormDataInterface $formInstance, string $formKey): string
+    protected function getFormTemplateString(FormDataInterface $formInstance, ?string $formKey): ?string
     {
         $deploymentId = $formInstance->getDeploymentId();
 

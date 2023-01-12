@@ -15,7 +15,7 @@ use Jabe\Impl\Persistence\Entity\{
 };
 use Jabe\Impl\Util\EngineUtilLogger;
 
-class CamundaFormDefinitionDeployer extends AbstractDefinitionDeployer
+class FormDefinitionDeployer extends AbstractDefinitionDeployer
 {
     //protected static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
     public static $FORM_RESOURCE_SUFFIXES = [ "form" ];
@@ -47,7 +47,7 @@ class CamundaFormDefinitionDeployer extends AbstractDefinitionDeployer
         }
     }
 
-    protected function findDefinitionByDeploymentAndKey(string $deploymentId, string $definitionKey): ?FormDefinitionEntity
+    protected function findDefinitionByDeploymentAndKey(?string $deploymentId, ?string $definitionKey): ?FormDefinitionEntity
     {
         return $this->getCommandContext()->getFormDefinitionManager()->findDefinitionByDeploymentAndKey(
             $deploymentId,
@@ -55,7 +55,7 @@ class CamundaFormDefinitionDeployer extends AbstractDefinitionDeployer
         );
     }
 
-    protected function findLatestDefinitionByKeyAndTenantId(string $definitionKey, ?string $tenantId): ?FormDefinitionEntity
+    protected function findLatestDefinitionByKeyAndTenantId(?string $definitionKey, ?string $tenantId): ?FormDefinitionEntity
     {
         return $this->getCommandContext()->getFormDefinitionManager()->findLatestDefinitionByKeyAndTenantId(
             $definitionKey,
@@ -63,12 +63,12 @@ class CamundaFormDefinitionDeployer extends AbstractDefinitionDeployer
         );
     }
 
-    protected function persistDefinition(FormDefinitionEntity $definition): void
+    protected function persistDefinition(/*FormDefinitionEntity*/$definition): void
     {
         $this->getCommandContext()->getFormDefinitionManager()->insert($definition);
     }
 
-    protected function addDefinitionToDeploymentCache(DeploymentCache $deploymentCache, FormDefinitionEntity $definition): void
+    protected function addDefinitionToDeploymentCache(DeploymentCache $deploymentCache, /*FormDefinitionEntity*/$definition): void
     {
         $deploymentCache->addCamundaFormDefinition($definition);
     }

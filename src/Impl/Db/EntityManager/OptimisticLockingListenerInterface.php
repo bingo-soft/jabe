@@ -13,7 +13,7 @@ interface OptimisticLockingListenerInterface
      *
      * @return string the entity type for which the listener should be notified.
      */
-    public function getEntityType(): string;
+    public function getEntityType(): ?string;
 
     /**
      * Signifies that an operation failed due to optimistic locking.
@@ -22,5 +22,5 @@ interface OptimisticLockingListenerInterface
      * @return OptimisticLockingResult that instructs the caller how to handle
      *            the result of the failed operation.
      */
-    public function failedOperation(DbOperation $operation): string;
+    public function failedOperation(DbOperation $operation): ?string;
 }

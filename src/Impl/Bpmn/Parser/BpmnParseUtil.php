@@ -39,7 +39,7 @@ class BpmnParseUtil
     * @param extensionElementName the name of the extension element to find
     * @return Element the extension element or null if not found
     */
-    public static function findExtensionElement(Element $element, string $extensionElementName): ?Element
+    public static function findExtensionElement(Element $element, ?string $extensionElementName): ?Element
     {
         return $element->element("extensionElements");
     }

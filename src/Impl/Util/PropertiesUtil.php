@@ -9,7 +9,7 @@ class PropertiesUtil
     //protected static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
 
-    public static function getProperties(string $propertiesFile)
+    public static function getProperties(?string $propertiesFile)
     {
         $fd = fopen($propertiesFile, 'r');
         $properies = [];

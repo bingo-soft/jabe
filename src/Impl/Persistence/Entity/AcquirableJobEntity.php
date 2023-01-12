@@ -13,7 +13,7 @@ class AcquirableJobEntity implements DbEntityInterface, HasDbRevisionInterface
     public const DEFAULT_EXCLUSIVE = true;
 
     protected $id;
-    protected $revision;
+    protected int $revision = 0;
 
     protected $lockOwner = null;
     protected $lockExpirationTime = null;
@@ -44,12 +44,12 @@ class AcquirableJobEntity implements DbEntityInterface, HasDbRevisionInterface
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }
@@ -59,42 +59,42 @@ class AcquirableJobEntity implements DbEntityInterface, HasDbRevisionInterface
         $this->revision = $revision;
     }
 
-    public function getDuedate(): string
+    public function getDuedate(): ?string
     {
         return $this->duedate;
     }
 
-    public function setDuedate(string $duedate): void
+    public function setDuedate(?string $duedate): void
     {
         $this->duedate = $duedate;
     }
 
-    public function getLockOwner(): string
+    public function getLockOwner(): ?string
     {
         return $this->lockOwner;
     }
 
-    public function setLockOwner(string $lockOwner): void
+    public function setLockOwner(?string $lockOwner): void
     {
         $this->lockOwner = $lockOwner;
     }
 
-    public function getLockExpirationTime(): string
+    public function getLockExpirationTime(): ?string
     {
         return $this->lockExpirationTime;
     }
 
-    public function setLockExpirationTime(string $lockExpirationTime): void
+    public function setLockExpirationTime(?string $lockExpirationTime): void
     {
         $this->lockExpirationTime = $lockExpirationTime;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
 
-    public function setProcessInstanceId(string $processInstanceId): void
+    public function setProcessInstanceId(?string $processInstanceId): void
     {
         $this->processInstanceId = $processInstanceId;
     }

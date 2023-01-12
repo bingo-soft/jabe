@@ -26,35 +26,35 @@ class FilterQueryImpl extends AbstractQuery implements FilterQueryInterface
         parent::__construct($commandExecutor);
     }
 
-    public function filterId(string $filterId): FilterQueryInterface
+    public function filterId(?string $filterId): FilterQueryInterface
     {
         EnsureUtil::ensureNotNull("filterId", "filterId", $filterId);
         $this->filterId = $filterId;
         return $this;
     }
 
-    public function filterResourceType(string $resourceType): FilterQueryInterface
+    public function filterResourceType(?string $resourceType): FilterQueryInterface
     {
         EnsureUtil::ensureNotNull("resourceType", "resourceType", $resourceType);
         $this->resourceType = $resourceType;
         return $this;
     }
 
-    public function filterName(string $name): FilterQueryInterface
+    public function filterName(?string $name): FilterQueryInterface
     {
         EnsureUtil::ensureNotNull("name", "name", $name);
         $this->name = $name;
         return $this;
     }
 
-    public function filterNameLike(string $nameLike): FilterQueryInterface
+    public function filterNameLike(?string $nameLike): FilterQueryInterface
     {
         EnsureUtil::ensureNotNull("nameLike", "nameLike", $nameLike);
         $this->nameLike = $nameLike;
         return $this;
     }
 
-    public function filterOwner(string $owner): FilterQueryInterface
+    public function filterOwner(?string $owner): FilterQueryInterface
     {
         EnsureUtil::ensureNotNull("owner", "owner", $owner);
         $this->owner = $owner;
@@ -81,7 +81,7 @@ class FilterQueryImpl extends AbstractQuery implements FilterQueryInterface
         return $this->orderBy(FilterQueryProperty::owner());
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         return $commandContext
             ->getFilterManager()

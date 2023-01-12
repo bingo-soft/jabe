@@ -5,22 +5,22 @@ namespace Jabe\Repository;
 interface ResourceDefinitionInterface
 {
     /** unique identifier */
-    public function getId(): string;
+    public function getId(): ?string;
 
     /** category name which is derived from the targetNamespace attribute in the definitions element */
-    public function getCategory(): string;
+    public function getCategory(): ?string;
 
     /** label used for display purposes */
-    public function getName(): string;
+    public function getName(): ?string;
 
     /** unique name for all versions this definition */
-    public function getKey(): string;
+    public function getKey(): ?string;
 
     /** version of this definition */
     public function getVersion(): int;
 
     /** name of {@link RepositoryService#getResourceAsStream(String, String) the resource} of this definition */
-    public function getResourceName(): string;
+    public function getResourceName(): ?string;
 
     /** The deployment in which this definition is contained. */
     public function getDeploymentId(): ?string;
@@ -35,5 +35,5 @@ interface ResourceDefinitionInterface
     public function getTenantId(): ?string;
 
     /** History time to live. Is taken into account in history cleanup. */
-    public function getHistoryTimeToLive(): string;
+    public function getHistoryTimeToLive(): ?int;
 }

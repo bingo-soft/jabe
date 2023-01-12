@@ -31,7 +31,7 @@ class SchemaLogQueryImpl extends AbstractQuery implements SchemaLogQueryInterfac
         return self::$TIMESTAMP_PROPERTY;
     }
 
-    public function version(string $version): SchemaLogQueryInterface
+    public function version(?string $version): SchemaLogQueryInterface
     {
         EnsureUtil::ensureNotNull("version", "version", $version);
         $this->version = $version;
@@ -50,7 +50,7 @@ class SchemaLogQueryImpl extends AbstractQuery implements SchemaLogQueryInterfac
         return $commandContext->getSchemaLogManager()->findSchemaLogEntryCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         return $commandContext->getSchemaLogManager()->findSchemaLogEntriesByQueryCriteria($this, $page);

@@ -9,12 +9,12 @@ interface HistoricBatchQueryInterface extends QueryInterface
     /**
      * Only select historic batch instances for the given batch id.
      */
-    public function batchId(string $batchId): HistoricBatchQueryInterface;
+    public function batchId(?string $batchId): HistoricBatchQueryInterface;
 
     /**
      * Only select historic batches of the given type.
      */
-    public function type(string $type): HistoricBatchQueryInterface;
+    public function type(?string $type): HistoricBatchQueryInterface;
 
     /**
      * Only select historic batches which are completed or not.

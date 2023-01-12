@@ -2,6 +2,10 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
+use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface
+};
 use Jabe\Impl\{
     Direction,
     JobQueryImpl,
@@ -101,7 +105,7 @@ class JobManager extends AbstractManager
         $this->hintJobExecutorIfNeeded($timer, $duedate);
     }
 
-    public function reschedule(JobEntity $jobEntity, string $newDuedate): void
+    public function reschedule(JobEntity $jobEntity, ?string $newDuedate): void
     {
         $jobEntity->init(Context::getCommandContext(), true);
         $jobEntity->setSuspensionState(SuspensionState::active()->getStateCode());
@@ -109,7 +113,7 @@ class JobManager extends AbstractManager
         $this->hintJobExecutorIfNeeded(JobEntity, $newDuedate);
     }
 
-    private function hintJobExecutorIfNeeded(JobEntity $jobEntity, string $duedate): void
+    private function hintJobExecutorIfNeeded(JobEntity $jobEntity, ?string $duedate): void
     {
         // Check if this timer fires before the next time the job executor will check for new timers to fire.
         // This is highly unlikely because normally waitTimeInMillis is 5000 (5 seconds)
@@ -191,7 +195,7 @@ class JobManager extends AbstractManager
         }
     }
 
-    public function findJobById(string $jobId): ?JobEntity
+    public function findJobById(?string $jobId): ?JobEntity
     {
         return $this->getDbEntityManager()->selectOne("selectJob", $jobId);
     }
@@ -235,38 +239,38 @@ class JobManager extends AbstractManager
         return $this->getDbEntityManager()->selectList("selectNextJobsToExecute", $params, $page);
     }
 
-    public function findJobsByExecutionId(string $executionId): array
+    public function findJobsByExecutionId(?string $executionId): array
     {
         return $this->getDbEntityManager()->selectList("selectJobsByExecutionId", $executionId);
     }
 
-    public function findJobsByProcessInstanceId(string $processInstanceId): array
+    public function findJobsByProcessInstanceId(?string $processInstanceId): array
     {
         return $this->getDbEntityManager()->selectList("selectJobsByProcessInstanceId", $processInstanceId);
     }
 
-    public function findJobsByJobDefinitionId(string $jobDefinitionId): array
+    public function findJobsByJobDefinitionId(?string $jobDefinitionId): array
     {
         return $this->getDbEntityManager()->selectList("selectJobsByJobDefinitionId", $jobDefinitionId);
     }
 
-    public function findJobsByHandlerType(string $handlerType): array
+    public function findJobsByHandlerType(?string $handlerType): array
     {
         return $this->getDbEntityManager()->selectList("selectJobsByHandlerType", $handlerType);
     }
 
-    public function findUnlockedTimersByDuedate(string $duedate, Page $page): array
+    public function findUnlockedTimersByDuedate(?string $duedate, ?Page $page): array
     {
         $query = "selectUnlockedTimersByDuedate";
         return $this->getDbEntityManager()->selectList($query, $duedate, $page);
     }
 
-    public function findTimersByExecutionId(string $executionId): array
+    public function findTimersByExecutionId(?string $executionId): array
     {
         return $this->getDbEntityManager()->selectList("selectTimersByExecutionId", $executionId);
     }
 
-    public function findJobsByQueryCriteria(JobQueryImpl $jobQuery, Page $page): array
+    public function findJobsByQueryCriteria(JobQueryImpl $jobQuery, ?Page $page): array
     {
         $this->configureQuery($jobQuery);
         return $this->getDbEntityManager()->selectList("selectJobByQueryCriteria", $jobQuery, $page);
@@ -289,7 +293,7 @@ class JobManager extends AbstractManager
         }
     }
 
-    public function findJobsByConfiguration(string $jobHandlerType, string $jobHandlerConfiguration, ?string $tenantId): array
+    public function findJobsByConfiguration(?string $jobHandlerType, ?string $jobHandlerConfiguration, ?string $tenantId): array
     {
         $params = [];
         $params["handlerType"] = $jobHandlerType;
@@ -302,7 +306,7 @@ class JobManager extends AbstractManager
             || TimerStartEventJobHandler::TYPE == $jobHandlerType
             || TimerStartEventSubprocessJobHandler::TYPE == $jobHandlerType
         ) {
-            $queryValue = $jobHandlerConfiguration + TimerEventJobHandler::JOB_HANDLER_CONFIG_PROPERTY_DELIMITER + TimerEventJobHandler::JOB_HANDLER_CONFIG_PROPERTY_FOLLOW_UP_JOB_CREATED;
+            $queryValue = $jobHandlerConfiguration . TimerEventJobHandler::JOB_HANDLER_CONFIG_PROPERTY_DELIMITER . TimerEventJobHandler::JOB_HANDLER_CONFIG_PROPERTY_FOLLOW_UP_JOB_CREATED;
             $params["handlerConfigurationWithFollowUpJobCreatedProperty"] = $queryValue;
         }
 
@@ -315,7 +319,7 @@ class JobManager extends AbstractManager
         return $this->getDbEntityManager()->selectOne("selectJobCountByQueryCriteria", $jobQuery);
     }
 
-    public function updateJobSuspensionStateById(string $jobId, SuspensionState $suspensionState): void
+    public function updateJobSuspensionStateById(?string $jobId, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["jobId"] = $jobId;
@@ -323,7 +327,7 @@ class JobManager extends AbstractManager
         $this->getDbEntityManager()->update(JobEntity::class, "updateJobSuspensionStateByParameters", $this->configureParameterizedQuery($parameters));
     }
 
-    public function updateJobSuspensionStateByJobDefinitionId(string $jobDefinitionId, SuspensionState $suspensionState): void
+    public function updateJobSuspensionStateByJobDefinitionId(?string $jobDefinitionId, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["jobDefinitionId"] = $jobDefinitionId;
@@ -331,7 +335,7 @@ class JobManager extends AbstractManager
         $this->getDbEntityManager()->update(JobEntity::class, "updateJobSuspensionStateByParameters", $this->configureParameterizedQuery($parameters));
     }
 
-    public function updateJobSuspensionStateByProcessInstanceId(string $processInstanceId, SuspensionState $suspensionState): void
+    public function updateJobSuspensionStateByProcessInstanceId(?string $processInstanceId, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processInstanceId"] = $processInstanceId;
@@ -339,7 +343,7 @@ class JobManager extends AbstractManager
         $this->getDbEntityManager()->update(JobEntity::class, "updateJobSuspensionStateByParameters", $this->configureParameterizedQuery($parameters));
     }
 
-    public function updateJobSuspensionStateByProcessDefinitionId(string $processDefinitionId, SuspensionState $suspensionState): void
+    public function updateJobSuspensionStateByProcessDefinitionId(?string $processDefinitionId, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processDefinitionId"] = $processDefinitionId;
@@ -347,7 +351,7 @@ class JobManager extends AbstractManager
         $this->getDbEntityManager()->update(JobEntity::class, "updateJobSuspensionStateByParameters", $this->configureParameterizedQuery($parameters));
     }
 
-    public function updateStartTimerJobSuspensionStateByProcessDefinitionId(string $processDefinitionId, SuspensionState $suspensionState): void
+    public function updateStartTimerJobSuspensionStateByProcessDefinitionId(?string $processDefinitionId, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processDefinitionId"] = $processDefinitionId;
@@ -356,7 +360,7 @@ class JobManager extends AbstractManager
         $this->getDbEntityManager()->update(JobEntity::class, "updateJobSuspensionStateByParameters", $this->configureParameterizedQuery($parameters));
     }
 
-    public function updateJobSuspensionStateByProcessDefinitionKey(string $processDefinitionKey, SuspensionState $suspensionState): void
+    public function updateJobSuspensionStateByProcessDefinitionKey(?string $processDefinitionKey, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processDefinitionKey"] = $processDefinitionKey;
@@ -365,7 +369,7 @@ class JobManager extends AbstractManager
         $this->getDbEntityManager()->update(JobEntity::class, "updateJobSuspensionStateByParameters", $this->configureParameterizedQuery($parameters));
     }
 
-    public function updateJobSuspensionStateByProcessDefinitionKeyAndTenantId(string $processDefinitionKey, ?string $processDefinitionTenantId, SuspensionState $suspensionState): void
+    public function updateJobSuspensionStateByProcessDefinitionKeyAndTenantId(?string $processDefinitionKey, ?string $processDefinitionTenantId, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processDefinitionKey"] = $processDefinitionKey;
@@ -375,7 +379,7 @@ class JobManager extends AbstractManager
         $this->getDbEntityManager()->update(JobEntity::class, "updateJobSuspensionStateByParameters", $this->configureParameterizedQuery($parameters));
     }
 
-    public function updateStartTimerJobSuspensionStateByProcessDefinitionKey(string $processDefinitionKey, SuspensionState $suspensionState): void
+    public function updateStartTimerJobSuspensionStateByProcessDefinitionKey(?string $processDefinitionKey, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processDefinitionKey"] = $processDefinitionKey;
@@ -385,7 +389,7 @@ class JobManager extends AbstractManager
         $this->getDbEntityManager()->update(JobEntity::class, "updateJobSuspensionStateByParameters", $this->configureParameterizedQuery($parameters));
     }
 
-    public function updateStartTimerJobSuspensionStateByProcessDefinitionKeyAndTenantId(string $processDefinitionKey, ?string $processDefinitionTenantId, SuspensionState $suspensionState): void
+    public function updateStartTimerJobSuspensionStateByProcessDefinitionKeyAndTenantId(?string $processDefinitionKey, ?string $processDefinitionTenantId, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processDefinitionKey"] = $processDefinitionKey;
@@ -396,7 +400,7 @@ class JobManager extends AbstractManager
         $this->getDbEntityManager()->update(JobEntity::class, "updateJobSuspensionStateByParameters", $this->configureParameterizedQuery($parameters));
     }
 
-    public function updateFailedJobRetriesByJobDefinitionId(string $jobDefinitionId, int $retries): void
+    public function updateFailedJobRetriesByJobDefinitionId(?string $jobDefinitionId, int $retries): void
     {
         $parameters = [];
         $parameters["jobDefinitionId"] = $jobDefinitionId;
@@ -404,7 +408,7 @@ class JobManager extends AbstractManager
         $this->getDbEntityManager()->update(JobEntity::class, "updateFailedJobRetriesByParameters", $parameters);
     }
 
-    public function updateJobPriorityByDefinitionId(string $jobDefinitionId, int $priority): void
+    public function updateJobPriorityByDefinitionId(?string $jobDefinitionId, int $priority): void
     {
         $parameters = [];
         $parameters["jobDefinitionId"] = $jobDefinitionId;
@@ -412,7 +416,7 @@ class JobManager extends AbstractManager
         $this->getDbEntityManager()->update(JobEntity::class, "updateJobPriorityByDefinitionId", $parameters);
     }
 
-    protected function configureQuery(JobQueryImpl $query): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         $this->getAuthorizationManager()->configureJobQuery($query);
         $this->getTenantManager()->configureQuery($query);

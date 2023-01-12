@@ -27,7 +27,7 @@ class ExecuteJobHelper
     {
         if (self::$LOGGING_HANDLER === null) {
             self::$LOGGING_HANDLER = new class () implements ExceptionLoggingHandlerInterface {
-                public function exceptionWhileExecutingJob(string $jobId, \Throwable $exception): void
+                public function exceptionWhileExecutingJob(?string $jobId, \Throwable $exception): void
                 {
                     // Default behavior, just log exception
                     //LOG.exceptionWhileExecutingJob(jobId, exception);
@@ -43,7 +43,7 @@ class ExecuteJobHelper
     }
 
     public static function executeJob(
-        string $nextJobId,
+        ?string $nextJobId,
         CommandExecutorInterface $commandExecutor,
         ?JobFailureCollector $jobFailureCollector = null,
         ?CommandInterface $cmd = null,
@@ -120,7 +120,7 @@ class ExecuteJobHelper
         }
     }
 
-    protected static function handleJobFailure(string $nextJobId, JobFailureCollector $jobFailureCollector, \Throwable $exception): void
+    protected static function handleJobFailure(?string $nextJobId, JobFailureCollector $jobFailureCollector, \Throwable $exception): void
     {
         $jobFailureCollector->setFailure($exception);
     }

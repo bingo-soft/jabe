@@ -98,7 +98,13 @@ class DeleteHistoricProcessInstancesCmd implements CommandInterface, \Serializab
             null,
             null,
             null,
-            $propertyChanges
+            $propertyChanges,
+            null
         );
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

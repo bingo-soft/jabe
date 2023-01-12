@@ -73,9 +73,10 @@ abstract class AbstractManager implements SessionInterface
         return $this->getSession(DbSqlSession::class);
     }
 
-    protected function getSession(string $sessionClass)
+    protected function getSession(?string $sessionClass)
     {
-        return Context::getCommandContext()->getSession($sessionClass);
+        $context = Context::getCommandContext();
+        return $context->getSession($sessionClass);
     }
 
     protected function getDeploymentManager(): DeploymentManager
@@ -275,12 +276,12 @@ abstract class AbstractManager implements SessionInterface
         return $this->getSession(AuthorizationManager::class);
     }
 
-    protected function configureQuery(AbstractQuery $query, ResourceInterface $resource): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         $this->getAuthorizationManager()->configureQuery($query, $resource);
     }
 
-    protected function checkAuthorization(PermissionInterface $permission, ResourceInterface $resource, string $resourceId): void
+    protected function checkAuthorization(PermissionInterface $permission, ResourceInterface $resource, ?string $resourceId): void
     {
         $this->getAuthorizationManager()->checkAuthorization($permission, $resource, $resourceId);
     }
@@ -290,7 +291,7 @@ abstract class AbstractManager implements SessionInterface
         return Context::getProcessEngineConfiguration()->isAuthorizationEnabled();
     }
 
-    protected function getCurrentAuthentication(): Authentication
+    protected function getCurrentAuthentication(): ?Authentication
     {
         return Context::getCommandContext()->getAuthentication();
     }
@@ -301,17 +302,17 @@ abstract class AbstractManager implements SessionInterface
             ->getResourceAuthorizationProvider();
     }
 
-    protected function deleteAuthorizations(ResourceInterface $resource, string $resourceId): void
+    protected function deleteAuthorizations(ResourceInterface $resource, ?string $resourceId): void
     {
         $this->getAuthorizationManager()->deleteAuthorizationsByResourceId($resource, $resourceId);
     }
 
-    protected function deleteAuthorizationsForUser(ResourceInterface $resource, string $resourceId, string $userId): void
+    protected function deleteAuthorizationsForUser(ResourceInterface $resource, ?string $resourceId, ?string $userId): void
     {
         $this->getAuthorizationManager()->deleteAuthorizationsByResourceIdAndUserId($resource, $resourceId, $userId);
     }
 
-    protected function deleteAuthorizationsForGroup(ResourceInterface $resource, string $resourceId, string $groupId): void
+    protected function deleteAuthorizationsForGroup(ResourceInterface $resource, ?string $resourceId, ?string $groupId): void
     {
         $this->getAuthorizationManager()->deleteAuthorizationsByResourceIdAndGroupId($resource, $resourceId, $groupId);
     }

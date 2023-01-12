@@ -63,7 +63,7 @@ class EventHandlerImpl implements EventHandlerInterface
         $this->handleIntermediateEvent($eventSubscription, $payload, $localPayload, $commandContext);
     }
 
-    public function getEventHandlerType(): string
+    public function getEventHandlerType(): ?string
     {
         return $this->eventType->name();
     }

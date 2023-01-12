@@ -10,13 +10,13 @@ class TransitionInstanceCancellationCmd extends AbstractInstanceCancellationCmd
 {
     protected $transitionInstanceId;
 
-    public function __construct(string $processInstanceId, string $transitionInstanceId)
+    public function __construct(?string $processInstanceId, ?string $transitionInstanceId)
     {
         parent::__construct($processInstanceId);
         $this->transitionInstanceId = $transitionInstanceId;
     }
 
-    public function getTransitionInstanceId(): string
+    public function getTransitionInstanceId(): ?string
     {
         return $this->transitionInstanceId;
     }
@@ -40,7 +40,7 @@ class TransitionInstanceCancellationCmd extends AbstractInstanceCancellationCmd
         return $transitionExecution;
     }
 
-    protected function describe(): string
+    protected function describe(): ?string
     {
         return "Cancel transition instance '" . $this->transitionInstanceId . "'";
     }

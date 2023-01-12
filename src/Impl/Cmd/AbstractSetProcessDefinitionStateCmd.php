@@ -25,7 +25,7 @@ abstract class AbstractSetProcessDefinitionStateCmd extends AbstractSetStateCmd
     protected $processDefinitionKey;
 
     protected $tenantId;
-    protected $isTenantIdSet = false;
+    protected bool $isTenantIdSet = false;
 
     public function __construct(UpdateProcessDefinitionSuspensionStateBuilderImpl $builder)
     {

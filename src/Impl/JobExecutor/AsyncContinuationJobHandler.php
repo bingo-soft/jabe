@@ -34,7 +34,7 @@ class AsyncContinuationJobHandler implements JobHandlerInterface
         $this->supportedOperations[AtomicOperation::activityEnd()->getCanonicalName()] = AtomicOperation::activityEnd();
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return self::TYPE;
     }
@@ -76,7 +76,7 @@ class AsyncContinuationJobHandler implements JobHandlerInterface
         return array_key_exists($atomicOperation->getCanonicalName(), $this->supportedOperations);
     }
 
-    public function newConfiguration(string $canonicalString): JobHandlerConfigurationInterface
+    public function newConfiguration(?string $canonicalString): JobHandlerConfigurationInterface
     {
         $configParts = $this->tokenizeJobConfiguration($canonicalString);
 

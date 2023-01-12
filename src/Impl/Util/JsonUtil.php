@@ -6,19 +6,19 @@ use Jabe\Impl\Json\JsonObjectConverter;
 
 class JsonUtil
 {
-    public static function addFieldRawValue(\stdClass $jsonObject, string $memberName, $rawValue = null): void
+    public static function addFieldRawValue(\stdClass $jsonObject, ?string $memberName, $rawValue = null): void
     {
         if ($rawValue !== null) {
             $jsonObject->{$memberName} = json_decode($rawValue);
         }
     }
 
-    public static function addNullField(\stdClass $jsonObject, string $name): void
+    public static function addNullField(\stdClass $jsonObject, ?string $name): void
     {
         $jsonObject->{$name} = null;
     }
 
-    public static function addField(\stdClass $jsonObject, string $name, $converterOrValue = null, $value = null): void
+    public static function addField(\stdClass $jsonObject, ?string $name, $converterOrValue = null, $value = null): void
     {
         if ($converterOrValue !== null && $converterOrValue instanceof JsonObjectConverter) {
             $jsonObject->{$name} = $converterOrValue->toJsonObject($value);
@@ -27,7 +27,7 @@ class JsonUtil
         }
     }
 
-    public static function addListField(\stdClass $jsonObject, string $name, $converterOrlist, $list = null): void
+    public static function addListField(\stdClass $jsonObject, ?string $name, $converterOrlist, $list = null): void
     {
         if ($converterOrlist !== null && is_array($converterOrlist)) {
             $jsonObject->{$name} = $converterOrlist;
@@ -43,14 +43,14 @@ class JsonUtil
         }
     }
 
-    public static function addArrayField(\stdClass $jsonObject, string $name, array $array = null): void
+    public static function addArrayField(\stdClass $jsonObject, ?string $name, array $array = null): void
     {
         if ($array !== null) {
             self::addListField($jsonObject, $name, $array);
         }
     }
 
-    public static function addDateField(\stdClass $jsonObject, string $name, $date = null): void
+    public static function addDateField(\stdClass $jsonObject, ?string $name, $date = null): void
     {
         if ($date !== null) {
             if (is_string($date)) {
@@ -88,12 +88,12 @@ class JsonUtil
         }
     }
 
-    public static function asBytes(\stdClass $jsonObject): string
+    public static function asBytes(\stdClass $jsonObject): ?string
     {
         return json_encode($jsonObject);
     }
 
-    public static function asString(?array $properties = null): string
+    public static function asString(?array $properties = null): ?string
     {
         if (!empty($properties)) {
             return json_encode($properties);
@@ -169,7 +169,7 @@ class JsonUtil
         return $list;
     }
 
-    public static function getArray($json = null, string $memberName = null): array
+    public static function getArray($json = null, ?string $memberName = null): array
     {
         if ($json !== null && $json instanceof \stdClass && $memberName !== null && property_exists($json, $memberName)) {
             return self::getArray($json->{$memberName});
@@ -202,7 +202,7 @@ class JsonUtil
         return [];
     }
 
-    public static function getBoolean(\stdClass $json = null, string $memberName = null): bool
+    public static function getBoolean(\stdClass $json = null, ?string $memberName = null): bool
     {
         if ($json !== null && $memberName !== null && property_exists($json, $memberName)) {
             try {
@@ -216,7 +216,7 @@ class JsonUtil
         }
     }
 
-    public static function getString($json = null, string $memberName = null, string $defaultString = null): string
+    public static function getString($json = null, ?string $memberName = null, ?string $defaultString = null): ?string
     {
         if (is_object($json)) {
             if ($json !== null && $memberName !== null && property_exists($json, $memberName)) {
@@ -233,7 +233,7 @@ class JsonUtil
         }
     }
 
-    public static function getInt(\stdClass $json = null, string $memberName = null): int
+    public static function getInt(\stdClass $json = null, ?string $memberName = null): int
     {
         if ($json !== null && $memberName !== null && property_exists($json, $memberName)) {
             try {
@@ -247,7 +247,7 @@ class JsonUtil
         }
     }
 
-    public static function isNull(\stdClass $jsonObject = null, string $memberName = null): bool
+    public static function isNull(\stdClass $jsonObject = null, ?string $memberName = null): bool
     {
         if ($jsonObject !== null && $memberName !== null && property_exists($jsonObject, $memberName)) {
             return $jsonObject->{$memberName} === null;
@@ -256,7 +256,7 @@ class JsonUtil
         }
     }
 
-    public static function getLong(\stdClass $json = null, string $memberName = null): int
+    public static function getLong(\stdClass $json = null, ?string $memberName = null): int
     {
         return self::getInt($json, $memberName);
     }

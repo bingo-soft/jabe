@@ -11,10 +11,10 @@ use Jabe\Impl\Util\EnsureUtil;
 
 class SetExternalTaskRetriesCmd extends ExternalTaskCmd
 {
-    protected $retries;
+    protected int $retries = 0;
     protected $writeUserOperationLog;
 
-    public function __construct(string $externalTaskId, int $retries, bool $writeUserOperationLog)
+    public function __construct(?string $externalTaskId, int $retries, bool $writeUserOperationLog)
     {
         parent::__construct($externalTaskId);
         $this->retries = $retries;
@@ -31,7 +31,7 @@ class SetExternalTaskRetriesCmd extends ExternalTaskCmd
         $externalTask->setRetriesAndManageIncidents($this->retries);
     }
 
-    protected function getUserOperationLogOperationType(): string
+    protected function getUserOperationLogOperationType(): ?string
     {
         if ($this->writeUserOperationLog) {
             return UserOperationLogEntryInterface::OPERATION_TYPE_SET_EXTERNAL_TASK_RETRIES;

@@ -7,7 +7,7 @@ use Jabe\Variable\VariableMapInterface;
 use Jabe\Variable\Context\VariableContextInterface;
 use Jabe\Variable\Value\TypedValueInterface;
 
-class VariableMapImpl implements VariableMapInterface, \Serializable, VariableContextInterface
+class VariableMapImpl extends \ArrayObject implements VariableMapInterface, \Serializable, VariableContextInterface
 {
     protected $variables = [];
 
@@ -20,19 +20,19 @@ class VariableMapImpl implements VariableMapInterface, \Serializable, VariableCo
         }
     }
 
-    public function putValue(string $name, $value): VariableMapInterface
+    public function putValue(?string $name, $value): VariableMapInterface
     {
         $this->put($name, $value);
         return $this;
     }
 
-    public function putValueTyped(string $name, TypedValueInterface $value): VariableMapInterface
+    public function putValueTyped(?string $name, TypedValueInterface $value): VariableMapInterface
     {
         $this->variables[$name] = $value;
         return $this;
     }
 
-    public function getValue(string $name, string $type)
+    public function getValue(?string $name, ?string $type)
     {
         $object = $this->get($name);
         if ($object === null) {
@@ -44,7 +44,7 @@ class VariableMapImpl implements VariableMapInterface, \Serializable, VariableCo
         }
     }
 
-    public function getValueTyped(string $name): ?TypedValueInterface
+    public function getValueTyped(?string $name): ?TypedValueInterface
     {
         if (array_key_exists($name, $this->variables)) {
             return $this->variables[$name];
@@ -89,7 +89,7 @@ class VariableMapImpl implements VariableMapInterface, \Serializable, VariableCo
         return null;
     }
 
-    public function put(string $key, $value)
+    public function put(?string $key, $value)
     {
         $typedValue = Variables::untypedValue($value);
 
@@ -142,7 +142,7 @@ class VariableMapImpl implements VariableMapInterface, \Serializable, VariableCo
         return array_keys($this->variables);
     }
 
-    public function __toString(): string
+    public function __toString()
     {
         $stringBuilder = "";
         $stringBuilder .= "{\n";
@@ -191,12 +191,12 @@ class VariableMapImpl implements VariableMapInterface, \Serializable, VariableCo
         return array_values($this->asValueMap());
     }
 
-    public function resolve(string $variableName): ?TypedValueInterface
+    public function resolve(?string $variableName): ?TypedValueInterface
     {
         return $this->getValueTyped($variableName);
     }
 
-    public function containsVariable(string $variableName): bool
+    public function containsVariable(?string $variableName): bool
     {
         return $this->containsKey($variableName);
     }

@@ -44,7 +44,7 @@ abstract class ModelInstanceCache
     protected function loadAndCacheBpmnModelInstance(ResourceDefinitionEntityInterface $definitionEntity): ?ModelInstanceInterface
     {
         $commandContext = Context::getCommandContext();
-        $bpmnResourceInputStream = $commandContext->runWithoutAuthorization(
+        $bytes = $commandContext->runWithoutAuthorization(
             function () use ($definitionEntity, $commandContext) {
                 $cmd = new GetDeploymentResourceCmd($definitionEntity->getDeploymentId(), $definitionEntity->getResourceName());
                 return $cmd->execute($commandContext);
@@ -52,16 +52,25 @@ abstract class ModelInstanceCache
         );
 
         try {
-            $bpmnModelInstance = $this->readModelFromStream($bpmnResourceInputStream);
+            $inputStream = tmpfile();
+            fwrite($inputStream, $bytes);
+            fseek($inputStream, 0);
+            $bpmnModelInstance = $this->readModelFromStream($inputStream);
             $this->instanceCache->put($definitionEntity->getId(), $bpmnModelInstance);
             return $bpmnModelInstance;
         } catch (\Exception $e) {
             $this->throwLoadModelException($definitionEntity->getId(), $e);
+        } finally {
+            try {
+                fclose($inputStream);
+            } catch (\Throwable $e) {
+                //ignore
+            }
         }
         return null;
     }
 
-    public function removeAllDefinitionsByDeploymentId(string $deploymentId): void
+    public function removeAllDefinitionsByDeploymentId(?string $deploymentId): void
     {
         // remove all definitions for a specific deployment
         $allDefinitionsForDeployment = $this->getAllDefinitionsForDeployment($deploymentId);
@@ -75,7 +84,7 @@ abstract class ModelInstanceCache
         }
     }
 
-    public function remove(string $definitionId): void
+    public function remove(?string $definitionId): void
     {
         $this->instanceCache->remove($definitionId);
     }
@@ -90,11 +99,11 @@ abstract class ModelInstanceCache
         return $this->instanceCache;
     }
 
-    abstract protected function throwLoadModelException(string $definitionId, \Exception $e): void;
+    abstract protected function throwLoadModelException(?string $definitionId, \Exception $e): void;
 
-    abstract protected function logRemoveEntryFromDeploymentCacheFailure(string $definitionId, \Exception $e): void;
+    abstract protected function logRemoveEntryFromDeploymentCacheFailure(?string $definitionId, \Exception $e): void;
 
     abstract protected function readModelFromStream($stream): ModelInstanceInterface;
 
-    abstract protected function getAllDefinitionsForDeployment(string $deploymentId): array;
+    abstract protected function getAllDefinitionsForDeployment(?string $deploymentId): array;
 }

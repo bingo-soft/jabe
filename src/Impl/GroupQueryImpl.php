@@ -19,7 +19,7 @@ abstract class GroupQueryImpl extends AbstractQuery implements GroupQueryInterfa
     protected $procDefId;
     protected $tenantId;
 
-    public function groupId(string $id): GroupQueryInterface
+    public function groupId(?string $id): GroupQueryInterface
     {
         EnsureUtil::ensureNotNull("Provided id", "id", $id);
         $this->id = $id;
@@ -33,42 +33,42 @@ abstract class GroupQueryImpl extends AbstractQuery implements GroupQueryInterfa
         return $this;
     }
 
-    public function groupName(string $name): GroupQueryInterface
+    public function groupName(?string $name): GroupQueryInterface
     {
         EnsureUtil::ensureNotNull("Provided name", "name", $name);
         $this->name = $name;
         return $this;
     }
 
-    public function groupNameLike(string $nameLike): GroupQueryInterface
+    public function groupNameLike(?string $nameLike): GroupQueryInterface
     {
         EnsureUtil::ensureNotNull("Provided nameLike", "nameLike", $nameLike);
         $this->nameLike = $nameLike;
         return $this;
     }
 
-    public function groupType(string $type): GroupQueryInterface
+    public function groupType(?string $type): GroupQueryInterface
     {
         EnsureUtil::ensureNotNull("Provided type", "type", $type);
         $this->type = $type;
         return $this;
     }
 
-    public function groupMember(string $userId): GroupQueryInterface
+    public function groupMember(?string $userId): GroupQueryInterface
     {
         EnsureUtil::ensureNotNull("Provided userId", "userId", $userId);
         $this->userId = $userId;
         return $this;
     }
 
-    public function potentialStarter(string $procDefId): GroupQueryInterface
+    public function potentialStarter(?string $procDefId): GroupQueryInterface
     {
         EnsureUtil::ensureNotNull("Provided processDefinitionId", "procDefId", $procDefId);
         $this->procDefId = $procDefId;
         return $this;
     }
 
-    public function memberOfTenant(string $tenantId): GroupQueryInterface
+    public function memberOfTenant(?string $tenantId): GroupQueryInterface
     {
         EnsureUtil::ensureNotNull("Provided tenantId", "tenantId", $tenantId);
         $this->tenantId = $tenantId;
@@ -90,32 +90,32 @@ abstract class GroupQueryImpl extends AbstractQuery implements GroupQueryInterfa
         return $this->orderBy(GroupQueryProperty::type());
     }
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getNameLike(): string
+    public function getNameLike(): ?string
     {
         return $this->nameLike;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function getUserId(): string
+    public function getUserId(): ?string
     {
         return $this->userId;
     }
 
-    public function getTenantId(): string
+    public function getTenantId(): ?string
     {
         return $this->tenantId;
     }

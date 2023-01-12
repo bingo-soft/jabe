@@ -26,7 +26,7 @@ interface UpdateProcessDefinitionSuspensionStateBuilderInterface
      *
      * @return UpdateProcessDefinitionSuspensionStateBuilderInterface the builder
      */
-    public function executionDate(string $executionDate): UpdateProcessDefinitionSuspensionStateBuilderInterface;
+    public function executionDate(?string $executionDate): UpdateProcessDefinitionSuspensionStateBuilderInterface;
 
     /**
      * Activates the provided process definitions.

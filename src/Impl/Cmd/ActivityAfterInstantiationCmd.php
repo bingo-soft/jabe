@@ -16,7 +16,7 @@ class ActivityAfterInstantiationCmd extends AbstractInstantiationCmd
     protected $activityId;
 
     //@TODO. Check invocation arguments ordering
-    public function __construct(?string $processInstanceId, string $activityId, ?string $ancestorActivityInstanceId = null)
+    public function __construct(?string $processInstanceId, ?string $activityId, ?string $ancestorActivityInstanceId = null)
     {
         if ($processInstanceId !== null) {
             parent::__construct($processInstanceId, $ancestorActivityInstanceId);
@@ -56,12 +56,12 @@ class ActivityAfterInstantiationCmd extends AbstractInstantiationCmd
         return $activity->getOutgoingTransitions()[0];
     }
 
-    public function getTargetElementId(): string
+    public function getTargetElementId(): ?string
     {
         return $this->activityId;
     }
 
-    protected function describe(): string
+    protected function describe(): ?string
     {
         $sb = "";
         $sb .= "Start after activity '";

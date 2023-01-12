@@ -46,7 +46,7 @@ class PvmAtomicOperationActivityLeave implements PvmAtomicOperationInterface
         }
     }
 
-    public function getCanonicalName(): string
+    public function getCanonicalName(): ?string
     {
         return "activity-leave";
     }

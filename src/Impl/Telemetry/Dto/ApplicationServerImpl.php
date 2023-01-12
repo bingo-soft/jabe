@@ -10,7 +10,7 @@ class ApplicationServerImpl implements ApplicationServerInterface
     protected $vendor;
     protected $version;
 
-    public function __construct(string $vendorOrVersion, string $version = null)
+    public function __construct(?string $vendorOrVersion, ?string $version = null)
     {
         $this->vendor = $version === null ? ParseUtil::parseServerVendor($vendorOrVersion) : $vendorOrVersion;
         $this->version = $version === null ? $vendorOrVersion : $version;
@@ -24,22 +24,22 @@ class ApplicationServerImpl implements ApplicationServerInterface
         ]);
     }
 
-    public function getVendor(): string
+    public function getVendor(): ?string
     {
         return $this->vendor;
     }
 
-    public function setVendor(string $vendor): void
+    public function setVendor(?string $vendor): void
     {
         $this->vendor = $vendor;
     }
 
-    public function getVersion(): string
+    public function getVersion(): ?string
     {
         return $this->version;
     }
 
-    public function setVersion(string $version): void
+    public function setVersion(?string $version): void
     {
         $this->version = $version;
     }

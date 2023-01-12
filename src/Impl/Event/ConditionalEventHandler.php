@@ -10,7 +10,7 @@ use Jabe\Impl\Core\Variable\Event\VariableEvent;
 
 class ConditionalEventHandler implements EventHandlerInterface
 {
-    public function getEventHandlerType(): string
+    public function getEventHandlerType(): ?string
     {
         return EventType::conditional()->name();
     }

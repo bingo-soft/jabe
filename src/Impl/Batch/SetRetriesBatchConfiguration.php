@@ -4,7 +4,7 @@ namespace Jabe\Impl\Batch;
 
 class SetRetriesBatchConfiguration extends BatchConfiguration
 {
-    protected $retries;
+    protected int $retries = 0;
 
     public function __construct(array $ids, $mappingsOrRetries, int $retries)
     {

@@ -26,7 +26,7 @@ class DoctrineJoinHelper
         }
     }
 
-    public static function tableAlias(?string $relation, int $index): string
+    public static function tableAlias(?string $relation, int $index): ?string
     {
         self::init();
         if ($relation === null) {
@@ -41,7 +41,7 @@ class DoctrineJoinHelper
         }
     }
 
-    public static function tableMapping(string $relation): string
+    public static function tableMapping(?string $relation): ?string
     {
         self::init();
         $mapping = self::getTableMapping($relation);
@@ -49,7 +49,7 @@ class DoctrineJoinHelper
         return $mapping->getTableName();
     }
 
-    public static function orderBySelection(QueryOrderingProperty $orderingProperty, int $index): string
+    public static function orderBySelection(QueryOrderingProperty $orderingProperty, int $index): ?string
     {
         self::init();
         $queryProperty = $orderingProperty->getQueryProperty();
@@ -72,7 +72,7 @@ class DoctrineJoinHelper
         return $sb;
     }
 
-    public static function orderBy(QueryOrderingProperty $orderingProperty, int $index): string
+    public static function orderBy(QueryOrderingProperty $orderingProperty, int $index): ?string
     {
         self::init();
         $queryProperty = $orderingProperty->getQueryProperty();
@@ -94,7 +94,7 @@ class DoctrineJoinHelper
         return $sb;
     }
 
-    protected static function getTableMapping(string $relation): DoctrineTableMappingInterface
+    protected static function getTableMapping(?string $relation): DoctrineTableMappingInterface
     {
         self::init();
         if (array_key_exists($relation, self::$mappings)) {

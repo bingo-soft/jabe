@@ -12,7 +12,7 @@ class GetTableNameCmd implements CommandInterface, \Serializable
 {
     private $entityClass;
 
-    public function __construct(string $entityClass)
+    public function __construct(?string $entityClass)
     {
         $this->entityClass = $entityClass;
     }
@@ -39,5 +39,10 @@ class GetTableNameCmd implements CommandInterface, \Serializable
         return $commandContext
             ->getTableDataManager()
             ->getTableName($this->entityClass, true);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

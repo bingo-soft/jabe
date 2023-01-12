@@ -17,7 +17,7 @@ class FormDefinitionManager extends AbstractManager implements AbstractResourceD
 {
     //protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
-    public function findLatestDefinitionByKey(string $key): ?FormDefinitionEntity
+    public function findLatestDefinitionByKey(?string $key): ?FormDefinitionEntity
     {
         $formDefinitions = $this->getDbEntityManager()->selectList("selectLatestFormDefinitionByKey", $this->configureParameterizedQuery($key));
 
@@ -31,12 +31,12 @@ class FormDefinitionManager extends AbstractManager implements AbstractResourceD
         }
     }
 
-    public function findLatestDefinitionById(string $id): ?FormDefinitionEntity
+    public function findLatestDefinitionById(?string $id): ?FormDefinitionEntity
     {
         return $this->getDbEntityManager()->selectById(FormDefinitionEntity::class, $id);
     }
 
-    public function findLatestDefinitionByKeyAndTenantId(string $definitionKey, ?string $tenantId): ?FormDefinitionEntity
+    public function findLatestDefinitionByKeyAndTenantId(?string $definitionKey, ?string $tenantId): ?FormDefinitionEntity
     {
         $parameters = [];
         $parameters["formDefinitionKey"] = $definitionKey;
@@ -51,7 +51,7 @@ class FormDefinitionManager extends AbstractManager implements AbstractResourceD
         }
     }
 
-    public function findDefinitionByKeyVersionAndTenantId(string $definitionKey, int $definitionVersion, ?string $tenantId): ?FormDefinitionEntity
+    public function findDefinitionByKeyVersionAndTenantId(?string $definitionKey, int $definitionVersion, ?string $tenantId): ?FormDefinitionEntity
     {
         $parameters = [];
         $parameters["formDefinitionVersion"] = $definitionVersion;
@@ -66,7 +66,7 @@ class FormDefinitionManager extends AbstractManager implements AbstractResourceD
         }
     }
 
-    public function findDefinitionByDeploymentAndKey(string $deploymentId, string $definitionKey): ?FormDefinitionEntity
+    public function findDefinitionByDeploymentAndKey(?string $deploymentId, ?string $definitionKey): ?FormDefinitionEntity
     {
         $parameters = [];
         $parameters["deploymentId"] = $deploymentId;
@@ -77,19 +77,19 @@ class FormDefinitionManager extends AbstractManager implements AbstractResourceD
         );
     }
 
-    public function findDefinitionsByDeploymentId(string $deploymentId): array
+    public function findDefinitionsByDeploymentId(?string $deploymentId): array
     {
         return $this->getDbEntityManager()->selectList("selectFormDefinitionByDeploymentId", $deploymentId);
     }
 
-    public function getCachedResourceDefinitionEntity(string $definitionId): ?FormDefinitionEntity
+    public function getCachedResourceDefinitionEntity(?string $definitionId): ?FormDefinitionEntity
     {
         return $this->getDbEntityManager()->getCachedEntity(FormDefinitionEntity::class, $definitionId);
     }
 
     public function findDefinitionByKeyVersionTagAndTenantId(
-        string $definitionKey,
-        string $definitionVersionTag,
+        ?string $definitionKey,
+        ?string $definitionVersionTag,
         ?string $tenantId
     ): ?FormDefinitionEntity {
         throw new Exception(
@@ -97,7 +97,7 @@ class FormDefinitionManager extends AbstractManager implements AbstractResourceD
         );
     }
 
-    public function deleteFormDefinitionsByDeploymentId(string $deploymentId): void
+    public function deleteFormDefinitionsByDeploymentId(?string $deploymentId): void
     {
         $this->getDbEntityManager()->delete(
             FormDefinitionEntity::class,

@@ -4,5 +4,5 @@ namespace Jabe\Variable\Value;
 
 interface SerializationDataFormatInterface
 {
-    public function getName(): string;
+    public function getName(): ?string;
 }

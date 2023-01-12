@@ -13,7 +13,7 @@ class PvmAtomicOperationActivityStartConcurrent extends PvmAtomicOperationCreate
         $propagatingExecution->performOperation(self::activityStartCreateScope());
     }
 
-    public function getCanonicalName(): string
+    public function getCanonicalName(): ?string
     {
         return "activity-start-concurrent";
     }

@@ -15,7 +15,7 @@ class CycleBusinessCalendar implements BusinessCalendarInterface
 
     public const NAME = "cycle";
 
-    public function resolveDuedate(string $duedateDescription, $startDate = null, int $repeatOffset = 0): ?\DateTime
+    public function resolveDuedate(?string $duedateDescription, $startDate = null, int $repeatOffset = 0): ?\DateTime
     {
         try {
             if (strpos($duedateDescription, "R") === 0) {

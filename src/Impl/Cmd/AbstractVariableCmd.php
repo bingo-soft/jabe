@@ -18,9 +18,9 @@ abstract class AbstractVariableCmd implements CommandInterface, \Serializable
     protected $commandContext;
     protected $entityId;
     protected $isLocal;
-    protected $preventLogUserOperation = false;
+    protected bool $preventLogUserOperation = false;
 
-    public function __construct(string $entityId, bool $isLocal)
+    public function __construct(?string $entityId, bool $isLocal)
     {
         $this->entityId = $entityId;
         $this->isLocal = $isLocal;
@@ -72,7 +72,7 @@ abstract class AbstractVariableCmd implements CommandInterface, \Serializable
 
     abstract protected function executeOperation(AbstractVariableScope $scope): void;
 
-    abstract protected function getLogEntryOperation(): string;
+    abstract protected function getLogEntryOperation(): ?string;
 
     protected function onSuccess(AbstractVariableScope $scope): void
     {
@@ -80,5 +80,10 @@ abstract class AbstractVariableCmd implements CommandInterface, \Serializable
         if ($contextExecution !== null) {
             $contextExecution->dispatchDelayedEventsAndPerformOperation(null);
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

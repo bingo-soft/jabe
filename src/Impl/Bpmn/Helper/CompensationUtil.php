@@ -201,7 +201,7 @@ class CompensationUtil
      * Collect all compensate event subscriptions for activity on the scope of
      * given execution.
      */
-    public static function collectCompensateEventSubscriptionsForActivity(ActivityExecutionInterface $execution, string $activityRef): array
+    public static function collectCompensateEventSubscriptionsForActivity(ActivityExecutionInterface $execution, ?string $activityRef): array
     {
         $eventSubscriptions = self::collectCompensateEventSubscriptionsForScope($execution);
         $subscriptionActivityId = self::getSubscriptionActivityId($execution, $activityRef);
@@ -225,7 +225,7 @@ class CompensationUtil
         }
     }
 
-    private static function getSubscriptionActivityId(ActivityExecutionInterface $execution, string $activityRef): string
+    private static function getSubscriptionActivityId(ActivityExecutionInterface $execution, ?string $activityRef): ?string
     {
         $activityToCompensate = $execution->getProcessDefinition()->findActivity($activityRef);
 

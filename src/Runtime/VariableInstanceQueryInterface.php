@@ -9,19 +9,19 @@ interface VariableInstanceQueryInterface extends QueryInterface
     /** Only select the variable with the given Id
      * @param the id of the variable to select
      * @return VariableInstanceQueryInterface the query object */
-    public function variableId(string $id): VariableInstanceQueryInterface;
+    public function variableId(?string $id): VariableInstanceQueryInterface;
 
     /** Only select variable instances which have the variable name. **/
-    public function variableName(string $variableName): VariableInstanceQueryInterface;
+    public function variableName(?string $variableName): VariableInstanceQueryInterface;
 
     /** Only select variable instances which have one of the variables names. **/
     public function variableNameIn(array $variableNames): VariableInstanceQueryInterface;
 
     /** Only select variable instances which have the name like the assigned variable name.
-     * The string $can include the wildcard character '%' to express like-strategy:
+     * The ?string $can include the wildcard character '%' to express like-strategy:
      * starts with (string%), ends with (%string) or contains (%string%).
      **/
-    public function variableNameLike(string $variableNameLike): VariableInstanceQueryInterface;
+    public function variableNameLike(?string $variableNameLike): VariableInstanceQueryInterface;
 
     /** Only select variable instances which have one of the executions ids. **/
     public function executionIdIn(array $executionIds): VariableInstanceQueryInterface;
@@ -66,7 +66,7 @@ interface VariableInstanceQueryInterface extends QueryInterface
      *  <li>{@link #variableNameLike(String)}</li>
      * <ul>
      */
-    public function matchVariableNamesIgnoreCase(): VariableInstanceQueryInterface;
+    public function matchVariableNamesIgnoreCase(): QueryInterface;
 
     /**
      * The query will match the values of variables in a case-insensitive way.<br>
@@ -81,7 +81,7 @@ interface VariableInstanceQueryInterface extends QueryInterface
      *  <li>{@link #variableValueNotEquals(String, Object)}</li>
      * </ul>
      */
-    public function matchVariableValuesIgnoreCase(): VariableInstanceQueryInterface;
+    public function matchVariableValuesIgnoreCase(): QueryInterface;
 
     /**
      * Only select variables instances which have the given name and value. The type
@@ -92,7 +92,7 @@ interface VariableInstanceQueryInterface extends QueryInterface
      * @param name name of the variable, cannot be null.
      * @param value variable value, can be null.
      */
-    public function variableValueEquals(string $name, $value): VariableInstanceQueryInterface;
+    public function variableValueEquals(?string $name, $value): QueryInterface;
 
     /**
      * Only select variable instances which have the given name, but
@@ -102,7 +102,7 @@ interface VariableInstanceQueryInterface extends QueryInterface
      * @param name name of the variable, cannot be null.
      * @param value variable value, can be null.
      */
-    public function variableValueNotEquals(string $name, $value): VariableInstanceQueryInterface;
+    public function variableValueNotEquals(?string $name, $value): QueryInterface;
 
     /**
      * Only select variable instances which value is greater than the passed value.
@@ -111,7 +111,7 @@ interface VariableInstanceQueryInterface extends QueryInterface
      * @param name variable name, cannot be null.
      * @param value variable value, cannot be null.
      */
-    public function variableValueGreaterThan(string $name, $value): VariableInstanceQueryInterface;
+    public function variableValueGreaterThan(?string $name, $value): QueryInterface;
 
     /**
      * Only select variable instances which value is greater than or equal to
@@ -120,7 +120,7 @@ interface VariableInstanceQueryInterface extends QueryInterface
      * @param name variable name, cannot be null.
      * @param value variable value, cannot be null.
      */
-    public function variableValueGreaterThanOrEqual(string $name, $value): VariableInstanceQueryInterface;
+    public function variableValueGreaterThanOrEqual(?string $name, $value): QueryInterface;
 
     /**
      * Only select variable instances which value is less than the passed value.
@@ -129,7 +129,7 @@ interface VariableInstanceQueryInterface extends QueryInterface
      * @param name variable name, cannot be null.
      * @param value variable value, cannot be null.
      */
-    public function variableValueLessThan(string $name, $value): VariableInstanceQueryInterface;
+    public function variableValueLessThan(?string $name, $value): QueryInterface;
 
     /**
      * Only select variable instances which value is less than or equal to the passed value.
@@ -138,7 +138,7 @@ interface VariableInstanceQueryInterface extends QueryInterface
      * @param name variable name, cannot be null.
      * @param value variable value, cannot be null.
      */
-    public function variableValueLessThanOrEqual(string $name, $value): VariableInstanceQueryInterface;
+    public function variableValueLessThanOrEqual(?string $name, $value): QueryInterface;
 
     /**
      * Disable fetching of byte array and file values. By default, the query will fetch such values.
@@ -159,13 +159,13 @@ interface VariableInstanceQueryInterface extends QueryInterface
 
     /**
      * Only select variable instances which value is like the given value.
-     * This be used on string $variables only.
+     * This be used on ?string $variables only.
      * @param name variable name, cannot be null.
-     * @param value variable value, cannot be null. The string $can include the
+     * @param value variable value, cannot be null. The ?string $can include the
      * wildcard character '%' to express like-strategy:
      * starts with (string%), ends with (%string) or contains (%string%).
      */
-    public function variableValueLike(string $name, string $value): VariableInstanceQueryInterface;
+    public function variableValueLike(?string $name, ?string $value): QueryInterface;
 
     /** Only select variable instances with one of the given tenant ids. */
     public function tenantIdIn(array $tenantIds): VariableInstanceQueryInterface;

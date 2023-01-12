@@ -13,74 +13,74 @@ class HistoricTaskInstanceEventEntity extends HistoricScopeInstanceEvent
     protected $description;
     protected $dueDate;
     protected $followUpDate;
-    protected $priority;
+    protected int $priority = 0;
     protected $parentTaskId;
     protected $deleteReason;
     protected $taskDefinitionKey;
     protected $activityInstanceId;
     protected $tenantId;
 
-    public function getDeleteReason(): string
+    public function getDeleteReason(): ?string
     {
         return $this->deleteReason;
     }
 
-    public function getAssignee(): string
+    public function getAssignee(): ?string
     {
         return $this->assignee;
     }
 
-    public function setAssignee(string $assignee): void
+    public function setAssignee(?string $assignee): void
     {
         $this->assignee = $assignee;
     }
 
-    public function getOwner(): string
+    public function getOwner(): ?string
     {
         return $this->owner;
     }
 
-    public function setOwner(string $owner): void
+    public function setOwner(?string $owner): void
     {
         $this->owner = $owner;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
 
-    public function getDueDate(): string
+    public function getDueDate(): ?string
     {
         return $this->dueDate;
     }
 
-    public function setDueDate(string $dueDate): void
+    public function setDueDate(?string $dueDate): void
     {
         $this->dueDate = $dueDate;
     }
 
-    public function getFollowUpDate(): string
+    public function getFollowUpDate(): ?string
     {
         return $this->followUpDate;
     }
 
-    public function setFollowUpDate(string $followUpDate): void
+    public function setFollowUpDate(?string $followUpDate): void
     {
         $this->followUpDate = $followUpDate;
     }
@@ -100,42 +100,42 @@ class HistoricTaskInstanceEventEntity extends HistoricScopeInstanceEvent
         return $this->parentTaskId;
     }
 
-    public function setParentTaskId(string $parentTaskId): void
+    public function setParentTaskId(?string $parentTaskId): void
     {
         $this->parentTaskId = $parentTaskId;
     }
 
-    public function setDeleteReason(string $deleteReason): void
+    public function setDeleteReason(?string $deleteReason): void
     {
         $this->deleteReason = $deleteReason;
     }
 
-    public function setTaskId(string $taskId): void
+    public function setTaskId(?string $taskId): void
     {
         $this->taskId = $taskId;
     }
 
-    public function getTaskId(): string
+    public function getTaskId(): ?string
     {
         return $this->taskId;
     }
 
-    public function getTaskDefinitionKey(): string
+    public function getTaskDefinitionKey(): ?string
     {
         return $this->taskDefinitionKey;
     }
 
-    public function setTaskDefinitionKey(string $taskDefinitionKey): void
+    public function setTaskDefinitionKey(?string $taskDefinitionKey): void
     {
         $this->taskDefinitionKey = $taskDefinitionKey;
     }
 
-    public function getActivityInstanceId(): string
+    public function getActivityInstanceId(): ?string
     {
         return $this->activityInstanceId;
     }
 
-    public function setActivityInstanceId(string $activityInstanceId): void
+    public function setActivityInstanceId(?string $activityInstanceId): void
     {
         $this->activityInstanceId = $activityInstanceId;
     }
@@ -150,12 +150,12 @@ class HistoricTaskInstanceEventEntity extends HistoricScopeInstanceEvent
         $this->tenantId = $tenantId;
     }
 
-    public function getRootProcessInstanceId(): string
+    public function getRootProcessInstanceId(): ?string
     {
         return $this->rootProcessInstanceId;
     }
 
-    public function setRootProcessInstanceId(string $rootProcessInstanceId): void
+    public function setRootProcessInstanceId(?string $rootProcessInstanceId): void
     {
         $this->rootProcessInstanceId = $rootProcessInstanceId;
     }

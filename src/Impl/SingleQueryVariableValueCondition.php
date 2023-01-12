@@ -28,7 +28,7 @@ class SingleQueryVariableValueCondition extends AbstractQueryVariableValueCondit
         parent::__construct($variableValue);
     }
 
-    public function initializeValue(VariableSerializersInterface $serializers, ?TypedValueInterface $typedValue, string $dbType): void
+    public function initializeValue(VariableSerializersInterface $serializers, ?TypedValueInterface $typedValue, ?string $dbType): void
     {
         $typedValue = $typedValue ?? $this->wrappedQueryValue->getTypedValue();
 
@@ -75,27 +75,27 @@ class SingleQueryVariableValueCondition extends AbstractQueryVariableValueCondit
         return [ $this ];
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->wrappedQueryValue->getName();
     }
 
-    public function getTextValue(): string
+    public function getTextValue(): ?string
     {
         return $this->textValue;
     }
 
-    public function setTextValue(string $textValue): void
+    public function setTextValue(?string $textValue): void
     {
         $this->textValue = $textValue;
     }
 
-    public function getTextValue2(): string
+    public function getTextValue2(): ?string
     {
         return $this->textValue2;
     }
 
-    public function setTextValue2(string $textValue2): void
+    public function setTextValue2(?string $textValue2): void
     {
         $this->textValue2 = $textValue2;
     }
@@ -125,11 +125,11 @@ class SingleQueryVariableValueCondition extends AbstractQueryVariableValueCondit
         return null;
     }
 
-    public function setByteArrayValue(string $bytes): void
+    public function setByteArrayValue($bytes): void
     {
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }

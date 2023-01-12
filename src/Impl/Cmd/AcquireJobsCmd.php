@@ -26,7 +26,7 @@ class AcquireJobsCmd implements CommandInterface, OptimisticLockingListenerInter
 {
     private $jobExecutor;
     protected $acquiredJobs;
-    protected $numJobsToAcquire;
+    protected int $numJobsToAcquire = 0;
 
     public function __construct(JobExecutor $jobExecutor, ?int $numJobsToAcquire = null)
     {
@@ -98,12 +98,12 @@ class AcquireJobsCmd implements CommandInterface, OptimisticLockingListenerInter
         $job->setLockExpirationTime($date->format('c'));
     }
 
-    public function getEntityType(): string
+    public function getEntityType(): ?string
     {
         return AcquirableJobEntity::class;
     }
 
-    public function failedOperation(DbOperation $operation): string
+    public function failedOperation(DbOperation $operation): ?string
     {
         if ($operation instanceof DbEntityOperation) {
             $entityOperation = $operation;

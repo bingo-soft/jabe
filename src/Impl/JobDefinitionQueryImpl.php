@@ -23,9 +23,9 @@ class JobDefinitionQueryImpl extends AbstractQuery implements JobDefinitionQuery
     protected $jobConfiguration;
     protected $suspensionState;
     protected $withOverridingJobPriority;
-    protected $isTenantIdSet = false;
+    protected bool $isTenantIdSet = false;
     protected $tenantIds = [];
-    protected $includeJobDefinitionsWithoutTenantId = false;
+    protected bool $includeJobDefinitionsWithoutTenantId = false;
 
     public function __construct(CommandExecutorInterface $commandExecutor)
     {
@@ -65,7 +65,7 @@ class JobDefinitionQueryImpl extends AbstractQuery implements JobDefinitionQuery
         $this->includeJobDefinitionsWithoutTenantId = $json->includeJobDefinitionsWithoutTenantId;
     }
 
-    public function jobDefinitionId(string $jobDefinitionId): JobDefinitionQueryInterface
+    public function jobDefinitionId(?string $jobDefinitionId): JobDefinitionQueryInterface
     {
         EnsureUtil::ensureNotNull("Job definition id", "jobDefinitionId", $jobDefinitionId);
         $this->id = $jobDefinitionId;
@@ -79,28 +79,28 @@ class JobDefinitionQueryImpl extends AbstractQuery implements JobDefinitionQuery
         return $this;
     }
 
-    public function processDefinitionId(string $processDefinitionId): JobDefinitionQueryInterface
+    public function processDefinitionId(?string $processDefinitionId): JobDefinitionQueryInterface
     {
         EnsureUtil::ensureNotNull("Process definition id", "processDefinitionId", $processDefinitionId);
         $this->processDefinitionId = $processDefinitionId;
         return $this;
     }
 
-    public function processDefinitionKey(string $processDefinitionKey): JobDefinitionQueryInterface
+    public function processDefinitionKey(?string $processDefinitionKey): JobDefinitionQueryInterface
     {
         EnsureUtil::ensureNotNull("Process definition key", "processDefinitionKey", $processDefinitionKey);
         $this->processDefinitionKey = $processDefinitionKey;
         return $this;
     }
 
-    public function jobType(string $jobType): JobDefinitionQueryInterface
+    public function jobType(?string $jobType): JobDefinitionQueryInterface
     {
         EnsureUtil::ensureNotNull("Job type", "jobType", $jobType);
         $this->jobType = $jobType;
         return $this;
     }
 
-    public function jobConfiguration(string $jobConfiguration): JobDefinitionQueryInterface
+    public function jobConfiguration(?string $jobConfiguration): JobDefinitionQueryInterface
     {
         EnsureUtil::ensureNotNull("Job configuration", "jobConfiguration", $jobConfiguration);
         $this->jobConfiguration = $jobConfiguration;
@@ -189,7 +189,7 @@ class JobDefinitionQueryImpl extends AbstractQuery implements JobDefinitionQuery
             ->findJobDefinitionCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         return $commandContext
@@ -197,7 +197,7 @@ class JobDefinitionQueryImpl extends AbstractQuery implements JobDefinitionQuery
             ->findJobDefnitionByQueryCriteria($this, $page);
     }
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -207,22 +207,22 @@ class JobDefinitionQueryImpl extends AbstractQuery implements JobDefinitionQuery
         return $this->activityIds;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }
 
-    public function getJobType(): string
+    public function getJobType(): ?string
     {
         return $this->jobType;
     }
 
-    public function getJobConfiguration(): string
+    public function getJobConfiguration(): ?string
     {
         return $this->jobConfiguration;
     }

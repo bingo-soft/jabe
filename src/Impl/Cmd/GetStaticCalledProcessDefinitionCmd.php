@@ -16,7 +16,7 @@ class GetStaticCalledProcessDefinitionCmd implements CommandInterface
 {
     protected $processDefinitionId;
 
-    public function __construct(string $processDefinitionId)
+    public function __construct(?string $processDefinitionId)
     {
         $this->processDefinitionId = $processDefinitionId;
     }
@@ -79,5 +79,10 @@ class GetStaticCalledProcessDefinitionCmd implements CommandInterface
             }
         }
         return array_values($calledProcessDefinitionsById);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

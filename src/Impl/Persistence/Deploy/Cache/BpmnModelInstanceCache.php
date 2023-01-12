@@ -16,7 +16,7 @@ class BpmnModelInstanceCache extends ModelInstanceCache
         parent::__construct($factory, $cacheCapacity, $definitionCache);
     }
 
-    protected function throwLoadModelException(string $definitionId, \Exception $e): void
+    protected function throwLoadModelException(?string $definitionId, \Exception $e): void
     {
         //throw LOG.loadModelException("BPMN", "process", definitionId, e);
         throw new \Exception("loadModelException");
@@ -27,12 +27,12 @@ class BpmnModelInstanceCache extends ModelInstanceCache
         return Bpmn::readModelFromStream($bpmnResourceInputStream);
     }
 
-    protected function logRemoveEntryFromDeploymentCacheFailure(string $definitionId, \Exception $e): void
+    protected function logRemoveEntryFromDeploymentCacheFailure(?string $definitionId, \Exception $e): void
     {
         //LOG.removeEntryFromDeploymentCacheFailure("process", definitionId, e);
     }
 
-    protected function getAllDefinitionsForDeployment(string $deploymentId): array
+    protected function getAllDefinitionsForDeployment(?string $deploymentId): array
     {
         $commandContext = Context::getCommandContext();
         $allDefinitionsForDeployment = $commandContext->runWithoutAuthorization(function () use ($deploymentId) {

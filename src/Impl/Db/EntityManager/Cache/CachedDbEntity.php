@@ -89,7 +89,7 @@ class CachedDbEntity implements RecyclableInterface
         return $this->entityState;
     }
 
-    public function setEntityState(string $entityState): void
+    public function setEntityState(?string $entityState): void
     {
         $this->entityState = $entityState;
     }

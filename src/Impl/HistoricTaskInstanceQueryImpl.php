@@ -72,11 +72,11 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
     protected $tenantIds = [];
     protected $isTenantIdSet;
 
-    protected $caseDefinitionId;
+    /*protected $caseDefinitionId;
     protected $caseDefinitionKey;
     protected $caseDefinitionName;
     protected $caseInstanceId;
-    protected $caseExecutionId;
+    protected $caseExecutionId;*/
 
     protected $finishedAfter;
     protected $finishedBefore;
@@ -84,7 +84,7 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
     protected $startedBefore;
 
     protected $queries = [];
-    protected $isOrQueryActive = false;
+    protected bool $isOrQueryActive = false;
 
     public function __construct(CommandExecutorInterface $commandExecutor)
     {
@@ -101,7 +101,7 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
             ->findHistoricTaskInstanceCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->ensureVariablesInitialized();
         $this->checkQueryOk();
@@ -110,13 +110,13 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
             ->findHistoricTaskInstancesByQueryCriteria($this, $page);
     }
 
-    public function processInstanceId(string $processInstanceId): HistoricTaskInstanceQueryImpl
+    public function processInstanceId(?string $processInstanceId): HistoricTaskInstanceQueryImpl
     {
         $this->processInstanceId = $processInstanceId;
         return $this;
     }
 
-    public function processInstanceBusinessKey(string $processInstanceBusinessKey): HistoricTaskInstanceQueryInterface
+    public function processInstanceBusinessKey(?string $processInstanceBusinessKey): HistoricTaskInstanceQueryInterface
     {
         $this->processInstanceBusinessKey = $processInstanceBusinessKey;
         return $this;
@@ -129,13 +129,13 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
         return $this;
     }
 
-    public function processInstanceBusinessKeyLike(string $processInstanceBusinessKey): HistoricTaskInstanceQueryInterface
+    public function processInstanceBusinessKeyLike(?string $processInstanceBusinessKey): HistoricTaskInstanceQueryInterface
     {
         $this->processInstanceBusinessKeyLike = $processInstanceBusinessKey;
         return $this;
     }
 
-    public function executionId(string $executionId): HistoricTaskInstanceQueryImpl
+    public function executionId(?string $executionId): HistoricTaskInstanceQueryImpl
     {
         $this->executionId = $executionId;
         return $this;
@@ -148,67 +148,67 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
         return $this;
     }
 
-    public function processDefinitionId(string $processDefinitionId): HistoricTaskInstanceQueryImpl
+    public function processDefinitionId(?string $processDefinitionId): HistoricTaskInstanceQueryImpl
     {
         $this->processDefinitionId = $processDefinitionId;
         return $this;
     }
 
-    public function processDefinitionKey(string $processDefinitionKey): HistoricTaskInstanceQueryInterface
+    public function processDefinitionKey(?string $processDefinitionKey): HistoricTaskInstanceQueryInterface
     {
         $this->processDefinitionKey = $processDefinitionKey;
         return $this;
     }
 
-    public function processDefinitionName(string $processDefinitionName): HistoricTaskInstanceQueryInterface
+    public function processDefinitionName(?string $processDefinitionName): HistoricTaskInstanceQueryInterface
     {
         $this->processDefinitionName = $processDefinitionName;
         return $this;
     }
 
-    public function taskId(string $taskId): HistoricTaskInstanceQueryInterface
+    public function taskId(?string $taskId): HistoricTaskInstanceQueryInterface
     {
         $this->taskId = $taskId;
         return $this;
     }
 
-    public function taskName(string $taskName): HistoricTaskInstanceQueryImpl
+    public function taskName(?string $taskName): HistoricTaskInstanceQueryImpl
     {
         $this->taskName = $taskName;
         return $this;
     }
 
-    public function taskNameLike(string $taskNameLike): HistoricTaskInstanceQueryImpl
+    public function taskNameLike(?string $taskNameLike): HistoricTaskInstanceQueryImpl
     {
         $this->taskNameLike = $taskNameLike;
         return $this;
     }
 
-    public function taskParentTaskId(string $parentTaskId): HistoricTaskInstanceQueryInterface
+    public function taskParentTaskId(?string $parentTaskId): HistoricTaskInstanceQueryInterface
     {
         $this->taskParentTaskId = $parentTaskId;
         return $this;
     }
 
-    public function taskDescription(string $taskDescription): HistoricTaskInstanceQueryImpl
+    public function taskDescription(?string $taskDescription): HistoricTaskInstanceQueryImpl
     {
         $this->taskDescription = $taskDescription;
         return $this;
     }
 
-    public function taskDescriptionLike(string $taskDescriptionLike): HistoricTaskInstanceQueryImpl
+    public function taskDescriptionLike(?string $taskDescriptionLike): HistoricTaskInstanceQueryImpl
     {
         $this->taskDescriptionLike = $taskDescriptionLike;
         return $this;
     }
 
-    public function taskDeleteReason(string $taskDeleteReason): HistoricTaskInstanceQueryImpl
+    public function taskDeleteReason(?string $taskDeleteReason): HistoricTaskInstanceQueryImpl
     {
         $this->taskDeleteReason = $taskDeleteReason;
         return $this;
     }
 
-    public function taskDeleteReasonLike(string $taskDeleteReasonLike): HistoricTaskInstanceQueryImpl
+    public function taskDeleteReasonLike(?string $taskDeleteReasonLike): HistoricTaskInstanceQueryImpl
     {
         $this->taskDeleteReasonLike = $taskDeleteReasonLike;
         return $this;
@@ -226,51 +226,51 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
         return $this;
     }
 
-    public function taskAssignee(string $taskAssignee): HistoricTaskInstanceQueryImpl
+    public function taskAssignee(?string $taskAssignee): HistoricTaskInstanceQueryImpl
     {
         $this->taskAssignee = $taskAssignee;
         return $this;
     }
 
-    public function taskAssigneeLike(string $taskAssigneeLike): HistoricTaskInstanceQueryImpl
+    public function taskAssigneeLike(?string $taskAssigneeLike): HistoricTaskInstanceQueryImpl
     {
         $this->taskAssigneeLike = $taskAssigneeLike;
         return $this;
     }
 
-    public function taskOwner(string $taskOwner): HistoricTaskInstanceQueryImpl
+    public function taskOwner(?string $taskOwner): HistoricTaskInstanceQueryImpl
     {
         $this->taskOwner = $taskOwner;
         return $this;
     }
 
-    public function taskOwnerLike(string $taskOwnerLike): HistoricTaskInstanceQueryImpl
+    public function taskOwnerLike(?string $taskOwnerLike): HistoricTaskInstanceQueryImpl
     {
         $this->taskOwnerLike = $taskOwnerLike;
         return $this;
     }
 
-    /*public HistoricTaskInstanceQueryInterface caseDefinitionId(string $caseDefinitionId) {
+    /*public HistoricTaskInstanceQueryInterface caseDefinitionId(?string $caseDefinitionId) {
         $this->caseDefinitionId = caseDefinitionId;
         return $this;
     }
 
-    public HistoricTaskInstanceQueryInterface caseDefinitionKey(string $caseDefinitionKey) {
+    public HistoricTaskInstanceQueryInterface caseDefinitionKey(?string $caseDefinitionKey) {
         $this->caseDefinitionKey = caseDefinitionKey;
         return $this;
     }
 
-    public HistoricTaskInstanceQueryInterface caseDefinitionName(string $caseDefinitionName) {
+    public HistoricTaskInstanceQueryInterface caseDefinitionName(?string $caseDefinitionName) {
         $this->caseDefinitionName = caseDefinitionName;
         return $this;
     }
 
-    public HistoricTaskInstanceQueryInterface caseInstanceId(string $caseInstanceId) {
+    public HistoricTaskInstanceQueryInterface caseInstanceId(?string $caseInstanceId) {
         $this->caseInstanceId = caseInstanceId;
         return $this;
     }
 
-    public HistoricTaskInstanceQueryInterface caseExecutionId(string $caseExecutionId) {
+    public HistoricTaskInstanceQueryInterface caseExecutionId(?string $caseExecutionId) {
         $this->caseExecutionId = caseExecutionId;
         return $this;
     }*/
@@ -305,61 +305,61 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
         return $this;
     }
 
-    public function taskVariableValueEquals(string $variableName, $variableValue): HistoricTaskInstanceQueryImpl
+    public function taskVariableValueEquals(?string $variableName, $variableValue): HistoricTaskInstanceQueryImpl
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::EQUALS, true, false);
         return $this;
     }
 
-    public function processVariableValueEquals(string $variableName, $variableValue): HistoricTaskInstanceQueryInterface
+    public function processVariableValueEquals(?string $variableName, $variableValue): HistoricTaskInstanceQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::EQUALS, false, true);
         return $this;
     }
 
-    public function processVariableValueNotEquals(string $variableName, $variableValue): HistoricTaskInstanceQueryInterface
+    public function processVariableValueNotEquals(?string $variableName, $variableValue): HistoricTaskInstanceQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::NOT_EQUALS, false, true);
         return $this;
     }
 
-    public function processVariableValueLike(string $variableName, $variableValue): HistoricTaskInstanceQueryInterface
+    public function processVariableValueLike(?string $variableName, $variableValue): HistoricTaskInstanceQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::LIKE, false, true);
         return $this;
     }
 
-    public function processVariableValueNotLike(string $variableName, $variableValue): HistoricTaskInstanceQueryInterface
+    public function processVariableValueNotLike(?string $variableName, $variableValue): HistoricTaskInstanceQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::NOT_LIKE, false, true);
         return $this;
     }
 
-    public function processVariableValueGreaterThan(string $variableName, $variableValue): HistoricTaskInstanceQueryInterface
+    public function processVariableValueGreaterThan(?string $variableName, $variableValue): HistoricTaskInstanceQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::GREATER_THAN, false, true);
         return $this;
     }
 
-    public function processVariableValueGreaterThanOrEquals(string $variableName, $variableValue): HistoricTaskInstanceQueryInterface
+    public function processVariableValueGreaterThanOrEquals(?string $variableName, $variableValue): HistoricTaskInstanceQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::GREATER_THAN_OR_EQUAL, false, true);
         return $this;
     }
 
-    public function processVariableValueLessThan(string $variableName, $variableValue): HistoricTaskInstanceQueryInterface
+    public function processVariableValueLessThan(?string $variableName, $variableValue): HistoricTaskInstanceQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::LESS_THAN, false, true);
         return $this;
     }
 
-    public function processVariableValueLessThanOrEquals(string $variableName, $variableValue): HistoricTaskInstanceQueryInterface
+    public function processVariableValueLessThanOrEquals(?string $variableName, $variableValue): HistoricTaskInstanceQueryInterface
     {
         $this->addVariable($variableName, $variableValue, QueryOperator::LESS_THAN_OR_EQUAL, false, true);
         return $this;
     }
 
-    public function taskDefinitionKey(string $taskDefinitionKey): HistoricTaskInstanceQueryInterface
+    public function taskDefinitionKey(?string $taskDefinitionKey): HistoricTaskInstanceQueryInterface
     {
         return $this->taskDefinitionKeyIn($taskDefinitionKey);
     }
@@ -383,25 +383,25 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
         return $this;
     }
 
-    public function taskInvolvedUser(string $userId): HistoricTaskInstanceQueryInterface
+    public function taskInvolvedUser(?string $userId): HistoricTaskInstanceQueryInterface
     {
         $this->taskInvolvedUser = $userId;
         return $this;
     }
 
-    public function taskInvolvedGroup(string $groupId): HistoricTaskInstanceQueryInterface
+    public function taskInvolvedGroup(?string $groupId): HistoricTaskInstanceQueryInterface
     {
         $this->taskInvolvedGroup = $groupId;
         return $this;
     }
 
-    public function taskHadCandidateUser(string $userId): HistoricTaskInstanceQueryInterface
+    public function taskHadCandidateUser(?string $userId): HistoricTaskInstanceQueryInterface
     {
         $this->taskHadCandidateUser = $userId;
         return $this;
     }
 
-    public function taskHadCandidateGroup(string $groupId): HistoricTaskInstanceQueryInterface
+    public function taskHadCandidateGroup(?string $groupId): HistoricTaskInstanceQueryInterface
     {
         $this->taskHadCandidateGroup = $groupId;
         return $this;
@@ -451,7 +451,7 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
         }
     }
 
-    public function addVariable($nameOrValue, $value = null, string $operator = null, bool $isTaskVariable = null, bool $isProcessInstanceVariable = null): void
+    public function addVariable($nameOrValue, $value = null, ?string $operator = null, bool $isTaskVariable = null, bool $isProcessInstanceVariable = null): void
     {
         if ($nameOrValue instanceof TaskQueryVariableValue) {
             $this->variables[] = $nameOrValue;
@@ -492,7 +492,7 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
         return is_bool($value) || strtolower($value) === "true" || strtolower($value) === "false";
     }
 
-    public function taskDueDate(string $dueDate): HistoricTaskInstanceQueryInterface
+    public function taskDueDate(?string $dueDate): HistoricTaskInstanceQueryInterface
     {
         // The taskDueDate filter can't be used in an AND query with
         // the withoutTaskDueDate filter. They can be combined in an OR query
@@ -506,7 +506,7 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
         return $this;
     }
 
-    public function taskDueAfter(string $dueAfter): HistoricTaskInstanceQueryInterface
+    public function taskDueAfter(?string $dueAfter): HistoricTaskInstanceQueryInterface
     {
         // The taskDueAfter filter can't be used in an AND query with
         // the withoutTaskDueDate filter. They can be combined in an OR query
@@ -520,7 +520,7 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
         return $this;
     }
 
-    public function taskDueBefore(string $dueBefore): HistoricTaskInstanceQueryInterface
+    public function taskDueBefore(?string $dueBefore): HistoricTaskInstanceQueryInterface
     {
         // The taskDueBefore filter can't be used in an AND query with
         // the withoutTaskDueDate filter. They can be combined in an OR query
@@ -548,19 +548,19 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
         return $this;
     }
 
-    public function taskFollowUpDate(string $followUpDate): HistoricTaskInstanceQueryInterface
+    public function taskFollowUpDate(?string $followUpDate): HistoricTaskInstanceQueryInterface
     {
         $this->followUpDate = $followUpDate;
         return $this;
     }
 
-    public function taskFollowUpBefore(string $followUpBefore): HistoricTaskInstanceQueryInterface
+    public function taskFollowUpBefore(?string $followUpBefore): HistoricTaskInstanceQueryInterface
     {
         $this->followUpBefore = $followUpBefore;
         return $this;
     }
 
-    public function taskFollowUpAfter(string $followUpAfter): HistoricTaskInstanceQueryInterface
+    public function taskFollowUpAfter(?string $followUpAfter): HistoricTaskInstanceQueryInterface
     {
         $this->followUpAfter = $followUpAfter;
         return $this;
@@ -581,25 +581,25 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
         return $this;
     }
 
-    public function finishedAfter(string $date): HistoricTaskInstanceQueryInterface
+    public function finishedAfter(?string $date): HistoricTaskInstanceQueryInterface
     {
         $this->finishedAfter = $date;
         return $this;
     }
 
-    public function finishedBefore(string $date): HistoricTaskInstanceQueryInterface
+    public function finishedBefore(?string $date): HistoricTaskInstanceQueryInterface
     {
         $this->finishedBefore = $date;
         return $this;
     }
 
-    public function startedAfter(string $date): HistoricTaskInstanceQueryInterface
+    public function startedAfter(?string $date): HistoricTaskInstanceQueryInterface
     {
         $this->startedAfter = $date;
         return $this;
     }
 
-    public function startedBefore(string $date): HistoricTaskInstanceQueryInterface
+    public function startedBefore(?string $date): HistoricTaskInstanceQueryInterface
     {
         $this->startedBefore = $date;
         return $this;
@@ -824,12 +824,12 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
 
     // getters and setters //////////////////////////////////////////////////////
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
 
-    public function getProcessInstanceBusinessKey(): string
+    public function getProcessInstanceBusinessKey(): ?string
     {
         return $this->processInstanceBusinessKey;
     }
@@ -839,22 +839,22 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
         return $this->processInstanceBusinessKeys;
     }
 
-    public function getProcessInstanceBusinessKeyLike(): string
+    public function getProcessInstanceBusinessKeyLike(): ?string
     {
         return $this->processInstanceBusinessKeyLike;
     }
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }
 
-    public function getProcessDefinitionName(): string
+    public function getProcessDefinitionName(): ?string
     {
         return $this->processDefinitionName;
     }
 
-    public function getExecutionId(): string
+    public function getExecutionId(): ?string
     {
         return $this->executionId;
     }
@@ -864,7 +864,7 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
         return $this->activityInstanceIds;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
@@ -909,17 +909,17 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
         return $this->processUnfinished;
     }
 
-    public function getDueDate(): string
+    public function getDueDate(): ?string
     {
         return $this->dueDate;
     }
 
-    public function getDueBefore(): string
+    public function getDueBefore(): ?string
     {
         return $this->dueBefore;
     }
 
-    public function getDueAfter(): string
+    public function getDueAfter(): ?string
     {
         return $this->dueAfter;
     }
@@ -929,82 +929,82 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
         return $this->isWithoutTaskDueDate;
     }
 
-    public function getFollowUpDate(): string
+    public function getFollowUpDate(): ?string
     {
         return $this->followUpDate;
     }
 
-    public function getFollowUpBefore(): string
+    public function getFollowUpBefore(): ?string
     {
         return $this->followUpBefore;
     }
 
-    public function getFollowUpAfter(): string
+    public function getFollowUpAfter(): ?string
     {
         return $this->followUpAfter;
     }
 
-    public function getTaskName(): string
+    public function getTaskName(): ?string
     {
         return $this->taskName;
     }
 
-    public function getTaskNameLike(): string
+    public function getTaskNameLike(): ?string
     {
         return $this->taskNameLike;
     }
 
-    public function getTaskDescription(): string
+    public function getTaskDescription(): ?string
     {
         return $this->taskDescription;
     }
 
-    public function getTaskDescriptionLike(): string
+    public function getTaskDescriptionLike(): ?string
     {
         return $this->taskDescriptionLike;
     }
 
-    public function getTaskDeleteReason(): string
+    public function getTaskDeleteReason(): ?string
     {
         return $this->taskDeleteReason;
     }
 
-    public function getTaskDeleteReasonLike(): string
+    public function getTaskDeleteReasonLike(): ?string
     {
         return $this->taskDeleteReasonLike;
     }
 
-    public function getTaskAssignee(): string
+    public function getTaskAssignee(): ?string
     {
         return $this->taskAssignee;
     }
 
-    public function getTaskAssigneeLike(): string
+    public function getTaskAssigneeLike(): ?string
     {
         return $this->taskAssigneeLike;
     }
 
-    public function getTaskId(): string
+    public function getTaskId(): ?string
     {
         return $this->taskId;
     }
 
-    public function getTaskInvolvedGroup(): string
+    public function getTaskInvolvedGroup(): ?string
     {
         return $this->taskInvolvedGroup;
     }
 
-    public function getTaskInvolvedUser(): string
+    public function getTaskInvolvedUser(): ?string
     {
         return $this->taskInvolvedUser;
     }
 
-    public function getTaskHadCandidateGroup(): string
+    public function getTaskHadCandidateGroup(): ?string
     {
         return $this->taskHadCandidateGroup;
     }
 
-    public function getTaskHadCandidateUser(): string
+    public function getTaskHadCandidateUser(): ?string
     {
         return $this->taskHadCandidateUser;
     }
@@ -1029,12 +1029,12 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
         return $this->variableValuesIgnoreCase;
     }
 
-    public function getTaskOwnerLike(): string
+    public function getTaskOwnerLike(): ?string
     {
         return $this->taskOwnerLike;
     }
 
-    public function getTaskOwner(): string
+    public function getTaskOwner(): ?string
     {
         return $this->taskOwner;
     }
@@ -1044,7 +1044,7 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
         return $this->taskPriority;
     }
 
-    public function getTaskParentTaskId(): string
+    public function getTaskParentTaskId(): ?string
     {
         return $this->taskParentTaskId;
     }
@@ -1070,27 +1070,27 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
         return caseInstanceId;
     }
 
-    public function getCaseExecutionId(): string
+    public function getCaseExecutionId(): ?string
     {
         return caseExecutionId;
     }*/
 
-    public function getFinishedAfter(): string
+    public function getFinishedAfter(): ?string
     {
         return $this->finishedAfter;
     }
 
-    public function getFinishedBefore(): string
+    public function getFinishedBefore(): ?string
     {
         return $this->finishedBefore;
     }
 
-    public function getStartedAfter(): string
+    public function getStartedAfter(): ?string
     {
         return $this->startedAfter;
     }
 
-    public function getStartedBefore(): string
+    public function getStartedBefore(): ?string
     {
         return $this->startedBefore;
     }

@@ -10,7 +10,7 @@ use Jabe\Query\QueryInterface;
 
 class ExecuteFilterCountCmd extends AbstractExecuteFilterCmd implements CommandInterface
 {
-    public function __construct(string $filterId, ?QueryInterface $extendingQuery = null)
+    public function __construct(?string $filterId, ?QueryInterface $extendingQuery = null)
     {
         parent::__construct($filterId, $extendingQuery);
     }
@@ -19,5 +19,10 @@ class ExecuteFilterCountCmd extends AbstractExecuteFilterCmd implements CommandI
     {
         $filter = $this->getFilter($commandContext);
         return $filter->getQuery()->count();
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

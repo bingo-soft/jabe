@@ -2,7 +2,11 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
-use Jabe\Authorization\Resources;
+use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface,
+    Resources
+};
 use Jabe\Impl\{
     HistoricTaskInstanceQueryImpl,
     Page
@@ -83,7 +87,7 @@ class HistoricTaskInstanceManager extends AbstractHistoricManager
         return 0;
     }
 
-    public function findHistoricTaskInstancesByQueryCriteria(HistoricTaskInstanceQueryImpl $historicTaskInstanceQuery, Page $page): array
+    public function findHistoricTaskInstancesByQueryCriteria(HistoricTaskInstanceQueryImpl $historicTaskInstanceQuery, ?Page $page): array
     {
         if ($this->isHistoryEnabled()) {
             $this->configureQuery($historicTaskInstanceQuery);
@@ -93,7 +97,7 @@ class HistoricTaskInstanceManager extends AbstractHistoricManager
         return [];
     }
 
-    public function findHistoricTaskInstanceById(string $taskId): HistoricTaskInstanceEntity
+    public function findHistoricTaskInstanceById(?string $taskId): HistoricTaskInstanceEntity
     {
         EnsureUtil::ensureNotNull("Invalid historic task id", "taskId", $taskId);
 
@@ -104,7 +108,7 @@ class HistoricTaskInstanceManager extends AbstractHistoricManager
         return null;
     }
 
-    public function deleteHistoricTaskInstanceById(string $taskId): void
+    public function deleteHistoricTaskInstanceById(?string $taskId): void
     {
         if ($this->isHistoryEnabled()) {
             $historicTaskInstance = findHistoricTaskInstanceById($taskId);
@@ -175,7 +179,7 @@ class HistoricTaskInstanceManager extends AbstractHistoricManager
         }
     }
 
-    public function addRemovalTimeToTaskInstancesByRootProcessInstanceId(string $rootProcessInstanceId, string $removalTime): void
+    public function addRemovalTimeToTaskInstancesByRootProcessInstanceId(?string $rootProcessInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["rootProcessInstanceId"] = $rootProcessInstanceId;
@@ -185,7 +189,7 @@ class HistoricTaskInstanceManager extends AbstractHistoricManager
             ->updatePreserveOrder(HistoricTaskInstanceEventEntity::class, "updateHistoricTaskInstancesByRootProcessInstanceId", $parameters);
     }
 
-    public function addRemovalTimeToTaskInstancesByProcessInstanceId(string $processInstanceId, string $removalTime): void
+    public function addRemovalTimeToTaskInstancesByProcessInstanceId(?string $processInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["processInstanceId"] = $processInstanceId;
@@ -195,7 +199,7 @@ class HistoricTaskInstanceManager extends AbstractHistoricManager
             ->updatePreserveOrder(HistoricTaskInstanceEventEntity::class, "updateHistoricTaskInstancesByProcessInstanceId", $parameters);
     }
 
-    public function markTaskInstanceEnded(string $taskId, string $deleteReason): void
+    public function markTaskInstanceEnded(?string $taskId, ?string $deleteReason): void
     {
         $configuration = Context::getProcessEngineConfiguration();
 
@@ -209,7 +213,7 @@ class HistoricTaskInstanceManager extends AbstractHistoricManager
                 private $taskEntity;
                 private $deleteReason;
 
-                public function __construct(TaskEntity $taskEntity, string $deleteReason)
+                public function __construct(TaskEntity $taskEntity, ?string $deleteReason)
                 {
                     $this->taskEntity = $taskEntity;
                     $this->deleteReason = $deleteReason;
@@ -245,13 +249,13 @@ class HistoricTaskInstanceManager extends AbstractHistoricManager
         }
     }
 
-    protected function configureQuery(HistoricTaskInstanceQueryImpl $query): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         $this->getAuthorizationManager()->configureHistoricTaskInstanceQuery($query);
         $this->getTenantManager()->configureQuery($query);
     }
 
-    public function deleteHistoricTaskInstancesByRemovalTime(string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
+    public function deleteHistoricTaskInstancesByRemovalTime(?string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
     {
         $parameters = [];
         $parameters["removalTime"] = $removalTime;

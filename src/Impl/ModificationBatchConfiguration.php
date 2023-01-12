@@ -17,7 +17,7 @@ class ModificationBatchConfiguration extends BatchConfiguration
     public function __construct(
         array $ids,
         DeploymentMappings $mappings,
-        string $processDefinitionId,
+        ?string $processDefinitionId,
         array $instructions,
         bool $skipCustomListeners,
         bool $skipIoMappings
@@ -34,7 +34,7 @@ class ModificationBatchConfiguration extends BatchConfiguration
         return $this->instructions;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }

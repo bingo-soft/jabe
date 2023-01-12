@@ -2,7 +2,11 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
-use Jabe\Authorization\Resources;
+use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface,
+    Resources
+};
 use Jabe\Impl\{
     AbstractQuery,
     ExecutionQueryImpl,
@@ -39,7 +43,7 @@ class ExecutionManager extends AbstractManager
         }
     }
 
-    public function deleteProcessInstancesByProcessDefinition(string $processDefinitionId, string $deleteReason, bool $cascade, bool $skipCustomListeners, bool $skipIoMappings): void
+    public function deleteProcessInstancesByProcessDefinition(?string $processDefinitionId, ?string $deleteReason, bool $cascade, bool $skipCustomListeners, bool $skipIoMappings): void
     {
         $processInstanceIds = $this->getDbEntityManager()
             ->selectList("selectProcessInstanceIdsByProcessDefinitionId", $processDefinitionId);
@@ -53,7 +57,7 @@ class ExecutionManager extends AbstractManager
         }
     }
 
-    public function deleteProcessInstance(string $processInstanceId, string $deleteReason = null, bool $cascade = false, bool $skipCustomListeners = false, bool $externallyTerminated = false, bool $skipIoMappings = false, bool $skipSubprocesses = false): void
+    public function deleteProcessInstance(?string $processInstanceId, ?string $deleteReason = null, bool $cascade = false, bool $skipCustomListeners = false, bool $externallyTerminated = false, bool $skipIoMappings = false, bool $skipSubprocesses = false): void
     {
         $execution = $this->findExecutionById($processInstanceId);
 
@@ -72,27 +76,27 @@ class ExecutionManager extends AbstractManager
         }
     }
 
-    public function findSubProcessInstanceBySuperExecutionId(string $superExecutionId): ?ExecutionEntity
+    public function findSubProcessInstanceBySuperExecutionId(?string $superExecutionId): ?ExecutionEntity
     {
         return $this->getDbEntityManager()->selectOne("selectSubProcessInstanceBySuperExecutionId", $superExecutionId);
     }
 
-    public function findSubProcessInstanceBySuperCaseExecutionId(string $superCaseExecutionId): ?ExecutionEntity
+    public function findSubProcessInstanceBySuperCaseExecutionId(?string $superCaseExecutionId): ?ExecutionEntity
     {
         return $this->getDbEntityManager()->selectOne("selectSubProcessInstanceBySuperCaseExecutionId", $superCaseExecutionId);
     }
 
-    public function findChildExecutionsByParentExecutionId(string $parentExecutionId): array
+    public function findChildExecutionsByParentExecutionId(?string $parentExecutionId): array
     {
         return $this->getDbEntityManager()->selectList("selectExecutionsByParentExecutionId", $parentExecutionId);
     }
 
-    public function findExecutionsByProcessInstanceId(string $processInstanceId): array
+    public function findExecutionsByProcessInstanceId(?string $processInstanceId): array
     {
         return $this->getDbEntityManager()->selectList("selectExecutionsByProcessInstanceId", $processInstanceId);
     }
 
-    public function findExecutionById(string $executionId): ?ExecutionEntity
+    public function findExecutionById(?string $executionId): ?ExecutionEntity
     {
         return $this->getDbEntityManager()->selectById(ExecutionEntity::class, $executionId);
     }
@@ -103,7 +107,7 @@ class ExecutionManager extends AbstractManager
         return $this->getDbEntityManager()->selectOne("selectExecutionCountByQueryCriteria", $executionQuery);
     }
 
-    public function findExecutionsByQueryCriteria(ExecutionQueryImpl $executionQuery, Page $page): array
+    public function findExecutionsByQueryCriteria(ExecutionQueryImpl $executionQuery, ?Page $page): array
     {
         $this->configureQuery($executionQuery);
         return $this->getDbEntityManager()->selectList("selectExecutionsByQueryCriteria", $executionQuery, $page);
@@ -115,7 +119,7 @@ class ExecutionManager extends AbstractManager
         return $this->getDbEntityManager()->selectOne("selectProcessInstanceCountByQueryCriteria", $processInstanceQuery);
     }
 
-    public function findProcessInstancesByQueryCriteria(ProcessInstanceQueryImpl $processInstanceQuery, Page $page): array
+    public function findProcessInstancesByQueryCriteria(ProcessInstanceQueryImpl $processInstanceQuery, ?Page $page): array
     {
         $this->configureQuery($processInstanceQuery);
         return $this->getDbEntityManager()->selectList("selectProcessInstanceByQueryCriteria", $processInstanceQuery, $page);
@@ -133,7 +137,7 @@ class ExecutionManager extends AbstractManager
         return $this->getDbEntityManager()->selectList("selectProcessInstanceDeploymentIdMappingsByQueryCriteria", $processInstanceQuery);
     }
 
-    public function findEventScopeExecutionsByActivityId(string $activityRef, string $parentExecutionId): array
+    public function findEventScopeExecutionsByActivityId(?string $activityRef, ?string $parentExecutionId): array
     {
         $parameters = [];
         $parameters["activityId"] = $activityRef;
@@ -156,7 +160,7 @@ class ExecutionManager extends AbstractManager
         return $this->getDbEntityManager()->selectOne("selectExecutionCountByNativeQuery", $parameterMap);
     }
 
-    public function updateExecutionSuspensionStateByProcessDefinitionId(string $processDefinitionId, SuspensionState $suspensionState): void
+    public function updateExecutionSuspensionStateByProcessDefinitionId(?string $processDefinitionId, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processDefinitionId"] = $processDefinitionId;
@@ -164,7 +168,7 @@ class ExecutionManager extends AbstractManager
         $this->getDbEntityManager()->update(ExecutionEntity::class, "updateExecutionSuspensionStateByParameters", $this->configureParameterizedQuery($parameters));
     }
 
-    public function updateExecutionSuspensionStateByProcessInstanceId(string $processInstanceId, SuspensionState $suspensionState): void
+    public function updateExecutionSuspensionStateByProcessInstanceId(?string $processInstanceId, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processInstanceId"] = $processInstanceId;
@@ -172,7 +176,7 @@ class ExecutionManager extends AbstractManager
         $this->getDbEntityManager()->update(ExecutionEntity::class, "updateExecutionSuspensionStateByParameters", $this->configureParameterizedQuery($parameters));
     }
 
-    public function updateExecutionSuspensionStateByProcessDefinitionKey(string $processDefinitionKey, SuspensionState $suspensionState): void
+    public function updateExecutionSuspensionStateByProcessDefinitionKey(?string $processDefinitionKey, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processDefinitionKey"] = $processDefinitionKey;
@@ -181,7 +185,7 @@ class ExecutionManager extends AbstractManager
         $this->getDbEntityManager()->update(ExecutionEntity::class, "updateExecutionSuspensionStateByParameters", $this->configureParameterizedQuery($parameters));
     }
 
-    public function updateExecutionSuspensionStateByProcessDefinitionKeyAndTenantId(string $processDefinitionKey, string $tenantId, SuspensionState $suspensionState): void
+    public function updateExecutionSuspensionStateByProcessDefinitionKeyAndTenantId(?string $processDefinitionKey, ?string $tenantId, SuspensionState $suspensionState): void
     {
         $parameters = [];
         $parameters["processDefinitionKey"] = $processDefinitionKey;
@@ -206,7 +210,7 @@ class ExecutionManager extends AbstractManager
         }
     }
 
-    protected function configureQuery(AbstractQuery $query): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         $this->getAuthorizationManager()->configureExecutionQuery($query);
         $this->getTenantManager()->configureQuery($query);

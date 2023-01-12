@@ -12,7 +12,7 @@ class GetTableMetaDataCmd implements CommandInterface, \Serializable
 {
     protected $tableName;
 
-    public function __construct(string $tableName)
+    public function __construct(?string $tableName)
     {
         $this->tableName = $tableName;
     }
@@ -39,5 +39,10 @@ class GetTableMetaDataCmd implements CommandInterface, \Serializable
         return $commandContext
             ->getTableDataManager()
             ->getTableMetaData($this->tableName);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

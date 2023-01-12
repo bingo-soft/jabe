@@ -15,7 +15,7 @@ class HandleTaskEscalationCmd implements CommandInterface, \Serializable
     protected $escalationCode;
     protected $variables = [];
 
-    public function __construct(string $taskId, string $escalationCode, array $variables = [])
+    public function __construct(?string $taskId, ?string $escalationCode, array $variables = [])
     {
         $this->taskId = $taskId;
         $this->escalationCode = $escalationCode;
@@ -59,5 +59,10 @@ class HandleTaskEscalationCmd implements CommandInterface, \Serializable
         $task->escalation($this->escalationCode, $this->variables);
 
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

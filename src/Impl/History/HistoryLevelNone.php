@@ -12,7 +12,7 @@ class HistoryLevelNone extends AbstractHistoryLevel
         return 0;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return ProcessEngineConfiguration::HISTORY_NONE;
     }

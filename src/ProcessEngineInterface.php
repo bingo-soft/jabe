@@ -11,9 +11,9 @@ interface ProcessEngineInterface extends ProcessEngineServicesInterface
     /** The name as specified in 'process-engine-name' in
      * configuration file.
      * The default name for a process engine is 'default */
-    public function getName(): string;
+    public function getName(): ?string;
 
     public function close(): void;
 
-    public function getProcessEngineConfiguration(): AbstractProcessEngineConfiguration;
+    public function getProcessEngineConfiguration(): ProcessEngineConfiguration;
 }

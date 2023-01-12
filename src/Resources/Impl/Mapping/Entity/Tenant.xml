@@ -22,8 +22,8 @@
   <insert id="insertTenant" parameterType="Jabe\Impl\Persistence\Entity\TenantEntity">
     insert into ${prefix}ACT_ID_TENANT (ID_, NAME_, REV_)
     values (
-      #{id ,dbalType=VARCHAR},
-      #{name ,dbalType=VARCHAR},
+      #{id:VARCHAR},
+      #{name:VARCHAR},
       1
     )
   </insert>
@@ -32,8 +32,8 @@
   
   <update id="updateTenant" parameterType="Jabe\Impl\Persistence\Entity\TenantEntity">
     update ${prefix}ACT_ID_TENANT set
-      REV_ = #{revisionNext ,dbalType=INTEGER},
-      NAME_ = #{name ,dbalType=VARCHAR}
+      REV_ = #{revisionNext},
+      NAME_ = #{name:VARCHAR}
     where ID_ = #{id}
        and REV_ = #{revision}
   </update>
@@ -86,7 +86,7 @@
       <if test="id != null">
         RES.ID_ = #{id}
       </if>
-      <if test="ids != null and count(ids) > 0">
+      <if test="!empty(ids)">
         and RES.ID_ in
         <foreach item="item" index="index" collection="ids"
                  open="(" separator="," close=")">
@@ -136,7 +136,7 @@
     <if test="tenantCheck.isTenantCheckEnabled">
     
       and (${columnPrefix}TENANT_ID_ is null
-      <if test="tenantCheck.authTenantIds != null and !tenantCheck.authTenantIds.isEmpty">
+      <if test="!empty(tenantCheck.authTenantIds)">
           or ${columnPrefix}TENANT_ID_ in
           <foreach item="tenantId" index="index" collection="tenantCheck.authTenantIds"
                    open="(" separator="," close=")">

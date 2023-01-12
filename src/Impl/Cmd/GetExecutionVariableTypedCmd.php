@@ -16,7 +16,7 @@ class GetExecutionVariableTypedCmd implements CommandInterface, \Serializable
     protected $isLocal;
     protected $deserializeValue;
 
-    public function __construct(string $executionId, string $variableName, bool $isLocal, bool $deserializeValue)
+    public function __construct(?string $executionId, ?string $variableName, bool $isLocal, bool $deserializeValue)
     {
         $this->executionId = $executionId;
         $this->variableName = $variableName;
@@ -72,5 +72,10 @@ class GetExecutionVariableTypedCmd implements CommandInterface, \Serializable
         foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
             $checker->checkReadProcessInstanceVariable($execution);
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

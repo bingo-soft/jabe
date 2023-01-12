@@ -39,7 +39,7 @@ use Jabe\Impl\Util\{
 
 class UserOperationLogManager extends AbstractHistoricManager
 {
-    public function findOperationLogById(string $entryId): ?UserOperationLogEntryInterface
+    public function findOperationLogById(?string $entryId): ?UserOperationLogEntryInterface
     {
         return $this->getDbEntityManager()->selectById(UserOperationLogEntryEventEntity::class, $entryId);
     }
@@ -50,13 +50,13 @@ class UserOperationLogManager extends AbstractHistoricManager
         return $this->getDbEntityManager()->selectOne("selectUserOperationLogEntryCountByQueryCriteria", $query);
     }
 
-    public function findOperationLogEntriesByQueryCriteria(UserOperationLogQueryImpl $query, Page $page): array
+    public function findOperationLogEntriesByQueryCriteria(UserOperationLogQueryImpl $query, ?Page $page): array
     {
         $this->getAuthorizationManager()->configureUserOperationLogQuery($query);
         return $this->getDbEntityManager()->selectList("selectUserOperationLogEntriesByQueryCriteria", $query, $page);
     }
 
-    public function addRemovalTimeToUserOperationLogByRootProcessInstanceId(string $rootProcessInstanceId, string $removalTime): void
+    public function addRemovalTimeToUserOperationLogByRootProcessInstanceId(?string $rootProcessInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["rootProcessInstanceId"] = $rootProcessInstanceId;
@@ -66,7 +66,7 @@ class UserOperationLogManager extends AbstractHistoricManager
             ->updatePreserveOrder(UserOperationLogEntryEventEntity::class, "updateUserOperationLogByRootProcessInstanceId", $parameters);
     }
 
-    public function addRemovalTimeToUserOperationLogByProcessInstanceId(string $processInstanceId, string $removalTime): void
+    public function addRemovalTimeToUserOperationLogByProcessInstanceId(?string $processInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["processInstanceId"] = $processInstanceId;
@@ -76,7 +76,7 @@ class UserOperationLogManager extends AbstractHistoricManager
             ->updatePreserveOrder(UserOperationLogEntryEventEntity::class, "updateUserOperationLogByProcessInstanceId", $parameters);
     }
 
-    public function updateOperationLogAnnotationByOperationId(string $operationId, string $annotation): void
+    public function updateOperationLogAnnotationByOperationId(?string $operationId, ?string $annotation): void
     {
         $parameters = [];
         $parameters["operationId"] = $operationId;
@@ -86,14 +86,14 @@ class UserOperationLogManager extends AbstractHistoricManager
             ->updatePreserveOrder(UserOperationLogEntryEventEntity::class, "updateOperationLogAnnotationByOperationId", $parameters);
     }
 
-    public function deleteOperationLogEntryById(string $entryId): void
+    public function deleteOperationLogEntryById(?string $entryId): void
     {
         if ($this->isHistoryEventProduced()) {
             $this->getDbEntityManager()->delete(UserOperationLogEntryEventEntity::class, "deleteUserOperationLogEntryById", $entryId);
         }
     }
 
-    public function deleteOperationLogByRemovalTime(string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
+    public function deleteOperationLogByRemovalTime(?string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
     {
         $parameters = [];
         $parameters["removalTime"] = $removalTime;
@@ -118,7 +118,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    public function logUserOperation(string $operation, string $userId): void
+    public function logUserOperation($operation, ?string $userId): void
     {
         $operationResult = $this->getOperationType($operation);
         $operation = $operationResult ?? $operation;
@@ -134,7 +134,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    public function logGroupOperation(string $operation, string $groupId): void
+    public function logGroupOperation($operation, ?string $groupId): void
     {
         $operationResult = $this->getOperationType($operation);
         $operation = $operationResult ?? $operation;
@@ -150,7 +150,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    public function logTenantOperation(string $operation, ?string $tenantId): void
+    public function logTenantOperation(?string $operation, ?string $tenantId): void
     {
         $operationResult = $this->getOperationType($operation);
         $operation = $operationResult ?? $operation;
@@ -166,15 +166,15 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    public function logMembershipOperation(string $operation, ?string $userId, ?string $groupId, ?string $tenantId): void
+    public function logMembershipOperation($operation, ?string $userId, ?string $groupId, ?string $tenantId): void
     {
         $operationResult = $this->getOperationType($operation);
         $operation = $operationResult ?? $operation;
         if ($operation !== null && $this->isUserOperationLogEnabled()) {
-            $entityType = $tenantId == null ? EntityTypes::GROUP_MEMBERSHIP : EntityTypes::TENANT_MEMBERSHIP;
+            $entityType = $tenantId === null ? EntityTypes::GROUP_MEMBERSHIP : EntityTypes::TENANT_MEMBERSHIP;
             $context = new UserOperationLogContext();
             $entryBuilder =
-                UserOperationLogContextEntryBuilder::entry($operation, entityType)
+                UserOperationLogContextEntryBuilder::entry($operation, $entityType)
                 ->category(UserOperationLogEntryInterface::CATEGORY_ADMIN);
             $propertyChanges = [];
             if ($userId !== null) {
@@ -192,7 +192,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    public function logTaskOperations(string $operation, HistoricTaskInstanceInterface $task, array $propertyChanges): void
+    public function logTaskOperations(?string $operation, HistoricTaskInstanceInterface $task, array $propertyChanges): void
     {
         if ($task instanceof TaskEntity) {
             if ($this->isUserOperationLogEnabled()) {
@@ -219,7 +219,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    public function logLinkOperation(string $operation, TaskEntity $task, PropertyChange $propertyChange): void
+    public function logLinkOperation(?string $operation, TaskEntity $task, PropertyChange $propertyChange): void
     {
         if ($this->isUserOperationLogEnabled()) {
             $context = new UserOperationLogContext();
@@ -233,7 +233,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    public function logProcessInstanceOperation(string $operation, ?string $processInstanceId, ?string $processDefinitionId, ?string $processDefinitionKey, array $propertyChanges, ?string $annotation): void
+    public function logProcessInstanceOperation(?string $operation, ?string $processInstanceId, ?string $processDefinitionId, ?string $processDefinitionKey, array $propertyChanges, ?string $annotation): void
     {
         if ($this->isUserOperationLogEnabled()) {
             $context = new UserOperationLogContext();
@@ -266,9 +266,9 @@ class UserOperationLogManager extends AbstractHistoricManager
     }
 
     public function logProcessDefinitionOperation(
-        string $operation,
-        string $processDefinitionId,
-        string $processDefinitionKey,
+        ?string $operation,
+        ?string $processDefinitionId,
+        ?string $processDefinitionKey,
         $propertyChanges
     ): void {
         if ($propertyChanges instanceof PropertyChange) {
@@ -294,7 +294,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    /*public void logCaseInstanceOperation(string $operation, string $caseInstanceId, List<PropertyChange> propertyChanges) {
+    /*public void logCaseInstanceOperation(?string $operation, ?string $caseInstanceId, List<PropertyChange> propertyChanges) {
         if ($this->isUserOperationLogEnabled()) {
 
             $context = new UserOperationLogContext();
@@ -309,7 +309,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    public void logCaseDefinitionOperation(string $operation, string $caseDefinitionId, List<PropertyChange> propertyChanges) {
+    public void logCaseDefinitionOperation(?string $operation, ?string $caseDefinitionId, List<PropertyChange> propertyChanges) {
         if ($this->isUserOperationLogEnabled()) {
 
             $context = new UserOperationLogContext();
@@ -324,7 +324,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    public void logDecisionDefinitionOperation(string $operation, List<PropertyChange> propertyChanges) {
+    public void logDecisionDefinitionOperation(?string $operation, List<PropertyChange> propertyChanges) {
         if ($this->isUserOperationLogEnabled()) {
 
             $context = new UserOperationLogContext();
@@ -339,12 +339,12 @@ class UserOperationLogManager extends AbstractHistoricManager
     }*/
 
     public function logJobOperation(
-        string $operation,
-        string $jobId,
-        string $jobDefinitionId,
-        string $processInstanceId,
-        string $processDefinitionId,
-        string $processDefinitionKey,
+        ?string $operation,
+        ?string $jobId,
+        ?string $jobDefinitionId,
+        ?string $processInstanceId,
+        ?string $processDefinitionId,
+        ?string $processDefinitionKey,
         $propertyChanges
     ): void {
         if ($propertyChanges instanceof PropertyChange) {
@@ -393,10 +393,10 @@ class UserOperationLogManager extends AbstractHistoricManager
     }
 
     public function logJobDefinitionOperation(
-        string $operation,
-        string $jobDefinitionId,
-        string $processDefinitionId,
-        string $processDefinitionKey,
+        ?string $operation,
+        ?string $jobDefinitionId,
+        ?string $processDefinitionId,
+        ?string $processDefinitionKey,
         PropertyChange $propertyChange
     ): void {
         if ($this->isUserOperationLogEnabled()) {
@@ -429,7 +429,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    public function logAttachmentOperation(string $operation, ExecutionEntity $inst, PropertyChange $propertyChange): void
+    public function logAttachmentOperation(?string $operation, ExecutionEntity $inst, PropertyChange $propertyChange): void
     {
         if ($inst instanceof TaskEntity) {
             if ($this->isUserOperationLogEnabled()) {
@@ -458,7 +458,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    public function logVariableOperation(string $operation, string $executionId, string $taskId, PropertyChange $propertyChange): void
+    public function logVariableOperation(?string $operation, ?string $executionId, ?string $taskId, PropertyChange $propertyChange): void
     {
         if ($this->isUserOperationLogEnabled()) {
             $context = new UserOperationLogContext();
@@ -483,7 +483,7 @@ class UserOperationLogManager extends AbstractHistoricManager
     }
 
     public function logHistoricVariableOperation(
-        string $operation,
+        ?string $operation,
         HistoricVariableInstanceEntity $inst,
         ResourceDefinitionEntity $definition,
         PropertyChange $propertyChange
@@ -517,7 +517,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    public function logDeploymentOperation(string $operation, string $deploymentId, array $propertyChanges): void
+    public function logDeploymentOperation(?string $operation, ?string $deploymentId, array $propertyChanges): void
     {
         if ($this->isUserOperationLogEnabled()) {
             $context = new UserOperationLogContext();
@@ -533,7 +533,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    public function logBatchOperation(string $operation, ?string $batchId, $propertyChanges): void
+    public function logBatchOperation(?string $operation, ?string $batchId, $propertyChanges): void
     {
         if ($propertyChanges instanceof PropertyChange) {
             $propertyChanges = [$propertyChanges];
@@ -552,7 +552,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    /*public void logDecisionInstanceOperation(string $operation, List<PropertyChange> propertyChanges) {
+    /*public void logDecisionInstanceOperation(?string $operation, List<PropertyChange> propertyChanges) {
         if ($this->isUserOperationLogEnabled()) {
             $context = new UserOperationLogContext();
             $entryBuilder =
@@ -566,7 +566,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }*/
 
-    public function logExternalTaskOperation(string $operation, ExternalTaskEntity $externalTask, array $propertyChanges): void
+    public function logExternalTaskOperation(?string $operation, ExternalTaskEntity $externalTask, array $propertyChanges): void
     {
         if ($this->isUserOperationLogEnabled()) {
             $context = new UserOperationLogContext();
@@ -594,7 +594,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    public function logMetricsOperation(string $operation, array $propertyChanges): void
+    public function logMetricsOperation(?string $operation, array $propertyChanges): void
     {
         if ($this->isUserOperationLogEnabled()) {
             $context = new UserOperationLogContext();
@@ -607,7 +607,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    public function logTaskMetricsOperation(string $operation, array $propertyChanges): void
+    public function logTaskMetricsOperation(?string $operation, array $propertyChanges): void
     {
         if ($this->isUserOperationLogEnabled()) {
             $context = new UserOperationLogContext();
@@ -620,7 +620,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    public function logFilterOperation(string $operation, string $filterId): void
+    public function logFilterOperation(?string $operation, ?string $filterId): void
     {
         if ($this->isUserOperationLogEnabled()) {
             $context = new UserOperationLogContext();
@@ -633,7 +633,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    public function logPropertyOperation(string $operation, array $propertyChanges): void
+    public function logPropertyOperation(?string $operation, array $propertyChanges): void
     {
         if ($this->isUserOperationLogEnabled()) {
             $context = new UserOperationLogContext();
@@ -646,12 +646,12 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    public function logSetAnnotationOperation(string $operationId): void
+    public function logSetAnnotationOperation(?string $operationId): void
     {
         $this->logAnnotationOperation($operationId, EntityTypes::OPERATION_LOG, "operationId", UserOperationLogEntryInterface::OPERATION_TYPE_SET_ANNOTATION);
     }
 
-    public function logClearAnnotationOperation(string $operationId): void
+    public function logClearAnnotationOperation(?string $operationId): void
     {
         $this->logAnnotationOperation(
             $operationId,
@@ -661,17 +661,17 @@ class UserOperationLogManager extends AbstractHistoricManager
         );
     }
 
-    public function logSetIncidentAnnotationOperation(string $incidentId): void
+    public function logSetIncidentAnnotationOperation(?string $incidentId): void
     {
         $this->logAnnotationOperation($incidentId, EntityTypes::INCIDENT, "incidentId", UserOperationLogEntryInterface::OPERATION_TYPE_SET_ANNOTATION);
     }
 
-    public function logClearIncidentAnnotationOperation(string $incidentId): void
+    public function logClearIncidentAnnotationOperation(?string $incidentId): void
     {
         $this->logAnnotationOperation(incidentId, EntityTypes::INCIDENT, "incidentId", UserOperationLogEntryInterface::OPERATION_TYPE_CLEAR_ANNOTATION);
     }
 
-    protected function logAnnotationOperation(string $id, string $type, string $idProperty, string $operationType): void
+    protected function logAnnotationOperation(?string $id, ?string $type, ?string $idProperty, ?string $operationType): void
     {
         if ($this->isUserOperationLogEnabled()) {
             $entryBuilder =
@@ -686,7 +686,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    public function logAuthorizationOperation(string $operation, AuthorizationEntity $authorization, ?AuthorizationEntity $previousValues): void
+    public function logAuthorizationOperation(?string $operation, AuthorizationEntity $authorization, ?AuthorizationEntity $previousValues): void
     {
         if ($this->isUserOperationLogEnabled()) {
             $propertyChanges = [];
@@ -712,10 +712,10 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    protected function getPermissionStringList(AuthorizationEntity $authorization): string
+    protected function getPermissionStringList(AuthorizationEntity $authorization): ?string
     {
         $permissionsForResource = Context::getProcessEngineConfiguration()->getPermissionProvider()->getPermissionsForResource($authorization->getResourceType());
-        $permissions = $authorization->getPermissions($permissionsForResource);
+        $permissions = $authorization->getPermissionsFromSupplied($permissionsForResource);
         $namesForPermissions = PermissionConverter::getNamesForPermissions($authorization, $permissions);
         if (count($namesForPermissions) == 0) {
             return Permissions::nonde()->getName();
@@ -723,7 +723,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         return StringUtil::trimToMaximumLengthAllowed(StringUtil::join($namesForPermissions));
     }
 
-    protected function getResourceName(int $resourceType): string
+    protected function getResourceName(int $resourceType): ?string
     {
         return Context::getProcessEngineConfiguration()->getPermissionProvider()->getNameForResource($resourceType);
     }
@@ -738,7 +738,7 @@ class UserOperationLogManager extends AbstractHistoricManager
     protected function isHistoryEventProduced(): bool
     {
         $historyLevel = Context::getProcessEngineConfiguration()->getHistoryLevel();
-        return $historyLevel->isHistoryEventProduced(HistoryEventTypes::USER_OPERATION_LOG, null);
+        return $historyLevel->isHistoryEventProduced(HistoryEventTypes::userOperationLog(), null);
     }
 
     protected function isUserAuthenticated(): bool
@@ -784,7 +784,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         return Context::getCommandContext()->isUserOperationLogEnabled();
     }
 
-    protected function getOperationType(string $operationResult): ?string
+    protected function getOperationType($operationResult): ?string
     {
         switch ($operationResult->getOperation()) {
             case IdentityOperationResult::OPERATION_CREATE:

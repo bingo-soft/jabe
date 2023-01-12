@@ -46,12 +46,12 @@ class OperationImpl extends BaseElementImpl implements OperationInterface
         $typeBuilder->build();
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return self::$nameAttribute->getValue($this);
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         self::$nameAttribute->setValue($this, $name);
     }

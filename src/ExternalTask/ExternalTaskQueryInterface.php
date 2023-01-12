@@ -9,7 +9,7 @@ interface ExternalTaskQueryInterface extends QueryInterface
     /**
      * Only select the external task with the given id
      */
-    public function externalTaskId(string $externalTaskId): ExternalTaskQueryInterface;
+    public function externalTaskId(?string $externalTaskId): ExternalTaskQueryInterface;
 
     /**
      * Only select external tasks with any of the given ids
@@ -19,22 +19,22 @@ interface ExternalTaskQueryInterface extends QueryInterface
     /**
      * Only select external tasks that was most recently locked by the given worker
      */
-    public function workerId(string $workerId): ExternalTaskQueryInterface;
+    public function workerId(?string $workerId): ExternalTaskQueryInterface;
 
     /**
      * Only select external tasks that have a lock expiring before the given date
      */
-    public function lockExpirationBefore(string $lockExpirationDate): ExternalTaskQueryInterface;
+    public function lockExpirationBefore(?string $lockExpirationDate): ExternalTaskQueryInterface;
 
     /**
      * Only select external tasks that have a lock expiring after the given date
      */
-    public function lockExpirationAfter(string $lockExpirationDate): ExternalTaskQueryInterface;
+    public function lockExpirationAfter(?string $lockExpirationDate): ExternalTaskQueryInterface;
 
     /**
      * Only select external tasks of the given topic
      */
-    public function topicName(string $topicName): ExternalTaskQueryInterface;
+    public function topicName(?string $topicName): ExternalTaskQueryInterface;
 
     /**
      * Only select external tasks that are currently locked, i.e. that have a lock expiration
@@ -51,12 +51,12 @@ interface ExternalTaskQueryInterface extends QueryInterface
     /**
      * Only select external tasks created in the context of the given execution
      */
-    public function executionId(string $executionId): ExternalTaskQueryInterface;
+    public function executionId(?string $executionId): ExternalTaskQueryInterface;
 
     /**
      * Only select external tasks created in the context of the given process instance
      */
-    public function processInstanceId(string $processInstanceId): ExternalTaskQueryInterface;
+    public function processInstanceId(?string $processInstanceId): ExternalTaskQueryInterface;
 
     /**
      * Only select external tasks created in the context of the given process instances
@@ -66,12 +66,12 @@ interface ExternalTaskQueryInterface extends QueryInterface
     /**
      * Only select external tasks that belong to an instance of the given process definition
      */
-    public function processDefinitionId(string $processDefinitionId): ExternalTaskQueryInterface;
+    public function processDefinitionId(?string $processDefinitionId): ExternalTaskQueryInterface;
 
     /**
      * Only select external tasks that belong to an instance of the given activity
      */
-    public function activityId(string $activityId): ExternalTaskQueryInterface;
+    public function activityId(?string $activityId): ExternalTaskQueryInterface;
 
     /**
      * Only select external tasks that belong to an instances of the given activities.

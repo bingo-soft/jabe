@@ -15,4 +15,9 @@ class CreateTenantQueryCmd implements CommandInterface
             ->getReadOnlyIdentityProvider()
             ->createTenantQuery();
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

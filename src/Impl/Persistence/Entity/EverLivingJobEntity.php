@@ -13,7 +13,7 @@ class EverLivingJobEntity extends JobEntity
 
     public const TYPE = "ever-living";
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return self::TYPE;
     }

@@ -15,4 +15,9 @@ class CreateUserQueryCmd implements CommandInterface
             ->getReadOnlyIdentityProvider()
             ->createUserQuery();
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

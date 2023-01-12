@@ -11,7 +11,7 @@ interface MetricIntervalValueInterface
      *
      * @return string the name of the metric
      */
-    public function getName(): string;
+    public function getName(): ?string;
 
     /**
      * Returns
@@ -20,14 +20,14 @@ interface MetricIntervalValueInterface
      *
      * @return string the reporter name
      */
-    public function getReporter(): string;
+    public function getReporter(): ?string;
 
     /**
      * Returns the timestamp as date object, on which the metric was created.
      *
      * @return string the timestamp
      */
-    public function getTimestamp(): string;
+    public function getTimestamp(): ?string;
 
     /**
      * Returns the value of the metric.

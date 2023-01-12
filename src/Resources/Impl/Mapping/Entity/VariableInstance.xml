@@ -28,8 +28,8 @@
       PROC_DEF_ID_,
       PROC_INST_ID_,
       EXECUTION_ID_,
-      CASE_INST_ID_,
-      CASE_EXECUTION_ID_,
+      <!-- CASE_INST_ID_,
+      CASE_EXECUTION_ID_, -->
       TASK_ID_,
       BATCH_ID_,
       BYTEARRAY_ID_,
@@ -44,25 +44,25 @@
       REV_
     )
     values (
-      #{id, dbalType=VARCHAR},
-      #{serializerName, dbalType=VARCHAR},
-      #{name, dbalType=VARCHAR},
-      #{processDefinitionId, dbalType=VARCHAR},
-      #{processInstanceId, dbalType=VARCHAR},
-      #{executionId, dbalType=VARCHAR},
-      #{caseInstanceId, dbalType=VARCHAR},
-      #{caseExecutionId, dbalType=VARCHAR},
-      #{taskId, dbalType=VARCHAR},
-      #{batchId, dbalType=VARCHAR},
-      #{byteArrayValueId, dbalType=VARCHAR},
-      #{doubleValue, dbalType=FLOAT},
-      #{longValue, dbalType=BIGINT},
-      #{textValue, dbalType=VARCHAR},
-      #{textValue2, dbalType=VARCHAR},
-      #{variableScopeId, dbalType=VARCHAR},
-      #{sequenceCounter, dbalType=BIGINT},
-      #{isConcurrentLocal, dbalType=BOOLEAN},
-      #{tenantId, dbalType=VARCHAR},
+      #{id:VARCHAR},
+      #{serializerName:VARCHAR},
+      #{name:VARCHAR},
+      #{processDefinitionId:VARCHAR},
+      #{processInstanceId:VARCHAR},
+      #{executionId:VARCHAR},
+      <!-- #{caseInstanceId:VARCHAR},
+      #{caseExecutionId:VARCHAR}, -->
+      #{taskId:VARCHAR},
+      #{batchId:VARCHAR},
+      #{byteArrayValueId:VARCHAR},
+      #{doubleValue},
+      #{longValue},
+      #{textValue:VARCHAR},
+      #{textValue2:VARCHAR},
+      #{variableScopeId:VARCHAR},
+      #{sequenceCounter},
+      #{isConcurrentLocal},
+      #{tenantId:VARCHAR},
       1
     )
   </insert>
@@ -72,24 +72,24 @@
   <update id="updateVariableInstance" parameterType="Jabe\Impl\Persistence\Entity\VariableInstanceEntity">
     update ${prefix}ACT_RU_VARIABLE
     set
-      REV_ = #{revisionNext, dbalType=INTEGER},
-      EXECUTION_ID_ = #{executionId, dbalType=VARCHAR},
-      VAR_SCOPE_ = #{variableScopeId, dbalType=VARCHAR},
-      TYPE_ = #{serializerName, dbalType=VARCHAR },
-	    BYTEARRAY_ID_ = #{byteArrayValueId, dbalType=VARCHAR},
-	    DOUBLE_ = #{doubleValue, dbalType=FLOAT},
-	    LONG_ = #{longValue, dbalType=BIGINT},
-	    TEXT_ = #{textValue, dbalType=VARCHAR},
-	    TEXT2_ = #{textValue2, dbalType=VARCHAR},
-      SEQUENCE_COUNTER_ = #{sequenceCounter, dbalType=BIGINT}
-    where ID_ = #{id, dbalType=VARCHAR}
-      and REV_ = #{revision, dbalType=INTEGER}
+      REV_ = #{revisionNext},
+      EXECUTION_ID_ = #{executionId:VARCHAR},
+      VAR_SCOPE_ = #{variableScopeId:VARCHAR},
+      TYPE_ = #{serializerName:VARCHAR},
+	    BYTEARRAY_ID_ = #{byteArrayValueId:VARCHAR},
+	    DOUBLE_ = #{doubleValue},
+	    LONG_ = #{longValue},
+	    TEXT_ = #{textValue:VARCHAR},
+	    TEXT2_ = #{textValue2:VARCHAR},
+      SEQUENCE_COUNTER_ = #{sequenceCounter}
+    where ID_ = #{id:VARCHAR}
+      and REV_ = #{revision}
   </update>
 
   <!-- VARIABLE INSTANCE DELETE -->
 
   <delete id="deleteVariableInstance" parameterType="Jabe\Impl\Persistence\Entity\VariableInstanceEntity">
-    delete from ${prefix}ACT_RU_VARIABLE where ID_ = #{id, dbalType=VARCHAR} and REV_ = #{revision}
+    delete from ${prefix}ACT_RU_VARIABLE where ID_ = #{id:VARCHAR} and REV_ = #{revision}
   </delete>
 
   <!-- VARIABLE INSTANCE RESULTMAP -->
@@ -97,13 +97,13 @@
 	<resultMap id="variableInstanceResultMap" type="Jabe\Impl\Persistence\Entity\VariableInstanceEntity">
       <id property="id" column="ID_" dbalType="VARCHAR" />
       <result property="revision" column="REV_" dbalType="INTEGER"/>
-      <result property="serializerName" column="TYPE_" javaType="String" dbalType="VARCHAR"/>
-      <result property="name" column="NAME_" javaType="String" dbalType="VARCHAR" />
+      <result property="serializerName" column="TYPE_" phpType="string" dbalType="VARCHAR"/>
+      <result property="name" column="NAME_" phpType="string" dbalType="VARCHAR" />
       <result property="processDefinitionId" column="PROC_DEF_ID_" dbalType="VARCHAR" />
       <result property="processInstanceId" column="PROC_INST_ID_" dbalType="VARCHAR" />
       <result property="executionId" column="EXECUTION_ID_" dbalType="VARCHAR" />
-      <result property="caseInstanceId" column="CASE_INST_ID_" dbalType="VARCHAR" />
-      <result property="caseExecutionId" column="CASE_EXECUTION_ID_" dbalType="VARCHAR" />
+      <!--<result property="caseInstanceId" column="CASE_INST_ID_" dbalType="VARCHAR" />-->
+      <!--<result property="caseExecutionId" column="CASE_EXECUTION_ID_" dbalType="VARCHAR" />-->
       <result property="taskId" column="TASK_ID_" dbalType="VARCHAR" />
       <result property="batchId" column="BATCH_ID_" dbalType="VARCHAR" />
       <result property="activityInstanceId" column="ACT_INST_ID_" dbalType="VARCHAR" />
@@ -144,7 +144,7 @@
         EXECUTION.PARENT_ID_ = PARENT_EXECUTION.ID_
 
     WHERE
-        RES.ID_ = #{id, dbalType=VARCHAR}
+        RES.ID_ = #{id:VARCHAR}
   </select>
 
   <select id="selectVariablesByExecutionId" parameterType="Jabe\Impl\Db\ListQueryParameterObject" resultMap="variableInstanceResultMap">
@@ -165,14 +165,14 @@
         EXECUTION.PARENT_ID_ = PARENT_EXECUTION.ID_
 
     WHERE
-        EXECUTION_ID_ = #{parameter.executionId, dbalType=VARCHAR}
+        EXECUTION_ID_ = #{parameter.executionId:VARCHAR}
     AND
         TASK_ID_ is null
-    <if test="parameter.variableNames != null and count(parameter.variableNames) > 0">
+    <if test="!empty(parameter.variableNames)">
     AND
         NAME_ IN
         <foreach item="item" index="index" collection="parameter.variableNames" open="(" separator="," close=")">
-          #{item, dbalType=VARCHAR}
+          #{item:VARCHAR}
         </foreach>
     </if>
   </select>
@@ -195,7 +195,7 @@
         EXECUTION.PARENT_ID_ = PARENT_EXECUTION.ID_
 
     WHERE
-        RES.PROC_INST_ID_ = #{parameter, dbalType=VARCHAR}
+        RES.PROC_INST_ID_ = #{parameter:VARCHAR}
   </select>
 
   <select id="selectVariablesByCaseExecutionId" parameterType="Jabe\Impl\Db\ListQueryParameterObject" resultMap="variableInstanceResultMap">
@@ -216,14 +216,14 @@
         EXECUTION.PARENT_ID_ = PARENT_EXECUTION.ID_
 
     WHERE
-        CASE_EXECUTION_ID_ = #{parameter.caseExecutionId, dbalType=VARCHAR}
+        CASE_EXECUTION_ID_ = #{parameter.caseExecutionId:VARCHAR}
     AND
         TASK_ID_ is null
-    <if test="parameter.variableNames != null and count(parameter.variableNames) > 0">
+    <if test="!empty(parameter.variableNames)">
     AND
         NAME_ IN
         <foreach item="item" index="index" collection="parameter.variableNames" open="(" separator="," close=")">
-          #{item, dbalType=VARCHAR}
+          #{item:VARCHAR}
         </foreach>
     </if>
   </select>
@@ -246,12 +246,12 @@
         EXECUTION.PARENT_ID_ = PARENT_EXECUTION.ID_
 
     WHERE
-        TASK_ID_ = #{parameter.taskId, dbalType=VARCHAR}
-    <if test="parameter.variableNames != null and count(parameter.variableNames) > 0">
+        TASK_ID_ = #{parameter.taskId:VARCHAR}
+    <if test="!empty(parameter.variableNames)">
     AND
         NAME_ IN
         <foreach item="item" index="index" collection="parameter.variableNames" open="(" separator="," close=")">
-          #{item, dbalType=VARCHAR}
+          #{item:VARCHAR}
         </foreach>
     </if>
   </select>
@@ -345,7 +345,7 @@
             </if>
 
             <!-- variablesNames -->
-            <if test="variableNames != null and count(variableNames) > 0">
+            <if test="!empty(variableNames)">
               and RES.NAME_ in
               <foreach item="item" index="index" collection="variableNames"
                        open="(" separator="," close=")">
@@ -359,7 +359,7 @@
             </if>
 
             <!-- executionIds -->
-            <if test="executionIds != null and count(executionIds) > 0">
+            <if test="!empty(executionIds)">
               and RES.EXECUTION_ID_ in
               <foreach item="item" index="index" collection="executionIds"
                        open="(" separator="," close=")">
@@ -368,7 +368,7 @@
             </if>
 
             <!-- processInstanceIds -->
-            <if test="processInstanceIds != null and count(processInstanceIds) > 0">
+            <if test="!empty(processInstanceIds)">
               and RES.PROC_INST_ID_ in
               <foreach item="item" index="index" collection="processInstanceIds"
                        open="(" separator="," close=")">
@@ -377,25 +377,25 @@
             </if>
 
             <!-- caseExecutionIds -->
-            <if test="caseExecutionIds != null and count(caseExecutionIds) > 0">
+            <!-- <if test="caseExecutionIds != null and count(caseExecutionIds) &gt; 0">
               and RES.CASE_EXECUTION_ID_ in
               <foreach item="item" index="index" collection="caseExecutionIds"
                        open="(" separator="," close=")">
                 #{item}
               </foreach>
-            </if>
+            </if> -->
 
             <!-- caseInstanceIds -->
-            <if test="caseInstanceIds != null and count(caseInstanceIds) > 0">
+            <!-- <if test="caseInstanceIds != null and count(caseInstanceIds) &gt; 0">
               and RES.CASE_INST_ID_ in
               <foreach item="item" index="index" collection="caseInstanceIds"
                        open="(" separator="," close=")">
                 #{item}
               </foreach>
-            </if>
+            </if> -->
 
             <!-- taskIds -->
-            <if test="taskIds != null and count(taskIds) > 0">
+            <if test="!empty(taskIds)">
               and RES.TASK_ID_ in
               <foreach item="item" index="index" collection="taskIds"
                        open="(" separator="," close=")">
@@ -404,7 +404,7 @@
             </if>
 
             <!-- batchIds -->
-            <if test="batchIds != null and count(batchIds) > 0">
+            <if test="!empty(batchIds)">
               and RES.BATCH_ID_ in
               <foreach item="item" index="index" collection="batchIds"
                        open="(" separator="," close=")">
@@ -413,7 +413,7 @@
             </if>
 
             <!-- variableScopeIds -->
-            <if test="variableScopeIds != null and count(variableScopeIds) > 0">
+            <if test="!empty(variableScopeIds)">
               and RES.VAR_SCOPE_ in
               <foreach item="item" index="index" collection="variableScopeIds"
                        open="(" separator="," close=")">
@@ -422,13 +422,13 @@
             </if>
 
             <!-- activityInstanceIds -->
-            <if test="activityInstanceIds != null and count(activityInstanceIds) > 0">
+            <if test="!empty(activityInstanceIds)">
               <bind name="sizeOfIds" value="count(activityInstanceIds)"/>
               and ( <include refid="actInstIdColumn"/> IN
 			  <foreach item="id" index="index" collection="activityInstanceIds" open = "(" separator="" close=")">
 				#{id}
 				<choose>
-				  <when test="index != 0 and (index+1)%1000 == 0 and (index+1) < sizeOfIds">
+				  <when test="index != 0 and (index+1)%1000 == 0 and (index+1) &lt; sizeOfIds">
 					) or <include refid="actInstIdColumn"/> IN (
 				  </when>
 				  <when test="index == sizeOfIds -1"></when>
@@ -438,7 +438,7 @@
 			    )
 			</if>
 
-            <if test="tenantIds != null and count(tenantIds) > 0">
+            <if test="!empty(tenantIds)">
               and RES.TENANT_ID_ in
               <foreach item="tenantId" index="index" collection="tenantIds"
                        open="(" separator="," close=")">
@@ -471,15 +471,15 @@
   <insert id="insertByteArray" parameterType="Jabe\Impl\Persistence\Entity\ByteArrayEntity">
     insert into ${prefix}ACT_GE_BYTEARRAY(ID_, NAME_, BYTES_, DEPLOYMENT_ID_, TENANT_ID_, TYPE_, CREATE_TIME_, ROOT_PROC_INST_ID_, REMOVAL_TIME_, REV_)
     values (
-      #{id, dbalType=VARCHAR},
-      #{name, dbalType=VARCHAR}, 
-      #{bytes, dbalType=BLOB}, 
-      #{deploymentId, dbalType=VARCHAR},
-      #{tenantId, dbalType=VARCHAR},
-      #{type, dbalType=INTEGER},
-      #{createTime, dbalType=VARCHAR},
-      #{rootProcessInstanceId, dbalType=VARCHAR},
-      #{removalTime, dbalType=VARCHAR},
+      #{id:VARCHAR},
+      #{name:VARCHAR}, 
+      #{bytes}, 
+      #{deploymentId:VARCHAR},
+      #{tenantId:VARCHAR},
+      #{type},
+      #{createTime:VARCHAR},
+      #{rootProcessInstanceId:VARCHAR},
+      #{removalTime:VARCHAR},
       1 
     )  
   </insert>
@@ -489,71 +489,71 @@
   <update id="updateByteArray" parameterType="Jabe\Impl\Persistence\Entity\ByteArrayEntity">
     update ${prefix}ACT_GE_BYTEARRAY 
     set
-      REV_ = #{revisionNext, dbalType=INTEGER},
-      BYTES_ = #{bytes, dbalType=BLOB}
+      REV_ = #{revisionNext},
+      BYTES_ = #{bytes}
     where ID_ = #{id}
-      and REV_ = #{revision, dbalType=INTEGER}
+      and REV_ = #{revision}
   </update>
 
   <update id="updateByteArraysByRootProcessInstanceId"
           parameterType="array">
       update ${prefix}ACT_GE_BYTEARRAY set
-      REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      REMOVAL_TIME_ = #{removalTime:VARCHAR}
 
-      where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+      where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateByteArraysByRootProcessInstanceId_mssql"
           parameterType="array">
       update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
-      where RES.ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+      where RES.ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateVariableByteArraysByProcessInstanceId"
           parameterType="array">
     update ${prefix}ACT_GE_BYTEARRAY
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR}
       where ID_ IN (
         <!-- variables -->
         SELECT BYTEARRAY_ID_
         FROM ${prefix}ACT_HI_VARINST
-        WHERE PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+        WHERE PROC_INST_ID_ = #{processInstanceId:VARCHAR}
       )
   </update>
 
   <update id="updateVariableByteArraysByProcessInstanceId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
       where RES.ID_ IN (
         <!-- variables -->
         SELECT BYTEARRAY_ID_
         FROM ${prefix}ACT_HI_VARINST
-        WHERE PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+        WHERE PROC_INST_ID_ = #{processInstanceId:VARCHAR}
       )
   </update>
 
   <update id="updateDecisionInputsByteArraysByProcessInstanceId"
           parameterType="array">
     update ${prefix}ACT_GE_BYTEARRAY
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR}
       where ID_ IN (
         <!-- decision inputs -->
         SELECT BYTEARRAY_ID_
         FROM ${prefix}ACT_HI_DEC_IN I
         INNER JOIN ${prefix}ACT_HI_DECINST D
         ON I.DEC_INST_ID_ = D.ID_
-        WHERE D.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+        WHERE D.PROC_INST_ID_ = #{processInstanceId:VARCHAR}
       )
   </update>
 
   <update id="updateDecisionInputsByteArraysByProcessInstanceId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
       where RES.ID_ IN (
         <!-- decision inputs -->
@@ -561,28 +561,28 @@
         FROM ${prefix}ACT_HI_DEC_IN I
         INNER JOIN ${prefix}ACT_HI_DECINST D
         ON I.DEC_INST_ID_ = D.ID_
-        WHERE D.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+        WHERE D.PROC_INST_ID_ = #{processInstanceId:VARCHAR}
       )
   </update>
 
   <update id="updateDecisionOutputsByteArraysByProcessInstanceId"
           parameterType="array">
     update ${prefix}ACT_GE_BYTEARRAY
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR}
       where ID_ IN (
         <!-- decision outputs -->
         SELECT BYTEARRAY_ID_
         FROM ${prefix}ACT_HI_DEC_OUT O
         INNER JOIN ${prefix}ACT_HI_DECINST D
         ON O.DEC_INST_ID_ = D.ID_
-        WHERE D.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+        WHERE D.PROC_INST_ID_ = #{processInstanceId:VARCHAR}
       )
   </update>
 
   <update id="updateDecisionOutputsByteArraysByProcessInstanceId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
       where RES.ID_ IN (
         <!-- decision outputs -->
@@ -590,108 +590,108 @@
         FROM ${prefix}ACT_HI_DEC_OUT O
         INNER JOIN ${prefix}ACT_HI_DECINST D
         ON O.DEC_INST_ID_ = D.ID_
-        WHERE D.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+        WHERE D.PROC_INST_ID_ = #{processInstanceId:VARCHAR}
       )
   </update>
 
   <update id="updateJobLogByteArraysByProcessInstanceId"
           parameterType="array">
     update ${prefix}ACT_GE_BYTEARRAY
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR}
       where ID_ IN (
         <!-- job log -->
         SELECT JOB_EXCEPTION_STACK_ID_
         FROM ${prefix}ACT_HI_JOB_LOG
-        WHERE PROCESS_INSTANCE_ID_ = #{processInstanceId, dbalType=VARCHAR}
+        WHERE PROCESS_INSTANCE_ID_ = #{processInstanceId:VARCHAR}
       )
   </update>
 
   <update id="updateJobLogByteArraysByProcessInstanceId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
       where RES.ID_ IN (
         <!-- job log -->
         SELECT JOB_EXCEPTION_STACK_ID_
         FROM ${prefix}ACT_HI_JOB_LOG
-        WHERE PROCESS_INSTANCE_ID_ = #{processInstanceId, dbalType=VARCHAR}
+        WHERE PROCESS_INSTANCE_ID_ = #{processInstanceId:VARCHAR}
       )
   </update>
 
   <update id="updateExternalTaskLogByteArraysByProcessInstanceId"
           parameterType="array">
     update ${prefix}ACT_GE_BYTEARRAY
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR}
       where ID_ IN (
         <!-- external task log -->
         SELECT ERROR_DETAILS_ID_
         FROM ${prefix}ACT_HI_EXT_TASK_LOG
-        WHERE PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+        WHERE PROC_INST_ID_ = #{processInstanceId:VARCHAR}
       )
   </update>
 
   <update id="updateExternalTaskLogByteArraysByProcessInstanceId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
       where RES.ID_ IN (
         <!-- external task log -->
         SELECT ERROR_DETAILS_ID_
         FROM ${prefix}ACT_HI_EXT_TASK_LOG
-        WHERE PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+        WHERE PROC_INST_ID_ = #{processInstanceId:VARCHAR}
       )
   </update>
 
   <update id="updateAttachmentByteArraysByProcessInstanceId"
           parameterType="array">
     update ${prefix}ACT_GE_BYTEARRAY
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR}
       where ID_ IN (
         <!-- attachment -->
         SELECT CONTENT_ID_
         FROM ${prefix}ACT_HI_ATTACHMENT A
         LEFT JOIN ${prefix}ACT_HI_TASKINST T ON A.TASK_ID_ = T.ID_
-        WHERE A.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
-          OR T.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+        WHERE A.PROC_INST_ID_ = #{processInstanceId:VARCHAR}
+          OR T.PROC_INST_ID_ = #{processInstanceId:VARCHAR}
       )
   </update>
 
   <update id="updateAttachmentByteArraysByProcessInstanceId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
       where RES.ID_ IN (
         <!-- attachment -->
         SELECT CONTENT_ID_
         FROM ${prefix}ACT_HI_ATTACHMENT A
         LEFT JOIN ${prefix}ACT_HI_TASKINST T ON A.TASK_ID_ = T.ID_
-        WHERE A.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
-          OR T.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+        WHERE A.PROC_INST_ID_ = #{processInstanceId:VARCHAR}
+          OR T.PROC_INST_ID_ = #{processInstanceId:VARCHAR}
       )
   </update>
 
   <update id="updateDecisionInputByteArraysByRootDecisionInstanceId"
           parameterType="array">
     update ${prefix}ACT_GE_BYTEARRAY
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR}
       where ID_ IN (
         <!-- decision inputs -->
         SELECT BYTEARRAY_ID_
         FROM ${prefix}ACT_HI_DEC_IN I
         INNER JOIN ${prefix}ACT_HI_DECINST D
         ON I.DEC_INST_ID_ = D.ID_
-        WHERE D.ROOT_DEC_INST_ID_ = #{rootDecisionInstanceId, dbalType=VARCHAR} <!-- null for root dec instances -->
-           OR D.ID_ = #{rootDecisionInstanceId, dbalType=VARCHAR}
+        WHERE D.ROOT_DEC_INST_ID_ = #{rootDecisionInstanceId:VARCHAR} <!-- null for root dec instances -->
+           OR D.ID_ = #{rootDecisionInstanceId:VARCHAR}
       )
   </update>
 
   <update id="updateDecisionInputByteArraysByRootDecisionInstanceId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
       where RES.ID_ IN (
         <!-- decision inputs -->
@@ -699,30 +699,30 @@
         FROM ${prefix}ACT_HI_DEC_IN I
         INNER JOIN ${prefix}ACT_HI_DECINST D
         ON I.DEC_INST_ID_ = D.ID_
-        WHERE D.ROOT_DEC_INST_ID_ = #{rootDecisionInstanceId, dbalType=VARCHAR} <!-- null for root dec instances -->
-           OR D.ID_ = #{rootDecisionInstanceId, dbalType=VARCHAR}
+        WHERE D.ROOT_DEC_INST_ID_ = #{rootDecisionInstanceId:VARCHAR} <!-- null for root dec instances -->
+           OR D.ID_ = #{rootDecisionInstanceId:VARCHAR}
       )
   </update>
 
   <update id="updateDecisionOutputByteArraysByRootDecisionInstanceId"
           parameterType="array">
     update ${prefix}ACT_GE_BYTEARRAY
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR}
       where ID_ IN (
         <!-- decision outputs -->
         SELECT BYTEARRAY_ID_
         FROM ${prefix}ACT_HI_DEC_OUT O
         INNER JOIN ${prefix}ACT_HI_DECINST D
         ON O.DEC_INST_ID_ = D.ID_
-        WHERE D.ROOT_DEC_INST_ID_ = #{rootDecisionInstanceId, dbalType=VARCHAR} <!-- null for root dec instances -->
-           OR D.ID_ = #{rootDecisionInstanceId, dbalType=VARCHAR}
+        WHERE D.ROOT_DEC_INST_ID_ = #{rootDecisionInstanceId:VARCHAR} <!-- null for root dec instances -->
+           OR D.ID_ = #{rootDecisionInstanceId:VARCHAR}
       )
   </update>
 
   <update id="updateDecisionOutputByteArraysByRootDecisionInstanceId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
       where RES.ID_ IN (
         <!-- decision outputs -->
@@ -730,29 +730,29 @@
         FROM ${prefix}ACT_HI_DEC_OUT O
         INNER JOIN ${prefix}ACT_HI_DECINST D
         ON O.DEC_INST_ID_ = D.ID_
-        WHERE D.ROOT_DEC_INST_ID_ = #{rootDecisionInstanceId, dbalType=VARCHAR} <!-- null for root dec instances -->
-           OR D.ID_ = #{rootDecisionInstanceId, dbalType=VARCHAR}
+        WHERE D.ROOT_DEC_INST_ID_ = #{rootDecisionInstanceId:VARCHAR} <!-- null for root dec instances -->
+           OR D.ID_ = #{rootDecisionInstanceId:VARCHAR}
       )
   </update>
 
   <update id="updateDecisionInputByteArraysByDecisionInstanceId"
           parameterType="array">
     update ${prefix}ACT_GE_BYTEARRAY
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR}
       where ID_ IN (
         <!-- decision inputs -->
         SELECT BYTEARRAY_ID_
         FROM ${prefix}ACT_HI_DEC_IN I
         INNER JOIN ${prefix}ACT_HI_DECINST D
         ON I.DEC_INST_ID_ = D.ID_
-        WHERE D.ID_ = #{decisionInstanceId, dbalType=VARCHAR}
+        WHERE D.ID_ = #{decisionInstanceId:VARCHAR}
       )
   </update>
 
   <update id="updateDecisionInputByteArraysByDecisionInstanceId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
       where RES.ID_ IN (
         <!-- decision inputs -->
@@ -760,28 +760,28 @@
         FROM ${prefix}ACT_HI_DEC_IN I
         INNER JOIN ${prefix}ACT_HI_DECINST D
         ON I.DEC_INST_ID_ = D.ID_
-        WHERE D.ID_ = #{decisionInstanceId, dbalType=VARCHAR}
+        WHERE D.ID_ = #{decisionInstanceId:VARCHAR}
       )
   </update>
 
   <update id="updateDecisionOutputByteArraysByDecisionInstanceId"
           parameterType="array">
     update ${prefix}ACT_GE_BYTEARRAY
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR}
       where ID_ IN (
         <!-- decision outputs -->
         SELECT BYTEARRAY_ID_
         FROM ${prefix}ACT_HI_DEC_OUT O
         INNER JOIN ${prefix}ACT_HI_DECINST D
         ON O.DEC_INST_ID_ = D.ID_
-        WHERE D.ID_ = #{decisionInstanceId, dbalType=VARCHAR}
+        WHERE D.ID_ = #{decisionInstanceId:VARCHAR}
       )
   </update>
 
   <update id="updateDecisionOutputByteArraysByDecisionInstanceId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
       where RES.ID_ IN (
         <!-- decision outputs -->
@@ -789,30 +789,30 @@
         FROM ${prefix}ACT_HI_DEC_OUT O
         INNER JOIN ${prefix}ACT_HI_DECINST D
         ON O.DEC_INST_ID_ = D.ID_
-        WHERE D.ID_ = #{decisionInstanceId, dbalType=VARCHAR}
+        WHERE D.ID_ = #{decisionInstanceId:VARCHAR}
       )
   </update>
 
   <update id="updateByteArraysByBatchId"
           parameterType="array">
     update ${prefix}ACT_GE_BYTEARRAY
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR}
       where ID_ IN (
         SELECT JOB_EXCEPTION_STACK_ID_
         FROM ${prefix}ACT_HI_JOB_LOG
-        WHERE JOB_DEF_CONFIGURATION_ = #{batchId, dbalType=VARCHAR}
+        WHERE JOB_DEF_CONFIGURATION_ = #{batchId:VARCHAR}
       )
   </update>
 
   <update id="updateByteArraysByBatchId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_GE_BYTEARRAY RES WITH (FORCESEEK)
       where RES.ID_ IN (
         SELECT JOB_EXCEPTION_STACK_ID_
         FROM ${prefix}ACT_HI_JOB_LOG
-        WHERE JOB_DEF_CONFIGURATION_ = #{batchId, dbalType=VARCHAR}
+        WHERE JOB_DEF_CONFIGURATION_ = #{batchId:VARCHAR}
       )
   </update>
 
@@ -837,14 +837,14 @@
   <sql id="andWhereMinuteInDateBetweenSql">
     <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
       AND ${datepart1}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart2}${date}${datepart3}
-      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+      between #{parameter.minuteFrom} and #{parameter.minuteTo}
     </if>
   </sql>
 
   <sql id="andWhereMinuteInDateBetweenSql_oracle">
     <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
       AND ${datepart1}${date}${datepart2}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart3}
-      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+      between #{parameter.minuteFrom} and #{parameter.minuteTo}
     </if>
   </sql>
 
@@ -853,7 +853,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_GE_BYTEARRAY
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql"/>
     ${limitAfterWithoutOffset}
   </delete>
@@ -863,7 +863,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_GE_BYTEARRAY
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql_oracle"/>
     ${limitAfterWithoutOffset}
   </delete>
@@ -876,7 +876,7 @@
     where ID_ IN
       (SELECT ID_
        FROM ${prefix}ACT_GE_BYTEARRAY
-       WHERE REMOVAL_TIME_ <= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
+       WHERE REMOVAL_TIME_ &lt;= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
        ${limitAfterWithoutOffset})
   </delete>
 
@@ -885,7 +885,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_GE_BYTEARRAY
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql"/>
     ${limitAfterWithoutOffset}
     OPTION (LOOP JOIN)
@@ -947,24 +947,24 @@
 	<update id="updateByteArray_postgres" parameterType="Jabe\Impl\Persistence\Entity\ByteArrayEntity">
     update ${prefix}ACT_GE_BYTEARRAY
     set
-      REV_ = #{revisionNext, dbalType=INTEGER},
-      BYTES_ = #{bytes, dbalType=BINARY}
+      REV_ = #{revisionNext},
+      BYTES_ = #{bytes}
     where ID_ = #{id}
-      and REV_ = #{revision, dbalType=INTEGER}
+      and REV_ = #{revision}
   </update>
 
     <insert id="insertByteArray_postgres" parameterType="Jabe\Impl\Persistence\Entity\ByteArrayEntity">
     insert into ${prefix}ACT_GE_BYTEARRAY(ID_, NAME_, BYTES_, DEPLOYMENT_ID_, TENANT_ID_, TYPE_, CREATE_TIME_, ROOT_PROC_INST_ID_, REMOVAL_TIME_, REV_)
     values (
-      #{id, dbalType=VARCHAR},
-      #{name, dbalType=VARCHAR},
-      #{bytes, dbalType=BINARY},
-      #{deploymentId, dbalType=VARCHAR},
-      #{tenantId, dbalType=VARCHAR},
-      #{type, dbalType=INTEGER},
-      #{createTime, dbalType=VARCHAR},
-      #{rootProcessInstanceId, dbalType=VARCHAR},
-      #{removalTime, dbalType=VARCHAR},
+      #{id:VARCHAR},
+      #{name:VARCHAR},
+      #{bytes},
+      #{deploymentId:VARCHAR},
+      #{tenantId:VARCHAR},
+      #{type},
+      #{createTime:VARCHAR},
+      #{rootProcessInstanceId:VARCHAR},
+      #{removalTime:VARCHAR},
       1
     )
   </insert>
@@ -975,7 +975,7 @@
     update ${prefix}ACT_GE_BYTEARRAY BA
       INNER JOIN ${prefix}ACT_HI_JOB_LOG JL
         ON BA.ID_ = JL.JOB_EXCEPTION_STACK_ID_
-        AND JL.JOB_DEF_CONFIGURATION_ = #{batchId, dbalType=VARCHAR}
-      SET BA.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+        AND JL.JOB_DEF_CONFIGURATION_ = #{batchId:VARCHAR}
+      SET BA.REMOVAL_TIME_ = #{removalTime:VARCHAR}
   </update>
 </mapper>

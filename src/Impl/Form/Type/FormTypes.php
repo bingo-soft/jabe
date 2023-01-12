@@ -45,7 +45,7 @@ class FormTypes
         return $formType;
     }
 
-    public function getFormType(string $name): ?AbstractFormFieldType
+    public function getFormType(?string $name): ?AbstractFormFieldType
     {
         $formType = null;
         if (array_key_exists($name, $this->formTypes)) {

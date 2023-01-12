@@ -4,13 +4,13 @@ namespace Jabe\Query;
 
 interface NativeQueryInterface
 {
-    public function sql(string $sql): NativeQueryInterface;
+    public function sql(?string $sql): NativeQueryInterface;
 
     /**
-     * @param string $name
+     * @param ?string $name
      * @param mixed $value
      */
-    public function parameter(string $name, $value): NativeQueryInterface;
+    public function parameter(?string $name, $value): NativeQueryInterface;
 
     public function count(): int;
 

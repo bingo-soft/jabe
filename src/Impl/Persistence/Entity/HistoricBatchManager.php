@@ -2,6 +2,10 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
+use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface
+};
 use Jabe\Impl\{
     CleanableHistoricBatchReportImpl,
     Direction,
@@ -36,18 +40,18 @@ class HistoricBatchManager extends AbstractManager
         return $this->getDbEntityManager()->selectOne("selectHistoricBatchCountByQueryCriteria", $historicBatchQuery);
     }
 
-    public function findBatchesByQueryCriteria(HistoricBatchQueryImpl $historicBatchQuery, Page $page): array
+    public function findBatchesByQueryCriteria(HistoricBatchQueryImpl $historicBatchQuery, ?Page $page): array
     {
         $this->configureQuery($historicBatchQuery);
         return $this->getDbEntityManager()->selectList("selectHistoricBatchesByQueryCriteria", $historicBatchQuery, $page);
     }
 
-    public function findHistoricBatchById(string $batchId): ?HistoricBatchEntity
+    public function findHistoricBatchById(?string $batchId): ?HistoricBatchEntity
     {
         return $this->getDbEntityManager()->selectById(HistoricBatchEntity::class, $batchId);
     }
 
-    public function findHistoricBatchByJobId(string $jobId): ?HistoricBatchEntity
+    public function findHistoricBatchByJobId(?string $jobId): ?HistoricBatchEntity
     {
         return $this->getDbEntityManager()->selectOne("selectHistoricBatchByJobId", $jobId);
     }
@@ -67,7 +71,7 @@ class HistoricBatchManager extends AbstractManager
         return $this->getDbEntityManager()->selectList("selectHistoricBatchIdsForCleanup", $parameterObject);
     }
 
-    public function deleteHistoricBatchById(string $id): void
+    public function deleteHistoricBatchById(?string $id): void
     {
         $this->getDbEntityManager()->delete(HistoricBatchEntity::class, "deleteHistoricBatchById", $id);
     }
@@ -126,13 +130,13 @@ class HistoricBatchManager extends AbstractManager
         }
     }
 
-    protected function configureQuery(HistoricBatchQueryImpl $query): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         $this->getAuthorizationManager()->configureHistoricBatchQuery($query);
         $this->getTenantManager()->configureQuery($query);
     }
 
-    public function findCleanableHistoricBatchesReportByCriteria(CleanableHistoricBatchReportImpl $query, Page $page, array $batchOperationsForHistoryCleanup): array
+    public function findCleanableHistoricBatchesReportByCriteria(CleanableHistoricBatchReportImpl $query, ?Page $page, array $batchOperationsForHistoryCleanup): array
     {
         $query->setCurrentTimestamp(ClockUtil::getCurrentTime()->format('c'));
         $query->setParameter($batchOperationsForHistoryCleanup);
@@ -155,7 +159,7 @@ class HistoricBatchManager extends AbstractManager
         }
     }
 
-    public function deleteHistoricBatchesByRemovalTime(string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
+    public function deleteHistoricBatchesByRemovalTime(?string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
     {
         $parameters = [];
         $parameters["removalTime"] = $removalTime;
@@ -173,7 +177,7 @@ class HistoricBatchManager extends AbstractManager
             );
     }
 
-    public function addRemovalTimeById(string $id, string $removalTime): void
+    public function addRemovalTimeById(?string $id, ?string $removalTime): void
     {
         $commandContext = Context::getCommandContext();
 

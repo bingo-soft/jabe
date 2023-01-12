@@ -20,7 +20,8 @@ class ActivityInstanceStartListener extends HistoryExecutionListener
     {
         $this->ensureHistoryLevelInitialized();
         if ($this->historyLevel->isHistoryEventProduced(HistoryEventTypes::activityInstanceStart(), $execution)) {
-            return $this->eventProducer->createActivityInstanceStartEvt($execution);
+            $evt = $this->eventProducer->createActivityInstanceStartEvt($execution);
+            return $evt;
         } else {
             return null;
         }

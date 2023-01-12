@@ -22,12 +22,12 @@
   <insert id="insertFilter" parameterType="Jabe\Impl\Persistence\Entity\FilterEntity">
     insert into ${prefix}ACT_RU_FILTER (ID_, RESOURCE_TYPE_, NAME_, OWNER_, QUERY_, PROPERTIES_, REV_)
     values (
-      #{id ,dbalType=VARCHAR},
-      #{resourceType ,dbalType=VARCHAR},
-      #{name ,dbalType=VARCHAR},
-      #{owner ,dbalType=VARCHAR},
-      #{queryInternal ,dbalType=CLOB},
-      #{propertiesInternal ,dbalType=CLOB},
+      #{id:VARCHAR},
+      #{resourceType:VARCHAR},
+      #{name:VARCHAR},
+      #{owner:VARCHAR},
+      #{queryInternal},
+      #{propertiesInternal},
       1
     )
   </insert>
@@ -37,13 +37,13 @@
   <update id="updateFilter" parameterType="Jabe\Impl\Persistence\Entity\FilterEntity">
     update ${prefix}ACT_RU_FILTER
     set
-      REV_ = #{revisionNext, dbalType=INTEGER},
-      NAME_ = #{name, dbalType=VARCHAR},
-      OWNER_ = #{owner, dbalType=VARCHAR},
-      QUERY_ = #{queryInternal, dbalType=CLOB},
-      PROPERTIES_ = #{propertiesInternal, dbalType=CLOB}
+      REV_ = #{revisionNext},
+      NAME_ = #{name:VARCHAR},
+      OWNER_ = #{owner:VARCHAR},
+      QUERY_ = #{queryInternal},
+      PROPERTIES_ = #{propertiesInternal}
     where ID_ = #{id}
-      and REV_ = #{revision, dbalType=INTEGER}
+      and REV_ = #{revision}
   </update>
 
   <!-- FILTER DELETE -->
@@ -78,11 +78,11 @@
   <!-- FILTER SELECT -->
 
   <select id="selectFilter" parameterType="string" resultMap="filterResultMap">
-    select * from ${prefix}ACT_RU_FILTER where ID_ = #{id, dbalType=VARCHAR}
+    select * from ${prefix}ACT_RU_FILTER where ID_ = #{id:VARCHAR}
   </select>
   
   <select id="selectFilter_postgres" parameterType="string" resultMap="filterResultMap_postgres">
-    select * from ${prefix}ACT_RU_FILTER where ID_ = #{id, dbalType=VARCHAR}
+    select * from ${prefix}ACT_RU_FILTER where ID_ = #{id:VARCHAR}
   </select>
 
   <select id="selectFilterByQueryCriteria" parameterType="Jabe\Impl\Filter\FilterQueryImpl" resultMap="filterResultMap">
@@ -119,7 +119,7 @@
       ${limitAfter}
     ) RES
     INNER JOIN ${prefix}ACT_RU_FILTER J ON RES.ID_ = J.ID_
-    <if test="count(orderingProperties) > 0">
+    <if test="!empty(orderingProperties)">
       ORDER BY
       <foreach item="orderingProperty" index="index" collection="orderingProperties" separator=",">
         ${@Jabe\Impl\Db\sql.MybatisJoinHelper::orderBy(orderingProperty, index)}

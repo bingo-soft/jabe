@@ -7,22 +7,22 @@ use Jabe\Query\QueryInterface;
 interface HistoricJobLogQueryInterface extends QueryInterface
 {
     /** Only select historic job log entries with the id. */
-    public function logId(string $logId): HistoricJobLogQueryInterface;
+    public function logId(?string $logId): HistoricJobLogQueryInterface;
 
     /** Only select historic job log entries with the given job id. */
-    public function jobId(string $jobId): HistoricJobLogQueryInterface;
+    public function jobId(?string $jobId): HistoricJobLogQueryInterface;
 
     /** Only select historic job log entries with the given exception message. */
-    public function jobExceptionMessage(string $exceptionMessage): HistoricJobLogQueryInterface;
+    public function jobExceptionMessage(?string $exceptionMessage): HistoricJobLogQueryInterface;
 
     /** Only select historic job log entries with the given job definition id. */
-    public function jobDefinitionId(string $jobDefinitionId): HistoricJobLogQueryInterface;
+    public function jobDefinitionId(?string $jobDefinitionId): HistoricJobLogQueryInterface;
 
     /** Only select historic job log entries with the given job definition type. */
-    public function jobDefinitionType(string $jobDefinitionType): HistoricJobLogQueryInterface;
+    public function jobDefinitionType(?string $jobDefinitionType): HistoricJobLogQueryInterface;
 
     /** Only select historic job log entries with the given job definition configuration type. */
-    public function jobDefinitionConfiguration(string $jobDefinitionConfiguration): HistoricJobLogQueryInterface;
+    public function jobDefinitionConfiguration(?string $jobDefinitionConfiguration): HistoricJobLogQueryInterface;
 
     /** Only select historic job log entries which are associated with one of the given activity ids. **/
     public function activityIdIn(array $activityIds): HistoricJobLogQueryInterface;
@@ -34,16 +34,16 @@ interface HistoricJobLogQueryInterface extends QueryInterface
     public function executionIdIn(array $executionIds): HistoricJobLogQueryInterface;
 
     /** Only select historic job log entries with the process instance id. */
-    public function processInstanceId(string $processInstanceId): HistoricJobLogQueryInterface;
+    public function processInstanceId(?string $processInstanceId): HistoricJobLogQueryInterface;
 
     /** Only select historic job log entries with the process definition id. */
-    public function processDefinitionId(string $processDefinitionId): HistoricJobLogQueryInterface;
+    public function processDefinitionId(?string $processDefinitionId): HistoricJobLogQueryInterface;
 
     /** Only select historic job log entries with the process instance key. */
-    public function processDefinitionKey(string $processDefinitionKey): HistoricJobLogQueryInterface;
+    public function processDefinitionKey(?string $processDefinitionKey): HistoricJobLogQueryInterface;
 
     /** Only select historic job log entries with the deployment id. */
-    public function deploymentId(string $deploymentId): HistoricJobLogQueryInterface;
+    public function deploymentId(?string $deploymentId): HistoricJobLogQueryInterface;
 
     /** Only select historic job log entries that belong to one of the given tenant ids. */
     public function tenantIdIn(array $tenantIds): HistoricJobLogQueryInterface;
@@ -52,7 +52,7 @@ interface HistoricJobLogQueryInterface extends QueryInterface
     public function withoutTenantId(): HistoricJobLogQueryInterface;
 
     /** Only selects historic job log entries that belong to the given host name. */
-    public function hostname(string $hostname): HistoricJobLogQueryInterface;
+    public function hostname(?string $hostname): HistoricJobLogQueryInterface;
 
     /**
      * Only select log entries where the job had a priority higher than or

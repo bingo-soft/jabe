@@ -21,7 +21,7 @@ class OptimizeHistoricVariableUpdateQueryCmd implements CommandInterface
     protected $excludeObjectValues;
     protected $maxResults;
 
-    public function __construct(string $occurreAfter, string $occurreAt, bool $excludeObjectValues, int $maxResults)
+    public function __construct(?string $occurreAfter, ?string $occurreAt, bool $excludeObjectValues, int $maxResults)
     {
         $this->occurreAfter = $occurreAfter;
         $this->occurreAt = $occurreAt;
@@ -99,5 +99,10 @@ class OptimizeHistoricVariableUpdateQueryCmd implements CommandInterface
                 }
             }
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

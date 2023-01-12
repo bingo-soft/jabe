@@ -19,7 +19,7 @@ class DeleteTaskAttachmentCmd implements CommandInterface, \Serializable
     protected $attachmentId;
     protected $taskId;
 
-    public function __construct(string $taskId, string $attachmentId)
+    public function __construct(?string $taskId, ?string $attachmentId)
     {
         $this->attachmentId = $attachmentId;
         $this->taskId = $taskId;
@@ -70,5 +70,10 @@ class DeleteTaskAttachmentCmd implements CommandInterface, \Serializable
         }
 
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

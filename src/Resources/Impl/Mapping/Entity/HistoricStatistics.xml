@@ -124,7 +124,7 @@
 
           <include refid="applyStatisticsFilters" />
 
-          <if test="processInstanceIds != null">
+          <if test="!empty(processInstanceIds)">
             and ACT.PROC_INST_ID_ in
             <foreach item="processInstanceId" index="index" collection="processInstanceIds"
                 open="(" separator="," close=")">
@@ -162,7 +162,7 @@
 
             <include refid="applyStatisticsFilters" />
 
-            <if test="processInstanceIds != null">
+            <if test="!empty(processInstanceIds)">
               and INC.PROC_INST_ID_ in
               <foreach item="processInstanceId" index="index" collection="processInstanceIds"
                   open="(" separator="," close=")">
@@ -180,16 +180,16 @@
 
   <sql id="applyStatisticsFilters">
     <if test="startedBefore != null">
-      and PI.START_TIME_ <= #{startedBefore}
+      and PI.START_TIME_ &lt;= #{startedBefore}
     </if>
     <if test="startedAfter != null">
-      and PI.START_TIME_ >= #{startedAfter}
+      and PI.START_TIME_ &gt;= #{startedAfter}
     </if>
     <if test="finishedBefore != null">
-      and PI.END_TIME_ <= #{finishedBefore}
+      and PI.END_TIME_ &lt;= #{finishedBefore}
     </if>
     <if test="finishedAfter != null">
-      and PI.END_TIME_ >= #{finishedAfter}
+      and PI.END_TIME_ &gt;= #{finishedAfter}
     </if>
   </sql>
 

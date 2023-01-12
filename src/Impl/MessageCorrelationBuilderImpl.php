@@ -27,7 +27,7 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
     //private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
     protected $commandExecutor;
     protected $commandContext;
-    protected $isExclusiveCorrelation = false;
+    protected bool $isExclusiveCorrelation = false;
     protected $messageName;
     protected $businessKey;
     protected $processInstanceId;
@@ -37,11 +37,11 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
     protected $payloadProcessInstanceVariables;
     protected $payloadProcessInstanceVariablesLocal;
     protected $tenantId = null;
-    protected $isTenantIdSet = false;
-    protected $startMessagesOnly = false;
-    protected $executionsOnly = false;
+    protected bool $isTenantIdSet = false;
+    protected bool $startMessagesOnly = false;
+    protected bool $executionsOnly = false;
 
-    public function __construct(/*CommandExecutor*/$commandOrMessage, string $messageName = null)
+    public function __construct(/*CommandExecutor*/$commandOrMessage, ?string $messageName = null)
     {
         if ($commandOrMessage instanceof CommandExecutorInterface) {
             $this->messageName = $messageName;
@@ -56,14 +56,14 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
         }
     }
 
-    public function processInstanceBusinessKey(string $businessKey): MessageCorrelationBuilderInterface
+    public function processInstanceBusinessKey(?string $businessKey): MessageCorrelationBuilderInterface
     {
         EnsureUtil::ensureNotNull("businessKey", "businessKey", $businessKey);
         $this->businessKey = $businessKey;
         return $this;
     }
 
-    public function processInstanceVariableEquals(string $variableName, $variableValue): MessageCorrelationBuilderInterface
+    public function processInstanceVariableEquals(?string $variableName, $variableValue): MessageCorrelationBuilderInterface
     {
         EnsureUtil::ensureNotNull("variableName", "variableName", $variableName);
         $this->ensureCorrelationProcessInstanceVariablesInitialized();
@@ -79,7 +79,7 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
         return $this;
     }
 
-    public function localVariableEquals(string $variableName, $variableValue): MessageCorrelationBuilderInterface
+    public function localVariableEquals(?string $variableName, $variableValue): MessageCorrelationBuilderInterface
     {
         EnsureUtil::ensureNotNull("variableName", "variableName", $variableName);
         $this->ensureCorrelationLocalVariablesInitialized();
@@ -111,21 +111,21 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
         }
     }
 
-    public function processInstanceId(string $id): MessageCorrelationBuilderInterface
+    public function processInstanceId(?string $id): MessageCorrelationBuilderInterface
     {
         EnsureUtil::ensureNotNull("processInstanceId", "id", $id);
         $this->processInstanceId = $id;
         return $this;
     }
 
-    public function processDefinitionId(string $processDefinitionId): MessageCorrelationBuilderInterface
+    public function processDefinitionId(?string $processDefinitionId): MessageCorrelationBuilderInterface
     {
         EnsureUtil::ensureNotNull("processDefinitionId", "processDefinitionId", $processDefinitionId);
         $this->processDefinitionId = $processDefinitionId;
         return $this;
     }
 
-    public function setVariable(string $variableName, $variableValue): MessageCorrelationBuilderInterface
+    public function setVariable(?string $variableName, $variableValue): MessageCorrelationBuilderInterface
     {
         EnsureUtil::ensureNotNull("variableName", "variableName", $variableName);
         $this->ensurePayloadProcessInstanceVariablesInitialized();
@@ -133,7 +133,7 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
         return $this;
     }
 
-    public function setVariableLocal(string $variableName, $variableValue): MessageCorrelationBuilderInterface
+    public function setVariableLocal(?string $variableName, $variableValue): MessageCorrelationBuilderInterface
     {
         EnsureUtil::ensureNotNull("variableName", "variableName", $variableName);
         $this->ensurePayloadProcessInstanceVariablesLocalInitialized();
@@ -173,7 +173,7 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
         }
     }
 
-    public function tenantId(string $tenantId): MessageCorrelationBuilderInterface
+    public function tenantId(?string $tenantId): MessageCorrelationBuilderInterface
     {
         EnsureUtil::ensureNotNull(
             "The tenant-id cannot be null. Use 'withoutTenantId()' if you want to correlate the message to a process definition or an execution which has no tenant-id.",
@@ -337,22 +337,22 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
         return $this->commandContext;
     }
 
-    public function getMessageName(): string
+    public function getMessageName(): ?string
     {
         return $this->messageName;
     }
 
-    public function getBusinessKey(): string
+    public function getBusinessKey(): ?string
     {
         return $this->businessKey;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
@@ -382,7 +382,7 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
         return $this->isExclusiveCorrelation;
     }
 
-    public function getTenantId(): string
+    public function getTenantId(): ?string
     {
         return $this->tenantId;
     }

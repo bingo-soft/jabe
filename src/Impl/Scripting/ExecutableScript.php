@@ -20,7 +20,7 @@ abstract class ExecutableScript
      * ScriptEngine. */
     protected $language;
 
-    public function __construct(string $language)
+    public function __construct(?string $language)
     {
         $this->language = $language;
     }
@@ -29,7 +29,7 @@ abstract class ExecutableScript
      * The language in which the script is written.
      * @return string the language
      */
-    public function getLanguage(): string
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
@@ -48,7 +48,7 @@ abstract class ExecutableScript
         return $this->evaluate($scriptEngine, $variableScope, $bindings);
     }
 
-    protected function getActivityIdExceptionMessage(VariableScopeInterface $variableScope): string
+    protected function getActivityIdExceptionMessage(VariableScopeInterface $variableScope): ?string
     {
         $activityId = null;
         $definitionIdMessage = "";

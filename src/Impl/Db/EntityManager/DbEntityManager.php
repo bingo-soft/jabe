@@ -123,7 +123,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
 
     // selects /////////////////////////////////////////////////
 
-    public function selectList(string $statement, $parameter = null, $pageOrFirstResult = null, $maxResults = null): array
+    public function selectList(?string $statement, $parameter = null, $pageOrFirstResult = null, $maxResults = null): array
     {
         if ($parameter === null) {
             return $this->selectList($statement, null, 0, PHP_INT_MAX);
@@ -141,7 +141,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
         }
     }
 
-    public function selectListWithRawParameter(string $statement, $parameter, int $firstResult, int $maxResults): array
+    public function selectListWithRawParameter(?string $statement, $parameter, ?int $firstResult, ?int $maxResults): array
     {
         if ($firstResult == -1 ||  $maxResults == -1) {
             return [];
@@ -150,7 +150,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
         return $this->filterLoadedObjects($loadedObjects);
     }
 
-    public function selectOne(string $statement, $parameter)
+    public function selectOne(?string $statement, $parameter)
     {
         $result = $this->persistenceSession->selectOne($statement, $parameter);
         if ($result instanceof DbEntityInterface) {
@@ -160,7 +160,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
         return $result;
     }
 
-    public function selectBoolean(string $statement, $parameter): bool
+    public function selectBoolean(?string $statement, $parameter): bool
     {
         $result = $this->persistenceSession->selectList($statement, $parameter);
         if (!empty($result)) {
@@ -169,7 +169,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
         return false;
     }
 
-    public function selectById(string $entityClass, string $id): ?DbEntityInterface
+    public function selectById(?string $entityClass, ?string $id): ?DbEntityInterface
     {
         $persistentObject = $this->dbEntityCache->get($entityClass, $id);
         if (!empty($persistentObject)) {
@@ -185,12 +185,12 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
         return $persistentObject;
     }
 
-    public function getCachedEntity(string $type, string $id): ?DbEntityInterface
+    public function getCachedEntity(?string $type, ?string $id): ?DbEntityInterface
     {
         return $this->dbEntityCache->get($type, $id);
     }
 
-    public function getCachedEntitiesByType(string $type): array
+    public function getCachedEntitiesByType(?string $type): array
     {
         return $this->dbEntityCache->getEntitiesByType($type);
     }
@@ -226,7 +226,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
     public function onEntityLoaded(DbEntityInterface $entity): void
     {
         // we get a callback when the persistence session loads an object from the database
-        $cachedPersistentObject = $this->dbEntityCache->get(entity->getClass(), entity->getId());
+        $cachedPersistentObject = $this->dbEntityCache->get(get_class($entity), $entity->getId());
         if (empty($cachedPersistentObject)) {
             // only put into the cache if not already present
             $this->dbEntityCache->putPersistent($entity);
@@ -239,7 +239,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
         }
     }
 
-    public function lock(string $statement, $parameter = null): void
+    public function lock(?string $statement, $parameter = null): void
     {
         $this->persistenceSession->lock($statement, $parameter);
     }
@@ -270,7 +270,6 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
 
     protected function flushDbOperationManager(): void
     {
-
         // obtain totally ordered operation list from operation manager
         $operationsToFlush = $this->dbOperationManager->calculateFlush();
         if (empty($operationsToFlush)) {
@@ -289,7 +288,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
 
         try {
             $batches = CollectionUtil::partition($operationsToFlush, self::BATCH_SIZE);
-            foreach ($batches as $batch) {
+            foreach ($batches as $key => $batch) {
                 $this->flushDbOperations($batch, $operationsToFlush);
             }
         } finally {
@@ -464,7 +463,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
         //LOG.flushedCacheState(dbEntityCache->getCachedEntities());
     }
 
-    protected function flushCachedEntity(CachedDbEntityInterface $cachedDbEntity): void
+    protected function flushCachedEntity(CachedDbEntity $cachedDbEntity): void
     {
         if ($cachedDbEntity->getEntityState() == DbEntityState::TRANSIENT) {
             // latest state of references in cache is relevant when determining insertion order
@@ -543,7 +542,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
         $this->dbEntityCache->undoDelete($entity);
     }
 
-    public function update(string $entityType, string $statement, $parameter): void
+    public function update(?string $entityType, ?string $statement, $parameter): void
     {
         $this->performBulkOperation($entityType, $statement, $parameter, DbOperationType::UPDATE_BULK);
     }
@@ -556,12 +555,12 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
      * @param statement
      * @param parameter
      */
-    public function updatePreserveOrder(string $entityType, string $statement, $parameter): void
+    public function updatePreserveOrder(?string $entityType, ?string $statement, $parameter): void
     {
         $this->performBulkOperationPreserveOrder($entityType, $statement, $parameter, DbOperationType::UPDATE_BULK);
     }
 
-    public function delete($entityTypeOrEntity, string $statement = null, $parameter = null): void
+    public function delete($entityTypeOrEntity, ?string $statement = null, $parameter = null): void
     {
         if (is_string($entityTypeOrEntity)) {
             $this->performBulkOperation($entityTypeOrEntity, $statement, $parameter, DbOperationType::DELETE_BULK);
@@ -579,12 +578,12 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
      * @param parameter
      * @return delete operation
      */
-    public function deletePreserveOrder(string $entityType, string $statement, $parameter): DbBulkOperation
+    public function deletePreserveOrder(?string $entityType, ?string $statement, $parameter): DbBulkOperation
     {
         return $this->performBulkOperationPreserveOrder($entityType, $statement, $parameter, DbOperationType::DELETE_BULK);
     }
 
-    protected function performBulkOperation(string $entityType, string $statement, $parameter, string $operationType): DbBulkOperation
+    protected function performBulkOperation(?string $entityType, ?string $statement, $parameter, ?string $operationType): DbBulkOperation
     {
         // create operation
         $bulkOperation = $this->createDbBulkOperation($entityType, $statement, $parameter, $operationType);
@@ -594,7 +593,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
         return $bulkOperation;
     }
 
-    protected function performBulkOperationPreserveOrder(string $entityType, string $statement, $parameter, string $operationType): DbBulkOperation
+    protected function performBulkOperationPreserveOrder(?string $entityType, ?string $statement, $parameter, ?string $operationType): DbBulkOperation
     {
         $bulkOperation = $this->createDbBulkOperation($entityType, $statement, $parameter, $operationType);
 
@@ -603,7 +602,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
         return $bulkOperation;
     }
 
-    private function createDbBulkOperation(string $entityType, string $statement, $parameter, string $operationType): DbBulkOperation
+    private function createDbBulkOperation(?string $entityType, ?string $statement, $parameter, ?string $operationType): DbBulkOperation
     {
         // create operation
         $bulkOperation = new DbBulkOperation();
@@ -615,7 +614,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
         return $bulkOperation;
     }
 
-    protected function performEntityOperation(CachedDbEntityInterface $cachedDbEntity, string $type): void
+    protected function performEntityOperation(CachedDbEntity $cachedDbEntity, ?string $type): void
     {
         $dbOperation = new DbEntityOperation();
         $dbOperation->setEntity($cachedDbEntity->getEntity());
@@ -643,7 +642,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
 
     protected function validateId(DbEntityInterface $dbEntity): void
     {
-        EnsureUtil::ensureValidIndividualResourceId("Entity " . $dbEntity . " has an invalid id", $dbEntity->getId());
+        EnsureUtil::ensureValidIndividualResourceId("Entity has an invalid id", $dbEntity->getId());
     }
 
     public function pruneDeletedEntities(array $listToPrune): array

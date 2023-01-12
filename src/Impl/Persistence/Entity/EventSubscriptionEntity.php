@@ -28,7 +28,7 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
 {
     // persistent state ///////////////////////////
     protected $id;
-    protected $revision = 1;
+    protected int $revision = 1;
     protected $eventType;
     protected $eventName;
 
@@ -217,12 +217,12 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }
@@ -242,73 +242,73 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
         return $this->eventType == $eventType->name();
     }
 
-    public function getEventType(): string
+    public function getEventType(): ?string
     {
         return $this->eventType;
     }
 
-    public function setEventType(string $eventType): void
+    public function setEventType(?string $eventType): void
     {
         $this->eventType = $eventType;
     }
 
-    public function getEventName(): string
+    public function getEventName(): ?string
     {
         return $this->eventName;
     }
 
-    public function setEventName(string $eventName): void
+    public function setEventName(?string $eventName): void
     {
         $this->eventName = $eventName;
     }
 
-    public function getExecutionId(): string
+    public function getExecutionId(): ?string
     {
         return $this->executionId;
     }
 
-    public function setExecutionId(string $executionId): void
+    public function setExecutionId(?string $executionId): void
     {
         $this->executionId = $executionId;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
 
-    public function setProcessInstanceId(string $processInstanceId): void
+    public function setProcessInstanceId(?string $processInstanceId): void
     {
         $this->processInstanceId = $processInstanceId;
     }
 
-    public function getConfiguration(): string
+    public function getConfiguration(): ?string
     {
         return $this->configuration;
     }
 
-    public function setConfiguration(string $configuration): void
+    public function setConfiguration(?string $configuration): void
     {
         $this->configuration = $configuration;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
 
-    public function setActivityId(string $activityId): void
+    public function setActivityId(?string $activityId): void
     {
         $this->activityId = $activityId;
         $this->activity = null;
     }
 
-    public function getCreated(): string
+    public function getCreated(): ?string
     {
         return $this->created;
     }
 
-    public function setCreated(string $created): void
+    public function setCreated(?string $created): void
     {
         $this->created = $created;
     }
@@ -406,5 +406,10 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
         $this->configuration = $json->configuration;
         $this->revision = $json->revision;
         $this->created = $json->created;
+    }
+
+    public function getDependentEntities(): array
+    {
+        return [];
     }
 }

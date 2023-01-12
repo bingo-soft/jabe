@@ -14,7 +14,7 @@ class ActivityExecutionMappingCollector implements TreeVisitorInterface
     private $activityExecutionMapping = [];
 
     private $initialExecution;
-    private $initialized = false;
+    private bool $initialized = false;
 
     public function __construct(ActivityExecutionInterface $execution)
     {

@@ -9,7 +9,7 @@ class OutputParameter extends IoParameter
 {
     //private final static CoreLogger LOG = CoreLogger.CORE_LOGGER;
 
-    public function __construct(string $name, ParameterValueProviderInterface $valueProvider)
+    public function __construct(?string $name, ParameterValueProviderInterface $valueProvider)
     {
         parent::__construct($name, $valueProvider);
     }

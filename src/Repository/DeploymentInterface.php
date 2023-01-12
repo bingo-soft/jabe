@@ -4,13 +4,13 @@ namespace Jabe\Repository;
 
 interface DeploymentInterface
 {
-    public function getId(): string;
+    public function getId(): ?string;
 
-    public function getName(): string;
+    public function getName(): ?string;
 
-    public function getDeploymentTime(): string;
+    public function getDeploymentTime(): ?string;
 
-    public function getSource(): string;
+    public function getSource(): ?string;
 
     /**
      * Returns the id of the tenant this deployment belongs to. Can be <code>null</code>

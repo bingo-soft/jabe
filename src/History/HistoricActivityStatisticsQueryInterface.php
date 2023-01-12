@@ -26,16 +26,16 @@ interface HistoricActivityStatisticsQueryInterface extends QueryInterface
     public function includeIncidents(): HistoricActivityStatisticsQueryInterface;
 
     /** Only select historic activities of process instances that were started before the given date. */
-    public function startedBefore(string $date): HistoricActivityStatisticsQueryInterface;
+    public function startedBefore(?string $date): HistoricActivityStatisticsQueryInterface;
 
     /** Only select historic activities of process instances that were started after the given date. */
-    public function startedAfter(string $date): HistoricActivityStatisticsQueryInterface;
+    public function startedAfter(?string $date): HistoricActivityStatisticsQueryInterface;
 
     /** Only select historic activities of process instances that were finished before the given date. */
-    public function finishedBefore(string $date): HistoricActivityStatisticsQueryInterface;
+    public function finishedBefore(?string $date): HistoricActivityStatisticsQueryInterface;
 
     /** Only select historic activities of process instances that were finished after the given date. */
-    public function finishedAfter(string $date): HistoricActivityStatisticsQueryInterface;
+    public function finishedAfter(?string $date): HistoricActivityStatisticsQueryInterface;
 
     /** Only select historic activities of process instances with the given IDs */
     public function processInstanceIdIn(array $processInstanceIds): HistoricActivityStatisticsQueryInterface;

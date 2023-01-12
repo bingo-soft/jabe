@@ -20,72 +20,72 @@ class HistoricIdentityLinkLogEventEntity extends HistoryEvent
 
     protected $tenantId;
 
-    public function getTime(): string
+    public function getTime(): ?string
     {
         return $this->time;
     }
 
-    public function setTime(string $time): void
+    public function setTime(?string $time): void
     {
         $this->time = $time;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function setType(string $type): void
+    public function setType(?string $type): void
     {
         $this->type = $type;
     }
 
-    public function getUserId(): string
+    public function getUserId(): ?string
     {
         return $this->userId;
     }
 
-    public function setUserId(string $userId): void
+    public function setUserId(?string $userId): void
     {
         $this->userId = $userId;
     }
 
-    public function getGroupId(): string
+    public function getGroupId(): ?string
     {
         return $this->groupId;
     }
 
-    public function setGroupId(string $groupId): void
+    public function setGroupId(?string $groupId): void
     {
         $this->groupId = $groupId;
     }
 
-    public function getTaskId(): string
+    public function getTaskId(): ?string
     {
         return $this->taskId;
     }
 
-    public function setTaskId(string $taskId): void
+    public function setTaskId(?string $taskId): void
     {
         $this->taskId = $taskId;
     }
 
-    public function getOperationType(): string
+    public function getOperationType(): ?string
     {
         return $this->operationType;
     }
 
-    public function setOperationType(string $operationType): void
+    public function setOperationType(?string $operationType): void
     {
         $this->operationType = $operationType;
     }
 
-    public function getAssignerId(): string
+    public function getAssignerId(): ?string
     {
         return $this->assignerId;
     }
 
-    public function setAssignerId(string $assignerId): void
+    public function setAssignerId(?string $assignerId): void
     {
         $this->assignerId = $assignerId;
     }
@@ -100,12 +100,12 @@ class HistoricIdentityLinkLogEventEntity extends HistoryEvent
         $this->tenantId = $tenantId;
     }
 
-    public function getRootProcessInstanceId(): string
+    public function getRootProcessInstanceId(): ?string
     {
         return $this->rootProcessInstanceId;
     }
 
-    public function setRootProcessInstanceId(string $rootProcessInstanceId): void
+    public function setRootProcessInstanceId(?string $rootProcessInstanceId): void
     {
         $this->rootProcessInstanceId = $rootProcessInstanceId;
     }

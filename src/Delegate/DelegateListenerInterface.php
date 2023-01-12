@@ -4,5 +4,5 @@ namespace Jabe\Delegate;
 
 interface DelegateListenerInterface
 {
-    public function notify(BaseDelegateExecutionInterface $instance): void;
+    public function notify(/*BaseDelegateExecutionInterface*/$instance): void;
 }

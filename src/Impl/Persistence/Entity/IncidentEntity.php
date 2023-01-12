@@ -30,7 +30,7 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
 {
     //protected static final IncidentLogger LOG = ProcessEngineLogger.INCIDENT_LOGGER;
 
-    protected $revision;
+    protected int $revision = 0;
 
     protected $id;
     protected $incidentTimestamp;
@@ -88,7 +88,7 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
         return $createdIncidents;
     }
 
-    public static function createAndInsertIncident(string $incidentType, IncidentContext $context, string $message): IncidentEntity
+    public static function createAndInsertIncident(?string $incidentType, IncidentContext $context, ?string $message): IncidentEntity
     {
         // create new incident
         $newIncident = self::create($incidentType);
@@ -123,7 +123,7 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
         return $newIncident;
     }
 
-    protected static function create(string $incidentType): IncidentEntity
+    protected static function create(?string $incidentType): IncidentEntity
     {
         $incidentId = Context::getProcessEngineConfiguration()
             ->getDbSqlSessionFactory()
@@ -272,37 +272,37 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getIncidentTimestamp(): string
+    public function getIncidentTimestamp(): ?string
     {
         return $this->incidentTimestamp;
     }
 
-    public function setIncidentTimestamp(string $incidentTimestamp): void
+    public function setIncidentTimestamp(?string $incidentTimestamp): void
     {
         $this->incidentTimestamp = $incidentTimestamp;
     }
 
-    public function getIncidentType(): string
+    public function getIncidentType(): ?string
     {
         return $this->incidentType;
     }
 
-    public function setIncidentType(string $incidentType): void
+    public function setIncidentType(?string $incidentType): void
     {
         $this->incidentType = $incidentType;
     }
 
-    public function getIncidentMessage(): string
+    public function getIncidentMessage(): ?string
     {
         return $this->incidentMessage;
     }
 
-    public function setIncidentMessage(string $incidentMessage): void
+    public function setIncidentMessage(?string $incidentMessage): void
     {
         $this->incidentMessage = $incidentMessage;
     }
@@ -312,27 +312,27 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
         return $this->executionId;
     }
 
-    public function setExecutionId(string $executionId): void
+    public function setExecutionId(?string $executionId): void
     {
         $this->executionId = $executionId;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
 
-    public function setActivityId(string $activityId): void
+    public function setActivityId(?string $activityId): void
     {
         $this->activityId = $activityId;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
 
-    public function setProcessInstanceId(string $processInstanceId): void
+    public function setProcessInstanceId(?string $processInstanceId): void
     {
         $this->processInstanceId = $processInstanceId;
     }
@@ -352,37 +352,37 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
         return $this->processDefinitionId;
     }
 
-    public function setProcessDefinitionId(string $processDefinitionId): void
+    public function setProcessDefinitionId(?string $processDefinitionId): void
     {
         $this->processDefinitionId = $processDefinitionId;
     }
 
-    public function getCauseIncidentId(): string
+    public function getCauseIncidentId(): ?string
     {
         return $this->causeIncidentId;
     }
 
-    public function setCauseIncidentId(string $causeIncidentId): void
+    public function setCauseIncidentId(?string $causeIncidentId): void
     {
         $this->causeIncidentId = $causeIncidentId;
     }
 
-    public function getRootCauseIncidentId(): string
+    public function getRootCauseIncidentId(): ?string
     {
         return $this->rootCauseIncidentId;
     }
 
-    public function setRootCauseIncidentId(string $rootCauseIncidentId): void
+    public function setRootCauseIncidentId(?string $rootCauseIncidentId): void
     {
         $this->rootCauseIncidentId = $rootCauseIncidentId;
     }
 
-    public function getConfiguration(): string
+    public function getConfiguration(): ?string
     {
         return $this->configuration;
     }
 
-    public function setConfiguration(string $configuration): void
+    public function setConfiguration(?string $configuration): void
     {
         $this->configuration = $configuration;
     }
@@ -397,12 +397,12 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
         $this->tenantId = $tenantId;
     }
 
-    public function setJobDefinitionId(string $jobDefinitionId): void
+    public function setJobDefinitionId(?string $jobDefinitionId): void
     {
         $this->jobDefinitionId = $jobDefinitionId;
     }
 
-    public function getJobDefinitionId(): string
+    public function getJobDefinitionId(): ?string
     {
         return $this->jobDefinitionId;
     }
@@ -457,7 +457,7 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
         $this->revision = $revision;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }
@@ -467,12 +467,12 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
         return $this->revision + 1;
     }
 
-    public function getHistoryConfiguration(): string
+    public function getHistoryConfiguration(): ?string
     {
         return $this->historyConfiguration;
     }
 
-    public function setHistoryConfiguration(string $historyConfiguration): void
+    public function setHistoryConfiguration(?string $historyConfiguration): void
     {
         $this->historyConfiguration = $historyConfiguration;
     }
@@ -482,17 +482,17 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
         return $this->failedActivityId;
     }
 
-    public function setFailedActivityId(string $failedActivityId): void
+    public function setFailedActivityId(?string $failedActivityId): void
     {
         $this->failedActivityId = $failedActivityId;
     }
 
-    public function getAnnotation(): string
+    public function getAnnotation(): ?string
     {
         return $this->annotation;
     }
 
-    public function setAnnotation(string $annotation): void
+    public function setAnnotation(?string $annotation): void
     {
         $this->annotation = $annotation;
     }
@@ -579,5 +579,10 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
             return false;
         }
         return true;
+    }
+
+    public function getDependentEntities(): array
+    {
+        return [];
     }
 }

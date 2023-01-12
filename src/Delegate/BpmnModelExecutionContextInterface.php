@@ -3,11 +3,11 @@
 namespace Jabe\Delegate;
 
 use Bpmn\BpmnModelInstanceInterface;
-use Bpmn\Instnace\FlowElementInterface;
+use Bpmn\Instance\FlowElementInterface;
 
 interface BpmnModelExecutionContextInterface
 {
-    public function getBpmnModelInstance(): BpmnModelInstanceInterface;
+    public function getBpmnModelInstance(): ?BpmnModelInstanceInterface;
 
     /**
      * <p>Returns the currently executed Element in the BPMN Model. This method returns a FlowElement which may be casted
@@ -19,5 +19,5 @@ interface BpmnModelExecutionContextInterface
      *
      * @return FlowElementInterface the FlowElement corresponding to the current Bpmn Model Element
      */
-    public function getBpmnModelElementInstance(): FlowElementInterface;
+    public function getBpmnModelElementInstance(): ?FlowElementInterface;
 }

@@ -15,12 +15,12 @@ interface AuthorizationServiceInterface
 
     public function saveAuthorization(AuthorizationInterface $authorization): AuthorizationInterface;
 
-    public function deleteAuthorization(string $authorizationId): void;
+    public function deleteAuthorization(?string $authorizationId): void;
 
     public function createAuthorizationQuery(): AuthorizationQueryInterface;
 
     public function isUserAuthorized(
-        string $userId,
+        ?string $userId,
         array $groupIds,
         PermissionInterface $permission,
         ResourceInterface $resource

@@ -4,10 +4,10 @@ namespace Jabe\History;
 
 class JobStateImpl implements JobStateInterface
 {
-    public $stateCode;
-    protected $name;
+    public int $stateCode = 0;
+    protected ?string $name;
 
-    public function __construct(int $stateCode, string $string)
+    public function __construct(int $stateCode, ?string $string)
     {
         $this->stateCode = $stateCode;
         $this->name = $string;

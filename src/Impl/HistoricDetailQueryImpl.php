@@ -33,24 +33,24 @@ class HistoricDetailQueryImpl extends AbstractQuery implements HistoricDetailQue
     protected $sequenceCounter;
     protected $occurredBefore;
     protected $occurredAfter;
-    protected $initial = false;
-    protected $excludeTaskRelated = false;
-    protected $isByteArrayFetchingEnabled = true;
-    protected $isCustomObjectDeserializationEnabled = true;
+    protected bool $initial = false;
+    protected bool $excludeTaskRelated = false;
+    protected bool $isByteArrayFetchingEnabled = true;
+    protected bool $isCustomObjectDeserializationEnabled = true;
 
     public function __construct(CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
     }
 
-    public function detailId(string $id): HistoricDetailQueryInterface
+    public function detailId(?string $id): HistoricDetailQueryInterface
     {
         EnsureUtil::ensureNotNull("detailId", "id", $id);
         $this->detailId = $id;
         return $this;
     }
 
-    public function variableInstanceId(string $variableInstanceId): HistoricDetailQueryInterface
+    public function variableInstanceId(?string $variableInstanceId): HistoricDetailQueryInterface
     {
         EnsureUtil::ensureNotNull("variableInstanceId", "variableInstanceId", $variableInstanceId);
         $this->variableInstanceId = $variableInstanceId;
@@ -72,43 +72,43 @@ class HistoricDetailQueryImpl extends AbstractQuery implements HistoricDetailQue
         return $variableTypes;
     }
 
-    public function processInstanceId(string $processInstanceId): HistoricDetailQueryInterface
+    public function processInstanceId(?string $processInstanceId): HistoricDetailQueryInterface
     {
         $this->processInstanceId = $processInstanceId;
         return $this;
     }
 
-    /*public HistoricDetailQueryInterface caseInstanceId(string $caseInstanceId) {
+    /*public HistoricDetailQueryInterface caseInstanceId(?string $caseInstanceId) {
         EnsureUtil::ensureNotNull("Case instance id", caseInstanceId);
         $this->caseInstanceId = caseInstanceId;
         return $this;
     }*/
 
-    public function executionId(string $executionId): HistoricDetailQueryInterface
+    public function executionId(?string $executionId): HistoricDetailQueryInterface
     {
         $this->executionId = $executionId;
         return $this;
     }
 
-    /*public HistoricDetailQueryInterface caseExecutionId(string $caseExecutionId) {
+    /*public HistoricDetailQueryInterface caseExecutionId(?string $caseExecutionId) {
         EnsureUtil::ensureNotNull("Case execution id", caseExecutionId);
         $this->caseExecutionId = caseExecutionId;
         return $this;
     }*/
 
-    public function activityId(string $activityId): HistoricDetailQueryInterface
+    public function activityId(?string $activityId): HistoricDetailQueryInterface
     {
         $this->activityId = $activityId;
         return $this;
     }
 
-    public function activityInstanceId(string $activityInstanceId): HistoricDetailQueryInterface
+    public function activityInstanceId(?string $activityInstanceId): HistoricDetailQueryInterface
     {
         $this->activityInstanceId = $activityInstanceId;
         return $this;
     }
 
-    public function taskId(string $taskId): HistoricDetailQueryInterface
+    public function taskId(?string $taskId): HistoricDetailQueryInterface
     {
         $this->taskId = $taskId;
         return $this;
@@ -154,7 +154,7 @@ class HistoricDetailQueryImpl extends AbstractQuery implements HistoricDetailQue
         return $this;
     }
 
-    public function userOperationId(string $userOperationId): HistoricDetailQueryInterface
+    public function userOperationId(?string $userOperationId): HistoricDetailQueryInterface
     {
         EnsureUtil::ensureNotNull("userOperationId", "userOperationId", $userOperationId);
         $this->userOperationId = $userOperationId;
@@ -173,14 +173,14 @@ class HistoricDetailQueryImpl extends AbstractQuery implements HistoricDetailQue
         return $this;
     }
 
-    public function occurredBefore(string $date): HistoricDetailQueryInterface
+    public function occurredBefore(?string $date): HistoricDetailQueryInterface
     {
         EnsureUtil::ensureNotNull("occurred before", "date", $date);
         $this->occurredBefore = $date;
         return $this;
     }
 
-    public function occurredAfter(string $date): HistoricDetailQueryInterface
+    public function occurredAfter(?string $date): HistoricDetailQueryInterface
     {
         EnsureUtil::ensureNotNull("occurred after", "date", $date);
         $this->occurredAfter = $date;
@@ -213,7 +213,7 @@ class HistoricDetailQueryImpl extends AbstractQuery implements HistoricDetailQue
         return $this;
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         $historicDetails = $commandContext
@@ -295,7 +295,7 @@ class HistoricDetailQueryImpl extends AbstractQuery implements HistoricDetailQue
 
     // getters and setters //////////////////////////////////////////////////////
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
@@ -304,27 +304,27 @@ class HistoricDetailQueryImpl extends AbstractQuery implements HistoricDetailQue
         return caseInstanceId;
     }*/
 
-    public function getExecutionId(): string
+    public function getExecutionId(): ?string
     {
         return $this->executionId;
     }
 
-    /*public function getCaseExecutionId(): string
+    /*public function getCaseExecutionId(): ?string
     {
       return caseExecutionId;
     }*/
 
-    public function getTaskId(): string
+    public function getTaskId(): ?string
     {
         return $this->taskId;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -334,7 +334,7 @@ class HistoricDetailQueryImpl extends AbstractQuery implements HistoricDetailQue
         return $this->excludeTaskRelated;
     }
 
-    public function getDetailId(): string
+    public function getDetailId(): ?string
     {
         return $this->detailId;
     }
@@ -344,12 +344,12 @@ class HistoricDetailQueryImpl extends AbstractQuery implements HistoricDetailQue
         return $this->processInstanceIds;
     }
 
-    public function getOccurredBefore(): string
+    public function getOccurredBefore(): ?string
     {
         return $this->occurredBefore;
     }
 
-    public function getOccurredAfter(): string
+    public function getOccurredAfter(): ?string
     {
         return $this->occurredAfter;
     }

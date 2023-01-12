@@ -58,7 +58,7 @@ class VariableStore
         return $result;
     }
 
-    public function getRemovedVariable(string $name): ?CoreVariableInstanceInterface
+    public function getRemovedVariable(?string $name): ?CoreVariableInstanceInterface
     {
         if (array_key_exists($name, $this->removedVariables)) {
             return $this->removedVariables[$name];
@@ -66,7 +66,7 @@ class VariableStore
         return null;
     }
 
-    public function getVariable(string $name): ?CoreVariableInstanceInterface
+    public function getVariable(?string $name): ?CoreVariableInstanceInterface
     {
         $variablesMap = $this->getVariablesMap();
         if (array_key_exists($name, $variablesMap)) {
@@ -125,7 +125,7 @@ class VariableStore
         return false;
     }
 
-    public function containsKey(string $key): bool
+    public function containsKey(?string $key): bool
     {
         $this->getVariablesMap();
         return array_key_exists($key, $this->variables);
@@ -153,7 +153,7 @@ class VariableStore
         }
     }
 
-    public function removeVariable(string $variableName): ?CoreVariableInstanceInterface
+    public function removeVariable(?string $variableName): ?CoreVariableInstanceInterface
     {
         if (!$this->containsKey($variableName)) {
             return null;
@@ -192,7 +192,7 @@ class VariableStore
         }
     }
 
-    public function isRemoved(string $variableName): bool
+    public function isRemoved(?string $variableName): bool
     {
         return array_key_exists($variableName, $this->removedVariables);
     }

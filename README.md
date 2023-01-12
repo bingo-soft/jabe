@@ -85,7 +85,7 @@ Bpmn::getInstance()->createProcess()
 // Read business process from file
 
 $fd = fopen('test.bpmn', 'r+');
-$modelInstance = Bpmn::getInstance()->readModelFromStream($fd);
+$modelInstance = Bpmn::readModelFromStream($fd);
 ```
 
 ## Acknowledgements

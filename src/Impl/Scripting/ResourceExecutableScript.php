@@ -14,7 +14,7 @@ class ResourceExecutableScript extends SourceExecutableScript
 {
     protected $scriptResource;
 
-    public function __construct(string $language, string $scriptResource)
+    public function __construct(?string $language, ?string $scriptResource)
     {
         parent::__construct($language, null);
         $this->scriptResource = $scriptResource;

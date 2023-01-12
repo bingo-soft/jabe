@@ -32,7 +32,7 @@ class DeleteUserCmd extends AbstractWritableIdentityServiceCmd implements Comman
 
     protected function executeCmd(CommandContext $commandContext)
     {
-        EnsureUtil::ensureNotNull("userId", $this->userId);
+        EnsureUtil::ensureNotNull("userId", "userId", $this->userId);
 
         // delete user picture
         (new DeleteUserPictureCmd($this->userId))->execute($commandContext);

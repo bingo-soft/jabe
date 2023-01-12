@@ -62,7 +62,7 @@ interface ManagementServiceInterface
      * @throws AuthorizationException
      *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
      */
-    public function registerProcessApplication(string $deploymentId, ProcessApplicationReferenceInterface $reference): ProcessApplicationRegistrationInterface;
+    public function registerProcessApplication(?string $deploymentId, ProcessApplicationReferenceInterface $reference): ProcessApplicationRegistrationInterface;
 
     /**
      * Deactivate a deployment for a given ProcessApplication. This removes the association
@@ -87,7 +87,7 @@ interface ManagementServiceInterface
      * @throws AuthorizationException
      *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
      */
-    public function getProcessApplicationForDeployment(string $deploymentId): string;
+    public function getProcessApplicationForDeployment(?string $deploymentId): ?string;
 
     /**
      * Get the mapping containing {table name, row count} entries of the database schema.
@@ -104,7 +104,7 @@ interface ManagementServiceInterface
      * @throws AuthorizationException
      *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
      */
-    public function getTableName(string $entityClass): string;
+    public function getTableName(?string $entityClass): ?string;
 
     /**
     * Gets the metadata (column names, column types, etc.) of a certain table.
@@ -113,7 +113,7 @@ interface ManagementServiceInterface
     * @throws AuthorizationException
     *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
-    public function getTableMetaData(string $tableName): TableMetaData;
+    public function getTableMetaData(?string $tableName): TableMetaData;
 
     /**
     * Creates a TablePageQuery that can be used to fetch TablePage
@@ -149,7 +149,7 @@ interface ManagementServiceInterface
     *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
     *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
-    public function executeJob(string $jobId): void;
+    public function executeJob(?string $jobId): void;
 
     /**
     * Delete the job with the provided id.
@@ -162,7 +162,7 @@ interface ManagementServiceInterface
     *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
     *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
-    public function deleteJob(string $jobId): void;
+    public function deleteJob(?string $jobId): void;
 
     /**
     * Activates the JobDefinition with the given id.
@@ -192,7 +192,7 @@ interface ManagementServiceInterface
     * @see #activateJobById(String)
     * @see #activateJobByJobDefinitionId(String)
     */
-    public function activateJobDefinitionById(string $jobDefinitionId, bool $activateJobs = false, string $activationDate = null): void;
+    public function activateJobDefinitionById(?string $jobDefinitionId, bool $activateJobs = false, ?string $activationDate = null): void;
 
     /**
     * <p>Activates all JobDefinitions of the provided process definition id.</p>
@@ -221,7 +221,7 @@ interface ManagementServiceInterface
     *
     * @see #activateJobByProcessDefinitionId(String)
     */
-    public function activateJobDefinitionByProcessDefinitionId(string $processDefinitionId, bool $activateJobs = false, string $activationDate = null): void;
+    public function activateJobDefinitionByProcessDefinitionId(?string $processDefinitionId, bool $activateJobs = false, ?string $activationDate = null): void;
 
     /**
     * <p>Activates all JobDefinitions of the provided process definition key.</p>
@@ -250,7 +250,7 @@ interface ManagementServiceInterface
     *
     * @see #activateJobByProcessDefinitionKey(String)
     */
-    public function activateJobDefinitionByProcessDefinitionKey(string $processDefinitionKey, bool $activateJobs = false, string $activationDate = null): void;
+    public function activateJobDefinitionByProcessDefinitionKey(?string $processDefinitionKey, bool $activateJobs = false, ?string $activationDate = null): void;
 
     /**
     * Suspends the JobDefinition with the given id.
@@ -280,7 +280,7 @@ interface ManagementServiceInterface
     * @see #suspendJobById(String)
     * @see #suspendJobByJobDefinitionId(String)
     */
-    public function suspendJobDefinitionById(string $jobDefinitionId, bool $suspendJobs = false, string $suspensionDate = null): void;
+    public function suspendJobDefinitionById(?string $jobDefinitionId, bool $suspendJobs = false, ?string $suspensionDate = null): void;
 
     /**
     * Suspends all JobDefinitions of the provided process definition id.
@@ -309,7 +309,7 @@ interface ManagementServiceInterface
     *
     * @see #suspendJobByProcessDefinitionId(String)
     */
-    public function suspendJobDefinitionByProcessDefinitionId(string $processDefinitionId, bool $suspendJobs = false, string $suspensionDate = null): void;
+    public function suspendJobDefinitionByProcessDefinitionId(?string $processDefinitionId, bool $suspendJobs = false, ?string $suspensionDate = null): void;
 
     /**
     * Suspends all JobDefinitions of the provided process definition key.
@@ -338,7 +338,7 @@ interface ManagementServiceInterface
     *
     * @see #suspendJobByProcessDefinitionKey(String)
     */
-    public function suspendJobDefinitionByProcessDefinitionKey(string $processDefinitionKey, bool $suspendJobs = false, string $suspensionDate = null): void;
+    public function suspendJobDefinitionByProcessDefinitionKey(?string $processDefinitionKey, bool $suspendJobs = false, ?string $suspensionDate = null): void;
 
     /**
     * <p>Activates the Job with the given id.</p>
@@ -351,7 +351,7 @@ interface ManagementServiceInterface
     *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
     *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
-    public function activateJobById(string $jobId): void;
+    public function activateJobById(?string $jobId): void;
 
     /**
     * <p>Activates all Jobs of the provided job definition id.</p>
@@ -364,7 +364,7 @@ interface ManagementServiceInterface
     *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
     *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
-    public function activateJobByJobDefinitionId(string $jobDefinitionId): void;
+    public function activateJobByJobDefinitionId(?string $jobDefinitionId): void;
 
     /**
     * <p>Activates all Jobs of the provided process instance id.</p>
@@ -377,7 +377,7 @@ interface ManagementServiceInterface
     *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
     *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
-    public function activateJobByProcessInstanceId(string $processInstanceId): void;
+    public function activateJobByProcessInstanceId(?string $processInstanceId): void;
 
     /**
     * <p>Activates all Jobs of the provided process definition id.</p>
@@ -390,7 +390,7 @@ interface ManagementServiceInterface
     *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
     *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
-    public function activateJobByProcessDefinitionId(string $processDefinitionId): void;
+    public function activateJobByProcessDefinitionId(?string $processDefinitionId): void;
 
     /**
     * <p>Activates Jobs of the provided process definition key.</p>
@@ -403,7 +403,7 @@ interface ManagementServiceInterface
     *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
     *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
-    public function activateJobByProcessDefinitionKey(string $processDefinitionKey): void;
+    public function activateJobByProcessDefinitionKey(?string $processDefinitionKey): void;
 
     /**
     * <p>Suspends the Job with the given id.</p>
@@ -416,7 +416,7 @@ interface ManagementServiceInterface
     *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
     *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
-    public function suspendJobById(string $jobId): void;
+    public function suspendJobById(?string $jobId): void;
 
     /**
     * <p>Suspends all Jobs of the provided job definition id.</p>
@@ -429,7 +429,7 @@ interface ManagementServiceInterface
     *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
     *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
-    public function suspendJobByJobDefinitionId(string $jobDefinitionId): void;
+    public function suspendJobByJobDefinitionId(?string $jobDefinitionId): void;
 
     /**
     * <p>Suspends all Jobs of the provided process instance id.</p>
@@ -442,7 +442,7 @@ interface ManagementServiceInterface
     *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
     *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
-    public function suspendJobByProcessInstanceId(string $processInstanceId): void;
+    public function suspendJobByProcessInstanceId(?string $processInstanceId): void;
 
     /**
     * <p>Suspends all Jobs of the provided process definition id.</p>
@@ -455,7 +455,7 @@ interface ManagementServiceInterface
     *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
     *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
-    public function suspendJobByProcessDefinitionId(string $processDefinitionId): void;
+    public function suspendJobByProcessDefinitionId(?string $processDefinitionId): void;
 
     /**
     * <p>Suspends Jobs of the provided process definition key.</p>
@@ -468,7 +468,7 @@ interface ManagementServiceInterface
     *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
     *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
-    public function suspendJobByProcessDefinitionKey(string $processDefinitionKey): void;
+    public function suspendJobByProcessDefinitionKey(?string $processDefinitionKey): void;
 
     /**
     * Activate or suspend jobs using a fluent builder. Specify the jobs by
@@ -558,7 +558,7 @@ interface ManagementServiceInterface
     *          and no Permissions#RETRY_JOB permission on Resources#PROCESS_INSTANCE
     *          and no Permissions#RETRY_JOB permission on Resources#PROCESS_DEFINITION.
     */
-    public function setJobRetriesByJobDefinitionId(string $jobDefinitionId, int $retries): void;
+    public function setJobRetriesByJobDefinitionId(?string $jobDefinitionId, int $retries): void;
 
     /**
     * Sets a new due date for the provided id. The offset between
@@ -575,7 +575,7 @@ interface ManagementServiceInterface
     *          If the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
     *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
-    public function setJobDuedate(string $jobId, string $newDuedate, bool $cascade = false): void;
+    public function setJobDuedate(?string $jobId, ?string $newDuedate, bool $cascade = false): void;
 
     /**
     * Triggers the recalculation for the job with the provided id.
@@ -591,7 +591,7 @@ interface ManagementServiceInterface
     *           Permissions#UPDATE_INSTANCE permission on
     *           Resources#PROCESS_DEFINITION.
     */
-    public function recalculateJobDuedate(string $jobId, bool $creationDateBased): void;
+    public function recalculateJobDuedate(?string $jobId, bool $creationDateBased): void;
 
     /**
     * Sets a new priority for the job with the provided id.
@@ -607,7 +607,7 @@ interface ManagementServiceInterface
     *
     * @since 7.4
     */
-    public function setJobPriority(string $jobId, int $priority): void;
+    public function setJobPriority(?string $jobId, int $priority): void;
 
     /**
     * <p>Sets an explicit priority for jobs of the given job definition.
@@ -628,7 +628,7 @@ interface ManagementServiceInterface
     *
     * @since 7.4
     */
-    public function setOverridingJobPriorityForJobDefinition(string $jobDefinitionId, int $priority, bool $cascade = false): void;
+    public function setOverridingJobPriorityForJobDefinition(?string $jobDefinitionId, int $priority, bool $cascade = false): void;
 
     /**
     * <p>Clears the job definition's overriding job priority if set. After invoking this method,
@@ -646,7 +646,7 @@ interface ManagementServiceInterface
     *
     * @since 7.4
     */
-    public function clearOverridingJobPriorityForJobDefinition(string $jobDefinitionId): void;
+    public function clearOverridingJobPriorityForJobDefinition(?string $jobDefinitionId): void;
 
     /**
     * Returns the full stacktrace of the exception that occurs when the job
@@ -661,7 +661,7 @@ interface ManagementServiceInterface
     *          If the user has no Permissions#READ permission on Resources#PROCESS_INSTANCE
     *          or no Permissions#READ_INSTANCE permission on Resources#PROCESS_DEFINITION.
     */
-    public function getJobExceptionStacktrace(string $jobId): string;
+    public function getJobExceptionStacktrace(?string $jobId): ?string;
 
     /**
     * @return a map of all properties.
@@ -681,7 +681,7 @@ interface ManagementServiceInterface
     * @throws AuthorizationException
     *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
-    public function setProperty(string $name, string $value): void;
+    public function setProperty(?string $name, ?string $value): void;
 
     /**
     * Deletes a property by name. If the property does not exist, the request is ignored.
@@ -691,7 +691,7 @@ interface ManagementServiceInterface
     * @throws AuthorizationException
     *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
-    public function deleteProperty(string $name): void;
+    public function deleteProperty(?string $name): void;
 
     /**
     * Set the license key.
@@ -701,7 +701,7 @@ interface ManagementServiceInterface
     * @throws AuthorizationException
     *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
-    public function setLicenseKey(string $licenseKey): void;
+    public function setLicenseKey(?string $licenseKey): void;
 
     /**
     * Get the stored license key string or <code>null</code> if no license is set.
@@ -726,7 +726,7 @@ interface ManagementServiceInterface
     * @throws AuthorizationException
     *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
-    public function databaseSchemaUpgrade(Connection $connection, string $catalog, string $schema): string;
+    public function databaseSchemaUpgrade(Connection $connection, ?string $catalog, ?string $schema): ?string;
 
     /**
     * Query for the number of process instances aggregated by process definitions.
@@ -744,7 +744,7 @@ interface ManagementServiceInterface
     * @throws AuthorizationException
     *          If the user has no Permissions#READ permission on Resources#PROCESS_DEFINITION.
     */
-    public function createActivityStatisticsQuery(string $processDefinitionId): ActivityStatisticsQueryInterface;
+    public function createActivityStatisticsQuery(?string $processDefinitionId): ActivityStatisticsQueryInterface;
 
     /**
     * Get the deployments that are registered the engine's job executor.
@@ -763,7 +763,7 @@ interface ManagementServiceInterface
     * @throws AuthorizationException
     *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
-    public function registerDeploymentForJobExecutor(string $deploymentId): void;
+    public function registerDeploymentForJobExecutor(?string $deploymentId): void;
 
     /**
     * Unregister a deployment for the engine's job executor.
@@ -773,7 +773,7 @@ interface ManagementServiceInterface
     * @throws AuthorizationException
     *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
     */
-    public function unregisterDeploymentForJobExecutor(string $deploymentId): void;
+    public function unregisterDeploymentForJobExecutor(?string $deploymentId): void;
 
     /**
     * Get the configured history level for the process engine.
@@ -803,7 +803,7 @@ interface ManagementServiceInterface
     * @param reporter or null
     * @since 7.4
     */
-    public function deleteMetrics(string $timestamp = null, string $reporter = null);
+    public function deleteMetrics(?string $timestamp = null, ?string $reporter = null);
 
     /**
     * Forces this engine to commit its pending collected metrics to the database.
@@ -857,7 +857,7 @@ interface ManagementServiceInterface
     *
     * @since 7.5
     */
-    public function suspendBatchById(string $batchId): void;
+    public function suspendBatchById(?string $batchId): void;
 
     /**
     * <p>
@@ -876,7 +876,7 @@ interface ManagementServiceInterface
     *
     * @since 7.5
     */
-    public function activateBatchById(string $batchId): void;
+    public function activateBatchById(?string $batchId): void;
 
     /**
     * Deletes a batch instance and the corresponding job definitions.
@@ -889,7 +889,7 @@ interface ManagementServiceInterface
     *
     * @since 7.5
     */
-    public function deleteBatch(string $batchId, bool $cascade): void;
+    public function deleteBatch(?string $batchId, bool $cascade): void;
 
     /**
     * Query for the statistics of the batch execution jobs of a batch.

@@ -33,22 +33,22 @@ class LockedExternalTaskImpl implements LockedExternalTaskInterface
     protected $businessKey;
     protected $extensionProperties = [];
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function getTopicName(): string
+    public function getTopicName(): ?string
     {
         return $this->topicName;
     }
 
-    public function getWorkerId(): string
+    public function getWorkerId(): ?string
     {
         return $this->workerId;
     }
 
-    public function getLockExpirationTime(): string
+    public function getLockExpirationTime(): ?string
     {
         return $this->lockExpirationTime;
     }
@@ -58,42 +58,42 @@ class LockedExternalTaskImpl implements LockedExternalTaskInterface
         return $this->retries;
     }
 
-    public function getErrorMessage(): string
+    public function getErrorMessage(): ?string
     {
         return $this->errorMessage;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
 
-    public function getExecutionId(): string
+    public function getExecutionId(): ?string
     {
         return $this->executionId;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
 
-    public function getActivityInstanceId(): string
+    public function getActivityInstanceId(): ?string
     {
         return $this->activityInstanceId;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }
 
-    public function getProcessDefinitionVersionTag(): string
+    public function getProcessDefinitionVersionTag(): ?string
     {
         return $this->processDefinitionVersionTag;
     }
@@ -108,7 +108,7 @@ class LockedExternalTaskImpl implements LockedExternalTaskInterface
         return $this->variables;
     }
 
-    public function getErrorDetails(): string
+    public function getErrorDetails(): ?string
     {
         return $this->errorDetails;
     }

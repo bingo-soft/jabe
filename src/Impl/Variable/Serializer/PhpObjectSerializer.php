@@ -10,10 +10,10 @@ class PhpObjectSerializer extends AbstractObjectValueSerializer
 
     public function __construct()
     {
-        parent::__construct(SerializationDataFormats::JAVA);
+        parent::__construct(SerializationDataFormats::PHP);
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return self::NAME;
     }
@@ -23,17 +23,17 @@ class PhpObjectSerializer extends AbstractObjectValueSerializer
         return false;
     }
 
-    protected function deserializeFromByteArray(string $bytes, string $objectTypeName)
+    protected function deserializeFromByteArray(?string $bytes, /*string*/$objectTypeName)
     {
         return unserialize($bytes);
     }
 
-    protected function serializeToByteArray($deserializedObject): string
+    protected function serializeToByteArray($deserializedObject): ?string
     {
         return serialize($deserializedObject);
     }
 
-    protected function getTypeNameForDeserialized($deserializedObject): string
+    protected function getTypeNameForDeserialized($deserializedObject): ?string
     {
         return get_class($deserializedObject);
     }

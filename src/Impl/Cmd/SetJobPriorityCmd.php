@@ -19,7 +19,7 @@ class SetJobPriorityCmd implements CommandInterface
     protected $jobId;
     protected $priority;
 
-    public function __construct(string $jobId, int $priority)
+    public function __construct(?string $jobId, int $priority)
     {
         $this->jobId = $jobId;
         $this->priority = $priority;
@@ -59,4 +59,9 @@ class SetJobPriorityCmd implements CommandInterface
                 [$propertyChange]
             );
     }*/
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

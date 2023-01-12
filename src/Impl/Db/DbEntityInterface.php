@@ -5,7 +5,7 @@ namespace Jabe\Impl\Db;
 interface DbEntityInterface
 {
     public function getId(): ?string;
-    public function setId(string $id): void;
+    public function setId(?string $id): void;
 
     /**
      * Returns a representation of the object,

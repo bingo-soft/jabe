@@ -11,7 +11,7 @@ class ClassDelegateUtil
 {
     //private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
-    public static function instantiateDelegate(string $clazz, array $fieldDeclarations)
+    public static function instantiateDelegate(?string $clazz, array $fieldDeclarations)
     {
         $artifactFactory = Context::getProcessEngineConfiguration()->getArtifactFactory();
 

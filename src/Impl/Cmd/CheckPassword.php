@@ -12,7 +12,7 @@ class CheckPassword implements CommandInterface, \Serializable
     private $userId;
     private $password;
 
-    public function __construct(string $userId, string $password)
+    public function __construct(?string $userId, ?string $password)
     {
         $this->userId = $userId;
         $this->password = $password;
@@ -36,5 +36,10 @@ class CheckPassword implements CommandInterface, \Serializable
     public function execute(CommandContext $commandContext)
     {
         return $commandContext->getReadOnlyIdentityProvider()->checkPassword($this->userId, $this->password);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

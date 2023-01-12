@@ -278,5 +278,5 @@ interface ExternalTaskServiceInterface
      *          If the user has no Permissions#READ permission on Resources#PROCESS_INSTANCE
      *          or no Permissions#READ_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
-    public function getExternalTaskErrorDetails(string $externalTaskId): string;
+    public function getExternalTaskErrorDetails(string $externalTaskId): ?string;
 }

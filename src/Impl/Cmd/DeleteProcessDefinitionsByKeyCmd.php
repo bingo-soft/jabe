@@ -12,7 +12,7 @@ class DeleteProcessDefinitionsByKeyCmd extends AbstractDeleteProcessDefinitionCm
     private $tenantId;
     private $isTenantIdSet;
 
-    public function __construct(string $processDefinitionKey, bool $cascade, bool $skipCustomListeners, bool $skipIoMappings, ?string $tenantId, bool $isTenantIdSet)
+    public function __construct(?string $processDefinitionKey, bool $cascade, bool $skipCustomListeners, bool $skipIoMappings, ?string $tenantId, bool $isTenantIdSet)
     {
         $this->processDefinitionKey = $processDefinitionKey;
         $this->cascade = $cascade;

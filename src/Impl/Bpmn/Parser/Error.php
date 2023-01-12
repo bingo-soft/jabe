@@ -10,22 +10,22 @@ class Error
     protected $errorCode;
     private $errorMessageExpression;
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getErrorCode(): string
+    public function getErrorCode(): ?string
     {
         return $this->errorCode;
     }
 
-    public function setErrorCode(string $errorCode): void
+    public function setErrorCode(?string $errorCode): void
     {
         $this->errorCode = $errorCode;
     }

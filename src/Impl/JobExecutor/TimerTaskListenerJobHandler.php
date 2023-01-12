@@ -4,6 +4,7 @@ namespace Jabe\Impl\JobExecutor;
 
 use Jabe\ProcessEngineException;
 use Jabe\Impl\Interceptor\CommandContext;
+use Jabe\Impl\JobExecutor\JobHandlerConfigurationInterface;
 use Jabe\Impl\Persistence\Entity\{
     ExecutionEntity,
     TaskEntity
@@ -13,12 +14,12 @@ class TimerTaskListenerJobHandler extends TimerEventJobHandler
 {
     public const TYPE = "timer-task-listener";
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return self::TYPE;
     }
 
-    public function execute(TimerJobConfiguration $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
     {
         $activityId = $configuration->getTimerElementKey();
         $targetTask = null;

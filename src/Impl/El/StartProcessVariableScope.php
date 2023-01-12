@@ -35,7 +35,7 @@ class StartProcessVariableScope implements VariableScopeInterface
         return self::$INSTANCE;
     }
 
-    public function getVariableScopeKey(): string
+    public function getVariableScopeKey(): ?string
     {
         return "scope";
     }
@@ -60,22 +60,22 @@ class StartProcessVariableScope implements VariableScopeInterface
         return $this->getVariablesLocal();
     }
 
-    public function getVariable(string $variableName)
+    public function getVariable(?string $variableName)
     {
         return null;
     }
 
-    public function getVariableLocal(string $variableName)
+    public function getVariableLocal(?string $variableName)
     {
         return null;
     }
 
-    public function getVariableTyped(string $variableName, ?bool $deserializeValue = null): ?TypedValueInterface
+    public function getVariableTyped(?string $variableName, ?bool $deserializeValue = null): ?TypedValueInterface
     {
         return null;
     }
 
-    public function getVariableLocalTyped(string $variableName, ?bool $deserializeValue = null): ?TypedValueInterface
+    public function getVariableLocalTyped(?string $variableName, ?bool $deserializeValue = null): ?TypedValueInterface
     {
         return null;
     }
@@ -90,12 +90,12 @@ class StartProcessVariableScope implements VariableScopeInterface
         return [];
     }
 
-    public function setVariable(string $variableName, $value): void
+    public function setVariable(?string $variableName, $value): void
     {
         throw new \Exception("No execution active, no variables can be set");
     }
 
-    public function setVariableLocal(string $variableName, $value): void
+    public function setVariableLocal(?string $variableName, $value): void
     {
         throw new \Exception("No execution active, no variables can be set");
     }
@@ -120,12 +120,12 @@ class StartProcessVariableScope implements VariableScopeInterface
         return false;
     }
 
-    public function hasVariable(string $variableName): bool
+    public function hasVariable(?string $variableName): bool
     {
         return false;
     }
 
-    public function hasVariableLocal(string $variableName): bool
+    public function hasVariableLocal(?string $variableName): bool
     {
         return false;
     }
@@ -134,7 +134,7 @@ class StartProcessVariableScope implements VariableScopeInterface
      * Removes the variable and creates a new
      * HistoricVariableUpdateEntity.
      */
-    public function removeVariable(string $variableName): void
+    public function removeVariable(?string $variableName): void
     {
         throw new \Exception("No execution active, no variables can be removed");
     }
@@ -143,7 +143,7 @@ class StartProcessVariableScope implements VariableScopeInterface
      * Removes the local variable and creates a new
      * HistoricVariableUpdateEntity.
      */
-    public function removeVariableLocal(string $variableName): void
+    public function removeVariableLocal(?string $variableName): void
     {
         throw new \Exception("No execution active, no variables can be removed");
     }
@@ -171,7 +171,7 @@ class StartProcessVariableScope implements VariableScopeInterface
         return [];
     }
 
-    public function getVariableInstance(string $name): ?CoreVariableInstanceInterface
+    public function getVariableInstance(?string $name): ?CoreVariableInstanceInterface
     {
         return null;
     }
@@ -181,7 +181,7 @@ class StartProcessVariableScope implements VariableScopeInterface
         return [];
     }
 
-    public function getVariableInstanceLocal(string $name): ?CoreVariableInstanceInterface
+    public function getVariableInstanceLocal(?string $name): ?CoreVariableInstanceInterface
     {
         return null;
     }

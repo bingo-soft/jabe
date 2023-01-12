@@ -18,7 +18,7 @@ class SetUserInfoCmd implements CommandInterface, \Serializable
     protected $accountPassword;
     protected $accountDetails;
 
-    public function __cosntruct(string $userId, string $passwordOrKey, string $nameOrValue, string $accountUsername = null, string $accountPassword = null, array $accountDetails = [])
+    public function __cosntruct(?string $userId, ?string $passwordOrKey, ?string $nameOrValue, ?string $accountUsername = null, ?string $accountPassword = null, array $accountDetails = [])
     {
         if ($accountUsername === null) {
             $this->userId = $userId;
@@ -65,5 +65,10 @@ class SetUserInfoCmd implements CommandInterface, \Serializable
             ->getIdentityInfoManager()
             ->setUserInfo($this->userId, $this->userPassword, $this->type, $this->key, $this->value, $this->accountPassword, $this->accountDetails);
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

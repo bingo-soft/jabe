@@ -47,9 +47,9 @@ class JobQueryImpl extends AbstractQuery implements JobQueryInterface, \Serializ
     protected $failedActivityId;
     protected $noRetriesLeft;
     protected $suspensionState;
-    protected $isTenantIdSet = false;
+    protected bool $isTenantIdSet = false;
     protected $tenantIds = [];
-    protected $includeJobsWithoutTenantId = false;
+    protected bool $includeJobsWithoutTenantId = false;
 
     public function __construct(CommandExecutorInterface $commandExecutor)
     {
@@ -125,7 +125,7 @@ class JobQueryImpl extends AbstractQuery implements JobQueryInterface, \Serializ
         $this->includeJobsWithoutTenantId = $json->includeJobsWithoutTenantId;
     }
 
-    public function jobId(string $jobId): JobQueryInterface
+    public function jobId(?string $jobId): JobQueryInterface
     {
         EnsureUtil::ensureNotNull("Provided job id", "jobId", $jobId);
         $this->id = $jobId;
@@ -139,14 +139,14 @@ class JobQueryImpl extends AbstractQuery implements JobQueryInterface, \Serializ
         return $this;
     }
 
-    public function jobDefinitionId(string $jobDefinitionId): JobQueryInterface
+    public function jobDefinitionId(?string $jobDefinitionId): JobQueryInterface
     {
         EnsureUtil::ensureNotNull("Provided job definition id", "jobDefinitionId", $jobDefinitionId);
         $this->jobDefinitionId = $jobDefinitionId;
         return $this;
     }
 
-    public function processInstanceId(string $processInstanceId): JobQueryImpl
+    public function processInstanceId(?string $processInstanceId): JobQueryImpl
     {
         EnsureUtil::ensureNotNull("Provided process instance id", "processInstanceId", $processInstanceId);
         $this->processInstanceId = $processInstanceId;
@@ -160,28 +160,28 @@ class JobQueryImpl extends AbstractQuery implements JobQueryInterface, \Serializ
         return $this;
     }
 
-    public function executionId(string $executionId): JobQueryImpl
+    public function executionId(?string $executionId): JobQueryImpl
     {
         EnsureUtil::ensureNotNull("Provided execution id", "executionId", $executionId);
         $this->executionId = $executionId;
         return $this;
     }
 
-    public function processDefinitionId(string $processDefinitionId): JobQueryInterface
+    public function processDefinitionId(?string $processDefinitionId): JobQueryInterface
     {
         EnsureUtil::ensureNotNull("Provided process definition id", "processDefinitionId", $processDefinitionId);
         $this->processDefinitionId = $processDefinitionId;
         return $this;
     }
 
-    public function processDefinitionKey(string $processDefinitionKey): JobQueryInterface
+    public function processDefinitionKey(?string $processDefinitionKey): JobQueryInterface
     {
         EnsureUtil::ensureNotNull("Provided process instance key", "processDefinitionKey", $processDefinitionKey);
         $this->processDefinitionKey = $processDefinitionKey;
         return $this;
     }
 
-    public function activityId(string $activityId): JobQueryInterface
+    public function activityId(?string $activityId): JobQueryInterface
     {
         EnsureUtil::ensureNotNull("Provided activity id", "activityId", $activityId);
         $this->activityId = $activityId;
@@ -218,52 +218,52 @@ class JobQueryImpl extends AbstractQuery implements JobQueryInterface, \Serializ
         return $this;
     }
 
-    public function duedateHigherThan(string $date): JobQueryInterface
+    public function duedateHigherThan(?string $date): JobQueryInterface
     {
         EnsureUtil::ensureNotNull("Provided date", "date", $date);
         $this->duedateHigherThan = $date;
         return $this;
     }
 
-    public function duedateLowerThan(string $date): JobQueryInterface
+    public function duedateLowerThan(?string $date): JobQueryInterface
     {
         EnsureUtil::ensureNotNull("Provided date", "date", $date);
         $this->duedateLowerThan = $date;
         return $this;
     }
 
-    public function duedateHigherThen(string $date): JobQueryInterface
+    public function duedateHigherThen(?string $date): JobQueryInterface
     {
         return $this->duedateHigherThan($date);
     }
 
-    public function duedateHigherThenOrEquals(string $date): JobQueryInterface
+    public function duedateHigherThenOrEquals(?string $date): JobQueryInterface
     {
         EnsureUtil::ensureNotNull("Provided date", "date", $date);
         $this->duedateHigherThanOrEqual = $date;
         return $this;
     }
 
-    public function duedateLowerThen(string $date): JobQueryInterface
+    public function duedateLowerThen(?string $date): JobQueryInterface
     {
         return $this->duedateLowerThan($date);
     }
 
-    public function duedateLowerThenOrEquals(string $date): JobQueryInterface
+    public function duedateLowerThenOrEquals(?string $date): JobQueryInterface
     {
         EnsureUtil::ensureNotNull("Provided date", "date", $date);
         $this->duedateLowerThanOrEqual = $date;
         return $this;
     }
 
-    public function createdBefore(string $date): JobQueryInterface
+    public function createdBefore(?string $date): JobQueryInterface
     {
         EnsureUtil::ensureNotNull("Provided date", "date", $date);
         $this->createdBefore = $date;
         return $this;
     }
 
-    public function createdAfter(string $date): JobQueryInterface
+    public function createdAfter(?string $date): JobQueryInterface
     {
         EnsureUtil::ensureNotNull("Provided date", "date", $date);
         $this->createdAfter = $date;
@@ -288,14 +288,14 @@ class JobQueryImpl extends AbstractQuery implements JobQueryInterface, \Serializ
         return $this;
     }
 
-    public function exceptionMessage(string $exceptionMessage): JobQueryInterface
+    public function exceptionMessage(?string $exceptionMessage): JobQueryInterface
     {
         EnsureUtil::ensureNotNull("Provided exception message", "exceptionMessage", $exceptionMessage);
         $this->exceptionMessage = $exceptionMessage;
         return $this;
     }
 
-    public function failedActivityId(string $activityId): JobQueryInterface
+    public function failedActivityId(?string $activityId): JobQueryInterface
     {
         EnsureUtil::ensureNotNull("Provided activity id", "activityId", $activityId);
         $this->failedActivityId = $activityId;
@@ -424,7 +424,7 @@ class JobQueryImpl extends AbstractQuery implements JobQueryInterface, \Serializ
             ->findJobCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         return $commandContext
@@ -445,7 +445,7 @@ class JobQueryImpl extends AbstractQuery implements JobQueryInterface, \Serializ
         return $this->ids;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
@@ -455,7 +455,7 @@ class JobQueryImpl extends AbstractQuery implements JobQueryInterface, \Serializ
         return $this->processInstanceIds;
     }
 
-    public function getExecutionId(): string
+    public function getExecutionId(): ?string
     {
         return $this->executionId;
     }
@@ -470,7 +470,7 @@ class JobQueryImpl extends AbstractQuery implements JobQueryInterface, \Serializ
         return $this->executable;
     }
 
-    public function getNow(): string
+    public function getNow(): ?string
     {
         return ClockUtil::getCurrentTime()->format('c');
     }
@@ -480,7 +480,7 @@ class JobQueryImpl extends AbstractQuery implements JobQueryInterface, \Serializ
         return $this->withException;
     }
 
-    public function getExceptionMessage(): string
+    public function getExceptionMessage(): ?string
     {
         return $this->exceptionMessage;
     }

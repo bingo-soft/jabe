@@ -23,17 +23,17 @@ class PropertyEntity implements DbEntityInterface, HasDbRevisionInterface, \Seri
         $this->value = $value;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }
@@ -43,12 +43,12 @@ class PropertyEntity implements DbEntityInterface, HasDbRevisionInterface, \Seri
         $this->revision = $revision;
     }
 
-    public function getValue(): string
+    public function getValue(): ?string
     {
         return $this->value;
     }
 
-    public function setValue(string $value): void
+    public function setValue(?string $value): void
     {
         $this->value = $value;
     }
@@ -65,7 +65,7 @@ class PropertyEntity implements DbEntityInterface, HasDbRevisionInterface, \Seri
         return $this->value;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         //throw LOG.notAllowedIdException(id);
         throw new \Exception("notAllowedId");

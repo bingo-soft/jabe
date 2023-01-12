@@ -65,15 +65,21 @@ abstract class AbstractRestartProcessInstanceCmd implements CommandInterface
                 null,
                 $processDefinition->getId(),
                 $processDefinition->getKey(),
-                $propertyChanges
+                $propertyChanges,
+                null
             );
     }
 
-    protected function getProcessDefinition(CommandContext $commandContext, string $processDefinitionId): ?ProcessDefinitionEntity
+    protected function getProcessDefinition(CommandContext $commandContext, ?string $processDefinitionId): ?ProcessDefinitionEntity
     {
         return $commandContext
             ->getProcessEngineConfiguration()
             ->getDeploymentCache()
             ->findDeployedProcessDefinitionById($processDefinitionId);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

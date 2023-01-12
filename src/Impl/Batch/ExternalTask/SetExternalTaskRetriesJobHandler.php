@@ -18,6 +18,7 @@ use Jabe\Impl\JobExecutor\{
     JobDeclaration,
     JobHandlerConfigurationInterface
 };
+use Jabe\Impl\Batch\BatchConfiguration;
 use Jabe\Impl\Json\JsonObjectConverter;
 use Jabe\Impl\Persistence\Entity\{
     ByteArrayEntity,
@@ -29,7 +30,7 @@ class SetExternalTaskRetriesJobHandler extends AbstractBatchJobHandler
 {
     public static $JOB_DECLARATION;
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return BatchInterface::TYPE_SET_EXTERNAL_TASK_RETRIES;
     }

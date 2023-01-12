@@ -13,7 +13,7 @@ class OptimizeRunningHistoricProcessInstanceQueryCmd implements CommandInterface
     protected $startedAt;
     protected $maxResults;
 
-    public function __construct(string $startedAfter, string $startedAt, int $maxResults)
+    public function __construct(?string $startedAfter, ?string $startedAt, int $maxResults)
     {
         $this->startedAfter = $startedAfter;
         $this->startedAt = $startedAt;
@@ -23,5 +23,10 @@ class OptimizeRunningHistoricProcessInstanceQueryCmd implements CommandInterface
     public function execute(CommandContext $commandContext)
     {
         return $commandContext->getOptimizeManager()->getRunningHistoricProcessInstances($this->startedAfter, $this->startedAt, $this->maxResults);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

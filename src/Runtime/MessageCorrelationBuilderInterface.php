@@ -15,7 +15,7 @@ interface MessageCorrelationBuilderInterface
      *          the businessKey to correlate on.
      * @return MessageCorrelationBuilderInterface the builder
      */
-    public function processInstanceBusinessKey(string $businessKey): MessageCorrelationBuilderInterface;
+    public function processInstanceBusinessKey(?string $businessKey): MessageCorrelationBuilderInterface;
 
     /**
      * <p>Correlate the message such that the process instance has a
@@ -25,7 +25,7 @@ interface MessageCorrelationBuilderInterface
      * @param variableValue the value of the process instance variable to correlate on.
      * @return MessageCorrelationBuilderInterface the builder
      */
-    public function processInstanceVariableEquals(string $variableName, $variableValue): MessageCorrelationBuilderInterface;
+    public function processInstanceVariableEquals(?string $variableName, $variableValue): MessageCorrelationBuilderInterface;
 
     /**
      * <p>
@@ -44,7 +44,7 @@ interface MessageCorrelationBuilderInterface
      * @param variableValue the value of the local variable to correlate on.
      * @return MessageCorrelationBuilderInterface the builder
      */
-    public function localVariableEquals(string $variableName, $variableValue): MessageCorrelationBuilderInterface;
+    public function localVariableEquals(?string $variableName, $variableValue): MessageCorrelationBuilderInterface;
     /**
      * <p>Correlate the message such that the execution has the given variables as local variables.
      * </p>
@@ -60,7 +60,7 @@ interface MessageCorrelationBuilderInterface
      * @param id the id of the process instance to correlate on.
      * @return MessageCorrelationBuilderInterface the builder
      */
-    public function processInstanceId(string $id): MessageCorrelationBuilderInterface;
+    public function processInstanceId(?string $id): MessageCorrelationBuilderInterface;
 
     /**
      * <p>Correlate the message such that a process definition with the given id is selected.
@@ -69,7 +69,7 @@ interface MessageCorrelationBuilderInterface
      * @param processDefinitionId the id of the process definition to correlate on.
      * @return MessageCorrelationBuilderInterface the builder
      */
-    public function processDefinitionId(string $processDefinitionId): MessageCorrelationBuilderInterface;
+    public function processDefinitionId(?string $processDefinitionId): MessageCorrelationBuilderInterface;
 
     /**
      * <p>Pass a variable to the execution waiting on the message. Use this method for passing the
@@ -81,7 +81,7 @@ interface MessageCorrelationBuilderInterface
      * @param variableValue the value of the variable to set
      * @return MessageCorrelationBuilderInterface the builder
      */
-    public function setVariable(string $variableName, $variableValue): MessageCorrelationBuilderInterface;
+    public function setVariable(?string $variableName, $variableValue): MessageCorrelationBuilderInterface;
 
     /**
      * <p>Pass a local variable to the execution waiting on the message. Use this method for passing the
@@ -93,7 +93,7 @@ interface MessageCorrelationBuilderInterface
      * @param variableValue the value of the variable to set
      * @return MessageCorrelationBuilderInterface the builder
      */
-    public function setVariableLocal(string $variableName, $variableValue): MessageCorrelationBuilderInterface;
+    public function setVariableLocal(?string $variableName, $variableValue): MessageCorrelationBuilderInterface;
 
     /**
      * <p>Pass a map of variables to the execution waiting on the message. Use this method
@@ -123,7 +123,7 @@ interface MessageCorrelationBuilderInterface
      *          the id of the tenant
      * @return MessageCorrelationBuilderInterface the builder
      */
-    public function tenantId(string $tenantId): MessageCorrelationBuilderInterface;
+    public function tenantId(?string $tenantId): MessageCorrelationBuilderInterface;
 
     /**
      * Specify that the message can only be received on executions or process

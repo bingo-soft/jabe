@@ -106,7 +106,7 @@ abstract class AbstractRenderFormDelegate
     protected const TYPE_FIELD_MESSAGE = "Only a %s value is allowed";
     protected const INVALID_DATE_FIELD_MESSAGE = "Invalid date format: the date should have the pattern '" . self::DATE_FORMAT . "'";
 
-    protected function renderFormData(FormDataInterface $formData): string
+    protected function renderFormData(FormDataInterface $formData): ?string
     {
         if (
             $formData === null

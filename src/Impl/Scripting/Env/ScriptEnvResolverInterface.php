@@ -11,5 +11,5 @@ interface ScriptEnvResolverInterface
      * @return an array of environment script sources or null if this
      * resolver does not provide any scripts for the given language
      */
-    public function resolve(string $language): array;
+    public function resolve(?string $language): array;
 }

@@ -9,7 +9,7 @@ class Direction implements \Serializable
 
     private $name;
 
-    public function __construct(string $name)
+    public function __construct(?string $name)
     {
         $this->name = $name;
     }
@@ -35,7 +35,7 @@ class Direction implements \Serializable
         return self::$ASCENDING;
     }
 
-    public function descending(): Direction
+    public static function descending(): Direction
     {
         if (self::$DESCENDING === null) {
             self::$DESCENDING = new Direction("desc");
@@ -43,7 +43,7 @@ class Direction implements \Serializable
         return self::$DESCENDING;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -55,7 +55,7 @@ class Direction implements \Serializable
             . "]";
     }
 
-    public static function findByName(string $directionName): ?Direction
+    public static function findByName(?string $directionName): ?Direction
     {
         switch ($directionName) {
             case "asc":

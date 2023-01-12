@@ -11,7 +11,7 @@ class ReceiveTaskActivityBehavior extends TaskActivityBehavior
       // Do nothing: waitstate behavior
     }
 
-    public function signal(ActivityExecutionInterface $execution, string $signalName, $data): void
+    public function signal(ActivityExecutionInterface $execution, ?string $signalName, $data): void
     {
         $this->leave($execution);
     }

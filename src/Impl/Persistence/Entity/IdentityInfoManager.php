@@ -6,7 +6,7 @@ use Jabe\Impl\Persistence\AbstractManager;
 
 class IdentityInfoManager extends AbstractManager
 {
-    public function deleteUserInfoByUserIdAndKey(string $userId, string $key): void
+    public function deleteUserInfoByUserIdAndKey(?string $userId, ?string $key): void
     {
         $identityInfoEntity = $this->findUserInfoByUserIdAndKey($userId, $key);
         if ($identityInfoEntity !== null) {
@@ -24,7 +24,7 @@ class IdentityInfoManager extends AbstractManager
         }
     }
 
-    public function findUserAccountByUserIdAndKey(string $userId, string $userPassword, string $key): ?IdentityInfoEntity
+    public function findUserAccountByUserIdAndKey(?string $userId, ?string $userPassword, ?string $key): ?IdentityInfoEntity
     {
         $identityInfoEntity = $this->findUserInfoByUserIdAndKey($userId, $key);
         if ($identityInfoEntity === null) {
@@ -47,12 +47,12 @@ class IdentityInfoManager extends AbstractManager
         return $identityInfoEntity;
     }
 
-    protected function findIdentityInfoDetails(string $identityInfoId): array
+    protected function findIdentityInfoDetails(?string $identityInfoId): array
     {
         return $this->getDbEntityManager()->selectList("selectIdentityInfoDetails", $identityInfoId);
     }
 
-    public function setUserInfo(string $userId, string $userPassword, string $type, string $key, string $value, string $accountPassword, array $accountDetails): void
+    public function setUserInfo(?string $userId, ?string $userPassword, ?string $type, ?string $key, ?string $value, ?string $accountPassword, array $accountDetails): void
     {
         $storedPassword = null;
         if ($accountPassword !== null) {
@@ -117,19 +117,19 @@ class IdentityInfoManager extends AbstractManager
         }
     }
 
-    public function encryptPassword(string $accountPassword, string $userPassword): string
+    public function encryptPassword(?string $accountPassword, ?string $userPassword): ?string
     {
         // TODO
         return $accountPassword;
     }
 
-    public function decryptPassword(string $storedPassword, string $userPassword): string
+    public function decryptPassword(?string $storedPassword, ?string $userPassword): ?string
     {
         // TODO
         return $storedPassword;
     }
 
-    public function findUserInfoByUserIdAndKey(string $userId, string $key): ?IdentityInfoEntity
+    public function findUserInfoByUserIdAndKey(?string $userId, ?string $key): ?IdentityInfoEntity
     {
         $parameters = [];
         $parameters["userId"] = $userId;
@@ -137,7 +137,7 @@ class IdentityInfoManager extends AbstractManager
         return $this->getDbEntityManager()->selectOne("selectIdentityInfoByUserIdAndKey", $parameters);
     }
 
-    public function findUserInfoKeysByUserIdAndType(string $userId, string $type): array
+    public function findUserInfoKeysByUserIdAndType(?string $userId, ?string $type): array
     {
         $parameters = [];
         $parameters["userId"] = $userId;
@@ -145,7 +145,7 @@ class IdentityInfoManager extends AbstractManager
         return $this->getDbEntityManager()->selectList("selectIdentityInfoKeysByUserIdAndType", $parameters);
     }
 
-    public function deleteUserInfoByUserId(string $userId): void
+    public function deleteUserInfoByUserId(?string $userId): void
     {
         $identityInfos = $this->getDbEntityManager()->selectList("selectIdentityInfoByUserId", $userId);
         foreach ($identityInfos as $identityInfo) {
@@ -153,7 +153,7 @@ class IdentityInfoManager extends AbstractManager
         }
     }
 
-    public function updateUserLock(UserEntity $user, int $attempts, string $lockExpirationTime): void
+    public function updateUserLock(UserEntity $user, int $attempts, ?string $lockExpirationTime): void
     {
         $user->setAttempts($attempts);
         $user->setLockExpirationTime($lockExpirationTime);

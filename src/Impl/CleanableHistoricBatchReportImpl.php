@@ -46,7 +46,7 @@ class CleanableHistoricBatchReportImpl extends AbstractQuery implements Cleanabl
         return $commandContext->getHistoricBatchManager()->findCleanableHistoricBatchesReportCountByCriteria($this, $batchOperationsForHistoryCleanup);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->provideHistoryCleanupStrategy($commandContext);
 
@@ -79,12 +79,12 @@ class CleanableHistoricBatchReportImpl extends AbstractQuery implements Cleanabl
         }
     }
 
-    public function getCurrentTimestamp(): string
+    public function getCurrentTimestamp(): ?string
     {
         return $this->currentTimestamp;
     }
 
-    public function setCurrentTimestamp(string $currentTimestamp): void
+    public function setCurrentTimestamp(?string $currentTimestamp): void
     {
         $this->currentTimestamp = $currentTimestamp;
     }

@@ -14,7 +14,7 @@ class CompositeVariableContext implements VariableContextInterface
         $this->delegateContexts = $delegateContexts;
     }
 
-    public function resolve(string $variableName): ?TypedValueInterface
+    public function resolve(?string $variableName): ?TypedValueInterface
     {
         foreach ($this->delegateContexts as $variableContext) {
             $resolvedValue = $variableContext->resolve($variableName);
@@ -26,7 +26,7 @@ class CompositeVariableContext implements VariableContextInterface
         return null;
     }
 
-    public function containsVariable(string $name): bool
+    public function containsVariable(?string $name): bool
     {
         foreach ($this->delegateContexts as $variableContext) {
             if ($variableContext->containsVariable($name)) {

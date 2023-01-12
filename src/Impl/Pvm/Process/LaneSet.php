@@ -8,22 +8,22 @@ class LaneSet
     protected $lanes = [];
     protected $name;
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
@@ -38,7 +38,7 @@ class LaneSet
         $this->lanes[] = $laneToAdd;
     }
 
-    public function getLaneForId(string $id): ?Lane
+    public function getLaneForId(?string $id): ?Lane
     {
         foreach ($this->lanes as $lane) {
             if ($id == $lane->getId()) {

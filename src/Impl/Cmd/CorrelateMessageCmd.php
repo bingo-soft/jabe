@@ -78,4 +78,9 @@ class CorrelateMessageCmd extends AbstractCorrelateMessageCmd implements Command
 
         return $this->createMessageCorrelationResult($commandContext, $correlationResult);
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

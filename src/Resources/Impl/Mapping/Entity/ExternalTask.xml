@@ -68,23 +68,23 @@
       LAST_FAILURE_LOG_ID_,
       REV_
     ) values (
-      #{id, dbalType=VARCHAR},
-      #{workerId, dbalType=VARCHAR},
-      #{topicName, dbalType=VARCHAR},
-      #{lockExpirationTime, dbalType=VARCHAR},
-      #{retries, dbalType=INTEGER},
-      #{errorMessage, dbalType=VARCHAR},
-      #{errorDetailsByteArrayId, dbalType=VARCHAR},
-      #{suspensionState, dbalType=INTEGER},
-      #{executionId, dbalType=VARCHAR},
-      #{processInstanceId, dbalType=VARCHAR},
-      #{processDefinitionId, dbalType=VARCHAR},
-      #{processDefinitionKey, dbalType=VARCHAR},
-      #{activityId, dbalType=VARCHAR},
-      #{activityInstanceId, dbalType=VARCHAR},
-      #{tenantId, dbalType=VARCHAR},
-      #{priority, dbalType=BIGINT},
-      #{lastFailureLogId, dbalType=VARCHAR},
+      #{id:VARCHAR},
+      #{workerId:VARCHAR},
+      #{topicName:VARCHAR},
+      #{lockExpirationTime:VARCHAR},
+      #{retries},
+      #{errorMessage:VARCHAR},
+      #{errorDetailsByteArrayId:VARCHAR},
+      #{suspensionState},
+      #{executionId:VARCHAR},
+      #{processInstanceId:VARCHAR},
+      #{processDefinitionId:VARCHAR},
+      #{processDefinitionKey:VARCHAR},
+      #{activityId:VARCHAR},
+      #{activityInstanceId:VARCHAR},
+      #{tenantId:VARCHAR},
+      #{priority},
+      #{lastFailureLogId:VARCHAR},
       1
     )
   </insert>
@@ -92,31 +92,31 @@
   <update id="updateExternalTask" parameterType="Jabe\Impl\Persistence\Entity\ExternalTaskEntity">
     update ${prefix}ACT_RU_EXT_TASK
     <set>
-      REV_ = #{revisionNext, dbalType=INTEGER},
-      WORKER_ID_ = #{workerId, dbalType=VARCHAR},
-      TOPIC_NAME_ = #{topicName, dbalType=VARCHAR},
-      LOCK_EXP_TIME_ = #{lockExpirationTime, dbalType=VARCHAR},
-      RETRIES_ = #{retries, dbalType=INTEGER},
-      ERROR_MSG_ = #{errorMessage, dbalType=VARCHAR},
-      ERROR_DETAILS_ID_ = #{errorDetailsByteArrayId, dbalType=VARCHAR},
-      EXECUTION_ID_ = #{executionId, dbalType=VARCHAR},
-      PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR},
-      PROC_DEF_ID_ = #{processDefinitionId, dbalType=VARCHAR},
-      PROC_DEF_KEY_ = #{processDefinitionKey, dbalType=VARCHAR},
-      ACT_ID_ = #{activityId, dbalType=VARCHAR},
-      ACT_INST_ID_ = #{activityInstanceId, dbalType=VARCHAR},
-      SUSPENSION_STATE_ = #{suspensionState, dbalType=INTEGER},
-      PRIORITY_ = #{priority, dbalType=BIGINT},
-      LAST_FAILURE_LOG_ID_ = #{lastFailureLogId, dbalType=VARCHAR}
+      REV_ = #{revisionNext},
+      WORKER_ID_ = #{workerId:VARCHAR},
+      TOPIC_NAME_ = #{topicName:VARCHAR},
+      LOCK_EXP_TIME_ = #{lockExpirationTime:VARCHAR},
+      RETRIES_ = #{retries},
+      ERROR_MSG_ = #{errorMessage:VARCHAR},
+      ERROR_DETAILS_ID_ = #{errorDetailsByteArrayId:VARCHAR},
+      EXECUTION_ID_ = #{executionId:VARCHAR},
+      PROC_INST_ID_ = #{processInstanceId:VARCHAR},
+      PROC_DEF_ID_ = #{processDefinitionId:VARCHAR},
+      PROC_DEF_KEY_ = #{processDefinitionKey:VARCHAR},
+      ACT_ID_ = #{activityId:VARCHAR},
+      ACT_INST_ID_ = #{activityInstanceId:VARCHAR},
+      SUSPENSION_STATE_ = #{suspensionState},
+      PRIORITY_ = #{priority},
+      LAST_FAILURE_LOG_ID_ = #{lastFailureLogId:VARCHAR}
     </set>
-    where ID_= #{id, dbalType=VARCHAR}
-      and REV_ = #{revision, dbalType=INTEGER}
+    where ID_= #{id:VARCHAR}
+      and REV_ = #{revision}
   </update>
   
   <update id="updateExternalTaskSuspensionStateByParameters" parameterType="Jabe\Impl\Db\ListQueryParameterObject">
     update ${prefix}ACT_RU_EXT_TASK
     <set>
-      SUSPENSION_STATE_ = #{parameter.suspensionState, dbalType=INTEGER}
+      SUSPENSION_STATE_ = #{parameter.suspensionState}
     </set>
     <where>
       <if test="parameter.processInstanceId != null">
@@ -127,15 +127,15 @@
       </if>
       <if test="parameter.processDefinitionKey != null">
         <if test="!parameter.isProcessDefinitionTenantIdSet">
-          and PROC_DEF_KEY_ = #{parameter.processDefinitionKey, dbalType=VARCHAR}
+          and PROC_DEF_KEY_ = #{parameter.processDefinitionKey:VARCHAR}
         </if>
         <if test="parameter.isProcessDefinitionTenantIdSet">
           and PROC_DEF_ID_ IN (
             SELECT ID_ 
             FROM ${prefix}ACT_RE_PROCDEF PD
-            WHERE PD.KEY_ = #{parameter.processDefinitionKey, dbalType=VARCHAR}
+            WHERE PD.KEY_ = #{parameter.processDefinitionKey:VARCHAR}
             <if test="parameter.processDefinitionTenantId != null">
-              and PD.TENANT_ID_ = #{parameter.processDefinitionTenantId, dbalType=VARCHAR}
+              and PD.TENANT_ID_ = #{parameter.processDefinitionTenantId:VARCHAR}
             </if>
             <if test="parameter.processDefinitionTenantId == null">
               and PD.TENANT_ID_ is null
@@ -153,15 +153,15 @@
   </delete>
   
   <select id="selectExternalTask" parameterType="string" resultMap="externalTaskResultMap">
-   select * from ${prefix}ACT_RU_EXT_TASK where ID_ = #{id, dbalType=VARCHAR}
+   select * from ${prefix}ACT_RU_EXT_TASK where ID_ = #{id:VARCHAR}
   </select>
   
   <select id="selectExternalTasksByExecutionId" parameterType="Jabe\Impl\Db\ListQueryParameterObject" resultMap="externalTaskResultMap">
-    select * from ${prefix}ACT_RU_EXT_TASK where EXECUTION_ID_ = #{parameter, dbalType=VARCHAR}
+    select * from ${prefix}ACT_RU_EXT_TASK where EXECUTION_ID_ = #{parameter:VARCHAR}
   </select>
   
   <select id="selectExternalTasksByProcessInstanceId" parameterType="Jabe\Impl\Db\ListQueryParameterObject" resultMap="externalTaskResultMap">
-    select * from ${prefix}ACT_RU_EXT_TASK where PROC_INST_ID_ = #{parameter, dbalType=VARCHAR}
+    select * from ${prefix}ACT_RU_EXT_TASK where PROC_INST_ID_ = #{parameter:VARCHAR}
   </select>
   
   <select id="selectExternalTasksForTopics" parameterType="Jabe\Impl\Db\ListQueryParameterObject" resultMap="externalTaskResultMap">
@@ -210,10 +210,10 @@
       )    
     </if>
     <where>
-      (RES.LOCK_EXP_TIME_ is null or RES.LOCK_EXP_TIME_ <= #{parameter.now, dbalType=VARCHAR})
+      (RES.LOCK_EXP_TIME_ is null or RES.LOCK_EXP_TIME_ &lt;= #{parameter.now:VARCHAR})
       and (RES.SUSPENSION_STATE_ is null or RES.SUSPENSION_STATE_ = 1)
       and (RES.RETRIES_ is null or RES.RETRIES_ > 0)
-      <if test="parameter != null and count(parameter.topics) > 0">
+      <if test="parameter != null and !empty(parameter.topics)">
         and
         <foreach collection="parameter.topics" open="(" close=")" separator="or" item="topicFilters">
           RES.TOPIC_NAME_ = #{topicFilters.topicName}
@@ -223,7 +223,7 @@
           <if test="topicFilters.processDefinitionId != null">
             and RES.PROC_DEF_ID_ = #{topicFilters.processDefinitionId}
           </if>
-          <if test="topicFilters.processDefinitionIds != null and count(topicFilters.processDefinitionIds) > 0">
+          <if test="!empty(topicFilters.processDefinitionIds)">
             and RES.PROC_DEF_ID_ in
             <foreach item="item" index="index" collection="topicFilters.processDefinitionIds"
                      open="(" separator="," close=")">
@@ -233,7 +233,7 @@
           <if test="topicFilters.processDefinitionKey != null">
             and RES.PROC_DEF_KEY_ = #{topicFilters.processDefinitionKey}
           </if>
-          <if test="topicFilters.processDefinitionKeys != null and count(topicFilters.processDefinitionKeys) > 0">
+          <if test="!empty(topicFilters.processDefinitionKeys)">
             and RES.PROC_DEF_KEY_ in
             <foreach item="item" index="index" collection="topicFilters.processDefinitionKeys"
                      open="(" separator="," close=")">
@@ -241,10 +241,10 @@
             </foreach>
           </if>
           <if test="topicFilters.isTenantIdSet">
-            <if test="topicFilters.tenantIds == null" >
+            <if test="topicFilters.empty(tenantIds)" >
               and RES.TENANT_ID_ is null
             </if>
-            <if test="topicFilters.tenantIds != null and count(topicFilters.tenantIds) > 0">
+            <if test="!empty(topicFilters.tenantIds)">
               and RES.TENANT_ID_ in
               <foreach item="tenantId" index="index" collection="topicFilters.tenantIds"
                        open="(" separator="," close=")">
@@ -252,7 +252,7 @@
               </foreach>
             </if>
           </if>
-          <if test="count(topicFilters.filterVariables) > 0">
+          <if test="!empty(topicFilters.filterVariables)">
             and RES.PROC_INST_ID_ in (
               select VAR.EXECUTION_ID_
               from ${prefix}ACT_RU_VARIABLE VAR
@@ -346,7 +346,7 @@
       <if test="externalTaskId != null">
         and RES.ID_ = #{externalTaskId}
       </if>
-      <if test="externalTaskIds != null and !externalTaskIds.isEmpty()">
+      <if test="!empty(externalTaskIds)">
         and
         <bind name="listOfIds" value="externalTaskIds"/>
         <bind name="fieldName" value="'RES.ID_'"/>
@@ -356,21 +356,21 @@
         and RES.WORKER_ID_ = #{workerId}
       </if>
       <if test="lockExpirationBefore != null">
-        and RES.LOCK_EXP_TIME_ < #{lockExpirationBefore}
+        and RES.LOCK_EXP_TIME_ &lt; #{lockExpirationBefore}
       </if>
       <if test="lockExpirationAfter != null">
-        and RES.LOCK_EXP_TIME_ > #{lockExpirationAfter}
+        and RES.LOCK_EXP_TIME_ &gt; #{lockExpirationAfter}
       </if>
       <if test="topicName != null">
         and RES.TOPIC_NAME_ = #{topicName}
       </if>
       <if test="locked != null and locked">
         and RES.LOCK_EXP_TIME_ is not null
-        and RES.LOCK_EXP_TIME_ > #{now, dbalType=VARCHAR}
+        and RES.LOCK_EXP_TIME_ &gt; #{now:VARCHAR}
       </if>
       <if test="notLocked != null and notLocked">
         and (RES.LOCK_EXP_TIME_ is null
-        or RES.LOCK_EXP_TIME_ < #{now, dbalType=VARCHAR})
+        or RES.LOCK_EXP_TIME_ &lt; #{now:VARCHAR})
       </if>
       <if test="executionId != null">
         and RES.EXECUTION_ID_ = #{executionId}
@@ -378,7 +378,7 @@
       <if test="processInstanceId != null">
         and RES.PROC_INST_ID_ = #{processInstanceId}
       </if>
-      <if test="processInstanceIdIn != null and count(processInstanceIdIn) > 0">
+      <if test="!empty(processInstanceIdIn)">
         and
         <bind name="listOfIds" value="processInstanceIdIn"/>
         <bind name="fieldName" value="'RES.PROC_INST_ID_'"/>
@@ -390,7 +390,7 @@
       <if test="activityId != null">
         and RES.ACT_ID_ = #{activityId}
       </if>
-      <if test="activityIdIn != null and count(activityIdIn) > 0">
+      <if test="!empty(activityIdIn)">
         and RES.ACT_ID_ in
         <foreach item="activityId" index="index" collection="activityIdIn"
                  open="(" separator="," close=")">
@@ -414,12 +414,12 @@
         </if>
       </if>
       <if test="priorityHigherThanOrEquals != null">
-        and RES.PRIORITY_ >= #{priorityHigherThanOrEquals}
+        and RES.PRIORITY_ &gt;= #{priorityHigherThanOrEquals}
       </if>
       <if test="priorityLowerThanOrEquals != null">
-        and RES.PRIORITY_ <= #{priorityLowerThanOrEquals}
+        and RES.PRIORITY_ &lt;= #{priorityLowerThanOrEquals}
       </if>
-      <if test="tenantIds != null and count(tenantIds) > 0">
+      <if test="!empty(tenantIds)">
         and RES.TENANT_ID_ in
         <foreach item="tenantId" index="index" collection="tenantIds"
                  open="(" separator="," close=")">

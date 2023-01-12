@@ -27,7 +27,6 @@ class ProcessApplicationContextInterceptor extends CommandInterceptor
     public function execute(CommandInterface $command)
     {
         $processApplicationIdentifier = ProcessApplicationContextImpl::get();
-
         if ($processApplicationIdentifier !== null) {
             // clear the identifier so this interceptor does not apply to nested commands
             ProcessApplicationContextImpl::clear();

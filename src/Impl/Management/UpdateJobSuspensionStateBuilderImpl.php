@@ -31,42 +31,42 @@ class UpdateJobSuspensionStateBuilderImpl implements UpdateJobSuspensionStateBui
     protected $processDefinitionId;
 
     protected $processDefinitionTenantId;
-    protected $isProcessDefinitionTenantIdSet = false;
+    protected bool $isProcessDefinitionTenantIdSet = false;
 
     public function __construct(CommandExecutorInterface $commandExecutor = null)
     {
         $this->commandExecutor = $commandExecutor;
     }
 
-    public function byJobId(string $jobId): UpdateJobSuspensionStateBuilderImpl
+    public function byJobId(?string $jobId): UpdateJobSuspensionStateBuilderImpl
     {
         EnsureUtil::ensureNotNull("jobId", "jobId)", $jobId);
         $this->jobId = $jobId;
         return $this;
     }
 
-    public function byJobDefinitionId(string $jobDefinitionId): UpdateJobSuspensionStateBuilderImpl
+    public function byJobDefinitionId(?string $jobDefinitionId): UpdateJobSuspensionStateBuilderImpl
     {
         EnsureUtil::ensureNotNull("jobDefinitionId", "jobDefinitionId", $jobDefinitionId);
         $this->jobDefinitionId = $jobDefinitionId;
         return $this;
     }
 
-    public function byProcessInstanceId(string $processInstanceId): UpdateJobSuspensionStateBuilderImpl
+    public function byProcessInstanceId(?string $processInstanceId): UpdateJobSuspensionStateBuilderImpl
     {
         EnsureUtil::ensureNotNull("processInstanceId", "processInstanceId", $processInstanceId);
         $this->processInstanceId = $processInstanceId;
         return $this;
     }
 
-    public function byProcessDefinitionId(string $processDefinitionId): UpdateJobSuspensionStateBuilderImpl
+    public function byProcessDefinitionId(?string $processDefinitionId): UpdateJobSuspensionStateBuilderImpl
     {
         EnsureUtil::ensureNotNull("processDefinitionId", "processDefinitionId", $processDefinitionId);
         $this->processDefinitionId = $processDefinitionId;
         return $this;
     }
 
-    public function byProcessDefinitionKey(string $processDefinitionKey): UpdateJobSuspensionStateBuilderImpl
+    public function byProcessDefinitionKey(?string $processDefinitionKey): UpdateJobSuspensionStateBuilderImpl
     {
         EnsureUtil::ensureNotNull("processDefinitionKey", "processDefinitionKey", $processDefinitionKey);
         $this->processDefinitionKey = $processDefinitionKey;
@@ -80,7 +80,7 @@ class UpdateJobSuspensionStateBuilderImpl implements UpdateJobSuspensionStateBui
         return $this;
     }
 
-    public function processDefinitionTenantId(string $tenantId): UpdateJobSuspensionStateBuilderImpl
+    public function processDefinitionTenantId(?string $tenantId): UpdateJobSuspensionStateBuilderImpl
     {
         EnsureUtil::ensureNotNull("tenantId", "tenantId", $tenantId);
 
@@ -122,17 +122,17 @@ class UpdateJobSuspensionStateBuilderImpl implements UpdateJobSuspensionStateBui
         EnsureUtil::ensureNotNull("commandExecutor", "commandExecutor", $this->commandExecutor);
     }
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function getProcessDefinitionTenantId(): string
+    public function getProcessDefinitionTenantId(): ?string
     {
         return $this->processDefinitionTenantId;
     }
@@ -142,17 +142,17 @@ class UpdateJobSuspensionStateBuilderImpl implements UpdateJobSuspensionStateBui
         return $this->isProcessDefinitionTenantIdSet;
     }
 
-    public function getJobId(): string
+    public function getJobId(): ?string
     {
         return $this->jobId;
     }
 
-    public function getJobDefinitionId(): string
+    public function getJobDefinitionId(): ?string
     {
         return $this->jobDefinitionId;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }

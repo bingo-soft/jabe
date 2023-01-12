@@ -12,12 +12,12 @@ use Jabe\Impl\Util\ResourceUtil;
 
 class DynamicResourceExecutableScript extends DynamicExecutableScript
 {
-    public function __construct(string $language, ExpressionInterface $scriptResourceExpression)
+    public function __construct(?string $language, ExpressionInterface $scriptResourceExpression)
     {
         parent::__construct($scriptResourceExpression, $language);
     }
 
-    public function getScriptSource(VariableScopeInterface $variableScope): string
+    public function getScriptSource(VariableScopeInterface $variableScope): ?string
     {
         $scriptPath = $this->evaluateExpression($variableScope);
         return ResourceUtil::loadResourceContent($scriptPath, $this->getDeployment());

@@ -16,7 +16,7 @@ class EscalationEventDefinitionFinder implements TreeVisitorInterface
     protected $escalationCode;
     protected $throwEscalationActivity;
 
-    public function __construct(string $escalationCode, PvmActivityInterface $throwEscalationActivity)
+    public function __construct(?string $escalationCode, PvmActivityInterface $throwEscalationActivity)
     {
         $this->escalationCode = $escalationCode;
         $this->throwEscalationActivity = $throwEscalationActivity;

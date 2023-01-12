@@ -9,7 +9,7 @@ interface SchemaLogQueryInterface extends QueryInterface
     /**
      * Only show {@link SchemaLogEntry entries} with a given version.
      */
-    public function version(string $version): SchemaLogQueryInterface;
+    public function version(?string $version): SchemaLogQueryInterface;
 
     /**
      * Order by task timestamp (needs to be followed by {@link #asc()} or {@link #desc()}).

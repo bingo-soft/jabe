@@ -13,6 +13,7 @@ use Jabe\Identity\{
     GroupQueryInterface,
     NativeUserQueryInterface,
     TenantInterface,
+    TenantQueryInterface,
     UserInterface,
     UserQueryInterface
 };
@@ -35,13 +36,13 @@ use Jabe\Impl\Util\EncryptionUtil;
 class DbReadOnlyIdentityServiceProvider extends AbstractManager implements ReadOnlyIdentityProviderInterface
 {
     // users /////////////////////////////////////////
-    public function findUserById(string $userId): ?UserEntity
+    public function findUserById(?string $userId): ?UserEntity
     {
         $this->checkAuthorization(Permissions::read(), Resources::user(), $userId);
         return $this->getDbEntityManager()->selectById(UserEntity::class, $userId);
     }
 
-    public function createUserQuery(CommandContext $commandContext = null): UserQueryImpl
+    public function createUserQuery(CommandContext $commandContext = null): UserQueryInterface
     {
         if ($commandContext === null) {
             return new DbUserQueryImpl(Context::getProcessEngineConfiguration()->getCommandExecutorTxRequired());
@@ -77,7 +78,7 @@ class DbReadOnlyIdentityServiceProvider extends AbstractManager implements ReadO
         return $this->getDbEntityManager()->selectOne("selectUserCountByNativeQuery", $parameterMap);
     }
 
-    public function checkPassword(string $userId, string $password): bool
+    public function checkPassword(?string $userId, ?string $password): bool
     {
         $user = $this->findUserById($userId);
         if (($user !== null) && ($password !== null) && $this->matchPassword($password, $user)) {
@@ -87,7 +88,7 @@ class DbReadOnlyIdentityServiceProvider extends AbstractManager implements ReadO
         }
     }
 
-    protected function matchPassword(string $password, UserEntity $user): bool
+    protected function matchPassword(?string $password, UserEntity $user): bool
     {
         $saltedPassword = EncryptionUtil::saltPassword($password, $user->getSalt());
         return Context::getProcessEngineConfiguration()
@@ -97,7 +98,7 @@ class DbReadOnlyIdentityServiceProvider extends AbstractManager implements ReadO
 
     // groups //////////////////////////////////////////
 
-    public function findGroupById(string $groupId): GroupEntity
+    public function findGroupById(?string $groupId): ?GroupEntity
     {
         $this->checkAuthorization(Permissions::read(), Resources::group(), $groupId);
         return $this->getDbEntityManager()->selectById(GroupEntity::class, $groupId);
@@ -125,7 +126,7 @@ class DbReadOnlyIdentityServiceProvider extends AbstractManager implements ReadO
 
     //tenants //////////////////////////////////////////
 
-    public function findTenantById(string $tenantId): TenantEntity
+    public function findTenantById(?string $tenantId): TenantEntity
     {
         $this->checkAuthorization(Permissions::read(), Resources::tenant(), $tenantId);
         return $this->getDbEntityManager()->selectById(TenantEntity::class, $tenantId);
@@ -152,7 +153,7 @@ class DbReadOnlyIdentityServiceProvider extends AbstractManager implements ReadO
     }
 
     //memberships //////////////////////////////////////////
-    protected function existsMembership(string $userId, string $groupId): bool
+    protected function existsMembership(?string $userId, ?string $groupId): bool
     {
         $key = [];
         $key["userId"] = $userId;
@@ -160,7 +161,7 @@ class DbReadOnlyIdentityServiceProvider extends AbstractManager implements ReadO
         return $this->getDbEntityManager()->selectOne("selectMembershipCount", $key) > 0;
     }
 
-    protected function existsTenantMembership(string $tenantId, string $userId, string $groupId): bool
+    protected function existsTenantMembership(?string $tenantId, ?string $userId, ?string $groupId): bool
     {
         $key = [];
         $key["tenantId"] = $tenantId;
@@ -173,17 +174,17 @@ class DbReadOnlyIdentityServiceProvider extends AbstractManager implements ReadO
         return $this->getDbEntityManager()->selectOne("selectTenantMembershipCount", $key) > 0;
     }
 
-    protected function configureQuery(AbstractQuery $query, ResourceInterface $resource): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         Context::getCommandContext()
             ->getAuthorizationManager()
             ->configureQuery($query, $resource);
     }
 
-    protected function checkAuthorization(PermissionInterface $permission, ResourceInterface $resource, string $resourceId): void
+    protected function checkAuthorization(PermissionInterface $permission, ResourceInterface $resource, ?string $resourceId): void
     {
         Context::getCommandContext()
-            ->getAuthorizationManager()
-            ->checkAuthorization($permission, $resource, $resourceId);
+                ->getAuthorizationManager()
+                ->checkAuthorization($permission, $resource, $resourceId);
     }
 }

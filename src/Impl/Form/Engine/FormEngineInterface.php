@@ -9,7 +9,7 @@ use Jabe\Form\{
 
 interface FormEngineInterface
 {
-    public function getName(): string;
+    public function getName(): ?string;
     public function renderStartForm(StartFormDataInterface $startForm);
     public function renderTaskForm(TaskFormDataInterface $taskForm);
 }

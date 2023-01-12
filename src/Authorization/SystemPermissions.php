@@ -71,7 +71,7 @@ class SystemPermissions implements PermissionInterface
         return self::resources();
     }
 
-    private function __construct(string $name, int $id)
+    private function __construct(?string $name, int $id)
     {
         $this->name = $name;
         $this->id = $id;

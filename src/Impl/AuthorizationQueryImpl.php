@@ -20,12 +20,12 @@ class AuthorizationQueryImpl extends AbstractQuery implements AuthorizationQuery
     protected $id;
     protected $userIds = [];
     protected $groupIds = [];
-    protected $resourceType;
+    protected int $resourceType = 0;
     protected $resourceId;
-    protected $permission = 0;
+    protected int $permission = 0;
     protected $authorizationType;
-    protected $queryByPermission = false;
-    protected $queryByResourceType = false;
+    protected bool $queryByPermission = false;
+    protected bool $queryByResourceType = false;
     private $resourcesIntersection = [];
 
     public function __construct(CommandExecutorInterface $commandExecutor = null)
@@ -35,7 +35,7 @@ class AuthorizationQueryImpl extends AbstractQuery implements AuthorizationQuery
         }
     }
 
-    public function authorizationId(string $id): AuthorizationQueryInterface
+    public function authorizationId(?string $id): AuthorizationQueryInterface
     {
         $this->id = $id;
         return $this;
@@ -50,7 +50,7 @@ class AuthorizationQueryImpl extends AbstractQuery implements AuthorizationQuery
         return $this;
     }
 
-    public function groupIdIn(string $groupIdIn): AuthorizationQueryInterface
+    public function groupIdIn(string ...$groupIdIn): AuthorizationQueryInterface
     {
         if (!empty($this->userIds)) {
             throw new ProcessEngineException("Cannot query for user and group authorizations at the same time.");
@@ -59,7 +59,7 @@ class AuthorizationQueryImpl extends AbstractQuery implements AuthorizationQuery
         return $this;
     }
 
-    public function resourceType($resource): ?AuthorizationQueryInterface
+    public function resourceType(int|ResourceInterface $resource): ?AuthorizationQueryInterface
     {
         if (is_int($resource)) {
             $this->resourceType = $resource;
@@ -71,7 +71,7 @@ class AuthorizationQueryImpl extends AbstractQuery implements AuthorizationQuery
         return null;
     }
 
-    public function resourceId(string $resourceId): AuthorizationQueryInterface
+    public function resourceId(?string $resourceId): AuthorizationQueryInterface
     {
         $this->resourceId = $resourceId;
         return $this;
@@ -104,7 +104,7 @@ class AuthorizationQueryImpl extends AbstractQuery implements AuthorizationQuery
             ->selectAuthorizationCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         return $commandContext->getAuthorizationManager()
@@ -142,7 +142,7 @@ class AuthorizationQueryImpl extends AbstractQuery implements AuthorizationQuery
 
     // getters ////////////////////////////
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -167,7 +167,7 @@ class AuthorizationQueryImpl extends AbstractQuery implements AuthorizationQuery
         return $this->resourceType;
     }
 
-    public function getResourceId(): string
+    public function getResourceId(): ?string
     {
         return $this->resourceId;
     }

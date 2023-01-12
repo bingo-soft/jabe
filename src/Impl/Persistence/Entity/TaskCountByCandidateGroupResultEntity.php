@@ -7,7 +7,7 @@ use Jabe\Impl\Util\ClassNameUtil;
 
 class TaskCountByCandidateGroupResultEntity implements TaskCountByCandidateGroupResultInterface
 {
-    protected $taskCount;
+    protected int $taskCount = 0;
     protected $groupName;
 
     public function getTaskCount(): int
@@ -15,7 +15,7 @@ class TaskCountByCandidateGroupResultEntity implements TaskCountByCandidateGroup
         return $this->taskCount;
     }
 
-    public function getGroupName(): string
+    public function getGroupName(): ?string
     {
         return $this->groupName;
     }
@@ -25,7 +25,7 @@ class TaskCountByCandidateGroupResultEntity implements TaskCountByCandidateGroup
         $this->taskCount = $taskCount;
     }
 
-    public function setGroupName(string $groupName): void
+    public function setGroupName(?string $groupName): void
     {
         $this->groupName = $groupName;
     }

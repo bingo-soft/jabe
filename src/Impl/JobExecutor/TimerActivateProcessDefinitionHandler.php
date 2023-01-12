@@ -11,7 +11,7 @@ class TimerActivateProcessDefinitionHandler extends TimerChangeProcessDefinition
 {
     public const TYPE = "activate-processdefinition";
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return self::TYPE;
     }

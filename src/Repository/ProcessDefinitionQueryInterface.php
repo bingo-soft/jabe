@@ -9,49 +9,49 @@ use Jabe\Query\QueryInterface;
 interface ProcessDefinitionQueryInterface extends QueryInterface
 {
     /** Only select process definiton with the given id.  */
-    public function processDefinitionId(string $processDefinitionId): ProcessDefinitionQueryInterface;
+    public function processDefinitionId(?string $processDefinitionId): ProcessDefinitionQueryInterface;
 
     /** Only select process definiton with the given id.  */
     public function processDefinitionIdIn(array $ids): ProcessDefinitionQueryInterface;
 
     /** Only select process definitions with the given category. */
-    public function processDefinitionCategory(string $processDefinitionCategory): ProcessDefinitionQueryInterface;
+    public function processDefinitionCategory(?string $processDefinitionCategory): ProcessDefinitionQueryInterface;
 
     /**
      * Only select process definitions where the category matches the given parameter.
      * The syntax that should be used is the same as in SQL, eg. %activiti%
      */
-    public function processDefinitionCategoryLike(string $processDefinitionCategoryLike): ProcessDefinitionQueryInterface;
+    public function processDefinitionCategoryLike(?string $processDefinitionCategoryLike): ProcessDefinitionQueryInterface;
 
     /** Only select process definitions with the given name. */
-    public function processDefinitionName(string $processDefinitionName): ProcessDefinitionQueryInterface;
+    public function processDefinitionName(?string $processDefinitionName): ProcessDefinitionQueryInterface;
 
     /**
      * Only select process definitions where the name matches the given parameter.
      * The syntax that should be used is the same as in SQL, eg. %activiti%
      */
-    public function processDefinitionNameLike(string $processDefinitionNameLike): ProcessDefinitionQueryInterface;
+    public function processDefinitionNameLike(?string $processDefinitionNameLike): ProcessDefinitionQueryInterface;
 
     /**
      * Only select process definitions that are deployed in a deployment with the
      * given deployment id
      */
-    public function deploymentId(string $deploymentId): ProcessDefinitionQueryInterface;
+    public function deploymentId(?string $deploymentId): ProcessDefinitionQueryInterface;
 
     /**
      * Only select process definitions that were deployed after the given Date (exclusive).
      */
-    public function deployedAfter(string $deployedAfter): ProcessDefinitionQueryInterface;
+    public function deployedAfter(?string $deployedAfter): ProcessDefinitionQueryInterface;
 
     /**
      * Only select process definitions that were deployed at the given Date.
      */
-    public function deployedAt(string $deployedAt): ProcessDefinitionQueryInterface;
+    public function deployedAt(?string $deployedAt): ProcessDefinitionQueryInterface;
 
     /**
      * Only select process definition with the given key.
      */
-    public function processDefinitionKey(string $processDefinitionKey): ProcessDefinitionQueryInterface;
+    public function processDefinitionKey(?string $processDefinitionKey): ProcessDefinitionQueryInterface;
 
     /**
      * Only select process definitions with the given keys
@@ -62,7 +62,7 @@ interface ProcessDefinitionQueryInterface extends QueryInterface
      * Only select process definitions where the key matches the given parameter.
      * The syntax that should be used is the same as in SQL, eg. %activiti%
      */
-    public function processDefinitionKeyLike(string $processDefinitionKeyLike): ProcessDefinitionQueryInterface;
+    public function processDefinitionKeyLike(?string $processDefinitionKeyLike): ProcessDefinitionQueryInterface;
 
     /**
      * Only select process definition with a certain version.
@@ -95,15 +95,15 @@ interface ProcessDefinitionQueryInterface extends QueryInterface
     public function latestVersion(): ProcessDefinitionQueryInterface;
 
     /** Only select process definition with the given resource name. */
-    public function processDefinitionResourceName(string $resourceName): ProcessDefinitionQueryInterface;
+    public function processDefinitionResourceName(?string $resourceName): ProcessDefinitionQueryInterface;
 
     /** Only select process definition with a resource name like the given . */
-    public function processDefinitionResourceNameLike(string $resourceNameLike): ProcessDefinitionQueryInterface;
+    public function processDefinitionResourceNameLike(?string $resourceNameLike): ProcessDefinitionQueryInterface;
 
     /**
      * Only selects process definitions which given userId is authorized to start
      */
-    public function startableByUser(string $userId): ProcessDefinitionQueryInterface;
+    public function startableByUser(?string $userId): ProcessDefinitionQueryInterface;
 
     /**
      * Only selects process definitions which are suspended
@@ -118,32 +118,32 @@ interface ProcessDefinitionQueryInterface extends QueryInterface
     /**
      * Only selects process definitions with the given incident type.
      */
-    public function incidentType(string $incidentType): ProcessDefinitionQueryInterface;
+    public function incidentType(?string $incidentType): ProcessDefinitionQueryInterface;
 
     /**
      * Only selects process definitions with the given incident id.
      */
-    public function incidentId(string $incidentId): ProcessDefinitionQueryInterface;
+    public function incidentId(?string $incidentId): ProcessDefinitionQueryInterface;
 
     /**
      * Only selects process definitions with the given incident message.
      */
-    public function incidentMessage(string $incidentMessage): ProcessDefinitionQueryInterface;
+    public function incidentMessage(?string $incidentMessage): ProcessDefinitionQueryInterface;
 
     /**
      * Only selects process definitions with an incident message like the given.
      */
-    public function incidentMessageLike(string $incidentMessageLike): ProcessDefinitionQueryInterface;
+    public function incidentMessageLike(?string $incidentMessageLike): ProcessDefinitionQueryInterface;
 
     /**
      * Only selects process definitions with a specific version tag
      */
-    public function versionTag(string $versionTag): ProcessDefinitionQueryInterface;
+    public function versionTag(?string $versionTag): ProcessDefinitionQueryInterface;
 
     /**
      * Only selects process definitions with a version tag like the given
      */
-    public function versionTagLike(string $versionTagLike): ProcessDefinitionQueryInterface;
+    public function versionTagLike(?string $versionTagLike): ProcessDefinitionQueryInterface;
 
     /**
      * Only selects process definitions without a version tag
@@ -154,7 +154,7 @@ interface ProcessDefinitionQueryInterface extends QueryInterface
      * Selects the single process definition which has a start message event
      * with the messageName.
      */
-    public function messageEventSubscriptionName(string $messageName): ProcessDefinitionQueryInterface;
+    public function messageEventSubscriptionName(?string $messageName): ProcessDefinitionQueryInterface;
 
     /** Only select process definitions with one of the given tenant ids. */
     public function tenantIdIn(array $tenantIds): ProcessDefinitionQueryInterface;
@@ -210,7 +210,7 @@ interface ProcessDefinitionQueryInterface extends QueryInterface
     /**
      * Order by version tag (needs to be followed by {@link #asc()} or {@link #desc()}).
      *
-     * <strong>Note:</strong> sorting by versionTag is a string $based sort.
+     * <strong>Note:</strong> sorting by versionTag is a ?string $based sort.
      * There is no interpretation of the version which can lead to a sorting like:
      * v0.1.0 v0.10.0 v0.2.0.
      */

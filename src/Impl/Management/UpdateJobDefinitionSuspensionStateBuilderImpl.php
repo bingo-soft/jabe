@@ -28,9 +28,9 @@ class UpdateJobDefinitionSuspensionStateBuilderImpl implements UpdateJobDefiniti
     protected $processDefinitionId;
 
     protected $processDefinitionTenantId;
-    protected $isProcessDefinitionTenantIdSet = false;
+    protected bool $isProcessDefinitionTenantIdSet = false;
 
-    protected $includeJobs = false;
+    protected bool $includeJobs = false;
     protected $executionDate;
 
     public function __construct(CommandExecutorInterface $commandExecutor = null)
@@ -38,21 +38,21 @@ class UpdateJobDefinitionSuspensionStateBuilderImpl implements UpdateJobDefiniti
         $this->commandExecutor = $commandExecutor;
     }
 
-    public function byJobDefinitionId(string $jobDefinitionId): UpdateJobDefinitionSuspensionStateBuilderImpl
+    public function byJobDefinitionId(?string $jobDefinitionId): UpdateJobDefinitionSuspensionStateBuilderImpl
     {
         EnsureUtil::ensureNotNull("jobDefinitionId", "jobDefinitionId", $jobDefinitionId);
         $this->jobDefinitionId = $jobDefinitionId;
         return $this;
     }
 
-    public function byProcessDefinitionId(string $processDefinitionId): UpdateJobDefinitionSuspensionStateBuilderImpl
+    public function byProcessDefinitionId(?string $processDefinitionId): UpdateJobDefinitionSuspensionStateBuilderImpl
     {
         EnsureUtil::ensureNotNull("processDefinitionId", "processDefinitionId", $processDefinitionId);
         $this->processDefinitionId = $processDefinitionId;
         return $this;
     }
 
-    public function byProcessDefinitionKey(string $processDefinitionKey): UpdateJobDefinitionSuspensionStateBuilderImpl
+    public function byProcessDefinitionKey(?string $processDefinitionKey): UpdateJobDefinitionSuspensionStateBuilderImpl
     {
         EnsureUtil::ensureNotNull("processDefinitionKey", "processDefinitionKey", $processDefinitionKey);
         $this->processDefinitionKey = $processDefinitionKey;
@@ -66,7 +66,7 @@ class UpdateJobDefinitionSuspensionStateBuilderImpl implements UpdateJobDefiniti
         return $this;
     }
 
-    public function processDefinitionTenantId(string $tenantId): UpdateJobDefinitionSuspensionStateBuilderImpl
+    public function processDefinitionTenantId(?string $tenantId): UpdateJobDefinitionSuspensionStateBuilderImpl
     {
         EnsureUtil::ensureNotNull("tenantId", "tenantId", $tenantId);
         $this->processDefinitionTenantId = $tenantId;
@@ -80,7 +80,7 @@ class UpdateJobDefinitionSuspensionStateBuilderImpl implements UpdateJobDefiniti
         return $this;
     }
 
-    public function executionDate(string $executionDate): UpdateJobDefinitionSuspensionStateBuilderImpl
+    public function executionDate(?string $executionDate): UpdateJobDefinitionSuspensionStateBuilderImpl
     {
         $this->executionDate = $executionDate;
         return $this;
@@ -117,17 +117,17 @@ class UpdateJobDefinitionSuspensionStateBuilderImpl implements UpdateJobDefiniti
         EnsureUtil::ensureNotNull("commandExecutor", "commandExecutor", $this->commandExecutor);
     }
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function getProcessDefinitionTenantId(): string
+    public function getProcessDefinitionTenantId(): ?string
     {
         return $this->processDefinitionTenantId;
     }
@@ -137,7 +137,7 @@ class UpdateJobDefinitionSuspensionStateBuilderImpl implements UpdateJobDefiniti
         return $this->isProcessDefinitionTenantIdSet;
     }
 
-    public function getJobDefinitionId(): string
+    public function getJobDefinitionId(): ?string
     {
         return $this->jobDefinitionId;
     }
@@ -147,7 +147,7 @@ class UpdateJobDefinitionSuspensionStateBuilderImpl implements UpdateJobDefiniti
         return $this->includeJobs;
     }
 
-    public function getExecutionDate(): string
+    public function getExecutionDate(): ?string
     {
         return $this->executionDate;
     }

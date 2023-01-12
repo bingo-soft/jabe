@@ -54,4 +54,9 @@ class DeleteLicenseKeyCmd extends LicenseCmd implements CommandInterface
 
         return null;
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

@@ -38,7 +38,7 @@ class DefaultJobRetryCmd extends JobRetryCmd
     ];
     //private final static JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
-    public function __construct(string $jobId, \Throwable $exception)
+    public function __construct(?string $jobId, \Throwable $exception)
     {
         parent::__construct($jobId, $exception);
     }
@@ -125,7 +125,7 @@ class DefaultJobRetryCmd extends JobRetryCmd
         return $activity;
     }
 
-    protected function fetchExecutionEntity(string $executionId): ?ExecutionEntity
+    protected function fetchExecutionEntity(?string $executionId): ?ExecutionEntity
     {
         return Context::getCommandContext()
                         ->getExecutionManager()
@@ -178,7 +178,7 @@ class DefaultJobRetryCmd extends JobRetryCmd
         }
     }
 
-    protected function getDurationHelper(string $failedJobRetryTimeCycle): DurationHelper
+    protected function getDurationHelper(?string $failedJobRetryTimeCycle): DurationHelper
     {
         return new DurationHelper($failedJobRetryTimeCycle);
     }

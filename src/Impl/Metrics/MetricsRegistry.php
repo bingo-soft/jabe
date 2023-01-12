@@ -7,7 +7,7 @@ class MetricsRegistry
     protected $dbMeters = [];
     protected $telemetryMeters = [];
 
-    public function getDbMeterByName(string $name): ?Meter
+    public function getDbMeterByName(?string $name): ?Meter
     {
         if (array_key_exists($key, $this->dbMeters)) {
             return $this->dbMeters[$name];
@@ -32,7 +32,7 @@ class MetricsRegistry
         }
     }
 
-    public function markOccurrence(string $name, int $times = 1, array $meters = null): void
+    public function markOccurrence(?string $name, int $times = 1, array $meters = null): void
     {
         if ($meters !== null) {
             $meters[$name]->markTimes($times);
@@ -46,7 +46,7 @@ class MetricsRegistry
         }
     }
 
-    public function markTelemetryOccurrence(string $name, int $times): void
+    public function markTelemetryOccurrence(?string $name, int $times): void
     {
         $this->markOccurrence($this->telemetryMeters, $name, $times);
     }
@@ -54,7 +54,7 @@ class MetricsRegistry
     /**
      * Creates a meter for both database and telemetry collection.
      */
-    public function createMeter(string $name): void
+    public function createMeter(?string $name): void
     {
         $dbMeter = new Meter($name);
         $this->dbMeters[$name] = $dbMeter;
@@ -65,7 +65,7 @@ class MetricsRegistry
     /**
      * Creates a meter only for database collection.
      */
-    public function createDbMeter(string $name): void
+    public function createDbMeter(?string $name): void
     {
         $dbMeter = new Meter($name);
         $this->dbMeters[$name] = $dbMeter;

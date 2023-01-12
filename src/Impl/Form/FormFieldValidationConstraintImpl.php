@@ -9,7 +9,7 @@ class FormFieldValidationConstraintImpl implements FormFieldValidationConstraint
     protected $name;
     protected $configuration;
 
-    public function __construct(string $name, string $configuration)
+    public function __construct(?string $name, ?string $configuration)
     {
         $this->name = $name;
         $this->configuration = $configuration;
@@ -30,7 +30,7 @@ class FormFieldValidationConstraintImpl implements FormFieldValidationConstraint
         $this->configuration = $json->configuration;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -40,12 +40,12 @@ class FormFieldValidationConstraintImpl implements FormFieldValidationConstraint
         return $this->configuration;
     }
 
-    public function setConfiguration(string $configuration): void
+    public function setConfiguration(?string $configuration): void
     {
         $this->configuration = $configuration;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }

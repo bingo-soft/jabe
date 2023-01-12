@@ -15,7 +15,7 @@ class HistoryLevelAudit extends HistoryLevelActivity
         return 2;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return ProcessEngineConfiguration::HISTORY_AUDIT;
     }

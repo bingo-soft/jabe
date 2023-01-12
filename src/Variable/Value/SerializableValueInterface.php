@@ -30,14 +30,14 @@ interface SerializableValueInterface extends TypedValueInterface
      * The serialized value is a snapshot of the state of the value as it is
      * serialized to the process engine database.
      */
-    public function getValueSerialized(): string;
+    public function getValueSerialized(): ?string;
 
     /**
      * The serialization format used to serialize this value.
      *
      * @return string the serialization format used to serialize this variable.
      */
-    public function getSerializationDataFormat(): string;
+    public function getSerializationDataFormat(): ?string;
 
     public function getType(): SerializableValueTypeInterface;
 }

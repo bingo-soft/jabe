@@ -15,12 +15,12 @@ class GenericManagerFactory implements SessionFactoryInterface
 
     protected $managerImplementation;
 
-    public function __construct(string $className)
+    public function __construct(?string $className)
     {
         $this->managerImplementation = $className;
     }
 
-    public function getSessionType(): string
+    public function getSessionType(): ?string
     {
         return $this->managerImplementation;
     }

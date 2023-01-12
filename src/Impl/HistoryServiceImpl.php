@@ -54,7 +54,7 @@ use Jabe\Runtime\JobInterface;
 
 class HistoryServiceImpl extends ServiceImpl implements HistoryServiceInterface
 {
-    public function createHistoricProcessInstanceQuery(): HistoricProcessInstanceQuery
+    public function createHistoricProcessInstanceQuery(): HistoricProcessInstanceQueryInterface
     {
         return new HistoricProcessInstanceQueryImpl($this->commandExecutor);
     }
@@ -64,12 +64,12 @@ class HistoryServiceImpl extends ServiceImpl implements HistoryServiceInterface
         return new HistoricActivityInstanceQueryImpl($this->commandExecutor);
     }
 
-    public function createHistoricActivityStatisticsQuery(string $processDefinitionId): HistoricActivityStatisticsQuery
+    public function createHistoricActivityStatisticsQuery(?string $processDefinitionId): HistoricActivityStatisticsQueryInterface
     {
         return new HistoricActivityStatisticsQueryImpl($processDefinitionId, $this->commandExecutor);
     }
 
-    /*public HistoricCaseActivityStatisticsQuery createHistoricCaseActivityStatisticsQuery(string $caseDefinitionId) {
+    /*public HistoricCaseActivityStatisticsQuery createHistoricCaseActivityStatisticsQuery(?string $caseDefinitionId) {
         return new HistoricCaseActivityStatisticsQueryImpl(caseDefinitionId, $this->commandExecutor);
     }*/
 
@@ -115,17 +115,17 @@ class HistoryServiceImpl extends ServiceImpl implements HistoryServiceInterface
         return new HistoricDecisionInstanceQueryImpl($this->commandExecutor);
     }*/
 
-    public function deleteHistoricTaskInstance(string $taskId): void
+    public function deleteHistoricTaskInstance(?string $taskId): void
     {
         $this->commandExecutor->execute(new DeleteHistoricTaskInstanceCmd($taskId));
     }
 
-    public function deleteHistoricProcessInstance(string $processInstanceId): void
+    public function deleteHistoricProcessInstance(?string $processInstanceId): void
     {
         $this->deleteHistoricProcessInstances([$processInstanceId]);
     }
 
-    public function deleteHistoricProcessInstanceIfExists(string $processInstanceId): void
+    public function deleteHistoricProcessInstanceIfExists(?string $processInstanceId): void
     {
         $this->deleteHistoricProcessInstancesIfExists([$processInstanceId]);
     }
@@ -165,17 +165,17 @@ class HistoryServiceImpl extends ServiceImpl implements HistoryServiceInterface
         return $this->commandExecutor->execute(new FindHistoryCleanupJobsCmd());
     }
 
-    public function deleteHistoricProcessInstancesAsync(array $processInstanceIds, ?HistoricProcessInstanceQueryInterface $query, string $deleteReason): BatchInterface
+    public function deleteHistoricProcessInstancesAsync(array $processInstanceIds, ?HistoricProcessInstanceQueryInterface $query, ?string $deleteReason): BatchInterface
     {
         return $this->commandExecutor->execute(new DeleteHistoricProcessInstancesBatchCmd($processInstanceIds, $query, $deleteReason));
     }
 
-    public function deleteUserOperationLogEntry(string $entryId): void
+    public function deleteUserOperationLogEntry(?string $entryId): void
     {
         $this->commandExecutor->execute(new DeleteUserOperationLogEntryCmd($entryId));
     }
 
-    /*public void deleteHistoricCaseInstance(string $caseInstanceId) {
+    /*public void deleteHistoricCaseInstance(?string $caseInstanceId) {
         $this->commandExecutor->execute(new DeleteHistoricCaseInstanceCmd(caseInstanceId));
     }
 
@@ -183,7 +183,7 @@ class HistoryServiceImpl extends ServiceImpl implements HistoryServiceInterface
         $this->commandExecutor->execute(new DeleteHistoricCaseInstancesBulkCmd(caseInstanceIds));
     }
 
-    public void deleteHistoricDecisionInstance(string $decisionDefinitionId) {
+    public void deleteHistoricDecisionInstance(?string $decisionDefinitionId) {
         deleteHistoricDecisionInstanceByDefinitionId(decisionDefinitionId);
     }
 
@@ -191,11 +191,11 @@ class HistoryServiceImpl extends ServiceImpl implements HistoryServiceInterface
         $this->commandExecutor->execute(new DeleteHistoricDecisionInstancesBulkCmd(decisionInstanceIds));
     }
 
-    public void deleteHistoricDecisionInstanceByDefinitionId(string $decisionDefinitionId) {
+    public void deleteHistoricDecisionInstanceByDefinitionId(?string $decisionDefinitionId) {
         $this->commandExecutor->execute(new DeleteHistoricDecisionInstanceByDefinitionIdCmd(decisionDefinitionId));
     }
 
-    public void deleteHistoricDecisionInstanceByInstanceId(string $historicDecisionInstanceId){
+    public void deleteHistoricDecisionInstanceByInstanceId(?string $historicDecisionInstanceId){
         $this->commandExecutor->execute(new DeleteHistoricDecisionInstanceByInstanceIdCmd(historicDecisionInstanceId));
     }
 
@@ -211,12 +211,12 @@ class HistoryServiceImpl extends ServiceImpl implements HistoryServiceInterface
         return $this->commandExecutor->execute(new DeleteHistoricDecisionInstancesBatchCmd(decisionInstanceIds, query, deleteReason));
     }*/
 
-    public function deleteHistoricVariableInstance(string $variableInstanceId): void
+    public function deleteHistoricVariableInstance(?string $variableInstanceId): void
     {
         $this->commandExecutor->execute(new DeleteHistoricVariableInstanceCmd($variableInstanceId));
     }
 
-    public function deleteHistoricVariableInstancesByProcessInstanceId(string $processInstanceId): void
+    public function deleteHistoricVariableInstancesByProcessInstanceId(?string $processInstanceId): void
     {
         $this->commandExecutor->execute(new DeleteHistoricVariableInstancesByProcessInstanceIdCmd($processInstanceId));
     }
@@ -249,7 +249,7 @@ class HistoryServiceImpl extends ServiceImpl implements HistoryServiceInterface
         return new NativeHistoryDecisionInstanceQueryImpl($this->commandExecutor);
     }*/
 
-    public function createNativeHistoricVariableInstanceQuery(): NativeHistoricVariableInstanceQuery
+    public function createNativeHistoricVariableInstanceQuery(): NativeHistoricVariableInstanceQueryInterface
     {
         return new NativeHistoricVariableInstanceQueryImpl($this->commandExecutor);
     }
@@ -259,7 +259,7 @@ class HistoryServiceImpl extends ServiceImpl implements HistoryServiceInterface
         return new HistoricJobLogQueryImpl($this->commandExecutor);
     }
 
-    public function getHistoricJobLogExceptionStacktrace(string $historicJobLogId): string
+    public function getHistoricJobLogExceptionStacktrace(?string $historicJobLogId): ?string
     {
         return $this->commandExecutor->execute(new GetHistoricJobLogExceptionStacktraceCmd($historicJobLogId));
     }
@@ -297,12 +297,12 @@ class HistoryServiceImpl extends ServiceImpl implements HistoryServiceInterface
         return new HistoricBatchQueryImpl($this->commandExecutor);
     }
 
-    public function deleteHistoricBatch(string $batchId): void
+    public function deleteHistoricBatch(?string $batchId): void
     {
         $this->commandExecutor->execute(new DeleteHistoricBatchCmd($batchId));
     }
 
-    /*public HistoricDecisionInstanceStatisticsQuery createHistoricDecisionInstanceStatisticsQuery(string $decisionRequirementsDefinitionId) {
+    /*public HistoricDecisionInstanceStatisticsQuery createHistoricDecisionInstanceStatisticsQuery(?string $decisionRequirementsDefinitionId) {
         return new HistoricDecisionInstanceStatisticsQueryImpl(decisionRequirementsDefinitionId, $this->commandExecutor);
     }*/
 
@@ -311,7 +311,7 @@ class HistoryServiceImpl extends ServiceImpl implements HistoryServiceInterface
         return new HistoricExternalTaskLogQueryImpl($this->commandExecutor);
     }
 
-    public function getHistoricExternalTaskLogErrorDetails(string $historicExternalTaskLogId): string
+    public function getHistoricExternalTaskLogErrorDetails(?string $historicExternalTaskLogId): ?string
     {
         return $this->commandExecutor->execute(new GetHistoricExternalTaskLogErrorDetailsCmd($historicExternalTaskLogId));
     }
@@ -330,12 +330,12 @@ class HistoryServiceImpl extends ServiceImpl implements HistoryServiceInterface
         return new SetRemovalTimeToHistoricBatchesBuilderImpl($this->commandExecutor);
     }
 
-    public function setAnnotationForOperationLogById(string $operationId, string $annotation): void
+    public function setAnnotationForOperationLogById(?string $operationId, ?string $annotation): void
     {
         $this->commandExecutor->execute(new SetAnnotationForOperationLog($operationId, $annotation));
     }
 
-    public function clearAnnotationForOperationLogById(string $operationId): void
+    public function clearAnnotationForOperationLogById(?string $operationId): void
     {
         $this->commandExecutor->execute(new SetAnnotationForOperationLog($operationId, null));
     }

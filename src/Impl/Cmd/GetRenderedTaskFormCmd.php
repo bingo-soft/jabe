@@ -14,7 +14,7 @@ class GetRenderedTaskFormCmd implements CommandInterface, \Serializable
     protected $taskId;
     protected $formEngineName;
 
-    public function __construct(string $taskId, ?string $formEngineName = null)
+    public function __construct(?string $taskId, ?string $formEngineName = null)
     {
         $this->taskId = $taskId;
         $this->formEngineName = $formEngineName;
@@ -63,5 +63,10 @@ class GetRenderedTaskFormCmd implements CommandInterface, \Serializable
         $taskForm = $taskFormHandler->createTaskForm($task);
 
         return $formEngine->renderTaskForm($taskForm);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

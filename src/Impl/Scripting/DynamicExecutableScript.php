@@ -17,7 +17,7 @@ abstract class DynamicExecutableScript extends ExecutableScript
 {
     protected $scriptExpression;
 
-    public function __construct(ExpressionInterface $scriptExpression, string $language)
+    public function __construct(ExpressionInterface $scriptExpression, ?string $language)
     {
         parent::__construct($language);
         $this->scriptExpression = $scriptExpression;
@@ -34,10 +34,10 @@ abstract class DynamicExecutableScript extends ExecutableScript
         }
     }
 
-    protected function evaluateExpression(VariableScopeInterface $variableScope): string
+    protected function evaluateExpression(VariableScopeInterface $variableScope): ?string
     {
         return $this->scriptExpression->getValue($variableScope);
     }
 
-    abstract public function getScriptSource(VariableScopeInterface $variableScope): string;
+    abstract public function getScriptSource(VariableScopeInterface $variableScope): ?string;
 }

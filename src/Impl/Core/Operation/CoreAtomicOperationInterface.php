@@ -10,5 +10,5 @@ interface CoreAtomicOperationInterface
 
     public function isAsync(CoreExecution $instance): bool;
 
-    public function getCanonicalName(): string;
+    public function getCanonicalName(): ?string;
 }

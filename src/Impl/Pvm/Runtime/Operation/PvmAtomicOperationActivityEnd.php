@@ -100,7 +100,7 @@ class PvmAtomicOperationActivityEnd implements PvmAtomicOperationInterface
         }
     }
 
-    public function getCanonicalName(): string
+    public function getCanonicalName(): ?string
     {
         return "activity-end";
     }

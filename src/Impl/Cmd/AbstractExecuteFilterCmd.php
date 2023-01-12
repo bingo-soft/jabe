@@ -13,7 +13,7 @@ abstract class AbstractExecuteFilterCmd implements \Serializable
     protected $filterId;
     protected $extendingQuery;
 
-    public function __construct(string $filterId, ?QueryInterface $extendingQuery = null)
+    public function __construct(?string $filterId, ?QueryInterface $extendingQuery = null)
     {
         $this->filterId = $filterId;
         $this->extendingQuery = $extendingQuery;

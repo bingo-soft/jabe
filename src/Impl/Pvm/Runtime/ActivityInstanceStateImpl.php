@@ -4,10 +4,10 @@ namespace Jabe\Impl\Pvm\Runtime;
 
 class ActivityInstanceStateImpl extends ActivityInstanceState
 {
-    public $stateCode;
+    public int $stateCode = 0;
     protected $name;
 
-    public function __construct(int $suspensionCode, string $string)
+    public function __construct(int $suspensionCode, ?string $string)
     {
         $this->stateCode = $suspensionCode;
         $this->name = $string;

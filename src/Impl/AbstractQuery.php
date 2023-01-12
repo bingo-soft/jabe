@@ -36,10 +36,11 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
 
     protected $validators = [];
 
-    protected $maxResultsLimitEnabled;
+    protected bool $maxResultsLimitEnabled = false;
 
     public function __construct(CommandExecutorInterface $commandExecutor = null)
     {
+        parent::__construct();
         if ($commandExecutor !== null) {
             $this->commandExecutor = $commandExecutor;
 
@@ -121,7 +122,7 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
         return $this->executeResult($this->resultType);
     }
 
-    public function executeResult(string $resultType)
+    public function executeResult(?string $resultType)
     {
         if ($this->commandExecutor !== null) {
             if (!$this->maxResultsLimitEnabled) {
@@ -185,7 +186,7 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
 
     abstract public function executeCount(CommandContext $commandContext): int;
 
-    public function evaluateExpressionsAndExecuteList(CommandContext $commandContext, Page $page): array
+    public function evaluateExpressionsAndExecuteList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkMaxResultsLimit();
         $this->validate();
@@ -209,7 +210,7 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
      * Executes the actual query to retrieve the list of results.
      * @param page used if the results must be paged. If null, no paging will be applied.
      */
-    abstract public function executeList(CommandContext $commandContext, Page $page): array;
+    abstract public function executeList(CommandContext $commandContext, ?Page $page): array;
 
     public function executeSingleResult(CommandContext $commandContext)
     {
@@ -233,7 +234,7 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
         $this->expressions = $expressions;
     }
 
-    public function addExpression(string $key, string $expression): void
+    public function addExpression(?string $key, ?string $expression): void
     {
         $this->expressions[$key] = $expression;
     }
@@ -270,7 +271,7 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
         }
     }
 
-    protected function getMethod(string $methodName): \ReflectionMethod
+    protected function getMethod(?string $methodName): \ReflectionMethod
     {
         $ref = new \ReflectionClass($this);
         foreach ($ref->getMethods() as $method) {
@@ -377,7 +378,7 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
 
     public function executeIdsList(CommandContext $commandContext): array
     {
-        throw new UnsupportedOperationException("executeIdsList not supported by " . get_class($this));
+        throw new \Exception("executeIdsList not supported by " . get_class($this));
     }
 
     public function evaluateExpressionsAndExecuteDeploymentIdMappingsList(CommandContext $commandContext): array
@@ -389,7 +390,7 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
 
     public function executeDeploymentIdMappingsList(CommandContext $commandContext): array
     {
-        throw new UnsupportedOperationException("executeDeploymentIdMappingsList not supported by " . get_class($this));
+        throw new \Exception("executeDeploymentIdMappingsList not supported by " . get_class($this));
     }
 
     protected function checkMaxResultsLimit(): void
@@ -407,5 +408,10 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
     public function disableMaxResultsLimit(): void
     {
         $this->maxResultsLimitEnabled = false;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

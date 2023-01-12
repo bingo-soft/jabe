@@ -10,7 +10,7 @@ abstract class DefaultProcessApplication
      * Allows specifying the name of the process application.
      * Overrides the {@code name} property.
      */
-    public function value(): string
+    public function value(): ?string
     {
         return "";
     }
@@ -19,7 +19,7 @@ abstract class DefaultProcessApplication
      * Allows specifying the name of the process application.
      * Only applies if the {@code value} property is not set.
      */
-    public function name(): string
+    public function name(): ?string
     {
         return "";
     }
@@ -33,7 +33,7 @@ abstract class DefaultProcessApplication
      *
      * @return string the location of the <code>processes.xml</code> file.
      */
-    public function deploymentDescriptors(): string
+    public function deploymentDescriptors(): ?string
     {
         return self::DEFAULT_META_INF_PROCESSES_XML;
     }

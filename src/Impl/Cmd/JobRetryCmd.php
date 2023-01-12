@@ -17,7 +17,7 @@ abstract class JobRetryCmd implements CommandInterface
     protected $jobId;
     protected $exception;
 
-    public function __construct(string $jobId, \Throwable $exception)
+    public function __construct(?string $jobId, \Throwable $exception)
     {
         $this->jobId = $jobId;
         $this->exception = $exception;
@@ -45,7 +45,7 @@ abstract class JobRetryCmd implements CommandInterface
         }
     }
 
-    protected function getExceptionStacktrace(): string
+    protected function getExceptionStacktrace(): ?string
     {
         return ExceptionUtil::getExceptionStacktrace($this->exception);
     }
@@ -61,5 +61,10 @@ abstract class JobRetryCmd implements CommandInterface
         $messageAddedNotification = new MessageAddedNotification($jobExecutor);
         $transactionContext = $commandContext->getTransactionContext();
         $transactionContext->addTransactionListener(TransactionState::COMMITTED, $messageAddedNotification);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

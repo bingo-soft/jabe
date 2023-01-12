@@ -16,19 +16,19 @@ interface DeploymentWithDefinitionsInterface extends DeploymentInterface
      *
      * @return array the case definitions, which are deployed
      */
-    public function getDeployedCaseDefinitions(): array;
+    //public function getDeployedCaseDefinitions(): array;
 
     /**
      * Returns the decision definitions, which are deployed with that deployment
      *
      * @return array the decision definitions, which are deployed
      */
-    public function getDeployedDecisionDefinitions(): array;
+    //public function getDeployedDecisionDefinitions(): array;
 
     /**
      * Returns the decision requirements definitions, which are deployed with that deployment
      *
      * @return array the decision definitions, which are deployed
      */
-    public function getDeployedDecisionRequirementsDefinitions(): array;
+    //public function getDeployedDecisionRequirementsDefinitions(): array;
 }

@@ -19,7 +19,7 @@ class ProcessDefinitionSuspensionStateConfiguration implements JobHandlerConfigu
     protected $isTenantIdSet;
     protected $by;
 
-    public function toCanonicalString(): string
+    public function toCanonicalString(): ?string
     {
         $json = [];
 
@@ -91,7 +91,7 @@ class ProcessDefinitionSuspensionStateConfiguration implements JobHandlerConfigu
         return $config;
     }
 
-    public static function byProcessDefinitionId(string $processDefinitionId, bool $includeProcessInstances): ProcessDefinitionSuspensionStateConfiguration
+    public static function byProcessDefinitionId(?string $processDefinitionId, bool $includeProcessInstances): ProcessDefinitionSuspensionStateConfiguration
     {
         $configuration = new ProcessDefinitionSuspensionStateConfiguration();
 
@@ -102,7 +102,7 @@ class ProcessDefinitionSuspensionStateConfiguration implements JobHandlerConfigu
         return $configuration;
     }
 
-    public static function byProcessDefinitionKey(string $processDefinitionKey, bool $includeProcessInstances): ProcessDefinitionSuspensionStateConfiguration
+    public static function byProcessDefinitionKey(?string $processDefinitionKey, bool $includeProcessInstances): ProcessDefinitionSuspensionStateConfiguration
     {
         $configuration = new ProcessDefinitionSuspensionStateConfiguration();
 
@@ -113,7 +113,7 @@ class ProcessDefinitionSuspensionStateConfiguration implements JobHandlerConfigu
         return $configuration;
     }
 
-    public static function byProcessDefinitionKeyAndTenantId(string $processDefinitionKey, ?string $tenantId, bool $includeProcessInstances): ProcessDefinitionSuspensionStateConfiguration
+    public static function byProcessDefinitionKeyAndTenantId(?string $processDefinitionKey, ?string $tenantId, bool $includeProcessInstances): ProcessDefinitionSuspensionStateConfiguration
     {
         $configuration = self::byProcessDefinitionKey($processDefinitionKey, $includeProcessInstances);
 

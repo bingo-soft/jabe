@@ -40,7 +40,7 @@ class ExternalTaskActivityBehavior extends AbstractBpmnActivityBehavior implemen
         ExternalTaskEntity::createAndInsert($executionEntity, $topic, $priority);
     }
 
-    public function signal(ActivityExecutionInterface $execution, string $signalName, $signalData): void
+    public function signal(ActivityExecutionInterface $execution, ?string $signalName, $signalData): void
     {
         $this->leave($execution);
     }

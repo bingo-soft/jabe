@@ -2,6 +2,10 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
+use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface
+};
 use Jabe\Impl\{
     HistoricJobLogQueryImpl,
     Page
@@ -26,17 +30,17 @@ class HistoricJobLogManager extends AbstractHistoricManager
 {
     // select /////////////////////////////////////////////////////////////////
 
-    public function findHistoricJobLogById(string $historicJobLogId): ?HistoricJobLogEventEntity
+    public function findHistoricJobLogById(?string $historicJobLogId): ?HistoricJobLogEventEntity
     {
         return $this->getDbEntityManager()->selectOne("selectHistoricJobLog", $historicJobLogId);
     }
 
-    public function findHistoricJobLogsByDeploymentId(string $deploymentId): array
+    public function findHistoricJobLogsByDeploymentId(?string $deploymentId): array
     {
         return $this->getDbEntityManager()->selectList("selectHistoricJobLogByDeploymentId", $deploymentId);
     }
 
-    public function findHistoricJobLogsByQueryCriteria(HistoricJobLogQueryImpl $query, Page $page): array
+    public function findHistoricJobLogsByQueryCriteria(HistoricJobLogQueryImpl $query, ?Page $page): array
     {
         $this->configureQuery($query);
         return $this->getDbEntityManager()->selectList("selectHistoricJobLogByQueryCriteria", $query, $page);
@@ -50,7 +54,7 @@ class HistoricJobLogManager extends AbstractHistoricManager
 
     // update ///////////////////////////////////////////////////////////////////
 
-    public function addRemovalTimeToJobLogByRootProcessInstanceId(string $rootProcessInstanceId, string $removalTime): void
+    public function addRemovalTimeToJobLogByRootProcessInstanceId(?string $rootProcessInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["rootProcessInstanceId"] = $rootProcessInstanceId;
@@ -60,7 +64,7 @@ class HistoricJobLogManager extends AbstractHistoricManager
             ->updatePreserveOrder(HistoricJobLogEventEntity::class, "updateJobLogByRootProcessInstanceId", $parameters);
     }
 
-    public function addRemovalTimeToJobLogByProcessInstanceId(string $processInstanceId, string $removalTime): void
+    public function addRemovalTimeToJobLogByProcessInstanceId(?string $processInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["processInstanceId"] = $processInstanceId;
@@ -70,7 +74,7 @@ class HistoricJobLogManager extends AbstractHistoricManager
             ->updatePreserveOrder(HistoricJobLogEventEntity::class, "updateJobLogByProcessInstanceId", $parameters);
     }
 
-    public function addRemovalTimeToJobLogByBatchId(string $batchId, string $removalTime): void
+    public function addRemovalTimeToJobLogByBatchId(?string $batchId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["batchId"] = $batchId;
@@ -85,7 +89,7 @@ class HistoricJobLogManager extends AbstractHistoricManager
 
     // delete ///////////////////////////////////////////////////////////////////
 
-    public function deleteHistoricJobLogById(string $id): void
+    public function deleteHistoricJobLogById(?string $id): void
     {
         if ($this->isHistoryEnabled()) {
             $this->deleteExceptionByteArrayByParameterMap("id", $id);
@@ -93,7 +97,7 @@ class HistoricJobLogManager extends AbstractHistoricManager
         }
     }
 
-    public function deleteHistoricJobLogByJobId(string $jobId): void
+    public function deleteHistoricJobLogByJobId(?string $jobId): void
     {
         if ($this->isHistoryEnabled()) {
             $this->deleteExceptionByteArrayByParameterMap("jobId", $jobId);
@@ -107,7 +111,7 @@ class HistoricJobLogManager extends AbstractHistoricManager
         $this->getDbEntityManager()->deletePreserveOrder(HistoricJobLogEventEntity::class, "deleteHistoricJobLogByProcessInstanceIds", $processInstanceIds);
     }
 
-    public function deleteHistoricJobLogsByProcessDefinitionId(string $processDefinitionId): void
+    public function deleteHistoricJobLogsByProcessDefinitionId(?string $processDefinitionId): void
     {
         if ($this->isHistoryEnabled()) {
             $this->deleteExceptionByteArrayByParameterMap("processDefinitionId", $processDefinitionId);
@@ -115,7 +119,7 @@ class HistoricJobLogManager extends AbstractHistoricManager
         }
     }
 
-    public function deleteHistoricJobLogsByDeploymentId(string $deploymentId): void
+    public function deleteHistoricJobLogsByDeploymentId(?string $deploymentId): void
     {
         if ($this->isHistoryEnabled()) {
             $this->deleteExceptionByteArrayByParameterMap("deploymentId", $deploymentId);
@@ -123,7 +127,7 @@ class HistoricJobLogManager extends AbstractHistoricManager
         }
     }
 
-    public function deleteHistoricJobLogsByHandlerType(string $handlerType): void
+    public function deleteHistoricJobLogsByHandlerType(?string $handlerType): void
     {
         if ($this->isHistoryEnabled()) {
             $this->deleteExceptionByteArrayByParameterMap("handlerType", $handlerType);
@@ -131,7 +135,7 @@ class HistoricJobLogManager extends AbstractHistoricManager
         }
     }
 
-    public function deleteHistoricJobLogsByJobDefinitionId(string $jobDefinitionId): void
+    public function deleteHistoricJobLogsByJobDefinitionId(?string $jobDefinitionId): void
     {
         if ($this->isHistoryEnabled()) {
             $this->deleteExceptionByteArrayByParameterMap("jobDefinitionId", $jobDefinitionId);
@@ -147,7 +151,7 @@ class HistoricJobLogManager extends AbstractHistoricManager
         }
     }
 
-    public function deleteJobLogByRemovalTime(string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
+    public function deleteJobLogByRemovalTime(?string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
     {
         $parameters = [];
         $parameters["removalTime"] = $removalTime;
@@ -167,7 +171,7 @@ class HistoricJobLogManager extends AbstractHistoricManager
 
     // byte array delete ////////////////////////////////////////////////////////
 
-    protected function deleteExceptionByteArrayByParameterMap(string $key, $value): void
+    protected function deleteExceptionByteArrayByParameterMap(?string $key, $value): void
     {
         EnsureUtil::ensureNotNull($key, $key, $value);
         $parameterMap = [];
@@ -269,7 +273,7 @@ class HistoricJobLogManager extends AbstractHistoricManager
         return $historyLevel->isHistoryEventProduced($eventType, $job);
     }
 
-    protected function configureQuery(HistoricJobLogQueryImpl $query): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         $this->getAuthorizationManager()->configureHistoricJobLogQuery($query);
         $this->getTenantManager()->configureQuery($query);

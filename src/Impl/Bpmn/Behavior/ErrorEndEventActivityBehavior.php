@@ -11,7 +11,7 @@ class ErrorEndEventActivityBehavior extends AbstractBpmnActivityBehavior
     protected $errorCode;
     private $errorMessageExpression;
 
-    public function __construct(string $errorCode, ParameterValueProviderInterfce $errorMessage)
+    public function __construct(?string $errorCode, ParameterValueProviderInterfce $errorMessage)
     {
         $this->errorCode = $errorCode;
         $this->errorMessageExpression = $errorMessage;
@@ -23,12 +23,12 @@ class ErrorEndEventActivityBehavior extends AbstractBpmnActivityBehavior
         BpmnExceptionHandler::propagateError($this->errorCode, $errorMessageValue, null, $execution);
     }
 
-    public function getErrorCode(): string
+    public function getErrorCode(): ?string
     {
         return $this->errorCode;
     }
 
-    public function setErrorCode(string $errorCode): void
+    public function setErrorCode(?string $errorCode): void
     {
         $this->errorCode = $errorCode;
     }

@@ -19,7 +19,7 @@ class TaskQueryVariableValue extends QueryVariableValue
      * </ul>
      */
 
-    public function __construct(string $name, $value, string $operator, bool $isTaskVariable, bool $isProcessInstanceVariable, bool $variableNameIgnoreCase = false, bool $variableValueIgnoreCase = false)
+    public function __construct(?string $name, $value, ?string $operator, bool $isTaskVariable, bool $isProcessInstanceVariable, bool $variableNameIgnoreCase = false, bool $variableValueIgnoreCase = false)
     {
         parent::__construct($name, $value, $operator, $isTaskVariable, $variableNameIgnoreCase, $variableValueIgnoreCase);
         $this->isProcessInstanceVariable = $isProcessInstanceVariable;

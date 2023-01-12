@@ -11,7 +11,7 @@ use Jabe\Variable\Impl\VariableMapImpl;
 
 class GetStartFormVariablesCmd extends AbstractGetFormVariablesCmd
 {
-    public function __construct(string $resourceId, array $formVariableNames, bool $deserializeObjectValues)
+    public function __construct(?string $resourceId, array $formVariableNames, bool $deserializeObjectValues)
     {
         parent::__construct($resourceId, $formVariableNames, $deserializeObjectValues);
     }

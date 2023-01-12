@@ -28,12 +28,12 @@ class ActivityImpl extends ScopeImpl implements PvmActivityInterface, HasDIBound
     protected $eventScope;
     protected $flowScope;
 
-    protected $isScope = false;
+    protected bool $isScope = false;
 
     protected $isAsyncBefore;
     protected $isAsyncAfter;
 
-    public function __construct(string $id, ProcessDefinitionImpl $processDefinition)
+    public function __construct(?string $id, ProcessDefinitionImpl $processDefinition)
     {
         parent::__construct($id, $processDefinition);
     }
@@ -54,7 +54,7 @@ class ActivityImpl extends ScopeImpl implements PvmActivityInterface, HasDIBound
         return $transition;
     }
 
-    public function findOutgoingTransition(string $transitionId): ?TransitionImpl
+    public function findOutgoingTransition(?string $transitionId): ?TransitionImpl
     {
         if (array_key_exists($transitionId, $this->namedOutgoingTransitions)) {
             return $this->namedOutgoingTransitions[$transitionId];
@@ -100,7 +100,7 @@ class ActivityImpl extends ScopeImpl implements PvmActivityInterface, HasDIBound
         $this->activityBehavior = $activityBehavior;
     }
 
-    public function getActivityStartBehavior(): string
+    public function getActivityStartBehavior(): ?string
     {
         return $this->activityStartBehavior;
     }
@@ -151,7 +151,7 @@ class ActivityImpl extends ScopeImpl implements PvmActivityInterface, HasDIBound
         $this->isAsyncAfter = $isAsyncAfter;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return parent::getId();
     }
@@ -308,7 +308,7 @@ class ActivityImpl extends ScopeImpl implements PvmActivityInterface, HasDIBound
         return $this->delegateAsyncBeforeUpdate;
     }
 
-    public function setDelegateAsyncBeforeUpdate(AsyncBeforeUpdateInterface $delegateAsyncBeforeUpdate): void
+    public function setDelegateAsyncBeforeUpdate(?AsyncBeforeUpdateInterface $delegateAsyncBeforeUpdate): void
     {
         $this->delegateAsyncBeforeUpdate = $delegateAsyncBeforeUpdate;
     }
@@ -318,7 +318,7 @@ class ActivityImpl extends ScopeImpl implements PvmActivityInterface, HasDIBound
         return $this->delegateAsyncAfterUpdate;
     }
 
-    public function setDelegateAsyncAfterUpdate(AsyncAfterUpdateInterface $delegateAsyncAfterUpdate): void
+    public function setDelegateAsyncAfterUpdate(?AsyncAfterUpdateInterface $delegateAsyncAfterUpdate): void
     {
         $this->delegateAsyncAfterUpdate = $delegateAsyncAfterUpdate;
     }

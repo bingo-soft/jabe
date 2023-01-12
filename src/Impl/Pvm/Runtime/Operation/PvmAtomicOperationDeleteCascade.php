@@ -77,7 +77,7 @@ class PvmAtomicOperationDeleteCascade implements PvmAtomicOperationInterface
         }
     }
 
-    public function getCanonicalName(): string
+    public function getCanonicalName(): ?string
     {
         return "delete-cascade";
     }

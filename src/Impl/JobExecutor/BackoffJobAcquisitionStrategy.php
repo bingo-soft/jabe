@@ -13,30 +13,30 @@ class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategyInterface
     /*
      * managing the idle level
      */
-    protected $baseIdleWaitTime;
-    protected $idleIncreaseFactor;
-    protected $idleLevel;
-    protected $maxIdleLevel;
-    protected $maxIdleWaitTime;
+    protected int $baseIdleWaitTime = 0;
+    protected int $idleIncreaseFactor = 0;
+    protected int $idleLevel = 0;
+    protected int $maxIdleLevel = 0;
+    protected int $maxIdleWaitTime = 0;
 
     /*
      * managing the backoff level
      */
-    protected $baseBackoffWaitTime;
-    protected $backoffIncreaseFactor;
-    protected $backoffLevel;
-    protected $maxBackoffLevel;
-    protected $maxBackoffWaitTime;
-    protected $applyJitter = false;
+    protected int $baseBackoffWaitTime = 0;
+    protected int $backoffIncreaseFactor = 0;
+    protected int $backoffLevel = 0;
+    protected int $maxBackoffLevel = 0;
+    protected int $maxBackoffWaitTime = 0;
+    protected bool $applyJitter = false;
 
     /*
      * Keeping a history of recent acquisitions without locking failure
      * for backoff level decrease
      */
-    protected $numAcquisitionsWithoutLockingFailure = 0;
-    protected $backoffDecreaseThreshold;
+    protected int $numAcquisitionsWithoutLockingFailure = 0;
+    protected int $backoffDecreaseThreshold = 0;
 
-    protected $baseNumJobsToAcquire;
+    protected int $baseNumJobsToAcquire = 0;
 
     protected $jobsToAcquire = [];
 
@@ -44,7 +44,7 @@ class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategyInterface
      * Backing off when the execution resources (queue) are saturated
      * in order to not busy wait for free resources
      */
-    protected $executionSaturated = false;
+    protected bool $executionSaturated = false;
     protected $executionSaturationWaitTime = self::DEFAULT_EXECUTION_SATURATION_WAIT_TIME;
 
     public function __construct(
@@ -260,7 +260,7 @@ class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategyInterface
         return $backoffTime;
     }
 
-    public function getNumJobsToAcquire(string $processEngine): int
+    public function getNumJobsToAcquire(?string $processEngine): int
     {
         $numJobsToAcquire = null;
         if (array_key_exists($processEngine, $this->jobsToAcquire)) {

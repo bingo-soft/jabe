@@ -15,4 +15,9 @@ class GetRegisteredDeploymentsCmd implements CommandInterface
         $registeredDeployments = Context::getProcessEngineConfiguration()->getRegisteredDeployments();
         return $registeredDeployments;
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

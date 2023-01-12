@@ -7,7 +7,7 @@ interface MigratingProcessInstanceValidationReportInterface
     /**
      * @return string the id of the process instance that the migration plan is applied to
      */
-    public function getProcessInstanceId(): string;
+    public function getProcessInstanceId(): ?string;
 
     /**
      * @return array the list of general failures of the migrating process instance

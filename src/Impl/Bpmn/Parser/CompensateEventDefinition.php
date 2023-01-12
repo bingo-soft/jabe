@@ -27,7 +27,7 @@ class CompensateEventDefinition implements \Serializable
         return $this->activityRef;
     }
 
-    public function setActivityRef(string $activityRef): void
+    public function setActivityRef(?string $activityRef): void
     {
         $this->activityRef = $activityRef;
     }

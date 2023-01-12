@@ -4,5 +4,5 @@ namespace Jabe\Impl\JobExecutor;
 
 interface JobHandlerConfigurationInterface
 {
-    public function toCanonicalString(): string;
+    public function toCanonicalString(): ?string;
 }

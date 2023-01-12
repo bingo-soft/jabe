@@ -4,7 +4,7 @@ namespace Jabe\Impl\Json;
 
 abstract class JsonArrayConverter
 {
-    public function toJson(\stdClass $object): string
+    public function toJson(\stdClass $object): ?string
     {
         return json_encode($this->toJsonArray($object));
     }

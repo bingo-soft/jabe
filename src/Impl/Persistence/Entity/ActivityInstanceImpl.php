@@ -49,17 +49,17 @@ class ActivityInstanceImpl extends ProcessElementInstanceImpl implements Activit
         return $this->businessKey;
     }
 
-    public function setBusinessKey(string $businessKey): void
+    public function setBusinessKey(?string $businessKey): void
     {
         $this->businessKey = $businessKey;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
 
-    public function setActivityId(string $activityId): void
+    public function setActivityId(?string $activityId): void
     {
         $this->activityId = $activityId;
     }
@@ -84,22 +84,22 @@ class ActivityInstanceImpl extends ProcessElementInstanceImpl implements Activit
         $this->childTransitionInstances = $childTransitionInstances;
     }
 
-    public function getActivityType(): string
+    public function getActivityType(): ?string
     {
         return $this->activityType;
     }
 
-    public function setActivityType(string $activityType): void
+    public function setActivityType(?string $activityType): void
     {
         $this->activityType = $activityType;
     }
 
-    public function getActivityName(): string
+    public function getActivityName(): ?string
     {
         return $this->activityName;
     }
 
-    public function setActivityName(string $activityName): void
+    public function setActivityName(?string $activityName): void
     {
         $this->activityName = $activityName;
     }
@@ -124,7 +124,7 @@ class ActivityInstanceImpl extends ProcessElementInstanceImpl implements Activit
         $this->incidents = $incidents;
     }
 
-    protected function writeTree(string &$writer, string $prefix, bool $isTail): void
+    protected function writeTree(string &$writer, ?string $prefix, bool $isTail): void
     {
         $writer .= $prefix;
         if ($isTail) {
@@ -147,7 +147,7 @@ class ActivityInstanceImpl extends ProcessElementInstanceImpl implements Activit
         }
     }
 
-    protected function writeTransition(TransitionInstanceInterface $transition, string &$writer, string $prefix, bool $isTail): void
+    protected function writeTransition(TransitionInstanceInterface $transition, string &$writer, ?string $prefix, bool $isTail): void
     {
         $writer .= $prefix;
         if ($isTail) {
@@ -166,7 +166,7 @@ class ActivityInstanceImpl extends ProcessElementInstanceImpl implements Activit
         return $writer;
     }
 
-    public function getActivityInstances(string $activityId): array
+    public function getActivityInstances(?string $activityId): array
     {
         EnsureUtil::ensureNotNull("activityId", "activityId", $activityId);
 
@@ -176,7 +176,7 @@ class ActivityInstanceImpl extends ProcessElementInstanceImpl implements Activit
         return $instances;
     }
 
-    protected function collectActivityInstances(string $activityId, array &$instances): void
+    protected function collectActivityInstances(?string $activityId, array &$instances): void
     {
         if ($this->activityId == $activityId) {
             $instances[] = $this;
@@ -187,7 +187,7 @@ class ActivityInstanceImpl extends ProcessElementInstanceImpl implements Activit
         }
     }
 
-    public function getTransitionInstances(string $activityId): array
+    public function getTransitionInstances(?string $activityId): array
     {
         EnsureUtil::ensureNotNull("activityId", "activityId", $activityId);
 
@@ -197,7 +197,7 @@ class ActivityInstanceImpl extends ProcessElementInstanceImpl implements Activit
         return $instances;
     }
 
-    protected function collectTransitionInstances(string $activityId, array &$instances): void
+    protected function collectTransitionInstances(?string $activityId, array &$instances): void
     {
         $instanceFound = false;
 

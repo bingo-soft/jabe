@@ -27,12 +27,12 @@ class TablePage
      */
     protected $rowData;
 
-    public function getTableName(): string
+    public function getTableName(): ?string
     {
         return $this->tableName;
     }
 
-    public function setTableName(string $tableName): void
+    public function setTableName(?string $tableName): void
     {
         $this->tableName = $tableName;
     }

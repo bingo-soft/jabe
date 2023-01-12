@@ -8,26 +8,26 @@ class ErrorEventDefinition implements \Serializable
 {
     protected $handlerActivityId;
     protected $errorCode;
-    protected $precedence = 0;
+    protected int $precedence = 0;
     protected $errorCodeVariable;
     protected $errorMessageVariable;
 
-    public function __construct(string $handlerActivityId)
+    public function __construct(?string $handlerActivityId)
     {
         $this->handlerActivityId = $handlerActivityId;
     }
 
-    public function getErrorCode(): string
+    public function getErrorCode(): ?string
     {
         return $this->errorCode;
     }
 
-    public function setErrorCode(string $errorCode): void
+    public function setErrorCode(?string $errorCode): void
     {
         $this->errorCode = $errorCode;
     }
 
-    public function getHandlerActivityId(): string
+    public function getHandlerActivityId(): ?string
     {
         return $this->handlerActivityId;
     }
@@ -43,7 +43,7 @@ class ErrorEventDefinition implements \Serializable
         $this->precedence = $precedence;
     }
 
-    public function catchesError(string $errorCode): bool
+    public function catchesError(?string $errorCode): bool
     {
         return $this->errorCode === null || $this->errorCode == $errorCode;
     }
@@ -72,22 +72,22 @@ class ErrorEventDefinition implements \Serializable
         }
     }
 
-    public function setErrorCodeVariable(string $errorCodeVariable): void
+    public function setErrorCodeVariable(?string $errorCodeVariable): void
     {
         $this->errorCodeVariable = $errorCodeVariable;
     }
 
-    public function getErrorCodeVariable(): string
+    public function getErrorCodeVariable(): ?string
     {
         return $this->errorCodeVariable;
     }
 
-    public function setErrorMessageVariable(string $errorMessageVariable): void
+    public function setErrorMessageVariable(?string $errorMessageVariable): void
     {
         $this->errorMessageVariable = $errorMessageVariable;
     }
 
-    public function getErrorMessageVariable(): string
+    public function getErrorMessageVariable(): ?string
     {
         return $this->errorMessageVariable;
     }

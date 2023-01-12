@@ -75,7 +75,7 @@ interface PvmScopeInterface extends PvmProcessElementInterface
      * @param activityId the id of the activity to find.
      * @return PvmActivityInterface the activity or null
      */
-    public function findActivity(string $activityId): PvmActivityInterface;
+    public function findActivity(?string $activityId): ?PvmActivityInterface;
 
     /**
      * Finds an activity at the same level of subprocess.
@@ -83,12 +83,12 @@ interface PvmScopeInterface extends PvmProcessElementInterface
      * @param activityId the id of the activity to find.
      * @return PvmActivityInterface the activity or null
      */
-    public function findActivityAtLevelOfSubprocess(string $activityId): PvmActivityInterface;
+    public function findActivityAtLevelOfSubprocess(?string $activityId): ?PvmActivityInterface;
 
     /**
      * Recursively finds a transition.
      * @param transitionId the transiton to find
      * @return TransitionImpl the transition or null
      */
-    public function findTransition(string $transitionId): TransitionImpl;
+    public function findTransition(?string $transitionId): ?TransitionImpl;
 }

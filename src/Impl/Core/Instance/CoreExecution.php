@@ -6,9 +6,9 @@ use Jabe\Delegate\{
     BaseDelegateExecutionInterface,
     DelegateListenerInterface
 };
-use Jabe\Core\Model\CoreModelElement;
-use Jabe\Core\Operation\CoreAtomicOperation;
-use Jabe\Core\Variable\Scope\AbstractVariableScope;
+use Jabe\Impl\Core\Model\CoreModelElement;
+use Jabe\Impl\Core\Operation\CoreAtomicOperation;
+use Jabe\Impl\Core\Variable\Scope\AbstractVariableScope;
 
 abstract class CoreExecution extends AbstractVariableScope implements BaseDelegateExecutionInterface
 {
@@ -28,10 +28,10 @@ abstract class CoreExecution extends AbstractVariableScope implements BaseDelega
 
     protected $eventName;
     protected $eventSource;
-    protected $listenerIndex = 0;
-    protected $skipCustomListeners;
-    protected $skipIoMapping;
-    protected $skipSubprocesses;
+    protected int $listenerIndex = 0;
+    protected bool $skipCustomListeners = false;
+    protected bool $skipIoMapping = false;
+    protected bool $skipSubprocesses = false;
 
     // atomic operations ////////////////////////////////////////////////////////
     public function performOperation(/*CoreAtomicOperation*/$operation): void
@@ -48,22 +48,22 @@ abstract class CoreExecution extends AbstractVariableScope implements BaseDelega
 
     // event handling ////////////////////////////////////////////////////////
 
-    public function getEventName(): string
+    public function getEventName(): ?string
     {
         return $this->eventName;
     }
 
-    public function setEventName(string $eventName): void
+    public function setEventName(?string $eventName): void
     {
         $this->eventName = $eventName;
     }
 
-    public function getEventSource(): CoreModelElement
+    public function getEventSource(): ?CoreModelElement
     {
         return $this->eventSource;
     }
 
-    public function setEventSource(CoreModelElement $eventSource): void
+    public function setEventSource(?CoreModelElement $eventSource): void
     {
         $this->eventSource = $eventSource;
     }
@@ -85,22 +85,22 @@ abstract class CoreExecution extends AbstractVariableScope implements BaseDelega
 
     // getters / setters /////////////////////////////////////////////////
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getBusinessKeyWithoutCascade(): string
+    public function getBusinessKeyWithoutCascade(): ?string
     {
         return $this->businessKeyWithoutCascade;
     }
 
-    public function setBusinessKey(string $businessKey): void
+    public function setBusinessKey(?string $businessKey): void
     {
         $this->businessKey = $businessKey;
         $this->businessKeyWithoutCascade = $businessKey;

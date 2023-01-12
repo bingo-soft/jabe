@@ -13,7 +13,7 @@ namespace Jabe\Authorization;
  */
 interface ResourceInterface
 {
-    public function resourceName(): string;
+    public function resourceName(): ?string;
 
     public function resourceType(): int;
 }

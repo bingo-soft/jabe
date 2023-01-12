@@ -79,7 +79,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
     public const DELETE_REASON_DELETED   = "deleted";
 
     protected $id;
-    protected $revision;
+    protected int $revision = 0;
 
     protected $owner;
     protected $assignee;
@@ -92,13 +92,14 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
     protected $description;
     protected $priority = TaskInterface::PRIORITY_NORMAL;
     protected $createTime; // The time when the task has been created
+    protected $lastUpdated;
     protected $dueDate;
     protected $followUpDate;
-    protected $suspensionState;
-    protected $lifecycleState = TaskState::STATE_INIT;
+    protected int $suspensionState = 1; //ACTIVE = 1
+    protected int $lifecycleState = TaskState::STATE_INIT;
     protected $tenantId;
 
-    protected $isIdentityLinksInitialized = false;
+    protected bool $isIdentityLinksInitialized = false;
     protected $taskIdentityLinkEntities = [];
 
     // execution
@@ -125,13 +126,13 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
     protected $deleteReason;
 
     protected $eventName;
-    protected $isFormKeyInitialized = false;
+    protected bool $isFormKeyInitialized = false;
     protected $formKey;
     protected $formRef;
 
     protected $variableStore;
 
-    protected $skipCustomListeners = false;
+    protected bool $skipCustomListeners = false;
 
     /**
      * contains all changed properties of this entity
@@ -172,13 +173,12 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
             $this->lifecycleState = TaskState::STATE_INIT;
             $this->setExecution($data);
             $this->skipCustomListeners = $data->isSkipCustomListeners();
-            $this->setTenantId($this->execution->getTenantId());
-            $this->execution->addTask($this);
+            $this->setTenantId($data->getTenantId());
+            $data->addTask($this);
         } elseif ($data === null) {
             $this->lifecycleState = TaskState::STATE_CREATED;
-            $this->variableStore = new VariableStore($this, new TaskEntityReferencer($this));
-            $this->suspensionState = SuspensionState::active()->getStateCode();
         }
+        $this->variableStore = new VariableStore($this, new TaskEntityReferencer($this));
         if (self::$DEFAULT_VARIABLE_LIFECYCLE_LISTENERS === null) {
             self::$DEFAULT_VARIABLE_LIFECYCLE_LISTENERS = [
                 VariableInstanceEntityPersistenceListener::instance(),
@@ -328,7 +328,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
             ->deleteTask(this, TaskEntity::DELETE_REASON_COMPLETED, false, false);
     }*/
 
-    public function delete(string $deleteReason, bool $cascade, ?bool $skipCustomListeners = null): void
+    public function delete(?string $deleteReason, bool $cascade, ?bool $skipCustomListeners = null): void
     {
         if ($skipCustomListeners !== null) {
             $this->skipCustomListeners = $skipCustomListeners;
@@ -354,7 +354,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         }
     }
 
-    public function delegate(string $userId): void
+    public function delegate(?string $userId): void
     {
         $this->setDelegationState(DelegationState::PENDING);
         if ($this->getOwner() === null) {
@@ -436,6 +436,9 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         }*/
         if ($this->createTime !== null) {
             $persistentState["createTime"] = $this->createTime;
+        }
+        if ($this->lastUpdated !== null) {
+            $persistentState["lastUpdated"] = $this->lastUpdated;
         }
         if ($this->description !== null) {
             $persistentState["description"] = $this->description;
@@ -599,7 +602,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         return null;
     }
 
-    public function getVariableScopeKey(): string
+    public function getVariableScopeKey(): ?string
     {
         return "task";
     }
@@ -616,7 +619,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         return $this->parentTask;
     }
 
-    public function getExecution(): ExecutionEntity
+    public function getExecution(): ?ExecutionEntity
     {
         if (($this->execution === null) && ($this->executionId !== null)) {
             $this->execution = Context::getCommandContext()
@@ -626,9 +629,9 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         return $this->execution;
     }
 
-    public function setExecution(PvmExecutionImpl $execution): void
+    public function setExecution(?PvmExecutionImpl $execution): void
     {
-        if ($this->execution !== null) {
+        if ($execution !== null) {
             $this->execution = $execution;
             $this->executionId = $this->execution->getId();
             $this->processInstanceId = $this->execution->getProcessInstanceId();
@@ -651,77 +654,9 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
 
     // case execution ////////////////////////////////////////////////////////////////
 
-    /*public CaseExecutionEntity getCaseExecution() {
-        ensureCaseExecutionInitialized();
-        return caseExecution;
-    }
-
-    protected void ensureCaseExecutionInitialized() {
-        if ((caseExecution==null) && (caseExecutionId!=null) ) {
-            caseExecution = Context
-            ->getCommandContext()
-            ->getCaseExecutionManager()
-            ->findCaseExecutionById(caseExecutionId);
-        }
-    }
-
-    public void setCaseExecution(CaseExecutionEntity caseExecution) {
-        if (caseExecution!=null) {
-
-            $this->caseExecution = caseExecution;
-            $this->caseExecutionId = $this->caseExecution->getId();
-            $this->caseInstanceId = $this->caseExecution->getCaseInstanceId();
-            $this->caseDefinitionId = $this->caseExecution->getCaseDefinitionId();
-            $this->tenantId = $this->caseExecution->getTenantId();
-
-        } else {
-            $this->caseExecution = null;
-            $this->caseExecutionId = null;
-            $this->caseInstanceId = null;
-            $this->caseDefinitionId = null;
-            $this->tenantId = null;
-        }
-    }
-
-    public String getCaseExecutionId() {
-        return caseExecutionId;
-    }
-
-    public void setCaseExecutionId(string $caseExecutionId) {
-        $this->caseExecutionId = caseExecutionId;
-    }
-
-    public String getCaseInstanceId() {
-        return caseInstanceId;
-    }
-
-    public void setCaseInstanceId(string $caseInstanceId) {
-        registerCommandContextCloseListener();
-        propertyChanged(CASE_INSTANCE_ID, $this->caseInstanceId, caseInstanceId);
-        $this->caseInstanceId = caseInstanceId;
-    }
-
-    public CaseDefinitionEntity getCaseDefinition() {
-        if (caseDefinitionId !== null) {
-            return Context
-                ->getProcessEngineConfiguration()
-                ->getDeploymentCache()
-                ->findDeployedCaseDefinitionById(caseDefinitionId);
-        }
-        return null;
-    }
-
-    public String getCaseDefinitionId() {
-        return caseDefinitionId;
-    }
-
-    public void setCaseDefinitionId(string $caseDefinitionId) {
-        $this->caseDefinitionId = caseDefinitionId;
-    }*/
-
     // task assignment //////////////////////////////////////////////////////////
 
-    public function addIdentityLink(?string $userId, ?string $groupId, string $type): IdentityLinkEntity
+    public function addIdentityLink(?string $userId, ?string $groupId, ?string $type): IdentityLinkEntity
     {
         $this->ensureTaskActive();
 
@@ -734,13 +669,13 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         return $identityLink;
     }
 
-    public function fireIdentityLinkHistoryEvents(string $userId, string $groupId, string $type, HistoryEventTypes $historyEventType): void
+    public function fireIdentityLinkHistoryEvents(?string $userId, ?string $groupId, ?string $type, HistoryEventTypes $historyEventType): void
     {
-        $identityLinkEntity = newIdentityLink($userId, $groupId, $type);
-        $this->identityLinkEntity->fireHistoricIdentityLinkEvent($historyEventType);
+        $identityLinkEntity = $this->newIdentityLink($userId, $groupId, $type);
+        $identityLinkEntity->fireHistoricIdentityLinkEvent($historyEventType);
     }
 
-    public function newIdentityLink(string $userId, string $groupId, string $type): IdentityLinkEntity
+    public function newIdentityLink(?string $userId, ?string $groupId, ?string $type): IdentityLinkEntity
     {
         $identityLinkEntity = new IdentityLinkEntity();
         $identityLinkEntity->setTask($this);
@@ -751,7 +686,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         return $identityLinkEntity;
     }
 
-    public function deleteIdentityLink(?string $userId, ?string $groupId, string $type): void
+    public function deleteIdentityLink(?string $userId, ?string $groupId, ?string $type): void
     {
         $this->ensureTaskActive();
 
@@ -790,7 +725,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         return $potentialOwners;
     }
 
-    public function addCandidateUser(string $userId): void
+    public function addCandidateUser(?string $userId): void
     {
         $this->addIdentityLink($userId, null, IdentityLinkType::CANDIDATE);
     }
@@ -802,7 +737,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         }
     }
 
-    public function addCandidateGroup(string $groupId): void
+    public function addCandidateGroup(?string $groupId): void
     {
         $this->addIdentityLink(null, $groupId, IdentityLinkType::CANDIDATE);
     }
@@ -814,34 +749,34 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         }
     }
 
-    public function addGroupIdentityLink(string $groupId, string $identityLinkType): void
+    public function addGroupIdentityLink(?string $groupId, ?string $identityLinkType): void
     {
         $this->addIdentityLink(null, $groupId, $identityLinkType);
     }
 
-    public function addUserIdentityLink(string $userId, string $identityLinkType): void
+    public function addUserIdentityLink(?string $userId, ?string $identityLinkType): void
     {
         $this->addIdentityLink($userId, null, $identityLinkType);
     }
 
-    public function deleteCandidateGroup(string $groupId): void
+    public function deleteCandidateGroup(?string $groupId): void
     {
         $this->deleteGroupIdentityLink($groupId, IdentityLinkType::CANDIDATE);
     }
 
-    public function deleteCandidateUser(string $userId): void
+    public function deleteCandidateUser(?string $userId): void
     {
         $this->deleteUserIdentityLink($userId, IdentityLinkType::CANDIDATE);
     }
 
-    public function deleteGroupIdentityLink(string $groupId, string $identityLinkType): void
+    public function deleteGroupIdentityLink(?string $groupId, ?string $identityLinkType): void
     {
         if ($groupId !== null) {
             $this->deleteIdentityLink(null, $groupId, $identityLinkType);
         }
     }
 
-    public function deleteUserIdentityLink(string $userId, string $identityLinkType): void
+    public function deleteUserIdentityLink(?string $userId, ?string $identityLinkType): void
     {
         if ($userId !== null) {
             $this->deleteIdentityLink($userId, null, $identityLinkType);
@@ -883,14 +818,14 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
 
     // special setters //////////////////////////////////////////////////////////
 
-    public function setName(string $taskName): void
+    public function setName(?string $taskName): void
     {
         $this->registerCommandContextCloseListener();
         $this->propertyChanged(self::NAME, $this->name, $taskName);
         $this->name = $taskName;
     }
 
-    public function setDescription(string $description): void
+    public function setDescription(?string $description): void
     {
         $this->registerCommandContextCloseListener();
         $this->propertyChanged(self::DESCRIPTION, $this->description, $description);
@@ -927,30 +862,30 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         }
     }
 
-    public function setOwner(string $owner): void
+    public function setOwner(?string $owner): void
     {
         $this->ensureTaskActive();
         $this->registerCommandContextCloseListener();
 
         $oldOwner = $this->owner;
-        if ($this->owner === null && $oldOwner === null) {
+        if ($owner === null && $oldOwner === null) {
             return;
         }
 
-        $this->addIdentityLinkChanges(IdentityLinkType::OWNER, $oldOwner, $this->owner);
-        $this->propertyChanged(self::OWNER, $oldOwner, $this->owner);
+        $this->addIdentityLinkChanges(IdentityLinkType::OWNER, $oldOwner, $owner);
+        $this->propertyChanged(self::OWNER, $oldOwner, $owner);
         $this->owner = $owner;
 
         $commandContext = Context::getCommandContext();
         // if there is no command context, then it means that the user is calling the
         // setOwner outside a service method.  E.g. while creating a new task.
         if ($commandContext !== null && $commandContext->getDbEntityManager()->contains($this)) {
-            $this->fireOwnerAuthorizationProvider($oldOwner, $this->owner);
+            $this->fireOwnerAuthorizationProvider($oldOwner, $owner);
             $this->fireHistoricIdentityLinks();
         }
     }
 
-    public function setDueDate(string $dueDate): void
+    public function setDueDate(?string $dueDate): void
     {
         $this->registerCommandContextCloseListener();
         $this->propertyChanged(self::DUE_DATE, $this->dueDate, $dueDate);
@@ -964,7 +899,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         $this->priority = $priority;
     }
 
-    public function setParentTaskId(string $parentTaskId): void
+    public function setParentTaskId(?string $parentTaskId): void
     {
         $this->registerCommandContextCloseListener();
         $this->propertyChanged(self::PARENT_TASK, $this->parentTaskId, $parentTaskId);
@@ -972,30 +907,30 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
     }
 
     /* plain setter for persistence */
-    public function setNameWithoutCascade(string $taskName): void
+    public function setNameWithoutCascade(?string $taskName): void
     {
         $this->name = $taskName;
     }
 
     /* plain setter for persistence */
-    public function setDescriptionWithoutCascade(string $description): void
+    public function setDescriptionWithoutCascade(?string $description): void
     {
         $this->description = $description;
     }
 
     /* plain setter for persistence */
-    public function setAssigneeWithoutCascade(string $assignee): void
+    public function setAssigneeWithoutCascade(?string $assignee): void
     {
         $this->assignee = $assignee;
     }
 
     /* plain setter for persistence */
-    public function setOwnerWithoutCascade(string $owner): void
+    public function setOwnerWithoutCascade(?string $owner): void
     {
         $this->owner = $owner;
     }
 
-    public function setDueDateWithoutCascade(string $dueDate): void
+    public function setDueDateWithoutCascade(?string $dueDate): void
     {
         $this->dueDate = $dueDate;
     }
@@ -1006,31 +941,26 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
     }
 
     /* plain setter for persistence */
-    /*public function setCaseInstanceIdWithoutCascade(string $caseInstanceId): void
+    /*public function setCaseInstanceIdWithoutCascade(?string $caseInstanceId): void
     {
         $this->caseInstanceId = caseInstanceId;
     }*/
 
-    public function setParentTaskIdWithoutCascade(string $parentTaskId): void
+    public function setParentTaskIdWithoutCascade(?string $parentTaskId): void
     {
         $this->parentTaskId = $parentTaskId;
     }
 
-    public function setTaskDefinitionKeyWithoutCascade(string $taskDefinitionKey): void
+    public function setTaskDefinitionKeyWithoutCascade(?string $taskDefinitionKey): void
     {
         $this->taskDefinitionKey = $taskDefinitionKey;
     }
 
-    public function setDelegationStateWithoutCascade(string $delegationState): void
+    public function setDelegationStateWithoutCascade(?string $delegationState): void
     {
         $this->delegationState = $delegationState;
     }
 
-    /**
-     * Setter for mybatis mapper.
-     *
-     * @param delegationState  the delegation state as string
-     */
     public function setDelegationStateString(?string $delegationState): void
     {
         if ($delegationState === null) {
@@ -1040,17 +970,12 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         }
     }
 
-    public function setFollowUpDateWithoutCascade(string $followUpDate): void
+    public function setFollowUpDateWithoutCascade(?string $followUpDate): void
     {
         $this->followUpDate = $followUpDate;
     }
 
-    /**
-     * @return bool true if invoking the listener was successful;
-     *   if not successful, either false is returned (case: BPMN error propagation)
-     *   or an exception is thrown
-     */
-    public function fireEvent(string $taskEventName): bool
+    public function fireEvent(?string $taskEventName): bool
     {
         $taskEventListeners = $this->getListenersForEvent($taskEventName);
 
@@ -1065,7 +990,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         return true;
     }
 
-    protected function getListenersForEvent(string $event): array
+    protected function getListenersForEvent(?string $event): array
     {
         $resolvedTaskDefinition = $this->getTaskDefinition();
         if ($resolvedTaskDefinition !== null) {
@@ -1079,7 +1004,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         }
     }
 
-    protected function getTimeoutListener(string $timeoutId): ?TaskListenerInterface
+    protected function getTimeoutListener(?string $timeoutId): ?TaskListenerInterface
     {
         $resolvedTaskDefinition = $this->getTaskDefinition();
         if ($resolvedTaskDefinition === null) {
@@ -1092,7 +1017,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
     /**
      * @return bool true if the next listener can be invoked; false if not
      */
-    protected function invokeListener(?CoreExecution $currentExecution, string $eventName, TaskListenerInterface $taskListener): bool
+    protected function invokeListener(?CoreExecution $currentExecution, ?string $eventName, TaskListenerInterface $taskListener): bool
     {
         if ($currentExecution !== null) {
             $isBpmnTask = $currentExecution instanceof ActivityExecution && $currentExecution !== null;
@@ -1146,16 +1071,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         }
     }
 
-    /**
-     * Tracks a property change. Therefore the original and new value are stored in a map.
-     * It tracks multiple changes and if a property finally is changed back to the original
-     * value, then the change is removed.
-     *
-     * @param propertyName
-     * @param orgValue
-     * @param newValue
-     */
-    protected function propertyChanged(string $propertyName, $orgValue, $newValue): void
+    protected function propertyChanged(?string $propertyName, $orgValue, $newValue): void
     {
         if (array_key_exists($propertyName, $this->propertyChanges)) {// update an existing change to save the original value
             $oldOrgValue = $this->propertyChanges[$propertyName]->getOrgValue();
@@ -1214,12 +1130,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         }
     }
 
-    /**
-     * @return bool true if invoking the listener was successful;
-     *   if not successful, either false is returned (case: BPMN error propagation)
-     *   or an exception is thrown
-     */
-    public function triggerTimeoutEvent(string $timeoutId): bool
+    public function triggerTimeoutEvent(?string $timeoutId): bool
     {
         $taskListener = $this->getTimeoutListener($timeoutId);
         if ($taskListener === null) {
@@ -1240,12 +1151,12 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         return true;
     }
 
-    protected function fireAssigneeAuthorizationProvider(string $oldAssignee, string $newAssignee): void
+    protected function fireAssigneeAuthorizationProvider(?string $oldAssignee, ?string $newAssignee): void
     {
         $this->fireAuthorizationProvider(self::ASSIGNEE, $oldAssignee, $newAssignee);
     }
 
-    protected function fireOwnerAuthorizationProvider(string $oldOwner, string $newOwner): void
+    protected function fireOwnerAuthorizationProvider(?string $oldOwner, ?string $newOwner): void
     {
         $this->fireAuthorizationProvider(self::OWNER, $oldOwner, $newOwner);
     }
@@ -1282,7 +1193,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         }
     }
 
-    protected function fireAddIdentityLinkAuthorizationProvider(string $type, string $userId, string $groupId): void
+    protected function fireAddIdentityLinkAuthorizationProvider(?string $type, ?string $userId, ?string $groupId): void
     {
         if ($this->isAuthorizationEnabled()) { // && caseExecutionId === null
             $provider = $this->getResourceAuthorizationProvider();
@@ -1298,7 +1209,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         }
     }
 
-    protected function fireDeleteIdentityLinkAuthorizationProvider(string $type, string $userId, string $groupId): void
+    protected function fireDeleteIdentityLinkAuthorizationProvider(?string $type, ?string $userId, ?string $groupId): void
     {
         if ($this->isAuthorizationEnabled()) { // && caseExecutionId === null
             $provider = $this->getResourceAuthorizationProvider();
@@ -1380,12 +1291,12 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }
@@ -1395,17 +1306,17 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         $this->revision = $revision;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function getDueDate(): string
+    public function getDueDate(): ?string
     {
         return $this->dueDate;
     }
@@ -1415,22 +1326,32 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         return $this->priority;
     }
 
-    public function getCreateTime(): string
+    public function getCreateTime(): ?string
     {
         return $this->createTime;
     }
 
-    public function setCreateTime(string $createTime): void
+    public function setCreateTime(?string $createTime): void
     {
         $this->createTime = $createTime;
     }
 
-    public function getExecutionId(): string
+    public function getLastUpdated(): ?string
+    {
+        return $this->lastUpdated;
+    }
+
+    public function setLastUpdated(?string $lastUpdated): void
+    {
+        $this->lastUpdated = $lastUpdated;
+    }
+
+    public function getExecutionId(): ?string
     {
         return $this->executionId;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
@@ -1440,7 +1361,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         return $this->executionId === null;// && caseExecutionId === null;
     }
 
-    public function getProcessDefinition(): ProcessDefinitionEntity
+    public function getProcessDefinition(): ?ProcessDefinitionEntity
     {
         if ($this->processDefinitionId !== null) {
             return Context::getProcessEngineConfiguration()
@@ -1450,7 +1371,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         return null;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
@@ -1486,7 +1407,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         }
     }
 
-    public function getFormKey(): string
+    public function getFormKey(): ?string
     {
         if (!$this->isFormKeyInitialized) {
             //throw LOG.uninitializedFormKeyException();
@@ -1504,22 +1425,22 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         return $this->formRef;
     }
 
-    public function setProcessDefinitionId(string $processDefinitionId): void
+    public function setProcessDefinitionId(?string $processDefinitionId): void
     {
         $this->processDefinitionId = $processDefinitionId;
     }
 
-    public function getAssignee(): string
+    public function getAssignee(): ?string
     {
         return $this->assignee;
     }
 
-    public function getTaskDefinitionKey(): string
+    public function getTaskDefinitionKey(): ?string
     {
         return $this->taskDefinitionKey;
     }
 
-    public function setTaskDefinitionKey(string $taskDefinitionKey): void
+    public function setTaskDefinitionKey(?string $taskDefinitionKey): void
     {
         if (
             ($taskDefinitionKey === null && $this->taskDefinitionKey !== null)
@@ -1533,17 +1454,17 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         $this->taskDefinitionKey = $taskDefinitionKey;
     }
 
-    public function getEventName(): string
+    public function getEventName(): ?string
     {
         return $this->eventName;
     }
 
-    public function setEventName(string $eventName): void
+    public function setEventName(?string $eventName): void
     {
         $this->eventName = $this->eventName;
     }
 
-    public function setExecutionId(string $executionId): void
+    public function setExecutionId(?string $executionId): void
     {
         $this->executionId = $executionId;
     }
@@ -1561,22 +1482,22 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         $this->processInstance = $processInstance;
     }
 
-    public function setProcessInstanceId(string $processInstanceId): void
+    public function setProcessInstanceId(?string $processInstanceId): void
     {
         $this->processInstanceId = $processInstanceId;
     }
 
-    public function getOwner(): string
+    public function getOwner(): ?string
     {
         return $this->owner;
     }
 
-    public function getDelegationState(): string
+    public function getDelegationState(): ?string
     {
         return $this->delegationState;
     }
 
-    public function setDelegationState(string $delegationState): void
+    public function setDelegationState(?string $delegationState): void
     {
         $this->propertyChanged(self::DELEGATION, $this->delegationState, $delegationState);
         $this->delegationState = $delegationState;
@@ -1592,7 +1513,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         return $this->isDeleted;
     }
 
-    public function getDeleteReason(): string
+    public function getDeleteReason(): ?string
     {
         return $this->deleteReason;
     }
@@ -1622,7 +1543,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         return $this->suspensionState == SuspensionState::suspended()->getStateCode();
     }
 
-    public function getFollowUpDate(): string
+    public function getFollowUpDate(): ?string
     {
         return $this->followUpDate;
     }
@@ -1637,7 +1558,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         $this->tenantId = $tenantId;
     }
 
-    public function setFollowUpDate(string $followUpDate): void
+    public function setFollowUpDate(?string $followUpDate): void
     {
         $this->registerCommandContextCloseListener();
         $this->propertyChanged(self::FOLLOW_UP_DATE, $this->followUpDate, $followUpDate);
@@ -1674,7 +1595,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         return $this->propertyChanges;
     }
 
-    public function logUserOperation(string $operation): void
+    public function logUserOperation(?string $operation): void
     {
         if (
             UserOperationLogEntryInterface::OPERATION_TYPE_COMPLETE == $operation ||
@@ -1740,7 +1661,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         return true;
     }
 
-    public function executeMetrics(string $metricsName, CommandContext $commandContext): void
+    public function executeMetrics(?string $metricsName, CommandContext $commandContext): void
     {
         $processEngineConfiguration = Context::getProcessEngineConfiguration();
         if (Metrics::ACTIVTY_INSTANCE_START == $metricsName && $processEngineConfiguration->isMetricsEnabled()) {
@@ -1755,12 +1676,12 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         }
     }
 
-    public function addIdentityLinkChanges(string $type, string $oldProperty, string $newProperty): void
+    public function addIdentityLinkChanges(?string $type, ?string $oldProperty, ?string $newProperty): void
     {
         $this->identityLinkChanges[] = new PropertyChange($type, $oldProperty, $newProperty);
     }
 
-    public function setVariablesLocal(array $variables, ?bool $skipSerializationFormatCheck = null): void
+    public function setVariablesLocal($variables, ?bool $skipSerializationFormatCheck = null): void
     {
         parent::setVariablesLocal($variables, $skipSerializationFormatCheck);
         Context::getCommandContext()->getDbEntityManager()->forceUpdate($this);
@@ -1795,7 +1716,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         return $referenceIdAndClass;
     }
 
-    public function bpmnError(string $errorCode, ?string $errorMessage, ?array $variables = null): void
+    public function bpmnError(?string $errorCode, ?string $errorMessage, ?array $variables = null): void
     {
         $this->ensureTaskActive();
         $activityExecution = $this->getExecution();
@@ -1816,7 +1737,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         }
     }
 
-    public function escalation(string $escalationCode, ?array $variables = null): void
+    public function escalation(?string $escalationCode, ?array $variables = null): void
     {
         $this->ensureTaskActive();
         $activityExecution = $this->getExecution();
@@ -1825,5 +1746,10 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
             $activityExecution->setVariables($variables);
         }
         EscalationHandler::propagateEscalation($activityExecution, $escalationCode);
+    }
+
+    public function getDependentEntities(): array
+    {
+        return [];
     }
 }

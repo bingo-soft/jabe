@@ -18,5 +18,5 @@ interface UpdateProcessDefinitionSuspensionStateTenantBuilderInterface
      *          the id of the tenant
      * @return UpdateProcessDefinitionSuspensionStateBuilderInterface the builder
      */
-    public function processDefinitionTenantId(string $tenantId): UpdateProcessDefinitionSuspensionStateBuilderInterface;
+    public function processDefinitionTenantId(?string $tenantId): UpdateProcessDefinitionSuspensionStateBuilderInterface;
 }

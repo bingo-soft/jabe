@@ -51,22 +51,22 @@ class FormFieldImpl implements FormFieldInterface, \Serializable
 
     // getters / setters ///////////////////////////////////////////
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getLabel(): string
+    public function getLabel(): ?string
     {
         return $this->label;
     }
 
-    public function setLabel(string $label): void
+    public function setLabel(?string $label): void
     {
         $this->label = $label;
     }
@@ -76,7 +76,7 @@ class FormFieldImpl implements FormFieldInterface, \Serializable
         return $this->type;
     }
 
-    public function getTypeName(): string
+    public function getTypeName(): ?string
     {
         return $this->type->getName();
     }

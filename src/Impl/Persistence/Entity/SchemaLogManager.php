@@ -24,7 +24,7 @@ class SchemaLogManager extends AbstractManager
         }
     }
 
-    public function findSchemaLogEntriesByQueryCriteria(SchemaLogQueryImpl $schemaLogQueryImpl, Page $page): array
+    public function findSchemaLogEntriesByQueryCriteria(SchemaLogQueryImpl $schemaLogQueryImpl, ?Page $page): array
     {
         if ($this->isAuthorized()) {
             return $this->getDbEntityManager()->selectList("selectSchemaLogEntryByQueryCriteria", $schemaLogQueryImpl, $page);

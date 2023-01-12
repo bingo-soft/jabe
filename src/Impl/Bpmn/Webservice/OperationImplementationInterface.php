@@ -7,10 +7,10 @@ interface OperationImplementationInterface
     /**
      * @return string the id of this implementation
      */
-    public function getId(): string;
+    public function getId(): ?string;
 
     /**
      * @return string the name of this implementation
      */
-    public function getName(): string;
+    public function getName(): ?string;
 }

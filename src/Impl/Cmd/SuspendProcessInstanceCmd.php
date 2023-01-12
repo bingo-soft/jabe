@@ -24,7 +24,7 @@ class SuspendProcessInstanceCmd extends AbstractSetProcessInstanceStateCmd
         return new SuspendJobCmd($jobCommandBuilder);
     }
 
-    protected function getLogEntryOperation(): string
+    protected function getLogEntryOperation(): ?string
     {
         return UserOperationLogEntryInterface::OPERATION_TYPE_SUSPEND;
     }

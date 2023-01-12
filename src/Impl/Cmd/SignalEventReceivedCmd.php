@@ -37,7 +37,7 @@ class SignalEventReceivedCmd implements CommandInterface
         return null;
     }
 
-    protected function sendSignal(CommandContext $commandContext, string $signalName): void
+    protected function sendSignal(CommandContext $commandContext, ?string $signalName): void
     {
         $signalEventSubscriptions = $this->findSignalEventSubscriptions($commandContext, $signalName);
 
@@ -52,7 +52,7 @@ class SignalEventReceivedCmd implements CommandInterface
         $this->startProcessInstances($startSignalEventSubscriptions, $processDefinitions);
     }
 
-    protected function findSignalEventSubscriptions(CommandContext $commandContext, string $signalName): array
+    protected function findSignalEventSubscriptions(CommandContext $commandContext, ?string $signalName): array
     {
         $eventSubscriptionManager = $commandContext->getEventSubscriptionManager();
 
@@ -86,7 +86,7 @@ class SignalEventReceivedCmd implements CommandInterface
         return $processDefinitions;
     }
 
-    protected function sendSignalToExecution(CommandContext $commandContext, string $signalName, string $executionId): void
+    protected function sendSignalToExecution(CommandContext $commandContext, ?string $signalName, ?string $executionId): void
     {
         $executionManager = $commandContext->getExecutionManager();
         $execution = $executionManager->findExecutionById($executionId);
@@ -182,5 +182,10 @@ class SignalEventReceivedCmd implements CommandInterface
         }
 
         return $result;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

@@ -12,5 +12,5 @@ interface HostnameProviderInterface
      * @param processEngineConfiguration of the Process Engine that will run on the current host
      * @return a String identifying the current host
      */
-    public function getHostname(ProcessEngineConfigurationImpl $processEngineConfiguration): string;
+    public function getHostname(ProcessEngineConfigurationImpl $processEngineConfiguration): ?string;
 }

@@ -12,7 +12,7 @@ abstract class BaseLogger
     /** the component Id of the logger. */
     protected $componentId;
 
-    public static function createLogger($loggerClass, $projectCode, string $name, string $componentId): BaseLogger
+    public static function createLogger($loggerClass, $projectCode, ?string $name, ?string $componentId): BaseLogger
     {
         try {
             $logger = new $loggerClass();
@@ -32,7 +32,7 @@ abstract class BaseLogger
      * @param messageTemplate the message template to use
      * @param parameters a list of optional parameters
      */
-    protected function logDebug(string $id, string $messageTemplate, ?array $parameters = null): void
+    protected function logDebug(?string $id, ?string $messageTemplate, ?array $parameters = null): void
     {
         if ($this->delegateLogger->isDebugEnabled()) {
             $msg = $this->formatMessageTemplate($id, $messageTemplate);
@@ -47,7 +47,7 @@ abstract class BaseLogger
      * @param messageTemplate the message template to use
      * @param parameters a list of optional parameters
      */
-    protected function logInfo(string $id, string $messageTemplate, ?array $parameters = null): void
+    protected function logInfo(?string $id, ?string $messageTemplate, ?array $parameters = null): void
     {
         if ($this->delegateLogger->isInfoEnabled()) {
             $msg = $this->formatMessageTemplate($id, $messageTemplate);
@@ -62,7 +62,7 @@ abstract class BaseLogger
      * @param messageTemplate the message template to use
      * @param parameters a list of optional parameters
      */
-    protected function logWarn(string $id, string $messageTemplate, ?array $parameters = null): void
+    protected function logWarn(?string $id, ?string $messageTemplate, ?array $parameters = null): void
     {
         if ($this->delegateLogger->isWarnEnabled()) {
             $msg = $this->formatMessageTemplate($id, $messageTemplate);
@@ -77,7 +77,7 @@ abstract class BaseLogger
      * @param messageTemplate the message template to use
      * @param parameters a list of optional parameters
      */
-    protected function logError(string $id, string $messageTemplate, ?array $parameters = null): void
+    protected function logError(?string $id, ?string $messageTemplate, ?array $parameters = null): void
     {
         if ($this->delegateLogger->isErrorEnabled()) {
             $msg = $this->formatMessageTemplate($id, $messageTemplate);
@@ -130,7 +130,7 @@ abstract class BaseLogger
      *
      * @return string the formatted template
      */
-    protected function formatMessageTemplate(string $id, string $messageTemplate): string
+    protected function formatMessageTemplate(?string $id, ?string $messageTemplate): ?string
     {
         return sprintf("%s-%s%s %s", $this->projectCode, $this->componentId, $id, $messageTemplate);
     }
@@ -144,7 +144,7 @@ abstract class BaseLogger
      *
      * @return string the prepared exception message
      */
-    protected function exceptionMessage(string $id, string $messageTemplate, ?array $parameters = null): string
+    protected function exceptionMessage(?string $id, ?string $messageTemplate, ?array $parameters = null): ?string
     {
         $formattedTemplate = $this->formatMessageTemplate($id, $messageTemplate);
         if (empty($parameters)) {

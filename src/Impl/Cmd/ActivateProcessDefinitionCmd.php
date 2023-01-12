@@ -20,7 +20,7 @@ class ActivateProcessDefinitionCmd extends AbstractSetProcessDefinitionStateCmd
         return SuspensionState::active();
     }
 
-    protected function getDelayedExecutionJobHandlerType(): string
+    protected function getDelayedExecutionJobHandlerType(): ?string
     {
         return TimerActivateProcessDefinitionHandler::TYPE;
     }
@@ -35,7 +35,7 @@ class ActivateProcessDefinitionCmd extends AbstractSetProcessDefinitionStateCmd
         return new ActivateProcessInstanceCmd($processInstanceCommandBuilder);
     }
 
-    protected function getLogEntryOperation(): string
+    protected function getLogEntryOperation(): ?string
     {
         return UserOperationLogEntryInterface::OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION;
     }

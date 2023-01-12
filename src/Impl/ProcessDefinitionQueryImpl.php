@@ -46,7 +46,7 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
     protected $resourceName;
     protected $resourceNameLike;
     protected $version;
-    protected $latest = false;
+    protected bool $latest = false;
     protected $suspensionState;
     protected $authorizationUserId;
     protected $cachedCandidateGroups = [];
@@ -59,27 +59,27 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
     protected $eventSubscriptionName;
     protected $eventSubscriptionType;
 
-    protected $isTenantIdSet = false;
+    protected bool $isTenantIdSet = false;
     protected $tenantIds = [];
-    protected $includeDefinitionsWithoutTenantId = false;
+    protected bool $includeDefinitionsWithoutTenantId = false;
 
-    protected $isVersionTagSet = false;
+    protected bool $isVersionTagSet = false;
     protected $versionTag;
     protected $versionTagLike;
 
-    protected $isStartableInTasklist = false;
-    protected $isNotStartableInTasklist = false;
-    protected $startablePermissionCheck = false;
+    protected bool $isStartableInTasklist = false;
+    protected bool $isNotStartableInTasklist = false;
+    protected bool $startablePermissionCheck = false;
     // for internal use
     protected $processDefinitionCreatePermissionChecks = [];
-    private $shouldJoinDeploymentTable = false;
+    private bool $shouldJoinDeploymentTable = false;
 
     public function __construct(CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
     }
 
-    public function processDefinitionId(string $processDefinitionId): ProcessDefinitionQueryImpl
+    public function processDefinitionId(?string $processDefinitionId): ProcessDefinitionQueryImpl
     {
         $this->id = $processDefinitionId;
         return $this;
@@ -91,42 +91,42 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
         return $this;
     }
 
-    public function processDefinitionCategory(string $category): ProcessDefinitionQueryImpl
+    public function processDefinitionCategory(?string $category): ProcessDefinitionQueryImpl
     {
         EnsureUtil::ensureNotNull("category", "category", $category);
         $this->category = $category;
         return $this;
     }
 
-    public function processDefinitionCategoryLike(string $categoryLike): ProcessDefinitionQueryImpl
+    public function processDefinitionCategoryLike(?string $categoryLike): ProcessDefinitionQueryImpl
     {
         EnsureUtil::ensureNotNull("categoryLike", "categoryLike", $categoryLike);
         $this->categoryLike = $categoryLike;
         return $this;
     }
 
-    public function processDefinitionName(string $name): ProcessDefinitionQueryImpl
+    public function processDefinitionName(?string $name): ProcessDefinitionQueryImpl
     {
         EnsureUtil::ensureNotNull("name", "name", $name);
         $this->name = $name;
         return $this;
     }
 
-    public function processDefinitionNameLike(string $nameLike): ProcessDefinitionQueryImpl
+    public function processDefinitionNameLike(?string $nameLike): ProcessDefinitionQueryImpl
     {
         EnsureUtil::ensureNotNull("nameLike", "nameLike", $nameLike);
         $this->nameLike = $nameLike;
         return $this;
     }
 
-    public function deploymentId(string $deploymentId): ProcessDefinitionQueryImpl
+    public function deploymentId(?string $deploymentId): ProcessDefinitionQueryImpl
     {
         EnsureUtil::ensureNotNull("deploymentId", "deploymentId", $deploymentId);
         $this->deploymentId = $deploymentId;
         return $this;
     }
 
-    public function deployedAfter(string $deployedAfter): ProcessDefinitionQueryImpl
+    public function deployedAfter(?string $deployedAfter): ProcessDefinitionQueryImpl
     {
         EnsureUtil::ensureNotNull("deployedAfter", "deployedAfter", $deployedAfter);
         $this->shouldJoinDeploymentTable = true;
@@ -134,7 +134,7 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
         return $this;
     }
 
-    public function deployedAt(string $deployedAt): ProcessDefinitionQueryImpl
+    public function deployedAt(?string $deployedAt): ProcessDefinitionQueryImpl
     {
         EnsureUtil::ensureNotNull("deployedAt", "deployedAt", $deployedAt);
         $this->shouldJoinDeploymentTable = true;
@@ -142,7 +142,7 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
         return $this;
     }
 
-    public function processDefinitionKey(string $key): ProcessDefinitionQueryImpl
+    public function processDefinitionKey(?string $key): ProcessDefinitionQueryImpl
     {
         EnsureUtil::ensureNotNull("key", "key", $key);
         $this->key = $key;
@@ -156,21 +156,21 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
         return $this;
     }
 
-    public function processDefinitionKeyLike(string $keyLike): ProcessDefinitionQueryImpl
+    public function processDefinitionKeyLike(?string $keyLike): ProcessDefinitionQueryImpl
     {
         EnsureUtil::ensureNotNull("keyLike", "keyLike", $keyLike);
         $this->keyLike = $keyLike;
         return $this;
     }
 
-    public function processDefinitionResourceName(string $resourceName): ProcessDefinitionQueryImpl
+    public function processDefinitionResourceName(?string $resourceName): ProcessDefinitionQueryImpl
     {
         EnsureUtil::ensureNotNull("resourceName", "resourceName", $resourceName);
         $this->resourceName = $resourceName;
         return $this;
     }
 
-    public function processDefinitionResourceNameLike(string $resourceNameLike): ProcessDefinitionQueryImpl
+    public function processDefinitionResourceNameLike(?string $resourceNameLike): ProcessDefinitionQueryImpl
     {
         EnsureUtil::ensureNotNull("resourceNameLike", "resourceNameLike", $resourceNameLike);
         $this->resourceNameLike = $resourceNameLike;
@@ -203,23 +203,23 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
         return $this;
     }
 
-    public function messageEventSubscription(string $messageName): ProcessDefinitionQueryInterface
+    public function messageEventSubscription(?string $messageName): ProcessDefinitionQueryInterface
     {
         return $this->eventSubscription(EventType::message(), $messageName);
     }
 
-    public function messageEventSubscriptionName(string $messageName): ProcessDefinitionQueryInterface
+    public function messageEventSubscriptionName(?string $messageName): ProcessDefinitionQueryInterface
     {
         return $this->eventSubscription(EventType::message(), $messageName);
     }
 
-    public function processDefinitionStarter(string $procDefId): ProcessDefinitionQueryInterface
+    public function processDefinitionStarter(?string $procDefId): ProcessDefinitionQueryInterface
     {
         $this->procDefId = $procDefId;
         return $this;
     }
 
-    public function eventSubscription(EventType $eventType, string $eventName): ProcessDefinitionQueryInterface
+    public function eventSubscription(EventType $eventType, ?string $eventName): ProcessDefinitionQueryInterface
     {
         EnsureUtil::ensureNotNull("event type", "eventType", $eventType);
         EnsureUtil::ensureNotNull("event name", "eventName", $eventName);
@@ -228,28 +228,28 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
         return $this;
     }
 
-    public function incidentType(string $incidentType): ProcessDefinitionQueryInterface
+    public function incidentType(?string $incidentType): ProcessDefinitionQueryInterface
     {
         EnsureUtil::ensureNotNull("incident type", "incidentType", $incidentType);
         $this->incidentType = $incidentType;
         return $this;
     }
 
-    public function incidentId(string $incidentId): ProcessDefinitionQueryInterface
+    public function incidentId(?string $incidentId): ProcessDefinitionQueryInterface
     {
         EnsureUtil::ensureNotNull("incident id", "incidentId", $incidentId);
         $this->incidentId = $incidentId;
         return $this;
     }
 
-    public function incidentMessage(string $incidentMessage): ProcessDefinitionQueryInterface
+    public function incidentMessage(?string $incidentMessage): ProcessDefinitionQueryInterface
     {
         EnsureUtil::ensureNotNull("incident message", "incidentMessage", $incidentMessage);
         $this->incidentMessage = $incidentMessage;
         return $this;
     }
 
-    public function incidentMessageLike(string $incidentMessageLike): ProcessDefinitionQueryInterface
+    public function incidentMessageLike(?string $incidentMessageLike): ProcessDefinitionQueryInterface
     {
         EnsureUtil::ensureNotNull("incident messageLike", "incidentMessageLike", $incidentMessageLike);
         $this->incidentMessageLike = $incidentMessageLike;
@@ -282,7 +282,7 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
         return $this;
     }
 
-    public function versionTag(string $versionTag): ProcessDefinitionQueryInterface
+    public function versionTag(?string $versionTag): ProcessDefinitionQueryInterface
     {
         EnsureUtil::ensureNotNull("versionTag", "versionTag", $versionTag);
         $this->versionTag = $versionTag;
@@ -291,7 +291,7 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
         return $this;
     }
 
-    public function versionTagLike(string $versionTagLike): ProcessDefinitionQueryInterface
+    public function versionTagLike(?string $versionTagLike): ProcessDefinitionQueryInterface
     {
         EnsureUtil::ensureNotNull("versionTagLike", "versionTagLike", $versionTagLike);
         $this->versionTagLike = $versionTagLike;
@@ -383,18 +383,15 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
         ->findProcessDefinitionCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         // fetch candidate groups
         $this->getCandidateGroups();
-        $list = $commandContext
-        ->getProcessDefinitionManager()
-        ->findProcessDefinitionsByQueryCriteria($this, $page);
-
+        $list = $commandContext->getProcessDefinitionManager()->findProcessDefinitionsByQueryCriteria($this, $page);
         $shouldQueryAddBpmnModelInstancesToCache =
             $commandContext->getProcessEngineConfiguration()->getEnableFetchProcessDefinitionDescription();
-        if ($this->shouldQueryAddBpmnModelInstancesToCache) {
+        if ($shouldQueryAddBpmnModelInstancesToCache) {
             $this->addProcessDefinitionToCacheAndRetrieveDocumentation($list);
         }
 
@@ -403,7 +400,7 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
 
     protected function addProcessDefinitionToCacheAndRetrieveDocumentation(array $list): void
     {
-        foreach ($this->list as $processDefinition) {
+        foreach ($list as $processDefinition) {
             $bpmnModelInstance = Context::getProcessEngineConfiguration()
                 ->getDeploymentCache()
                 ->findBpmnModelInstanceForProcessDefinition($processDefinition);
@@ -433,22 +430,22 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
 
     //getters ////////////////////////////////////////////
 
-    public function getDeploymentId(): string
+    public function getDeploymentId(): ?string
     {
         return $this->deploymentId;
     }
 
-    public function getDeployedAfter(): string
+    public function getDeployedAfter(): ?string
     {
         return $this->deployedAfter;
     }
 
-    public function getDeployedAt(): string
+    public function getDeployedAt(): ?string
     {
         return $this->deployedAt;
     }
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -458,27 +455,27 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
         return $this->ids;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getNameLike(): string
+    public function getNameLike(): ?string
     {
         return $this->nameLike;
     }
 
-    public function getKey(): string
+    public function getKey(): ?string
     {
         return $this->key;
     }
 
-    public function getKeyLike(): string
+    public function getKeyLike(): ?string
     {
         return $this->keyLike;
     }
 
-    public function getVersion(): int
+    public function getVersion(): ?int
     {
         return $this->version;
     }
@@ -488,27 +485,27 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
         return $this->latest;
     }
 
-    public function getCategory(): string
+    public function getCategory(): ?string
     {
         return $this->category;
     }
 
-    public function getCategoryLike(): string
+    public function getCategoryLike(): ?string
     {
         return $this->categoryLike;
     }
 
-    public function getResourceName(): string
+    public function getResourceName(): ?string
     {
         return $this->resourceName;
     }
 
-    public function getResourceNameLike(): string
+    public function getResourceNameLike(): ?string
     {
         return $this->resourceNameLike;
     }
 
-    public function getSuspensionState(): SuspensionState
+    public function getSuspensionState(): ?SuspensionState
     {
         return $this->suspensionState;
     }
@@ -518,27 +515,27 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
         $this->suspensionState = $suspensionState;
     }
 
-    public function getIncidentId(): string
+    public function getIncidentId(): ?string
     {
         return $this->incidentId;
     }
 
-    public function getIncidentType(): string
+    public function getIncidentType(): ?string
     {
         return $this->incidentType;
     }
 
-    public function getIncidentMessage(): string
+    public function getIncidentMessage(): ?string
     {
         return $this->incidentMessage;
     }
 
-    public function getIncidentMessageLike(): string
+    public function getIncidentMessageLike(): ?string
     {
         return $this->incidentMessageLike;
     }
 
-    public function getVersionTag(): string
+    public function getVersionTag(): ?string
     {
         return $this->versionTag;
     }
@@ -598,7 +595,7 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
         return $this->cachedCandidateGroups;
     }
 
-    public function startableByUser(string $userId): ProcessDefinitionQueryImpl
+    public function startableByUser(?string $userId): ProcessDefinitionQueryImpl
     {
         EnsureUtil::ensureNotNull("userId", "userId", $userId);
         $this->authorizationUserId = $userId;

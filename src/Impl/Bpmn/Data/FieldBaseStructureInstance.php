@@ -15,7 +15,7 @@ class FieldBaseStructureInstance implements StructureInstanceInterface
         $this->structureDefinition = $structureDefinition;
     }
 
-    public function setFieldValue(string $fieldName, $value): void
+    public function setFieldValue(?string $fieldName, $value): void
     {
         $this->fieldValues[$fieldName] = $value;
     }

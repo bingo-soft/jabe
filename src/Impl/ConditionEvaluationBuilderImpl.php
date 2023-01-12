@@ -24,7 +24,7 @@ class ConditionEvaluationBuilderImpl implements ConditionEvaluationBuilderInterf
     protected $variables;
 
     protected $tenantId = null;
-    protected $isTenantIdSet = false;
+    protected bool $isTenantIdSet = false;
 
     public function __construct(CommandExecutorInterface $commandExecutor)
     {
@@ -38,12 +38,12 @@ class ConditionEvaluationBuilderImpl implements ConditionEvaluationBuilderInterf
         return $this->commandExecutor;
     }
 
-    public function getBusinessKey(): string
+    public function getBusinessKey(): ?string
     {
         return $this->businessKey;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
@@ -53,7 +53,7 @@ class ConditionEvaluationBuilderImpl implements ConditionEvaluationBuilderInterf
         return $this->variables;
     }
 
-    public function getTenantId(): string
+    public function getTenantId(): ?string
     {
         return $this->tenantId;
     }
@@ -68,21 +68,21 @@ class ConditionEvaluationBuilderImpl implements ConditionEvaluationBuilderInterf
         return $this->commandExecutor->execute($command);
     }
 
-    public function processInstanceBusinessKey(string $businessKey): ConditionEvaluationBuilderInterface
+    public function processInstanceBusinessKey(?string $businessKey): ConditionEvaluationBuilderInterface
     {
         EnsureUtil::ensureNotNull("businessKey", "businessKey", $businessKey);
         $this->businessKey = $businessKey;
         return $this;
     }
 
-    public function processDefinitionId(string $processDefinitionId): ConditionEvaluationBuilderInterface
+    public function processDefinitionId(?string $processDefinitionId): ConditionEvaluationBuilderInterface
     {
         EnsureUtil::ensureNotNull("processDefinitionId", "processDefinitionId", $processDefinitionId);
         $this->processDefinitionId = $processDefinitionId;
         return $this;
     }
 
-    public function setVariable(string $variableName, $variableValue): ConditionEvaluationBuilderInterface
+    public function setVariable(?string $variableName, $variableValue): ConditionEvaluationBuilderInterface
     {
         EnsureUtil::ensureNotNull("variableName", "variableName", $variableName);
         $this->variables->put($variableName, $variableValue);
@@ -98,7 +98,7 @@ class ConditionEvaluationBuilderImpl implements ConditionEvaluationBuilderInterf
         return $this;
     }
 
-    public function tenantId(string $tenantId): ConditionEvaluationBuilderInterface
+    public function tenantId(?string $tenantId): ConditionEvaluationBuilderInterface
     {
         EnsureUtil::ensureNotNull(
             "The tenant-id cannot be null. Use 'withoutTenantId()' if you want to evaluate conditional start event with a process definition which has no tenant-id.",

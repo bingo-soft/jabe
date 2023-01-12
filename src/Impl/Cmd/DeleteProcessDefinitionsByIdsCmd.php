@@ -97,9 +97,9 @@ class DeleteProcessDefinitionsByIdsCmd implements CommandInterface, \Serializabl
     protected function getSingleProcessDefinition(CommandContext $commandContext): ?ProcessDefinitionInterface
     {
         $processDefinitionId = $this->processDefinitionIds[0];
-        EnsureUtil::ensureNotNull("processDefinitionId", "processDefinitionId", $this->processDefinitionId);
-        $processDefinition = $commandContext->getProcessDefinitionManager()->findLatestProcessDefinitionById($this->processDefinitionId);
-        EnsureUtil::ensureNotNull("No process definition found with id '" . $this->processDefinitionId . "'", "processDefinition", $processDefinition);
+        EnsureUtil::ensureNotNull("processDefinitionId", "processDefinitionId", $processDefinitionId);
+        $processDefinition = $commandContext->getProcessDefinitionManager()->findLatestProcessDefinitionById($processDefinitionId);
+        EnsureUtil::ensureNotNull("No process definition found with id '" . $processDefinitionId . "'", "processDefinition", $processDefinition);
         return $processDefinition;
     }
 
@@ -115,9 +115,9 @@ class DeleteProcessDefinitionsByIdsCmd implements CommandInterface, \Serializabl
             $group->key = $processDefinition->getKey();
             $group->tenant = $processDefinition->getTenantId();
 
-            $definitions = $group->processDefinitions;
+            $definitions = &$group->processDefinitions;
             if (array_key_exists(strval($group), $map)) {
-                $definitions = $map[$group];
+                $definitions = $map[strval($group)];
             } else {
                 $groups[] = $group;
                 $map[strval($group)] = $definitions;
@@ -214,5 +214,10 @@ class DeleteProcessDefinitionsByIdsCmd implements CommandInterface, \Serializabl
                 }
             }
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

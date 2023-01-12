@@ -19,7 +19,7 @@ class ClaimTaskCmd implements CommandInterface, \Serializable
     protected $taskId;
     protected $userId;
 
-    public function __construct(string $taskId, string $userId)
+    public function __construct(?string $taskId, ?string $userId)
     {
         $this->taskId = $taskId;
         $this->userId = $userId;
@@ -74,5 +74,10 @@ class ClaimTaskCmd implements CommandInterface, \Serializable
         foreach ($commandContext->getProcessEngineConfiguration()->getCommandCheckers() as $checker) {
             $checker->checkTaskWork($task);
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

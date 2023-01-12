@@ -12,22 +12,22 @@ class SchemaLogEntryEntity implements SchemaLogEntryInterface, DbEntityInterface
     protected $timestamp;
     protected $version;
 
-    public function getTimestamp(): string
+    public function getTimestamp(): ?string
     {
         return $this->timestamp;
     }
 
-    public function setTimestamp(string $timestamp): void
+    public function setTimestamp(?string $timestamp): void
     {
         $this->timestamp = $timestamp;
     }
 
-    public function getVersion(): string
+    public function getVersion(): ?string
     {
         return $this->version;
     }
 
-    public function setVersion(string $version): void
+    public function setVersion(?string $version): void
     {
         $this->version = $version;
     }
@@ -39,7 +39,7 @@ class SchemaLogEntryEntity implements SchemaLogEntryInterface, DbEntityInterface
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }

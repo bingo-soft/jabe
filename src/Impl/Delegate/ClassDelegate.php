@@ -7,13 +7,13 @@ abstract class ClassDelegate
     protected $className;
     protected $fieldDeclarations;
 
-    public function __construct(string $className, array $fieldDeclarations)
+    public function __construct(?string $className, array $fieldDeclarations)
     {
         $this->className = $className;
         $this->fieldDeclarations = $fieldDeclarations;
     }
 
-    public function getClassName(): string
+    public function getClassName(): ?string
     {
         return $this->className;
     }

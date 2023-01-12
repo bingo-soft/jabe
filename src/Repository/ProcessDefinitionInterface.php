@@ -14,7 +14,7 @@ interface ProcessDefinitionInterface extends ResourceDefinitionInterface
     public function isSuspended(): bool;
 
     /** Version tag of the process definition. */
-    public function getVersionTag(): string;
+    public function getVersionTag(): ?string;
 
     /** Returns true if the process definition is startable in Tasklist. */
     public function isStartableInTasklist(): bool;

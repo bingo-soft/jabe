@@ -16,7 +16,7 @@ interface FilterServiceInterface
      * @return a new task filter with a name
      * @throws AuthorizationException if the user has no Permissions#CREATE permissions on Resources#FILTER.
      */
-    public function newTaskFilter(string $filterName = null): FilterInterface;
+    public function newTaskFilter(?string $filterName = null): FilterInterface;
 
     /**
      * Creates a new filter query
@@ -55,7 +55,7 @@ interface FilterServiceInterface
      * @return FilterInterface the filter
      * @throws AuthorizationException if the user has no Permissions#READ permissions on Resources#FILTER.
      */
-    public function getFilter(string $filterId): ?FilterInterface;
+    public function getFilter(?string $filterId): ?FilterInterface;
 
     /**
      * Deletes a filter by its id.
@@ -63,7 +63,7 @@ interface FilterServiceInterface
      * @param filterId the id of the filter
      * @throws AuthorizationException if the user has no Permissions#DELETE permissions on Resources#FILTER.
      */
-    public function deleteFilter(string $filterId): void;
+    public function deleteFilter(?string $filterId): void;
 
     /**
      * Executes the extended query of a filter and returns the result as list.
@@ -83,7 +83,7 @@ interface FilterServiceInterface
      *  Integer#MAX_VALUE).
      *  Please use {@link #listPage(String, Query, int, int)} instead.
      */
-    public function list(string $filterId, ?QueryInterface $extendingQuery = null): array;
+    public function list(?string $filterId, ?QueryInterface $extendingQuery = null): array;
 
     /**
      * Executes the extended query of a filter and returns the result in the given boundaries as list.
@@ -104,7 +104,7 @@ interface FilterServiceInterface
      *  be specified with the process engine configuration property <code>queryMaxResultsLimit</code>
      *  (default Integer#MAX_VALUE).
      */
-    public function listPage(string $filterId, ?QueryInterface $extendingQuery, int $firstResult, int $maxResults): array;
+    public function listPage(?string $filterId, ?QueryInterface $extendingQuery, int $firstResult, int $maxResults): array;
 
     /**
      * Executes the extended query of the filter and returns the a single result.
@@ -120,7 +120,7 @@ interface FilterServiceInterface
      *  <code>enableExpressionsInAdhocQueries</code> (default <code>false</code>) and
      *  <code>enableExpressionsInStoredQueries</code> (default <code>true</code>) to <code>true</code>.
      */
-    public function singleResult(string $filterId, ?QueryInterface $extendingQuery = null);
+    public function singleResult(?string $filterId, ?QueryInterface $extendingQuery = null);
 
     /**
      * Executes the extended query of the filter and returns the result count.
@@ -136,5 +136,5 @@ interface FilterServiceInterface
      *  <code>enableExpressionsInAdhocQueries</code> (default <code>false</code>) and
      *  <code>enableExpressionsInStoredQueries</code> (default <code>true</code>) to <code>true</code>.
      */
-    public function count(string $filterId, ?QueryInterface $extendingQuery = null): int;
+    public function count(?string $filterId, ?QueryInterface $extendingQuery = null): int;
 }

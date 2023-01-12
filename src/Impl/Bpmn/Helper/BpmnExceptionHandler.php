@@ -65,7 +65,7 @@ class BpmnExceptionHandler
      * @return BpmnError the BpmnError that was the cause of this exception or null if no
      *         BpmnError was found
      */
-    protected static function checkIfCauseOfExceptionIsBpmnError(\Throwable $e): BpmnError
+    protected static function checkIfCauseOfExceptionIsBpmnError(\Throwable $e): ?BpmnError
     {
         if ($e instanceof BpmnError) {
             return $e;
@@ -84,7 +84,7 @@ class BpmnExceptionHandler
         self::propagateError($error->getCode(), $error->getMessage(), null, $execution);
     }
 
-    public static function propagateError(string $errorCode, string $errorMessage, \Exception $origException, ActivityExecutionInterface $execution): void
+    public static function propagateError(?string $errorCode, ?string $errorMessage, \Exception $origException, ActivityExecutionInterface $execution): void
     {
         $walker = new ActivityExecutionHierarchyWalker($execution);
 

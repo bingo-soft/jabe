@@ -18,7 +18,7 @@ class HistoricJobLogEvent extends HistoryEvent
 
     protected $jobDueDate;
 
-    protected $jobRetries;
+    protected int $jobRetries = 0;
 
     protected $jobPriority;
 
@@ -38,38 +38,38 @@ class HistoricJobLogEvent extends HistoryEvent
 
     protected $deploymentId;
 
-    protected $state;
+    protected int $state = 0;
 
     protected $tenantId;
 
     protected $hostname;
 
-    public function getTimestamp(): string
+    public function getTimestamp(): ?string
     {
         return $this->timestamp;
     }
 
-    public function setTimestamp(string $timestamp): void
+    public function setTimestamp(?string $timestamp): void
     {
         $this->timestamp = $timestamp;
     }
 
-    public function getJobId(): string
+    public function getJobId(): ?string
     {
         return $this->jobId;
     }
 
-    public function setJobId(string $jobId): void
+    public function setJobId(?string $jobId): void
     {
         $this->jobId = $jobId;
     }
 
-    public function getJobDueDate(): string
+    public function getJobDueDate(): ?string
     {
         return $this->jobDueDate;
     }
 
-    public function setJobDueDate(string $jobDueDate): void
+    public function setJobDueDate(?string $jobDueDate): void
     {
         $this->jobDueDate = $jobDueDate;
     }
@@ -94,12 +94,12 @@ class HistoricJobLogEvent extends HistoryEvent
         $this->jobPriority = $jobPriority;
     }
 
-    public function getJobExceptionMessage(): string
+    public function getJobExceptionMessage(): ?string
     {
         return $this->jobExceptionMessage;
     }
 
-    public function setJobExceptionMessage(string $jobExceptionMessage): void
+    public function setJobExceptionMessage(?string $jobExceptionMessage): void
     {
         // note: it is not a clean way to truncate where the history event is produced, since truncation is only
         //   relevant for relational history databases that follow our schema restrictions;
@@ -108,17 +108,17 @@ class HistoricJobLogEvent extends HistoryEvent
         $this->jobExceptionMessage = StringUtil::trimToMaximumLengthAllowed($jobExceptionMessage);
     }
 
-    public function getExceptionByteArrayId(): string
+    public function getExceptionByteArrayId(): ?string
     {
         return $this->exceptionByteArrayId;
     }
 
-    public function setExceptionByteArrayId(string $exceptionByteArrayId): void
+    public function setExceptionByteArrayId(?string $exceptionByteArrayId): void
     {
         $this->exceptionByteArrayId = $exceptionByteArrayId;
     }
 
-    public function getExceptionStacktrace(): string
+    public function getExceptionStacktrace(): ?string
     {
         $byteArray = $this->getExceptionByteArray();
         return ExceptionUtil::getExceptionStacktrace($byteArray);
@@ -135,42 +135,42 @@ class HistoricJobLogEvent extends HistoryEvent
         return null;
     }
 
-    public function getJobDefinitionId(): string
+    public function getJobDefinitionId(): ?string
     {
         return $this->jobDefinitionId;
     }
 
-    public function setJobDefinitionId(string $jobDefinitionId): void
+    public function setJobDefinitionId(?string $jobDefinitionId): void
     {
         $this->jobDefinitionId = $jobDefinitionId;
     }
 
-    public function getJobDefinitionType(): string
+    public function getJobDefinitionType(): ?string
     {
         return $this->jobDefinitionType;
     }
 
-    public function setJobDefinitionType(string $jobDefinitionType): void
+    public function setJobDefinitionType(?string $jobDefinitionType): void
     {
         $this->jobDefinitionType = $jobDefinitionType;
     }
 
-    public function getJobDefinitionConfiguration(): string
+    public function getJobDefinitionConfiguration(): ?string
     {
         return $this->jobDefinitionConfiguration;
     }
 
-    public function setJobDefinitionConfiguration(string $jobDefinitionConfiguration): void
+    public function setJobDefinitionConfiguration(?string $jobDefinitionConfiguration): void
     {
         $this->jobDefinitionConfiguration = $jobDefinitionConfiguration;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
 
-    public function setActivityId(string $activityId): void
+    public function setActivityId(?string $activityId): void
     {
         $this->activityId = $activityId;
     }
@@ -180,7 +180,7 @@ class HistoricJobLogEvent extends HistoryEvent
         return $this->deploymentId;
     }
 
-    public function setDeploymentId(string $deploymentId): void
+    public function setDeploymentId(?string $deploymentId): void
     {
         $this->deploymentId = $deploymentId;
     }
@@ -205,12 +205,12 @@ class HistoricJobLogEvent extends HistoryEvent
         $this->tenantId = $tenantId;
     }
 
-    public function getHostname(): string
+    public function getHostname(): ?string
     {
         return $this->hostname;
     }
 
-    public function setHostname(string $hostname): void
+    public function setHostname(?string $hostname): void
     {
         $this->hostname = $hostname;
     }
@@ -235,12 +235,12 @@ class HistoricJobLogEvent extends HistoryEvent
         return $this->state == JobStateImpl::deleted()->getStateCode();
     }
 
-    public function getRootProcessInstanceId(): string
+    public function getRootProcessInstanceId(): ?string
     {
         return $this->rootProcessInstanceId;
     }
 
-    public function setRootProcessInstanceId(string $rootProcessInstanceId): void
+    public function setRootProcessInstanceId(?string $rootProcessInstanceId): void
     {
         $this->rootProcessInstanceId = $rootProcessInstanceId;
     }
@@ -250,7 +250,7 @@ class HistoricJobLogEvent extends HistoryEvent
         return $this->failedActivityId;
     }
 
-    public function setFailedActivityId(string $failedActivityId): void
+    public function setFailedActivityId(?string $failedActivityId): void
     {
         $this->failedActivityId = $failedActivityId;
     }

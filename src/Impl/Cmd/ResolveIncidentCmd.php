@@ -49,10 +49,16 @@ class ResolveIncidentCmd implements CommandInterface
             $execution->getProcessInstanceId(),
             $execution->getProcessDefinitionId(),
             null,
-            [new PropertyChange("incidentId", null, $this->incidentId)]
+            [new PropertyChange("incidentId", null, $this->incidentId)],
+            null
         );
 
         $execution->resolveIncident($this->incidentId);
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

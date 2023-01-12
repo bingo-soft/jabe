@@ -6,12 +6,12 @@ class StringWriter
 {
     private $value;
 
-    public function set(string $value): void
+    public function set(?string $value): void
     {
         $this->value = $value;
     }
 
-    public function write(string $part): void
+    public function write(?string $part): void
     {
         $this->value = $this->value . $part;
     }

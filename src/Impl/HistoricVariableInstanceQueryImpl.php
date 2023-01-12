@@ -19,7 +19,7 @@ use Jabe\Impl\Variable\Serializer\{
     VariableSerializersInterface
 };
 
-class HistoricVariableInstanceQueryImpl extends AbstractQuery implements HistoricVariableInstanceQuery
+class HistoricVariableInstanceQueryImpl extends AbstractQuery implements HistoricVariableInstanceQueryInterface
 {
     //private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
@@ -28,7 +28,7 @@ class HistoricVariableInstanceQueryImpl extends AbstractQuery implements Histori
     protected $processInstanceId;
     protected $processDefinitionId;
     protected $processDefinitionKey;
-    protected $caseInstanceId;
+    //protected $caseInstanceId;
     protected $variableName;
     protected $variableNameLike;
     protected $queryVariableValue;
@@ -45,10 +45,10 @@ class HistoricVariableInstanceQueryImpl extends AbstractQuery implements Histori
     protected $isTenantIdSet;
 
     protected $processInstanceIds = [];
-    protected $includeDeleted = false;
+    protected bool $includeDeleted = false;
 
-    protected $isByteArrayFetchingEnabled = true;
-    protected $isCustomObjectDeserializationEnabled = true;
+    protected bool $isByteArrayFetchingEnabled = true;
+    protected bool $isCustomObjectDeserializationEnabled = true;
 
     public function __construct(CommandExecutorInterface $commandExecutor = null)
     {
@@ -62,34 +62,34 @@ class HistoricVariableInstanceQueryImpl extends AbstractQuery implements Histori
         return $this;
     }
 
-    public function variableId(string $id): HistoricVariableInstanceQueryInterface
+    public function variableId(?string $id): HistoricVariableInstanceQueryInterface
     {
         EnsureUtil::ensureNotNull("variableId", "variableId", $id);
         $this->variableId = $id;
         return $this;
     }
 
-    public function processInstanceId(string $processInstanceId): HistoricVariableInstanceQueryImpl
+    public function processInstanceId(?string $processInstanceId): HistoricVariableInstanceQueryImpl
     {
         EnsureUtil::ensureNotNull("processInstanceId", "processInstanceId", $processInstanceId);
         $this->processInstanceId = $processInstanceId;
         return $this;
     }
 
-    public function processDefinitionId(string $processDefinitionId): HistoricVariableInstanceQueryInterface
+    public function processDefinitionId(?string $processDefinitionId): HistoricVariableInstanceQueryInterface
     {
         EnsureUtil::ensureNotNull("processDefinitionId", "processDefinitionId", $processDefinitionId);
         $this->processDefinitionId = $processDefinitionId;
         return $this;
     }
 
-    public function processDefinitionKey(string $processDefinitionKey): HistoricVariableInstanceQueryInterface
+    public function processDefinitionKey(?string $processDefinitionKey): HistoricVariableInstanceQueryInterface
     {
         $this->processDefinitionKey = $processDefinitionKey;
         return $this;
     }
 
-    /*public HistoricVariableInstanceQueryInterface caseInstanceId(string $caseInstanceId) {
+    /*public HistoricVariableInstanceQueryInterface caseInstanceId(?string $caseInstanceId) {
         EnsureUtil::ensureNotNull("caseInstanceId", caseInstanceId);
         $this->caseInstanceId = caseInstanceId;
         return $this;
@@ -169,14 +169,14 @@ class HistoricVariableInstanceQueryImpl extends AbstractQuery implements Histori
         return $this;
     }
 
-    public function variableName(string $variableName): HistoricVariableInstanceQueryInterface
+    public function variableName(?string $variableName): HistoricVariableInstanceQueryInterface
     {
         EnsureUtil::ensureNotNull("variableName", "variableName", $variableName);
         $this->variableName = $variableName;
         return $this;
     }
 
-    public function variableValueEquals(string $variableName, $variableValue): HistoricVariableInstanceQueryInterface
+    public function variableValueEquals(?string $variableName, $variableValue): HistoricVariableInstanceQueryInterface
     {
         EnsureUtil::ensureNotNull("variableName", "variableName", $variableName);
         EnsureUtil::ensureNotNull("variableValue", "variableValue", $variableValue);
@@ -185,7 +185,7 @@ class HistoricVariableInstanceQueryImpl extends AbstractQuery implements Histori
         return $this;
     }
 
-    public function variableNameLike(string $variableNameLike): HistoricVariableInstanceQueryInterface
+    public function variableNameLike(?string $variableNameLike): HistoricVariableInstanceQueryInterface
     {
         EnsureUtil::ensureNotNull("variableNameLike", "variableNameLike", $variableNameLike);
         $this->variableNameLike = $variableNameLike;
@@ -236,7 +236,7 @@ class HistoricVariableInstanceQueryImpl extends AbstractQuery implements Histori
         return $commandContext->getHistoricVariableInstanceManager()->findHistoricVariableInstanceCountByQueryCriteria($this);
     }
 
-    public function executeList(CommandContext $commandContext, Page $page): array
+    public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
         $this->ensureVariablesInitialized();
@@ -289,7 +289,7 @@ class HistoricVariableInstanceQueryImpl extends AbstractQuery implements Histori
 
     // getters and setters //////////////////////////////////////////////////////
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
@@ -332,12 +332,12 @@ class HistoricVariableInstanceQueryImpl extends AbstractQuery implements Histori
         return $this->isTenantIdSet;
     }
 
-    public function getVariableName(): string
+    public function getVariableName(): ?string
     {
         return $this->variableName;
     }
 
-    public function getVariableNameLike(): string
+    public function getVariableNameLike(): ?string
     {
         return $this->variableNameLike;
     }
@@ -363,12 +363,12 @@ class HistoricVariableInstanceQueryImpl extends AbstractQuery implements Histori
         return $this;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }

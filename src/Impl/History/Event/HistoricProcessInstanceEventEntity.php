@@ -34,22 +34,22 @@ class HistoricProcessInstanceEventEntity extends HistoricScopeInstanceEvent
 
     // getters / setters ////////////////////////////////////////
 
-    public function getEndActivityId(): string
+    public function getEndActivityId(): ?string
     {
         return $this->endActivityId;
     }
 
-    public function setEndActivityId(string $endActivityId): void
+    public function setEndActivityId(?string $endActivityId): void
     {
         $this->endActivityId = $endActivityId;
     }
 
-    public function getStartActivityId(): string
+    public function getStartActivityId(): ?string
     {
         return $this->startActivityId;
     }
 
-    public function setStartActivityId(string $startActivityId): void
+    public function setStartActivityId(?string $startActivityId): void
     {
         $this->startActivityId = $startActivityId;
     }
@@ -59,27 +59,27 @@ class HistoricProcessInstanceEventEntity extends HistoricScopeInstanceEvent
         return $this->businessKey;
     }
 
-    public function setBusinessKey(string $businessKey): void
+    public function setBusinessKey(?string $businessKey): void
     {
         $this->businessKey = $businessKey;
     }
 
-    public function getStartUserId(): string
+    public function getStartUserId(): ?string
     {
         return $this->startUserId;
     }
 
-    public function setStartUserId(string $startUserId): void
+    public function setStartUserId(?string $startUserId): void
     {
         $this->startUserId = $startUserId;
     }
 
-    public function getSuperProcessInstanceId(): string
+    public function getSuperProcessInstanceId(): ?string
     {
         return $this->superProcessInstanceId;
     }
 
-    public function setSuperProcessInstanceId(string $superProcessInstanceId): void
+    public function setSuperProcessInstanceId(?string $superProcessInstanceId): void
     {
         $this->superProcessInstanceId = $superProcessInstanceId;
     }
@@ -92,12 +92,12 @@ class HistoricProcessInstanceEventEntity extends HistoricScopeInstanceEvent
       this.superCaseInstanceId = superCaseInstanceId;
     }*/
 
-    public function getDeleteReason(): string
+    public function getDeleteReason(): ?string
     {
         return $this->deleteReason;
     }
 
-    public function setDeleteReason(string $deleteReason): void
+    public function setDeleteReason(?string $deleteReason): void
     {
         $this->deleteReason = $deleteReason;
     }
@@ -112,12 +112,12 @@ class HistoricProcessInstanceEventEntity extends HistoricScopeInstanceEvent
         $this->tenantId = $tenantId;
     }
 
-    public function getState(): string
+    public function getState(): ?string
     {
         return $this->state;
     }
 
-    public function setState(string $state): void
+    public function setState(?string $state): void
     {
         $this->state = $state;
     }
@@ -175,7 +175,7 @@ class HistoricProcessInstanceEventEntity extends HistoricScopeInstanceEvent
               . ", startUserId=" . $this->startUserId
               . ", superProcessInstanceId=" . $this->superProcessInstanceId
               . ", rootProcessInstanceId=" . $this->rootProcessInstanceId
-              . ", superCaseInstanceId=" . $this->superCaseInstanceId
+              //. ", superCaseInstanceId=" . $this->superCaseInstanceId
               . ", deleteReason=" . $this->deleteReason
               . ", durationInMillis=" . $this->durationInMillis
               . ", startTime=" . $this->startTime

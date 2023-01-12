@@ -16,7 +16,7 @@ class GetRenderedStartFormCmd implements CommandInterface, \Serializable
     protected $formEngineName;
     //private static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
-    public function __construct(string $processDefinitionId, ?string $engineName = null)
+    public function __construct(?string $processDefinitionId, ?string $engineName = null)
     {
         $this->processDefinitionId = $processDefinitionId;
         $this->formEngineName = $engineName;
@@ -71,5 +71,10 @@ class GetRenderedStartFormCmd implements CommandInterface, \Serializable
             //LOG.exceptionWhenStartFormScriptEvaluation(processDefinitionId, e);
         }
         return $renderedStartForm;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

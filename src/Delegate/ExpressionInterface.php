@@ -8,7 +8,7 @@ interface ExpressionInterface
 
     public function setValue($value, VariableScopeInterface $variableScope): void;
 
-    public function getExpressionText(): string;
+    public function getExpressionText(): ?string;
 
     public function isLiteralText(): bool;
 }

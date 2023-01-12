@@ -11,7 +11,7 @@ class VariableEvent
     protected $eventName;
     protected $sourceScope;
 
-    public function __construct(VariableInstanceInterface $variableInstance, string $eventName, AbstractVariableScope $sourceScope)
+    public function __construct(VariableInstanceInterface $variableInstance, ?string $eventName, AbstractVariableScope $sourceScope)
     {
         $this->variableInstance = $variableInstance;
         $this->eventName = $eventName;
@@ -23,7 +23,7 @@ class VariableEvent
         return $this->variableInstance;
     }
 
-    public function getEventName(): string
+    public function getEventName(): ?string
     {
         return $this->eventName;
     }

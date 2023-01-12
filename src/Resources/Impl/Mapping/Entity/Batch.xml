@@ -40,20 +40,20 @@
     )
     values
     (
-      #{id ,dbalType=VARCHAR},
-      #{type, dbalType=VARCHAR},
-      #{totalJobs, dbalType=INTEGER},
-      #{jobsCreated, dbalType=INTEGER},
-      #{batchJobsPerSeed, dbalType=INTEGER},
-      #{invocationsPerBatchJob, dbalType=INTEGER},
-      #{seedJobDefinitionId, dbalType=VARCHAR},
-      #{monitorJobDefinitionId, dbalType=VARCHAR},
-      #{batchJobDefinitionId, dbalType=VARCHAR},
-      #{configuration ,dbalType=VARCHAR},
-      #{tenantId, dbalType=VARCHAR},
-      #{createUserId, dbalType=VARCHAR},
-      #{suspensionState, dbalType=INTEGER},
-      #{startTime, dbalType=VARCHAR},
+      #{id:VARCHAR},
+      #{type:VARCHAR},
+      #{totalJobs},
+      #{jobsCreated},
+      #{batchJobsPerSeed},
+      #{invocationsPerBatchJob},
+      #{seedJobDefinitionId:VARCHAR},
+      #{monitorJobDefinitionId:VARCHAR},
+      #{batchJobDefinitionId:VARCHAR},
+      #{configuration:VARCHAR},
+      #{tenantId:VARCHAR},
+      #{createUserId:VARCHAR},
+      #{suspensionState},
+      #{startTime:VARCHAR},
       1
     )
   </insert>
@@ -83,24 +83,24 @@
   <update id="updateBatch" parameterType="Jabe\Impl\Batch\BatchEntity">
     update ${prefix}ACT_RU_BATCH
     <set>
-      JOBS_CREATED_ = #{jobsCreated, dbalType=INTEGER},
-      REV_ = #{revisionNext, dbalType=INTEGER},
+      JOBS_CREATED_ = #{jobsCreated},
+      REV_ = #{revisionNext},
       <if test="executionStartTime != null">
-        EXEC_START_TIME_ = #{executionStartTime, dbalType=VARCHAR}
+        EXEC_START_TIME_ = #{executionStartTime:VARCHAR}
       </if>
     </set>
     where
-      ID_ = #{id, dbalType=VARCHAR}
-      and REV_ = #{revision, dbalType=INTEGER}
+      ID_ = #{id:VARCHAR}
+      and REV_ = #{revision}
   </update>
 
   <update id="updateBatchSuspensionStateByParameters" parameterType="Jabe\Impl\Db\ListQueryParameterObject">
     update ${prefix}ACT_RU_BATCH set
       REV_ = 1 + REV_ ,
-      SUSPENSION_STATE_ = #{parameter.suspensionState, dbalType=INTEGER}
+      SUSPENSION_STATE_ = #{parameter.suspensionState}
     <where>
       <if test="parameter.batchId != null">
-        ID_ = #{parameter.batchId, dbalType=VARCHAR}
+        ID_ = #{parameter.batchId:VARCHAR}
       </if>
     </where>
   </update>
@@ -145,14 +145,14 @@
         and RES.TYPE_ = #{type}
       </if>
       <if test="isTenantIdSet">
-        <if test="tenantIds != null and count(tenantIds) > 0">
+        <if test="!empty(tenantIds)">
           and RES.TENANT_ID_ in
           <foreach item="tenantId" index="index" collection="tenantIds"
                    open="(" separator="," close=")">
             #{tenantId}
           </foreach>
         </if>
-        <if test="tenantIds == null">
+        <if test="empty(tenantIds)">
           and RES.TENANT_ID_ is null
         </if>
       </if>

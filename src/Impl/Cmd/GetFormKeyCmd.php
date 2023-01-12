@@ -17,7 +17,7 @@ class GetFormKeyCmd implements CommandInterface
     /**
      * Retrieves a task form key.
      */
-    public function __construct(string $processDefinitionId, ?string $taskDefinitionKey = null)
+    public function __construct(?string $processDefinitionId, ?string $taskDefinitionKey = null)
     {
         $this->setProcessDefinitionId($processDefinitionId);
         if ($taskDefinitionKey !== null) {
@@ -61,5 +61,10 @@ class GetFormKeyCmd implements CommandInterface
             $formKey = $formKeyExpression->getExpressionText();
         }
         return $formKey;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

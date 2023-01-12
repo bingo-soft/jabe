@@ -9,15 +9,15 @@ interface VariableMapInterface
 {
     // fluent api for collecting variables ////////////////////////
 
-    public function putValue(string $name, $value): VariableMapInterface;
+    public function putValue(?string $name, $value): VariableMapInterface;
 
-    public function putValueTyped(string $name, TypedValueInterface $value): VariableMapInterface;
+    public function putValueTyped(?string $name, TypedValueInterface $value): VariableMapInterface;
 
     // retrieving variables ///////////////////////////////////////
 
-    public function getValue(string $name, string $type);
+    public function getValue(?string $name, ?string $type);
 
-    public function getValueTyped(string $name);
+    public function getValueTyped(?string $name);
 
     /**
      * Interprets the variable map as variable context

@@ -14,7 +14,7 @@ class BaseCallableElement
     protected $tenantIdProvider;
     protected $deploymentId;
 
-    public function getDefinitionKey(VariableScopeInterface $variableScope): string
+    public function getDefinitionKey(VariableScopeInterface $variableScope): ?string
     {
         $result = $this->definitionKeyValueProvider->getValue($variableScope);
 
@@ -40,7 +40,7 @@ class BaseCallableElement
         return $this->binding;
     }
 
-    public function setBinding(string $binding): void
+    public function setBinding(?string $binding): void
     {
         $this->binding = $binding;
     }
@@ -117,12 +117,12 @@ class BaseCallableElement
         return $this->deploymentId;
     }
 
-    public function setDeploymentId(string $deploymentId): void
+    public function setDeploymentId(?string $deploymentId): void
     {
         $this->deploymentId = $deploymentId;
     }
 
-    public function getDefinitionTenantId(VariableScopeInterface $variableScope, string $defaultTenantId = null): ?string
+    public function getDefinitionTenantId(VariableScopeInterface $variableScope, ?string $defaultTenantId = null): ?string
     {
         if ($this->tenantIdProvider !== null) {
             return $this->tenantIdProvider->getValue($variableScope);

@@ -2,21 +2,23 @@
 
 namespace Jabe\Impl\History\Event;
 
+use Jabe\Impl\History\Producer\HistoryEventProducerInterface;
+
 class HistoryEventCreator
 {
     /**
      * Creates the HistoryEvent with the help off the given
-     * HistoryEventProducer.
+     * HistoryEventProducerInterface.
      *
      * @param producer the producer which is used for the creation
      * @return HistoryEvent the created HistoryEvent
      */
-    public function createHistoryEvent(HistoryEventProducer $producer): ?HistoryEvent
+    public function createHistoryEvent(HistoryEventProducerInterface $producer): ?HistoryEvent
     {
         return null;
     }
 
-    public function createHistoryEvents(HistoryEventProducer $producer): array
+    public function createHistoryEvents(HistoryEventProducerInterface $producer): array
     {
         return [];
     }

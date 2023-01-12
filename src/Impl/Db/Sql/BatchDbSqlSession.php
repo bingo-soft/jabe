@@ -24,14 +24,14 @@ use Jabe\Impl\Util\{
 
 class BatchDbSqlSession extends DbSqlSession
 {
-    public function __construct(DbSqlSessionFactory $dbSqlSessionFactory, Connection $connection = null, string $catalog = null, string $schema = null)
+    public function __construct(DbSqlSessionFactory $dbSqlSessionFactory, Connection $connection = null, ?string $catalog = null, ?string $schema = null)
     {
         parent::__construct($dbSqlSessionFactory, $connection, $catalog, $schema);
     }
 
     public function executeDbOperations(array $operations): FlushResult
     {
-        foreach ($operations as $operation) {
+        foreach ($operations as $it => $operation) {
             try {
                 // stage operation
                 $this->executeDbOperation($operation);
@@ -56,12 +56,11 @@ class BatchDbSqlSession extends DbSqlSession
     {
         $operationsIt = new \ArrayIterator($operations);
         $failedOperations = [];
-        foreach ($batchResults as $successfulBatch) {
+        foreach ($batchResults as $key => $successfulBatch) {
             // even if all batches are successful, there can be concurrent modification failures
             // (e.g. 0 rows updated)
-            $this->postProcessJdbcBatchResult($operationsIt, $successfulBatch->getUpdateCounts(), null, $failedOperations);
+            $this->postProcessDbalBatchResult($operationsIt, $successfulBatch->getUpdateCounts(), null, $failedOperations);
         }
-
         // there should be no more operations remaining
         if ($operationsIt->valid()) {
             //throw LOG.wrongBatchResultsSizeException(operations);
@@ -87,11 +86,11 @@ class BatchDbSqlSession extends DbSqlSession
         $failedOperations = [];
 
         foreach ($successfulBatches as $successfulBatch) {
-            $this->postProcessJdbcBatchResult($operationsIt, $successfulBatch->getUpdateCounts(), null, $failedOperations);
+            $this->postProcessDbalBatchResult($operationsIt, $successfulBatch->getUpdateCounts(), null, $failedOperations);
         }
 
         $failedBatchUpdateCounts = $cause->getUpdateCounts();
-        $this->postProcessJdbcBatchResult($operationsIt, $failedBatchUpdateCounts, $exception, $failedOperations);
+        $this->postProcessDbalBatchResult($operationsIt, $failedBatchUpdateCounts, $exception, $failedOperations);
 
         $remainingOperations = CollectionUtil::collectInList($operationsIt);
         return FlushResult::withFailuresAndRemaining($failedOperations, $remainingOperations);
@@ -116,7 +115,7 @@ class BatchDbSqlSession extends DbSqlSession
      *
      * @return all failed operations
      */
-    protected function postProcessJdbcBatchResult(
+    protected function postProcessDbalBatchResult(
         \ArrayIterator $operationsIt,
         array $statementResults,
         \Exception $failure,
@@ -128,6 +127,7 @@ class BatchDbSqlSession extends DbSqlSession
             EnsureUtil::ensureTrue("More batch results than scheduled operations detected. This indicates a bug", $operationsIt->valid());
 
             $operation = $operationsIt->current();
+            $operationsIt->next();
 
             if ($statementResult == StatementInterface::SUCCESS_NO_INFO) {
                 if ($this->requiresAffectedRows($operation->getOperationType())) {
@@ -167,6 +167,7 @@ class BatchDbSqlSession extends DbSqlSession
             EnsureUtil::ensureTrue("More batch results than scheduled operations detected. This indicates a bug", $operationsIt->valid());
 
             $failedOperation = $operationsIt->current();
+            $operationsIt->next();
             $this->postProcessOperationPerformed($failedOperation, 0, $failure);
             if ($failedOperation->isFailed()) {
                 $failedOperations[] = $failedOperation; // the operation is added to the list only if it's marked as failed
@@ -174,7 +175,7 @@ class BatchDbSqlSession extends DbSqlSession
         }
     }
 
-    protected function requiresAffectedRows(string $operationType): bool
+    protected function requiresAffectedRows(?string $operationType): bool
     {
         /*
         * Affected rows required:
@@ -258,7 +259,7 @@ class BatchDbSqlSession extends DbSqlSession
         $this->executeDelete($deleteStatement, $dbEntity);
     }
 
-    protected function executeSelectForUpdate(string $statement, $parameter): void
+    protected function executeSelectForUpdate(?string $statement, $parameter = null): void
     {
         $this->executeSelectList($statement, $parameter);
     }

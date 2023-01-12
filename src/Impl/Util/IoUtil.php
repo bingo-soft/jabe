@@ -7,7 +7,7 @@ use Jabe\Impl\ProcessEngineLogger;
 class IoUtil
 {
     //private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
-    public static function readInputStream($inputStream, string $inputStreamName): string
+    public static function readInputStream($inputStream, ?string $inputStreamName): ?string
     {
         try {
             $meta = stream_get_meta_data($inputStream);
@@ -18,7 +18,7 @@ class IoUtil
         }
     }
 
-    public static function getFile(string $filePath)
+    public static function getFile(?string $filePath)
     {
         if (file_exists($filePath)) {
             return fopen($filePath, 'r+');
@@ -31,7 +31,7 @@ class IoUtil
     {
         try {
             fclose($file);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // ignored
         }
     }

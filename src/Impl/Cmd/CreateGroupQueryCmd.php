@@ -15,4 +15,9 @@ class CreateGroupQueryCmd implements CommandInterface
             ->getReadOnlyIdentityProvider()
             ->createGroupQuery();
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

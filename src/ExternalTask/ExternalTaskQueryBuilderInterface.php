@@ -13,7 +13,7 @@ interface ExternalTaskQueryBuilderInterface
      *   begins at the time of fetching
      * @return
      */
-    public function topic(string $topicName, int $lockDuration): ExternalTaskQueryTopicBuilderInterface;
+    public function topic(?string $topicName, int $lockDuration): ExternalTaskQueryTopicBuilderInterface;
 
     /**
      * Performs the fetching. Locks candidate tasks of the given topics

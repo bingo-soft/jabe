@@ -123,7 +123,7 @@ class CreateMigrationPlanCmd implements CommandInterface
         };
     }
 
-    protected function getProcessDefinition(CommandContext $commandContext, ?string $id, string $type): ProcessDefinitionEntity
+    protected function getProcessDefinition(CommandContext $commandContext, ?string $id, ?string $type): ProcessDefinitionEntity
     {
         EnsureUtil::ensureNotNull(BadUserRequestException::class, $type . " process definition id", $id);
         try {
@@ -236,5 +236,10 @@ class CreateMigrationPlanCmd implements CommandInterface
             }
         }
         return $validatingMigrationInstructions;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

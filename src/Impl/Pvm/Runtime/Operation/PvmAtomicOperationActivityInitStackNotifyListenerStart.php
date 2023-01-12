@@ -22,7 +22,7 @@ use Jabe\Impl\Core\Instance\CoreExecution;
 
 class PvmAtomicOperationActivityInitStackNotifyListenerStart extends PvmAtomicOperationActivityInstanceStart
 {
-    public function getCanonicalName(): string
+    public function getCanonicalName(): ?string
     {
         return "activity-init-stack-notify-listener-start";
     }
@@ -41,7 +41,7 @@ class PvmAtomicOperationActivityInitStackNotifyListenerStart extends PvmAtomicOp
         }
     }
 
-    protected function getEventName(): string
+    protected function getEventName(): ?string
     {
         return ExecutionListenerInterface::EVENTNAME_START;
     }

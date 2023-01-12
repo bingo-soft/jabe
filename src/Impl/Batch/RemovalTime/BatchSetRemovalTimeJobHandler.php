@@ -6,13 +6,17 @@ use Jabe\ProcessEngineConfiguration;
 use Jabe\Batch\BatchInterface;
 use Jabe\Impl\Batch\{
     AbstractBatchJobHandler,
+    BatchConfiguration,
     BatchJobConfiguration,
     BatchJobContext,
     BatchJobDeclaration
 };
 use Jabe\Impl\Batch\History\HistoricBatchEntity;
 use Jabe\Impl\Interceptor\CommandContext;
-use Jabe\Impl\JobExecutor\JobDeclaration;
+use Jabe\Impl\JobExecutor\{
+    JobDeclaration,
+    JobHandlerConfigurationInterface
+};
 use Jabe\Impl\Json\JsonObjectConverter;
 use Jabe\Impl\Persistence\Entity\{
     ByteArrayEntity,
@@ -24,7 +28,7 @@ class BatchSetRemovalTimeJobHandler extends AbstractBatchJobHandler
 {
     public static $JOB_DECLARATION;
 
-    public function execute(BatchJobConfiguration $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId)
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
     {
         $byteArrayId = $configuration->getConfigurationByteArrayId();
         $configurationByteArray = $this->findByteArrayById($byteArrayId, $commandContext);
@@ -43,7 +47,7 @@ class BatchSetRemovalTimeJobHandler extends AbstractBatchJobHandler
         }
     }
 
-    protected function getOrCalculateRemovalTime(SetRemovalTimeBatchConfiguration $batchConfiguration, HistoricBatchEntity $instance, CommandContext $commandContext): string
+    protected function getOrCalculateRemovalTime(SetRemovalTimeBatchConfiguration $batchConfiguration, HistoricBatchEntity $instance, CommandContext $commandContext): ?string
     {
         if ($batchConfiguration->hasRemovalTime()) {
             return $batchConfiguration->getRemovalTime();
@@ -54,7 +58,7 @@ class BatchSetRemovalTimeJobHandler extends AbstractBatchJobHandler
         }
     }
 
-    protected function addRemovalTime(string $instanceId, string $removalTime, CommandContext $commandContext): void
+    protected function addRemovalTime(?string $instanceId, ?string $removalTime, CommandContext $commandContext): void
     {
         $commandContext->getHistoricBatchManager()
             ->addRemovalTimeById($instanceId, $removalTime);
@@ -80,7 +84,7 @@ class BatchSetRemovalTimeJobHandler extends AbstractBatchJobHandler
         return ProcessEngineConfiguration::HISTORY_REMOVAL_TIME_STRATEGY_END == $this->getHistoryRemovalTimeStrategy($commandContext);
     }
 
-    protected function getHistoryRemovalTimeStrategy(CommandContext $commandContext): string
+    protected function getHistoryRemovalTimeStrategy(CommandContext $commandContext): ?string
     {
         return $commandContext->getProcessEngineConfiguration()
             ->getHistoryRemovalTimeStrategy();
@@ -90,20 +94,20 @@ class BatchSetRemovalTimeJobHandler extends AbstractBatchJobHandler
         return commandContext.getProcessEngineConfiguration().isDmnEnabled();
     }*/
 
-    protected function calculateRemovalTime(HistoricBatchEntity $batch, CommandContext $commandContext): string
+    protected function calculateRemovalTime(HistoricBatchEntity $batch, CommandContext $commandContext): ?string
     {
         return $commandContext->getProcessEngineConfiguration()
             ->getHistoryRemovalTimeProvider()
             ->calculateRemovalTime($batch);
     }
 
-    protected function findByteArrayById(string $byteArrayId, CommandContext $commandContext): ByteArrayEntity
+    protected function findByteArrayById(?string $byteArrayId, CommandContext $commandContext): ByteArrayEntity
     {
         return $commandContext->getDbEntityManager()
             ->selectById(ByteArrayEntity::class, $byteArrayId);
     }
 
-    protected function findBatchById(string $instanceId, CommandContext $commandContext): ?HistoricBatchEntity
+    protected function findBatchById(?string $instanceId, CommandContext $commandContext): ?HistoricBatchEntity
     {
         return $commandContext->getHistoricBatchManager()
             ->findHistoricBatchById($instanceId);
@@ -129,7 +133,7 @@ class BatchSetRemovalTimeJobHandler extends AbstractBatchJobHandler
         return SetRemovalTimeJsonConverter::instance();
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return BatchInterface::TYPE_BATCH_SET_REMOVAL_TIME;
     }

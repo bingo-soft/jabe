@@ -37,7 +37,7 @@ class DeleteHistoricProcessInstancesBatchCmd implements CommandInterface
     protected $historicProcessInstanceIds;
     protected $historicProcessInstanceQuery;
 
-    public function __construct(array $historicProcessInstanceIds, HistoricProcessInstanceQueryInterface $historicProcessInstanceQuery, string $deleteReason)
+    public function __construct(array $historicProcessInstanceIds, HistoricProcessInstanceQueryInterface $historicProcessInstanceQuery, ?string $deleteReason)
     {
         $this->historicProcessInstanceIds = $historicProcessInstanceIds;
         $this->historicProcessInstanceQuery = $historicProcessInstanceQuery;
@@ -113,12 +113,18 @@ class DeleteHistoricProcessInstancesBatchCmd implements CommandInterface
                 null,
                 null,
                 null,
-                $propertyChanges
+                $propertyChanges,
+                null
             );
     }
 
     public function getConfiguration(BatchElementConfiguration $elementConfiguration): BatchConfiguration
     {
         return new BatchConfiguration($elementConfiguration->getIds(), $elementConfiguration->getMappings(), false);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

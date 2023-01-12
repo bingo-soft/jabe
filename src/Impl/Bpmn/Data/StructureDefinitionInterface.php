@@ -9,7 +9,7 @@ interface StructureDefinitionInterface
      *
      * @return string the id of this structure
      */
-    public function getId(): string;
+    public function getId(): ?string;
 
     /**
      * @return a new instance of this structure definition

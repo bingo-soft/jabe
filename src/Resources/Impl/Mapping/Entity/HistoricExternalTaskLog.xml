@@ -41,25 +41,25 @@
       STATE_,
       REMOVAL_TIME_
     )
-    values (#{id, dbalType=VARCHAR},
-      #{timestamp, dbalType=VARCHAR},
-      #{externalTaskId, dbalType=VARCHAR},
-      #{retries, dbalType=INTEGER},
-      #{topicName, dbalType=VARCHAR},
-      #{workerId, dbalType=VARCHAR},
-      #{priority, dbalType=BIGINT},
-      #{errorMessage, dbalType=VARCHAR},
-      #{errorDetailsByteArrayId, dbalType=VARCHAR},
-      #{activityId, dbalType=VARCHAR},
-      #{activityInstanceId, dbalType=VARCHAR},
-      #{executionId, dbalType=VARCHAR},
-      #{rootProcessInstanceId, dbalType=VARCHAR},
-      #{processInstanceId, dbalType=VARCHAR},
-      #{processDefinitionId, dbalType=VARCHAR},
-      #{processDefinitionKey, dbalType=VARCHAR},
-      #{tenantId, dbalType=VARCHAR},
-      #{state, dbalType=INTEGER},
-      #{removalTime, dbalType=VARCHAR}
+    values (#{id:VARCHAR},
+      #{timestamp:VARCHAR},
+      #{externalTaskId:VARCHAR},
+      #{retries},
+      #{topicName:VARCHAR},
+      #{workerId:VARCHAR},
+      #{priority},
+      #{errorMessage:VARCHAR},
+      #{errorDetailsByteArrayId:VARCHAR},
+      #{activityId:VARCHAR},
+      #{activityInstanceId:VARCHAR},
+      #{executionId:VARCHAR},
+      #{rootProcessInstanceId:VARCHAR},
+      #{processInstanceId:VARCHAR},
+      #{processDefinitionId:VARCHAR},
+      #{processDefinitionKey:VARCHAR},
+      #{tenantId:VARCHAR},
+      #{state},
+      #{removalTime:VARCHAR}
     )
   </insert>
 
@@ -68,49 +68,49 @@
   <update id="updateExternalTaskLogByRootProcessInstanceId"
           parameterType="array">
       update ${prefix}ACT_HI_EXT_TASK_LOG set
-      REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      REMOVAL_TIME_ = #{removalTime:VARCHAR}
 
-      where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+      where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateExternalTaskLogByRootProcessInstanceId_mssql"
           parameterType="array">
       update RES set
-      RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
       FROM ${prefix}ACT_HI_EXT_TASK_LOG RES WITH (FORCESEEK)
-      where RES.ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+      where RES.ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateExternalTaskLogByRootProcessInstanceId_mysql"
           parameterType="array">
       update ${prefix}ACT_HI_EXT_TASK_LOG set
-      REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR},
+      REMOVAL_TIME_ = #{removalTime:VARCHAR},
       TIMESTAMP_ = TIMESTAMP_
 
-      where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+      where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateExternalTaskLogByProcessInstanceId"
           parameterType="array">
     update ${prefix}ACT_HI_EXT_TASK_LOG
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
-      where PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR}
+      where PROC_INST_ID_ = #{processInstanceId:VARCHAR}
   </update>
 
   <update id="updateExternalTaskLogByProcessInstanceId_mssql"
           parameterType="array">
     update RES set
-      RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
       FROM ${prefix}ACT_HI_EXT_TASK_LOG RES WITH (FORCESEEK)
-      where RES.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      where RES.PROC_INST_ID_ = #{processInstanceId:VARCHAR}
   </update>
 
   <update id="updateExternalTaskLogByProcessInstanceId_mysql"
           parameterType="array">
     update ${prefix}ACT_HI_EXT_TASK_LOG
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR},
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR},
           TIMESTAMP_ = TIMESTAMP_
-      where PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      where PROC_INST_ID_ = #{processInstanceId:VARCHAR}
   </update>
 
   <!-- DELETE -->
@@ -127,14 +127,14 @@
   <sql id="andWhereMinuteInDateBetweenSql">
     <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
       AND ${datepart1}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart2}${date}${datepart3}
-      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+      between #{parameter.minuteFrom} and #{parameter.minuteTo}
     </if>
   </sql>
 
   <sql id="andWhereMinuteInDateBetweenSql_oracle">
     <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
       AND ${datepart1}${date}${datepart2}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart3}
-      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+      between #{parameter.minuteFrom} and #{parameter.minuteTo}
     </if>
   </sql>
 
@@ -143,7 +143,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_EXT_TASK_LOG
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql"/>
     ${limitAfterWithoutOffset}
   </delete>
@@ -153,7 +153,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_EXT_TASK_LOG
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql_oracle"/>
     ${limitAfterWithoutOffset}
   </delete>
@@ -166,7 +166,7 @@
     where ID_ IN
       (SELECT ID_
        FROM ${prefix}ACT_HI_EXT_TASK_LOG
-       WHERE REMOVAL_TIME_ <= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
+       WHERE REMOVAL_TIME_ &lt;= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
        ${limitAfterWithoutOffset})
   </delete>
 
@@ -223,34 +223,34 @@
   <sql id="selectErrorDetailsByteArrayIds">
     and E.ERROR_DETAILS_ID_ is not null
     <if test="id != null">
-      and E.ID_ = #{id, dbalType=VARCHAR}
+      and E.ID_ = #{id:VARCHAR}
     </if>
     <if test="externalTaskId != null">
-      and E.RES.EXT_TASK_ID_ = #{externalTaskId, dbalType=VARCHAR}
+      and E.RES.EXT_TASK_ID_ = #{externalTaskId:VARCHAR}
     </if>
     <if test="topicName != null">
-      and E.RES.TOPIC_NAME_ = #{topicName, dbalType=VARCHAR}
+      and E.RES.TOPIC_NAME_ = #{topicName:VARCHAR}
     </if>
     <if test="workerId != null">
-      and E.RES.WORKER_ID_ = #{workerId, dbalType=VARCHAR}
+      and E.RES.WORKER_ID_ = #{workerId:VARCHAR}
     </if>
     <if test="executionId != null">
-      and E.EXECUTION_ID_ = #{executionId, dbalType=VARCHAR}
+      and E.EXECUTION_ID_ = #{executionId:VARCHAR}
     </if>
     <if test="processInstanceId != null">
-      and E.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      and E.PROC_INST_ID_ = #{processInstanceId:VARCHAR}
     </if>
-    <if test="processInstanceIdIn != null and count(processInstanceIdIn) > 0">
+    <if test="!empty(processInstanceIdIn)">
       and
         <bind name="listOfIds" value="processInstanceIdIn"/>
         <bind name="fieldName" value="'E.PROC_INST_ID_'"/>
         <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedArray"/>
     </if>
     <if test="processDefinitionId != null">
-      and E.PROC_DEF_ID_ = #{processDefinitionId, dbalType=VARCHAR}
+      and E.PROC_DEF_ID_ = #{processDefinitionId:VARCHAR}
     </if>
     <if test="processDefinitionKey != null">
-      and E.PROC_DEF_KEY_ = #{processDefinitionKey, dbalType=VARCHAR}
+      and E.PROC_DEF_KEY_ = #{processDefinitionKey:VARCHAR}
     </if>
   </sql>
 
@@ -306,21 +306,21 @@
       <if test="workerId != null">
         and RES.WORKER_ID_ = #{workerId}
       </if>
-      <if test="activityIds != null and count(activityIds) > 0">
+      <if test="!empty(activityIds)">
         and RES.ACT_ID_ in
         <foreach item="item" index="index" collection="activityIds"
                  open="(" separator="," close=")">
           #{item}
         </foreach>
       </if>
-      <if test="activityInstanceIds != null and count(activityInstanceIds) > 0">
+      <if test="!empty(activityInstanceIds)">
         and RES.ACT_INST_ID_ in
         <foreach item="item" index="index" collection="activityInstanceIds"
                  open="(" separator="," close=")">
           #{item}
         </foreach>
       </if>
-      <if test="executionIds != null and count(executionIds) > 0">
+      <if test="!empty(executionIds)">
         and RES.EXECUTION_ID_ in
         <foreach item="item" index="index" collection="executionIds"
                  open="(" separator="," close=")">
@@ -337,20 +337,20 @@
         and RES.PROC_DEF_KEY_ = #{processDefinitionKey}
       </if>
       <if test="priorityHigherThanOrEqual != null">
-        and RES.PRIORITY_ >= #{priorityHigherThanOrEqual}
+        and RES.PRIORITY_ &gt;= #{priorityHigherThanOrEqual}
       </if>
       <if test="priorityLowerThanOrEqual != null">
-        and RES.PRIORITY_ <= #{priorityLowerThanOrEqual}
+        and RES.PRIORITY_ &lt;= #{priorityLowerThanOrEqual}
       </if>
       <if test="isTenantIdSet">
-        <if test="tenantIds != null and count(tenantIds) > 0">
+        <if test="!empty(tenantIds)">
           and RES.TENANT_ID_ in
           <foreach item="tenantId" index="index" collection="tenantIds"
                    open="(" separator="," close=")">
             #{tenantId}
           </foreach>
         </if>
-        <if test="tenantIds == null">
+        <if test="empty(tenantIds)">
           and RES.TENANT_ID_ is null
         </if>
       </if>

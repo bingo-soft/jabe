@@ -17,7 +17,7 @@ class PvmAtomicOperationActivityInitStack implements PvmAtomicOperationInterface
         $this->operationOnScopeInitialization = $operationOnScopeInitialization;
     }
 
-    public function getCanonicalName(): string
+    public function getCanonicalName(): ?string
     {
         return "activity-stack-init";
     }

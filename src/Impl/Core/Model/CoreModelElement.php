@@ -24,18 +24,18 @@ abstract class CoreModelElement implements \Serializable
 
     protected $variableListeners = [];
 
-    public function __construct(string $id)
+    public function __construct(?string $id)
     {
         $this->id = $id;
         $this->properties = new Properties();
     }
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -43,7 +43,7 @@ abstract class CoreModelElement implements \Serializable
     /**
      * @see Properties#set(PropertyKey, Object)
      */
-    public function setProperty(string $name, $value): void
+    public function setProperty(?string $name, $value): void
     {
         $this->properties->set(new PropertyKey($name), $value);
     }
@@ -51,12 +51,12 @@ abstract class CoreModelElement implements \Serializable
     /**
      * @see Properties#get(PropertyKey)
      */
-    public function getProperty(string $name)
+    public function getProperty(?string $name)
     {
         return $this->properties->get(new PropertyKey($name));
     }
 
-    public function clearPropertyItem(string $name, string $itemKey): void
+    public function clearPropertyItem(?string $name, ?string $itemKey): void
     {
         $this->properties->clearItem(new PropertyKey($name), $itemKey);
     }
@@ -91,12 +91,12 @@ abstract class CoreModelElement implements \Serializable
         $this->properties->add(new PropertyKey($name), $value);
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
@@ -159,24 +159,24 @@ abstract class CoreModelElement implements \Serializable
         return $this->variableListeners;
     }
 
-    public function addListener(string $eventName, DelegateListenerInterface $listener, ?int $index = -1): void
+    public function addListener(?string $eventName, DelegateListenerInterface $listener, ?int $index = -1): void
     {
         $this->addListenerToMap($this->listeners, $eventName, $listener, $index);
     }
 
-    public function addBuiltInListener(string $eventName, DelegateListenerInterface $listener, ?int $index = -1): void
+    public function addBuiltInListener(?string $eventName, DelegateListenerInterface $listener, ?int $index = -1): void
     {
         $this->addListenerToMap($this->listeners, $eventName, $listener, $index);
         $this->addListenerToMap($this->builtInListeners, $eventName, $listener, $index);
     }
 
-    public function addBuiltInVariableListener(string $eventName, VariableListenerInterface $listener, ?int $index = -1): void
+    public function addBuiltInVariableListener(?string $eventName, VariableListenerInterface $listener, ?int $index = -1): void
     {
         $this->addListenerToMap($this->variableListeners, $eventName, $listener, $index);
         $this->addListenerToMap($this->builtInVariableListeners, $eventName, $listener, $index);
     }
 
-    protected function addListenerToMap(array &$listenerMap, string $eventName, DelegateListenerInterface $listener, int $index): void
+    protected function addListenerToMap(array &$listenerMap, ?string $eventName, DelegateListenerInterface $listener, int $index): void
     {
         if (!array_key_exists($eventName, $listenerMap)) {
             $listenerMap[$eventName] = [];

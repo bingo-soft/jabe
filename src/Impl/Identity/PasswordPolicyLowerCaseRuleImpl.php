@@ -15,7 +15,7 @@ class PasswordPolicyLowerCaseRuleImpl implements PasswordPolicyRuleInterface
         $this->minLowerCase = $minLowerCase;
     }
 
-    public function getPlaceholder(): string
+    public function getPlaceholder(): ?string
     {
         return PasswordPolicyLowerCaseRuleImpl::PLACEHOLDER;
     }
@@ -27,7 +27,7 @@ class PasswordPolicyLowerCaseRuleImpl implements PasswordPolicyRuleInterface
         return $parameter;
     }
 
-    public function execute(string $password): bool
+    public function execute(?string $password): bool
     {
         $lowerCaseCount = 0;
         foreach (str_split($password) as $c) {

@@ -10,10 +10,10 @@ use Jabe\Query\QueryInterface;
 
 class ExecuteFilterListPageCmd extends AbstractExecuteFilterCmd implements CommandInterface
 {
-    protected $firstResult;
-    protected $maxResults;
+    protected int $firstResult = 0;
+    protected int $maxResults = 0;
 
-    public function __construct(string $filterId, ?QueryInterface $extendingQuery, int $firstResult, int $maxResults)
+    public function __construct(?string $filterId, ?QueryInterface $extendingQuery, int $firstResult, int $maxResults)
     {
         parent::__construct($filterId, $extendingQuery);
         $this->firstResult = $firstResult;
@@ -25,5 +25,10 @@ class ExecuteFilterListPageCmd extends AbstractExecuteFilterCmd implements Comma
         $query = $this->getFilterQuery($commandContext);
         $query->enableMaxResultsLimit();
         return $query->listPage($this->firstResult, $this->maxResults);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

@@ -114,17 +114,17 @@ class AtomicOperationInvocation
         return $this->performAsync;
     }
 
-    public function getApplicationContextName(): string
+    public function getApplicationContextName(): ?string
     {
         return $this->applicationContextName;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
 
-    public function getActivityName(): string
+    public function getActivityName(): ?string
     {
         return $this->activityName;
     }

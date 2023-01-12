@@ -18,7 +18,7 @@ class AdhocQueryValidator implements ValidatorInterface
         return self::$INSTANCE;
     }
 
-    public function validate($query)
+    public function validate($query): void
     {
         if (
             !Context::getProcessEngineConfiguration()->isEnableExpressionsInAdhocQueries() &&

@@ -16,7 +16,7 @@ class LicenseKeyDataImpl implements LicenseKeyDataInterface
     protected $features;
     protected $raw;
 
-    public function __construct(string $customer, string $type, string $validUntil, bool $isUnlimited, array $features, string $raw)
+    public function __construct(?string $customer, ?string $type, ?string $validUntil, bool $isUnlimited, array $features, ?string $raw)
     {
         $this->customer = $customer;
         $this->type = $type;
@@ -26,7 +26,7 @@ class LicenseKeyDataImpl implements LicenseKeyDataInterface
         $this->raw = $raw;
     }
 
-    public static function fromRawString(string $rawLicense): LicenseKeyDataImpl
+    public static function fromRawString(?string $rawLicense): LicenseKeyDataImpl
     {
         $licenseKeyRawString = strpos($rawLicense, ";") !== -1 ? substr($rawLicense, strpos($rawLicense, ";") + 1, strlen($rawLicense)) : $rawLicense;
         return new LicenseKeyDataImpl(null, null, null, null, null, $licenseKeyRawString);
@@ -44,32 +44,32 @@ class LicenseKeyDataImpl implements LicenseKeyDataInterface
         ]);
     }
 
-    public function getCustomer(): string
+    public function getCustomer(): ?string
     {
         return $this->customer;
     }
 
-    public function setCustomer(string $customer): void
+    public function setCustomer(?string $customer): void
     {
         $this->customer = $customer;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function setType(string $type): void
+    public function setType(?string $type): void
     {
         $this->type = $type;
     }
 
-    public function getValidUntil(): string
+    public function getValidUntil(): ?string
     {
         return $this->validUntil;
     }
 
-    public function setValidUntil(string $validUntil): void
+    public function setValidUntil(?string $validUntil): void
     {
         $this->validUntil = $validUntil;
     }
@@ -94,12 +94,12 @@ class LicenseKeyDataImpl implements LicenseKeyDataInterface
         $this->features = $features;
     }
 
-    public function getRaw(): string
+    public function getRaw(): ?string
     {
         return $this->raw;
     }
 
-    public function setRaw(string $raw): void
+    public function setRaw(?string $raw): void
     {
         $this->raw = $raw;
     }

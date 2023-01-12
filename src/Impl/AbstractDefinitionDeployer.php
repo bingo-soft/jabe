@@ -17,6 +17,7 @@ use Jabe\Impl\Persistence\Entity\{
     DeploymentEntity,
     ResourceEntity
 };
+use Jabe\Impl\Repository\ResourceDefinitionEntityInterface;
 
 abstract class AbstractDefinitionDeployer implements DeployerInterface
 {
@@ -122,7 +123,7 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
      *
      * @return string null if no matching image resource is found.
      */
-    protected function getDiagramResourceForDefinition(DeploymentEntity $deployment, string $resourceName, DefinitionEntity $definition, array $resources): ?string
+    protected function getDiagramResourceForDefinition(DeploymentEntity $deployment, ?string $resourceName, ResourceDefinitionEntityInterface $definition, array $resources): ?string
     {
         foreach ($this->getDiagramSuffixes() as $diagramSuffix) {
             $definitionDiagramResource = $this->getDefinitionDiagramResourceName($resourceName, $definition, $diagramSuffix);
@@ -137,21 +138,21 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
         return null;
     }
 
-    protected function getDefinitionDiagramResourceName(string $resourceName, DefinitionEntity $definition, string $diagramSuffix): string
+    protected function getDefinitionDiagramResourceName(?string $resourceName, ResourceDefinitionEntityInterface $definition, ?string $diagramSuffix): ?string
     {
         $fileResourceBase = $this->stripDefinitionFileSuffix($resourceName);
         $definitionKey = $definition->getKey();
         return $fileResourceBase . $definitionKey . "." . $diagramSuffix;
     }
 
-    protected function getGeneralDiagramResourceName(string $resourceName, DefinitionEntity $definition, string $diagramSuffix): string
+    protected function getGeneralDiagramResourceName(?string $resourceName, ResourceDefinitionEntityInterface $definition, ?string $diagramSuffix): ?string
     {
         $fileResourceBase = $this->stripDefinitionFileSuffix($resourceName);
 
         return $fileResourceBase . $diagramSuffix;
     }
 
-    protected function stripDefinitionFileSuffix(string $resourceName): string
+    protected function stripDefinitionFileSuffix(?string $resourceName): ?string
     {
         foreach ($this->getResourcesSuffixes() as $suffix) {
             if (str_ends_with($resourceName, $suffix)) {
@@ -208,7 +209,7 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
         }
     }
 
-    protected function updateDefinitionByLatestDefinition(DeploymentEntity $deployment, DefinitionEntity $definition, DefinitionEntity $latestDefinition): void
+    protected function updateDefinitionByLatestDefinition(DeploymentEntity $deployment, ResourceDefinitionEntityInterface $definition, ?ResourceDefinitionEntityInterface $latestDefinition): void
     {
         $definition->setVersion($this->getNextVersion($deployment, $definition, $latestDefinition));
         $definition->setId($this->generateDefinitionId($deployment, $definition, $latestDefinition));
@@ -228,8 +229,8 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
     }
 
     protected function handlePersistedDefinition(
-        DefinitionEntity $definition,
-        ?DefinitionEntity $persistedDefinition,
+        /*DefinitionEntity*/$definition,
+        /*?DefinitionEntity*/$persistedDefinition,
         DeploymentEntity $deployment,
         Properties $properties
     ): void {
@@ -238,7 +239,7 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
         $this->registerDefinition($deployment, $definition, $properties);
     }
 
-    protected function updateDefinitionByPersistedDefinition(DeploymentEntity $deployment, DefinitionEntity $definition, DefinitionEntity $persistedDefinition): void
+    protected function updateDefinitionByPersistedDefinition(DeploymentEntity $deployment, ResourceDefinitionEntityInterface $definition, ResourceDefinitionEntityInterface $persistedDefinition): void
     {
         $definition->setVersion($persistedDefinition->getVersion());
         $definition->setId($persistedDefinition->getId());
@@ -253,7 +254,7 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
      * @param definition the definition entity
      * @param persistedDefinition the loaded definition entity
      */
-    protected function persistedDefinitionLoaded(DeploymentEntity $deployment, DefinitionEntity $definition, DefinitionEntity $persistedDefinition): void
+    protected function persistedDefinitionLoaded(DeploymentEntity $deployment, /*ResourceDefinitionEntityInterface*/$definition, /*ResourceDefinitionEntityInterface*/$persistedDefinition): void
     {
         // do nothing;
     }
@@ -264,22 +265,22 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
      * @param definitionKey the definition key
      * @return DefinitionEntity the corresponding definition entity or null if non is found
      */
-    abstract protected function findDefinitionByDeploymentAndKey(string $deploymentId, string $definitionKey): DefinitionEntity;
+    abstract protected function findDefinitionByDeploymentAndKey(?string $deploymentId, ?string $definitionKey): ?ResourceDefinitionEntityInterface;
 
     /**
      * Find the last deployed definition entity by definition key and tenant id.
      *
      * @return DefinitionEntity the corresponding definition entity or null if non is found
      */
-    abstract protected function findLatestDefinitionByKeyAndTenantId(string $definitionKey, ?string $tenantId): DefinitionEntity;
+    abstract protected function findLatestDefinitionByKeyAndTenantId(?string $definitionKey, ?string $tenantId): ?ResourceDefinitionEntityInterface;
 
     /**
      * Persist definition entity into the database.
      * @param definition the definition entity
      */
-    abstract protected function persistDefinition(DefinitionEntity $definition): void;
+    abstract protected function persistDefinition(/*ResourceDefinitionEntityInterface*/$definition): void;
 
-    protected function registerDefinition(DeploymentEntity $deployment, DefinitionEntity $definition, Properties $properties): void
+    protected function registerDefinition(DeploymentEntity $deployment, ResourceDefinitionEntityInterface $definition, Properties $properties): void
     {
         $deploymentCache = $this->getDeploymentCache();
 
@@ -298,7 +299,7 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
      * @param deploymentCache the deployment cache
      * @param definition the definition to add
      */
-    abstract protected function addDefinitionToDeploymentCache(DeploymentCache $deploymentCache, DefinitionEntity $definition): void;
+    abstract protected function addDefinitionToDeploymentCache(DeploymentCache $deploymentCache, /*ResourceDefinitionEntityInterface*/$definition): void;
 
     /**
      * Called after a definition was added to the deployment cache.
@@ -306,7 +307,7 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
      * @param deployment the deployment of the definition
      * @param definition the definition entity
      */
-    protected function definitionAddedToDeploymentCache(DeploymentEntity $deployment, DefinitionEntity $definition, Properties $properties): void
+    protected function definitionAddedToDeploymentCache(DeploymentEntity $deployment, /*ResourceDefinitionEntityInterface*/$definition, Properties $properties): void
     {
         // do nothing
     }
@@ -316,7 +317,7 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
      * might want to hook in some own logic here, e.g. to align definition
      * versions with deployment / build versions.
      */
-    protected function getNextVersion(DeploymentEntity $deployment, DefinitionEntity $newDefinition, DefinitionEntity $latestDefinition): int
+    protected function getNextVersion(DeploymentEntity $deployment, ResourceDefinitionEntityInterface $newDefinition, ?ResourceDefinitionEntityInterface $latestDefinition): int
     {
         $result = 1;
         if ($latestDefinition !== null) {
@@ -331,7 +332,7 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
      * and add the definition key and version if that does not exceed 64 characters.
      * You might want to hook in your own implementation here.
      */
-    protected function generateDefinitionId(DeploymentEntity $deployment, DefinitionEntity $newDefinition, DefinitionEntity $latestDefinition): string
+    protected function generateDefinitionId(DeploymentEntity $deployment, ResourceDefinitionEntityInterface $newDefinition, ?ResourceDefinitionEntityInterface $latestDefinition): ?string
     {
         $nextId = $this->idGenerator->getNextId();
 

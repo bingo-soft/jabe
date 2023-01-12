@@ -2,6 +2,10 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
+use Jabe\Authorization\{
+    PermissionInterface,
+    ResourceInterface
+};
 use Jabe\Impl\{
     HistoricDetailQueryImpl,
     Page
@@ -39,7 +43,7 @@ class HistoricDetailManager extends AbstractHistoricManager
       deleteHistoricDetails(parameters);
     }*/
 
-    public function deleteHistoricDetailsByVariableInstanceId(string $historicVariableInstanceId): void
+    public function deleteHistoricDetailsByVariableInstanceId(?string $historicVariableInstanceId): void
     {
         $parameters = [];
         $parameters["variableInstanceId"] = $historicVariableInstanceId;
@@ -58,13 +62,13 @@ class HistoricDetailManager extends AbstractHistoricManager
         return $this->getDbEntityManager()->selectOne("selectHistoricDetailCountByQueryCriteria", $historicVariableUpdateQuery);
     }
 
-    public function findHistoricDetailsByQueryCriteria(HistoricDetailQueryImpl $historicVariableUpdateQuery, Page $page): array
+    public function findHistoricDetailsByQueryCriteria(HistoricDetailQueryImpl $historicVariableUpdateQuery, ?Page $page): array
     {
         $this->configureQuery($historicVariableUpdateQuery);
         return $this->getDbEntityManager()->selectList("selectHistoricDetailsByQueryCriteria", $historicVariableUpdateQuery, $page);
     }
 
-    public function deleteHistoricDetailsByTaskId(string $taskId): void
+    public function deleteHistoricDetailsByTaskId(?string $taskId): void
     {
         if ($this->isHistoryEnabled()) {
             // delete entries in DB
@@ -85,18 +89,18 @@ class HistoricDetailManager extends AbstractHistoricManager
         }
     }
 
-    public function findHistoricDetailsByTaskId(string $taskId): array
+    public function findHistoricDetailsByTaskId(?string $taskId): array
     {
         return $this->getDbEntityManager()->selectList("selectHistoricDetailsByTaskId", $taskId);
     }
 
-    protected function configureQuery(HistoricDetailQueryImpl $query): void
+    public function configureQuery($query, ?ResourceInterface $resource = null, ?string $queryParam = "RES.ID_", ?PermissionInterface $permission = null)
     {
         $this->getAuthorizationManager()->configureHistoricDetailQuery($query);
         $this->getTenantManager()->configureQuery($query);
     }
 
-    public function addRemovalTimeToDetailsByRootProcessInstanceId(string $rootProcessInstanceId, string $removalTime): void
+    public function addRemovalTimeToDetailsByRootProcessInstanceId(?string $rootProcessInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["rootProcessInstanceId"] = $rootProcessInstanceId;
@@ -106,7 +110,7 @@ class HistoricDetailManager extends AbstractHistoricManager
             ->updatePreserveOrder(HistoricDetailEventEntity::class, "updateHistoricDetailsByRootProcessInstanceId", $parameters);
     }
 
-    public function addRemovalTimeToDetailsByProcessInstanceId(string $processInstanceId, string $removalTime): void
+    public function addRemovalTimeToDetailsByProcessInstanceId(?string $processInstanceId, ?string $removalTime): void
     {
         $parameters = [];
         $parameters["processInstanceId"] = $processInstanceId;
@@ -116,7 +120,7 @@ class HistoricDetailManager extends AbstractHistoricManager
             ->updatePreserveOrder(HistoricDetailEventEntity::class, "updateHistoricDetailsByProcessInstanceId", $parameters);
     }
 
-    public function deleteHistoricDetailsByRemovalTime(string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
+    public function deleteHistoricDetailsByRemovalTime(?string $removalTime, int $minuteFrom, int $minuteTo, int $batchSize): DbOperation
     {
         $parameters = [];
         $parameters["removalTime"] = $removalTime;

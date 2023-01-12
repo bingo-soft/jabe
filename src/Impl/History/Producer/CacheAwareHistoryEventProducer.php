@@ -1,12 +1,15 @@
 <?php
 
-namespace Jabe\Impl\History\Handler;
+namespace Jabe\Impl\History\Producer;
 
+use Jabe\Delegate\DelegateTaskInterface;
 use Jabe\Impl\Batch\BatchEntity;
 use Jabe\Impl\Batch\History\HistoricBatchEntity;
 use Jabe\Impl\Context\Context;
 use Jabe\Impl\History\Event\{
     HistoricActivityInstanceEventEntity,
+    HistoryEvent,
+    HistoricIncidentEventEntity,
     HistoricProcessInstanceEventEntity,
     HistoricTaskInstanceEventEntity
 };
@@ -41,7 +44,7 @@ class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer
         }
     }
 
-    protected function loadTaskInstanceEvent(DelegateTask $task): HistoricTaskInstanceEventEntity
+    protected function loadTaskInstanceEvent(DelegateTaskInterface $task): HistoricTaskInstanceEventEntity
     {
         $taskId = $task->getId();
 
@@ -81,7 +84,7 @@ class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer
     }
 
     /** find a cached entity by primary key */
-    protected function findInCache(string $type, string $id): ?HistoryEvent
+    protected function findInCache(?string $type, ?string $id): ?HistoryEvent
     {
         return Context::getCommandContext()
         ->getDbEntityManager()

@@ -16,7 +16,7 @@ class PasswordPolicySpecialCharacterRuleImpl implements PasswordPolicyRuleInterf
         $this->minSpecial = $minSpecial;
     }
 
-    public function getPlaceholder(): string
+    public function getPlaceholder(): ?string
     {
         return PasswordPolicySpecialCharacterRuleImpl::PLACEHOLDER;
     }
@@ -28,7 +28,7 @@ class PasswordPolicySpecialCharacterRuleImpl implements PasswordPolicyRuleInterf
         return $parameter;
     }
 
-    public function execute(string $password): bool
+    public function execute(?string $password): bool
     {
         $specialCount = 0;
         foreach (str_split($password) as $c) {

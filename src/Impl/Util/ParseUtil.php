@@ -88,7 +88,7 @@ class ParseUtil
         }
     }
 
-    public static function parseServerVendor(string $applicationServerInfo): string
+    public static function parseServerVendor(?string $applicationServerInfo): ?string
     {
         $serverVendor = "";
         preg_match_all('/([\sa-zA-Z]+)/', $applicationServerInfo, $matches);

@@ -23,7 +23,7 @@ abstract class AbstractSetStateCmd implements CommandInterface
     protected $isLogUserOperationDisabled;
     protected $executionDate;
 
-    public function __construct(bool $includeSubResources, string $executionDate)
+    public function __construct(bool $includeSubResources, ?string $executionDate)
     {
         $this->includeSubResources = $includeSubResources;
         $this->executionDate = $executionDate;
@@ -130,11 +130,11 @@ abstract class AbstractSetStateCmd implements CommandInterface
 
     abstract protected function logUserOperation(CommandContext $commandContext): void;
 
-    abstract protected function getLogEntryOperation(): string;
+    abstract protected function getLogEntryOperation(): ?string;
 
     abstract protected function getNewSuspensionState(): SuspensionState;
 
-    protected function getDeploymentIdByProcessDefinition(CommandContext $commandContext, string $processDefinitionId): ?string
+    protected function getDeploymentIdByProcessDefinition(CommandContext $commandContext, ?string $processDefinitionId): ?string
     {
         $definition = $commandContext->getProcessDefinitionManager()->getCachedResourceDefinitionEntity($this->processDefinitionId);
         if ($definition === null) {
@@ -148,9 +148,9 @@ abstract class AbstractSetStateCmd implements CommandInterface
 
     protected function getDeploymentIdByProcessDefinitionKey(
         CommandContext $commandContext,
-        string $processDefinitionKey,
+        ?string $processDefinitionKey,
         bool $tenantIdSet,
-        string $tenantId
+        ?string $tenantId
     ): ?string {
         $definition = null;
         if ($tenantIdSet) {
@@ -166,7 +166,7 @@ abstract class AbstractSetStateCmd implements CommandInterface
         return null;
     }
 
-    protected function getDeploymentIdByJobDefinition(CommandContext $commandContext, string $jobDefinitionId): ?string
+    protected function getDeploymentIdByJobDefinition(CommandContext $commandContext, ?string $jobDefinitionId): ?string
     {
         $jobDefinitionManager = $commandContext->getJobDefinitionManager();
         $jobDefinition = $jobDefinitionManager->findById($jobDefinitionId);
@@ -176,5 +176,10 @@ abstract class AbstractSetStateCmd implements CommandInterface
             }
         }
         return null;
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

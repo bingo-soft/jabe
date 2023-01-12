@@ -58,7 +58,7 @@ class MailActivityBehavior extends AbstractBpmnActivityBehavior
         $this->leave($execution);
     }
 
-    protected function createEmail(string $text, string $html): PHPMailer
+    protected function createEmail(?string $text, ?string $html): PHPMailer
     {
         if ($html !== null) {
             return $this->createHtmlEmail($text, $html);
@@ -69,7 +69,7 @@ class MailActivityBehavior extends AbstractBpmnActivityBehavior
         }
     }
 
-    protected function createHtmlEmail(?string $text, string $html): PHPMailer
+    protected function createHtmlEmail(?string $text, ?string $html): PHPMailer
     {
         $email = new PHPMailer(true);
         try {
@@ -85,7 +85,7 @@ class MailActivityBehavior extends AbstractBpmnActivityBehavior
         }
     }
 
-    protected function createTextOnlyEmail(string $text): PHPMailer
+    protected function createTextOnlyEmail(?string $text): PHPMailer
     {
         $email = new PHPMailer(true);
         try {
@@ -99,7 +99,7 @@ class MailActivityBehavior extends AbstractBpmnActivityBehavior
         }
     }
 
-    protected function addTo(PHPMailer $email, string $to): void
+    protected function addTo(PHPMailer $email, ?string $to): void
     {
         $tos = $this->splitAndTrim($to);
         if (!empty($tos)) {
@@ -134,7 +134,7 @@ class MailActivityBehavior extends AbstractBpmnActivityBehavior
         }
     }
 
-    protected function addCc(PHPMailer $email, string $cc): void
+    protected function addCc(PHPMailer $email, ?string $cc): void
     {
         $ccs = $this->splitAndTrim($cc);
         if (!empty($ccs)) {
@@ -149,7 +149,7 @@ class MailActivityBehavior extends AbstractBpmnActivityBehavior
         }
     }
 
-    protected function addBcc(PHPMailer $email, string $bcc): void
+    protected function addBcc(PHPMailer $email, ?string $bcc): void
     {
         $bccs = $this->splitAndTrim($bcc);
         if (!empty($bcc)) {
@@ -164,7 +164,7 @@ class MailActivityBehavior extends AbstractBpmnActivityBehavior
         }
     }
 
-    protected function setSubject(PHPMailer $email, string $subject): void
+    protected function setSubject(PHPMailer $email, ?string $subject): void
     {
         $email->Subject = $subject ?? "";
     }
@@ -192,7 +192,7 @@ class MailActivityBehavior extends AbstractBpmnActivityBehavior
         }
     }
 
-    protected function setCharset(PHPMailer $email, string $charSetStr): void
+    protected function setCharset(PHPMailer $email, ?string $charSetStr): void
     {
         /*if (charset !== null) {
             email.setCharset(charSetStr);

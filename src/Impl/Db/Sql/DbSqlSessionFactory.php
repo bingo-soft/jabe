@@ -104,10 +104,10 @@ class DbSqlSessionFactory implements SessionFactoryInterface
     protected $updateStatements = [];
     protected $deleteStatements = [];
     protected $selectStatements = [];
-    protected $isDbIdentityUsed = true;
-    protected $isDbHistoryUsed = true;
-    protected $cmmnEnabled = false;
-    protected $dmnEnabled = false;
+    protected bool $isDbIdentityUsed = true;
+    protected bool $isDbHistoryUsed = true;
+    protected bool $cmmnEnabled = false;
+    protected bool $dmnEnabled = false;
 
     protected $batchProcessing;
 
@@ -117,7 +117,7 @@ class DbSqlSessionFactory implements SessionFactoryInterface
         $this->batchProcessing = $batchProcessing;
     }
 
-    private static function init(): void
+    public static function init(): void
     {
         if (self::$initialized == false) {
             self::$initialized = true;
@@ -224,12 +224,12 @@ class DbSqlSessionFactory implements SessionFactoryInterface
         }
     }
 
-    public function getSessionType(): string
+    public function getSessionType(): ?string
     {
         return DbSqlSession::class;
     }
 
-    public function openSession(Connection $connection = null, string $catalog = null, string $schema = null): SessionInterface
+    public function openSession(Connection $connection = null, ?string $catalog = null, ?string $schema = null): SessionInterface
     {
         return $this->batchProcessing ?
             new BatchDbSqlSession($this, $connection, $catalog, $schema) :
@@ -238,27 +238,27 @@ class DbSqlSessionFactory implements SessionFactoryInterface
 
     // insert, update and delete statements /////////////////////////////////////
 
-    public function getInsertStatement(DbEntityInterface $object): string
+    public function getInsertStatement(DbEntityInterface $object): ?string
     {
         return $this->getStatement(get_class($object), $this->insertStatements, "insert");
     }
 
-    public function getUpdateStatement(DbEntityInterface $object): string
+    public function getUpdateStatement(DbEntityInterface $object): ?string
     {
         return $this->getStatement(get_class($object), $this->updateStatements, "update");
     }
 
-    public function getDeleteStatement(string $persistentObjectClass): ?string
+    public function getDeleteStatement(?string $persistentObjectClass): ?string
     {
         return $this->getStatement($persistentObjectClass, $this->deleteStatements, "delete");
     }
 
-    public function getSelectStatement(string $persistentObjectClass): ?string
+    public function getSelectStatement(?string $persistentObjectClass): ?string
     {
-        return $this->getStatement($persistentObjectClass, $selectStatements, "select");
+        return $this->getStatement($persistentObjectClass, $this->selectStatements, "select");
     }
 
-    private function getStatement(string $persistentObjectClass, array &$cachedStatements, string $prefix): ?string
+    private function getStatement(?string $persistentObjectClass, array &$cachedStatements, ?string $prefix): ?string
     {
         if (array_key_exists($persistentObjectClass, $cachedStatements)) {
             $statement = $cachedStatements[$persistentObjectClass];
@@ -272,7 +272,7 @@ class DbSqlSessionFactory implements SessionFactoryInterface
 
     // db specific mappings /////////////////////////////////////////////////////
 
-    protected static function addDatabaseSpecificStatement(string $databaseType, string $activitiStatement, string $doctrineStatement): void
+    protected static function addDatabaseSpecificStatement(?string $databaseType, ?string $activitiStatement, ?string $doctrineStatement): void
     {
         $specificStatements = array_key_exists($databaseType, self::$databaseSpecificStatements) ? self::$databaseSpecificStatements[$databaseType] : null;
         if ($specificStatements === null) {
@@ -283,7 +283,7 @@ class DbSqlSessionFactory implements SessionFactoryInterface
         }
     }
 
-    public function mapStatement(string $statement): ?string
+    public function mapStatement(?string $statement): ?string
     {
         if (empty($this->statementMappings)) {
             return $statement;
@@ -294,7 +294,7 @@ class DbSqlSessionFactory implements SessionFactoryInterface
 
     // customized getters and setters ///////////////////////////////////////////
 
-    public function setDatabaseType(string $databaseType): void
+    public function setDatabaseType(?string $databaseType): void
     {
         $this->databaseType = $databaseType;
         $this->statementMappings = array_key_exists($databaseType, self::$databaseSpecificStatements) ? self::$databaseSpecificStatements[$databaseType] : [];
@@ -322,7 +322,7 @@ class DbSqlSessionFactory implements SessionFactoryInterface
         $this->idGenerator = $idGenerator;
     }
 
-    public function getDatabaseType(): string
+    public function getDatabaseType(): ?string
     {
         return $this->databaseType;
     }
@@ -413,22 +413,22 @@ class DbSqlSessionFactory implements SessionFactoryInterface
         $this->dmnEnabled = dmnEnabled;
     }*/
 
-    public function setDatabaseTablePrefix(string $databaseTablePrefix): void
+    public function setDatabaseTablePrefix(?string $databaseTablePrefix): void
     {
         $this->databaseTablePrefix = $databaseTablePrefix;
     }
 
-    public function getDatabaseTablePrefix(): string
+    public function getDatabaseTablePrefix(): ?string
     {
         return $this->databaseTablePrefix;
     }
 
-    public function getDatabaseSchema(): string
+    public function getDatabaseSchema(): ?string
     {
         return $this->databaseSchema;
     }
 
-    public function setDatabaseSchema(string $databaseSchema): void
+    public function setDatabaseSchema(?string $databaseSchema): void
     {
         $this->databaseSchema = $databaseSchema;
     }

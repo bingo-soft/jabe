@@ -16,7 +16,7 @@ interface TypedValueSerializerInterface
      *
      * @return string the name of this serializer.
      */
-    public function getName(): string;
+    public function getName(): ?string;
 
     /**
      * The {@link ValueType VariableType} supported
@@ -30,7 +30,7 @@ interface TypedValueSerializerInterface
      * @param value the TypedValue to persist
      * @param valueFields the ValueFields to which the value should be persisted
      */
-    public function writeValue(TypedValueInterface $value, ValueFieldsInterface $valueFields): void;
+    public function writeValue($value, ValueFieldsInterface $valueFields): void;
 
     /**
      * Retrieve a TypedValue from the provided ValueFields.

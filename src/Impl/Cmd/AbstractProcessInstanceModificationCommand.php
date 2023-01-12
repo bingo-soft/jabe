@@ -24,7 +24,7 @@ abstract class AbstractProcessInstanceModificationCommand implements CommandInte
     protected $skipIoMappings;
     protected $externallyTerminated;
 
-    public function __construct(string $processInstanceId)
+    public function __construct(?string $processInstanceId)
     {
         $this->processInstanceId = $processInstanceId;
     }
@@ -44,17 +44,17 @@ abstract class AbstractProcessInstanceModificationCommand implements CommandInte
         $this->externallyTerminated = $externallyTerminated;
     }
 
-    public function setProcessInstanceId(string $processInstanceId): void
+    public function setProcessInstanceId(?string $processInstanceId): void
     {
         $this->processInstanceId = $processInstanceId;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
 
-    protected function findActivityInstance(ActivityInstanceInterface $tree, string $activityInstanceId): ?ActivityInstanceInterface
+    protected function findActivityInstance(ActivityInstanceInterface $tree, ?string $activityInstanceId): ?ActivityInstanceInterface
     {
         if ($activityInstanceId == $tree->getId()) {
             return $tree;
@@ -69,7 +69,7 @@ abstract class AbstractProcessInstanceModificationCommand implements CommandInte
         return null;
     }
 
-    protected function findTransitionInstance(ActivityInstanceInterface $tree, string $transitionInstanceId): ?TransitionInstanceInterface
+    protected function findTransitionInstance(ActivityInstanceInterface $tree, ?string $transitionInstanceId): ?TransitionInstanceInterface
     {
         foreach ($tree->getChildTransitionInstances() as $childTransitionInstance) {
             if ($this->matchesRequestedTransitionInstance($childTransitionInstance, $transitionInstanceId)) {
@@ -87,7 +87,7 @@ abstract class AbstractProcessInstanceModificationCommand implements CommandInte
         return null;
     }
 
-    protected function matchesRequestedTransitionInstance(TransitionInstanceInterface $instance, string $queryInstanceId): bool
+    protected function matchesRequestedTransitionInstance(TransitionInstanceInterface $instance, ?string $queryInstanceId): bool
     {
         $match = $instance->getId() == $queryInstanceId;
 
@@ -147,7 +147,7 @@ abstract class AbstractProcessInstanceModificationCommand implements CommandInte
         ActivityExecutionTreeMapping $mapping,
         ActivityInstanceInterface $activityInstance
     ): ExecutionEntity {
-        EnsureUtil::ensureNotNull("activityInstance", $activityInstance);
+        EnsureUtil::ensureNotNull("activityInstance", "activityInstance", $activityInstance);
 
         $processDefinition = $processInstance->getProcessDefinition();
         $scope = $this->getScopeForActivityInstance($processDefinition, $activityInstance);
@@ -187,15 +187,20 @@ abstract class AbstractProcessInstanceModificationCommand implements CommandInte
         return $retainedExecutionsForInstance[0];
     }
 
-    protected function describeFailure(string $detailMessage): string
+    protected function describeFailure(?string $detailMessage): ?string
     {
         return "Cannot perform instruction: " . $this->describe() . "; " . $detailMessage;
     }
 
-    abstract protected function describe(): string;
+    abstract protected function describe(): ?string;
 
     public function __toString()
     {
         return $this->describe();
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

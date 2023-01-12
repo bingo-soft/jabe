@@ -21,17 +21,17 @@ class ProcessEngineElContext extends ELContext
         $this->elResolver = $elResolver;
     }
 
-    public function getELResolver(): ELResolver
+    public function getELResolver(): ?ELResolver
     {
         return $this->elResolver;
     }
 
-    public function getFunctionMapper(): FunctionMapper
+    public function getFunctionMapper(): ?FunctionMapper
     {
         return $this->functionMapper;
     }
 
-    public function getVariableMapper(): VariableMapper
+    public function getVariableMapper(): ?VariableMapper
     {
         return null;
     }

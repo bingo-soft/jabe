@@ -9,21 +9,21 @@ class ListQueryParameterObject implements \Serializable
     protected $tenantCheck;
     protected $orderingProperties = [];
 
-    protected $maxResults = PHP_INT_MAX;
-    protected $firstResult = 0;
+    protected $maxResults;
+    protected $firstResult;
     protected $parameter;
     protected $databaseType;
 
-    public function __construct($parameter, int $firstResult, int $maxResults)
+    public function __construct($parameter = null, ?int $firstResult = null, ?int $maxResults = null)
     {
         $this->authCheck = new AuthorizationCheck();
         $this->tenantCheck = new TenantCheck();
         $this->parameter = $parameter;
-        $this->firstResult = $firstResult;
-        $this->maxResults = $maxResults;
+        $this->firstResult = $firstResult ?? 0;
+        $this->maxResults = $maxResults ?? PHP_INT_MAX;
     }
 
-    public function getFirstResult(): int
+    public function getFirstResult(): ?int
     {
         return $this->firstResult;
     }
@@ -41,7 +41,7 @@ class ListQueryParameterObject implements \Serializable
         return $this->firstResult + $this->maxResults + 1;
     }
 
-    public function getMaxResults(): int
+    public function getMaxResults(): ?int
     {
         return $this->maxResults;
     }
@@ -66,12 +66,12 @@ class ListQueryParameterObject implements \Serializable
         $this->parameter = $parameter;
     }
 
-    public function setDatabaseType(string $databaseType): void
+    public function setDatabaseType(?string $databaseType): void
     {
         $this->databaseType = $databaseType;
     }
 
-    public function getDatabaseType(): string
+    public function getDatabaseType(): ?string
     {
         return $this->databaseType;
     }

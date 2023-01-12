@@ -127,7 +127,7 @@ class SaveAuthorizationCmd implements CommandInterface
         return $this->resourceId === null || $this->isAny($resourceId);
     }
 
-    protected function isAny(string $resourceId): bool
+    protected function isAny(?string $resourceId): bool
     {
         return AuthorizationInterface::ANY == $resourceId;
     }
@@ -135,5 +135,10 @@ class SaveAuthorizationCmd implements CommandInterface
     protected function isResourceEqualTo(ResourceInterface $resource): bool
     {
         return $resource->resourceType() == $this->authorization->getResource();
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

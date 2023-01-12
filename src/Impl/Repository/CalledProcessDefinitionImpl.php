@@ -14,7 +14,7 @@ class CalledProcessDefinitionImpl implements CalledProcessDefinitionInterface
     protected $category;
     protected $description;
     protected $name;
-    protected $version;
+    protected int $version = 0;
     protected $deploymentId;
     protected $suspended;
     protected $tenantId;
@@ -28,7 +28,7 @@ class CalledProcessDefinitionImpl implements CalledProcessDefinitionInterface
     protected $calledFromActivityIds = [];
     protected $callingProcessDefinitionId;
 
-    public function __construct(ProcessDefinitionInterface $definition, string $callingProcessDefinitionId)
+    public function __construct(ProcessDefinitionInterface $definition, ?string $callingProcessDefinitionId)
     {
         $this->calledFromActivityIds = [];
         $this->callingProcessDefinitionId = $callingProcessDefinitionId;
@@ -49,7 +49,7 @@ class CalledProcessDefinitionImpl implements CalledProcessDefinitionInterface
         $this->resourceName = $definition->getResourceName();
     }
 
-    public function getCallingProcessDefinitionId(): string
+    public function getCallingProcessDefinitionId(): ?string
     {
         return $this->callingProcessDefinitionId;
     }
@@ -59,27 +59,27 @@ class CalledProcessDefinitionImpl implements CalledProcessDefinitionInterface
         return $this->calledFromActivityIds;
     }
 
-    public function addCallingCallActivity(string $activityId): void
+    public function addCallingCallActivity(?string $activityId): void
     {
         $this->calledFromActivityIds->add($activityId);
     }
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function getKey(): string
+    public function getKey(): ?string
     {
         return $this->key;
     }
 
-    public function getCategory(): string
+    public function getCategory(): ?string
     {
         return $this->category;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -89,7 +89,7 @@ class CalledProcessDefinitionImpl implements CalledProcessDefinitionInterface
         return $this->hasStartFormKey;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -99,17 +99,17 @@ class CalledProcessDefinitionImpl implements CalledProcessDefinitionInterface
         return $this->version;
     }
 
-    public function getResourceName(): string
+    public function getResourceName(): ?string
     {
         return $this->resourceName;
     }
 
-    public function getDeploymentId(): string
+    public function getDeploymentId(): ?string
     {
         return $this->deploymentId;
     }
 
-    public function getDiagramResourceName(): string
+    public function getDiagramResourceName(): ?string
     {
         return $this->diagramResourceName;
     }
@@ -119,17 +119,17 @@ class CalledProcessDefinitionImpl implements CalledProcessDefinitionInterface
         return $this->suspended;
     }
 
-    public function getTenantId(): string
+    public function getTenantId(): ?string
     {
         return $this->tenantId;
     }
 
-    public function getVersionTag(): string
+    public function getVersionTag(): ?string
     {
         return $this->versionTag;
     }
 
-    public function getHistoryTimeToLive(): int
+    public function getHistoryTimeToLive(): ?int
     {
         return $this->historyTimeToLive;
     }

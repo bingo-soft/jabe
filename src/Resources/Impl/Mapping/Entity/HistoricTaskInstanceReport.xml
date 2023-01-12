@@ -200,10 +200,10 @@
       HTI.END_TIME_ IS NOT NULL
 
       <if test="completedBefore != null">
-        AND HTI.END_TIME_ <= #{completedBefore}
+        AND HTI.END_TIME_ &lt;= #{completedBefore}
       </if>
       <if test="completedAfter != null">
-        AND HTI.END_TIME_ >= #{completedAfter}
+        AND HTI.END_TIME_ &gt;= #{completedAfter}
       </if>
 
       <bind name="columnPrefix" value="'HTI.'"/>
@@ -246,10 +246,10 @@
       END_TIME_ IS NOT NULL
 
       <if test="completedBefore != null">
-        AND END_TIME_ <= #{completedBefore}
+        AND END_TIME_ &lt;= #{completedBefore}
       </if>
       <if test="completedAfter != null">
-        AND END_TIME_ >= #{completedAfter}
+        AND END_TIME_ &gt;= #{completedAfter}
       </if>
 
       <bind name="columnPrefix" value="'HTI.'"/>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Jabe\Impl\Batch\ExternalTask;
+namespace Jabe\Impl\Batch\Job;
 
 use Jabe\Impl\Batch\{
     DeploymentMappingJsonConverter,

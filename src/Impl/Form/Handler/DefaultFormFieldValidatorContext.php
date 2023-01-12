@@ -19,7 +19,7 @@ class DefaultFormFieldValidatorContext implements FormFieldValidatorContextInter
 
     public function __construct(
         VariableScopeInterface $variableScope,
-        string $configuration,
+        ?string $configuration,
         VariableMapInterface $submittedValues,
         FormFieldHandler $formFieldHandler
     ) {
@@ -50,12 +50,12 @@ class DefaultFormFieldValidatorContext implements FormFieldValidatorContextInter
         return $this->variableScope;
     }
 
-    public function getConfiguration(): string
+    public function getConfiguration(): ?string
     {
         return $this->configuration;
     }
 
-    public function setConfiguration(string $configuration): void
+    public function setConfiguration(?string $configuration): void
     {
         $this->configuration = $configuration;
     }

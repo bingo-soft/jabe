@@ -14,7 +14,7 @@ class CompositeQueryVariableValueCondition extends AbstractQueryVariableValueCon
         parent::__construct($variableValue);
     }
 
-    public function initializeValue(VariableSerializersInterface $serializers, string $dbType): void
+    public function initializeValue(VariableSerializersInterface $serializers, ?string $dbType): void
     {
         $typedValue = $this->wrappedQueryValue->getTypedValue();
 

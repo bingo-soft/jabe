@@ -35,5 +35,5 @@ interface ReportResultInterface
      *
      * @see #getPeriod()
      */
-    public function getPeriodUnit(): string;
+    public function getPeriodUnit(): ?string;
 }

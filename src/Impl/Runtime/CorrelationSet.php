@@ -42,7 +42,7 @@ class CorrelationSet
         return $this->localCorrelationKeys;
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }

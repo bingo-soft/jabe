@@ -58,7 +58,7 @@ class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperationInte
             }
         } else {
             // activity is not scope => nothing to do
-            $propagatingExecution = execution;
+            $propagatingExecution = $execution;
         }
 
         // take the specified transitions
@@ -114,7 +114,7 @@ class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperationInte
         }
     }
 
-    public function getCanonicalName(): string
+    public function getCanonicalName(): ?string
     {
         return "transition-destroy-scope";
     }

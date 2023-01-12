@@ -107,22 +107,22 @@ class FormPropertyHandler
 
     // getters and setters //////////////////////////////////////////////////////
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
@@ -157,12 +157,12 @@ class FormPropertyHandler
         $this->isRequired = $isRequired;
     }
 
-    public function getVariableName(): string
+    public function getVariableName(): ?string
     {
         return $this->variableName;
     }
 
-    public function setVariableName(string $variableName): void
+    public function setVariableName(?string $variableName): void
     {
         $this->variableName = $variableName;
     }

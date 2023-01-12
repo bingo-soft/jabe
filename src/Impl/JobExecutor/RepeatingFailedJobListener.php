@@ -13,7 +13,7 @@ class RepeatingFailedJobListener implements TransactionListenerInterface
     protected $commandExecutor;
     protected $jobId;
 
-    public function __construct(CommandExecutorInterface $commandExecutor, string $jobId)
+    public function __construct(CommandExecutorInterface $commandExecutor, ?string $jobId)
     {
         $this->commandExecutor = $commandExecutor;
         $this->jobId = $jobId;

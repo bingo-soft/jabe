@@ -28,7 +28,7 @@ class FixedValue implements ExpressionInterface
         throw new ProcessEngineException("Cannot change fixed value");
     }
 
-    public function getExpressionText(): string
+    public function getExpressionText(): ?string
     {
         return strval($this->value);
     }

@@ -54,7 +54,7 @@ class DelegateExpressionTaskListener implements TaskListenerInterface
      * returns the expression text for this task listener. Comes in handy if you want to
      * check which listeners you already have.
      */
-    public function getExpressionText(): string
+    public function getExpressionText(): ?string
     {
         return $this->expression->getExpressionText();
     }

@@ -27,7 +27,7 @@ class ProcessDefinitionBuilder
         $this->scopeStack[] = $this->processDefinition;
     }
 
-    public function createActivity(string $id): ProcessDefinitionBuilder
+    public function createActivity(?string $id): ProcessDefinitionBuilder
     {
         $activity = $this->scopeStack[0]->createActivity($id);
         array_unshift($this->scopeStack, $activity);
@@ -38,7 +38,7 @@ class ProcessDefinitionBuilder
         return $this;
     }
 
-    public function attachedTo(string $id, bool $isInterrupting): ProcessDefinitionBuilder
+    public function attachedTo(?string $id, bool $isInterrupting): ProcessDefinitionBuilder
     {
         $activity = $this->getActivity();
         $activity->setEventScope($this->processDefinition->findActivity($id));
@@ -68,7 +68,7 @@ class ProcessDefinitionBuilder
         return $this;
     }
 
-    public function startTransition(string $destinationActivityId, ?string $transitionId = null): ProcessDefinitionBuilder
+    public function startTransition(?string $destinationActivityId, ?string $transitionId = null): ProcessDefinitionBuilder
     {
         if ($destinationActivityId === null) {
             throw new PvmException("destinationActivityId is null");
@@ -88,7 +88,7 @@ class ProcessDefinitionBuilder
         return $this;
     }
 
-    public function transition(string $destinationActivityId, ?string $transitionId = null): ProcessDefinitionBuilder
+    public function transition(?string $destinationActivityId, ?string $transitionId = null): ProcessDefinitionBuilder
     {
         $this->startTransition($destinationActivityId, $transitionId);
         $this->endTransition();
@@ -101,7 +101,7 @@ class ProcessDefinitionBuilder
         return $this;
     }
 
-    public function property(string $name, $value): ProcessDefinitionBuilder
+    public function property(?string $name, $value): ProcessDefinitionBuilder
     {
         $this->processElement->setProperty($name, $value);
         return $this;

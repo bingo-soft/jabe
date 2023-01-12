@@ -26,4 +26,9 @@ class GetTelemetryDataCmd implements CommandInterface
             throw new \Exception("exceptionWhileRetrievingTelemetryDataRegistryNull");
         }
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

@@ -9,7 +9,7 @@ use Jabe\{
 
 class DefaultArtifactFactory implements ArtifactFactoryInterface
 {
-    public function getArtifact(string $clazz)
+    public function getArtifact(?string $clazz)
     {
         try {
             return new $clazz();

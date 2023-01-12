@@ -23,7 +23,7 @@ class ProcessApplicationReferenceImpl implements ProcessApplicationReferenceInte
         $this->name = $processApplication->getName();
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }

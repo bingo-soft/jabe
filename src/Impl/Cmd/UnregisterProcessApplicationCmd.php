@@ -31,4 +31,9 @@ class UnregisterProcessApplicationCmd implements CommandInterface
             ->unregisterProcessApplicationForDeployments($this->deploymentIds, $this->removeProcessesFromCache);
         return null;
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

@@ -12,7 +12,7 @@ class GetUniqueTaskWorkerCountCmd implements CommandInterface, \Serializable
     protected $startTime;
     protected $endTime;
 
-    public function __construct(string $startTime, string $endTime)
+    public function __construct(?string $startTime, ?string $endTime)
     {
         $this->startTime = $startTime;
         $this->endTime = $endTime;
@@ -36,5 +36,10 @@ class GetUniqueTaskWorkerCountCmd implements CommandInterface, \Serializable
     public function execute(CommandContext $commandContext)
     {
         return $commandContext->getMeterLogManager()->findUniqueTaskWorkerCount($this->startTime, $this->endTime);
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

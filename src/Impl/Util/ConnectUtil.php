@@ -27,10 +27,10 @@ class ConnectUtil
 
     // helper methods
     public static function assembleRequestParameters(
-        string $methodName,
-        string $url,
-        string $contentType,
-        string $payload
+        ?string $methodName,
+        ?string $url,
+        ?string $contentType,
+        ?string $payload
     ): array {
         $requestHeaders = [];
         $requestHeaders[self::HEADER_CONTENT_TYPE] = $contentType;

@@ -14,7 +14,7 @@ class HistoryEvent implements \Serializable, DbEntityInterface, HistoricEntityIn
 
     private static $IDENTITY_LINK_DELETE;
 
-    public static function identityLinkAdd(): string
+    public static function identityLinkAdd(): ?string
     {
         if (self::$IDENTITY_LINK_ADD === null) {
             self::$IDENTITY_LINK_ADD = HistoryEventTypes::identityLinkAdd()->getEventName();
@@ -22,7 +22,7 @@ class HistoryEvent implements \Serializable, DbEntityInterface, HistoricEntityIn
         return self::$IDENTITY_LINK_ADD;
     }
 
-    public static function identityLinkDelete(): string
+    public static function identityLinkDelete(): ?string
     {
         if (self::$IDENTITY_LINK_DELETE === null) {
             self::$IDENTITY_LINK_DELETE = HistoryEventTypes::identityLinkDelete()->getEventName();
@@ -55,19 +55,19 @@ class HistoryEvent implements \Serializable, DbEntityInterface, HistoricEntityIn
     protected $processDefinitionVersion;
 
     /** the case instance in which the event has happened */
-    protected $caseInstanceId;
+    //protected $caseInstanceId;
 
     /** the id of the case execution in which the event has happened */
-    protected $caseExecutionId;
+    //protected $caseExecutionId;
 
     /** the id of the case definition */
-    protected $caseDefinitionId;
+    //protected $caseDefinitionId;
 
     /** the key of the case definition */
-    protected $caseDefinitionKey;
+    //protected $caseDefinitionKey;
 
     /** the name of the case definition */
-    protected $caseDefinitionName;
+    //protected $caseDefinitionName;
 
     /**
      * The type of the activity audit event.
@@ -82,62 +82,62 @@ class HistoryEvent implements \Serializable, DbEntityInterface, HistoricEntityIn
 
     // getters / setters ///////////////////////////////////
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
 
-    public function setProcessInstanceId(string $processInstanceId): void
+    public function setProcessInstanceId(?string $processInstanceId): void
     {
         $this->processInstanceId = $processInstanceId;
     }
 
-    public function getRootProcessInstanceId(): string
+    public function getRootProcessInstanceId(): ?string
     {
         return $this->rootProcessInstanceId;
     }
 
-    public function setRootProcessInstanceId(string $rootProcessInstanceId): void
+    public function setRootProcessInstanceId(?string $rootProcessInstanceId): void
     {
         $this->rootProcessInstanceId = $rootProcessInstanceId;
     }
 
-    public function getExecutionId(): string
+    public function getExecutionId(): ?string
     {
         return $this->executionId;
     }
 
-    public function setExecutionId(string $executionId): void
+    public function setExecutionId(?string $executionId): void
     {
         $this->executionId = $executionId;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function setProcessDefinitionId(string $processDefinitionId): void
+    public function setProcessDefinitionId(?string $processDefinitionId): void
     {
         $this->processDefinitionId = $processDefinitionId;
     }
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }
 
-    public function setProcessDefinitionKey(string $processDefinitionKey): void
+    public function setProcessDefinitionKey(?string $processDefinitionKey): void
     {
         $this->processDefinitionKey = $processDefinitionKey;
     }
 
-    public function getProcessDefinitionName(): string
+    public function getProcessDefinitionName(): ?string
     {
         return $this->processDefinitionName;
     }
 
-    public function setProcessDefinitionName(string $processDefinitionName): void
+    public function setProcessDefinitionName(?string $processDefinitionName): void
     {
         $this->processDefinitionName = $processDefinitionName;
     }
@@ -152,72 +152,72 @@ class HistoryEvent implements \Serializable, DbEntityInterface, HistoricEntityIn
         $this->processDefinitionVersion = $processDefinitionVersion;
     }
 
-    /*public function getCaseDefinitionName(): string
+    /*public function getCaseDefinitionName(): ?string
     {
         return $this->caseDefinitionName;
     }*/
 
-    /*public function setCaseDefinitionName(string $caseDefinitionName): void
+    /*public function setCaseDefinitionName(?string $caseDefinitionName): void
     {
         $this->caseDefinitionName = $caseDefinitionName;
     }*/
 
-    /*public function getCaseDefinitionKey(): string
+    /*public function getCaseDefinitionKey(): ?string
     {
         return $this->caseDefinitionKey;
     }*/
 
-    /*public function setCaseDefinitionKey(string $caseDefinitionKey): void
+    /*public function setCaseDefinitionKey(?string $caseDefinitionKey): void
     {
         $this->caseDefinitionKey = $caseDefinitionKey;
     }*/
 
-    /*public function getCaseDefinitionId(): string
+    /*public function getCaseDefinitionId(): ?string
     {
         return $this->caseDefinitionId;
     }*/
 
-    /*public function setCaseDefinitionId(string $caseDefinitionId): void
+    /*public function setCaseDefinitionId(?string $caseDefinitionId): void
     {
         $this->caseDefinitionId = $caseDefinitionId;
     }*/
 
-    /*public function getCaseInstanceId(): string
+    /*public function getCaseInstanceId(): ?string
     {
         return $this->caseInstanceId;
     }
 
-    public function setCaseInstanceId(string $caseInstanceId): void
+    public function setCaseInstanceId(?string $caseInstanceId): void
     {
         $this->caseInstanceId = $caseInstanceId;
     }
 
-    public function getCaseExecutionId(): string
+    public function getCaseExecutionId(): ?string
     {
         return $this->caseExecutionId;
     }
 
-    public function setCaseExecutionId(string $caseExecutionId): void
+    public function setCaseExecutionId(?string $caseExecutionId): void
     {
         $this->caseExecutionId = $caseExecutionId;
     }*/
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function getEventType(): string
+    public function getEventType(): ?string
     {
         return $this->eventType;
     }
 
-    public function setEventType(string $eventType): void
+    public function setEventType(?string $eventType): void
     {
         $this->eventType = $eventType;
     }
@@ -232,19 +232,19 @@ class HistoryEvent implements \Serializable, DbEntityInterface, HistoricEntityIn
         $this->sequenceCounter = $sequenceCounter;
     }
 
-    public function getRemovalTime(): string
+    public function getRemovalTime(): ?string
     {
         return $this->removalTime;
     }
 
-    public function setRemovalTime(string $removalTime): void
+    public function setRemovalTime(?string $removalTime): void
     {
         $this->removalTime = $removalTime;
     }
 
     // persistent object implementation ///////////////
 
-    public function getPersistentState(): string
+    public function getPersistentState(): ?string
     {
         // events are immutable
         return HistoryEvent::class;

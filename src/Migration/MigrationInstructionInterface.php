@@ -8,13 +8,13 @@ interface MigrationInstructionInterface
      * @return string the id of the activity of the source process definition that this
      * instruction maps instances from
      */
-    public function getSourceActivityId(): string;
+    public function getSourceActivityId(): ?string;
 
     /**
      * @return string the id of the activity of the target process definition that this
      * instruction maps instances to
      */
-    public function getTargetActivityId(): string;
+    public function getTargetActivityId(): ?string;
 
     /**
      * @return whether this flow node's event trigger is going to be updated during

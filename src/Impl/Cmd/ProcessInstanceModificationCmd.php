@@ -58,7 +58,7 @@ class ProcessInstanceModificationCmd extends AbstractModificationCmd
         return null;
     }
 
-    protected function ensureSameProcessDefinition(ExecutionEntity $processInstance, string $processDefinitionId): void
+    protected function ensureSameProcessDefinition(ExecutionEntity $processInstance, ?string $processDefinitionId): void
     {
         if ($processDefinitionId != $processInstance->getProcessDefinitionId()) {
             //throw LOG.processDefinitionOfInstanceDoesNotMatchModification(processInstance,
@@ -67,7 +67,7 @@ class ProcessInstanceModificationCmd extends AbstractModificationCmd
         }
     }
 
-    protected function ensureProcessInstanceExist(string $processInstanceId, ExecutionEntity $processInstance): void
+    protected function ensureProcessInstanceExist(?string $processInstanceId, ExecutionEntity $processInstance): void
     {
         if ($processInstance === null) {
             //throw LOG.processInstanceDoesNotExist(processInstanceId);
@@ -75,7 +75,7 @@ class ProcessInstanceModificationCmd extends AbstractModificationCmd
         }
     }
 
-    protected function createProcessInstanceModificationBuilder(string $processInstanceId, CommandContext $commandContext): ProcessInstanceModificationBuilderImpl
+    protected function createProcessInstanceModificationBuilder(?string $processInstanceId, CommandContext $commandContext): ProcessInstanceModificationBuilderImpl
     {
 
         $processInstanceModificationBuilder = new ProcessInstanceModificationBuilderImpl($commandContext, $processInstanceId);

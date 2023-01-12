@@ -49,7 +49,7 @@ class EventSubscriptionDeclaration
     /**
      * Returns the name of the event without evaluating the possible expression that it might contain.
      */
-    public function getUnresolvedEventName(): string
+    public function getUnresolvedEventName(): ?string
     {
         return $this->eventName->getExpressionText();
     }
@@ -74,22 +74,22 @@ class EventSubscriptionDeclaration
         $this->async = $async;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
 
-    public function setActivityId(string $activityId): void
+    public function setActivityId(?string $activityId): void
     {
         $this->activityId = $activityId;
     }
 
-    public function getEventScopeActivityId(): string
+    public function getEventScopeActivityId(): ?string
     {
         return $this->eventScopeActivityId;
     }
 
-    public function setEventScopeActivityId(string $eventScopeActivityId): void
+    public function setEventScopeActivityId(?string $eventScopeActivityId): void
     {
         $this->eventScopeActivityId = $eventScopeActivityId;
     }
@@ -104,7 +104,7 @@ class EventSubscriptionDeclaration
         $this->isStartEvent = $isStartEvent;
     }
 
-    public function getEventType(): string
+    public function getEventType(): ?string
     {
         return $this->eventType->name();
     }

@@ -37,14 +37,14 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
     private const EXCEPTION_NAME = "externalTask.exceptionByteArray";
 
     /**
-     * Note: String#length() counts Unicode supplementary
+     * Note: ?string#length() counts Unicode supplementary
      * characters twice, so for a String consisting only of those,
      * the limit is effectively MAX_EXCEPTION_MESSAGE_LENGTH / 2
      */
     public const MAX_EXCEPTION_MESSAGE_LENGTH = 666;
 
     protected $id;
-    protected $revision;
+    protected int $revision = 0;
 
     protected $topicName;
     protected $workerId;
@@ -84,92 +84,92 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    public function getTopicName(): string
+    public function getTopicName(): ?string
     {
         return $this->topicName;
     }
 
-    public function setTopicName(string $topic): void
+    public function setTopicName(?string $topic): void
     {
         $this->topicName = $topic;
     }
 
-    public function getWorkerId(): string
+    public function getWorkerId(): ?string
     {
         return $this->workerId;
     }
 
-    public function setWorkerId(string $workerId): void
+    public function setWorkerId(?string $workerId): void
     {
         $this->workerId = $workerId;
     }
 
-    public function getLockExpirationTime(): string
+    public function getLockExpirationTime(): ?string
     {
         return $this->lockExpirationTime;
     }
 
-    public function setLockExpirationTime(string $lockExpirationTime): void
+    public function setLockExpirationTime(?string $lockExpirationTime): void
     {
         $this->lockExpirationTime = $lockExpirationTime;
     }
 
-    public function getExecutionId(): string
+    public function getExecutionId(): ?string
     {
         return $this->executionId;
     }
 
-    public function setExecutionId(string $executionId): void
+    public function setExecutionId(?string $executionId): void
     {
         $this->executionId = $executionId;
     }
 
-    public function getProcessDefinitionKey(): string
+    public function getProcessDefinitionKey(): ?string
     {
         return $this->processDefinitionKey;
     }
 
-    public function setProcessDefinitionKey(string $processDefinitionKey): void
+    public function setProcessDefinitionKey(?string $processDefinitionKey): void
     {
         $this->processDefinitionKey = $processDefinitionKey;
     }
 
-    public function getProcessDefinitionVersionTag(): string
+    public function getProcessDefinitionVersionTag(): ?string
     {
         return $this->processDefinitionVersionTag;
     }
 
-    public function setProcessDefinitionVersionTag(string $processDefinitionVersionTag): void
+    public function setProcessDefinitionVersionTag(?string $processDefinitionVersionTag): void
     {
         $this->processDefinitionVersionTag = $processDefinitionVersionTag;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
 
-    public function setActivityId(string $activityId): void
+    public function setActivityId(?string $activityId): void
     {
         $this->activityId = $activityId;
     }
 
-    public function getActivityInstanceId(): string
+    public function getActivityInstanceId(): ?string
     {
         return $this->activityInstanceId;
     }
 
-    public function setActivityInstanceId(string $activityInstanceId): void
+    public function setActivityInstanceId(?string $activityInstanceId): void
     {
         $this->activityInstanceId = $activityInstanceId;
     }
 
-    public function getRevision(): int
+    public function getRevision(): ?int
     {
         return $this->revision;
     }
@@ -199,22 +199,22 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
         return $this->suspensionState == SuspensionState::suspended()->getStateCode();
     }
 
-    public function getProcessInstanceId(): string
+    public function getProcessInstanceId(): ?string
     {
         return $this->processInstanceId;
     }
 
-    public function setProcessInstanceId(string $processInstanceId): void
+    public function setProcessInstanceId(?string $processInstanceId): void
     {
         $this->processInstanceId = $processInstanceId;
     }
 
-    public function getProcessDefinitionId(): string
+    public function getProcessDefinitionId(): ?string
     {
         return $this->processDefinitionId;
     }
 
-    public function setProcessDefinitionId(string $processDefinitionId): void
+    public function setProcessDefinitionId(?string $processDefinitionId): void
     {
         $this->processDefinitionId = $processDefinitionId;
     }
@@ -239,7 +239,7 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
         $this->retries = $retries;
     }
 
-    public function getErrorMessage(): string
+    public function getErrorMessage(): ?string
     {
         return $this->errorMessage;
     }
@@ -264,7 +264,7 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
         return $this->businessKey;
     }
 
-    public function setBusinessKey(string $businessKey): void
+    public function setBusinessKey(?string $businessKey): void
     {
         $this->businessKey = $businessKey;
     }
@@ -320,13 +320,13 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
      *
      * @return string error details persisted in byte array table
      */
-    public function getErrorDetails(): string
+    public function getErrorDetails(): ?string
     {
         $byteArray = $this->getErrorByteArray();
         return ExceptionUtil::getExceptionStacktrace($byteArray);
     }
 
-    public function setErrorMessage(string $errorMessage): void
+    public function setErrorMessage(?string $errorMessage): void
     {
         if ($errorMessage !== null && strlen($errorMessage) > self::MAX_EXCEPTION_MESSAGE_LENGTH) {
             $this->errorMessage = substr($errorMessage, 0, self::MAX_EXCEPTION_MESSAGE_LENGTH);
@@ -335,7 +335,7 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
         }
     }
 
-    protected function setErrorDetails(string $exception): void
+    protected function setErrorDetails(?string $exception): void
     {
         EnsureUtil::ensureNotNull("exception", "exception", $exception);
 
@@ -352,7 +352,7 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
         }
     }
 
-    public function getErrorDetailsByteArrayId(): string
+    public function getErrorDetailsByteArrayId(): ?string
     {
         return $this->errorDetailsByteArrayId;
     }
@@ -430,7 +430,7 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
      * @param retries updated value of retries left
      * @param retryDuration used for lockExpirationTime calculation
      */
-    public function failed(string $errorMessage, string $errorDetails, int $retries, int $retryDuration, array $variables, array $localVariables): void
+    public function failed(?string $errorMessage, ?string $errorDetails, int $retries, int $retryDuration, array $variables, array $localVariables): void
     {
         $this->ensureActive();
 
@@ -454,7 +454,7 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
         $this->setRetriesAndManageIncidents($retries);
     }
 
-    public function bpmnError(string $errorCode, string $errorMessage, array $variables): void
+    public function bpmnError(?string $errorCode, ?string $errorMessage, array $variables): void
     {
         $this->ensureActive();
         $activityExecution = $this->getExecution();
@@ -506,7 +506,7 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
         return $context;
     }
 
-    public function lock(string $workerId, int $lockDuration): void
+    public function lock(?string $workerId, int $lockDuration): void
     {
         $this->workerId = $workerId;
         $dt = new \DateTime();
@@ -611,7 +611,7 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
         ->fireExternalTaskAvailableEvent();
     }
 
-    public static function createAndInsert(ExecutionEntity $execution, string $topic, int $priority): ExternalTaskEntity
+    public static function createAndInsert(ExecutionEntity $execution, ?string $topic, int $priority): ExternalTaskEntity
     {
         $externalTask = new ExternalTaskEntity();
 
@@ -691,8 +691,13 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
         return $this->lastFailureLogId;
     }
 
-    public function setLastFailureLogId(string $lastFailureLogId): void
+    public function setLastFailureLogId(?string $lastFailureLogId): void
     {
         $this->lastFailureLogId = $lastFailureLogId;
+    }
+
+    public function getDependentEntities(): array
+    {
+        return [];
     }
 }

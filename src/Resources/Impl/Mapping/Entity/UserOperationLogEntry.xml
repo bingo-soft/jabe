@@ -28,9 +28,9 @@
         ROOT_PROC_INST_ID_,
         PROC_INST_ID_,
         EXECUTION_ID_,
-        CASE_DEF_ID_,
+        <!-- CASE_DEF_ID_,
         CASE_INST_ID_,
-        CASE_EXECUTION_ID_,
+        CASE_EXECUTION_ID_, -->
         TASK_ID_,
         JOB_ID_,
         JOB_DEF_ID_,
@@ -49,33 +49,33 @@
         EXTERNAL_TASK_ID_,
         ANNOTATION_
       ) values (
-        #{id ,dbalType=VARCHAR},
-        #{deploymentId, dbalType=VARCHAR},
-        #{processDefinitionId, dbalType=VARCHAR},
-        #{processDefinitionKey, dbalType=VARCHAR},
-        #{rootProcessInstanceId, dbalType=VARCHAR},
-        #{processInstanceId, dbalType=VARCHAR},
-        #{executionId, dbalType=VARCHAR},
-        #{caseDefinitionId, dbalType=VARCHAR},
-        #{caseInstanceId, dbalType=VARCHAR},
-        #{caseExecutionId, dbalType=VARCHAR},
-        #{taskId ,dbalType=VARCHAR},
-        #{jobId, dbalType=VARCHAR},
-        #{jobDefinitionId, dbalType=VARCHAR},
-        #{batchId, dbalType=VARCHAR},
-        #{userId ,dbalType=VARCHAR},
-        #{timestamp ,dbalType=VARCHAR},
-        #{operationId ,dbalType=VARCHAR},
-        #{operationType ,dbalType=VARCHAR},
-        #{entityType ,dbalType=VARCHAR},
-        #{property, dbalType=VARCHAR},
-        #{orgValue, dbalType=VARCHAR},
-        #{newValue ,dbalType=VARCHAR},
-        #{tenantId ,dbalType=VARCHAR},
-        #{removalTime, dbalType=VARCHAR},
-        #{category, dbalType=VARCHAR},
-        #{externalTaskId, dbalType=VARCHAR},
-        #{annotation, dbalType=VARCHAR}
+        #{id:VARCHAR},
+        #{deploymentId:VARCHAR},
+        #{processDefinitionId:VARCHAR},
+        #{processDefinitionKey:VARCHAR},
+        #{rootProcessInstanceId:VARCHAR},
+        #{processInstanceId:VARCHAR},
+        #{executionId:VARCHAR},
+        <!-- #{caseDefinitionId:VARCHAR},
+        #{caseInstanceId:VARCHAR},
+        #{caseExecutionId:VARCHAR}, -->
+        #{taskId:VARCHAR},
+        #{jobId:VARCHAR},
+        #{jobDefinitionId:VARCHAR},
+        #{batchId:VARCHAR},
+        #{userId:VARCHAR},
+        #{timestamp:VARCHAR},
+        #{operationId:VARCHAR},
+        #{operationType:VARCHAR},
+        #{entityType:VARCHAR},
+        #{property:VARCHAR},
+        #{orgValue:VARCHAR},
+        #{newValue:VARCHAR},
+        #{tenantId:VARCHAR},
+        #{removalTime:VARCHAR},
+        #{category:VARCHAR},
+        #{externalTaskId:VARCHAR},
+        #{annotation:VARCHAR}
       )
   </insert>
 
@@ -84,64 +84,64 @@
   <update id="updateUserOperationLogByRootProcessInstanceId"
           parameterType="array">
       update ${prefix}ACT_HI_OP_LOG set
-      REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+      REMOVAL_TIME_ = #{removalTime:VARCHAR}
 
-      where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+      where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateUserOperationLogByRootProcessInstanceId_mssql"
           parameterType="array">
       update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_HI_OP_LOG RES WITH (FORCESEEK)
-      where RES.ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+      where RES.ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateUserOperationLogByRootProcessInstanceId_mysql"
           parameterType="array">
       update ${prefix}ACT_HI_OP_LOG set
-      REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR},
+      REMOVAL_TIME_ = #{removalTime:VARCHAR},
       TIMESTAMP_ = TIMESTAMP_
 
-      where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId, dbalType=VARCHAR}
+      where ROOT_PROC_INST_ID_ = #{rootProcessInstanceId:VARCHAR}
   </update>
 
   <update id="updateUserOperationLogByProcessInstanceId"
           parameterType="array">
     update ${prefix}ACT_HI_OP_LOG
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
-      where PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR}
+      where PROC_INST_ID_ = #{processInstanceId:VARCHAR}
   </update>
 
   <update id="updateUserOperationLogByProcessInstanceId_mssql"
           parameterType="array">
     update RES set
-    RES.REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR}
+    RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
     FROM ${prefix}ACT_HI_OP_LOG RES WITH (FORCESEEK)
-      where RES.PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      where RES.PROC_INST_ID_ = #{processInstanceId:VARCHAR}
   </update>
 
   <update id="updateUserOperationLogByProcessInstanceId_mysql"
           parameterType="array">
     update ${prefix}ACT_HI_OP_LOG
-      set REMOVAL_TIME_ = #{removalTime, dbalType=VARCHAR},
+      set REMOVAL_TIME_ = #{removalTime:VARCHAR},
           TIMESTAMP_ = TIMESTAMP_
-      where PROC_INST_ID_ = #{processInstanceId, dbalType=VARCHAR}
+      where PROC_INST_ID_ = #{processInstanceId:VARCHAR}
   </update>
 
   <update id="updateOperationLogAnnotationByOperationId"
           parameterType="array">
     update ${prefix}ACT_HI_OP_LOG
-      set ANNOTATION_ = #{annotation, dbalType=VARCHAR}
-      where OPERATION_ID_ = #{operationId, dbalType=VARCHAR}
+      set ANNOTATION_ = #{annotation:VARCHAR}
+      where OPERATION_ID_ = #{operationId:VARCHAR}
   </update>
 
   <update id="updateOperationLogAnnotationByOperationId_mysql"
           parameterType="array">
     update ${prefix}ACT_HI_OP_LOG
-      set ANNOTATION_ = #{annotation, dbalType=VARCHAR},
+      set ANNOTATION_ = #{annotation:VARCHAR},
           TIMESTAMP_ = TIMESTAMP_
-      where OPERATION_ID_ = #{operationId, dbalType=VARCHAR}
+      where OPERATION_ID_ = #{operationId:VARCHAR}
   </update>
 
   <!-- OPERATION LOG ENTRY DELETE -->
@@ -154,14 +154,14 @@
   <sql id="andWhereMinuteInDateBetweenSql">
     <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
       AND ${datepart1}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart2}${date}${datepart3}
-      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+      between #{parameter.minuteFrom} and #{parameter.minuteTo}
     </if>
   </sql>
 
   <sql id="andWhereMinuteInDateBetweenSql_oracle">
     <if test="parameter.minuteFrom != null and parameter.minuteTo != null">
       AND ${datepart1}${date}${datepart2}<include refid="src/Resources/Impl/Mapping/Entity/Commons.periodUnitFunction"/>${datepart3}
-      between #{parameter.minuteFrom, dbalType=INTEGER} and #{parameter.minuteTo, dbalType=INTEGER}
+      between #{parameter.minuteFrom} and #{parameter.minuteTo}
     </if>
   </sql>
 
@@ -170,7 +170,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_OP_LOG
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql"/>
     ${limitAfterWithoutOffset}
   </delete>
@@ -180,7 +180,7 @@
     <bind name="date" value="'REMOVAL_TIME_'"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
     delete ${limitBeforeWithoutOffset} from ${prefix}ACT_HI_OP_LOG
-    where REMOVAL_TIME_ <= #{parameter.removalTime}
+    where REMOVAL_TIME_ &lt;= #{parameter.removalTime}
     <include refid="andWhereMinuteInDateBetweenSql_oracle"/>
     ${limitAfterWithoutOffset}
   </delete>
@@ -193,7 +193,7 @@
     where ID_ IN
       (SELECT ID_
        FROM ${prefix}ACT_HI_OP_LOG
-       WHERE REMOVAL_TIME_ <= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
+       WHERE REMOVAL_TIME_ &lt;= #{parameter.removalTime} <include refid="andWhereMinuteInDateBetweenSql"/>
        ${limitAfterWithoutOffset})
   </delete>
 
@@ -207,9 +207,9 @@
     <result property="rootProcessInstanceId" column="ROOT_PROC_INST_ID_" dbalType="VARCHAR" />
     <result property="processInstanceId" column="PROC_INST_ID_" dbalType="VARCHAR" />
     <result property="executionId" column="EXECUTION_ID_" dbalType="VARCHAR" />
-    <result property="caseDefinitionId" column="CASE_DEF_ID_" dbalType="VARCHAR" />
+    <!-- <result property="caseDefinitionId" column="CASE_DEF_ID_" dbalType="VARCHAR" />
     <result property="caseInstanceId" column="CASE_INST_ID_" dbalType="VARCHAR" />
-    <result property="caseExecutionId" column="CASE_EXECUTION_ID_" dbalType="VARCHAR" />
+    <result property="caseExecutionId" column="CASE_EXECUTION_ID_" dbalType="VARCHAR" /> -->
     <result property="taskId" column="TASK_ID_" dbalType="VARCHAR" />
     <result property="jobId" column="JOB_ID_" dbalType="VARCHAR" />
     <result property="jobDefinitionId" column="JOB_DEF_ID_" dbalType="VARCHAR" />
@@ -282,7 +282,7 @@
       <if test="executionId != null">
         and RES.EXECUTION_ID_ = #{executionId}
       </if>
-      <if test="caseDefinitionId != null">
+      <!-- <if test="caseDefinitionId != null">
         and RES.CASE_DEF_ID_ = #{caseDefinitionId}
       </if>
       <if test="caseInstanceId != null">
@@ -290,7 +290,7 @@
       </if>
       <if test="caseExecutionId != null">
         and RES.CASE_EXECUTION_ID_ = #{caseExecutionId}
-      </if>
+      </if> -->
       <if test="taskId != null">
         and RES.TASK_ID_ = #{taskId}
       </if>
@@ -318,7 +318,7 @@
       <if test="entityType != null">
         and RES.ENTITY_TYPE_ = #{entityType}
       </if>
-      <if test="entityTypes != null and count(entityTypes) > 0">
+      <if test="!empty(entityTypes)">
         and RES.ENTITY_TYPE_ in
         <foreach item="entityType" collection="entityTypes" open="(" separator="," close=")">
           #{entityType}
@@ -328,15 +328,15 @@
         and RES.PROPERTY_ = #{property}
       </if>
       <if test="timestampAfter != null">
-        and RES.TIMESTAMP_ > #{timestampAfter}
+        and RES.TIMESTAMP_ &gt; #{timestampAfter}
       </if>
       <if test="timestampBefore != null">
-        and RES.TIMESTAMP_ < #{timestampBefore}
+        and RES.TIMESTAMP_ &lt; #{timestampBefore}
       </if>
       <if test="category != null">
         and RES.CATEGORY_ = #{category}
       </if>
-      <if test="categories != null and count(categories) > 0">
+      <if test="!empty(categories)">
         and RES.CATEGORY_ in
         <foreach item="category" collection="categories" open="(" separator="," close=")">
           #{category}
@@ -360,15 +360,15 @@
     select ${limitBeforeWithoutOffset} * from ${prefix}ACT_HI_OP_LOG RES
     <where>
       <if test="parameter.occurredAfter != null">
-        RES.TIMESTAMP_ > #{parameter.occurredAfter}
+        RES.TIMESTAMP_ &gt; #{parameter.occurredAfter}
       </if>
       <if test="parameter.occurredAt != null">
         and RES.TIMESTAMP_ = #{parameter.occurredAt}
       </if>
-      <if test="parameter.operationTypes != null and count(parameter.operationTypes) > 0">
+      <if test="!empty(parameter.operationTypes)">
         and RES.OPERATION_TYPE_ in
         <foreach item="item" index="index" collection="parameter.operationTypes" open="(" separator="," close=")">
-            #{item, dbalType=VARCHAR}
+            #{item:VARCHAR}
         </foreach>
       </if>
     </where>

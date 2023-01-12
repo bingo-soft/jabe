@@ -13,7 +13,7 @@ class GetDeploymentResourceCmd implements CommandInterface, \Serializable
     protected $deploymentId;
     protected $resourceName;
 
-    public function __construct(string $deploymentId, string $resourceName)
+    public function __construct(?string $deploymentId, ?string $resourceName)
     {
         $this->deploymentId = $deploymentId;
         $this->resourceName = $resourceName;
@@ -46,7 +46,12 @@ class GetDeploymentResourceCmd implements CommandInterface, \Serializable
         $resource = $commandContext
             ->getResourceManager()
             ->findResourceByDeploymentIdAndResourceName($this->deploymentId, $this->resourceName);
-            EnsureUtil::ensureNotNull("no resource found with name '" . $this->resourceName . "' in deployment '" . $this->deploymentId . "'", "resource", $resource);
+        EnsureUtil::ensureNotNull("no resource found with name '" . $this->resourceName . "' in deployment '" . $this->deploymentId . "'", "resource", $resource);
         return $resource->getBytes();
+    }
+
+    public function isRetryable(): bool
+    {
+        return false;
     }
 }

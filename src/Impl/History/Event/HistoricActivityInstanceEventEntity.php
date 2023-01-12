@@ -20,7 +20,7 @@ class HistoricActivityInstanceEventEntity extends HistoricScopeInstanceEvent
     protected $activityInstanceId;
 
     /** the state of this activity instance */
-    protected $activityInstanceState;
+    protected int $activityInstanceState = 0;
 
     /** the id of the parent activity instance */
     protected $parentActivityInstanceId;
@@ -39,67 +39,67 @@ class HistoricActivityInstanceEventEntity extends HistoricScopeInstanceEvent
 
     // getters and setters //////////////////////////////////////////////////////
 
-    public function getAssignee(): string
+    public function getAssignee(): ?string
     {
         return $this->taskAssignee;
     }
 
-    public function getActivityId(): string
+    public function getActivityId(): ?string
     {
         return $this->activityId;
     }
 
-    public function setActivityId(string $activityId): void
+    public function setActivityId(?string $activityId): void
     {
         $this->activityId = $activityId;
     }
 
-    public function getActivityType(): string
+    public function getActivityType(): ?string
     {
         return $this->activityType;
     }
 
-    public function setActivityType(string $activityType): void
+    public function setActivityType(?string $activityType): void
     {
         $this->activityType = $activityType;
     }
 
-    public function getActivityName(): string
+    public function getActivityName(): ?string
     {
         return $this->activityName;
     }
 
-    public function setActivityName(string $activityName): void
+    public function setActivityName(?string $activityName): void
     {
         $this->activityName = $activityName;
     }
 
-    public function getActivityInstanceId(): string
+    public function getActivityInstanceId(): ?string
     {
         return $this->activityInstanceId;
     }
 
-    public function setActivityInstanceId(string $activityInstanceId): void
+    public function setActivityInstanceId(?string $activityInstanceId): void
     {
         $this->activityInstanceId = $activityInstanceId;
     }
 
-    public function getParentActivityInstanceId(): string
+    public function getParentActivityInstanceId(): ?string
     {
         return $this->parentActivityInstanceId;
     }
 
-    public function setParentActivityInstanceId(string $parentActivityInstanceId): void
+    public function setParentActivityInstanceId(?string $parentActivityInstanceId): void
     {
         $this->parentActivityInstanceId = $parentActivityInstanceId;
     }
 
-    public function getCalledProcessInstanceId(): string
+    public function getCalledProcessInstanceId(): ?string
     {
         return $this->calledProcessInstanceId;
     }
 
-    public function setCalledProcessInstanceId(string $calledProcessInstanceId): void
+    public function setCalledProcessInstanceId(?string $calledProcessInstanceId): void
     {
         $this->calledProcessInstanceId = $calledProcessInstanceId;
     }
@@ -112,22 +112,22 @@ class HistoricActivityInstanceEventEntity extends HistoricScopeInstanceEvent
       this.calledCaseInstanceId = calledCaseInstanceId;
     }*/
 
-    public function getTaskId(): string
+    public function getTaskId(): ?string
     {
         return $this->taskId;
     }
 
-    public function setTaskId(string $taskId): void
+    public function setTaskId(?string $taskId): void
     {
         $this->taskId = $taskId;
     }
 
-    public function getTaskAssignee(): string
+    public function getTaskAssignee(): ?string
     {
         return $this->taskAssignee;
     }
 
-    public function setTaskAssignee(string $taskAssignee): void
+    public function setTaskAssignee(?string $taskAssignee): void
     {
         $this->taskAssignee = $taskAssignee;
     }
@@ -162,12 +162,12 @@ class HistoricActivityInstanceEventEntity extends HistoricScopeInstanceEvent
         $this->tenantId = $tenantId;
     }
 
-    public function getRootProcessInstanceId(): string
+    public function getRootProcessInstanceId(): ?string
     {
         return $this->rootProcessInstanceId;
     }
 
-    public function setRootProcessInstanceId(string $rootProcessInstanceId): void
+    public function setRootProcessInstanceId(?string $rootProcessInstanceId): void
     {
         $this->rootProcessInstanceId = $rootProcessInstanceId;
     }

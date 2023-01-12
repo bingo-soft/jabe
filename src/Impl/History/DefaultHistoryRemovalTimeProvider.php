@@ -11,7 +11,7 @@ use Jabe\Repository\{
     ProcessDefinitionInterface
 };
 
-class DefaultHistoryRemovalTimeProvider implements HistoryRemovalTimeProvider
+class DefaultHistoryRemovalTimeProvider implements HistoryRemovalTimeProviderInterface
 {
     public function calculateRemovalTime($instance, $definition = null): ?string
     {
@@ -68,7 +68,7 @@ class DefaultHistoryRemovalTimeProvider implements HistoryRemovalTimeProvider
         return $historicBatch->getEndTime() !== null;
     }
 
-    protected function getTTLByBatchOperation(string $batchOperation): int
+    protected function getTTLByBatchOperation(?string $batchOperation): int
     {
         return Context::getCommandContext()
             ->getProcessEngineConfiguration()
@@ -86,7 +86,7 @@ class DefaultHistoryRemovalTimeProvider implements HistoryRemovalTimeProvider
         return $historicProcessInstance->getEndTime() !== null;
     }
 
-    public static function determineRemovalTime(string $initTime, int $timeToLive): string
+    public static function determineRemovalTime(?string $initTime, int $timeToLive): ?string
     {
         $dt = new \DateTime($initTime);
         $offsetTimestamp = $dt->getTimestamp() + $timeToLive * 86400;
