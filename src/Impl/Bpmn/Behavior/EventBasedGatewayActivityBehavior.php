@@ -9,6 +9,11 @@ use Jabe\Impl\Pvm\Delegate\{
 
 class EventBasedGatewayActivityBehavior extends FlowNodeActivityBehavior
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function execute(ActivityExecutionInterface $execution): void
     {
         // If conditional events exist after the event based gateway they should be evaluated.

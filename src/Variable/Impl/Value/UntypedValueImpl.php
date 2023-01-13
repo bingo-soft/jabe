@@ -8,7 +8,7 @@ use Jabe\Variable\Type\ValueTypeInterface;
 class UntypedValueImpl implements TypedValueInterface
 {
     protected $value;
-    protected $isTransient;
+    protected bool $isTransient = false;
 
     public function __construct($object, ?bool $isTransient = null)
     {

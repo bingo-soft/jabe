@@ -79,7 +79,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
     protected $dbOperationManager;
 
     protected $persistenceSession;
-    protected $isIgnoreForeignKeysForNextFlush;
+    protected bool $isIgnoreForeignKeysForNextFlush = false;
 
     public function __construct(IdGeneratorInterface $idGenerator, PersistenceSessionInterface $persistenceSession = null)
     {
@@ -328,6 +328,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
                     // Top level persistence exception
                     $failure = $failedOperation->getFailure();
                     //throw LOG.flushDbOperationException(allOperations, failedOperation, failure);
+                    var_dump($failure);
                     throw new \Exception("flushDbOperationException");
                 } else {
                     // This branch should never be reached and the exception thus indicates a bug

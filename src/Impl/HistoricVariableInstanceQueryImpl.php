@@ -42,7 +42,7 @@ class HistoricVariableInstanceQueryImpl extends AbstractQuery implements Histori
     protected $activityInstanceIds = [];
 
     protected $tenantIds = [];
-    protected $isTenantIdSet;
+    protected bool $isTenantIdSet = false;
 
     protected $processInstanceIds = [];
     protected bool $includeDeleted = false;

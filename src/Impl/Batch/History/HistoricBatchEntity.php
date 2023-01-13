@@ -29,6 +29,7 @@ class HistoricBatchEntity extends HistoryEvent implements HistoricBatchInterface
 
     protected $startTime;
     protected $endTime;
+    protected $executionStartTime;
 
     public function getType(): ?string
     {
@@ -138,6 +139,16 @@ class HistoricBatchEntity extends HistoryEvent implements HistoricBatchInterface
     public function setEndTime(?string $endTime): void
     {
         $this->endTime = $endTime;
+    }
+
+    public function getExecutionStartTime(): ?string
+    {
+        return $this->executionStartTime;
+    }
+
+    public function setExecutionStartTime(?string $executionStartTime): void
+    {
+        $this->executionStartTime = $executionStartTime;
     }
 
     public function getPersistentState()

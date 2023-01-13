@@ -22,9 +22,9 @@ class FormPropertyHandler
     protected $id;
     protected $name;
     protected $type;
-    protected $isReadable;
-    protected $isWritable;
-    protected $isRequired;
+    protected bool $isReadable = false;
+    protected bool $isWritable = false;
+    protected bool $isRequired = false;
     protected $variableName;
     protected $variableExpression;
     protected $defaultExpression;

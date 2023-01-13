@@ -38,7 +38,7 @@ class HistoricJobLogQueryImpl extends AbstractQuery implements HistoricJobLogQue
     protected $jobPriorityHigherThanOrEqual;
     protected $jobPriorityLowerThanOrEqual;
     protected $tenantIds = [];
-    protected $isTenantIdSet;
+    protected bool $isTenantIdSet = false;
     protected $hostname;
 
     public function __construct(CommandExecutorInterface $commandExecutor)

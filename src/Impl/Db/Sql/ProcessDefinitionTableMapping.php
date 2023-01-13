@@ -2,7 +2,7 @@
 
 namespace Jabe\Impl\Db\Sql;
 
-class ProcessDefinitionTableMapping implements DoctrineTableMappingInterface
+class ProcessDefinitionTableMapping implements MybatisTableMappingInterface
 {
     public function getTableName(): ?string
     {

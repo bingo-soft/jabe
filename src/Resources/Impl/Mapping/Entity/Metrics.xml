@@ -65,7 +65,7 @@
 
   <!-- SELECT -->
 
-  <select id="selectMeterLogSum" parameterType="Jabe\Impl\metrics.MetricsQueryImpl" resultType="integer">
+  <select id="selectMeterLogSum" parameterType="Jabe\Impl\Metrics\MetricsQueryImpl" resultType="integer">
     select SUM(RES.VALUE_)
     <include refid="selectMeterLogsByQueryCriteriaSqlOldTimestampColumn"/>
   </select>
@@ -116,7 +116,7 @@
     <result property="value" column="VALUE_" dbalType="BIGINT" />
   </resultMap>
 
-  <select id="selectMeterLogAggregatedByTimeInterval_db2_or_mssql"  parameterType="Jabe\Impl\metrics.MetricsQueryImpl" resultMap="meterResultIntervallMap">
+  <select id="selectMeterLogAggregatedByTimeInterval_db2_or_mssql"  parameterType="Jabe\Impl\Metrics\MetricsQueryImpl" resultMap="meterResultIntervallMap">
     SELECT NAME_, REPORTER_, VALUE_, INTERVAL_
     FROM (
     SELECT row_number() OVER ( ORDER BY INTERVAL_ DESC, NAME_ DESC, REPORTER_ DESC) AS rid, RES.*
@@ -150,7 +150,7 @@
     INTERVAL_
   </sql>
 
-  <select id="selectMeterLogAggregatedByTimeInterval"  parameterType="Jabe\Impl\metrics.MetricsQueryImpl" resultMap="meterResultIntervallMap">
+  <select id="selectMeterLogAggregatedByTimeInterval"  parameterType="Jabe\Impl\Metrics\MetricsQueryImpl" resultMap="meterResultIntervallMap">
     ${limitBefore}
     <include refid="selectMeterLogAggregatedByTimeIntervalQuery"/>
     ORDER BY INTERVAL_ DESC

@@ -12,8 +12,8 @@ class CorrelationSet
     protected $processInstanceId;
     protected $processDefinitionId;
     protected $tenantId;
-    protected $isTenantIdSet;
-    protected $isExecutionsOnly;
+    protected bool $isTenantIdSet = false;
+    protected bool $isExecutionsOnly = false;
 
     public function __construct(MessageCorrelationBuilderImpl $builder)
     {

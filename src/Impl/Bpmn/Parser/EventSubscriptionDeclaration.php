@@ -27,7 +27,7 @@ class EventSubscriptionDeclaration
     protected $async;
     protected $activityId = null;
     protected $eventScopeActivityId = null;
-    protected $isStartEvent;
+    protected bool $isStartEvent = false;
     protected $jobDeclaration = null;
 
     public function __construct(ExpressionInterface $eventExpression, EventType $eventType, CallableElement $eventPayload = null)

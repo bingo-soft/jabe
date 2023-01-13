@@ -15,11 +15,11 @@
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Jabe\Impl\Batch\history.HistoricBatchEntity">
+<mapper namespace="Jabe\Impl\Batch\History\HistoricBatchEntity">
 
   <!-- INSERT -->
 
-  <insert id="insertHistoricBatch" parameterType="Jabe\Impl\Batch\history.HistoricBatchEntity">
+  <insert id="insertHistoricBatch" parameterType="Jabe\Impl\Batch\History\HistoricBatchEntity">
     insert into ${prefix}ACT_HI_BATCH
     (
       ID_,
@@ -56,7 +56,7 @@
 
   <!-- RESULTMAP -->
 
-  <resultMap id="historicBatchResultMap" type="Jabe\Impl\Batch\history.HistoricBatchEntity">
+  <resultMap id="historicBatchResultMap" type="Jabe\Impl\Batch\History\HistoricBatchEntity">
     <id property="id" column="ID_" dbalType="VARCHAR" />
     <result property="type" column="TYPE_" dbalType="VARCHAR" />
     <result property="totalJobs" column="TOTAL_JOBS_" dbalType="INTEGER" />
@@ -82,7 +82,7 @@
 
   <!-- DELETE -->
 
-  <delete id="deleteHistoricBatch" parameterType="Jabe\Impl\Batch\history.HistoricBatchEntity">
+  <delete id="deleteHistoricBatch" parameterType="Jabe\Impl\Batch\History\HistoricBatchEntity">
     delete from ${prefix}ACT_HI_BATCH where ID_ = #{id}
   </delete>
 
@@ -132,7 +132,7 @@
   </delete>
 
   <!-- UPDATE -->
-  <update id="updateHistoricBatch" parameterType="Jabe\Impl\Batch\history.HistoricBatchEntity">
+  <update id="updateHistoricBatch" parameterType="Jabe\Impl\Batch\History\HistoricBatchEntity">
     update ${prefix}ACT_HI_BATCH
     <set>
       <if test="endTime != null">
@@ -148,7 +148,7 @@
     where ID_= #{id:VARCHAR}
   </update>
 
-  <update id="updateHistoricBatch_mssql" parameterType="Jabe\Impl\Batch\history.HistoricBatchEntity">
+  <update id="updateHistoricBatch_mssql" parameterType="Jabe\Impl\Batch\History\HistoricBatchEntity">
     update RES
     <set>
       <if test="endTime != null">
@@ -165,7 +165,7 @@
     where RES.ID_= #{id:VARCHAR}
   </update>
 
-  <update id="updateHistoricBatchRemovalTimeById" parameterType="Jabe\Impl\Batch\history.HistoricBatchEntity">
+  <update id="updateHistoricBatchRemovalTimeById" parameterType="Jabe\Impl\Batch\History\HistoricBatchEntity">
     update ${prefix}ACT_HI_BATCH
     <set>
         REMOVAL_TIME_ = #{removalTime:VARCHAR}
@@ -173,7 +173,7 @@
     where ID_ = #{id:VARCHAR}
   </update>
 
-  <update id="updateHistoricBatchRemovalTimeById_mssql" parameterType="Jabe\Impl\Batch\history.HistoricBatchEntity">
+  <update id="updateHistoricBatchRemovalTimeById_mssql" parameterType="Jabe\Impl\Batch\History\HistoricBatchEntity">
     update RES
     <set>
       RES.REMOVAL_TIME_ = #{removalTime:VARCHAR}
@@ -187,7 +187,7 @@
     select * from ${prefix}ACT_HI_BATCH where ID_ = #{id}
   </select>
 
-  <select id="selectHistoricBatchesByQueryCriteria" parameterType="Jabe\Impl\Batch\history.HistoricBatchQueryImpl" resultMap="historicBatchResultMap">
+  <select id="selectHistoricBatchesByQueryCriteria" parameterType="Jabe\Impl\Batch\History\HistoricBatchQueryImpl" resultMap="historicBatchResultMap">
     <include refid="src/Resources/Impl/Mapping/Entity/Commons.bindOrderBy"/>
     ${limitBefore}
     select ${distinct} RES.*
@@ -197,7 +197,7 @@
     ${limitAfter}
   </select>
 
-  <select id="selectHistoricBatchCountByQueryCriteria" parameterType="Jabe\Impl\Batch\history.HistoricBatchQueryImpl" resultType="integer">
+  <select id="selectHistoricBatchCountByQueryCriteria" parameterType="Jabe\Impl\Batch\History\HistoricBatchQueryImpl" resultType="integer">
     ${countDistinctBeforeStart} RES.ID_ ${countDistinctBeforeEnd}
     <include refid="selectHistoricBatchesByQueryCriteriaSql"/>
     ${countDistinctAfterEnd}

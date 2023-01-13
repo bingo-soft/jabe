@@ -2,7 +2,7 @@
 
 namespace Jabe\Impl\Db\Sql;
 
-class DeploymentTableMapping implements DoctrineTableMappingInterface
+class DeploymentTableMapping implements MybatisTableMappingInterface
 {
     public function getTableName(): ?string
     {

@@ -25,7 +25,7 @@ class TimerDeclarationImpl extends JobDeclaration
     protected $type;
 
     protected $repeat;
-    protected $isInterruptingTimer; // For boundary timers
+    protected bool $isInterruptingTimer = false; // For boundary timers
     protected $eventScopeActivityId = null;
     protected $isParallelMultiInstance;
 

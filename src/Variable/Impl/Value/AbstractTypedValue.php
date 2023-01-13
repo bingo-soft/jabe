@@ -11,7 +11,7 @@ class AbstractTypedValue implements TypedValueInterface
 
     protected $type;
 
-    protected $isTransient;
+    protected bool $isTransient = false;
 
     public function __construct($value, ValueTypeInterface $type)
     {

@@ -122,7 +122,7 @@
     <if test="!empty(orderingProperties)">
       ORDER BY
       <foreach item="orderingProperty" index="index" collection="orderingProperties" separator=",">
-        ${@Jabe\Impl\Db\sql.MybatisJoinHelper::orderBy(orderingProperty, index)}
+        ${@Jabe\Impl\Db\Sql\MybatisJoinHelper::orderBy(orderingProperty, index)}
       </foreach>
     </if>
   </select>

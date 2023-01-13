@@ -6,6 +6,11 @@ use Jabe\Impl\Pvm\Delegate\ActivityExecutionInterface;
 
 class TaskActivityBehavior extends AbstractBpmnActivityBehavior
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     /**
      * Activity instance id before execution.
      */

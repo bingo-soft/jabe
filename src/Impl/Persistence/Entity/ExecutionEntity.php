@@ -700,7 +700,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         }
     }
 
-    public function getExecutions(): array
+    public function &getExecutions(): array
     {
         $this->ensureExecutionsInitialized();
         return $this->executions;
@@ -831,7 +831,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
     // activity /////////////////////////////////////////////////////////////////
 
     /** ensures initialization and returns the activity */
-    public function getActivity(): ActivityImpl
+    public function getActivity(): ?ActivityImpl
     {
         $this->ensureActivityInitialized();
         return parent::getActivity();
@@ -846,7 +846,8 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
     protected function ensureActivityInitialized(): void
     {
         if (($this->activity === null) && ($this->activityId !== null)) {
-            $this->setActivity($this->getProcessDefinition()->findActivity($this->activityId));
+            $activity = $this->getProcessDefinition()->findActivity($this->activityId);
+            $this->setActivity($activity);
         }
     }
 
@@ -1719,7 +1720,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
 
     public function removeTask(TaskEntity $task): void
     {
-        foreach ($this->tasks as $key => $value) {
+        foreach ($this->getTasks() as $key => $value) {
             if ($value == $task) {
                 unset($this->tasks[$key]);
             }

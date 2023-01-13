@@ -51,7 +51,7 @@ class TaskDefinition
         $this->nameExpression = $nameExpression;
     }
 
-    public function getDescriptionExpression(): ExpressionInterface
+    public function getDescriptionExpression(): ?ExpressionInterface
     {
         return $this->descriptionExpression;
     }

@@ -4,7 +4,7 @@ namespace Jabe\Impl\Util;
 
 use Jabe\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Impl\Context\Context;
-use Jabe\Impl\El\ExpressionManager;
+use Jabe\Impl\El\ExpressionManagerInterface;
 
 class StringUtil
 {
@@ -39,7 +39,7 @@ class StringUtil
      * Use {@link #isExpression(String)} to conduct these kind of checks.
      *
      */
-    public static function isCompositeExpression(?string $text, ExpressionManager $expressionManager): bool
+    public static function isCompositeExpression(?string $text, ExpressionManagerInterface $expressionManager): bool
     {
         return !$expressionManager->createExpression($text)->isLiteralText();
     }

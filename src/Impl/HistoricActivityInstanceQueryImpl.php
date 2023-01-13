@@ -33,7 +33,7 @@ class HistoricActivityInstanceQueryImpl extends AbstractQuery implements Histori
     protected $finishedAfter;
     protected $activityInstanceState;
     protected $tenantIds = [];
-    protected $isTenantIdSet;
+    protected bool $isTenantIdSet = false;
 
     public function __construct(CommandExecutor $commandExecutor = null)
     {

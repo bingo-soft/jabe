@@ -63,14 +63,14 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
     protected $dueDate;
     protected $dueAfter;
     protected $dueBefore;
-    protected $isWithoutTaskDueDate;
+    protected bool $isWithoutTaskDueDate = false;
 
     protected $followUpDate;
     protected $followUpBefore;
     protected $followUpAfter;
 
     protected $tenantIds = [];
-    protected $isTenantIdSet;
+    protected bool $isTenantIdSet = false;
 
     /*protected $caseDefinitionId;
     protected $caseDefinitionKey;

@@ -6,6 +6,11 @@ use Jabe\Impl\Pvm\Delegate\ActivityExecutionInterface;
 
 abstract class GatewayActivityBehavior extends FlowNodeActivityBehavior
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     protected function lockConcurrentRoot(ActivityExecutionInterface $execution): void
     {
         $concurrentRoot = null;

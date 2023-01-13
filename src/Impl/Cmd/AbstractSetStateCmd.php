@@ -20,7 +20,7 @@ abstract class AbstractSetStateCmd implements CommandInterface
     protected const SUSPENSION_STATE_PROPERTY = "suspensionState";
 
     protected $includeSubResources;
-    protected $isLogUserOperationDisabled;
+    protected bool $isLogUserOperationDisabled = false;
     protected $executionDate;
 
     public function __construct(bool $includeSubResources, ?string $executionDate)

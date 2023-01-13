@@ -96,7 +96,7 @@ class ListQueryParameterObject implements \Serializable
         $this->tenantCheck = $tenantCheck;
     }
 
-    public function getOrderingProperties(): array
+    public function &getOrderingProperties(): array
     {
         return $this->orderingProperties;
     }

@@ -11,7 +11,7 @@ class ConditionSet
     protected $processDefinitionId;
     protected $variables;
     protected $tenantId;
-    protected $isTenantIdSet;
+    protected bool $isTenantIdSet = false;
 
     public function __construct(ConditionEvaluationBuilderImpl $builder)
     {

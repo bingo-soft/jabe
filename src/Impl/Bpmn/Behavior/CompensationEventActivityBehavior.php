@@ -16,6 +16,7 @@ class CompensationEventActivityBehavior extends FlowNodeActivityBehavior
 
     public function __construct(CompensateEventDefinition $compensateEventDefinition)
     {
+        parent::__construct();
         $this->compensateEventDefinition = $compensateEventDefinition;
     }
 

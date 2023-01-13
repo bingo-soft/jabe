@@ -33,7 +33,7 @@ class HistoricExternalTaskLogQueryImpl extends AbstractQuery implements Historic
     protected $priorityHigherThanOrEqual;
     protected $priorityLowerThanOrEqual;
     protected $tenantIds = [];
-    protected $isTenantIdSet;
+    protected bool $isTenantIdSet = false;
     protected $state;
 
     public function __construct(CommandExecutorInterface $commandExecutor = null)

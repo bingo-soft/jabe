@@ -19,7 +19,7 @@ class VariableInstanceManager extends AbstractManager
         return $this->findVariableInstancesByTaskIdAndVariableNames($taskId, null);
     }
 
-    public function findVariableInstancesByTaskIdAndVariableNames(?string $taskId, array $variableNames): array
+    public function findVariableInstancesByTaskIdAndVariableNames(?string $taskId, ?array $variableNames = []): array
     {
         $parameter = [];
         $parameter["taskId"] = $taskId;
@@ -58,7 +58,7 @@ class VariableInstanceManager extends AbstractManager
 
     public function deleteVariableInstanceByTask(TaskEntity $task): void
     {
-        $variableInstances = $task->variableStore->getVariables();
+        $variableInstances = $task->getVariableStore()->getVariables();
         foreach ($variableInstances as $variableInstance) {
             $variableInstance->delete();
         }

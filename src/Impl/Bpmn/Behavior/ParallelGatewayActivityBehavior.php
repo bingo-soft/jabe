@@ -13,7 +13,12 @@ class ParallelGatewayActivityBehavior extends GatewayActivityBehavior
 {
     //protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
-    public function execute(ActivityExecutionInterface $execution): void
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function execute(/*ActivityExecutionInterface*/$execution): void
     {
         // Join
         $activity = $execution->getActivity();

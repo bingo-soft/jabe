@@ -58,8 +58,8 @@ class CompareUtil
      */
     public static function elementIsNotContainedInArray($element, ...$values): bool
     {
-        if ($element !== null && !empty($values)) {
-            return self::elementIsNotContainedInList($element, $values);
+        if ($element !== null && !empty($values) && is_array($values[0]) && !empty($values[0])) {
+            return self::elementIsNotContainedInList($element, $values[0]);
         } else {
             return false;
         }

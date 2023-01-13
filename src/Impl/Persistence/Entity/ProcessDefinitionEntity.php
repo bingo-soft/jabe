@@ -38,7 +38,7 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
     protected $startFormHandler;
     protected $startFormDefinition;
     protected $diagramResourceName;
-    protected $isGraphicalNotationDefined;
+    protected bool $isGraphicalNotationDefined = false;
     protected $taskDefinitions = [];
     protected $hasStartFormKey;
     protected $suspensionState;

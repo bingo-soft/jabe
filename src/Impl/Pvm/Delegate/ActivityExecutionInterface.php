@@ -86,7 +86,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
      * returns the list of execution of which this execution the parent of.
      * This is a copy of the actual list, so a modification has no direct effect.
      */
-    public function getExecutions(): array;
+    public function &getExecutions(): array;
 
     /**
      * returns child executions that are not event scope executions.

@@ -12,7 +12,7 @@ use Jabe\Form\{
 };
 use Jabe\Impl\Bpmn\Parser\BpmnParse;
 use Jabe\Impl\Context\Context;
-use Jabe\Impl\El\ExpressionManager;
+use Jabe\Impl\El\ExpressionManagerInterface;
 use Jabe\Impl\Form\{
     FormDataImpl,
     FormDefinition
@@ -81,7 +81,7 @@ class DefaultFormHandler implements FormHandlerInterface
         }
     }
 
-    protected function parseFormData(BpmnParse $bpmnParse, ExpressionManager $expressionManager, Element $extensionElement): void
+    protected function parseFormData(BpmnParse $bpmnParse, ExpressionManagerInterface $expressionManager, Element $extensionElement): void
     {
         $formData = $extensionElement->elementNS(BpmnParse::BPMN_EXTENSIONS_NS_PREFIX, "formData");
         if ($formData !== null) {
@@ -90,7 +90,7 @@ class DefaultFormHandler implements FormHandlerInterface
         }
     }
 
-    protected function parseFormFields(Element $formData, BpmnParse $bpmnParse, ExpressionManager $expressionManager): void
+    protected function parseFormFields(Element $formData, BpmnParse $bpmnParse, ExpressionManagerInterface $expressionManager): void
     {
         // parse fields:
         $formFields = $formData->elementsNS(BpmnParse::BPMN_EXTENSIONS_NS_PREFIX, self::FORM_FIELD_ELEMENT);
@@ -99,7 +99,7 @@ class DefaultFormHandler implements FormHandlerInterface
         }
     }
 
-    protected function parseFormField(Element $formField, BpmnParse $bpmnParse, ExpressionManager $expressionManager): void
+    protected function parseFormField(Element $formField, BpmnParse $bpmnParse, ExpressionManagerInterface $expressionManager): void
     {
         $formFieldHandler = new FormFieldHandler();
 
@@ -147,7 +147,7 @@ class DefaultFormHandler implements FormHandlerInterface
         Element $formField,
         FormFieldHandler $formFieldHandler,
         BpmnParse $bpmnParse,
-        ExpressionManager $expressionManager
+        ExpressionManagerInterface $expressionManager
     ): void {
         $propertiesElement = $formField->elementNS(BpmnParse::BPMN_EXTENSIONS_NS_PREFIX, "properties");
 
@@ -166,7 +166,7 @@ class DefaultFormHandler implements FormHandlerInterface
         }
     }
 
-    protected function parseValidation(Element $formField, FormFieldHandler $formFieldHandler, BpmnParse $bpmnParse, ExpressionManager $expressionManager): void
+    protected function parseValidation(Element $formField, FormFieldHandler $formFieldHandler, BpmnParse $bpmnParse, ExpressionManagerInterface $expressionManager): void
     {
         $validationElement = $formField->elementNS(BpmnParse::BPMN_EXTENSIONS_NS_PREFIX, "validation");
 
@@ -199,7 +199,7 @@ class DefaultFormHandler implements FormHandlerInterface
         return $formTypes;
     }
 
-    protected function parseFormProperties(BpmnParse $bpmnParse, ExpressionManager $expressionManager, Element $extensionElement): void
+    protected function parseFormProperties(BpmnParse $bpmnParse, ExpressionManagerInterface $expressionManager, Element $extensionElement): void
     {
         $formTypes = $this->getFormTypes();
 

@@ -10,8 +10,8 @@ use Jabe\Impl\Batch\{
 class SetRemovalTimeBatchConfiguration extends BatchConfiguration
 {
     protected $removalTime;
-    protected $hasRemovalTime;
-    protected $isHierarchical;
+    protected bool $hasRemovalTime = false;
+    protected bool $isHierarchical = false;
 
     public function __construct(array $ids, DeploymentMappings $mappings = null)
     {

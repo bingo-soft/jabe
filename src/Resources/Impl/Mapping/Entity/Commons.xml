@@ -117,7 +117,7 @@
     <choose>
       <when test="!empty(orderingProperties)">
         <foreach collection="orderingProperties" item="orderingProperty" index="index">
-          <bind name="newOrderBy" value="@Jabe\Impl\Db\sql.MybatisJoinHelper::orderBy(orderingProperty, index)" />
+          <bind name="newOrderBy" value="@Jabe\Impl\Db\Sql\MybatisJoinHelper::orderBy(orderingProperty, index)" />
 
           <if test="index == 0">
             <bind name="internalOrderBy" value="newOrderBy"/>
@@ -141,9 +141,9 @@
   <sql id="orderBySelection">
     <foreach collection="orderingProperties" item="orderingProperty" index="index">
       <if test="!orderingProperty.containedProperty">
-        <bind name="tableAlias" value="@Jabe\Impl\Db\sql.MybatisJoinHelper::tableAlias(orderingProperty.relation, index)"/>
+        <bind name="tableAlias" value="@Jabe\Impl\Db\Sql\MybatisJoinHelper::tableAlias(orderingProperty.relation, index)"/>
         ,
-        ${@Jabe\Impl\Db\sql.MybatisJoinHelper::orderBySelection(orderingProperty, index)}
+        ${@Jabe\Impl\Db\Sql\MybatisJoinHelper::orderBySelection(orderingProperty, index)}
         as
         ${tableAlias}_${orderingProperty.queryProperty.name}
       </if>

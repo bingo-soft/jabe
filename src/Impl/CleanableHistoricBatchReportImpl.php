@@ -17,7 +17,7 @@ class CleanableHistoricBatchReportImpl extends AbstractQuery implements Cleanabl
 {
     protected $currentTimestamp;
 
-    protected $isHistoryCleanupStrategyRemovalTimeBased;
+    protected bool $isHistoryCleanupStrategyRemovalTimeBased = false;
 
     public function __construct(CommandExecutorInterface $commandExecutor)
     {

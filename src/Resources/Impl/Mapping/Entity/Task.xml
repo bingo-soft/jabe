@@ -295,12 +295,12 @@
     <if test="E_JOIN">
       ${JOIN_TYPE} ${prefix}ACT_RU_EXECUTION E on RES.PROC_INST_ID_ = E.ID_
     </if>
-    <if test="CD_JOIN">
+    <!--<if test="CD_JOIN">
       ${JOIN_TYPE} ${prefix}ACT_RE_CASE_DEF CD on RES.CASE_DEF_ID_ = CD.ID_
     </if>
     <if test="CE_JOIN">
       ${JOIN_TYPE} ${prefix}ACT_RU_CASE_EXECUTION CE on RES.CASE_INST_ID_ = CE.ID_
-    </if>
+    </if>-->
     <if test="E1_JOIN">
       left join ${prefix}ACT_RU_EXECUTION E1 on RES.EXECUTION_ID_ = E1.ID_
     </if>
@@ -314,9 +314,9 @@
     
     <foreach collection="orderingProperties" item="orderingProperty" index="i">
       <if test="orderingProperty.relation != null">
-        <bind name="tableAlias" value="@Jabe\Impl\Db\sql.MybatisJoinHelper::tableAlias(orderingProperty.relation, i)"/>
+        <bind name="tableAlias" value="@Jabe\Impl\Db\Sql\MybatisJoinHelper::tableAlias(orderingProperty.relation, i)"/>
         left join 
-        ${prefix}${@Jabe\Impl\Db\sql.MybatisJoinHelper::tableMapping(orderingProperty.relation)} 
+        ${prefix}${@Jabe\Impl\Db\Sql\MybatisJoinHelper::tableMapping(orderingProperty.relation)} 
         ${tableAlias}
         on
         <include refid="src/Resources/Impl/Mapping/Entity/Commons.filterOrderByRelations"/>

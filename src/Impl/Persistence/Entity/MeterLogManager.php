@@ -175,7 +175,8 @@ class MeterLogManager extends AbstractManager
             $queryParameters["minuteTo"] = $minuteTo;
         }
         $parameterObject = new ListQueryParameterObject($queryParameters, 0, $batchSize);
-        $parameterObject->addOrderingProperty(new QueryOrderingProperty(new QueryPropertyImpl("TIMESTAMP_"), Direction::ascending()));
+        $props = &$parameterObject->getOrderingProperties();
+        $props[] = new QueryOrderingProperty(new QueryPropertyImpl("TIMESTAMP_"), Direction::ascending());
 
         return $this->getDbEntityManager()->selectList(self::SELECT_TASK_METER_FOR_CLEANUP, $parameterObject);
     }

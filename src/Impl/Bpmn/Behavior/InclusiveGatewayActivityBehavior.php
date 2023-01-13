@@ -21,6 +21,11 @@ class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior
 {
     //protected static BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+ 
     public function execute(ActivityExecutionInterface $execution): void
     {
         $execution->inactivate();

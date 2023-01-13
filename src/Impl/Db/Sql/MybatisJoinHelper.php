@@ -8,11 +8,11 @@ use Jabe\Impl\{
 };
 use Jabe\Impl\Db\EnginePersistenceLogger;
 
-class DoctrineJoinHelper
+class MybatisJoinHelper
 {
     //protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
     public const DEFAULT_ORDER = "RES.ID_ asc";
-    public static $mappings;// = new HashMap<String, MyBatisTableMapping>();
+    public static $mappings;
 
     private static function init(): void
     {
@@ -94,7 +94,7 @@ class DoctrineJoinHelper
         return $sb;
     }
 
-    protected static function getTableMapping(?string $relation): DoctrineTableMappingInterface
+    protected static function getTableMapping(?string $relation): MybatisTableMappingInterface
     {
         self::init();
         if (array_key_exists($relation, self::$mappings)) {

@@ -42,8 +42,8 @@ class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements Proc
     protected $superCaseInstanceId;
     protected $subCaseInstanceId;*/
     protected $activityIds = [];
-    protected $isRootProcessInstances;
-    protected $isLeafProcessInstances;
+    protected bool $isRootProcessInstances = false;
+    protected bool $isLeafProcessInstances = false;
 
     protected bool $isTenantIdSet = false;
     protected $tenantIds = [];

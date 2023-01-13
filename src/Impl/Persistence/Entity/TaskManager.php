@@ -87,8 +87,8 @@ class TaskManager extends AbstractManager
 
     public function findTaskById(?string $id): ?TaskEntity
     {
-        EnsureUtil::ensureNotNull("Invalid task id", "id", $this->id);
-        return $this->getDbEntityManager()->selectById(TaskEntity::class, $this->id);
+        EnsureUtil::ensureNotNull("Invalid task id", "id", $id);
+        return $this->getDbEntityManager()->selectById(TaskEntity::class, $id);
     }
 
     public function findTasksByExecutionId(?string $executionId): array

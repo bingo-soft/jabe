@@ -12,6 +12,11 @@ use Jabe\Impl\Pvm\Delegate\ActivityExecutionInterface;
 
 class ExclusiveGatewayActivityBehavior extends GatewayActivityBehavior
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     //protected static BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
     /**

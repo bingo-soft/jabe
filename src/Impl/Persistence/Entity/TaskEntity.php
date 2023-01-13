@@ -122,7 +122,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
     protected $taskDefinition;
     protected $taskDefinitionKey;
 
-    protected $isDeleted;
+    protected $isDeleted = false;
     protected $deleteReason;
 
     protected $eventName;
@@ -524,7 +524,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
 
     // variables ////////////////////////////////////////////////////////////////
 
-    protected function getVariableStore(): VariableStore
+    public function getVariableStore(): VariableStore
     {
         return $this->variableStore;
     }
@@ -788,7 +788,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         if (!$this->isIdentityLinksInitialized) {
             $this->taskIdentityLinkEntities = Context::getCommandContext()
             ->getIdentityLinkManager()
-            ->findIdentityLinksByTaskId(id);
+            ->findIdentityLinksByTaskId($this->id);
             $this->isIdentityLinksInitialized = true;
         }
 
@@ -1601,7 +1601,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
             UserOperationLogEntryInterface::OPERATION_TYPE_COMPLETE == $operation ||
             UserOperationLogEntryInterface::OPERATION_TYPE_DELETE == $operation
         ) {
-            propertyChanged(self::DELETE, false, true);
+            $this->propertyChanged(self::DELETE, false, true);
         }
 
         $commandContext = Context::getCommandContext();

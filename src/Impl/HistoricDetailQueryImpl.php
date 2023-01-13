@@ -27,7 +27,7 @@ class HistoricDetailQueryImpl extends AbstractQuery implements HistoricDetailQue
     protected $variableInstanceId;
     protected $variableTypes = [];
     protected $tenantIds = [];
-    protected $isTenantIdSet;
+    protected bool $isTenantIdSet = false;
     protected $processInstanceIds = [];
     protected $userOperationId;
     protected $sequenceCounter;

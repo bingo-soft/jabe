@@ -10,7 +10,7 @@ use Jabe\Variable\Type\ValueType;
 
 class NullValueImpl implements TypedValueInterface
 {
-    private $isTransient;
+    private bool $isTransient = false;
     public static $INSTANCE;
     public static $INSTANCE_TRANSIENT;
 

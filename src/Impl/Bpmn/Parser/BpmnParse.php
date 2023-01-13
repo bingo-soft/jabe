@@ -1394,11 +1394,11 @@ class BpmnParse extends Parse
         } elseif ($tagName == strtoupper(ActivityTypes::GATEWAY_INCLUSIVE)) {
             $activity = $this->parseInclusiveGateway($activityElement, $scopeElement);
         } elseif ($tagName == strtoupper(ActivityTypes::GATEWAY_PARALLEL)) {
-            $activity = strtoupper($this->parseParallelGateway($activityElement, $scopeElement));
+            $activity = $this->parseParallelGateway($activityElement, $scopeElement);
         } elseif ($tagName == strtoupper(ActivityTypes::TASK_SCRIPT)) {
             $activity = $this->parseScriptTask($activityElement, $scopeElement);
         } elseif ($tagName == strtoupper(ActivityTypes::TASK_SERVICE)) {
-            $activity = strtoupper($this->parseServiceTask($activityElement, $scopeElement));
+            $activity = $this->parseServiceTask($activityElement, $scopeElement);
         } elseif ($tagName == strtoupper(ActivityTypes::TASK_BUSINESS_RULE)) {
             $activity = $this->parseBusinessRuleTask($activityElement, $scopeElement);
         } elseif ($tagName == strtoupper(ActivityTypes::TASK)) {
@@ -3160,7 +3160,7 @@ class BpmnParse extends Parse
     {
         $taskListener = null;
 
-        $className = $taskListenerElement->attribute(self::PROPERTYNAME_CLASS);
+        $className = str_replace('.', '\\', $taskListenerElement->attribute(self::PROPERTYNAME_CLASS));
         $expression = $taskListenerElement->attribute(self::PROPERTYNAME_EXPRESSION);
         $delegateExpression = $taskListenerElement->attribute(self::PROPERTYNAME_DELEGATE_EXPRESSION);
         $scriptElement = $taskListenerElement->elementNS(self::BPMN_EXTENSIONS_NS_PREFIX, "script");
@@ -4660,7 +4660,7 @@ class BpmnParse extends Parse
     {
         $executionListener = null;
 
-        $className = $executionListenerElement->attribute(self::PROPERTYNAME_CLASS);
+        $className = str_replace('.', '\\', $executionListenerElement->attribute(self::PROPERTYNAME_CLASS));
         $expression = $executionListenerElement->attribute(self::PROPERTYNAME_EXPRESSION);
         $delegateExpression = $executionListenerElement->attribute(self::PROPERTYNAME_DELEGATE_EXPRESSION);
         $scriptElement = $executionListenerElement->elementNS(self::BPMN_EXTENSIONS_NS_PREFIX, "script");

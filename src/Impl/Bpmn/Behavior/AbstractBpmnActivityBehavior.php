@@ -24,6 +24,11 @@ class AbstractBpmnActivityBehavior extends FlowNodeActivityBehavior
      * the regular FlowNodeActivityBehavior#leave(ActivityExecution) is
      * called.
      */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function doLeave(ActivityExecutionInterface $execution): void
     {
         $currentActivity = $execution->getActivity();

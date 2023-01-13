@@ -2,7 +2,7 @@
 
 namespace Jabe\Impl\Db\Sql;
 
-interface DoctrineTableMappingInterface
+interface MybatisTableMappingInterface
 {
     public function getTableName(): ?string;
 

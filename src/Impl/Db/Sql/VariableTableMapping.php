@@ -2,7 +2,7 @@
 
 namespace Jabe\Impl\Db\Sql;
 
-class VariableTableMapping implements DoctrineTableMappingInterface
+class VariableTableMapping implements MybatisTableMappingInterface
 {
     public function getTableName(): ?string
     {

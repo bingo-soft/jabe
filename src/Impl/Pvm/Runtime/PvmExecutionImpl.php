@@ -386,7 +386,12 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
     {
         $parent = $this->getParent();
         if ($parent !== null) {
-            $parent->removeExecution($this);
+            $executions = &$parent->getExecutions();
+            foreach ($executions as $key => $ex) {
+                if ($ex == $this) {
+                    unset($executions[$key]);
+                }
+            }
 
             // if the sequence counter is greater than the
             // sequence counter of the parent, then set
@@ -1098,7 +1103,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
             $propagatingExecution->end(!$propagatingExecution->isConcurrent());
         } else {
             $propagatingExecution->setTransitionsToTake($_transitions);
-            $propagatingExecution->performOperation(AbstractPvmEventAtomicOperatio::transitionNotifyListenerEnd());
+            $propagatingExecution->performOperation(AbstractPvmEventAtomicOperation::transitionNotifyListenerEnd());
         }
     }
 
@@ -1119,7 +1124,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
     // executions ///////////////////////////////////////////////////////////////
 
-    abstract public function getExecutions(): array;
+    abstract public function &getExecutions(): array;
 
     abstract public function getExecutionsAsCopy(): array;
 
@@ -1422,7 +1427,8 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         }
 
         if ($parent !== null) {
-            $parent->addExecution($this);
+            $executions = &$parent->getExecutions();
+            $executions[] = $this;
         }
     }
 
@@ -2010,7 +2016,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         return $this->getParent() === null;
     }
 
-    public function setStartContext(ScopeInstantiationContext $startContext): void
+    public function setStartContext(?ScopeInstantiationContext $startContext): void
     {
         $this->scopeInstantiationContext = $startContext;
     }

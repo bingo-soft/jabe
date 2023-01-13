@@ -192,4 +192,9 @@ class MetricsQueryImpl extends ListQueryParameterObject implements \Serializable
         }
         return parent::getMaxResults();
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }

@@ -40,7 +40,7 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
     protected $incidentMessage;
     protected $incidentMessageLike;
     protected $startedBy;
-    protected $isRootProcessInstances;
+    protected bool $isRootProcessInstances = false;
     protected $superProcessInstanceId;
     protected $subProcessInstanceId;
     //protected $superCaseInstanceId;
@@ -58,7 +58,7 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
     protected $processDefinitionKeys = [];
     protected $processInstanceIds = [];
     protected $tenantIds = [];
-    protected $isTenantIdSet;
+    protected bool $isTenantIdSet = false;
     protected $executedActivityIds = [];
     protected $activeActivityIds = [];
     protected $state;

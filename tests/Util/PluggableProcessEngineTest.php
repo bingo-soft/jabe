@@ -42,6 +42,7 @@ class PluggableProcessEngineTest extends TestCase
     {
         $this->initializeServices();
         $this->engineRule->starting(get_class($this), $this->getName());
+        $this->testRule->starting();
     }
 
     public function initializeServices(): void

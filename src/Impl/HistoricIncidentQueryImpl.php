@@ -37,7 +37,7 @@ class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl implements His
     protected $historyConfiguration;
     protected $incidentState;
     protected $tenantIds = [];
-    protected $isTenantIdSet;
+    protected bool $isTenantIdSet = false;
     protected $jobDefinitionIds = [];
 
     public function __construct(CommandExecutorInterface $commandExecutor)

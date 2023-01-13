@@ -333,7 +333,7 @@
     </where>
   </sql>
 
-  <resultMap id="optimizeHistoricIdentityLinkResultMap" type="Jabe\Impl\Persistence\Entity\optimize.OptimizeHistoricIdentityLinkLogEntity">
+  <resultMap id="optimizeHistoricIdentityLinkResultMap" type="Jabe\Impl\Persistence\Entity\Optimize\OptimizeHistoricIdentityLinkLogEntity">
     <id property="id" column="ID_" dbalType="VARCHAR" />
     <result property="type" column="TYPE_" dbalType="VARCHAR" />
     <result property="time" column="TIMESTAMP_" dbalType="VARCHAR" />

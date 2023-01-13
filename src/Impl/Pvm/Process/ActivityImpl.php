@@ -30,8 +30,8 @@ class ActivityImpl extends ScopeImpl implements PvmActivityInterface, HasDIBound
 
     protected bool $isScope = false;
 
-    protected $isAsyncBefore;
-    protected $isAsyncAfter;
+    protected bool $isAsyncBefore = false;
+    protected bool $isAsyncAfter = false;
 
     public function __construct(?string $id, ProcessDefinitionImpl $processDefinition)
     {

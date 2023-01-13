@@ -244,7 +244,7 @@ class HistoryEvent implements \Serializable, DbEntityInterface, HistoricEntityIn
 
     // persistent object implementation ///////////////
 
-    public function getPersistentState(): ?string
+    public function getPersistentState()
     {
         // events are immutable
         return HistoryEvent::class;

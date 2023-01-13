@@ -192,7 +192,7 @@ class UserOperationLogManager extends AbstractHistoricManager
         }
     }
 
-    public function logTaskOperations(?string $operation, HistoricTaskInstanceInterface $task, array $propertyChanges): void
+    public function logTaskOperations(?string $operation, HistoricTaskInstanceInterface|TaskEntity $task, array $propertyChanges): void
     {
         if ($task instanceof TaskEntity) {
             if ($this->isUserOperationLogEnabled()) {

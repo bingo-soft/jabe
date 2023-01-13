@@ -24,7 +24,7 @@ class CleanableHistoricProcessInstanceReportImpl extends AbstractQuery implement
 
     protected $currentTimestamp;
 
-    protected $isHistoryCleanupStrategyRemovalTimeBased;
+    protected bool $isHistoryCleanupStrategyRemovalTimeBased = false;
 
     public function __construct(CommandExecutorInterface $commandExecutor)
     {

@@ -15,7 +15,7 @@ class FileValueImpl implements FileValueInterface
     protected $value;
     protected $type;
     protected $encoding;
-    protected $isTransient;
+    protected bool $isTransient = false;
 
     public function __construct(
         FileValueTypeInterface $type,

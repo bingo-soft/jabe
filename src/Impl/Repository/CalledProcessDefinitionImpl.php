@@ -20,7 +20,7 @@ class CalledProcessDefinitionImpl implements CalledProcessDefinitionInterface
     protected $tenantId;
     protected $versionTag;
     protected $historyTimeToLive;
-    protected $isStartableInTasklist;
+    protected bool $isStartableInTasklist = false;
     protected $hasStartFormKey;
     protected $diagramResourceName;
     protected $resourceName;

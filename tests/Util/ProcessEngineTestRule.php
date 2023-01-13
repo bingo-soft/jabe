@@ -54,12 +54,12 @@ class ProcessEngineTestRule
         $this->processEngineRule = $processEngineRule;
     }
 
-    protected function starting(): void
+    public function starting(): void
     {
         $this->processEngine = $this->processEngineRule->getProcessEngine();
     }
 
-    protected function finished(): void
+    public function finished(): void
     {
         $this->processEngine = null;
     }
@@ -72,7 +72,7 @@ class ProcessEngineTestRule
             ->processInstanceId($processInstanceId)
             ->singleResult();
 
-        //assertThat(processInstance).describedAs("Process instance with id " + processInstanceId + " is not finished").isNull();
+        assert($processInstance == null, "Process instance with id " . $processInstanceId . " is not finished");
     }
 
     public function assertProcessNotEnded(?string $processInstanceId): void
@@ -83,9 +83,9 @@ class ProcessEngineTestRule
             ->processInstanceId($processInstanceId)
             ->singleResult();
 
-        /*if ($processInstance == null) {
-            throw new AssertionFailedError("Expected process instance '" + processInstanceId + "' to be still active but it was not in the db");
-        }*/
+        if ($processInstance == null) {
+            throw new \Exception("Expected process instance '" . $processInstanceId . "' to be still active but it was not in the db");
+        }
     }
 
     public function deploy(...$instances): DeploymentWithDefinitionsInterface

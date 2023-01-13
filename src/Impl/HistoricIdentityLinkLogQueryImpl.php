@@ -22,7 +22,7 @@ class HistoricIdentityLinkLogQueryImpl extends AbstractVariableQueryImpl impleme
     protected $operationType;
     protected $assignerId;
     protected $tenantIds = [];
-    protected $isTenantIdSet;
+    protected bool $isTenantIdSet = false;
 
     public function __construct(CommandExecutorInterface $commandExecutor)
     {

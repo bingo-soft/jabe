@@ -6,7 +6,7 @@ use Jabe\Delegate\ExpressionInterface;
 use Jabe\Exception\NotValidException;
 use Jabe\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Impl\Context\Context;
-use Jabe\Impl\El\ExpressionManager;
+use Jabe\Impl\El\ExpressionManagerInterface;
 use Jabe\Impl\Scripting\{
     ExecutableScript,
     ScriptFactory
@@ -28,7 +28,7 @@ class ScriptUtil
      * @return the newly created script
      * @throws NotValidException if language is null or empty or both of source and resource are null or empty
      */
-    public static function getScript(?string $language, ?string $source, ?string $resource, ?ExpressionManager $expressionManager): ExecutableScript
+    public static function getScript(?string $language, ?string $source, ?string $resource, ?ExpressionManagerInterface $expressionManager): ExecutableScript
     {
         $scriptFactory = self::getScriptFactory();
         EnsureUtil::ensureNotEmpty(NotValidException::class, "Script language", $language);
@@ -51,7 +51,7 @@ class ScriptUtil
      * @return the newly created script
      * @throws NotValidException if language is null or empty or source is null
      */
-    public static function getScriptFromSource(?string $language, ?string $source, ?ExpressionManager $expressionManager, ScriptFactory $scriptFactory): ExecutableScript
+    public static function getScriptFromSource(?string $language, ?string $source, ?ExpressionManagerInterface $expressionManager, ScriptFactory $scriptFactory): ExecutableScript
     {
         EnsureUtil::ensureNotEmpty(NotValidException::class, "Script language", $language);
         EnsureUtil::ensureNotNull(NotValidException::class, "Script source", $source);
@@ -93,7 +93,7 @@ class ScriptUtil
      * @return the newly created script
      * @throws NotValidException if language or resource are null or empty
      */
-    public static function getScriptFromResource(?string $language, ?string $resource, ?ExpressionManager $expressionManager, ?ScriptFactory $scriptFactory): ExecutableScript
+    public static function getScriptFromResource(?string $language, ?string $resource, ?ExpressionManagerInterface $expressionManager, ?ScriptFactory $scriptFactory): ExecutableScript
     {
         EnsureUtil::ensureNotEmpty(NotValidException::class, "Script language", $language);
         EnsureUtil::ensureNotEmpty(NotValidException::class, "Script resource", $resource);

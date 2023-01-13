@@ -7,7 +7,7 @@ use Jabe\{
     ProcessEngineException
 };
 use Jabe\Impl\Bpmn\Parser\BpmnParse;
-use Jabe\Impl\El\ExpressionManager;
+use Jabe\Impl\El\ExpressionManagerInterface;
 use Jabe\Impl\Util\StringUtil;
 use Sax\Element;
 
@@ -20,7 +20,7 @@ class FormValidators
      * factory method for creating validator instances
      *
      */
-    public function createValidator(Element $constraint, BpmnParse $bpmnParse, ExpressionManager $expressionManager): ?FormFieldValidatorInterface
+    public function createValidator(Element $constraint, BpmnParse $bpmnParse, ExpressionManagerInterface $expressionManager): ?FormFieldValidatorInterface
     {
         $name = $constraint->attribute("name");
         $config = $constraint->attribute("config");

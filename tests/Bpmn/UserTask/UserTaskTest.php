@@ -4,6 +4,7 @@ namespace Tests\Bpmn\UserTask;
 
 use PHPUnit\Framework\TestCase;
 use Jabe\Impl\Bpmn\Parser\BpmnParse;
+use Jabe\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Impl\Interceptor\{
     CommandContext,
     CommandInterface
@@ -48,7 +49,7 @@ class UserTaskTest extends PluggableProcessEngineTest
 
         $activeActivityIds = $this->runtimeService->getActiveActivityIds($processInstance->getId());
 
-        $tasks = $this->taskService->createTaskQuery()->list();
+        $tasks = $this->taskService->createTaskQuery()->processInstanceId($processInstance->getId())->list();
         $task = $tasks[count($tasks) - 1];
         $this->assertNotNull($task->getId());
         $this->assertEquals("my task", $task->getName());
@@ -60,5 +61,36 @@ class UserTaskTest extends PluggableProcessEngineTest
         $this->assertNotNull($task->getProcessDefinitionId());
         $this->assertNotNull($task->getTaskDefinitionKey());
         $this->assertNotNull($task->getCreateTime());
+
+        if ($this->processEngineConfiguration->getHistoryLevel()->getId() >= ProcessEngineConfigurationImpl::HISTORYLEVEL_ACTIVITY) {
+            $this->assertCount(0, $this->taskService->getTaskEvents($task->getId()));
+        }
+    }
+
+    #[Deployment(resources: [ "tests/Resources/Bpmn/UserTask/UserTaskTest.testTaskPropertiesNotNull.bpmn20.xml"])]
+    public function testQuerySortingWithParameter(): void
+    {
+        $processInstance = $this->runtimeService->startProcessInstanceByKey("oneTaskProcess");
+        $this->assertCount(1, $this->taskService->createTaskQuery()->processInstanceId($processInstance->getId())->list());
+    }
+
+    #[Deployment(resources: [ "tests/Resources/Bpmn/UserTask/UserTaskTest.testCompleteAfterParallelGateway.bpmn20.xml"])]
+    public function testCompleteAfterParallelGateway(): void
+    {
+        // start the process
+        $processInstance = $this->runtimeService->startProcessInstanceByKey("ForkProcess");
+        $taskList = $this->taskService->createTaskQuery()->processInstanceId($processInstance->getId())->list();
+        $this->assertCount(2, $taskList);
+
+        // make sure user task exists
+        //$task = $this->taskService->createTaskQuery()->taskDefinitionKey("SimpleUser")->singleResult();
+        $task = $this->taskService->createTaskQuery()->processInstanceId($processInstance->getId())->taskDefinitionKey("SimpleUser")->singleResult();
+
+        $this->assertNotNull($task);
+
+        // attempt to complete the task and get PersistenceException pointing to "referential integrity constraint violation"
+        $this->taskService->complete($task->getId());
+
+        $this->testRule->assertProcessEnded($processInstance->getId());
     }
 }

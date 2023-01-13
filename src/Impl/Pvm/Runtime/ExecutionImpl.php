@@ -124,7 +124,7 @@ class ExecutionImpl extends PvmExecutionImpl implements ActivityExecutionInterfa
     }
 
     /** ensures initialization and returns the non-null executions list */
-    public function getExecutions(): array
+    public function &getExecutions(): array
     {
         return $this->executions;
     }

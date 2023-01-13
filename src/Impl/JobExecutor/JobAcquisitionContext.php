@@ -11,7 +11,7 @@ class JobAcquisitionContext
     protected $additionalJobBatchesByEngine = [];
     protected $acquisitionException;
     protected $acquisitionTime;
-    protected $isJobAdded;
+    protected bool $isJobAdded = false;
 
     public function __construct()
     {

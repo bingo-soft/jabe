@@ -26,7 +26,7 @@ class DeleteProcessDefinitionsBuilderImpl implements DeleteProcessDefinitionsBui
 
     private $cascade;
     private $tenantId;
-    private $isTenantIdSet;
+    private bool $isTenantIdSet = false;
     private $skipCustomListeners;
     protected $skipIoMappings;
 

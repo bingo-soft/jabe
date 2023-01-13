@@ -17,7 +17,7 @@ class DeploymentEntity implements \Serializable, DeploymentWithDefinitionsInterf
     protected $resources = [];
     protected $deploymentTime;
     protected bool $validatingSchema = true;
-    protected $isNew;
+    protected bool $isNew = false;
     protected $source;
     protected $tenantId;
 

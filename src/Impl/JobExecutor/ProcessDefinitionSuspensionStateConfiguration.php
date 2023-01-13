@@ -16,7 +16,7 @@ class ProcessDefinitionSuspensionStateConfiguration implements JobHandlerConfigu
     protected $processDefinitionId;
     protected $includeProcessInstances;
     protected $tenantId;
-    protected $isTenantIdSet;
+    protected bool $isTenantIdSet = false;
     protected $by;
 
     public function toCanonicalString(): ?string

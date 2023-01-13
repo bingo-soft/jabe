@@ -2,8 +2,9 @@
 
 namespace Jabe\Impl\Batch\History;
 
-use Jabe\Batch\HistoricBatchQueryInterface;
+use Jabe\Batch\History\HistoricBatchQueryInterface;
 use Jabe\Impl\{
+    AbstractQuery,
     HistoricBatchQueryProperty,
     Page
 };
