@@ -21,7 +21,7 @@ class IntegerValueSerializer extends PrimitiveValueSerializer
 
     public function writeValue($value, ValueFieldsInterface $valueFields): void
     {
-        $valueFields->setIntegerValue($value->getValue());
+        $valueFields->setLongValue($value->getValue());
     }
 
     public function readValue(ValueFieldsInterface $valueFields, bool $isTransient, bool $deserializeValue = false): IntegerValueInterface

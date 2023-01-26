@@ -10,7 +10,7 @@ use Jabe\Impl\Persistence\Entity\{
 };
 use Jabe\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
-    MigrationObserverBehavior
+    MigrationObserverBehaviorInterface
 };
 use Jabe\Impl\Pvm\Runtime\{
     CallbackInterface,
@@ -19,6 +19,11 @@ use Jabe\Impl\Pvm\Runtime\{
 
 class ParallelMultiInstanceActivityBehavior extends MultiInstanceActivityBehavior implements MigrationObserverBehaviorInterface
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     protected function createInstances(ActivityExecutionInterface $execution, int $nrOfInstances): void
     {
         $innerActivity = $this->getInnerActivity($execution->getActivity());
@@ -53,13 +58,13 @@ class ParallelMultiInstanceActivityBehavior extends MultiInstanceActivityBehavio
     protected function createConcurrentExecution(ActivityExecutionInterface $scopeExecution): ActivityExecutionInterface
     {
         $concurrentChild = $scopeExecution->createExecution();
-        $scopeExecution->createConcurrentExecutionforceUpdate();
+        $scopeExecution->forceUpdate();
         $concurrentChild->setConcurrent(true);
         $concurrentChild->setScope(false);
         return $concurrentChild;
     }
 
-    public function concurrentChildExecutionEnded(ActivityExecutionInterface $scopeExecution, ActivityExecutionInterface $endedExecution): void
+    public function concurrentChildExecutionEnded(?ActivityExecutionInterface $scopeExecution, ?ActivityExecutionInterface $endedExecution): void
     {
         $nrOfCompletedInstances = $this->getLoopVariable($scopeExecution, self::NUMBER_OF_COMPLETED_INSTANCES) + 1;
         $this->setLoopVariable($scopeExecution, self::NUMBER_OF_COMPLETED_INSTANCES, $nrOfCompletedInstances);

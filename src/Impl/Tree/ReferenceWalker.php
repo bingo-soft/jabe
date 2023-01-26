@@ -43,11 +43,9 @@ abstract class ReferenceWalker
                 $collector->visit($this->getCurrentElement());
             }
 
-            $this->currentElements = array_merge($this->currentElements, $this->nextElements());
+            array_push($this->currentElements, ...$this->nextElements());
 
-            if (!empty($this->currentElements)) {
-                unset($this->currentElements[0]);
-            }
+            array_shift($this->currentElements);
 
             foreach ($this->postVisitor as $collector) {
                 $collector->visit($this->getCurrentElement());
@@ -61,17 +59,14 @@ abstract class ReferenceWalker
         if ($condition === null) {
             $condition = new NullCondition();
         }
-
         do {
             foreach ($this->preVisitor as $collector) {
                 $collector->visit($this->getCurrentElement());
             }
 
-            $this->currentElements = array_merge($this->currentElements, $this->nextElements());
+            array_push($this->currentElements, ...$this->nextElements());
 
-            if (!empty($this->currentElements)) {
-                array_shift($this->currentElements);
-            }
+            array_shift($this->currentElements);
 
             foreach ($this->postVisitor as $collector) {
                 $collector->visit($this->getCurrentElement());
@@ -82,6 +77,10 @@ abstract class ReferenceWalker
 
     public function getCurrentElement()
     {
-        return empty($this->currentElements) ? null : $this->currentElements[0];
+        if (empty($this->currentElements)) {
+            return null;
+        } else {
+            return $this->currentElements[array_key_first($this->currentElements)];
+        }
     }
 }

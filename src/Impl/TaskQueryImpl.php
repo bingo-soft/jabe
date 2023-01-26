@@ -77,8 +77,8 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
     protected $maxPriority;
     protected $assignee;
     protected $assigneeLike;
-    protected $assigneeIn;
-    protected $assigneeNotIn;
+    protected $assigneeIn = [];
+    protected $assigneeNotIn = [];
     protected $involvedUser;
     protected $owner;
     protected $unassigned;
@@ -404,7 +404,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
             }
         }
 
-        $this->candidateGroup = candidateGroup;
+        $this->candidateGroup = $candidateGroup;
         unset($this->expressions["taskCandidateGroup"]);
         return $this;
     }
@@ -1075,7 +1075,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
           || CompareUtil::elementIsNotContainedInArray($this->processInstanceBusinessKey, $this->processInstanceBusinessKeys);
     }
 
-    public function getCandidateGroups(): array
+    public function getCandidateGroups(): ?array
     {
         if (!empty($this->cachedCandidateGroups)) {
             return $this->cachedCandidateGroups;
@@ -1161,7 +1161,7 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this->withoutCandidateGroups;
     }
 
-    public function getCandidateGroupsInternal(): array
+    public function getCandidateGroupsInternal(): ?array
     {
         return $this->candidateGroups;
     }
@@ -1691,17 +1691,17 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
         return $this->descriptionLike;
     }
 
-    public function getPriority(): int
+    public function getPriority(): ?int
     {
         return $this->priority;
     }
 
-    public function getMinPriority(): int
+    public function getMinPriority(): ?int
     {
         return $this->minPriority;
     }
 
-    public function getMaxPriority(): int
+    public function getMaxPriority(): ?int
     {
         return $this->maxPriority;
     }
@@ -1971,14 +1971,14 @@ class TaskQueryImpl extends AbstractQuery implements TaskQueryInterface
             $extendedQuery->taskAssigneeLike($this->getAssigneeLike());
         }
 
-        if ($extendingQuery->getAssigneeIn() !== null) {
+        if (!empty($extendingQuery->getAssigneeIn())) {
             $extendedQuery->taskAssigneeIn($extendingQuery->getAssigneeIn());
-        } elseif ($this->getAssigneeIn() !== null) {
+        } elseif (!empty($this->getAssigneeIn())) {
             $extendedQuery->taskAssigneeIn($this->getAssigneeIn());
         }
-        if ($extendingQuery->getAssigneeNotIn() !== null) {
+        if (!empty($extendingQuery->getAssigneeNotIn())) {
             $extendedQuery->taskAssigneeNotIn($extendingQuery->getAssigneeNotIn());
-        } elseif ($this->getAssigneeNotIn() !== null) {
+        } elseif (!empty($this->getAssigneeNotIn())) {
             $extendedQuery->taskAssigneeNotIn($this->getAssigneeNotIn());
         }
 

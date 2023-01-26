@@ -33,7 +33,7 @@ class JuelExpression implements ExpressionInterface
         $this->expressionText = $expressionText;
     }
 
-    public function getValue(VariableScopeInterface $variableScope, BaseDelegateExecutionInterface $contextExecution = null)
+    public function getValue(VariableScopeInterface $variableScope, ?BaseDelegateExecutionInterface $contextExecution = null)
     {
         $elContext = $this->expressionManager->getElContext($variableScope);
         try {
@@ -53,7 +53,7 @@ class JuelExpression implements ExpressionInterface
         }
     }
 
-    public function setValue($value, VariableScopeInterface $variableScope, BaseDelegateExecutionInterface $contextExecution = null): void
+    public function setValue($value, ?VariableScopeInterface $variableScope = null, ?BaseDelegateExecutionInterface $contextExecution = null): void
     {
         $elContext = $this->expressionManager->getElContext($variableScope);
         try {

@@ -24,9 +24,10 @@ class MetricsExecutionListener implements ExecutionListenerInterface
         $this->condition = $condition;
     }
 
-    public function notify(DelegateExecutionInterface $execution): void
+    public function notify(/*DelegateExecutionInterface*/$execution): void
     {
-        if ($this->condition($execution)) {
+        $condition = $this->condition;
+        if ($condition($execution)) {
             Context::getProcessEngineConfiguration()
                 ->getMetricsRegistry()
                 ->markOccurrence($this->metricsName);

@@ -67,7 +67,7 @@ class ProcessApplicationContextUtil
         return $processApplicationManager->hasRegistrations();
     }
 
-    public static function requiresContextSwitch(ProcessApplicationReferenceInterface $processApplicationReference): bool
+    public static function requiresContextSwitch(?ProcessApplicationReferenceInterface $processApplicationReference): bool
     {
         $currentProcessApplication = Context::getCurrentProcessApplication();
 

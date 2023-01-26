@@ -58,7 +58,7 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
     protected function createRecursiveIncidents(?string $rootCauseIncidentId = null, array $createdIncidents = []): array
     {
         $rootCauseIncidentId = $rootCauseIncidentId ?? $this->id;
-        $execution = getExecution();
+        $execution = $this->getExecution();
 
         if ($execution !== null) {
             $superExecution = $execution->getProcessInstance()->getSuperExecution();

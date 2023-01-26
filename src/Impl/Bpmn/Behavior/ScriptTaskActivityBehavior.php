@@ -18,6 +18,7 @@ class ScriptTaskActivityBehavior extends TaskActivityBehavior
 
     public function __construct(ExecutableScript $script, ?string $resultVariable)
     {
+        parent::__construct();
         $this->script = $script;
         $this->resultVariable = $resultVariable;
     }

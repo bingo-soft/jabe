@@ -60,7 +60,7 @@ class CallableElementUtil
         ?string $tenantId
     ): ProcessDefinitionEntity {
 
-        $deploymentCache = getDeploymentCache();
+        $deploymentCache = self::getDeploymentCache();
 
         $processDefinition = null;
 

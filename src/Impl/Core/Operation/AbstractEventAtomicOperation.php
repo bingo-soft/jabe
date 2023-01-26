@@ -26,6 +26,7 @@ abstract class AbstractEventAtomicOperation implements CoreAtomicOperationInterf
         if ($listenerIndex == 0) {
             $execution = $this->eventNotificationsStarted($execution);
         }
+
         if (!$this->isSkipNotifyListeners($execution)) {
             if (count($listeners) > $listenerIndex) {
                 $execution->setEventName($this->getEventName());
@@ -43,6 +44,7 @@ abstract class AbstractEventAtomicOperation implements CoreAtomicOperationInterf
                 $execution->performOperationSync($this);
             } else {
                 $this->resetListeners($execution);
+                $act = strval($execution->getActivity());
                 $this->eventNotificationsCompleted($execution);
             }
         } else {

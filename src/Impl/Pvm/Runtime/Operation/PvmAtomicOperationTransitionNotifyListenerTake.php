@@ -6,7 +6,6 @@ use Jabe\Impl\Core\Instance\CoreExecution;
 
 class PvmAtomicOperationTransitionNotifyListenerTake extends AbstractPvmAtomicOperationTransitionNotifyListenerTake
 {
-
     public function isAsync(CoreExecution $execution): bool
     {
         return $execution->getActivity()->isAsyncAfter();

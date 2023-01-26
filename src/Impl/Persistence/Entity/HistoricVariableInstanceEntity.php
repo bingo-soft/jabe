@@ -223,22 +223,22 @@ class HistoricVariableInstanceEntity implements ValueFieldsInterface, HistoricVa
         $this->name = $name;
     }
 
-    public function getLongValue(): int
+    public function getLongValue(): ?int
     {
         return $this->longValue;
     }
 
-    public function setLongValue(int $longValue): void
+    public function setLongValue(?int $longValue): void
     {
         $this->longValue = $longValue;
     }
 
-    public function getDoubleValue(): float
+    public function getDoubleValue(): ?float
     {
         return $this->doubleValue;
     }
 
-    public function setDoubleValue(float $doubleValue): void
+    public function setDoubleValue(?float $doubleValue): void
     {
         $this->doubleValue = $doubleValue;
     }

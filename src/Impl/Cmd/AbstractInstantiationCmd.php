@@ -202,8 +202,7 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
 
         $activitiesToInstantiate = $stackCollector->getActivityStack();
         $activitiesToInstantiate = array_reverse($activitiesToInstantiate);
-
-        // We have to make a distinction between
+          // We have to make a distinction between
         // - "regular" activities for which the activity stack can be instantiated and started
         //   right away
         // - interrupting or cancelling activities for which we have to ensure that

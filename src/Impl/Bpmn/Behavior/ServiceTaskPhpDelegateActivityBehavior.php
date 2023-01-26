@@ -20,6 +20,7 @@ class ServiceTaskPhpDelegateActivityBehavior extends TaskActivityBehavior implem
 
     public function __construct(?PhpDelegateInterface $phpDelegate)
     {
+        parent::__construct();
         $this->phpDelegate = $phpDelegate;
     }
 

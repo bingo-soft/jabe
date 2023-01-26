@@ -15,7 +15,10 @@ use Jabe\Impl\Context\{
     ProcessApplicationContextUtil
 };
 use Jabe\Impl\Persistence\Entity\ExecutionEntity;
-use Jabe\Impl\Pvm\Runtime\AtomicOperation;
+use Jabe\Impl\Pvm\Runtime\{
+    AtomicOperation,
+    AtomicOperationInterface
+};
 
 class CommandInvocationContext
 {
@@ -54,24 +57,22 @@ class CommandInvocationContext
         }
     }
 
-    public function performOperationAsync(AtomicOperation $executionOperation, ExecutionEntity $execution): void
+    public function performOperationAsync(AtomicOperationInterface $executionOperation, ExecutionEntity $execution): void
     {
         $this->performOperation($executionOperation, $execution, true);
     }
 
-    public function performOperation(AtomicOperation $executionOperation, ExecutionEntity $execution, ?bool $performAsync = false): void
+    public function performOperation(AtomicOperationInterface $executionOperation, ExecutionEntity $execution, ?bool $performAsync = false): void
     {
         $invocation = new AtomicOperationInvocation($executionOperation, $execution, $performAsync);
-        array_unsift($this->queuedInvocations, $invocation);
+        array_unshift($this->queuedInvocations, $invocation);
         $this->performNext();
     }
 
     public function performNext(): void
     {
         $nextInvocation = $this->queuedInvocations[0];
-
         if ($nextInvocation->operation->isAsyncCapable() && $this->isExecuting) {
-            // will be picked up by while loop below
             return;
         }
 
@@ -105,7 +106,7 @@ class CommandInvocationContext
         $invocation = array_shift($this->queuedInvocations);
         try {
             if ($invocation !== null) {
-                $invocation->execute($this->bpmnStackTrace, processDataContext);
+                $invocation->execute($this->bpmnStackTrace, $this->processDataContext);
             }
         } catch (\Exception $e) {
             // log bpmn stacktrace
@@ -115,7 +116,7 @@ class CommandInvocationContext
         }
     }
 
-    protected function requiresContextSwitch(ProcessApplicationReferenceInterface $processApplicationReference): bool
+    protected function requiresContextSwitch(?ProcessApplicationReferenceInterface $processApplicationReference): bool
     {
         return ProcessApplicationContextUtil::requiresContextSwitch($processApplicationReference);
     }

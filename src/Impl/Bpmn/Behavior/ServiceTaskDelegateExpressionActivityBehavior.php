@@ -34,6 +34,7 @@ class ServiceTaskDelegateExpressionActivityBehavior extends TaskActivityBehavior
 
     public function __construct(ExpressionInterface $expression, array $fieldDeclarations)
     {
+        parent::__construct();
         $this->expression = $expression;
         $this->fieldDeclarations = $fieldDeclarations;
     }

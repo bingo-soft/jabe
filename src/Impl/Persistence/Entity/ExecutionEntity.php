@@ -64,6 +64,7 @@ use Jabe\Impl\Pvm\Process\{
 use Jabe\Impl\Pvm\Runtime\{
     ActivityInstanceState,
     AtomicOperation,
+    AtomicOperationInterface,
     PvmExecutionImpl
 };
 use Jabe\Impl\Tree\{
@@ -116,7 +117,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
     protected $parent;
 
     /** nested executions representing scopes or concurrent paths */
-    protected $executions = [];
+    protected $executions = null;
 
     /** super execution, not-null if this execution is part of a subprocess */
     protected $superExecution;
@@ -234,6 +235,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
 
     public function __construct()
     {
+        parent::__construct();
         $this->variableStore = new VariableStore($this, new ExecutionEntityReferencer($this));
         $this->suspensionState = SuspensionState::active()->getStateCode();
     }
@@ -601,15 +603,14 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
 
     public function performOperation($operation): void
     {
-        if ($operation instanceof AtomicOperation) {
-            $async = !$this->isIgnoreAsync() && $this->executionOperation->isAsync($this);
+        if ($operation instanceof AtomicOperationInterface) {
+            $async = !$this->isIgnoreAsync() && $operation->isAsync($this);
 
-            if (!$async && $this->requiresUnsuspendedExecution($this->executionOperation)) {
+            if (!$async && $this->requiresUnsuspendedExecution($operation)) {
                 $this->ensureNotSuspended();
             }
-
             Context::getCommandInvocationContext()
-            ->performOperation($this->executionOperation, $this, $async);
+            ->performOperation($operation, $this, $async);
         } else {
             parent::performOperation($operation);
         }
@@ -617,11 +618,11 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
 
     public function performOperationSync($operation): void
     {
-        if ($operation instanceof AtomicOperation) {
-            if ($this->requiresUnsuspendedExecution($this->executionOperation)) {
+        if ($operation instanceof AtomicOperationInterface) {
+            if ($this->requiresUnsuspendedExecution($operation)) {
                 $this->ensureNotSuspended();
             }
-            Context::getCommandInvocationContext()->performOperation($this->executionOperation, $this);
+            Context::getCommandInvocationContext()->performOperation($operation, $this);
         } else {
             parent::performOperationSync($operation);
         }
@@ -635,10 +636,10 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         }
     }
 
-    protected function requiresUnsuspendedExecution(AtomicOperation $executionOperation): bool
+    protected function requiresUnsuspendedExecution(AtomicOperationInterface $executionOperation): bool
     {
         if (
-            $executionOperation != AtomicOperation::trasitionDestroyScope()
+            $executionOperation != AtomicOperation::transitionDestroyScope()
             && $executionOperation != AtomicOperation::transitionNotifyListenerTake()
             && $executionOperation != AtomicOperation::transitionNotifyListenerEnd()
             && $executionOperation != AtomicOperation::transitionCreateScope()
@@ -713,7 +714,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
 
     protected function ensureExecutionsInitialized(): void
     {
-        if (empty($this->executions)) {
+        if ($this->executions === null) {
             if ($this->isExecutionTreePrefetchEnabled()) {
                 $this->ensureExecutionTreeInitialized();
             } else {
@@ -1313,7 +1314,6 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
                 }
             }
         }
-
         $processInstance->restoreProcessInstance($executions, null, null, null, null, null, null);
     }
 

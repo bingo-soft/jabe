@@ -20,6 +20,7 @@ class ThrowSignalEventActivityBehavior extends AbstractBpmnActivityBehavior
 
     public function __construct(EventSubscriptionDeclaration $signalDefinition)
     {
+        parent::__construct();
         $this->signalDefinition = $signalDefinition;
     }
 

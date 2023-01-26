@@ -47,6 +47,7 @@ abstract class CallableElementActivityBehavior extends AbstractBpmnActivityBehav
 
     public function __construct($prop = null)
     {
+        parent::__construct();
         if (is_string($prop)) {
             $this->className = $prop;
         } elseif ($prop instanceof ExpressionInterface) {

@@ -24,8 +24,7 @@ class DbIdGenerator implements IdGeneratorInterface
         if ($this->lastId < $this->nextId) {
             $this->getNewBlock();
         }
-        $this->nextId += 1;
-        $_nextId = $this->nextId;
+        $_nextId = $this->nextId++;
         return strval($_nextId);
     }
 

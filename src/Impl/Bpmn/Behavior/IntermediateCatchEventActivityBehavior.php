@@ -10,6 +10,7 @@ class IntermediateCatchEventActivityBehavior extends AbstractBpmnActivityBehavio
 
     public function __construct(bool $isAfterEventBasedGateway)
     {
+        parent::__construct();
         $this->isAfterEventBasedGateway = $isAfterEventBasedGateway;
     }
 

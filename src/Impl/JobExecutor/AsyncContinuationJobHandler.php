@@ -11,6 +11,7 @@ use Jabe\Impl\Persistence\Entity\{
 };
 use Jabe\Impl\Pvm\Runtime\{
     AtomicOperation,
+    AtomicOperationInterface,
     LegacyBehavior
 };
 use Jabe\Impl\Util\EnsureUtil;
@@ -71,7 +72,7 @@ class AsyncContinuationJobHandler implements JobHandlerInterface
         return null;
     }
 
-    protected function isSupported(AtomicOperation $atomicOperation): bool
+    protected function isSupported(AtomicOperationInterface $atomicOperation): bool
     {
         return array_key_exists($atomicOperation->getCanonicalName(), $this->supportedOperations);
     }

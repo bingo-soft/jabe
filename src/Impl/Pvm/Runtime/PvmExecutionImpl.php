@@ -501,7 +501,6 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         } elseif (count($children) == 1) {
             // (2)
             $child = $children[0];
-
             $concurrentReplacingExecution = $this->createExecution();
             $concurrentReplacingExecution->setConcurrent(true);
             $concurrentReplacingExecution->setScope(false);
@@ -772,7 +771,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         }
 
         $activityStartBehavior = $activity->getActivityStartBehavior();
-        if (!$this->isScope() && ActivityStartBehavior::DEFAULT != $this->activityStartBehavior) {
+        if (!$this->isScope() && ActivityStartBehavior::DEFAULT != $activityStartBehavior) {
             throw new ProcessEngineException("Activity '" . $activity . "' with start behavior '" . $activityStartBehavior . "'"
             . "cannot be executed by non-scope execution.");
         }
@@ -922,7 +921,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
             $this->setVariables($variables);
             $this->setVariablesLocal($localVariables);
             $this->setActivity($targetActivity);
-            $this->performOperation(AtomicOperation::activityStartCReateScope());
+            $this->performOperation(AtomicOperation::activityStartCreateScope());
         } elseif ($targetTransition !== null) {
             $this->setVariables($variables);
             $this->setVariablesLocal($localVariables);
@@ -1504,6 +1503,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
             EnsureUtil::ensureNotNull("activity of current execution", "currentActivity", $currentActivity);
 
             $walker = new FlowScopeWalker($currentActivity);
+
             $targetFlowScope = $walker->walkUntil(new class ($targetScopeId) implements WalkConditionInterface {
 
                 private $targetScopeId;
@@ -1536,6 +1536,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
             return $scopeExecution->findExecutionForScope($currentActivity, $targetFlowScope);
         }
+        return null;
     }
 
     public function findExecutionForScope(ScopeImpl $currentScope, ScopeImpl $targetScope): ?PvmExecutionImpl
@@ -1543,7 +1544,6 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         if (!$targetScope->isScope()) {
             throw new ProcessEngineException("Target scope must be a scope.");
         }
-
         $activityExecutionMapping = $this->createActivityExecutionMapping($currentScope);
         $scopeExecution = null;
         foreach ($activityExecutionMapping as $map) {
@@ -1608,6 +1608,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
             // collect all ancestor scope executions unless one is encountered that is already in "mapping"
             $scopeExecutionCollector = new ScopeExecutionCollector();
+
             (new ExecutionWalker($this))
                 ->addPreVisitor($scopeExecutionCollector)
                 ->walkWhile(new class ($mapping) implements WalkConditionInterface {
@@ -1747,12 +1748,14 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
             // 1. Find leaf activity instance executions
             $leafCollector = new LeafActivityInstanceExecutionCollector();
+
             (new ExecutionWalker($this))->addPreVisitor($leafCollector)->walkUntil();
 
             $leafCollector->removeLeaf($this);
             $leaves = $leafCollector->getLeaves();
 
             // 2. Order them from top to bottom
+
             $leaves = array_reverse($leaves);
 
             // 3. Iteratively extend the mapping for every additional leaf
@@ -1760,7 +1763,6 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
             foreach ($leaves as $leaf) {
                 $leafFlowScope = $leaf->getFlowScope();
                 $leafFlowScopeExecution = $leaf->getFlowScopeExecution();
-
                 $mapping = $leafFlowScopeExecution->createActivityExecutionMapping($leafFlowScope, $mapping);
             }
 
@@ -1775,7 +1777,6 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
             $flowScope = $this->getFlowScope();
             $flowScopeExecution = $this->getFlowScopeExecution();
-
             return $flowScopeExecution->createActivityExecutionMapping($flowScope);
         }
     }
@@ -1808,10 +1809,8 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         return $this->getParent();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function setVariable(?string $variableName, $value, /*string*/...$args): void
+
+    /*public function setVariable(?string $variableName, $value, ...$args): void
     {
         $activityId = $this->getActivityId();
         if (!empty($args) && is_string($args[0])) {
@@ -1827,7 +1826,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
                 $executionForFlowScope->setVariableLocal($variableName, $value);
             }
         }
-    }
+    }*/
 
     // sequence counter ///////////////////////////////////////////////////////////
 

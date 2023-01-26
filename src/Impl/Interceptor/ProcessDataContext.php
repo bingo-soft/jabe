@@ -96,7 +96,7 @@ class ProcessDataContext
             $this->clearMdc();
         }
 
-        $numSections = count($this->sections);
+        $numSections = $this->sections->size();
 
         $this->addToStack($this->activityIdStack, $execution->getActivityId());
         $this->addToStack($execution->getProcessDefinitionId(), $this->mdcPropertyDefinitionId);
@@ -116,7 +116,7 @@ class ProcessDataContext
 
         $this->sections->sealCurrentSection();
 
-        $newSectionCreated = $numSections != count($this->sections);
+        $newSectionCreated = $numSections != $this->sections->size();
 
         return $newSectionCreated;
     }
@@ -169,7 +169,7 @@ class ProcessDataContext
         return $this->activityIdStack->getCurrentValue();
     }
 
-    protected function addToStack($valueOrStack, $propertyOrValue): void
+    public function addToStack($valueOrStack, $propertyOrValue): void
     {
         if (is_string($valueOrStack)) {
             if (!self::isNotBlank($propertyOrValue)) {
@@ -188,17 +188,17 @@ class ProcessDataContext
         }
     }
 
-    protected static function isNotBlank(?string $property): bool
+    public static function isNotBlank(?string $property): bool
     {
         return $property !== null && !empty(trim($property));
     }
 
-    protected static function valuesEqual(?string $val1, ?string $val2): bool
+    public static function valuesEqual(?string $val1, ?string $val2): bool
     {
         return $val1 == $val2;
     }
 
-    protected static function isNull(?string $value): bool
+    public static function isNull(?string $value): bool
     {
         return $value === null || self::NULL_VALUE == $value;
     }

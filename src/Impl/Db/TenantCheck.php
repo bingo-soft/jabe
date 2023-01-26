@@ -45,7 +45,7 @@ class TenantCheck implements \Serializable
         $this->isTenantCheckEnabled = $isTenantCheckEnabled;
     }
 
-    public function getAuthTenantIds(): array
+    public function getAuthTenantIds(): ?array
     {
         return $this->authTenantIds;
     }

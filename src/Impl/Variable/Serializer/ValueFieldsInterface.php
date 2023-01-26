@@ -13,7 +13,7 @@ interface ValueFieldsInterface extends NameableInterface
     public function setTextValue2(?string $textValue2): void;
 
     public function getLongValue(): ?int;
-    public function setLongValue(int $longValue): void;
+    public function setLongValue(?int $longValue): void;
 
     public function getDoubleValue(): ?float;
     public function setDoubleValue(float $doubleValue): void;

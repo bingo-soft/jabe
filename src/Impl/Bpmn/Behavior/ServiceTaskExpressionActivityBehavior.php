@@ -12,6 +12,7 @@ class ServiceTaskExpressionActivityBehavior extends TaskActivityBehavior
 
     public function __construct(ExpressionInterface $expression, ?string $resultVariable)
     {
+        parent::__construct();
         $this->expression = $expression;
         $this->resultVariable = $resultVariable;
     }

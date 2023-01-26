@@ -7,6 +7,11 @@ use Jabe\Impl\Pvm\Runtime\LegacyBehavior;
 
 class EventSubProcessActivityBehavior extends SubProcessActivityBehavior
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function complete(ActivityExecutionInterface $scopeExecution): void
     {
         // check whether legacy behavior needs to be performed.

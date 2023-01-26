@@ -12,6 +12,7 @@ class EventSubProcessStartConditionalEventActivityBehavior extends EventSubProce
 
     public function __construct(ConditionalEventDefinition $conditionalEvent)
     {
+        parent::__construct();
         $this->conditionalEvent = $conditionalEvent;
     }
 

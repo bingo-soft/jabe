@@ -306,7 +306,7 @@ class BpmnParse extends Parse
         parent::execute(); // schema validation
 
         /*try {*/
-            $this->parseRootElement();
+        $this->parseRootElement();
         /*} catch (BpmnParseException $e) {
             $this->addError($e);
         } catch (\Exception $e) {
@@ -363,7 +363,7 @@ class BpmnParse extends Parse
         $this->targetNamespace = $this->rootElement->attribute("targetNamespace");
 
         foreach ($this->rootElement->attributes() as $attribute) {
-            if (str_starts_with($attribute, "xmlns:")) {
+            if (str_starts_with(strtoupper($attribute), "XMLNS:")) {
                 $prefixValue = $this->rootElement->attribute($attribute);
                 $prefixName = substr($attribute, 6);
                 $this->prefixs[$prefixName] = $prefixValue;
@@ -641,6 +641,7 @@ class BpmnParse extends Parse
             $activity->setDelegateAsyncAfterUpdate(null);
             $activity->setDelegateAsyncBeforeUpdate(null);
         }
+
         return $processDefinition;
     }
 
@@ -983,7 +984,6 @@ class BpmnParse extends Parse
         $initial = null;
         // validate that there is s single none start event / timer start event:
         $exclusiveStartEventTypes = ["startEvent", "startTimerEvent"];
-
         foreach ($startEventActivities as $activityImpl) {
             if (in_array($activityImpl->getProperty(BpmnProperties::type()->getName()), $exclusiveStartEventTypes)) {
                 if ($initial === null) {
@@ -1077,7 +1077,7 @@ class BpmnParse extends Parse
 
         // set this as the scope's initial
         if (!$scopeProperties->contains(BpmnProperties::initialActivity())) {
-            $scopeActivity->set(BpmnProperties::initialActivity(), $startEventActivity);
+            $scopeProperties->set(BpmnProperties::initialActivity(), $startEventActivity);
         } else {
             $this->addError("multiple start events not supported for subprocess", $parentElement, $startEventActivity->getId());
         }
@@ -1711,7 +1711,7 @@ class BpmnParse extends Parse
         if ($activityRef !== null) {
             if ($scopeElement->findActivityAtLevelOfSubprocess($activityRef) === null) {
                 $isTriggeredByEvent = $scopeElement->getProperties()->get(BpmnProperties::triggeredByEvent());
-                $type = $scopeElement->getProperty(self::PROPERTYNAME_TYPE);
+                $type = $scopeElement->getProperty(BpmnProperties::type()->getName());
                 if (($isTriggeredByEvent !== null && strtolower($isTriggeredByEvent) === "true") && "subProcess" == $type) {
                     $scopeElement = $scopeElement->getFlowScope();
                 }
@@ -1847,7 +1847,7 @@ class BpmnParse extends Parse
             $id = self::getIdForMiBody($id);
             $miBodyScope = $scope->createActivity($id);
             $this->setActivityAsyncDelegates($miBodyScope);
-            $miBodyScope->setProperty(self::PROPERTYNAME_TYPE, ActivityTypes::MULTI_INSTANCE_BODY);
+            $miBodyScope->setProperty(BpmnProperties::type()->getName(), ActivityTypes::MULTI_INSTANCE_BODY);
             $miBodyScope->setScope(true);
 
             $isSequential = $this->parseBooleanAttribute($miLoopCharacteristics->attribute("isSequential"), false);
@@ -2700,7 +2700,7 @@ class BpmnParse extends Parse
                                                     // subelement
             $elementWithFieldInjections = $element;
         }
-        $fieldDeclarationElements = $elementWithFieldInjections->elementsNS(self::BPMN_EXTENSIONS_NS_PREFIX, "field");
+        $fieldDeclarationElements = $elementWithFieldInjections->elementsNS(BpmnParser::BPMN_EXTENSIONS_NS, "field");
         if (!empty($fieldDeclarationElements)) {
             foreach ($fieldDeclarationElements as $fieldDeclarationElement) {
                 $fieldDeclaration = $this->parseFieldDeclaration($element, $fieldDeclarationElement);
@@ -2762,7 +2762,7 @@ class BpmnParse extends Parse
         $value = null;
 
         $attributeValue = $element->attribute($attributeName);
-        $childElement = $element->elementNS(self::BPMN_EXTENSIONS_NS_PREFIX, $elementName);
+        $childElement = $element->elementNS(BpmnParser::BPMN_EXTENSIONS_NS, $elementName);
         $stringElementText = null;
 
         if ($attributeValue !== null && $childElement !== null) {
@@ -3103,8 +3103,8 @@ class BpmnParse extends Parse
 
             $strb = "";
             $insideExpression = false;
-
-            for ($i = 1; $i < strlen($s); $i += 1) {
+            $len = strlen($s);
+            for ($i = 0; $i < $len; $i += 1) {
                 if ($c == '{' || $c == '$') {
                     $insideExpression = true;
                 } elseif ($c == '}') {
@@ -3118,7 +3118,9 @@ class BpmnParse extends Parse
                     $strb .= $c;
                 }
 
-                $c = $s[$i];
+                if ($i + 1 < $len) {
+                    $c = $s[$i + 1];
+                }
             }
 
             if (strlen($strb) > 0) {
@@ -3132,7 +3134,7 @@ class BpmnParse extends Parse
     {
         $extentionsElement = $userTaskElement->element("extensionElements");
         if ($extentionsElement !== null) {
-            $taskListenerElements = $extentionsElement->elementsNS(self::BPMN_EXTENSIONS_NS_PREFIX, "taskListener");
+            $taskListenerElements = $extentionsElement->elementsNS(BpmnParser::BPMN_EXTENSIONS_NS, "taskListener");
             foreach ($taskListenerElements as $taskListenerElement) {
                 $eventName = $taskListenerElement->attribute("event");
                 if (!empty($eventName)) {
@@ -3163,7 +3165,7 @@ class BpmnParse extends Parse
         $className = str_replace('.', '\\', $taskListenerElement->attribute(self::PROPERTYNAME_CLASS));
         $expression = $taskListenerElement->attribute(self::PROPERTYNAME_EXPRESSION);
         $delegateExpression = $taskListenerElement->attribute(self::PROPERTYNAME_DELEGATE_EXPRESSION);
-        $scriptElement = $taskListenerElement->elementNS(self::BPMN_EXTENSIONS_NS_PREFIX, "script");
+        $scriptElement = $taskListenerElement->elementNS(BpmnParser::BPMN_EXTENSIONS_NS, "script");
 
         if ($className !== null) {
             $taskListener = new ClassDelegateTaskListener($className, $this->parseFieldDeclarations($taskListenerElement));
@@ -3302,7 +3304,7 @@ class BpmnParse extends Parse
             } elseif ($escalationEventDefinition !== null) {
                 $activity->getProperties()->set(BpmnProperties::type(), ActivityTypes::END_EVENT_ESCALATION);
 
-                $escalation = findEscalationForEscalationEventDefinition($escalationEventDefinition, $activityId);
+                $escalation = $this->findEscalationForEscalationEventDefinition($escalationEventDefinition, $activityId);
                 if ($escalation !== null && $escalation->getEscalationCode() === null) {
                     $this->addError("escalation end event must have an 'escalationCode'", $escalationEventDefinition, $activityId);
                 }
@@ -3456,7 +3458,7 @@ class BpmnParse extends Parse
         }
     }
 
-    public function parseCamundaErrorEventDefinitions(ActivityImpl $activity, Element $scopeElement): array
+    public function parseErrorEventDefinitions(ActivityImpl $activity, Element $scopeElement): array
     {
         $errorEventDefinitions = [];
         $extensionElements = $scopeElement->element("extensionElements");
@@ -4522,11 +4524,11 @@ class BpmnParse extends Parse
             ) {
                 $this->addError("Invalid incoming sequence flow of event subprocess", $sequenceFlowElement);
             } else {
-                if ($this->getMultiInstanceScope($sourceActivity) !== null) {
-                    $sourceActivity = $this->getMultiInstanceScope($sourceActivity);
+                if (($ret = $this->getMultiInstanceScope($sourceActivity)) !== null) {
+                    $sourceActivity = $ret;
                 }
-                if ($this->getMultiInstanceScope($destinationActivity) !== null) {
-                    $destinationActivity = getMultiInstanceScope($destinationActivity);
+                if (($ret = $this->getMultiInstanceScope($destinationActivity)) !== null) {
+                    $destinationActivity = $ret;
                 }
 
                 $transition = $sourceActivity->createOutgoingTransition($id);
@@ -4663,7 +4665,7 @@ class BpmnParse extends Parse
         $className = str_replace('.', '\\', $executionListenerElement->attribute(self::PROPERTYNAME_CLASS));
         $expression = $executionListenerElement->attribute(self::PROPERTYNAME_EXPRESSION);
         $delegateExpression = $executionListenerElement->attribute(self::PROPERTYNAME_DELEGATE_EXPRESSION);
-        $scriptElement = $executionListenerElement->elementNS(self::BPMN_EXTENSIONS_NS_PREFIX, "script");
+        $scriptElement = $executionListenerElement->elementNS(BpmnParser::BPMN_EXTENSIONS_NS, "script");
 
         if ($className !== null) {
             if (empty($className)) {
@@ -4748,7 +4750,7 @@ class BpmnParse extends Parse
             // For collaborations, their are also shape definitions for the
             // participants / processes
             if (array_key_exists($bpmnElement, $this->participantProcesses)) {
-                $procDef = $this->getProcessDefinition($this->participantProcesses[]);
+                $procDef = $this->getProcessDefinition($this->participantProcesses[$bpmnElement]);
                 $procDef->setGraphicalNotationDefined(true);
 
                 // The participation that references this process, has a bounds to be
@@ -4839,7 +4841,7 @@ class BpmnParse extends Parse
 
     public function getProcessDefinition(?string $processDefinitionKey): ?ProcessDefinitionEntity
     {
-        foreach ($processDefinitions as $processDefinition) {
+        foreach ($this->processDefinitions as $processDefinition) {
             if ($processDefinition->getKey() == $processDefinitionKey) {
                 return $processDefinition;
             }
@@ -4877,16 +4879,14 @@ class BpmnParse extends Parse
         return $this;
     }
 
-    public function parseBooleanAttribute(?string $booleanText, bool $defaultValue = null): bool
+    public function parseBooleanAttribute(?string $booleanText, ?bool $defaultValue = null): bool
     {
         if ($booleanText === null && $defaultValue !== null) {
             return $defaultValue;
         }
-        if (($booleanText === "TRUE" || $booleanText === true) || "enabled" == $booleanText || "on" == $booleanText || "active" == $booleanText || "yes" == $booleanText) {
+        $trueValues = ['true', 'enabled', 'on', 'active', 'yes'];
+        if ($booleanText === true || in_array(strtolower($booleanText), $trueValues)) {
             return true;
-        }
-        if (($booleanText === "FALSE" || $booleanText === false) || "disabled" == $booleanText || "off" == $booleanText || "inactive" == $booleanText || "no" == $booleanText) {
-            return false;
         }
         return false;
     }

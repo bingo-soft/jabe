@@ -10,7 +10,7 @@ interface GroupQueryInterface
 
     public function groupName(?string $groupName): GroupQueryInterface;
 
-    public function groupNameLink(?string $groupNameLink): GroupQueryInterface;
+    public function groupNameLike(?string $groupNameLike): GroupQueryInterface;
 
     public function groupType(?string $groupType): GroupQueryInterface;
 

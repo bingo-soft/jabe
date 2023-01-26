@@ -25,7 +25,7 @@ class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior
     {
         parent::__construct();
     }
- 
+
     public function execute(ActivityExecutionInterface $execution): void
     {
         $execution->inactivate();

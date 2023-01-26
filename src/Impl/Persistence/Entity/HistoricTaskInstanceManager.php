@@ -111,7 +111,7 @@ class HistoricTaskInstanceManager extends AbstractHistoricManager
     public function deleteHistoricTaskInstanceById(?string $taskId): void
     {
         if ($this->isHistoryEnabled()) {
-            $historicTaskInstance = findHistoricTaskInstanceById($taskId);
+            $historicTaskInstance = $this->findHistoricTaskInstanceById($taskId);
             if ($historicTaskInstance !== null) {
                 $commandContext = Context::getCommandContext();
 

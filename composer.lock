@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "505d10519728c68cb398bbcdd104b8f8",
+    "content-hash": "29edb4d14b45c209636d7a06c5bfbff4",
     "packages": [
         {
             "name": "bingo-soft/bpmn",
@@ -117,16 +117,16 @@
         },
         {
             "name": "bingo-soft/el",
-            "version": "1.1.5",
+            "version": "1.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/el.git",
-                "reference": "be07bf6083375fd647aceb207aa9116267843bab"
+                "reference": "b03cf945e3782494cb26141e6091bf29dbc02ca9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/el/zipball/be07bf6083375fd647aceb207aa9116267843bab",
-                "reference": "be07bf6083375fd647aceb207aa9116267843bab",
+                "url": "https://api.github.com/repos/bingo-soft/el/zipball/b03cf945e3782494cb26141e6091bf29dbc02ca9",
+                "reference": "b03cf945e3782494cb26141e6091bf29dbc02ca9",
                 "shasum": ""
             },
             "require": {
@@ -162,9 +162,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/el/issues",
-                "source": "https://github.com/bingo-soft/el/tree/1.1.5"
+                "source": "https://github.com/bingo-soft/el/tree/1.1.7"
             },
-            "time": "2023-01-12T11:59:37+00:00"
+            "time": "2023-01-25T06:03:01+00:00"
         },
         {
             "name": "bingo-soft/heap",
@@ -219,21 +219,21 @@
         },
         {
             "name": "bingo-soft/juel",
-            "version": "1.8.0",
+            "version": "1.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/juel.git",
-                "reference": "b595461a5fcdd90ecab62fdb6f1209cca71f9ee1"
+                "reference": "1910df228f31a14c93a7f38db237d6a9e56e278f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/juel/zipball/b595461a5fcdd90ecab62fdb6f1209cca71f9ee1",
-                "reference": "b595461a5fcdd90ecab62fdb6f1209cca71f9ee1",
+                "url": "https://api.github.com/repos/bingo-soft/juel/zipball/1910df228f31a14c93a7f38db237d6a9e56e278f",
+                "reference": "1910df228f31a14c93a7f38db237d6a9e56e278f",
                 "shasum": ""
             },
             "require": {
                 "bingo-soft/el": "^1.1",
-                "bingo-soft/util": "^1.4",
+                "bingo-soft/util": "^1.6",
                 "php": "^7.4 || ^8.0"
             },
             "require-dev": {
@@ -268,9 +268,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/juel/issues",
-                "source": "https://github.com/bingo-soft/juel/tree/1.8.0"
+                "source": "https://github.com/bingo-soft/juel/tree/1.8.1"
             },
-            "time": "2022-12-13T07:06:38+00:00"
+            "time": "2023-01-24T14:04:13+00:00"
         },
         {
             "name": "bingo-soft/mybatis",
@@ -330,20 +330,20 @@
         },
         {
             "name": "bingo-soft/sax",
-            "version": "1.1.6",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/sax.git",
-                "reference": "3387baaefb4eb5f1b94ad0ff5ef23723275f3b3a"
+                "reference": "cf2953afeb392b83043fbc0924ff7227a28b1e54"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/sax/zipball/3387baaefb4eb5f1b94ad0ff5ef23723275f3b3a",
-                "reference": "3387baaefb4eb5f1b94ad0ff5ef23723275f3b3a",
+                "url": "https://api.github.com/repos/bingo-soft/sax/zipball/cf2953afeb392b83043fbc0924ff7227a28b1e54",
+                "reference": "cf2953afeb392b83043fbc0924ff7227a28b1e54",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.4 || ^8.0"
+                "php": "^8.0"
             },
             "require-dev": {
                 "doctrine/coding-standard": "*",
@@ -375,9 +375,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/sax/issues",
-                "source": "https://github.com/bingo-soft/sax/tree/1.1.6"
+                "source": "https://github.com/bingo-soft/sax/tree/1.2.2"
             },
-            "time": "2023-01-13T06:35:16+00:00"
+            "time": "2023-01-16T11:16:08+00:00"
         },
         {
             "name": "bingo-soft/script",
@@ -693,16 +693,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "3.5.2",
+            "version": "3.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "63e513cebbbaf96a6795e5c5ee34d205831bfc85"
+                "reference": "88fa7e5189fd5ec6682477044264dc0ed4e3aa1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/63e513cebbbaf96a6795e5c5ee34d205831bfc85",
-                "reference": "63e513cebbbaf96a6795e5c5ee34d205831bfc85",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/88fa7e5189fd5ec6682477044264dc0ed4e3aa1e",
+                "reference": "88fa7e5189fd5ec6682477044264dc0ed4e3aa1e",
                 "shasum": ""
             },
             "require": {
@@ -717,7 +717,7 @@
             "require-dev": {
                 "doctrine/coding-standard": "11.0.0",
                 "jetbrains/phpstorm-stubs": "2022.3",
-                "phpstan/phpstan": "1.9.2",
+                "phpstan/phpstan": "1.9.4",
                 "phpstan/phpstan-strict-rules": "^1.4",
                 "phpunit/phpunit": "9.5.27",
                 "psalm/plugin-phpunit": "0.18.4",
@@ -784,7 +784,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/3.5.2"
+                "source": "https://github.com/doctrine/dbal/tree/3.5.3"
             },
             "funding": [
                 {
@@ -800,7 +800,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-12-19T08:17:34+00:00"
+            "time": "2023-01-12T10:21:44+00:00"
         },
         {
             "name": "doctrine/deprecations",

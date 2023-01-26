@@ -32,9 +32,6 @@ class SimpleDbSqlSession extends DbSqlSession
     {
         for ($i = 0; $i < count($operations); $i += 1) {
             $operation = $operations[$i];
-        }
-        for ($i = 0; $i < count($operations); $i += 1) {
-            $operation = $operations[$i];
             $this->executeDbOperation($operation);
             if ($operation->isFailed()) {
                 $remainingOperations = array_slice($operations, $i + 1, count($operations));

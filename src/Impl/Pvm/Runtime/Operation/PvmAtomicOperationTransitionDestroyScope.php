@@ -44,7 +44,7 @@ class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperationInte
         if ($execution->isScope() && $activity->isScope()) {
             if (!LegacyBehavior::destroySecondNonScope($execution)) {
                 if ($execution->isConcurrent()) {
-                // legacy behavior
+                    //legacy behavior
                     LegacyBehavior::destroyConcurrentScope($execution);
                 } else {
                     $propagatingExecution = $execution->getParent();
@@ -85,7 +85,6 @@ class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperationInte
                     $concurrentExecution = $propagatingExecution;
                 } else {
                     $concurrentExecution = $scopeExecution->createConcurrentExecution();
-
                     if ($i == 1 && !$propagatingExecution->isConcurrent()) {
                         array_shift($outgoingExecutions);
                         // get a hold of the concurrent execution that replaced the scope propagating execution
@@ -96,11 +95,9 @@ class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperationInte
                                 break;
                             }
                         }
-
                         $outgoingExecutions[] = new OutgoingExecution($replacingExecution, $transitionsToTake[0]);
                     }
                 }
-
                 $outgoingExecutions[] = new OutgoingExecution($concurrentExecution, $transition);
             }
 

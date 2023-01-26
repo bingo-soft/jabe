@@ -5,15 +5,18 @@ namespace Jabe\Impl\Interceptor;
 use Jabe\Impl\ProcessEngineLogger;
 use Jabe\Impl\Context\Context;
 use Jabe\Impl\Persistence\Entity\ExecutionEntity;
-use Jabe\Impl\Pvm\Runtime\AtomicOperation;
+use Jabe\Impl\Pvm\Runtime\{
+    AtomicOperation,
+    AtomicOperationInterface
+};
 
 class AtomicOperationInvocation
 {
     //private final static ContextLogger LOG = ProcessEngineLogger.CONTEXT_LOGGER;
 
-    protected $operation;
+    public $operation;
 
-    protected $execution;
+    public $execution;
 
     protected $performAsync;
 
@@ -22,12 +25,12 @@ class AtomicOperationInvocation
     protected $activityId = null;
     protected $activityName = null;
 
-    public function __construct(AtomicOperation $operation, ExecutionEntity $execution, bool $performAsync)
+    public function __construct(AtomicOperationInterface $operation, ExecutionEntity $execution, bool $performAsync)
     {
         $this->init($operation, $execution, $performAsync);
     }
 
-    protected function init(AtomicOperation $operation, ExecutionEntity $execution, bool $performAsync): void
+    protected function init(AtomicOperationInterface $operation, ExecutionEntity $execution, bool $performAsync): void
     {
         $this->operation = $operation;
         $this->execution = $execution;
@@ -99,7 +102,7 @@ class AtomicOperationInvocation
 
     // getters / setters ////////////////////////////////////
 
-    public function getOperation(): AtomicOperation
+    public function getOperation(): AtomicOperationInterface
     {
         return $this->operation;
     }

@@ -11,7 +11,8 @@ use Jabe\Impl\History\HistoryLevelInterface;
 use Jabe\Impl\History\Event\{
     HistoryEvent,
     HistoryEventCreator,
-    HistoryEventTypes
+    HistoryEventTypes,
+    HistoryEventProcessor
 };
 use Jabe\Impl\History\Producer\HistoryEventProducerInterface;
 use Jabe\Impl\Core\Variable\CoreVariableInstanceInterface;
@@ -47,7 +48,8 @@ class VariableInstanceHistoryListener implements VariableInstanceLifecycleListen
 
                 public function createHistoryEvent(HistoryEventProducerInterface $producer): HistoryEvent
                 {
-                    return $producer->createHistoricVariableCreateEvt($this->variableInstance, $this->sourceScope);
+                    $evt = $producer->createHistoricVariableCreateEvt($this->variableInstance, $this->sourceScope);
+                    return $evt;
                 }
             });
         }

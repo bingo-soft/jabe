@@ -353,9 +353,9 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         $evt->setProcessDefinitionKey($contextEntry->getProcessDefinitionKey());
         $evt->setProcessInstanceId($contextEntry->getProcessInstanceId());
         $evt->setExecutionId($contextEntry->getExecutionId());
-        $evt->setCaseDefinitionId($contextEntry->getCaseDefinitionId());
+        //$evt->setCaseDefinitionId($contextEntry->getCaseDefinitionId());
         //$evt->setCaseInstanceId($contextEntry->getCaseInstanceId());
-        $evt->setCaseExecutionId($contextEntry->getCaseExecutionId());
+        //$evt->setCaseExecutionId($contextEntry->getCaseExecutionId());
         $evt->setTaskId($contextEntry->getTaskId());
         $evt->setJobId($contextEntry->getJobId());
         $evt->setJobDefinitionId($contextEntry->getJobDefinitionId());
@@ -456,9 +456,9 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
             } else {
                 $scopeActivityInstanceId = $scopeExecution->getActivityInstanceId();
             }
-        } elseif ($variableInstance->getCaseExecutionId() !== null) {
+        } /*elseif ($variableInstance->getCaseExecutionId() !== null) {
             $scopeActivityInstanceId = $variableInstance->getCaseExecutionId();
-        }
+        }*/
 
         $sourceExecution = null;
         //CaseExecutionEntity sourceCaseExecution = null;
@@ -497,7 +497,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         if (
             $sourceExecution !== null
             && $sourceExecution->isProcessInstanceStarting()
-            && HistoryEventTypes::variabelInstanceCreate()->equals($eventType)
+            && HistoryEventTypes::variableInstanceCreate()->equals($eventType)
         ) {
             if ($variableInstance->getSequenceCounter() == 1) {
                 $evt->setInitial(true);
@@ -909,7 +909,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
     {
         $idGenerator = Context::getProcessEngineConfiguration()->getIdGenerator();
 
-        $historicFormPropertyEntity = newHistoricFormPropertyEvent();
+        $historicFormPropertyEntity = $this->newHistoricFormPropertyEvent();
         $historicFormPropertyEntity->setId($idGenerator->getNextId());
         $historicFormPropertyEntity->setEventType(HistoryEventTypes::formPropertyUpdate()->getEventName());
         $historicFormPropertyEntity->setTimestamp(ClockUtil::getCurrentTime()->format('c'));
@@ -1000,7 +1000,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
     protected function createHistoricIdentityLinkEvt(IdentityLinkInterface $identityLink, HistoryEventTypes $eventType): HistoryEvent
     {
         // create historic identity link event
-        $evt = newIdentityLinkEventEntity();
+        $evt = $this->newIdentityLinkEventEntity();
         // Mapping all the values of identity link to HistoricIdentityLinkEvent
         $this->initHistoricIdentityLinkEvent($evt, $identityLink, $eventType);
         return $evt;
@@ -1162,7 +1162,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
 
     protected function createHistoricJobLogEvt(JobInterface $job, HistoryEventTypeInterface $eventType): HistoryEvent
     {
-        $event = newHistoricJobLogEntity($job);
+        $event = $this->newHistoricJobLogEntity($job);
         $this->initHistoricJobLogEvent($event, $job, $eventType);
         return $event;
     }

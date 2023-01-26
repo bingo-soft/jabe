@@ -68,7 +68,7 @@ class ReflectUtil
     public static function setField(\ReflectionProperty $field, $object, $value): void
     {
         try {
-            $field->setValue($value);
+            $field->setValue($object, $value);
         } catch (\Exception $e) {
             //throw LOG.exceptionWhileSettingField(field, object, value, e);
             throw $e;

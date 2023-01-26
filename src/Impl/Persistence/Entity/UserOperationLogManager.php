@@ -732,7 +732,7 @@ class UserOperationLogManager extends AbstractHistoricManager
     {
         return $this->isHistoryEventProduced() &&
             (($this->isUserOperationLogEnabledOnCommandContext() && $this->isUserAuthenticated()) ||
-                !writeUserOperationLogOnlyWithLoggedInUser());
+                !$this->writeUserOperationLogOnlyWithLoggedInUser());
     }
 
     protected function isHistoryEventProduced(): bool

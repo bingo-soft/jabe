@@ -10,7 +10,7 @@ class NoneEndEventActivityBehavior extends FlowNodeActivityBehavior
     {
         parent::__construct();
     }
-    
+
     public function execute(/*ActivityExecutionInterface*/$execution): void
     {
         $execution->end(true);

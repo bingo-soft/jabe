@@ -28,7 +28,6 @@ class PvmAtomicOperationActivityExecute implements PvmAtomicOperationInterface
     public function execute(PvmExecutionImpl $execution): void
     {
         $execution->activityInstanceStarted();
-
         $execution->continueIfExecutionDoesNotAffectNextOperation(new class () implements CallbackInterface {
             public function callback($execution)
             {

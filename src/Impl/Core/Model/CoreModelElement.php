@@ -103,48 +103,44 @@ abstract class CoreModelElement implements \Serializable
 
     public function getListeners(?string $eventName = null): array
     {
-        $listeners = $this->listeners;
         if ($eventName === null) {
-            return $listeners;
+            return $this->listeners;
         }
-        if (array_key_exists($eventName, $listeners)) {
-            return $listeners[$eventName];
+        if (array_key_exists($eventName, $this->listeners)) {
+            return $this->listeners[$eventName];
         }
         return [];
     }
 
     public function getBuiltInListeners(?string $eventName = null): array
     {
-        $listeners = $this->builtInListeners;
         if ($eventName === null) {
-            return $listeners;
+            return $this->builtInListeners;
         }
-        if (array_key_exists($eventName, $listeners)) {
-            return $listeners[$eventName];
+        if (array_key_exists($eventName, $this->builtInListeners)) {
+            return $this->builtInListeners[$eventName];
         }
         return [];
     }
 
     public function getVariableListenersLocal(?string $eventName = null): array
     {
-        $listeners = $this->variableListeners;
         if ($eventName === null) {
-            return $listeners;
+            return $this->variableListeners;
         }
-        if (array_key_exists($eventName, $listeners)) {
-            return $listeners[$eventName];
+        if (array_key_exists($eventName, $this->variableListeners)) {
+            return $this->variableListeners[$eventName];
         }
         return [];
     }
 
     public function getBuiltInVariableListenersLocal(?string $eventName = null): array
     {
-        $listeners = $this->builtInVariableListeners;
         if ($eventName === null) {
-            return $listeners;
+            return $this->builtInVariableListeners;
         }
-        if (array_key_exists($eventName, $listeners)) {
-            return $listeners[$eventName];
+        if (array_key_exists($eventName, $this->builtInVariableListeners)) {
+            return $this->builtInVariableListeners[$eventName];
         }
         return [];
     }
@@ -181,10 +177,11 @@ abstract class CoreModelElement implements \Serializable
         if (!array_key_exists($eventName, $listenerMap)) {
             $listenerMap[$eventName] = [];
         }
+        $listeners = &$listenerMap[$eventName];
         if ($index < 0) {
-            $listenerMap[$eventName][] = $listener;
+            $listeners[] = $listener;
         } else {
-            $listenerMap[$eventName][$index] = $listener;
+            $listeners[$index] = $listener;
         }
     }
 

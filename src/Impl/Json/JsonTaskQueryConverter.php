@@ -125,7 +125,7 @@ class JsonTaskQueryConverter extends JsonObjectConverter
         JsonUtil::addField($json, self::MAX_PRIORITY, $query->getMaxPriority());
         JsonUtil::addField($json, self::ASSIGNEE, $query->getAssignee());
 
-        if ($query->getAssigneeIn() !== null) {
+        if (!empty($query->getAssigneeIn())) {
             JsonUtil::addArrayField(
                 $json,
                 self::ASSIGNEE_IN,
@@ -133,7 +133,7 @@ class JsonTaskQueryConverter extends JsonObjectConverter
             );
         }
 
-        if ($query->getAssigneeNotIn() !== null) {
+        if (!empty($query->getAssigneeNotIn())) {
             JsonUtil::addArrayField(
                 $json,
                 self::ASSIGNEE_NOT_IN,

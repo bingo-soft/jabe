@@ -33,7 +33,7 @@ class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements Proc
     protected $superProcessInstanceId;
     protected $subProcessInstanceId;
     protected $suspensionState;
-    protected $withIncident;
+    protected bool $withIncident = false;
     protected $incidentType;
     protected $incidentId;
     protected $incidentMessage;
@@ -522,7 +522,7 @@ class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements Proc
         return $this->subProcessInstanceId;
     }
 
-    public function getSuspensionState(): SuspensionState
+    public function getSuspensionState(): ?SuspensionState
     {
         return $this->suspensionState;
     }

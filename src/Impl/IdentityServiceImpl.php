@@ -224,7 +224,7 @@ class IdentityServiceImpl extends ServiceImpl implements IdentityServiceInterfac
 
     public function setAuthenticatedUserId(?string $authenticatedUserId): void
     {
-        $this->setAuthentication(new Authentication($authenticatedUserId, null));
+        $this->currentAuthentication = new Authentication($authenticatedUserId, null);
     }
 
     public function setAuthentication(?string $userId, array $groups, ?array $tenantIds = null): void

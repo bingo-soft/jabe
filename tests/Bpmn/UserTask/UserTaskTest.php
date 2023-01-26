@@ -2,12 +2,13 @@
 
 namespace Tests\Bpmn\UserTask;
 
-use PHPUnit\Framework\TestCase;
+use Jabe\Impl\Context\Context;
 use Jabe\Impl\Bpmn\Parser\BpmnParse;
 use Jabe\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Impl\Interceptor\{
     CommandContext,
-    CommandInterface
+    CommandInterface,
+    CommandInvocationContext
 };
 use Jabe\Test\{
     Deployment,
@@ -77,8 +78,8 @@ class UserTaskTest extends PluggableProcessEngineTest
     #[Deployment(resources: [ "tests/Resources/Bpmn/UserTask/UserTaskTest.testCompleteAfterParallelGateway.bpmn20.xml"])]
     public function testCompleteAfterParallelGateway(): void
     {
-        // start the process
         $processInstance = $this->runtimeService->startProcessInstanceByKey("ForkProcess");
+        // start the process
         $taskList = $this->taskService->createTaskQuery()->processInstanceId($processInstance->getId())->list();
         $this->assertCount(2, $taskList);
 
@@ -90,6 +91,45 @@ class UserTaskTest extends PluggableProcessEngineTest
 
         // attempt to complete the task and get PersistenceException pointing to "referential integrity constraint violation"
         $this->taskService->complete($task->getId());
+
+        $this->testRule->assertProcessEnded($processInstance->getId());
+    }
+
+    #[Deployment(resources: [ "tests/Resources/Bpmn/UserTask/UserTaskTest.testComplexScenarioWithSubprocessesAndParallelGateways.bpmn"])]
+    public function testComplexScenarioWithSubprocessesAndParallelGateways(): void
+    {
+        $processInstance = $this->runtimeService->startProcessInstanceByKey("processWithSubProcessesAndParallelGateways");
+        $taskList = $this->taskService->createTaskQuery()->processInstanceId($processInstance->getId())->list();
+        $this->assertCount(13, $taskList);
+    }
+
+    #[Deployment(resources: [ "tests/Resources/Bpmn/UserTask/UserTaskTest.testSimpleProcess.bpmn20.xml"])]
+    public function testSimpleProcess(): void
+    {
+        $processInstance = $this->runtimeService->startProcessInstanceByKey("financialReport");
+        $tasks = $this->taskService->createTaskQuery()->processInstanceId($processInstance->getId())->taskCandidateUser("fozzie")->list();
+        $this->assertCount(1, $tasks);
+        $task = $tasks[0];
+        $this->assertEquals("Write monthly financial report", $task->getName());
+
+        $this->taskService->claim($task->getId(), "fozzie");
+        $tasks = $this->taskService
+          ->createTaskQuery()
+          ->processInstanceId($processInstance->getId())
+          ->taskAssignee("fozzie")
+          ->list();
+
+        $this->assertCount(1, $tasks);
+        $this->taskService->complete($task->getId());
+
+        $this->testRule->assertProcessNotEnded($processInstance->getId());
+
+        $tasks = $this->taskService->createTaskQuery()->processInstanceId($processInstance->getId())->taskCandidateUser("fozzie")->list();
+        $this->assertCount(0, $tasks);
+        $tasks = $this->taskService->createTaskQuery()->processInstanceId($processInstance->getId())->taskCandidateUser("kermit")->list();
+        $this->assertCount(1, $tasks);
+        $this->assertEquals("Verify monthly financial report", $tasks[0]->getName());
+        $this->taskService->complete($tasks[0]->getId());
 
         $this->testRule->assertProcessEnded($processInstance->getId());
     }

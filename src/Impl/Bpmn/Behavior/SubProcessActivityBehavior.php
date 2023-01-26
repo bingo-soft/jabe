@@ -14,17 +14,22 @@ use Jabe\Impl\Pvm\Delegate\{
 
 class SubProcessActivityBehavior extends AbstractBpmnActivityBehavior implements CompositeActivityBehaviorInterface
 {
-    public function execute(ActivityExecutionInterface $execution): void
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function execute(/*ActivityExecutionInterface*/$execution): void
     {
         $activity = $execution->getActivity();
-        $initialActivity = $activity->getProperties()->get(BpmnProperties::INITIAL_ACTIVITY);
+        $initialActivity = $activity->getProperties()->get(BpmnProperties::initialActivity());
 
-        EnsureUtil::ensureNotNull("No initial activity found for subprocess " . $execution->getActivity()->getId(), "initialActivity", $this->initialActivity);
+        EnsureUtil::ensureNotNull("No initial activity found for subprocess " . $execution->getActivity()->getId(), "initialActivity", $initialActivity);
 
         $execution->executeActivity($initialActivity);
     }
 
-    public function concurrentChildExecutionEnded(ActivityExecutionInterface $scopeExecution, ActivityExecutionInterface $endedExecution): void
+    public function concurrentChildExecutionEnded(?ActivityExecutionInterface $scopeExecution, ?ActivityExecutionInterface $endedExecution): void
     {
         // join
         $endedExecution->remove();

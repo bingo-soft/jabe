@@ -206,17 +206,19 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
     public function setVariables($variables, ?bool $skipSerializationFormatCheck = null): void
     {
         $scope = $this;
-        VariableUtil::setVariables($variables, new class ($scope) implements SetVariableFunctionInterface {
+        VariableUtil::setVariables($variables, new class ($scope, $skipSerializationFormatCheck) implements SetVariableFunctionInterface {
             private $scope;
+            private $skipSerializationFormatCheck;
 
-            public function __construct(AbstractVariableScope $scope)
+            public function __construct(AbstractVariableScope $scope, ?bool $skipSerializationFormatCheck = null)
             {
                 $this->scope = $scope;
+                $this->skipSerializationFormatCheck = $skipSerializationFormatCheck;
             }
 
             public function apply(?string $variableName, $variableValue): void
             {
-                $this->scope->setVariable($variableName, $variableValue);
+                $this->scope->setVariable($variableName, $variableValue, $this->scope->getSourceActivityVariableScope(), $this->skipSerializationFormatCheck);
             }
         });
     }
@@ -224,17 +226,19 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
     public function setVariablesLocal($variables, ?bool $skipSerializationFormatCheck = null): void
     {
         $scope = $this;
-        VariableUtil::setVariables($variables, new class ($scope) implements SetVariableFunctionInterface {
+        VariableUtil::setVariables($variables, new class ($scope, $skipSerializationFormatCheck) implements SetVariableFunctionInterface {
             private $scope;
+            private $skipSerializationFormatCheck;
 
-            public function __construct(AbstractVariableScope $scope)
+            public function __construct(AbstractVariableScope $scope, ?bool $skipSerializationFormatCheck = null)
             {
                 $this->scope = $scope;
+                $this->skipSerializationFormatCheck = $skipSerializationFormatCheck;
             }
 
             public function apply(?string $variableName, $variableValue): void
             {
-                $this->scope->setVariableLocal($variableName, $variableValue);
+                $this->scope->setVariableLocal($variableName, $variableValue, $this->scope->getSourceActivityVariableScope(), $this->skipSerializationFormatCheck);
             }
         });
     }
@@ -418,7 +422,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
         }
     }
 
-    protected function getSourceActivityVariableScope(): AbstractVariableScope
+    public function getSourceActivityVariableScope(): AbstractVariableScope
     {
         return $this;
     }

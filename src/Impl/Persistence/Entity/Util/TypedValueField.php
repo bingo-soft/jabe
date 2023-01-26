@@ -104,15 +104,15 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
     public function setValue(TypedValueInterface $value): TypedValueInterface
     {
         // determine serializer to use
-        $serializer = self::getSerializers()->findSerializerForValue(
+        $this->serializer = self::getSerializers()->findSerializerForValue(
             $value,
             Context::getProcessEngineConfiguration()->getFallbackSerializerFactory()
         );
-        $serializerName = $serializer->getName();
+        $this->serializerName = $this->serializer->getName();
 
         if ($value instanceof UntypedValueImpl) {
             // type has been detected
-            $value = $serializer->convertToTypedValue($value);
+            $value = $this->serializer->convertToTypedValue($value);
         }
 
         // set new value
@@ -179,7 +179,7 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
       // ignore
     }
 
-    public function getSerializer(): TypedValueSerializerInterface
+    public function getSerializer(): ?TypedValueSerializerInterface
     {
         $this->ensureSerializerInitialized();
         return $this->serializer;

@@ -143,10 +143,8 @@ class TaskDecorator
     protected function initializeTaskCandidateGroups(TaskEntity $task, VariableScopeInterface $variableScope): void
     {
         $candidateGroupIdExpressions = $this->taskDefinition->getCandidateGroupIdExpressions();
-
         foreach ($candidateGroupIdExpressions as $groupIdExpr) {
             $value = $groupIdExpr->getValue($variableScope);
-
             if (is_string($value)) {
                 $candiates = $this->extractCandidates($value);
                 $task->addCandidateGroups($candiates);

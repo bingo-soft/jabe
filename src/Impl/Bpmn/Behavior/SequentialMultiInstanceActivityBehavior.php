@@ -9,6 +9,11 @@ class SequentialMultiInstanceActivityBehavior extends MultiInstanceActivityBehav
 {
     //protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     protected function createInstances(ActivityExecutionInterface $execution, int $nrOfInstances): void
     {
         $this->prepareScope($execution, $nrOfInstances);
@@ -34,7 +39,7 @@ class SequentialMultiInstanceActivityBehavior extends MultiInstanceActivityBehav
         }
     }
 
-    public function concurrentChildExecutionEnded(ActivityExecutionInterface $scopeExecution, ActivityExecutionInterface $endedExecution): void
+    public function concurrentChildExecutionEnded(?ActivityExecutionInterface $scopeExecution, ?ActivityExecutionInterface $endedExecution): void
     {
         // cannot happen
     }
@@ -70,7 +75,6 @@ class SequentialMultiInstanceActivityBehavior extends MultiInstanceActivityBehav
             //throw LOG.unsupportedConcurrencyException(scopeExecution.toString(), this.getClass().getSimpleName());
         } else {
             $nrOfInstances = $this->getLoopVariable($scopeExecution, self::NUMBER_OF_INSTANCES);
-
             $this->setLoopVariable($scopeExecution, self::LOOP_COUNTER, $nrOfInstances);
             $this->setLoopVariable($scopeExecution, self::NUMBER_OF_INSTANCES, $nrOfInstances + 1);
             $this->setLoopVariable($scopeExecution, self::NUMBER_OF_ACTIVE_INSTANCES, 1);
@@ -82,7 +86,6 @@ class SequentialMultiInstanceActivityBehavior extends MultiInstanceActivityBehav
     public function destroyInnerInstance(ActivityExecutionInterface $scopeExecution): void
     {
         $this->removeLoopVariable($scopeExecution, self::LOOP_COUNTER);
-
         $nrOfActiveInstances = $this->getLoopVariable($scopeExecution, self::NUMBER_OF_ACTIVE_INSTANCES);
         $this->setLoopVariable($scopeExecution, self::NUMBER_OF_ACTIVE_INSTANCES, $nrOfActiveInstances - 1);
     }

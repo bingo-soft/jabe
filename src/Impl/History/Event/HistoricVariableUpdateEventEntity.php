@@ -14,8 +14,8 @@ class HistoricVariableUpdateEventEntity extends HistoricDetailEventEntity
 
     protected $serializerName;
 
-    protected int $longValue;
-    protected float $doubleValue;
+    protected $longValue;
+    protected $doubleValue;
     protected $textValue;
     protected $textValue2;
     protected $byteValue;
@@ -46,22 +46,22 @@ class HistoricVariableUpdateEventEntity extends HistoricDetailEventEntity
         $this->variableName = $variableName;
     }
 
-    public function getLongValue(): int
+    public function getLongValue(): ?int
     {
         return $this->longValue;
     }
 
-    public function setLongValue(int $longValue): void
+    public function setLongValue(?int $longValue): void
     {
         $this->longValue = $longValue;
     }
 
-    public function getDoubleValue(): float
+    public function getDoubleValue(): ?float
     {
         return $this->doubleValue;
     }
 
-    public function setDoubleValue(float $doubleValue): void
+    public function setDoubleValue(?float $doubleValue): void
     {
         $this->doubleValue = $doubleValue;
     }

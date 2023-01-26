@@ -100,22 +100,22 @@ class SingleQueryVariableValueCondition extends AbstractQueryVariableValueCondit
         $this->textValue2 = $textValue2;
     }
 
-    public function getLongValue(): int
+    public function getLongValue(): ?int
     {
         return $this->longValue;
     }
 
-    public function setLongValue(int $longValue): void
+    public function setLongValue(?int $longValue): void
     {
         $this->longValue = $longValue;
     }
 
-    public function getDoubleValue(): float
+    public function getDoubleValue(): ?float
     {
         return $this->doubleValue;
     }
 
-    public function setDoubleValue(float $doubleValue): void
+    public function setDoubleValue(?float $doubleValue): void
     {
         $this->doubleValue = $doubleValue;
     }

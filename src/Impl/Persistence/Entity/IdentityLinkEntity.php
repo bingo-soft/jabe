@@ -206,7 +206,7 @@ class IdentityLinkEntity implements \Serializable, IdentityLinkInterface, DbEnti
         $historyLevel = $processEngineConfiguration->getHistoryLevel();
         if ($historyLevel->isHistoryEventProduced($eventType, $this)) {
             $scope = $this;
-            HistoryEventProcessor::processHistoryEvents(new class ($eventType, $scope) extends HistoryEventCreator {
+            HistoryEventProcessor::processHistoryEvents(new class ($scope, $eventType) extends HistoryEventCreator {
                 private $scope;
 
                 private $eventType;

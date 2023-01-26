@@ -33,7 +33,12 @@ abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivityBehavio
     protected $collectionVariable;
     protected $collectionElementVariable;
 
-    public function execute(ActivityExecutionInterface $execution): void
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function execute(/*ActivityExecutionInterface*/$execution): void
     {
         $nrOfInstances = $this->resolveNrOfInstances($execution);
         if ($nrOfInstances == 0) {
@@ -211,7 +216,7 @@ abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivityBehavio
         $this->completionConditionExpression = $completionConditionExpression;
     }
 
-    public function getCollectionExpression(): ExpressionInterface
+    public function getCollectionExpression(): ?ExpressionInterface
     {
         return $this->collectionExpression;
     }

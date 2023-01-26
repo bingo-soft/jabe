@@ -662,6 +662,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
 
         $identityLink = $this->newIdentityLink($userId, $groupId, $type);
         $identityLink->insert();
+
         $this->getIdentityLinks();
         $this->taskIdentityLinkEntities[] = $identityLink;
 
@@ -978,10 +979,9 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
     public function fireEvent(?string $taskEventName): bool
     {
         $taskEventListeners = $this->getListenersForEvent($taskEventName);
-
         if (!empty($taskEventListeners)) {
             foreach ($taskEventListeners as $taskListener) {
-                if (!$this->invokeListener($taskEventName, $taskListener)) {
+                if (!$this->invokeListener(null, $taskEventName, $taskListener)) {
                     return false;
                 }
             }
@@ -1107,7 +1107,6 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
                     $commandContext->getHistoricTaskInstanceManager()->createHistoricTask($this);
                 }
                 return $this->fireEvent(TaskListenerInterface::EVENTNAME_CREATE) && $this->fireAssignmentEvent();
-
             case TaskState::STATE_COMPLETED:
                 return $this->fireEvent(TaskListenerInterface::EVENTNAME_COMPLETE) && TaskState::STATE_COMPLETED == $this->lifecycleState;
 
@@ -1138,7 +1137,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
                                                                             + timeoutId + "' for task " + $this->id));*/
             throw new \Exception("triggerTimeoutEvent");
         }
-        return $this->invokeListener(TaskListenerInterface::EVENTNAME_TIMEOUT, $taskListener);
+        return $this->invokeListener(null, TaskListenerInterface::EVENTNAME_TIMEOUT, $taskListener);
     }
 
     protected function fireAssignmentEvent(): bool
@@ -1278,10 +1277,10 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
             }
 
             if ($taskDefinitions !== null) {
-                $taskDefinition = $taskDefinitions[$this->taskDefinitionKey];
+                $this->taskDefinition = $taskDefinitions[$this->taskDefinitionKey];
             }
         }
-        return $taskDefinition;
+        return $this->taskDefinition;
     }
 
     // getters and setters //////////////////////////////////////////////////////

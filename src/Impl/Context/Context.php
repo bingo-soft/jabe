@@ -34,17 +34,17 @@ class Context
         if (empty($stack)) {
             return null;
         }
-        return $stack[count($stack) - 1];
+        return $stack[array_key_first($stack)];
     }
 
     public static function setCommandContext(CommandContext $commandContext): void
     {
-        self::$commandContextThreadLocal[] = $commandContext;
+        array_unshift(self::$commandContextThreadLocal, $commandContext);
     }
 
     public static function removeCommandContext(): void
     {
-        array_pop(self::$commandContextThreadLocal);
+        array_shift(self::$commandContextThreadLocal);
     }
 
     public static function getCommandInvocationContext(): CommandInvocationContext
@@ -53,18 +53,19 @@ class Context
         if (empty($stack)) {
             return null;
         }
-        return $stack[count($stack) - 1];
+        $inv = $stack[array_key_first($stack)];
+        return $inv;
     }
 
     public static function setCommandInvocationContext(CommandInvocationContext $commandInvocationContext): void
     {
-        self::$commandInvocationContextThreadLocal[] = $commandInvocationContext;
+        array_unshift(self::$commandInvocationContextThreadLocal, $commandInvocationContext);
     }
 
     public static function removeCommandInvocationContext(): void
     {
         $stack = self::$commandInvocationContextThreadLocal;
-        $currentContext = $stack[count($stack) - 1];
+        $currentContext = array_shift(self::$commandInvocationContextThreadLocal);
         if (empty($stack)) {
             // do not clear when called from JobExecutor, will be cleared there after logging
             if (self::getJobExecutorContext() === null) {
@@ -72,7 +73,7 @@ class Context
             }
         } else {
             // reset the MDC to the logging context of the outer command invocation
-            $stack[count($stack) - 1]->getProcessDataContext()->updateMdcFromCurrentValues();
+            $stack[array_key_first($stack)]->getProcessDataContext()->updateMdcFromCurrentValues();
         }
     }
 
@@ -82,17 +83,17 @@ class Context
         if (empty($stack)) {
             return null;
         }
-        return $stack[count($stack) - 1];
+        return $stack[array_key_first($stack)];
     }
 
     public static function setProcessEngineConfiguration(ProcessEngineConfigurationImpl $processEngineConfiguration): void
     {
-        self::$processEngineConfigurationStackThreadLocal[] = $processEngineConfiguration;
+        array_unshift(self::$processEngineConfigurationStackThreadLocal, $processEngineConfiguration);
     }
 
     public static function removeProcessEngineConfiguration(): void
     {
-        array_pop(self::$processEngineConfigurationStackThreadLocal);
+        array_shift(self::$processEngineConfigurationStackThreadLocal);
     }
 
     /**
@@ -118,20 +119,20 @@ class Context
         if (empty($stack)) {
             return null;
         } else {
-            return $stack[count($stack) - 1];
+            return $stack[array_key_first($stack)];
         }
     }
 
     public static function setExecutionContext(ExecutionEntity $execution): void
     {
         if ($execution instanceof ExecutionEntity) {
-            self::$executionContextStackThreadLocal[] = new BpmnExecutionContext($execution);
+            array_unshift(self::$executionContextStackThreadLocal, new BpmnExecutionContext($execution));
         }
     }
 
     public static function removeExecutionContext(): void
     {
-        array_pop(self::$executionContextStackThreadLocal);
+        array_shift(self::$executionContextStackThreadLocal);
     }
 
     public static function getJobExecutorContext(): ?JobExecutorContext
@@ -155,18 +156,18 @@ class Context
         if (empty($stack)) {
             return null;
         } else {
-            return $stack[count($stack) - 1];
+            return $stack[array_key_first($stack)];
         }
     }
 
     public static function setCurrentProcessApplication(ProcessApplicationReferenceInterface $reference): void
     {
-        self::$processApplicationContext[] = $reference;
+        array_unshift(self::$processApplicationContext, $reference);
     }
 
     public static function removeCurrentProcessApplication(): void
     {
-        array_pop(self::$processApplicationContext);
+        array_shift(self::$processApplicationContext);
     }
 
     public static function executeWithinProcessApplication($callback, ProcessApplicationReferenceInterface $processApplicationReference, InvocationContext $invocationContext = null)

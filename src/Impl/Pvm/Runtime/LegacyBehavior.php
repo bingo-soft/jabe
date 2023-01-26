@@ -2,6 +2,7 @@
 
 namespace Jabe\Impl\Pvm\Runtime;
 
+use Jabe\ProcessEngineException;
 use Jabe\Impl\ProcessEngineLogger;
 use Jabe\Impl\Bpmn\Behavior\{
     BpmnBehaviorLogger,
@@ -108,6 +109,47 @@ class LegacyBehavior
      */
     public static function destroySecondNonScope(PvmExecutionImpl $execution): bool
     {
+        self::ensureScope($execution);
+        $performLegacyBehavior = self::isLegacyBehaviorRequired($execution);
+
+        if ($performLegacyBehavior) {
+            // legacy behavior is to do nothing
+        }
+
+        return $performLegacyBehavior;
+    }
+
+    protected static function ensureScope(PvmExecutionImpl $execution): void
+    {
+        if (!$execution->isScope()) {
+            throw new ProcessEngineException("Execution must be scope.");
+        }
+    }
+
+    protected static function isLegacyBehaviorRequired(ActivityExecutionInterface $scopeExecution): bool
+    {
+        // legacy behavior is turned off: the current activity was parsed as scope.
+        // now we need to check whether a scope execution was correctly created for the
+        // event subprocess.
+        // first create the mapping:
+        $activityExecutionMapping = $scopeExecution->createActivityExecutionMapping();
+        // if the scope execution for the current activity is the same as for the parent scope
+        // -> we need to perform legacy behavior
+        $activity = $scopeExecution->getActivity();
+        if (!$activity->isScope()) {
+            $activity = $activity->getFlowScope();
+        }
+
+        foreach ($activityExecutionMapping as $map) {
+            if ($map[0] == $activity) {
+                foreach ($activityExecutionMapping as $map2) {
+                    if ($map2[0] == $activity->getFlowScope()) {
+                        return $map[1] == $map2[1];
+                    }
+                }
+                return false;
+            }
+        }
         return false;
     }
 

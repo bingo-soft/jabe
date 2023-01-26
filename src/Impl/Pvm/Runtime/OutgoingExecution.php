@@ -11,8 +11,8 @@ class OutgoingExecution
 {
     //private final static PvmLogger LOG = PvmLogger.PVM_LOGGER;
 
-    protected $outgoingExecution;
-    protected $outgoingTransition;
+    public $outgoingExecution;
+    public $outgoingTransition;
 
     public function __construct(PvmExecutionImpl $outgoingExecution, PvmTransitionInterface $outgoingTransition)
     {
@@ -27,6 +27,7 @@ class OutgoingExecution
         if ($this->outgoingExecution->getReplacedBy() !== null) {
             $this->outgoingExecution = $this->outgoingExecution->getReplacedBy();
         }
+
         if (!$this->outgoingExecution->isEnded()) {
             $this->outgoingExecution->take();
         } else {

@@ -45,7 +45,7 @@ class ProcessDataStack
      */
     public function pushCurrentValueFromMdc(): bool
     {
-        if ($this->isNotBlank($this->mdcName)) {
+        if (ProcessDataContext::isNotBlank($this->mdcName)) {
             $mdcValue = MdcAccess::get($this->mdcName);
 
             array_unshift($this->deque, $mdcValue ?? self::NULL_VALUE);
@@ -64,14 +64,14 @@ class ProcessDataStack
 
     public function clearMdcProperty(): void
     {
-        if ($this->isNotBlank($this->mdcName)) {
+        if (ProcessDataContext::isNotBlank($this->mdcName)) {
             MdcAccess::remove($this->mdcName);
         }
     }
 
     public function updateMdcWithCurrentValue(): void
     {
-        if ($this->isNotBlank($this->mdcName)) {
+        if (ProcessDataContext::isNotBlank($this->mdcName)) {
             $currentValue = $this->getCurrentValue();
 
             if ($currentValue === null || $currentValue == self::NULL_VALUE) {

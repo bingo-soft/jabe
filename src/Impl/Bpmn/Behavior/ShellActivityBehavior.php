@@ -41,6 +41,11 @@ class ShellActivityBehavior extends AbstractBpmnActivityBehavior
     private $cleanEnvBoolan;
     private $directoryStr;
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     private function readFields(ActivityExecutionInterface $execution): void
     {
         $this->commandStr = $this->getStringFromField($this->command, $execution);

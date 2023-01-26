@@ -58,6 +58,7 @@ class ExecutionImpl extends PvmExecutionImpl implements ActivityExecutionInterfa
 
     public function __construct()
     {
+        parent::__construct();
         $this->variableStore = new VariableStore();
     }
 
@@ -66,7 +67,6 @@ class ExecutionImpl extends PvmExecutionImpl implements ActivityExecutionInterfa
     {
         // create the new child execution
         $createdExecution = $this->newExecution();
-
         // initialize sequence counter
         $createdExecution->setSequenceCounter($this->getSequenceCounter());
 

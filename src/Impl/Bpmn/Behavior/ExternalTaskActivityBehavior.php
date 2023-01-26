@@ -25,6 +25,7 @@ class ExternalTaskActivityBehavior extends AbstractBpmnActivityBehavior implemen
 
     public function __construct(ParameterValueProviderInterface $topicName, ParameterValueProviderInterface $paramValueProvider)
     {
+        parent::__construct();
         $this->topicNameValueProvider = $topicName;
         $this->priorityValueProvider = $paramValueProvider;
     }

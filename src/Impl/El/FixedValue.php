@@ -18,12 +18,12 @@ class FixedValue implements ExpressionInterface
         $this->value = $value;
     }
 
-    public function getValue(VariableScopeInterface $variableScope, ?BaseDelegateExecutionInterface $contextExecution)
+    public function getValue(VariableScopeInterface $variableScope, ?BaseDelegateExecutionInterface $contextExecution = null)
     {
         return $this->value;
     }
 
-    public function setValue($value, VariableScopeInterface $variableScope)
+    public function setValue($value, ?VariableScopeInterface $variableScope = null, ?BaseDelegateExecutionInterface $contextExecution = null): void
     {
         throw new ProcessEngineException("Cannot change fixed value");
     }

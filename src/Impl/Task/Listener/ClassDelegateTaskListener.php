@@ -10,6 +10,7 @@ use Jabe\Delegate\{
 use Jabe\Impl\Context\Context;
 use Jabe\Impl\Delegate\ClassDelegate;
 use Jabe\Impl\Task\Delegate\TaskListenerInvocation;
+use Jabe\Impl\Util\ClassDelegateUtil;
 
 class ClassDelegateTaskListener extends ClassDelegate implements TaskListenerInterface
 {
@@ -32,7 +33,7 @@ class ClassDelegateTaskListener extends ClassDelegate implements TaskListenerInt
 
     protected function getTaskListenerInstance(): TaskListenerInterface
     {
-        $delegateInstance = $this->instantiateDelegate($this->className, $this->fieldDeclarations);
+        $delegateInstance = ClassDelegateUtil::instantiateDelegate($this->className, $this->fieldDeclarations);
 
         if ($delegateInstance instanceof TaskListenerInterface) {
             return $delegateInstance;

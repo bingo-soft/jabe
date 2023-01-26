@@ -29,6 +29,11 @@ class MailActivityBehavior extends AbstractBpmnActivityBehavior
     protected $html;
     protected $charset;
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function execute(ActivityExecutionInterface $execution): void
     {
         $toStr = $this->getStringFromField($this->to, $execution);

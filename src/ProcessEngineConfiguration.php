@@ -72,7 +72,7 @@ abstract class ProcessEngineConfiguration
     /**
      * The default history level that is used when no history level is configured
      */
-    public const HISTORY_DEFAULT = self::HISTORY_AUDIT;
+    public const HISTORY_DEFAULT = self::HISTORY_FULL;// default value is self::HISTORY_AUDIT
 
     /**
      * History cleanup is performed based on end time.
@@ -163,7 +163,7 @@ abstract class ProcessEngineConfiguration
     protected $databaseSchemaUpdate = self::DB_SCHEMA_UPDATE_FALSE;
     //default Postgresql connection run inside the container
     protected $dbDriver = 'pdo_pgsql';
-    protected $dbUrl = 'pgsql:host=localhost;port=5432;dbname=engine;';
+    protected $dbUrl = 'pgsql:host=172.24.64.93;port=5432;dbname=engine;';
     protected $dbUsername = 'postgres';
     protected $dbPassword = 'postgres';
     protected int $dbMaxActiveConnections = 0;

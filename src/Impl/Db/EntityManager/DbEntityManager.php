@@ -328,7 +328,6 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
                     // Top level persistence exception
                     $failure = $failedOperation->getFailure();
                     //throw LOG.flushDbOperationException(allOperations, failedOperation, failure);
-                    var_dump($failure);
                     throw new \Exception("flushDbOperationException");
                 } else {
                     // This branch should never be reached and the exception thus indicates a bug

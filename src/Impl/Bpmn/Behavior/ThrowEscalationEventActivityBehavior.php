@@ -16,6 +16,7 @@ class ThrowEscalationEventActivityBehavior extends AbstractBpmnActivityBehavior
 
     public function __construct(Escalation $escalation)
     {
+        parent::__construct();
         $this->escalation = $escalation;
     }
 

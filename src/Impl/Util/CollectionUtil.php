@@ -90,7 +90,7 @@ class CollectionUtil
             $parts[] = $list;
         } else {
             for ($i = 0; $i < $listSize; $i += $partitionSize) {
-                $parts[] = array_slice($list, $i, min($listSize, $i + $partitionSize));
+                $parts[] = array_slice($list, $i, $partitionSize);
             }
         }
 

@@ -7,6 +7,11 @@ use Jabe\Impl\Pvm\Runtime\LegacyBehavior;
 
 class CancelBoundaryEventActivityBehavior extends BoundaryEventActivityBehavior
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function signal(ActivityExecutionInterface $execution, ?string $signalName, $signalData): void
     {
         if (LegacyBehavior::signalCancelBoundaryEvent($signalName)) {

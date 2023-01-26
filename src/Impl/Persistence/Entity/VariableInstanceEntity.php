@@ -106,15 +106,17 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
     protected $isActive;
     protected $isConcurrencyScope;
 
-    public function __construct(?string $name, TypedValueInterface $value, bool $isTransient)
+    public function __construct(?string $name = null, ?TypedValueInterface $value = null, ?bool $isTransient = null)
     {
         $this->byteArrayField = new ByteArrayField($this, ResourceTypes::runtime());
         $this->typedValueField = new TypedValueField($this, true);
-
+        $this->isTransient = $isTransient ?? false;
         $this->typedValueField->addImplicitUpdateListener($this);
+
         $this->name = $name;
-        $this->isTransient = $isTransient;
-        $this->typedValueField->setValue($value);
+        if ($value !== null) {
+            $this->typedValueField->setValue($value);
+        }
     }
 
     public static function createAndInsert(?string $name, TypedValueInterface $value): VariableInstanceEntity
@@ -394,22 +396,22 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
         return caseExecutionId;
     }*/
 
-    public function getLongValue(): int
+    public function getLongValue(): ?int
     {
         return $this->longValue;
     }
 
-    public function setLongValue(int $longValue): void
+    public function setLongValue(?int $longValue): void
     {
         $this->longValue = $longValue;
     }
 
-    public function getDoubleValue(): float
+    public function getDoubleValue(): ?float
     {
         return $this->doubleValue;
     }
 
-    public function setDoubleValue(float $doubleValue): void
+    public function setDoubleValue(?float $doubleValue): void
     {
         $this->doubleValue = $doubleValue;
     }
@@ -603,7 +605,7 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
         //   behavior that the variable scope
         //   of variable value can never become null
 
-        $targetProcessApplication = getContextProcessApplication();
+        $targetProcessApplication = $this->getContextProcessApplication();
         if ($targetProcessApplication !== null) {
             $scope = $this;
             Context::executeWithinProcessApplication(

@@ -30,7 +30,7 @@ class VariableStore
         }
     }
 
-    protected function getVariablesMap(?array $variableNames = []): array
+    protected function &getVariablesMap(?array $variableNames = []): array
     {
         if (empty($variableNames)) {
             $this->forceInitialization();
@@ -84,8 +84,7 @@ class VariableStore
         if ($this->containsKey($value->getName())) {
             //throw ProcessEngineLogger.CORE_LOGGER.duplicateVariableInstanceException(value);
         } else {
-            $this->getVariablesMap();
-            $this->variables[$value->getName()] = $value;
+            $this->getVariablesMap()[$value->getName()] = $value;
 
             foreach ($this->observers as $listener) {
                 $listener->onAdd($value);

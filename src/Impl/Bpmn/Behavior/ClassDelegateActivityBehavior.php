@@ -27,6 +27,7 @@ class ClassDelegateActivityBehavior extends AbstractBpmnActivityBehavior
 
     public function __construct(?string $className, array $fieldDeclarations)
     {
+        parent::__construct();
         $this->className = $className;
         $this->fieldDeclarations = $fieldDeclarations;
     }

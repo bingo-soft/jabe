@@ -61,10 +61,10 @@ class BpmnStackTrace
             $writer .= "\t";
 
             $activity = $activities[$i];
-            $activityId = $activity->get("activityId");
+            $activityId = $activity["activityId"];
             $writer .= $activityId;
 
-            $activityName = $activity->get("activityName");
+            $activityName = array_key_exists("activityName", $activity) ? $activity["activityName"] : null;
             if ($activityName !== null) {
                 $writer .= ", name=";
                 $writer .= $activityName;
@@ -93,7 +93,7 @@ class BpmnStackTrace
 
             if (
                 empty($activityTrace) ||
-                $activity->get("activityId") != $activityTrace[0]->get("activityId")
+                $activity["activityId"] != $activityTrace[0]["activityId"]
             ) {
                 array_unshift($activityTrace, $activity);
             }

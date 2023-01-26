@@ -793,7 +793,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
 
     protected $dbMetricsReporter;
 
-    protected bool $isMetricsEnabled = false;
+    protected bool $isMetricsEnabled = true;
     protected bool $isDbMetricsReporterActivate = false;
 
     protected $metricsReporterIdProvider;
@@ -1161,7 +1161,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
         //@TODO
         //$this->initPermissionProvider();
         $this->initHostName();
-        //$this->initMetrics();
+        $this->initMetrics();
         //$this->initTelemetry();
         //initMigration();
         $this->initCommandCheckers();
@@ -2465,21 +2465,20 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
         }
     }
 
-    /*protected function initMetrics(): void
+    protected function initMetrics(): void
     {
-        if (isMetricsEnabled) {
-
-            if (metricsRegistry === null) {
-                metricsRegistry = new MetricsRegistry();
+        if ($this->isMetricsEnabled) {
+            if ($this->metricsRegistry === null) {
+                $this->metricsRegistry = new MetricsRegistry();
             }
 
-            $this->initDefaultMetrics(metricsRegistry);
+            $this->initDefaultMetrics($this->metricsRegistry);
 
-            if (dbMetricsReporter === null) {
-                dbMetricsReporter = new DbMetricsReporter(metricsRegistry, commandExecutorTxRequired);
+            if ($this->dbMetricsReporter === null) {
+                $this->dbMetricsReporter = new DbMetricsReporter($this->metricsRegistry, $this->commandExecutorTxRequired);
             }
         }
-    }*/
+    }
 
     protected function initHostName(): void
     {
@@ -2491,23 +2490,24 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
         }
     }
 
-    /*protected void initDefaultMetrics(MetricsRegistry $metricsRegistry) {
-        metricsRegistry.createMeter(Metrics.ACTIVTY_INSTANCE_START);
-        metricsRegistry.createDbMeter(Metrics.ACTIVTY_INSTANCE_END);
+    protected function initDefaultMetrics(MetricsRegistry $metricsRegistry): void
+    {
+        $this->metricsRegistry->createMeter(Metrics::ACTIVTY_INSTANCE_START);
+        $this->metricsRegistry->createDbMeter(Metrics::ACTIVTY_INSTANCE_END);
 
-        metricsRegistry.createDbMeter(Metrics.JOB_ACQUISITION_ATTEMPT);
-        metricsRegistry.createDbMeter(Metrics.JOB_ACQUIRED_SUCCESS);
-        metricsRegistry.createDbMeter(Metrics.JOB_ACQUIRED_FAILURE);
-        metricsRegistry.createDbMeter(Metrics.JOB_SUCCESSFUL);
-        metricsRegistry.createDbMeter(Metrics.JOB_FAILED);
-        metricsRegistry.createDbMeter(Metrics.JOB_LOCKED_EXCLUSIVE);
-        metricsRegistry.createDbMeter(Metrics.JOB_EXECUTION_REJECTED);
+        $this->metricsRegistry->createDbMeter(Metrics::JOB_ACQUISITION_ATTEMPT);
+        $this->metricsRegistry->createDbMeter(Metrics::JOB_ACQUIRED_SUCCESS);
+        $this->metricsRegistry->createDbMeter(Metrics::JOB_ACQUIRED_FAILURE);
+        $this->metricsRegistry->createDbMeter(Metrics::JOB_SUCCESSFUL);
+        $this->metricsRegistry->createDbMeter(Metrics::JOB_FAILED);
+        $this->metricsRegistry->createDbMeter(Metrics::JOB_LOCKED_EXCLUSIVE);
+        $this->metricsRegistry->createDbMeter(Metrics::JOB_EXECUTION_REJECTED);
 
-        metricsRegistry.createMeter(Metrics.ROOT_PROCESS_INSTANCE_START);
+        $this->metricsRegistry->createMeter(Metrics::ROOT_PROCESS_INSTANCE_START);
 
-        metricsRegistry.createMeter(Metrics.EXECUTED_DECISION_INSTANCES);
-        metricsRegistry.createMeter(Metrics.EXECUTED_DECISION_ELEMENTS);
-    }*/
+        //metricsRegistry.createMeter(Metrics.EXECUTED_DECISION_INSTANCES);
+        //metricsRegistry.createMeter(Metrics.EXECUTED_DECISION_ELEMENTS);
+    }
 
     protected function initSerialization(): void
     {
@@ -3359,7 +3359,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
         return $this->variableSerializers;
     }
 
-    public function getFallbackSerializerFactory(): VariableSerializerFactoryInterface
+    public function getFallbackSerializerFactory(): ?VariableSerializerFactoryInterface
     {
         return $this->fallbackSerializerFactory;
     }
@@ -4660,7 +4660,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
     {
     }
 
-    /*public function getMetricsRegistry(): MetricsRegistry
+    public function getMetricsRegistry(): MetricsRegistry
     {
         return $this->metricsRegistry;
     }
@@ -4675,14 +4675,14 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
     {
         $this->isMetricsEnabled = $isMetricsEnabled;
         return $this;
-    }*/
+    }
 
     public function isMetricsEnabled(): bool
     {
         return $this->isMetricsEnabled;
     }
 
-    /*public function getDbMetricsReporter(): DbMetricsReporter
+    public function getDbMetricsReporter(): DbMetricsReporter
     {
         return $this->dbMetricsReporter;
     }
@@ -4702,7 +4702,18 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
     {
         $this->isDbMetricsReporterActivate = $isDbMetricsReporterEnabled;
         return $this;
-    }*/
+    }
+
+    public function getMetricsReporterIdProvider(): ?MetricsReporterIdProviderInterface
+    {
+        return $this->metricsReporterIdProvider;
+    }
+
+    public function setMetricsReporterIdProvider(MetricsReporterIdProviderInterface $metricsReporterIdProvider): ProcessEngineConfigurationImpl
+    {
+        $this->metricsReporterIdProvider = $metricsReporterIdProvider;
+        return $this;
+    }
 
     public function getHostname(): ?string
     {
