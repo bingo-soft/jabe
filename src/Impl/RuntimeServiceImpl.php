@@ -75,14 +75,17 @@ use Jabe\Variable\Value\TypedValueInterface;
 
 class RuntimeServiceImpl extends ServiceImpl implements RuntimeServiceInterface
 {
-    public function startProcessInstanceByKey(?string $processDefinitionKey, ?string $businessKey = null, array $variables = []): ProcessInstanceInterface
+    public function startProcessInstanceByKey(?string $processDefinitionKey, /*?string|array*/...$args): ProcessInstanceInterface
     {
         $res = $this->createProcessInstanceByKey($processDefinitionKey);
-        if ($businessKey !== null) {
-            $res->businessKey($businessKey);
+        if (!empty($args) && is_string($args[0])) {
+            $res->businessKey($args[0]);
         }
-        if (!empty($variables)) {
-            $res->setVariables($variables);
+        if (!empty($args) && is_array($args[0])) {
+            $res->setVariables($args[0]);
+        }
+        if (!empty($args) && isset($args[1]) && is_array($args[1])) {
+            $res->setVariables($args[1]);
         }
         return $res->execute();
     }
@@ -318,7 +321,7 @@ class RuntimeServiceImpl extends ServiceImpl implements RuntimeServiceInterface
         }
     }
 
-    public function signal(?string $executionId, ?string $signalName = null, $signalData = null, array $processVariables = []): void
+    public function signal(/*?string*/$executionId, ?string $signalName = null, $signalData = null, array $processVariables = []): void
     {
         $this->commandExecutor->execute(new SignalCmd($executionId, $signalName, $signalData, $processVariables));
     }

@@ -69,7 +69,7 @@ class EntityTypeComparatorForModifications implements ComparatorInterface
     public function compareTo(/*string*/$firstEntityType, /*string*/$secondEntityType): int
     {
         if ($firstEntityType == $secondEntityType) {
-            return 0;
+            $result = 0;
         }
 
         $firstIndex = null;
@@ -82,7 +82,7 @@ class EntityTypeComparatorForModifications implements ComparatorInterface
             $secondIndex = self::TYPE_ORDER[$secondEntityType];
         }
 
-            // unknown type happens before / after everything else
+        // unknown type happens before / after everything else
         if ($firstIndex === null) {
             $firstIndex = PHP_INT_MAX;
         }
@@ -91,10 +91,17 @@ class EntityTypeComparatorForModifications implements ComparatorInterface
         }
 
         if ($firstIndex == $secondIndex) {
-            return 0;
+            if ($firstEntityType > $secondEntityType) {
+                $result = 1;
+            } else {
+                $result = -1;
+            }
         } elseif ($firstIndex < $secondIndex) {
-            return -1;
+            $result = -1;
+        } else {
+            $result = 1;
         }
-        return 1;
+
+        return $result;
     }
 }

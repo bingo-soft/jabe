@@ -36,7 +36,7 @@ class HistoricExternalTaskLogQueryImpl extends AbstractQuery implements Historic
     protected bool $isTenantIdSet = false;
     protected $state;
 
-    public function __construct(CommandExecutorInterface $commandExecutor = null)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
     }

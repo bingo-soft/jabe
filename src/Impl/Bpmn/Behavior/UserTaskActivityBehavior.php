@@ -51,7 +51,7 @@ class UserTaskActivityBehavior extends TaskActivityBehavior implements Migration
         $task->transitionTo(TaskState::STATE_CREATED);
     }
 
-    public function signal(ActivityExecutionInterface $execution, ?string $signalName, $ignalData): void
+    public function signal(/*ActivityExecutionInterface*/$execution, ?string $signalName = null, $signalData = null, array $processVariables = []): void
     {
         $this->leave($execution);
     }

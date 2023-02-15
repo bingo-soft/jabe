@@ -14,7 +14,6 @@ use Jabe\Impl\Interceptor\{
 
 class NativeUserQueryImpl extends AbstractNativeQuery implements NativeUserQueryInterface
 {
-
     public function __construct($contextOrExecutor)
     {
         parent::__construct($contextOrExecutor);

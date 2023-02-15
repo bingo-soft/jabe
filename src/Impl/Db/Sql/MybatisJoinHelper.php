@@ -80,6 +80,7 @@ class MybatisJoinHelper
         $sb = "";
 
         $sb .= self::tableAlias($orderingProperty->getRelation(), $index);
+
         if ($orderingProperty->isContainedProperty()) {
             $sb .= ".";
         } else {
@@ -90,7 +91,6 @@ class MybatisJoinHelper
         $sb .= " ";
 
         $sb .= $orderingProperty->getDirection()->getName();
-
         return $sb;
     }
 

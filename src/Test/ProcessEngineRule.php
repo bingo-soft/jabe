@@ -18,6 +18,7 @@ use Jabe\{
 };
 use Jabe\Impl\Cfg\ProcessEngineConfigurationImpl;
 use Jabe\Impl\Test\TestHelper;
+use Jabe\Respository\DeploymentInterface;
 use Jabe\Test\Deployment;
 
 class ProcessEngineRule implements ProcessEngineServicesInterface
@@ -65,15 +66,18 @@ class ProcessEngineRule implements ProcessEngineServicesInterface
             $refMethod = $ref->getMethod($methodName);
             $attrs = $ref->getAttributes(Deployment::class);
         }
+        $attribute = null;
         if (!empty($attrs)) {
             $attribute = $attrs[0]->newInstance();
         }
-        $this->deploymentId = TestHelper::annotationDeploymentSetUp(
-            $this->processEngine,
-            $testClass,
-            $methodName,
-            $attribute
-        );
+        if ($attribute !== null) {
+            $this->deploymentId = TestHelper::annotationDeploymentSetUp(
+                $this->processEngine,
+                $testClass,
+                $methodName,
+                $attribute
+            );
+        }
     }
 
     public function apply(): void
@@ -278,5 +282,10 @@ class ProcessEngineRule implements ProcessEngineServicesInterface
     public function setExternalTaskService(ExternalTaskServiceInterface $externalTaskService): void
     {
         $this->externalTaskService = $externalTaskService;
+    }
+
+    public function manageDeployment(/*DeploymentInterface*/$deployment): void
+    {
+        $this->additionalDeployments[] = $deployment->getId();
     }
 }

@@ -23,6 +23,25 @@ class SignalCmd implements CommandInterface, \Serializable
         $this->processVariables = $processVariables;
     }
 
+    public function serialize()
+    {
+        return json_encode([
+            'executionId' => $this->executionId,
+            'signalName' => $this->signalName,
+            'signalData' => $this->signalData,
+            'processVariables' => $this->processVariables
+        ]);
+    }
+
+    public function unserialize($data)
+    {
+        $json = json_decode($data);
+        $this->executionId = $json->executionId;
+        $this->signalName = $json->signalName;
+        $this->signalData = $json->signalData;
+        $this->processVariables = $json->processVariables;
+    }
+
     public function execute(CommandContext $commandContext)
     {
         EnsureUtil::ensureNotNull("executionId is null", "executionId", $this->executionId);

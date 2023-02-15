@@ -9,6 +9,11 @@ class ThreadPoolJobExecutor extends JobExecutor
 {
     protected $threadPoolExecutor;
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     protected function startExecutingJobs(): void
     {
         $this->startJobAcquisitionThread();

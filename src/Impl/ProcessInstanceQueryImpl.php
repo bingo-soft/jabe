@@ -53,7 +53,7 @@ class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements Proc
     protected $queries = [];//new ArrayList<>(Arrays.asList($this));
     protected bool $isOrQueryActive = false;
 
-    public function __construct(CommandExecutorInterface $commandExecutor = null)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
         $this->queries[] = $this;

@@ -28,7 +28,7 @@ class JobFailureCollector implements CommandContextListenerInterface
         }
     }
 
-    public function getFailure(): Throwable
+    public function getFailure(): ?\Throwable
     {
         return $this->failure;
     }

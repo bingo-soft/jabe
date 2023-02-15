@@ -47,7 +47,7 @@ class ExecuteJobHelper
         CommandExecutorInterface $commandExecutor,
         ?JobFailureCollector $jobFailureCollector = null,
         ?CommandInterface $cmd = null,
-        ?ProcessEngineConfigurationImpl $configuration
+        ?ProcessEngineConfigurationImpl $configuration = null
     ): void {
         if ($jobFailureCollector === null) {
             $jobFailureCollector = new JobFailureCollector($nextJobId);
@@ -106,7 +106,7 @@ class ExecuteJobHelper
      *
      * @return exception or null if succeeded
      */
-    private static function callFailedJobListenerWithRetries(CommandExecutorInterface $commandExecutor, FailedJobListener $failedJobListener): OptimisticLockingException
+    private static function callFailedJobListenerWithRetries(CommandExecutorInterface $commandExecutor, FailedJobListener $failedJobListener): ?\Exception
     {
         try {
             $commandExecutor->execute($failedJobListener);

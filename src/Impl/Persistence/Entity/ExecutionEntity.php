@@ -451,7 +451,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         parent::start($variables, $formProperties);
     }
 
-    public function startWithoutExecuting(array $variables): void
+    public function startWithoutExecuting(?VariableMapInterface $variables = null): void
     {
         $this->setRootProcessInstanceId($this->getProcessInstanceId());
         $this->provideTenantId($variables, null);
@@ -673,11 +673,6 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         } else {
             //throw LOG.requiredAsyncContinuationException($this->getActivity()->getId());
         }
-    }
-
-    public function isActive(?string $activityId = null): bool
-    {
-        return $this->findExecution($activityId) !== null;
     }
 
     public function inactivate(): void
@@ -1620,9 +1615,11 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
 
     public function removeJob(JobEntity $job): void
     {
-        foreach ($this->jobs as $key => $value) {
-            if ($value == $job) {
-                unset($this->jobs[$key]);
+        if (!empty($this->jobs)) {
+            foreach ($this->jobs as $key => $value) {
+                if ($value == $job) {
+                    unset($this->jobs[$key]);
+                }
             }
         }
     }
@@ -1828,7 +1825,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         }
     }
 
-    public function handleConditionalEventOnVariableChange(VariableEvent $variableEvent): void
+    public function handleConditionalEventOnVariableChange(?VariableEvent $variableEvent): void
     {
         $subScriptions = $this->getEventSubscriptions();
         foreach ($subScriptions as $subscription) {

@@ -67,7 +67,7 @@ class DeleteProcessInstanceBatchCmd implements CommandInterface
         $scope = $this;
         return (new BatchBuilder($commandContext))
             ->type(BatchInterface::TYPE_PROCESS_INSTANCE_DELETION)
-            ->config(getConfiguration($elementConfiguration))
+            ->config($this->getConfiguration($elementConfiguration))
             ->permission(BatchPermissions::createBatchDeleteRunningProcessInstances())
             ->operationLogHandler(new class ($scope) implements OperationLogInstanceCountHandlerInterface {
                 private $scope;

@@ -46,12 +46,12 @@ class ErrorDeclarationForProcessInstanceFinder implements TreeVisitorInterface
         return $activityHandler->isAncestorFlowScopeOf($this->currentActivity);
     }
 
-    public function getErrorHandlerActivity(): PvmActivityInterface
+    public function getErrorHandlerActivity(): ?PvmActivityInterface
     {
         return $this->errorHandlerActivity;
     }
 
-    public function getErrorEventDefinition(): ErrorEventDefinition
+    public function getErrorEventDefinition(): ?ErrorEventDefinition
     {
         return $this->errorEventDefinition;
     }

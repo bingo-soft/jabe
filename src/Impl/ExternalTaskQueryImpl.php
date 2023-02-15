@@ -37,7 +37,7 @@ class ExternalTaskQueryImpl extends AbstractQuery implements ExternalTaskQueryIn
     protected $retriesLeft;
     protected $tenantIds = [];
 
-    public function __construct(CommandExecutorInterface $commandExecutor)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
     }
@@ -309,7 +309,7 @@ class ExternalTaskQueryImpl extends AbstractQuery implements ExternalTaskQueryIn
         return $this->activityId;
     }
 
-    public function getSuspensionState(): SuspensionState
+    public function getSuspensionState(): ?SuspensionState
     {
         return $this->suspensionState;
     }

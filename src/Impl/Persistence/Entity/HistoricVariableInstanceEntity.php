@@ -63,11 +63,13 @@ class HistoricVariableInstanceEntity implements ValueFieldsInterface, HistoricVa
 
     protected $typedValueField;
 
-    public function __construct(HistoricVariableUpdateEventEntity $historyEvent)
+    public function __construct(?HistoricVariableUpdateEventEntity $historyEvent = null)
     {
         $this->byteArrayField = new ByteArrayField($this, ResourceTypes::history());
         $this->typedValueField = new TypedValueField($this, false);
-        $this->updateFromEvent($historyEvent);
+        if ($historyEvent !== null) {
+            $this->updateFromEvent($historyEvent);
+        }
     }
 
     public function updateFromEvent(HistoricVariableUpdateEventEntity $historyEvent): void

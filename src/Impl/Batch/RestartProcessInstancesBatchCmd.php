@@ -54,7 +54,7 @@ class RestartProcessInstancesBatchCmd extends AbstractRestartProcessInstanceCmd
         $scope = $this;
         return (new BatchBuilder($commandContext))
             ->type(BatchInterface::TYPE_PROCESS_INSTANCE_RESTART)
-            ->config(getConfiguration($collectedInstanceIds, $processDefinition->getDeploymentId()))
+            ->config($this->getConfiguration($collectedInstanceIds, $processDefinition->getDeploymentId()))
             ->permission(BatchPermissions::createBatchRestartProcessInstances())
             ->tenantId($tenantId)
             ->operationLogHandler(new class ($scope, $processDefinition) implements OperationLogInstanceCountHandlerInterface {

@@ -18,7 +18,7 @@ class PvmAtomicOperationTransitionNotifyListenerEnd extends PvmAtomicOperationAc
         return $execution->getActivity();
     }
 
-    protected function getEventName(): ?string
+    public function getEventName(): ?string
     {
         return ExecutionListenerInterface::EVENTNAME_END;
     }

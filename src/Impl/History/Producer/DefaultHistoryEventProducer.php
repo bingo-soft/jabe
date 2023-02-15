@@ -43,6 +43,7 @@ use Jabe\Impl\History\Event\{
     HistoryEventTypes,
     UserOperationLogEntryEventEntity
 };
+//@TODO
 use Jabe\Impl\JobExecutor\HistoryCleanup\HistoryCleanupJobHandler;
 use Jabe\Impl\Migration\Instance\MigratingActivityInstance;
 use Jabe\Impl\OpLog\{
@@ -804,7 +805,6 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
 
     public function createTaskInstanceCreateEvt(DelegateTaskInterface $task): HistoryEvent
     {
-
         // create event instance
         $evt = $this->newTaskInstanceEventEntity($task);
 
@@ -1172,16 +1172,16 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         $currentTime = ClockUtil::getCurrentTime()->format('c');
         $evt->setTimestamp($currentTime);
 
-        $jobEntity = $job;
-        $evt->setJobId($jobEntity->getId());
-        $evt->setJobDueDate($jobEntity->getDuedate());
-        $evt->setJobRetries($jobEntity->getRetries());
-        $evt->setJobPriority($jobEntity->getPriority());
+        $evt->setJobId($job->getId());
+        $evt->setJobDueDate($job->getDuedate());
+        $evt->setJobRetries($job->getRetries());
+        $evt->setJobPriority($job->getPriority());
 
         $hostName = Context::getCommandContext()->getProcessEngineConfiguration()->getHostname();
         $evt->setHostname($hostName);
 
-        if (HistoryCleanupJobHandler::TYPE == $jobEntity->getJobHandlerType()) {
+        //@TODO
+        /*if (HistoryCleanupJobHandler::TYPE == $jobEntity->getJobHandlerType()) {
             $timeToLive = Context::getProcessEngineConfiguration()->getHistoryCleanupJobLogTimeToLive();
             if ($timeToLive !== null) {
                 try {
@@ -1194,9 +1194,8 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
                     throw $e;
                 }
             }
-        }
-
-        $jobDefinition = $jobEntity->getJobDefinition();
+        }*/
+        $jobDefinition = $job->getJobDefinition();
         if ($jobDefinition !== null) {
             $evt->setJobDefinitionId($jobDefinition->getId());
             $evt->setJobDefinitionType($jobDefinition->getJobType());
@@ -1212,19 +1211,19 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         } else {
             // in case of async signal there does not exist a job definition
             // but we use the jobHandlerType as jobDefinitionType
-            $evt->setJobDefinitionType($jobEntity->getJobHandlerType());
+            $evt->setJobDefinitionType($job->getJobHandlerType());
         }
 
-        $evt->setActivityId($jobEntity->getActivityId());
-        $evt->setFailedActivityId($jobEntity->getFailedActivityId());
-        $evt->setExecutionId($jobEntity->getExecutionId());
-        $evt->setProcessInstanceId($jobEntity->getProcessInstanceId());
-        $evt->setProcessDefinitionId($jobEntity->getProcessDefinitionId());
-        $evt->setProcessDefinitionKey($jobEntity->getProcessDefinitionKey());
-        $evt->setDeploymentId($jobEntity->getDeploymentId());
-        $evt->setTenantId($jobEntity->getTenantId());
+        $evt->setActivityId($job->getActivityId());
+        $evt->setFailedActivityId($job->getFailedActivityId());
+        $evt->setExecutionId($job->getExecutionId());
+        $evt->setProcessInstanceId($job->getProcessInstanceId());
+        $evt->setProcessDefinitionId($job->getProcessDefinitionId());
+        $evt->setProcessDefinitionKey($job->getProcessDefinitionKey());
+        $evt->setDeploymentId($job->getDeploymentId());
+        $evt->setTenantId($job->getTenantId());
 
-        $execution = $jobEntity->getExecution();
+        $execution = $job->getExecution();
         if ($execution !== null) {
             $evt->setRootProcessInstanceId($execution->getRootProcessInstanceId());
 
@@ -1234,7 +1233,7 @@ class DefaultHistoryEventProducer implements HistoryEventProducerInterface
         }
 
         // initialize sequence counter
-        $this->initSequenceCounter($jobEntity, $evt);
+        $this->initSequenceCounter($job, $evt);
 
         $state = null;
         if (HistoryEventTypes::jobCreate()->equals($eventType)) {

@@ -21,7 +21,7 @@ abstract class TimerEventJobHandler implements JobHandlerInterface
         }
 
         $configuration = new TimerJobConfiguration();
-        $configuration->timerElementKey = $configParts[0];
+        $configuration->setTimerElementKey($configParts[0]);
 
         // depending on the job configuration, the next parts can be a task listener id and/or the follow-up-job flag
         for ($i = 1; $i < count($configParts); $i += 1) {

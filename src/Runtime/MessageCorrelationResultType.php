@@ -2,7 +2,7 @@
 
 namespace Jabe\Runtime;
 
-class MessageCorrelationResultInterface
+class MessageCorrelationResultType
 {
     public const EXECUTION = 'Execution';
     public const PROCESS_DEFINITION = 'ProcessDefinition';

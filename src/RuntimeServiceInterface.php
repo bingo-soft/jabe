@@ -83,7 +83,7 @@ interface RuntimeServiceInterface
      *          if the user has no Permissions#CREATE permission on Resources#PROCESS_INSTANCE
      *          and no Permissions#CREATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
-    public function startProcessInstanceByKey(?string $processDefinitionKey, ?string $businessKey = null, array $variables = []): ProcessInstanceInterface;
+    public function startProcessInstanceByKey(?string $processDefinitionKey, /*?string|array*/...$args): ProcessInstanceInterface;
 
     /**
      * Starts a new process instance in the exactly specified version of the process definition with the given id.
@@ -391,7 +391,7 @@ interface RuntimeServiceInterface
      *          if the user has no Permissions#UPDATE permission on Resources#PROCESS_INSTANCE
      *          or no Permissions#UPDATE_INSTANCE permission on Resources#PROCESS_DEFINITION.
      */
-    public function signal(?string $executionId, ?string $signalName = null, $signalData = null, array $processVariables = []): void;
+    public function signal(/*?string*/$executionId, ?string $signalName = null, $signalData = null, array $processVariables = []): void;
 
     /**
      * The variable values for all given variableNames, takes all variables into account which are visible from the given execution scope (including parent scopes).

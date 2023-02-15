@@ -32,7 +32,7 @@ class VariableInstanceManager extends AbstractManager
         return $this->findVariableInstancesByExecutionIdAndVariableNames($executionId, null);
     }
 
-    public function findVariableInstancesByExecutionIdAndVariableNames(?string $executionId, array $variableNames): array
+    public function findVariableInstancesByExecutionIdAndVariableNames(?string $executionId, ?array $variableNames = []): array
     {
         $parameter = [];
         $parameter["executionId"] = $executionId;

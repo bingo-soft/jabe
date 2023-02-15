@@ -16,7 +16,7 @@ interface ConditionInterface
      * @param execution the execution which is used to evaluate the condition
      * @return bool the result
      */
-    public function evaluate(?VariableScopeInterface $scope, DelegateExecutionInterface $execution): bool;
+    public function evaluate(?VariableScopeInterface $scope, ?DelegateExecutionInterface $execution = null): bool;
 
     /**
      * Tries to evaluate the condition. If the property which is used in the condition does not exist
@@ -26,5 +26,5 @@ interface ConditionInterface
      * @param execution the execution which is used to evaluate the condition
      * @return bool the result
      */
-    public function tryEvaluate(?VariableScopeInterface $scope, DelegateExecutionInterface $execution): bool;
+    public function tryEvaluate(?VariableScopeInterface $scope, ?DelegateExecutionInterface $execution = null): bool;
 }

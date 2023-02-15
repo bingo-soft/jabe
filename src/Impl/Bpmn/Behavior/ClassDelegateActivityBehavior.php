@@ -17,6 +17,7 @@ use Jabe\Impl\Pvm\Delegate\{
     ActivityExecutionInterface,
     SignallableActivityBehaviorInterface
 };
+use Jabe\Impl\Util\ClassDelegateUtil;
 
 class ClassDelegateActivityBehavior extends AbstractBpmnActivityBehavior
 {
@@ -32,7 +33,7 @@ class ClassDelegateActivityBehavior extends AbstractBpmnActivityBehavior
         $this->fieldDeclarations = $fieldDeclarations;
     }
 
-    public function execute(ActivityExecutionInterface $execution): void
+    public function execute(/*ActivityExecutionInterface*/$execution): void
     {
         $scope = $this;
         $this->executeWithErrorPropagation($execution, function () use ($scope, $execution) {
@@ -42,7 +43,7 @@ class ClassDelegateActivityBehavior extends AbstractBpmnActivityBehavior
     }
 
     // Signallable activity behavior
-    public function signal(ActivityExecutionInterface $execution, ?string $signalName, $signalData): void
+    public function signal(/*ActivityExecutionInterface*/$execution, ?string $signalName = null, $signalData = null, array $processVariables = []): void
     {
         $targetProcessApplication = ProcessApplicationContextUtil::getTargetProcessApplication($execution);
         $scope = $this;
@@ -76,12 +77,12 @@ class ClassDelegateActivityBehavior extends AbstractBpmnActivityBehavior
 
     protected function getActivityBehaviorInstance(ActivityExecutionInterface $execution): ActivityBehaviorInterface
     {
-        $delegateInstance = $this->instantiateDelegate($className, $this->fieldDeclarations);
+        $delegateInstance = ClassDelegateUtil::instantiateDelegate($this->className, $this->fieldDeclarations);
 
         if ($delegateInstance instanceof ActivityBehaviorInterface) {
             return new CustomActivityBehavior($delegateInstance);
         } elseif ($delegateInstance instanceof PhpDelegateInterface) {
-            return new ServiceTaskJavaDelegateActivityBehavior($delegateInstance);
+            return new ServiceTaskPhpDelegateActivityBehavior($delegateInstance);
         } else {
             /*throw LOG.missingDelegateParentClassException(
                 delegateInstance.getClass().getName(),

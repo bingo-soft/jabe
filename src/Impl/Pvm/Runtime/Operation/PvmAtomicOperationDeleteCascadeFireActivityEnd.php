@@ -40,7 +40,7 @@ class PvmAtomicOperationDeleteCascadeFireActivityEnd extends PvmAtomicOperationA
         }
     }
 
-    protected function getEventName(): ?string
+    public function getEventName(): ?string
     {
         return ExecutionListenerInterface::EVENTNAME_END;
     }
@@ -57,7 +57,7 @@ class PvmAtomicOperationDeleteCascadeFireActivityEnd extends PvmAtomicOperationA
             $execution->removeAllTasks();
             // case this is a scope execution and the activity is not a scope
             $execution->leaveActivityInstance();
-            $execution->setActivity(getFlowScopeActivity($activity));
+            $execution->setActivity($this->getFlowScopeActivity($activity));
             $execution->performOperation(self::deleteCascadeFireActivityEnd());
         } else {
             if ($execution->isScope()) {
@@ -105,7 +105,7 @@ class PvmAtomicOperationDeleteCascadeFireActivityEnd extends PvmAtomicOperationA
         return !empty($execution->getActivityId()) && empty($execution->getActivityInstanceId());
     }
 
-    protected function getFlowScopeActivity(PvmActivityInterface $activity): ActivityImpl
+    protected function getFlowScopeActivity(PvmActivityInterface $activity): ?ActivityImpl
     {
         $flowScope = $activity->getFlowScope();
         $flowScopeActivity = null;

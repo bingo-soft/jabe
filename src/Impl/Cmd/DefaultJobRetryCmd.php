@@ -137,8 +137,8 @@ class DefaultJobRetryCmd extends JobRetryCmd
         $properties = $activity->getProperties();
         $key = strval(DefaultFailedJobParseListener::$FAILED_JOB_CONFIGURATION);
         $retryConfiguration = null;
-        if (array_key_exists($key, $properties)) {
-            $retryConfiguration = $properties[$key];
+        if ($properties->contains($key)) {
+            $retryConfiguration = $properties->get($key);
         }
 
         while ($retryConfiguration !== null && $retryConfiguration->getExpression() !== null) {

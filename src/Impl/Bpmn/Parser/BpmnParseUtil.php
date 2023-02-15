@@ -20,7 +20,7 @@ use Jabe\Impl\Core\Variable\Mapping\Value\{
 };
 use Jabe\Impl\El\{
     ElValueProvider,
-    ExpressionManager
+    ExpressionManagerInterface
 };
 use Jabe\Impl\Scripting\{
     ExecutableScript,
@@ -53,7 +53,7 @@ class BpmnParseUtil
      */
     public static function parseInputOutput(Element $element): ?IoMapping
     {
-        $inputOutputElement = $element->element(BpmnParse::BPMN_EXTENSIONS_NS_PREFIX . ":inputOutput");
+        $inputOutputElement = $element->elementNS(BpmnParser::BPMN_EXTENSIONS_NS, "inputOutput");
         if ($inputOutputElement !== null) {
             $ioMapping = new IoMapping();
             self::parseInputParameters($inputOutputElement, $ioMapping);
@@ -89,7 +89,7 @@ class BpmnParseUtil
      */
     public static function parseOutputParameters(Element $inputOutputElement, IoMapping $ioMapping): void
     {
-        $outputParameters = $inputOutputElement->elementsNS(BpmnParse::BPMN_EXTENSIONS_NS_PREFIX, ":outputParameter");
+        $outputParameters = $inputOutputElement->elementsNS(BpmnParser::BPMN_EXTENSIONS_NS, "outputParameter");
         foreach ($outputParameters as $outputParameterElement) {
             self::parseOutputParameterElement($outputParameterElement, $ioMapping);
         }
@@ -110,7 +110,6 @@ class BpmnParseUtil
         }
 
         $valueProvider = self::parseNestedParamValueProvider($inputParameterElement);
-
         // add parameter
         $ioMapping->addInputParameter(new InputParameter($nameAttribute, $valueProvider));
     }
@@ -240,7 +239,7 @@ class BpmnParseUtil
         return $propertiesMap;
     }
 
-    protected static function getExpressionManager(): ExpressionManager
+    protected static function getExpressionManager(): ExpressionManagerInterface
     {
         return Context::getProcessEngineConfiguration()->getExpressionManager();
     }

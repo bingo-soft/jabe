@@ -23,6 +23,6 @@ class ActivityBehaviorInvocation extends DelegateInvocation
 
     protected function invoke(): void
     {
-        $this->behaviorInstance->execute($execution);
+        $this->behaviorInstance->execute($this->execution);
     }
 }

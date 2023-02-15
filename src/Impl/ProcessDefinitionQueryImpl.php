@@ -74,7 +74,7 @@ class ProcessDefinitionQueryImpl extends AbstractQuery implements ProcessDefinit
     protected $processDefinitionCreatePermissionChecks = [];
     private bool $shouldJoinDeploymentTable = false;
 
-    public function __construct(CommandExecutorInterface $commandExecutor = null)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
     }

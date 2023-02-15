@@ -355,7 +355,7 @@ use Jabe\Task\TaskQueryInterface;
 use Jabe\Test\Mock\MocksResolverFactory;
 use Jabe\Variable\Variables;
 use Jabe\Variable\Type\ValueTypeInterface;
-use MyBatis\Builder\Xml\XMLConfigBuilder;
+use MyBatis\Builder\Xml\XMLConfigBuilder as MyBatisXMLConfigBuilder;
 use MyBatis\DataSource\DataSourceInterface;
 use MyBatis\DataSource\Unpooled\UnpooledDataSource;
 use MyBatis\Mapping\Environment;
@@ -798,7 +798,8 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
 
     protected $metricsReporterIdProvider;
 
-    protected bool $isTaskMetricsEnabled = true;
+    //disable telemetry
+    protected bool $isTaskMetricsEnabled = false;
 
     /**
      * the historic job log host name
@@ -1028,7 +1029,6 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
         $this->externalTaskService = new ExternalTaskServiceImpl();
         //protected DecisionService decisionService = new DecisionServiceImpl();
         $this->optimizeService = new OptimizeService();
-
         $this->dbEntityCacheKeyMapping = DbEntityCacheKeyMapping::defaultEntityCacheKeyMapping();
     }
 
@@ -1126,7 +1126,6 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
 
         // Database type needs to be detected before CommandExecutors are initialized
         $this->initDataSource();
-
         $this->initExceptionCodeProvider();
         $this->initCommandExecutors();
         $this->initServices();
@@ -1773,7 +1772,6 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
             $inputStream = null;
             //try {
                 $inputStream = $this->getMyBatisXmlConfigurationStream();
-
                 // update the dbal parameters to the configured ones...
                 $environment = new Environment("default", $this->transactionFactory, $this->dataSource);
 
@@ -1787,7 +1785,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
 
                 self::initSqlSessionFactoryProperties($properties, $this->databaseTablePrefix, $this->databaseType);
 
-                $parser = new XMLConfigBuilder($inputStream, "", $properties);
+                $parser = new MyBatisXMLConfigBuilder($inputStream, "", $properties);
                 $configuration = $parser->getConfiguration();
                 $configuration->setEnvironment($environment);
                 $configuration = $parser->parse();
@@ -2677,7 +2675,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
             $mapBusinessCalendarManager->addBusinessCalendar(DurationBusinessCalendar::NAME, new DurationBusinessCalendar());
             $mapBusinessCalendarManager->addBusinessCalendar(DueDateBusinessCalendar::NAME, new DueDateBusinessCalendar());
             $mapBusinessCalendarManager->addBusinessCalendar(CycleBusinessCalendar::NAME, new CycleBusinessCalendar());
-            $businessCalendarManager = $mapBusinessCalendarManager;
+            $this->businessCalendarManager = $mapBusinessCalendarManager;
         }
     }
 
@@ -4866,7 +4864,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
         return $this;
     }
 
-    public function setTenantIdProvider(TenantIdProvider $tenantIdProvider): ProcessEngineConfigurationImpl
+    public function setTenantIdProvider(?TenantIdProvider $tenantIdProvider): ProcessEngineConfigurationImpl
     {
         $this->tenantIdProvider = $tenantIdProvider;
         return $this;

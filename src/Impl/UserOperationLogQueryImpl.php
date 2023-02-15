@@ -42,7 +42,7 @@ class UserOperationLogQueryImpl extends AbstractQuery implements UserOperationLo
     protected $entityTypes = [];
     protected $categories = [];
 
-    public function __construct(CommandExecutorInterface $commandExecutor = null)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
     }

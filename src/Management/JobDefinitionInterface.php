@@ -58,7 +58,7 @@ interface JobDefinitionInterface
      * @return int the priority that overrides the default/BPMN XML priority or <code>null</code> if
      *   no overriding priority is set
      */
-    public function getOverridingJobPriority(): int;
+    public function getOverridingJobPriority(): ?int;
 
     /**
      * The id of the tenant this job definition belongs to. Can be <code>null</code>

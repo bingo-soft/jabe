@@ -11,6 +11,10 @@ use Jabe\Impl\Metrics\{
 };
 use Jabe\Impl\Persistence\Entity\MeterLogEntity;
 use Jabe\Impl\Util\ClockUtil;
+use Concurrent\{
+    ExecutorServiceInterface,
+    ThreadInterface
+};
 use Concurrent\Task\TimerTask;
 
 class MetricsCollectionTask extends TimerTask
@@ -26,7 +30,7 @@ class MetricsCollectionTask extends TimerTask
         $this->commandExecutor = $commandExecutor;
     }
 
-    public function run(): void
+    public function run(ThreadInterface $process, ...$args): void
     {
         try {
             $this->collectMetrics();

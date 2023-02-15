@@ -15,6 +15,7 @@ use Jabe\Impl\Pvm\Process\{
     ActivityImpl,
     ProcessDefinitionImpl
 };
+use Jabe\Impl\Util\CallableElementUtil;
 use Jabe\Variable\VariableMapInterface;
 
 class CallActivityBehavior extends CallableElementActivityBehavior implements MigrationObserverBehaviorInterface
@@ -28,7 +29,7 @@ class CallActivityBehavior extends CallableElementActivityBehavior implements Mi
     {
         $executionEntity = $execution;
 
-        $definition = $this->getProcessDefinitionToCall(
+        $definition = CallableElementUtil::getProcessDefinitionToCall(
             $executionEntity,
             $executionEntity->getProcessDefinitionTenantId(),
             $this->getCallableElement()

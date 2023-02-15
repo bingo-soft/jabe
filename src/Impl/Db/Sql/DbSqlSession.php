@@ -75,9 +75,10 @@ abstract class DbSqlSession extends AbstractPersistenceSession
     public function executeSelectList(?string $statement, $params = null): array
     {
         $scope = $this;
-        return ExceptionUtil::doWithExceptionWrapper(function () use ($scope, $statement, $params) {
+        $ret = ExceptionUtil::doWithExceptionWrapper(function () use ($scope, $statement, $params) {
             return $scope->sqlSession->selectList($statement, $params);
         });
+        return $ret;
     }
 
     public function selectById(?string $type, ?string $id)

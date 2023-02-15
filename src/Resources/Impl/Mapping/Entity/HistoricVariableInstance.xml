@@ -86,8 +86,8 @@
       LONG_ = #{longValue},
       TEXT_ = #{textValue:VARCHAR},
       TEXT2_ = #{textValue2:VARCHAR},
-      STATE_ = #{state:VARCHAR},
-      CASE_DEF_ID_ = #{caseDefinitionId:VARCHAR}
+      STATE_ = #{state:VARCHAR}
+      <!--CASE_DEF_ID_ = #{caseDefinitionId:VARCHAR}-->
     where ID_ = #{id:VARCHAR}
       and REV_ = #{revision}
   </update>

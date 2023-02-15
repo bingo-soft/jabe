@@ -25,12 +25,12 @@ class JobExecutorContext
         return $this->currentJob === null ? false : $this->currentJob->isExclusive();
     }
 
-    public function setCurrentJob(JobEntity $currentJob): void
+    public function setCurrentJob(?JobEntity $currentJob): void
     {
         $this->currentJob = $currentJob;
     }
 
-    public function getCurrentJob(): JobEntity
+    public function getCurrentJob(): ?JobEntity
     {
         return $this->currentJob;
     }

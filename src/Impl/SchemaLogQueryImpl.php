@@ -18,7 +18,7 @@ class SchemaLogQueryImpl extends AbstractQuery implements SchemaLogQueryInterfac
 
     protected $version;
 
-    public function __construct(CommandExecutorInterface $commandExecutor)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
     }

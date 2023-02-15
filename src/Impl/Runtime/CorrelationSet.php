@@ -19,8 +19,8 @@ class CorrelationSet
     {
         $this->businessKey = $builder->getBusinessKey();
         $this->processInstanceId = $builder->getProcessInstanceId();
-        $this->correlationKeys = $builder->getCorrelationProcessInstanceVariables();
-        $this->localCorrelationKeys = $builder->getCorrelationLocalVariables();
+        $this->correlationKeys = $builder->getCorrelationProcessInstanceVariables() ?? [];
+        $this->localCorrelationKeys = $builder->getCorrelationLocalVariables() ?? [];
         $this->processDefinitionId = $builder->getProcessDefinitionId();
         $this->tenantId = $builder->getTenantId();
         $this->isTenantIdSet = $builder->isTenantIdSet();

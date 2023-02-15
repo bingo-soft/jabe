@@ -37,7 +37,7 @@ abstract class AbstractObjectValueSerializer extends AbstractSerializableValueSe
         $valueFields->setTextValue2($objectTypeName);
     }
 
-    protected function getObjectTypeName(ObjectValueInterface $value, ValueFieldsInterface $valueFields): ?string
+    protected function getObjectTypeName(ObjectValueInterface $value, ?ValueFieldsInterface $valueFields): ?string
     {
         $objectTypeName = $value->getObjectTypeName();
 

@@ -32,6 +32,7 @@ class MetricsQueryImpl extends ListQueryParameterObject implements \Serializable
 
     public function __construct(CommandExecutorInterface $commandExecutor)
     {
+        parent::__construct();
         $this->commandExecutor = $commandExecutor;
         $this->maxResults = self::DEFAULT_LIMIT_SELECT_INTERVAL;
         $this->interval = self::DEFAULT_SELECT_INTERVAL;

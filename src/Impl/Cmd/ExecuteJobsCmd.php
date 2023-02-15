@@ -58,7 +58,6 @@ class ExecuteJobsCmd implements CommandInterface, \Serializable
         $identityService = $processEngineConfiguration->getIdentityService();
 
         $jobExecutorContext = Context::getJobExecutorContext();
-
         if ($job === null) {
             if ($jobExecutorContext !== null) {
                 // CAM-1842

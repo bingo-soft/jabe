@@ -52,10 +52,12 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
         $this->created = ClockUtil::getCurrentTime()->format('c');
         $this->eventType = $eventType !== null ? $eventType->name() : null;
 
-        $this->setExecution($executionEntity);
-        $this->setActivity($executionEntity->getActivity());
-        $this->processInstanceId = $executionEntity->getProcessInstanceId();
-        $this->tenantId = $executionEntity->getTenantId();
+        if ($executionEntity !== null) {
+            $this->setExecution($executionEntity);
+            $this->setActivity($executionEntity->getActivity());
+            $this->processInstanceId = $executionEntity->getProcessInstanceId();
+            $this->tenantId = $executionEntity->getTenantId();
+        }
     }
 
     // processing /////////////////////////////

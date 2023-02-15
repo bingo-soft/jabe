@@ -169,10 +169,10 @@ abstract class JobDeclaration implements \Serializable
     {
         $jobHandlers = Context::getProcessEngineConfiguration()->getJobHandlers();
         $jobHandler = null;
-        if (array_keys_exists($this->jobHandlerType, $jobHandlers)) {
+        if (array_key_exists($this->jobHandlerType, $jobHandlers)) {
             $jobHandler = $jobHandlers[$this->jobHandlerType];
         }
-        EnsureUtil::ensureNotNull("Cannot find job handler '" . $this->jobHandlerType . "' from job '" . $this . "'", "jobHandler", $jobHandler);
+        EnsureUtil::ensureNotNull("Cannot find job handler '" . $this->jobHandlerType . "'", "jobHandler", $jobHandler);
 
         return $jobHandler;
     }
@@ -252,12 +252,12 @@ abstract class JobDeclaration implements \Serializable
         $this->jobConfiguration = $jobConfiguration;
     }
 
-    public function getJobPriorityProvider(): ParameterValueProviderInterface
+    public function getJobPriorityProvider(): ?ParameterValueProviderInterface
     {
         return $this->jobPriorityProvider;
     }
 
-    public function setJobPriorityProvider(ParameterValueProviderInterface $jobPriorityProvider): void
+    public function setJobPriorityProvider(?ParameterValueProviderInterface $jobPriorityProvider): void
     {
         $this->jobPriorityProvider = $jobPriorityProvider;
     }

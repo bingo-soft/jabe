@@ -102,7 +102,7 @@ abstract class ResourceDefinitionCache
                     ->getDeploymentManager()
                     ->findDeploymentById($deploymentId);
                 $deployment->setNew(false);
-                $this->cacheDeployer->deployOnlyGivenResourcesOfDeployment($deployment, $definition->getResourceName(), $definition->getDiagramResourceName());
+                $this->cacheDeployer->deployOnlyGivenResourcesOfDeployment($deployment, [ $definition->getResourceName() ], $definition->getDiagramResourceName());
                 $cachedDefinition = $this->cache->get($definitionId);
             }
             $this->checkInvalidDefinitionWasCached($deploymentId, $definitionId, $cachedDefinition);

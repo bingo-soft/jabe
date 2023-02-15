@@ -39,7 +39,7 @@ class VariableInstanceQueryImpl extends AbstractVariableQueryImpl implements Var
     protected bool $isByteArrayFetchingEnabled = true;
     protected bool $isCustomObjectDeserializationEnabled = true;
 
-    public function __construct(CommandExecutorInterface $commandExecutor = null)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
     }

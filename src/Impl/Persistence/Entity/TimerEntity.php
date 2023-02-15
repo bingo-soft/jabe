@@ -29,7 +29,7 @@ class TimerEntity extends JobEntity
 
     protected $repeat;
 
-    protected $repeatOffset;
+    protected $repeatOffset = 0;
 
     public function __construct($t = null)
     {

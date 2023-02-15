@@ -121,9 +121,9 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
     // cascade deletion ////////////////////////////////////////////////////////
 
-    protected $deleteRoot;
+    protected bool $deleteRoot = false;
     protected $deleteReason;
-    protected $externallyTerminated;
+    protected bool $externallyTerminated = false;
 
     //state/type of execution //////////////////////////////////////////////////
 
@@ -249,7 +249,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
      *
      * @param variables the variables which are used for the start
      */
-    public function startWithoutExecuting(array $variables): void
+    public function startWithoutExecuting(?VariableMapInterface $variables = null): void
     {
         $this->initialize();
 
@@ -345,7 +345,6 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         if ($this->hasReplacedParent()) {
             $this->getParent()->replacedBy = null;
         }
-
         $this->performOperation(AtomicOperation::activityNotifyListenerEnd());
     }
 
@@ -1113,7 +1112,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         if ($activityId !== null) {
             return $this->findExecution($activityId) !== null;
         }
-        $this->isActive;
+        return $this->isActive;
     }
 
     public function inactivate(): void
@@ -1422,7 +1421,12 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         $this->setParentExecution($parent);
 
         if ($currentParent !== null) {
-            $currentParent->removeExecution($this);
+            $executions = &$parent->getExecutions();
+            foreach ($executions as $key => $execution) {
+                if ($execution == $this) {
+                    unset($executions[$key]);
+                }
+            }
         }
 
         if ($parent !== null) {
@@ -1938,7 +1942,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
     public function setCanceled(bool $canceled): void
     {
-        if ($this->canceled) {
+        if ($canceled) {
             $this->activityInstanceState = ActivityInstanceState::canceled()->getStateCode();
         }
     }
@@ -2050,7 +2054,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         $this->getProcessInstance()->setStarting($starting);
     }
 
-    public function setNextActivity(PvmActivityInterface $nextActivity): void
+    public function setNextActivity(?PvmActivityInterface $nextActivity): void
     {
         $this->nextActivity = $nextActivity;
     }

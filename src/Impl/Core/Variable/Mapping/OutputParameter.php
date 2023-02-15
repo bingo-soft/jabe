@@ -14,7 +14,7 @@ class OutputParameter extends IoParameter
         parent::__construct($name, $valueProvider);
     }
 
-    protected function execute(AbstractVariableScope $innerScope, ?AbstractVariableScope $outerScope = null): void
+    public function execute(AbstractVariableScope $innerScope, ?AbstractVariableScope $outerScope = null): void
     {
         if ($outerScope === null) {
             $outerScope = $innerScope->getParentVariableScope();

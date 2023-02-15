@@ -26,7 +26,6 @@ abstract class AbstractEventAtomicOperation implements CoreAtomicOperationInterf
         if ($listenerIndex == 0) {
             $execution = $this->eventNotificationsStarted($execution);
         }
-
         if (!$this->isSkipNotifyListeners($execution)) {
             if (count($listeners) > $listenerIndex) {
                 $execution->setEventName($this->getEventName());
@@ -80,11 +79,12 @@ abstract class AbstractEventAtomicOperation implements CoreAtomicOperationInterf
     }
 
     abstract protected function getScope(CoreExecution $execution): CoreModelElement;
-    abstract protected function getEventName(): ?string;
+    abstract public function getEventName(): ?string;
     abstract protected function eventNotificationsCompleted(CoreExecution $execution): void;
 
     protected function eventNotificationsFailed(CoreExecution $execution, \Exception $exception): void
     {
-        throw new PvmException("couldn't execute event listener : " . $exception->getMessage());
+        $t =  $exception->getTrace()[0];
+        throw new PvmException(sprintf("couldn't execute event listener: %s, %s.%s.%s", $exception->getMessage(), $t["file"], $t["function"], $t["line"]), $exception);
     }
 }

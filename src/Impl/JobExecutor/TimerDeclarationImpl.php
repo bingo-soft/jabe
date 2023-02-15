@@ -119,13 +119,13 @@ class TimerDeclarationImpl extends JobDeclaration
         if (is_string($dueDateValue)) {
             $dueDateString = $dueDateValue;
         } elseif ($dueDateValue instanceof \DateTime) {
-            $duedate = dueDateValue;
+            $duedate = $dueDateValue;
         } else {
             throw new ProcessEngineException("Timer '" . $context->getActivityId() . "' was not configured with a valid duration/time, either hand in a java.util.Date or a String in format 'yyyy-MM-dd'T'hh:mm:ss'");
         }
 
         if ($duedate === null) {
-            if ($this->creationDateBased) {
+            if ($creationDateBased) {
                 if ($job->getCreateTime() === null) {
                     throw new ProcessEngineException("Timer '" . $context->getActivityId() . "' has no creation time and cannot be recalculated based on creation date. Either recalculate on your own or trigger recalculation with creationDateBased set to false.");
                 }

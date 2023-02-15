@@ -14,7 +14,7 @@ class EventBasedGatewayActivityBehavior extends FlowNodeActivityBehavior
         parent::__construct();
     }
 
-    public function execute(ActivityExecutionInterface $execution): void
+    public function execute(/*ActivityExecutionInterface*/$execution): void
     {
         // If conditional events exist after the event based gateway they should be evaluated.
         // If a condition is satisfied the event based gateway should be left,

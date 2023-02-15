@@ -334,8 +334,8 @@ class DbEntityCache
     public function getCachedEntities(): array
     {
         $result = [];
-        foreach (array_values($this->cachedEntites) as $typeCache) {
-            $result = array_merge($result, array_values($typeCache));
+        foreach (array_values($this->cachedEntites) as $key => $typeCache) {
+            array_push($result, ...array_values($typeCache));
         }
         return $result;
     }

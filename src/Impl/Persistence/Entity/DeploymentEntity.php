@@ -15,7 +15,7 @@ class DeploymentEntity implements \Serializable, DeploymentWithDefinitionsInterf
     protected $id;
     protected $name;
     protected $resources = [];
-    protected $deploymentTime;
+    protected ?string $deploymentTime = null;
     protected bool $validatingSchema = true;
     protected bool $isNew = false;
     protected $source;
@@ -170,9 +170,9 @@ class DeploymentEntity implements \Serializable, DeploymentWithDefinitionsInterf
         $this->name = $name;
     }
 
-    public function setResources(array $resources): void
+    public function setResources(?array $resources): void
     {
-        $this->resources = $resources;
+        $this->resources = $resources ?? [];
     }
 
     public function getDeploymentTime(): ?string

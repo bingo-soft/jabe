@@ -48,29 +48,36 @@ class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategyInterface
     protected $executionSaturationWaitTime = self::DEFAULT_EXECUTION_SATURATION_WAIT_TIME;
 
     public function __construct(
-        int $baseIdleWaitTime,
-        float $idleIncreaseFactor,
-        int $maxIdleTime,
-        int $baseBackoffWaitTime,
-        float $backoffIncreaseFactor,
-        int $maxBackoffTime,
-        int $backoffDecreaseThreshold,
-        int $baseNumJobsToAcquire
+        int|JobExecutor $baseIdleWaitTimeOrJobExecutor,
+        ?float $idleIncreaseFactor = null,
+        ?int $maxIdleTime = null,
+        ?int $baseBackoffWaitTime = null,
+        ?float $backoffIncreaseFactor = null,
+        ?int $maxBackoffTime = null,
+        ?int $backoffDecreaseThreshold = null,
+        ?int $baseNumJobsToAcquire = null
     ) {
-
-        $this->baseIdleWaitTime = $baseIdleWaitTime;
-        $this->idleIncreaseFactor = $idleIncreaseFactor;
         $this->idleLevel = 0;
-        $this->maxIdleWaitTime = $maxIdleTime;
-
-        $this->baseBackoffWaitTime = $baseBackoffWaitTime;
-        $this->backoffIncreaseFactor = $backoffIncreaseFactor;
         $this->backoffLevel = 0;
-        $this->maxBackoffWaitTime = $maxBackoffTime;
-        $this->backoffDecreaseThreshold = $backoffDecreaseThreshold;
-
-        $this->baseNumJobsToAcquire = $baseNumJobsToAcquire;
-
+        if ($baseIdleWaitTimeOrJobExecutor instanceof JobExecutor) {
+            $this->baseIdleWaitTime = $baseIdleWaitTimeOrJobExecutor->getWaitTimeInMillis();
+            $this->idleIncreaseFactor = $baseIdleWaitTimeOrJobExecutor->getWaitIncreaseFactor();
+            $this->maxIdleWaitTime = $baseIdleWaitTimeOrJobExecutor->getMaxWait();
+            $this->baseBackoffWaitTime = $baseIdleWaitTimeOrJobExecutor->getBackoffTimeInMillis();
+            $this->backoffIncreaseFactor = $baseIdleWaitTimeOrJobExecutor->getWaitIncreaseFactor();
+            $this->maxBackoffWaitTime = $baseIdleWaitTimeOrJobExecutor->getMaxBackoff();
+            $this->backoffDecreaseThreshold = $baseIdleWaitTimeOrJobExecutor->getBackoffDecreaseThreshold();
+            $this->baseNumJobsToAcquire = $baseIdleWaitTimeOrJobExecutor->getMaxJobsPerAcquisition();
+        } else {
+            $this->baseIdleWaitTime = $baseIdleWaitTimeOrJobExecutor;
+            $this->idleIncreaseFactor = $idleIncreaseFactor;
+            $this->maxIdleWaitTime = $maxIdleTime;
+            $this->baseBackoffWaitTime = $baseBackoffWaitTime;
+            $this->backoffIncreaseFactor = $backoffIncreaseFactor;
+            $this->maxBackoffWaitTime = $maxBackoffTime;
+            $this->backoffDecreaseThreshold = $backoffDecreaseThreshold;
+            $this->baseNumJobsToAcquire = $baseNumJobsToAcquire;
+        }
         $this->initializeMaxLevels();
     }
 

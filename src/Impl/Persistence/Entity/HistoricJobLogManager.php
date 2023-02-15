@@ -266,7 +266,7 @@ class HistoricJobLogManager extends AbstractHistoricManager
 
     // helper /////////////////////////////////////////////////////////
 
-    protected function isHistoryEventProduced(HistoryEventType $eventType, JobInterface $job): bool
+    protected function isHistoryEventProduced(HistoryEventTypeInterface $eventType, JobInterface $job): bool
     {
         $configuration = Context::getProcessEngineConfiguration();
         $historyLevel = $configuration->getHistoryLevel();

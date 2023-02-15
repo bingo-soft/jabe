@@ -17,7 +17,7 @@ use Jabe\Impl\Persistence\Entity\{
     ProcessInstanceWithVariablesImpl,
     PropertyChange
 };
-use Jabe\Impl\Pvm\{
+use Jabe\Impl\Pvm\Process\{
     ActivityImpl,
     ProcessDefinitionImpl,
     TransitionImpl

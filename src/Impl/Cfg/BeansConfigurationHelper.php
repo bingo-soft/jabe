@@ -18,7 +18,8 @@ class BeansConfigurationHelper
         }
         return processEngineConfiguration;*/
         $builder = new XMLConfigBuilder($resource);
-        return $builder->build();
+        $processEngineConfiguration = $builder->build();
+        return $processEngineConfiguration;
     }
 
     public static function parseProcessEngineConfigurationFromInputStream($inputStream, ?string $beanName): ?ProcessEngineConfiguration

@@ -14,10 +14,11 @@ abstract class AbstractSetVariableCmd extends AbstractVariableCmd
     public function __construct(
         ?string $entityId,
         array $variables,
-        bool $isLocal,
+        ?bool $isLocal = false,
         ?bool $skipSerializationFormatCheck = null
     ) {
-        parent::__construct($entityId, $variables, $isLocal);
+        parent::__construct($entityId, $isLocal);
+        $this->variables = $variables;
         $this->skipSerializationFormatCheck = $skipSerializationFormatCheck;
     }
 

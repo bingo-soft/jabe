@@ -30,10 +30,10 @@ class JobQueryImpl extends AbstractQuery implements JobQueryInterface, \Serializ
     protected $executionId;
     protected $processDefinitionId;
     protected $processDefinitionKey;
-    protected $retriesLeft;
-    protected $executable;
-    protected $onlyTimers;
-    protected $onlyMessages;
+    protected bool $retriesLeft = false;
+    protected bool $executable = false;
+    protected bool $onlyTimers = false;
+    protected bool $onlyMessages = false;
     protected $duedateHigherThan;
     protected $duedateLowerThan;
     protected $duedateHigherThanOrEqual;
@@ -42,16 +42,16 @@ class JobQueryImpl extends AbstractQuery implements JobQueryInterface, \Serializ
     protected $createdAfter;
     protected $priorityHigherThanOrEqual;
     protected $priorityLowerThanOrEqual;
-    protected $withException;
+    protected bool $withException = false;
     protected $exceptionMessage;
     protected $failedActivityId;
-    protected $noRetriesLeft;
+    protected bool $noRetriesLeft = false;
     protected $suspensionState;
     protected bool $isTenantIdSet = false;
     protected $tenantIds = [];
     protected bool $includeJobsWithoutTenantId = false;
 
-    public function __construct(CommandExecutorInterface $commandExecutor)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
     }

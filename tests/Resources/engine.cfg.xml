@@ -17,7 +17,7 @@
     </property>
 
     <!-- job executor configurations -->
-    <property name="jobExecutorActivate" value="false" />
+    <property name="jobExecutorActivate" value="true" />
 
     <property name="bpmnStacktraceVerbose" value="false" />
 

@@ -6,6 +6,7 @@ use Jabe\Task\{
     TaskInterface,
     TaskQueryInterface
 };
+use Jabe\Query\QueryPropertyInterface;
 
 class QueryOrderingProperty implements \Serializable
 {
@@ -20,12 +21,12 @@ class QueryOrderingProperty implements \Serializable
     protected $direction;
     protected $relationConditions;
 
-    public function __construct($queryPropertyOrRelation = null, $directionOrProperty = null)
+    public function __construct($queryPropertyOrRelation, $directionOrProperty)
     {
-        if ($queryPropertyOrRelation !== null && $queryPropertyOrRelation instanceof QueryPropertyImpl) {
+        if ($queryPropertyOrRelation !== null && $queryPropertyOrRelation instanceof QueryPropertyInterface) {
             $this->queryProperty = $queryPropertyOrRelation;
             $this->direction = $directionOrProperty;
-        } elseif (is_string($queryPropertyOrRelation)) {
+        } elseif ($directionOrProperty instanceof QueryPropertyInterface) {
             $this->relation = $queryPropertyOrRelation;
             $this->queryProperty = $directionOrProperty;
         }
@@ -58,12 +59,12 @@ class QueryOrderingProperty implements \Serializable
         $this->relationConditions = $relationConditions;
     }
 
-    public function getQueryProperty(): QueryPropertyImpl
+    public function getQueryProperty(): ?QueryPropertyInterface
     {
         return $this->queryProperty;
     }
 
-    public function setQueryProperty(QueryPropertyImpl $queryProperty): void
+    public function setQueryProperty(QueryPropertyInterface $queryProperty): void
     {
         $this->queryProperty = $queryProperty;
     }
@@ -73,7 +74,7 @@ class QueryOrderingProperty implements \Serializable
         $this->direction = $direction;
     }
 
-    public function getDirection(): Direction
+    public function getDirection(): ?Direction
     {
         return $this->direction;
     }

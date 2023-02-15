@@ -7,6 +7,10 @@ use Jabe\Impl\{
     ProcessEngineImpl,
     ProcessEngineLogger
 };
+use Concurrent\{
+    ExecutorServiceInterface,
+    ThreadInterface
+};
 
 class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable
 {
@@ -20,14 +24,14 @@ class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable
         $this->acquisitionContext = $this->initializeAcquisitionContext();
     }
 
-    public function run(): void
+    public function run(ThreadInterface $process, ...$args): void
     {
         //LOG.startingToAcquireJobs(jobExecutor.getName());
         $acquisitionStrategy = $this->initializeAcquisitionStrategy();
 
         while (!$this->isInterrupted) {
             $this->acquisitionContext->reset();
-            $this->acquisitionContext->setAcquisitionTime(time());
+            $this->acquisitionContext->setAcquisitionTime(time() * 1000);
 
             $processEngines = $this->jobExecutor->engineIterator();
 
@@ -37,7 +41,6 @@ class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable
                         // if engine has been unregistered meanwhile
                         continue;
                     }
-
                     $acquiredJobs = $this->acquireJobs($this->acquisitionContext, $acquisitionStrategy, $currentProcessEngine);
                     $this->executeJobs($this->acquisitionContext, $currentProcessEngine, $acquiredJobs);
                 }
@@ -58,11 +61,9 @@ class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable
             $waitTime = $acquisitionStrategy->getWaitTime();
             // wait the requested wait time minus the time that acquisition itself took
             // this makes the intervals of job acquisition more constant and therefore predictable
-            $waitTime = max([0, ($this->acquisitionContext->getAcquisitionTime() + $waitTime) - time()]);
-
+            $waitTime = max([0, ($this->acquisitionContext->getAcquisitionTime() + $waitTime) - time() * 1000]);
             $this->suspendAcquisition($waitTime);
         }
-
         //LOG.stoppedJobAcquisition(jobExecutor.getName());
     }
 
@@ -135,7 +136,7 @@ class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable
 
         $context->submitAcquiredJobs($currentProcessEngine->getName(), $acquiredJobs);
 
-        $this->jobExecutor->logAcquiredJobs($currentProcessEngine, count($acquiredJobs));
+        $this->jobExecutor->logAcquiredJobs($currentProcessEngine, $acquiredJobs->size());
         $this->jobExecutor->logAcquisitionFailureJobs($currentProcessEngine, $acquiredJobs->getNumberOfJobsFailedToLock());
 
         //LOG.acquiredJobs(currentProcessEngine.getName(), acquiredJobs);

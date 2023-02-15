@@ -22,7 +22,7 @@ class EventSubscriptionQueryImpl extends AbstractQuery implements \Serializable,
     protected $tenantIds = [];
     protected bool $includeEventSubscriptionsWithoutTenantId = false;
 
-    public function __construct(CommandExecutorInterface $commandExecutor)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
     }

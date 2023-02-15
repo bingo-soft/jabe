@@ -2,6 +2,7 @@
 
 namespace Jabe\Impl\JobExecutor;
 
+use Jabe\ProcessEngineConfiguration;
 use Jabe\Impl\{
     ProcessEngineImpl,
     ProcessEngineLogger
@@ -15,15 +16,22 @@ use Jabe\Impl\Interceptor\{
     CommandExecutorInterface,
     ProcessDataContext
 };
-use Concurrent\RunnableInterface;
+use Concurrent\{
+    ExecutorServiceInterface,
+    RunnableInterface,
+    ThreadInterface
+};
 
-class ExecuteJobsRunnable implements RunnableInterface
+class ExecuteJobsRunnable implements \Serializable, RunnableInterface
 {
     //private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
     protected $jobIds;
     protected $jobExecutor;
     protected $processEngine;
+
+    protected static $loadedProcessEngineConfiguration;
+    protected static $loadedProcessEngine;
 
     public function __construct(array $jobIds, ProcessEngineImpl $processEngine)
     {
@@ -32,29 +40,44 @@ class ExecuteJobsRunnable implements RunnableInterface
         $this->jobExecutor = $processEngine->getProcessEngineConfiguration()->getJobExecutor();
     }
 
-    public function run(): void
+    public function serialize()
+    {
+        return json_encode([
+            'jobIds' => $this->jobIds,
+            'resource' => $this->processEngine->getProcessEngineConfiguration()->getResource()
+        ]);
+    }
+
+    public function unserialize($data)
+    {
+        $json = json_decode($data);
+        $this->jobIds = $json->jobIds;
+        if (self::$loadedProcessEngineConfiguration === null) {
+            self::$loadedProcessEngineConfiguration = ProcessEngineConfiguration::createProcessEngineConfigurationFromResource($json->resource);
+            self::$loadedProcessEngine = self::$loadedProcessEngineConfiguration->buildProcessEngine();
+            $this->processEngine = self::$loadedProcessEngine;
+            $this->jobExecutor = self::$loadedProcessEngineConfiguration->getJobExecutor();
+        }
+        $this->processEngine = self::$loadedProcessEngine;
+        $this->jobExecutor = self::$loadedProcessEngineConfiguration->getJobExecutor();
+    }
+
+    public function run(ThreadInterface $process, ...$args): void
     {
         $jobExecutorContext = new JobExecutorContext();
 
         $currentProcessorJobQueue = $jobExecutorContext->getCurrentProcessorJobQueue();
         $engineConfiguration = $this->processEngine->getProcessEngineConfiguration();
         $commandExecutor = $engineConfiguration->getCommandExecutorTxRequired();
-
-        $currentProcessorJobQueue = array_merge($currentProcessorJobQueue, $this->jobIds);
-
+        //$currentProcessorJobQueue = array_merge($currentProcessorJobQueue, $this->jobIds);
         Context::setJobExecutorContext($jobExecutorContext);
-
         try {
-            while (!empty($currentProcessorJobQueue)) {
-                $nextJobId = array_shift($currentProcessorJobQueue);
-                if ($this->jobExecutor->isActive()) {
+            while (!empty($this->jobIds)) {
+                $nextJobId = array_shift($this->jobIds);
+                if ($args[0]->get()) {
                     $jobFailureCollector = new JobFailureCollector($nextJobId);
                     try {
                         $this->executeJob($nextJobId, $commandExecutor, $jobFailureCollector);
-                    } catch (\Throwable $t) {
-                        if (ProcessEngineLogger::shouldLogJobException($engineConfiguration, $jobFailureCollector->getJob())) {
-                            ExecuteJobHelper::loggingHandler()->exceptionWhileExecutingJob($nextJobId, $t);
-                        }
                     } finally {
                         /*
                         * clear MDC of potential leftovers from command execution
@@ -75,7 +98,8 @@ class ExecuteJobsRunnable implements RunnableInterface
             // if there were only exclusive jobs then the job executor
             // does a backoff. In order to avoid too much waiting time
             // we need to tell him to check once more if there were any jobs added.
-            $this->jobExecutor->jobWasAdded();
+            //$jobExecutor->jobWasAdded();
+            $args[1]->set(1);
         } finally {
             Context::removeJobExecutorContext();
         }

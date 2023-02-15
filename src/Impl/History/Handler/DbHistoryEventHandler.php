@@ -2,6 +2,7 @@
 
 namespace Jabe\Impl\History\Handler;
 
+use Jabe\History\HistoricVariableInstanceInterface;
 use Jabe\Impl\Context\Context;
 use Jabe\Impl\Db\EntityManager\DbEntityManager;
 use Jabe\Impl\History\Event\{
@@ -96,7 +97,7 @@ class DbHistoryEventHandler implements HistoryEventHandlerInterface
             $historicVariableInstanceEntity = $dbEntityManager->selectById(HistoricVariableInstanceEntity::class, $historyEvent->getVariableInstanceId());
             if ($historicVariableInstanceEntity !== null) {
                 $historicVariableInstanceEntity->updateFromEvent($historyEvent);
-                $historicVariableInstanceEntity->setState(HistoricVariableInstance::stateCreated());
+                $historicVariableInstanceEntity->setState(HistoricVariableInstanceInterface::STATE_CREATED);
             } else {
                 // #CAM-1344 / #SUPPORT-688
                 // this is a FIX for process instances which were started in camunda fox 6.1 and migrated to Camunda Platform 7.0.
@@ -108,7 +109,7 @@ class DbHistoryEventHandler implements HistoryEventHandlerInterface
         } elseif ($historyEvent->isEventOfType(HistoryEventTypes::variableInstanceDelete())) {
             $historicVariableInstanceEntity = $dbEntityManager->selectById(HistoricVariableInstanceEntity::class, $historyEvent->getVariableInstanceId());
             if ($historicVariableInstanceEntity !== null) {
-                $historicVariableInstanceEntity->setState(HistoricVariableInstance::stateDeleted());
+                $historicVariableInstanceEntity->setState(HistoricVariableInstanceInterface::STATE_DELETED);
             }
         }
     }

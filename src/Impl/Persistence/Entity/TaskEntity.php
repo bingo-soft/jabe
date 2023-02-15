@@ -1099,7 +1099,6 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
     public function transitionTo(int $state): bool
     {
         $this->lifecycleState = $state;
-
         switch ($state) {
             case TaskState::STATE_CREATED:
                 $commandContext = Context::getCommandContext();

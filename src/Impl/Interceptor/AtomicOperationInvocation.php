@@ -18,7 +18,7 @@ class AtomicOperationInvocation
 
     public $execution;
 
-    protected $performAsync;
+    protected $performAsync = false;
 
     // for logging
     protected $applicationContextName = null;

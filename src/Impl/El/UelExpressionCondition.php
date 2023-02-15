@@ -18,14 +18,14 @@ class UelExpressionCondition implements ConditionInterface
         $this->expression = $expression;
     }
 
-    public function evaluate(?VariableScopeInterface $scope, DelegateExecutionInterface $execution): bool
+    public function evaluate(?VariableScopeInterface $scope, ?DelegateExecutionInterface $execution = null): bool
     {
         $scope = $scope ?? $execution;
         $result = $this->expression->getValue($scope, $execution);
         return $result;
     }
 
-    public function tryEvaluate(?VariableScopeInterface $scope, DelegateExecutionInterface $execution): bool
+    public function tryEvaluate(?VariableScopeInterface $scope, ?DelegateExecutionInterface $execution = null): bool
     {
         $result = $this->evaluate($scope, $execution);
         return $result;

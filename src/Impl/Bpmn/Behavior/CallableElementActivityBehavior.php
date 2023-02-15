@@ -25,7 +25,7 @@ use Jabe\Impl\Pvm\Delegate\{
 use Jabe\Impl\Util\ClassDelegateUtil;
 use Jabe\Variable\VariableMapInterface;
 
-abstract class CallableElementActivityBehavior extends AbstractBpmnActivityBehavior implements SubProcessActivityBehavior
+abstract class CallableElementActivityBehavior extends AbstractBpmnActivityBehavior implements SubProcessActivityBehaviorInterface
 {
     protected $variablesFilter = [
         MultiInstanceActivityBehavior::NUMBER_OF_INSTANCES,
@@ -96,7 +96,7 @@ abstract class CallableElementActivityBehavior extends AbstractBpmnActivityBehav
         return $delegate;
     }
 
-    public function execute(ActivityExecutionInterface $execution): void
+    public function execute(/*ActivityExecutionInterface*/$execution): void
     {
         $variables = $this->getInputVariables($execution);
 

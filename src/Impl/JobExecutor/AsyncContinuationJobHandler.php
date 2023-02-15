@@ -59,7 +59,7 @@ class AsyncContinuationJobHandler implements JobHandlerInterface
             ->performOperation($atomicOperation, $execution);
     }
 
-    public function findMatchingAtomicOperation(?string $operationName): ?AtomicOperation
+    public function findMatchingAtomicOperation(?string $operationName): ?AtomicOperationInterface
     {
         if ($operationName === null) {
             // default operation for backwards compatibility
@@ -83,10 +83,10 @@ class AsyncContinuationJobHandler implements JobHandlerInterface
 
         $configuration = new AsyncContinuationConfiguration();
 
-        if (count($configuration) > 0) {
+        if (count($configParts) > 0) {
             $configuration->setAtomicOperation($configParts[0]);
         }
-        if (count($configuration) > 1) {
+        if (count($configParts) > 1) {
             $configuration->setTransitionId($configParts[1]);
         }
 

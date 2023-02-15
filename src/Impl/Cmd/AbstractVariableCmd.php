@@ -20,7 +20,7 @@ abstract class AbstractVariableCmd implements CommandInterface, \Serializable
     protected $isLocal;
     protected bool $preventLogUserOperation = false;
 
-    public function __construct(?string $entityId, bool $isLocal)
+    public function __construct(?string $entityId, ?bool $isLocal = false)
     {
         $this->entityId = $entityId;
         $this->isLocal = $isLocal;

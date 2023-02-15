@@ -17,7 +17,7 @@ class MessageEventReceivedCmd implements CommandInterface, \Serializable
     protected $messageName;
     protected bool $exclusive = false;
 
-    public function __construct(?string $messageName, ?string $executionId, array $processVariables, array $processVariablesLocal = [], bool $exclusive = false)
+    public function __construct(?string $messageName, ?string $executionId, ?array $processVariables = [], ?array $processVariablesLocal = [], ?bool $exclusive = false)
     {
         $this->executionId = $executionId;
         $this->messageName = $messageName;
@@ -54,7 +54,7 @@ class MessageEventReceivedCmd implements CommandInterface, \Serializable
         $eventSubscriptions = [];
         if (!empty($this->messageName)) {
             $eventSubscriptions = $eventSubscriptionManager->findEventSubscriptionsByNameAndExecution(
-                EventType::MESSAGE->name(),
+                EventType::message()->name(),
                 $this->messageName,
                 $this->executionId,
                 $this->exclusive
@@ -62,7 +62,7 @@ class MessageEventReceivedCmd implements CommandInterface, \Serializable
         } else {
             $eventSubscriptions = $eventSubscriptionManager->findEventSubscriptionsByExecutionAndType(
                 $this->executionId,
-                EventType::MESSAGE->name(),
+                EventType::message()->name(),
                 $this->exclusive
             );
         }

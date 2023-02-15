@@ -7,6 +7,7 @@ use Jabe\Impl\Db\{
     HasDbReferencesInterface,
     HasDbRevisionInterface
 };
+use Jabe\Impl\JobExecutor\JobDeclaration;
 use Jabe\Management\JobDefinitionInterface;
 
 class JobDefinitionEntity implements JobDefinitionInterface, HasDbRevisionInterface, HasDbReferencesInterface, DbEntityInterface, \Serializable
@@ -42,7 +43,7 @@ class JobDefinitionEntity implements JobDefinitionInterface, HasDbRevisionInterf
 
     protected $deploymentId;
 
-    public function __construct(?JobDeclarationInterface $jobDeclaration = null)
+    public function __construct(?JobDeclaration $jobDeclaration = null)
     {
         if ($jobDeclaration !== null) {
             $this->activityId = $jobDeclaration->getActivityId();
@@ -88,7 +89,7 @@ class JobDefinitionEntity implements JobDefinitionInterface, HasDbRevisionInterf
         $state["processDefinitionId"] = $this->processDefinitionId;
         $state["processDefinitionKey"] = $this->processDefinitionKey;
         $state["activityId"] = $this->activityId;
-        $state["jobType"] = $this->obType;
+        $state["jobType"] = $this->jobType;
         $state["jobConfiguration"] = $this->jobConfiguration;
         $state["suspensionState"] = $this->suspensionState;
         $state["jobPriority"] = $this->jobPriority;
@@ -189,7 +190,7 @@ class JobDefinitionEntity implements JobDefinitionInterface, HasDbRevisionInterf
         $this->suspensionState = $state;
     }
 
-    public function getOverridingJobPriority(): int
+    public function getOverridingJobPriority(): ?int
     {
         return $this->jobPriority;
     }

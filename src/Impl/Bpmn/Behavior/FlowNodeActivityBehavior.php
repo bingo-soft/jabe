@@ -47,7 +47,7 @@ abstract class FlowNodeActivityBehavior implements SignallableActivityBehaviorIn
         $this->bpmnActivityBehavior->performIgnoreConditionsOutgoingBehavior($activityContext);
     }
 
-    public function signal(ActivityExecutionInterface $execution, ?string $signalName, $signalData): void
+    public function signal(/*ActivityExecutionInterface*/$execution, ?string $signalName = null, $signalData = null, array $processVariables = []): void
     {
         // concrete activity behaviors that do accept signals should override this method;
         //throw LOG.unsupportedSignalException(execution.getActivity().getId());

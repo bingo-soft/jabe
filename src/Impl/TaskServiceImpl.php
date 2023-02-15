@@ -265,7 +265,7 @@ class TaskServiceImpl extends ServiceImpl implements TaskServiceInterface
             if (ExceptionUtil::checkValueTooLongException($ex)) {
                 throw new BadUserRequestException("Variable value is too long", $ex);
             }
-            throw ex;
+            throw $ex;
         }
     }
 

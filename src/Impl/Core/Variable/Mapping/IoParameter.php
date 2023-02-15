@@ -35,7 +35,7 @@ abstract class IoParameter
      * @param innerScope
      * @param outerScope
      */
-    abstract protected function execute(AbstractVariableScope $innerScope, ?AbstractVariableScope $outerScope = null): void;
+    abstract public function execute(AbstractVariableScope $innerScope, ?AbstractVariableScope $outerScope = null): void;
 
     public function getName(): ?string
     {

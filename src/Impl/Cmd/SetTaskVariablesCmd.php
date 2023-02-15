@@ -2,6 +2,7 @@
 
 namespace Jabe\Impl\Cmd;
 
+use Jabe\Impl\Core\Variable\CoreVariableInstanceInterface;
 use Jabe\Impl\Core\Variable\Scope\{
     AbstractVariableScope,
     VariableInstanceLifecycleListenerInterface
@@ -19,7 +20,7 @@ class SetTaskVariablesCmd extends AbstractSetVariableCmd implements VariableInst
 
     protected bool $taskLocalVariablesUpdated = false;
 
-    public function __construct(?string $taskId, array $variables, bool $isLocal)
+    public function __construct(?string $taskId, array $variables, ?bool $isLocal = false)
     {
         parent::__construct($taskId, $variables, $isLocal);
     }
@@ -82,17 +83,17 @@ class SetTaskVariablesCmd extends AbstractSetVariableCmd implements VariableInst
         $this->taskLocalVariablesUpdated = true;
     }
 
-    public function onCreate(VariableInstanceEntity $variableInstance, AbstractVariableScope $sourceScope): void
+    public function onCreate(CoreVariableInstanceInterface $variableInstance, AbstractVariableScope $sourceScope): void
     {
         $this->onLocalVariableChanged();
     }
 
-    public function onDelete(VariableInstanceEntity $variableInstance, AbstractVariableScope $sourceScope): void
+    public function onDelete(CoreVariableInstanceInterface $variableInstance, AbstractVariableScope $sourceScope): void
     {
         $this->onLocalVariableChanged();
     }
 
-    public function onUpdate(VariableInstanceEntity $variableInstance, AbstractVariableScope $sourceScope): void
+    public function onUpdate(CoreVariableInstanceInterface $variableInstance, AbstractVariableScope $sourceScope): void
     {
         $this->onLocalVariableChanged();
     }

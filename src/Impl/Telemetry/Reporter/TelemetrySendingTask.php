@@ -36,7 +36,11 @@ use Jabe\Telemetry\{
     CommandInterface,
     MetricInterface
 };
-use Concurrent\RunnableInterface;
+use Concurrent\{
+    ExecutorServiceInterface,
+    RunnableInterface,
+    ThreadInterface
+};
 use Concurrent\Task\TimerTask;
 use Jabe\Impl\Util\Core\MediaType;
 use Jabe\Impl\Util\Net\HttpURLConnection;
@@ -82,7 +86,7 @@ class TelemetrySendingTask extends TimerTask
         $this->telemetryRequestTimeout = $telemetryRequestTimeout;
     }
 
-    public function run(): void
+    public function run(ThreadInterface $process, ...$args): void
     {
         //LOG.startTelemetrySendingTask();
 
@@ -102,7 +106,7 @@ class TelemetrySendingTask extends TimerTask
                 $this->scope = $scope;
             }
 
-            public function run(): void
+            public function run(ThreadInterface $process, ...$args): void
             {
                 $this->scope->updateAndSendData(true, true);
             }

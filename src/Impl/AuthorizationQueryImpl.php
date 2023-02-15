@@ -28,11 +28,9 @@ class AuthorizationQueryImpl extends AbstractQuery implements AuthorizationQuery
     protected bool $queryByResourceType = false;
     private $resourcesIntersection = [];
 
-    public function __construct(CommandExecutorInterface $commandExecutor = null)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
-        if ($commandExecutor !== null) {
-            parent::__construct($commandExecutor);
-        }
+        parent::__construct($commandExecutor);
     }
 
     public function authorizationId(?string $id): AuthorizationQueryInterface

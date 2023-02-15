@@ -19,7 +19,7 @@ abstract class TenantQueryImpl extends AbstractQuery implements TenantQueryInter
     protected $groupId;
     protected bool $includingGroups = false;
 
-    public function __construct(CommandExecutorInterface $commandExecutor = null)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
     }

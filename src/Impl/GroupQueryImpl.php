@@ -6,6 +6,7 @@ use Jabe\Identity\{
     GroupInterface,
     GroupQueryInterface
 };
+use Jabe\Impl\Interceptor\CommandExecutorInterface;
 use Jabe\Impl\Util\EnsureUtil;
 
 abstract class GroupQueryImpl extends AbstractQuery implements GroupQueryInterface
@@ -18,6 +19,11 @@ abstract class GroupQueryImpl extends AbstractQuery implements GroupQueryInterfa
     protected $userId;
     protected $procDefId;
     protected $tenantId;
+
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
+    {
+        parent::__construct($commandExecutor);
+    }
 
     public function groupId(?string $id): GroupQueryInterface
     {

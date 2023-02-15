@@ -18,7 +18,7 @@ class PvmAtomicOperationFireActivityEnd extends AbstractPvmEventAtomicOperation
         return $execution->getActivity();
     }
 
-    protected function getEventName(): ?string
+    public function getEventName(): ?string
     {
         return ExecutionListenerInterface::EVENTNAME_END;
     }

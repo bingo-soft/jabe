@@ -357,22 +357,22 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
         return $this->processDefinitionId;
     }
 
-    public function getCorrelationProcessInstanceVariables(): VariableMapInterface
+    public function getCorrelationProcessInstanceVariables(): ?VariableMapInterface
     {
         return $this->correlationProcessInstanceVariables;
     }
 
-    public function getCorrelationLocalVariables(): VariableMapInterface
+    public function getCorrelationLocalVariables(): ?VariableMapInterface
     {
         return $this->correlationLocalVariables;
     }
 
-    public function getPayloadProcessInstanceVariables(): VariableMapInterface
+    public function getPayloadProcessInstanceVariables(): ?VariableMapInterface
     {
         return $this->payloadProcessInstanceVariables;
     }
 
-    public function getPayloadProcessInstanceVariablesLocal(): VariableMapInterface
+    public function getPayloadProcessInstanceVariablesLocal(): ?VariableMapInterface
     {
         return $this->payloadProcessInstanceVariablesLocal;
     }

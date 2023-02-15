@@ -61,7 +61,9 @@ class PvmAtomicOperationDeleteCascade implements PvmAtomicOperationInterface
     protected function findNextLeaf(PvmExecutionImpl $execution): PvmExecutionImpl
     {
         if ($execution->hasChildren()) {
-            return $this->findNextLeaf($execution->getExecutions()[0]);
+            $executions = $execution->getExecutions();
+            $key = array_key_first($executions);
+            return $this->findNextLeaf($execution->getExecutions()[$key]);
         }
         return $execution;
     }

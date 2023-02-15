@@ -42,7 +42,7 @@ abstract class AbstractGetDeployedFormCmd implements CommandInterface
         } elseif ($formRef !== null && $formRef->getKey() !== null) {
             return $this->getResourceForFormRef($formRef, $formData->getDeploymentId());
         } else {
-            throw new BadUserRequestException("One of the attributes 'formKey' and 'camunda:formRef' must be supplied but none were set.");
+            throw new BadUserRequestException("One of the attributes 'formKey' and 'extension:formRef' must be supplied but none were set.");
         }
     }
 

@@ -27,7 +27,7 @@ class JobDefinitionQueryImpl extends AbstractQuery implements JobDefinitionQuery
     protected $tenantIds = [];
     protected bool $includeJobDefinitionsWithoutTenantId = false;
 
-    public function __construct(CommandExecutorInterface $commandExecutor)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
     }
@@ -227,12 +227,12 @@ class JobDefinitionQueryImpl extends AbstractQuery implements JobDefinitionQuery
         return $this->jobConfiguration;
     }
 
-    public function getSuspensionState(): SuspensionState
+    public function getSuspensionState(): ?SuspensionState
     {
         return $this->suspensionState;
     }
 
-    public function getWithOverridingJobPriority(): bool
+    public function getWithOverridingJobPriority(): ?bool
     {
         return $this->withOverridingJobPriority;
     }

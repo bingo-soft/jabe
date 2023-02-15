@@ -28,7 +28,7 @@ class LicenseKeyDataImpl implements LicenseKeyDataInterface
 
     public static function fromRawString(?string $rawLicense): LicenseKeyDataImpl
     {
-        $licenseKeyRawString = strpos($rawLicense, ";") !== -1 ? substr($rawLicense, strpos($rawLicense, ";") + 1, strlen($rawLicense)) : $rawLicense;
+        $licenseKeyRawString = strpos($rawLicense, ";") !== false ? substr($rawLicense, strpos($rawLicense, ";") + 1, strlen($rawLicense)) : $rawLicense;
         return new LicenseKeyDataImpl(null, null, null, null, null, $licenseKeyRawString);
     }
 

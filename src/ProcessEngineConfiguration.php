@@ -133,7 +133,7 @@ abstract class ProcessEngineConfiguration
     protected int $idBlockSize = 100;
     protected $history = self::HISTORY_DEFAULT;
     //@ATTENTION. JOB ACTIVATION COMES HERE
-    protected bool $jobExecutorActivate = false;
+    protected bool $jobExecutorActivate = true;
     protected bool $jobExecutorDeploymentAware = false;
     protected bool $jobExecutorPreferTimerJobs = false;
     protected bool $jobExecutorAcquireByDueDate = false;
@@ -346,6 +346,10 @@ abstract class ProcessEngineConfiguration
 
     protected $telemetryRegistry;
 
+    protected $resource;
+
+    protected $beanName;
+
     /**
      * On failing activities we can skip output mapping. This might be helpful if output mapping uses variables that might not
      * be available on failure (e.g. with external tasks or RPA tasks).
@@ -386,10 +390,20 @@ abstract class ProcessEngineConfiguration
         return BeansConfigurationHelper::parseProcessEngineConfigurationFromResource($resource, $beanName);
     }
 
-    public static function createProcessEngineConfigurationFromInputStream($inputStream, ?string $beanName = "processEngineConfiguration"): ProcessEngineConfiguration
+    public function getResource(): ?string
+    {
+        return $this->resource;
+    }
+
+    public function setResource(string $resource): void
+    {
+        $this->resource = $resource;
+    }
+
+    /*public static function createProcessEngineConfigurationFromInputStream($inputStream, ?string $beanName = "processEngineConfiguration"): ProcessEngineConfiguration
     {
         return BeansConfigurationHelper::parseProcessEngineConfigurationFromInputStream($inputStream, $beanName);
-    }
+    }*/
 
     public static function createStandaloneProcessEngineConfiguration(): ProcessEngineConfiguration
     {

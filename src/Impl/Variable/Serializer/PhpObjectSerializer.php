@@ -25,21 +25,47 @@ class PhpObjectSerializer extends AbstractObjectValueSerializer
 
     protected function deserializeFromByteArray(?string $bytes, /*string*/$objectTypeName)
     {
-        return unserialize($bytes);
+        /*if (!empty($bytes)) {
+            $bytes = str_replace('.', '\\', $bytes);
+            if (strpos($bytes, '[') === 0) {
+                $bytes = json_decode($bytes, true);
+                $res = [];
+                foreach ($bytes as $item) {
+                    $res[] = unserialize($item);
+                }
+                return $res;
+            }
+            return unserialize($bytes);
+        }*/
+        return null;
     }
 
     protected function serializeToByteArray($deserializedObject): ?string
     {
-        return serialize($deserializedObject);
+        /*if (is_array($deserializedObject)) {
+            $res = [];
+            foreach ($deserializedObject as $item) {
+                $res[] = str_replace('\\', '.', serialize($item));
+            }
+            return json_encode($res);
+        }*/
+        $serialized = str_replace('\\', '.', serialize($deserializedObject));
+        return $serialized;
     }
 
     protected function getTypeNameForDeserialized($deserializedObject): ?string
     {
-        return get_class($deserializedObject);
+        /*if (is_array($deserializedObject)) {
+            return sprintf("Array[%s]", is_object($deserializedObject[0]) ? get_class($deserializedObject[0]) : gettype($deserializedObject[0]));
+        }*/
+        return is_object($deserializedObject) ? get_class($deserializedObject) : gettype($deserializedObject);
     }
 
     protected function canSerializeValue($value): bool
     {
+        if (is_array($value) && !empty($value) && $value[0] instanceof \Serializable) {
+            return true;
+        }
         return $value instanceof \Serializable;
     }
 }

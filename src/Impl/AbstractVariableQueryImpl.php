@@ -19,11 +19,9 @@ abstract class AbstractVariableQueryImpl extends AbstractQuery
     protected $variableNamesIgnoreCase;
     protected $variableValuesIgnoreCase;
 
-    public function __construct(CommandExecutorInterface $commandExecutor = null)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
-        if ($commandExecutor !== null) {
-            parent::__construct($commandExecutor);
-        }
+        parent::__construct($commandExecutor);
     }
 
     abstract public function executeCount(CommandContext $commandContext): int;

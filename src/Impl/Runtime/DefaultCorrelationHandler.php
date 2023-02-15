@@ -99,7 +99,7 @@ class DefaultCorrelationHandler implements CorrelationHandlerInterface
             $query->messageEventSubscription();
         }
 
-        if ($correlationSet->isTenantIdSet) {
+        if ($correlationSet->isTenantIdSet()) {
             $tenantId = $correlationSet->getTenantId();
             if (!empty($tenantId)) {
                 $query->tenantIdIn($tenantId);
@@ -147,7 +147,7 @@ class DefaultCorrelationHandler implements CorrelationHandlerInterface
     {
         $results = [];
         $deploymentCache = $commandContext->getProcessEngineConfiguration()->getDeploymentCache();
-        $messageEventSubscriptions = $this->findMessageStartEventSubscriptions($commandContext, $messageName, correlationSet);
+        $messageEventSubscriptions = $this->findMessageStartEventSubscriptions($commandContext, $messageName, $correlationSet);
         foreach ($messageEventSubscriptions as $messageEventSubscription) {
             if ($messageEventSubscription->getConfiguration() !== null) {
                 $processDefinitionId = $messageEventSubscription->getConfiguration();
@@ -168,7 +168,7 @@ class DefaultCorrelationHandler implements CorrelationHandlerInterface
     {
         $eventSubscriptionManager = $commandContext->getEventSubscriptionManager();
 
-        if ($correlationSet->isTenantIdSet) {
+        if ($correlationSet->isTenantIdSet()) {
             $eventSubscription = $eventSubscriptionManager->findMessageStartEventSubscriptionByNameAndTenantId($messageName, $correlationSet->getTenantId());
             if ($eventSubscription !== null) {
                 return [ $eventSubscription ];

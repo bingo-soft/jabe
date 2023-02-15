@@ -81,7 +81,7 @@ class StringUtil
         if ($string !== null && strlen($string) > self::DB_MAX_STRING_LENGTH) {
             return substr($string, 0, self::DB_MAX_STRING_LENGTH);
         }
-        return string;
+        return $string;
     }
 
     public static function joinDbEntityIds(array $dbEntities): ?string

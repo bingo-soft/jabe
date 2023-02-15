@@ -13,6 +13,7 @@ use El\{
     FunctionMapper,
     ListELResolver,
     MapELResolver,
+    ObjectELResolver,
     ValueExpression
 };
 use Juel\ExpressionFactoryImpl;
@@ -127,8 +128,9 @@ class JuelExpressionManager implements ExpressionManagerInterface, ElProviderCom
 
         //$elResolver->add(new ProcessApplicationElResolverDelegate());
         $elResolver->add(new ArrayELResolver());
-        $elResolver->add(new ListELResolver());
-        $elResolver->add(new MapELResolver());
+        $elResolver->add(new ObjectELResolver());
+        //$elResolver->add(new ListELResolver());
+        //$elResolver->add(new MapELResolver());
         //$elResolver->add(new ProcessApplicationBeanElResolverDelegate());
 
         return $elResolver;

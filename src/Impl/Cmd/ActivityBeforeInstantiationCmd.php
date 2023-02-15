@@ -46,7 +46,7 @@ class ActivityBeforeInstantiationCmd extends AbstractInstantiationCmd
         return $activity->getFlowScope();
     }
 
-    protected function getTargetElement(ProcessDefinitionImpl $processDefinition): CoreModelElement
+    public function getTargetElement(ProcessDefinitionImpl $processDefinition): CoreModelElement
     {
         $activity = $processDefinition->findActivity($this->activityId);
         return $activity;

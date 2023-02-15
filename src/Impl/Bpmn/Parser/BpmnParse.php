@@ -73,16 +73,16 @@ use Jabe\Impl\Core\Model\{
     Properties
 };
 use Jabe\Impl\Core\Variable\Mapping\IoMapping;
-use Jabe\Impl\Core\Variable\Value\{
+use Jabe\Impl\Core\Variable\Mapping\Value\{
     ConstantValueProvider,
     NullValueProvider,
-    ParameterValueProvider
+    ParameterValueProviderInterface
 };
 use Jabe\Impl\Cxf\Webservice\CxfWSDLImporter;
 use Jabe\Impl\El\{
     ElValueProvider,
     ExpressionInterface,
-    ExpressionManager,
+    ExpressionManagerInterface,
     FixedValue,
     UelExpressionCondition
 };
@@ -147,6 +147,7 @@ use Jabe\Impl\Task\Listener\{
     ScriptTaskListener
 };
 use Jabe\Impl\Util\{
+    ClassDelegateUtil,
     ParseUtil,
     ReflectUtil,
     ScriptUtil,
@@ -377,7 +378,7 @@ class BpmnParse extends Parse
             return null;
         }
         $indexOfP = strpos($name, ':');
-        if ($indexOfP != -1) {
+        if ($indexOfP !== false) {
             $prefix = substr($name, 0, $indexOfP);
             $resolvedPrefix = $this->prefixs[$prefix];
             return $resolvedPrefix . ":" . substr($name, $indexOfP + 1);
@@ -434,7 +435,7 @@ class BpmnParse extends Parse
 
             $messageExpression = null;
             if ($messageName !== null) {
-                $messageExpression = $expressionManager->createExpression($messageName);
+                $messageExpression = $this->expressionManager->createExpression($messageName);
             }
 
             $messageDefinition = new MessageDefinition($this->targetNamespace . ":" . $id, $messageExpression);
@@ -464,7 +465,7 @@ class BpmnParse extends Parse
             } elseif ($signalName === null) {
                 $this->addError("signal with id '" . $id . "' has no name", $signalElement);
             } else {
-                $signalExpression = $expressionManager->createExpression($signalName);
+                $signalExpression = $this->expressionManager->createExpression($signalName);
                 $signal = new SignalDefinition();
                 $signal->setId($this->targetNamespace . ":" . $id);
                 $signal->setExpression($signalExpression);
@@ -492,7 +493,7 @@ class BpmnParse extends Parse
 
             $errorMessage = $errorElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "errorMessage");
             if ($errorMessage !== null) {
-                $error->setErrorMessageExpression($this->createParameterValueProvider($errorMessage, $expressionManager));
+                $error->setErrorMessageExpression($this->createParameterValueProvider($errorMessage, $this->expressionManager));
             }
 
             $this->errors[$id] = $error;
@@ -801,7 +802,7 @@ class BpmnParse extends Parse
         if ($candidateUsersString !== null) {
             $candidateUsers = $this->parseCommaSeparatedList($candidateUsersString);
             foreach ($candidateUsers as $candidateUser) {
-                $processDefinition->addCandidateStarterUserIdExpression($expressionManager->createExpression(trim($candidateUser)));
+                $processDefinition->addCandidateStarterUserIdExpression($this->expressionManager->createExpression(trim($candidateUser)));
             }
         }
 
@@ -810,7 +811,7 @@ class BpmnParse extends Parse
         if ($candidateGroupsString !== null) {
             $candidateGroups = $this->parseCommaSeparatedList($candidateGroupsString);
             foreach ($candidateGroups as $candidateGroup) {
-                $processDefinition->addCandidateStarterGroupIdExpression($expressionManager->createExpression(trim($candidateGroup)));
+                $processDefinition->addCandidateStarterGroupIdExpression($this->expressionManager->createExpression(trim($candidateGroup)));
             }
         }
     }
@@ -826,12 +827,12 @@ class BpmnParse extends Parse
                     $assignmentExpression = trim($assignmentExpression);
                     if (str_starts_with($assignmentExpression, self::USER_PREFIX)) {
                         $userAssignementId = $this->getAssignmentId($assignmentExpression, self::USER_PREFIX);
-                        $processDefinition->addCandidateStarterUserIdExpression($expressionManager->createExpression($userAssignementId));
+                        $processDefinition->addCandidateStarterUserIdExpression($this->expressionManager->createExpression($userAssignementId));
                     } elseif (str_starts_with($assignmentExpression, self::GROUP_PREFIX)) {
                         $groupAssignementId = $this->getAssignmentId($assignmentExpression, self::GROUP_PREFIX);
-                        $processDefinition->addCandidateStarterGroupIdExpression($expressionManager->createExpression($groupAssignementId));
+                        $processDefinition->addCandidateStarterGroupIdExpression($this->expressionManager->createExpression($groupAssignementId));
                     } else { // default: given string is a goupId, as-is.
-                        $processDefinition->addCandidateStarterGroupIdExpression($expressionManager->createExpression($assignmentExpression));
+                        $processDefinition->addCandidateStarterGroupIdExpression($this->expressionManager->createExpression($assignmentExpression));
                     }
                 }
             }
@@ -1218,7 +1219,7 @@ class BpmnParse extends Parse
     }
 
     /**
-    * Sets the value for "camunda:errorCodeVariable" on the passed definition if
+    * Sets the value for "extension:errorCodeVariable" on the passed definition if
     * it's present.
     *
     * @param errorEventDefinition
@@ -1235,7 +1236,7 @@ class BpmnParse extends Parse
     }
 
     /**
-    * Sets the value for "camunda:errorMessageVariable" on the passed definition if
+    * Sets the value for "extension:errorMessageVariable" on the passed definition if
     * it's present.
     *
     * @param errorEventDefinition
@@ -1500,7 +1501,7 @@ class BpmnParse extends Parse
                     $this->addError("Exclusive Gateway '" . $activity->getId() . "' has outgoing sequence flow '" . $flow->getId() . "' which is the default flow but has a condition too.", null, $activity->getId(), $flow->getId());
                 }
             }
-            if ($hasDefaultFlow || couynt($flowsWithoutCondition) > 1) {
+            if ($hasDefaultFlow || count($flowsWithoutCondition) > 1) {
                 // if we either have a default flow (then no flows without conditions
                 // are valid at all) or if we have more than one flow without condition
                 // this is an error
@@ -1880,7 +1881,7 @@ class BpmnParse extends Parse
             // activiti:collection
             $collection = $miLoopCharacteristics->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "collection");
             if (!empty($collection)) {
-                if (strpos($collection, "{") !== -1) {
+                if (strpos($collection, "{") !== false) {
                     $behavior->setCollectionExpression($this->expressionManager->createExpression($collection));
                 } else {
                     $behavior->setCollectionVariable($collection);
@@ -1892,7 +1893,7 @@ class BpmnParse extends Parse
             if ($loopDataInputRef !== null) {
                 $loopDataInputRefText = $loopDataInputRef->getText();
                 if ($loopDataInputRefText !== null) {
-                    if (strpos($loopDataInputRefText, "{") !== -1) {
+                    if (strpos($loopDataInputRefText, "{") !== false) {
                         $behavior->setCollectionExpression($this->expressionManager->createExpression($loopDataInputRefText));
                     } else {
                         $behavior->setCollectionVariable($loopDataInputRefText);
@@ -2327,8 +2328,8 @@ class BpmnParse extends Parse
     /**
     * @param elementName
     * @param serviceTaskElement the element that contains the camunda service task definition
-    *   (e.g. camunda:class attributes)
-    * @param camundaPropertiesElement the element that contains the camunda:properties extension elements
+    *   (e.g. extension:class attributes)
+    * @param camundaPropertiesElement the element that contains the extension:properties extension elements
     *   that apply to this service task. Usually, but not always, this is the same as serviceTaskElement
     * @param scope
     * @return
@@ -2524,7 +2525,7 @@ class BpmnParse extends Parse
         $activity->setAsyncAfter($isAsyncAfter, $exclusive);
     }
 
-    protected function parsePriority(Element $element, ?string $priorityAttribute): ?ParameterValueProvider
+    protected function parsePriority(Element $element, ?string $priorityAttribute): ?ParameterValueProviderInterface
     {
         $priorityAttributeValue = $element->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, $priorityAttribute);
 
@@ -2544,7 +2545,7 @@ class BpmnParse extends Parse
         }
     }
 
-    protected function parseTopic(Element $element, ?string $topicAttribute): ?ParameterValueProvider
+    protected function parseTopic(Element $element, ?string $topicAttribute): ?ParameterValueProviderInterface
     {
         $topicAttributeValue = $element->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, $topicAttribute);
 
@@ -2552,7 +2553,7 @@ class BpmnParse extends Parse
             $this->addError("External tasks must specify a 'topic' attribute in the camunda namespace", $element);
             return null;
         } else {
-            return $this->createParameterValueProvider($topicAttributeValue, $expressionManager);
+            return $this->createParameterValueProvider($topicAttributeValue, $this->expressionManager);
         }
     }
 
@@ -2570,11 +2571,9 @@ class BpmnParse extends Parse
         $key = $processDefinition->getKey();
 
         if (!array_key_exists($key, $this->jobDeclarations)) {
-            $containingJobDeclarations = $this->jobDeclarations[$key];
-            $this->jobDeclarations[$key] = [$jobDeclaration];
-        } else {
-            $this->jobDeclarations[$key][] = $jobDeclaration;
+            $this->jobDeclarations[$key] = [];
         }
+        $this->jobDeclarations[$key][] = $jobDeclaration;
     }
 
     /**
@@ -2621,13 +2620,13 @@ class BpmnParse extends Parse
     protected function parseEmailServiceTask(ActivityImpl $activity, Element $serviceTaskElement, array $fieldDeclarations): void
     {
         $this->validateFieldDeclarationsForEmail($serviceTaskElement, $fieldDeclarations);
-        $activity->setActivityBehavior($this->instantiateDelegate(MailActivityBehavior::class, $fieldDeclarations));
+        $activity->setActivityBehavior(ClassDelegateUtil::instantiateDelegate(MailActivityBehavior::class, $fieldDeclarations));
     }
 
     protected function parseShellServiceTask(ActivityImpl $activity, Element $serviceTaskElement, array $fieldDeclarations): void
     {
         $this->validateFieldDeclarationsForShell($serviceTaskElement, $fieldDeclarations);
-        $activity->setActivityBehavior($this->instantiateDelegate(ShellActivityBehavior::class, $fieldDeclarations));
+        $activity->setActivityBehavior(ClassDelegateUtil::instantiateDelegate(ShellActivityBehavior::class, $fieldDeclarations));
     }
 
     protected function parseExternalServiceTask(
@@ -3358,7 +3357,7 @@ class BpmnParse extends Parse
             // The boundary event is attached to an activity, reference by the
             // 'attachedToRef' attribute
             $attachedToRef = $boundaryEventElement->attribute("attachedToRef");
-            if (aempty($ttachedToRef)) {
+            if (empty($ttachedToRef)) {
                 $this->addError("AttachedToRef is required when using a timerEventDefinition", $boundaryEventElement);
             }
 
@@ -4091,9 +4090,9 @@ class BpmnParse extends Parse
 
         if ($calledElement === null) { // && caseRef === null
             $this->addError("Missing attribute 'calledElement' or 'caseRef'", callActivityElement);
-        } elseif ($calledElement !== null) { // && caseRef !== null
+        }/*elseif ($calledElement !== null) { // && caseRef !== null
             $this->addError("The attributes 'calledElement' or 'caseRef' cannot be used together: Use either 'calledElement' or 'caseRef'", $callActivityElement);
-        }
+        }*/
 
         $bindingAttributeName = "calledElementBinding";
         $versionAttributeName = "calledElementVersion";
@@ -4116,7 +4115,7 @@ class BpmnParse extends Parse
             } else {
                 $behavior = new CallActivityBehavior();
             }
-            $definitionKeyProvider = $this->createParameterValueProvider($calledElement, $expressionManager);
+            $definitionKeyProvider = $this->createParameterValueProvider($calledElement, $this->expressionManager);
             $callableElement->setDefinitionKeyValueProvider($definitionKeyProvider);
         } else {
             throw new \Exception("cmmn not yet implemented");
@@ -4205,7 +4204,7 @@ class BpmnParse extends Parse
             . "'", $callingActivityElement);
         }
 
-        $versionProvider = $this->createParameterValueProvider($version, $expressionManager);
+        $versionProvider = $this->createParameterValueProvider($version, $this->expressionManager);
         $callableElement->setVersionValueProvider($versionProvider);
     }
 
@@ -4220,7 +4219,7 @@ class BpmnParse extends Parse
             $this->addError("Missing attribute '" . $versionTagAttributeName . "' when '" . $bindingAttributeName . "' has value '" . CallableElementBinding::VERSION_TAG . "'", $callingActivityElement);
         }
 
-        $versionTagProvider = $this->createParameterValueProvider($versionTag, $expressionManager);
+        $versionTagProvider = $this->createParameterValueProvider($versionTag, $this->expressionManager);
         $callableElement->setVersionTagValueProvider($versionTagProvider);
     }
 
@@ -4234,7 +4233,7 @@ class BpmnParse extends Parse
                 $businessKey = $inElement->attribute("businessKey");
 
                 if ($businessKey !== null && !empty($businessKey)) {
-                    $businessKeyValueProvider = $this->createParameterValueProvider($businessKey, $expressionManager);
+                    $businessKeyValueProvider = $this->createParameterValueProvider($businessKey, $this->expressionManager);
                     $callableElement->setBusinessKeyValueProvider($businessKeyValueProvider);
                 } else {
                     $parameter = $this->parseCallableElementProvider($inElement, $elementWithParameters->attribute("id"));
@@ -4304,7 +4303,7 @@ class BpmnParse extends Parse
 
                 if ($source !== null) {
                     if (!empty($source)) {
-                        $expression = $expressionManager->createExpression($source);
+                        $expression = $this->expressionManager->createExpression($source);
                         $sourceValueProvider = new ElValueProvider($expression);
                     } elseif ($strictValidation) {
                         $this->addError("Empty attribute 'sourceExpression' when passing variables", $parameterElement, $ancestorElementId);
@@ -4405,7 +4404,7 @@ class BpmnParse extends Parse
 
         $srcExpr = $propertyElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "srcExpr");
         if ($srcExpr !== null) {
-            $sourceExpression = $expressionManager->createExpression($srcExpr);
+            $sourceExpression = $this->expressionManager->createExpression($srcExpr);
             $variableDeclaration->setSourceExpression($sourceExpression);
         }
 
@@ -4568,11 +4567,11 @@ class BpmnParse extends Parse
     protected function parseConditionExpression(Element $conditionExprElement, ?string $ancestorElementId): ?ConditionInterface
     {
         $expression = trim($conditionExprElement->getText());
-        $type = $conditionExprElement->attributeNS(self::XSI_NS, self::TYPE);
+        $type = $conditionExprElement->attributeNS(BpmnParser::XSI_NS, self::TYPE);
         $language = $conditionExprElement->attribute(self::PROPERTYNAME_LANGUAGE);
         $resource = $conditionExprElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::PROPERTYNAME_RESOURCE);
         if (!empty($type)) {
-            $value = strpos($type, ":") !== -1 ? $this->resolveName($type) : BpmnParser::BPMN20_NS . ":" . $type;
+            $value = strpos($type, ":") !== false ? $this->resolveName($type) : BpmnParser::BPMN20_NS . ":" . $type;
             if ($value != self::ATTRIBUTEVALUE_T_FORMAL_EXPRESSION) {
                 $this->addError("Invalid type, only tFormalExpression is currently supported", $conditionExprElement, $ancestorElementId);
             }
@@ -4639,7 +4638,7 @@ class BpmnParse extends Parse
     {
         $extensionElements = $activitiElement->element("extensionElements");
         if (!empty($extensionElements)) {
-            $listenerElements = $extensionElements->elementsNS(self::BPMN_EXTENSIONS_NS_PREFIX, "executionListener");
+            $listenerElements = $extensionElements->elements("executionListener");
             foreach ($listenerElements as $listenerElement) {
                 $listener = $this->parseExecutionListener($listenerElement, $activity->getId());
                 if ($listener !== null) {
@@ -4674,12 +4673,12 @@ class BpmnParse extends Parse
                 $executionListener = new ClassDelegateExecutionListener($className, $this->parseFieldDeclarations($executionListenerElement));
             }
         } elseif ($expression !== null) {
-            $executionListener = new ExpressionExecutionListener($expressionManager->createExpression($expression));
+            $executionListener = new ExpressionExecutionListener($this->expressionManager->createExpression($expression));
         } elseif ($delegateExpression !== null) {
             if (empty($delegateExpression)) {
                 $this->addError("Attribute 'delegateExpression' cannot be empty", $executionListenerElement, $ancestorElementId);
             } else {
-                $executionListener = new DelegateExpressionExecutionListener($expressionManager->createExpression($delegateExpression), $this->parseFieldDeclarations($executionListenerElement));
+                $executionListener = new DelegateExpressionExecutionListener($this->expressionManager->createExpression($delegateExpression), $this->parseFieldDeclarations($executionListenerElement));
             }
         } elseif ($scriptElement !== null) {
             try {
@@ -5001,18 +5000,18 @@ class BpmnParse extends Parse
         $tagName = $activityElement->getTagName();
 
         if (
-            !(strpos(strtolower($tagName), "task") !== -1
-            || strpos($tagName, "Event") !== -1
+            !(strpos(strtolower($tagName), "task") !== false
+            || strpos($tagName, "Event") !== false
             || $tagName == "transaction"
             || $tagName == "subProcess"
             || $tagName == "callActivity")
         ) {
-            $this->addError("camunda:inputOutput mapping unsupported for element type '" . $tagName . "'.", $activityElement);
+            $this->addError("extension:inputOutput mapping unsupported for element type '" . $tagName . "'.", $activityElement);
             return false;
         }
         $triggeredByEvent = $activityElement->attribute("triggeredByEvent");
         if ($tagName == "subProcess" && ($triggeredByEvent !== null && strtolower($triggeredByEvent) === "true")) {
-            $this->addError("camunda:inputOutput mapping unsupported for element type '" . $tagName . "' with attribute 'triggeredByEvent = true'.", $activityElement);
+            $this->addError("extension:inputOutput mapping unsupported for element type '" . $tagName . "' with attribute 'triggeredByEvent = true'.", $activityElement);
             return false;
         }
 
@@ -5028,10 +5027,10 @@ class BpmnParse extends Parse
         $tagName = $activityElement->getTagName();
 
         if ($tagName == "endEvent") {
-            $this->addError("camunda:outputParameter not allowed for element type '" . $tagName . "'.", $activityElement);
+            $this->addError("extension:outputParameter not allowed for element type '" . $tagName . "'.", $activityElement);
             return true;
         } elseif ($this->getMultiInstanceScope($activity) !== null) {
-            $this->addError("camunda:outputParameter not allowed for multi-instance constructs", $activityElement);
+            $this->addError("extension:outputParameter not allowed for multi-instance constructs", $activityElement);
             return false;
         } else {
             return true;
@@ -5042,11 +5041,11 @@ class BpmnParse extends Parse
     {
         $inputOutput = BpmnParseUtil::findExtensionElement($element, "inputOutput");
         if ($inputOutput !== null) {
-            $this->addError("camunda:inputOutput mapping unsupported for element type '" . $element->getTagName() . "'.", $element);
+            $this->addError("extension:inputOutput mapping unsupported for element type '" . $element->getTagName() . "'.", $element);
         }
     }
 
-    protected function createParameterValueProvider($value, ExpressionManager $expressionManager): ParameterValueProvider
+    protected function createParameterValueProvider($value, ExpressionManagerInterface $expressionManager): ParameterValueProviderInterface
     {
         if ($value === null) {
             return new NullValueProvider();

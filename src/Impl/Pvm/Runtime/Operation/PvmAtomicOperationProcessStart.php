@@ -28,7 +28,7 @@ class PvmAtomicOperationProcessStart extends AbstractPvmEventAtomicOperation
         return $execution->getProcessDefinition();
     }
 
-    protected function getEventName(): ?string
+    public function getEventName(): ?string
     {
         return ExecutionListenerInterface::EVENTNAME_START;
     }

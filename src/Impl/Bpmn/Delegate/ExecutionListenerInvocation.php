@@ -22,6 +22,6 @@ class ExecutionListenerInvocation extends DelegateInvocation
 
     protected function invoke(): void
     {
-        $this->executionListenerInstance->notify($execution);
+        $this->executionListenerInstance->notify($this->execution);
     }
 }

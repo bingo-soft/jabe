@@ -41,7 +41,7 @@ class TaskDefinition
 
     // getters and setters //////////////////////////////////////////////////////
 
-    public function getNameExpression(): ExpressionInterface
+    public function getNameExpression(): ?ExpressionInterface
     {
         return $this->nameExpression;
     }

@@ -41,7 +41,7 @@ class HistoricJobLogQueryImpl extends AbstractQuery implements HistoricJobLogQue
     protected bool $isTenantIdSet = false;
     protected $hostname;
 
-    public function __construct(CommandExecutorInterface $commandExecutor)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
     }

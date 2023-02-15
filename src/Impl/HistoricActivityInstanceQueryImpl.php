@@ -35,7 +35,7 @@ class HistoricActivityInstanceQueryImpl extends AbstractQuery implements Histori
     protected $tenantIds = [];
     protected bool $isTenantIdSet = false;
 
-    public function __construct(CommandExecutor $commandExecutor = null)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
     }

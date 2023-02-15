@@ -62,7 +62,6 @@ class DeleteJobCmd implements CommandInterface, \Serializable
             $job->getProcessDefinitionKey(),
             PropertyChange::emptyChange()
         );
-
         $job->delete();
         return null;
     }

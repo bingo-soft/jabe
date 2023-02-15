@@ -10,11 +10,12 @@ use Jabe\Delegate\{
 use Jabe\Impl\ProcessEngineLogger;
 use Jabe\Impl\Bpmn\Behavior\{
     BpmnBehaviorLogger,
-    ServiceTaskPhpDelegateActivityBehavior,
-    ExecutionListenerInvocation
+    ServiceTaskPhpDelegateActivityBehavior
 };
+use Jabe\Impl\Bpmn\Delegate\ExecutionListenerInvocation;
 use Jabe\Impl\Context\Context;
 use Jabe\Impl\Delegate\ClassDelegate;
+use Jabe\Impl\Util\ClassDelegateUtil;
 
 class ClassDelegateExecutionListener extends ClassDelegate implements ExecutionListenerInterface
 {
@@ -25,7 +26,7 @@ class ClassDelegateExecutionListener extends ClassDelegate implements ExecutionL
         parent::__construct($className, $fieldDeclarations);
     }
 
-    public function notify(DelegateExecutionInterface $execution): void
+    public function notify(/*DelegateExecutionInterface*/$execution): void
     {
         $executionListenerInstance = $this->getExecutionListenerInstance();
 
@@ -36,7 +37,7 @@ class ClassDelegateExecutionListener extends ClassDelegate implements ExecutionL
 
     protected function getExecutionListenerInstance(): ExecutionListenerInterface
     {
-        $delegateInstance = $this->instantiateDelegate($this->className, $this->fieldDeclarations);
+        $delegateInstance = ClassDelegateUtil::instantiateDelegate($this->className, $this->fieldDeclarations);
         if ($delegateInstance instanceof ExecutionListenerInterface) {
             return $this->delegateInstance;
         } elseif ($delegateInstance instanceof PhpDelegateInterface) {

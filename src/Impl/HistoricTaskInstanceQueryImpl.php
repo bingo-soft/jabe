@@ -86,7 +86,7 @@ class HistoricTaskInstanceQueryImpl extends AbstractQuery implements HistoricTas
     protected $queries = [];
     protected bool $isOrQueryActive = false;
 
-    public function __construct(CommandExecutorInterface $commandExecutor)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
         $this->queries[] = $this;

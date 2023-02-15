@@ -26,6 +26,6 @@ class IntegerValueSerializer extends PrimitiveValueSerializer
 
     public function readValue(ValueFieldsInterface $valueFields, bool $isTransient, bool $deserializeValue = false): IntegerValueInterface
     {
-        return Variables::integerValue($valueFields->getIntegerValue(), $isTransient);
+        return Variables::integerValue($valueFields->getLongValue(), $isTransient);
     }
 }

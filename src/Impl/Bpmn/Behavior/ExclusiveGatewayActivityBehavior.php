@@ -35,7 +35,6 @@ class ExclusiveGatewayActivityBehavior extends GatewayActivityBehavior
     public function doLeave(ActivityExecutionInterface $execution): void
     {
         //LOG.leavingActivity(execution.getActivity().getId());
-
         $outgoingSeqFlow = null;
         $defaultSequenceFlow = $execution->getActivity()->getProperty("default");
         $transitionIterator = $execution->getActivity()->getOutgoingTransitions();
@@ -47,6 +46,7 @@ class ExclusiveGatewayActivityBehavior extends GatewayActivityBehavior
             ) {
                 //LOG.outgoingSequenceFlowSelected(seqFlow.getId());
                 $outgoingSeqFlow = $seqFlow;
+                break;
             }
         }
 

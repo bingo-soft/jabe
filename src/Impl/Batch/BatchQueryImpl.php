@@ -91,7 +91,7 @@ class BatchQueryImpl extends AbstractQuery implements BatchQueryInterface
         return $this;
     }
 
-    public function getSuspensionState(): SuspensionState
+    public function getSuspensionState(): ?SuspensionState
     {
         return $this->suspensionState;
     }

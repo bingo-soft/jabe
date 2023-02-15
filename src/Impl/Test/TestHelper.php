@@ -450,7 +450,6 @@ abstract class TestHelper
     public static function getProcessEngine(?string $configurationResource): ProcessEngineInterface
     {
         if (!array_key_exists($configurationResource, self::$processEngines)) {
-            //LOG.debug("==== BUILDING PROCESS ENGINE ========================================================================");
             $processEngine = ProcessEngineConfiguration::createProcessEngineConfigurationFromResource($configurationResource)
             ->buildProcessEngine();
             self::$processEngines[$configurationResource] = $processEngine;

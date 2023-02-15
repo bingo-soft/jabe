@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions id="taskAssigneeExample" 
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:extension="http://activiti.org/bpmn"
+  targetNamespace="Examples">
+  
+  <process id="sendTaskPhpDelegate" isExecutable="true">
+  
+    <startEvent id="start"/>
+    
+    <sequenceFlow id="flow1" sourceRef="start" targetRef="sendTask" />
+
+    <sendTask id="sendTask" name="Send Task" extension:class="Tests.Bpmn.SendTask.DummySendTask" />
+    
+    <sequenceFlow id="flow2" sourceRef="sendTask" targetRef="end" />
+    
+    <endEvent id="end" />
+    
+  </process>
+
+</definitions>

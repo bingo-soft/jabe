@@ -15,14 +15,16 @@ class IncidentContext
     protected $historyConfiguration;
     protected $failedActivityId;
 
-    public function __construct(IncidentInterface $incident)
+    public function __construct(?IncidentInterface $incident = null)
     {
-        $this->processDefinitionId = $incident->getProcessDefinitionId();
-        $this->activityId = $incident->getActivityId();
-        $this->executionId = $incident->getExecutionId();
-        $this->configuration = $incident->getConfiguration();
-        $this->tenantId = $incident->getTenantId();
-        $this->jobDefinitionId = $incident->getJobDefinitionId();
+        if ($incident !== null) {
+            $this->processDefinitionId = $incident->getProcessDefinitionId();
+            $this->activityId = $incident->getActivityId();
+            $this->executionId = $incident->getExecutionId();
+            $this->configuration = $incident->getConfiguration();
+            $this->tenantId = $incident->getTenantId();
+            $this->jobDefinitionId = $incident->getJobDefinitionId();
+        }
     }
 
     public function getProcessDefinitionId(): ?string

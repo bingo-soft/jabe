@@ -39,7 +39,7 @@ class ServiceTaskDelegateExpressionActivityBehavior extends TaskActivityBehavior
         $this->fieldDeclarations = $fieldDeclarations;
     }
 
-    public function signal(ActivityExecutionInterface $execution, ?string $signalName, $signalData): void
+    public function signal(/*ActivityExecutionInterface*/$execution, ?string $signalName = null, $signalData = null, array $processVariables = []): void
     {
         $targetProcessApplication = ProcessApplicationContextUtil::getTargetProcessApplication($execution);
         if (ProcessApplicationContextUtil::requiresContextSwitch($targetProcessApplication)) {

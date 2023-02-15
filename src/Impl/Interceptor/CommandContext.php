@@ -171,9 +171,6 @@ class CommandContext
                             $this->transactionContext->commit();
                         }
                     } catch (\Throwable $exception) {
-                        //if (DbSqlSession::isCrdbConcurrencyConflict($exception)) {
-                        //    //$exception = ProcessEngineLogger.PERSISTENCE_LOGGER.crdbTransactionRetryExceptionOnCommit(exception);
-                        //}
                         $commandInvocationContext->trySetThrowable($exception);
                     }
 
@@ -698,7 +695,7 @@ class CommandContext
         return $this->tenantCheckEnabled;
     }
 
-    public function getCurrentJob(): JobEntity
+    public function getCurrentJob(): ?JobEntity
     {
         return $this->currentJob;
     }

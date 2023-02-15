@@ -26,7 +26,7 @@ class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior
         parent::__construct();
     }
 
-    public function execute(ActivityExecutionInterface $execution): void
+    public function execute(/*ActivityExecutionInterface*/$execution): void
     {
         $execution->inactivate();
         $this->lockConcurrentRoot($execution);
@@ -91,7 +91,6 @@ class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior
         $scopeExecution = $execution->isScope() ? $execution : $execution->getParent();
 
         $executionsAtGateway = $execution->findInactiveConcurrentExecutions($gatewayActivity);
-
         if (count($executionsAtGateway) >= $numExecutionsGuaranteedToActivate) {
             return true;
         } else {

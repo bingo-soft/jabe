@@ -68,7 +68,7 @@ class StandaloneTransactionContext implements TransactionContextInterface
             return;
         }
         foreach ($transactionListeners as $transactionListener) {
-            $transactionListener->execute($commandContext);
+            $transactionListener->execute($this->commandContext);
         }
     }
 

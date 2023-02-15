@@ -92,7 +92,7 @@ class BatchStatisticsQueryImpl extends AbstractQuery implements BatchStatisticsQ
         return $this;
     }
 
-    public function getSuspensionState(): SuspensionState
+    public function getSuspensionState(): ?SuspensionState
     {
         return $this->suspensionState;
     }

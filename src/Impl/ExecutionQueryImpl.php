@@ -29,7 +29,7 @@ class ExecutionQueryImpl extends AbstractVariableQueryImpl implements ExecutionQ
     protected bool $isTenantIdSet = false;
     protected $tenantIds = [];
 
-    public function __construct(CommandExecutorInterface $commandExecutor)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
     }
@@ -258,7 +258,7 @@ class ExecutionQueryImpl extends AbstractVariableQueryImpl implements ExecutionQ
         return $this->executionId;
     }
 
-    public function getSuspensionState(): SuspensionState
+    public function getSuspensionState(): ?SuspensionState
     {
         return $this->suspensionState;
     }
@@ -268,7 +268,7 @@ class ExecutionQueryImpl extends AbstractVariableQueryImpl implements ExecutionQ
         $this->suspensionState = $suspensionState;
     }
 
-    public function getEventSubscriptions(): array
+    public function getEventSubscriptions(): ?array
     {
         return $this->eventSubscriptions;
     }

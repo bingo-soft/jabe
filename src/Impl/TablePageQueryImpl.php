@@ -19,8 +19,9 @@ class TablePageQueryImpl extends ListQueryParameterObject implements TablePageQu
     protected $tableName;
     protected $order;
 
-    public function __construct(CommandExecutorInterface $commandExecutor = null)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
+        parent::__construct();
         $this->commandExecutor = $commandExecutor;
     }
 

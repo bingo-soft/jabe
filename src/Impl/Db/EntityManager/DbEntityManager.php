@@ -328,6 +328,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
                     // Top level persistence exception
                     $failure = $failedOperation->getFailure();
                     //throw LOG.flushDbOperationException(allOperations, failedOperation, failure);
+                    var_dump($failure);
                     throw new \Exception("flushDbOperationException");
                 } else {
                     // This branch should never be reached and the exception thus indicates a bug
@@ -378,7 +379,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
 
         if (
             OptimisticLockingResult::THROW == $handlingResult
-            && canIgnoreHistoryModificationFailure($dbOperation)
+            && $this->canIgnoreHistoryModificationFailure($dbOperation)
         ) {
             $handlingResult = OptimisticLockingResult::IGNORE;
         }
@@ -407,7 +408,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
         //throw new \Exception("crdbTransactionRetryException");
     }*/
 
-    private function invokeOptimisticLockingListeners(DbOperation $dbOperation): OptimisticLockingResult
+    private function invokeOptimisticLockingListeners(DbOperation $dbOperation): string
     {
         $handlingResult = OptimisticLockingResult::THROW;
 
@@ -455,6 +456,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
     protected function flushEntityCache(): void
     {
         $cachedEntities = $this->dbEntityCache->getCachedEntities();
+
         foreach ($cachedEntities as $cachedDbEntity) {
             $this->flushCachedEntity($cachedDbEntity);
         }

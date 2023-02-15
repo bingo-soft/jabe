@@ -37,7 +37,7 @@ class PvmAtomicOperationActivityInitStackNotifyListenerReturn extends PvmAtomicO
         }
     }
 
-    protected function getEventName(): ?string
+    public function getEventName(): ?string
     {
         return ExecutionListenerInterface::EVENTNAME_START;
     }

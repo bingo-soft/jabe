@@ -28,7 +28,7 @@ class UntypedValueImpl implements TypedValueInterface
 
     public function __toString()
     {
-        return sprintf("Untyped value '%s', isTransient = %s", $this->value, $this->isTransient);
+        return sprintf("Untyped value '%s', isTransient = %s", json_encode($this->value), $this->isTransient);
     }
 
     public function serialize()

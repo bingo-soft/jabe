@@ -13,8 +13,11 @@ class XMLConfigBuilder
 {
     private $parser;
 
+    private $resource;
+
     public function __construct($resource)
     {
+        $this->resource = $resource;
         $this->parser = new XPathParser($resource, false);
     }
 
@@ -22,6 +25,7 @@ class XMLConfigBuilder
     {
         $this->parsed = true;
         $this->parseConfiguration($this->parser->evalNode("/configuration"));
+        $this->configuration->setResource($this->resource);
         return $this->configuration;
     }
 

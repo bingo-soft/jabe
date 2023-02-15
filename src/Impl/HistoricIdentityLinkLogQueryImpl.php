@@ -24,7 +24,7 @@ class HistoricIdentityLinkLogQueryImpl extends AbstractVariableQueryImpl impleme
     protected $tenantIds = [];
     protected bool $isTenantIdSet = false;
 
-    public function __construct(CommandExecutorInterface $commandExecutor)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
     }

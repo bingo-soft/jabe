@@ -20,7 +20,7 @@ class PvmAtomicOperationProcessEnd extends PvmAtomicOperationActivityInstanceEnd
         return $execution->getProcessDefinition();
     }
 
-    protected function getEventName(): ?string
+    public function getEventName(): ?string
     {
         return ExecutionListenerInterface::EVENTNAME_END;
     }

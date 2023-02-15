@@ -637,7 +637,7 @@ class AuthorizationManager extends AbstractManager
 
     // variable instance query /////////////////////////////
 
-    protected function configureVariableInstanceQuery(VariableInstanceQueryImpl $query): void
+    public function configureVariableInstanceQuery(VariableInstanceQueryImpl $query): void
     {
         $this->configureQuery($query);
 

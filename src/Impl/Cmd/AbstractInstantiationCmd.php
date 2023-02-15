@@ -132,7 +132,7 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
                     $this->mapping = $mapping;
                 }
 
-                public function isFulfilled(ScopeImpl $element): bool
+                public function isFulfilled($element = null): bool
                 {
                     return !empty($this->mapping->getExecutions($element)) || $element == $this->processDefinition;
                 }
@@ -181,7 +181,7 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
                     $this->processDefinition = $processDefinition;
                 }
 
-                public function isFulfilled(ScopeImpl $element): bool
+                public function isFulfilled($element = null): bool
                 {
                     return (
                         in_array($this->ancestorScopeExecution, $this->mapping->getExecutions($element))
@@ -254,7 +254,7 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
         }
 
         switch ($startBehavior) {
-            case self::CANCEL_EVENT_SCOPE:
+            case ActivityStartBehavior::CANCEL_EVENT_SCOPE:
                 $scopeToCancel = $topMostActivity->getEventScope();
                 $executionToCancel = $this->getSingleExecutionForScope($mapping, $scopeToCancel);
                 if ($executionToCancel !== null) {
@@ -265,7 +265,7 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
                     $this->instantiateConcurrent($flowScopeExecution, $activitiesToInstantiate, $elementToInstantiate);
                 }
                 break;
-            case self::INTERRUPT_EVENT_SCOPE:
+            case ActivityStartBehavior::INTERRUPT_EVENT_SCOPE:
                  $scopeToCancel = $topMostActivity->getEventScope();
                 $executionToCancel = $this->getSingleExecutionForScope($mapping, $scopeToCancel);
                 $executionToCancel->interrupt("Interrupting activity " . $topMostActivity . " executed.", $this->skipCustomListeners, $this->skipIoMappings, false);
@@ -273,7 +273,7 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
                 $executionToCancel->leaveActivityInstance();
                 $this->instantiate($executionToCancel, $activitiesToInstantiate, $elementToInstantiate);
                 break;
-            case self::INTERRUPT_FLOW_SCOPE:
+            case ActivityStartBehavior::INTERRUPT_FLOW_SCOPE:
                 $scopeToCancel = $topMostActivity->getFlowScope();
                 $executionToCancel = $this->getSingleExecutionForScope($mapping, $scopeToCancel);
                 $executionToCancel->interrupt("Interrupting activity " . $topMostActivity . " executed.", $this->skipCustomListeners, $this->skipIoMappings, false);

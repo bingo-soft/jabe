@@ -105,7 +105,7 @@ class ActivityImpl extends ScopeImpl implements PvmActivityInterface, HasDIBound
         return $this->activityStartBehavior;
     }
 
-    public function setActivityStartBehavior(atring $activityStartBehavior): void
+    public function setActivityStartBehavior(string $activityStartBehavior): void
     {
         $this->activityStartBehavior = $activityStartBehavior;
     }

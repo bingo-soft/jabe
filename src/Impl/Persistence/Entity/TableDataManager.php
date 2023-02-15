@@ -191,7 +191,7 @@ class TableDataManager extends AbstractManager
         $tableData = $this->getDbEntityManager()->selectList("selectTableData", $tablePageQuery);
 
         $tablePage->setTableName($tablePageQuery->getTableName());
-        $tablePage->setTotal(getTableCount($tablePageQuery->getTableName()));
+        $tablePage->setTotal($this->getTableCount($tablePageQuery->getTableName()));
         $tablePage->setRows($tableData);
         $tablePage->setFirstResult($tablePageQuery->getFirstResult());
 

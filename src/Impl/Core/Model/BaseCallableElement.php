@@ -107,7 +107,7 @@ class BaseCallableElement
         $this->versionTagValueProvider = $version;
     }
 
-    public function setTenantIdProvider(ParameterValueProviderInterface $tenantIdProvider): void
+    public function setTenantIdProvider(?ParameterValueProviderInterface $tenantIdProvider): void
     {
         $this->tenantIdProvider = $tenantIdProvider;
     }

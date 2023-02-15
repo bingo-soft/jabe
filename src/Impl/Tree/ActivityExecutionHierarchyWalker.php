@@ -35,7 +35,7 @@ class ActivityExecutionHierarchyWalker extends SingleReferenceWalker
             // walk to parent scope
             foreach ($this->activityExecutionMapping as $pair) {
                 if ($pair[0] == $flowScope) {
-                    return new ActivityExecutionTuple(flowScope, $pair[1]);
+                    return new ActivityExecutionTuple($flowScope, $pair[1]);
                 }
             }
             return null;

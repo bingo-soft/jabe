@@ -38,7 +38,7 @@ class HistoricDetailQueryImpl extends AbstractQuery implements HistoricDetailQue
     protected bool $isByteArrayFetchingEnabled = true;
     protected bool $isCustomObjectDeserializationEnabled = true;
 
-    public function __construct(CommandExecutorInterface $commandExecutor = null)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
     }

@@ -13,6 +13,8 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Management\Metrics;
 use Jabe\Impl\Util\ClassNameUtil;
+use Concurrent\RunnableInterface;
+use Concurrent\Worker\InterruptibleProcess;
 
 abstract class JobExecutor
 {
@@ -26,7 +28,7 @@ abstract class JobExecutor
     protected $jobAcquisitionThread;
 
     protected bool $isAutoActivate = false;
-    protected bool $isActive = false;
+    protected $isActive;
 
     protected int $maxJobsPerAcquisition = 3;
 
@@ -53,29 +55,30 @@ abstract class JobExecutor
         $className = ClassNameUtil::getClassNameWithoutPackage(get_class($this));
         $this->name = "JobExecutor[$className]";
         $this->lockOwner = Uuid::uuid1();
+        $this->isActive = new \Swoole\Atomic(0);
     }
 
     public function start(): void
     {
-        if ($this->isActive) {
+        if ($this->isActive->get()) {
             return;
         }
         //LOG.startingUpJobExecutor(getClass().getName());
         $this->ensureInitialization();
         $this->startExecutingJobs();
-        $this->isActive = true;
+        $this->isActive->set(1);
     }
 
     public function shutdown(): void
     {
-        if (!$this->isActive) {
+        if (!$this->isActive->get()) {
             return;
         }
         //LOG.shuttingDownTheJobExecutor(getClass().getName());
         $this->acquireJobsRunnable->stop();
         $this->stopExecutingJobs();
         $this->ensureCleanup();
-        $this->isActive = false;
+        $this->isActive->set(0);
     }
 
     protected function ensureInitialization(): void
@@ -94,7 +97,7 @@ abstract class JobExecutor
 
     public function jobWasAdded(): void
     {
-        if ($this->isActive) {
+        if ($this->isActive->get()) {
             $this->acquireJobsRunnable->jobWasAdded();
         }
     }
@@ -120,7 +123,7 @@ abstract class JobExecutor
         }
 
         // if we unregister the last process engine, auto-shutdown the jobexecutor
-        if (empty($this->processEngines) && $this->isActive) {
+        if (empty($this->processEngines) && $this->isActive->get()) {
             $this->shutdown();
         }
     }
@@ -346,7 +349,7 @@ abstract class JobExecutor
 
     public function isActive(): bool
     {
-        return $this->isActive;
+        return $this->isActive->get();
     }
 
     public function getRejectedJobsHandler(): ?RejectedJobsHandlerInterface
@@ -363,8 +366,8 @@ abstract class JobExecutor
     {
         if ($this->jobAcquisitionThread === null) {
             $jobs = $this->acquireJobsRunnable;
-            $this->jobAcquisitionThread = new \Swoole\Process(function () use ($jobs) {
-                $jobs->run();
+            $this->jobAcquisitionThread = new InterruptibleProcess(function ($process) use ($jobs) {
+                $jobs->run($process);
             });
             $this->jobAcquisitionThread->start();
         }
@@ -372,7 +375,7 @@ abstract class JobExecutor
 
     protected function stopJobAcquisitionThread(): void
     {
-        while (\Swoole\Process::wait(0)) {
+        while (InterruptibleProcess::wait(0)) {
         }
         $this->jobAcquisitionThread = null;
     }

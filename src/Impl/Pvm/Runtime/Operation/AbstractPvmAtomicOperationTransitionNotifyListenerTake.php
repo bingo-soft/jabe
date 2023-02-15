@@ -37,7 +37,7 @@ abstract class AbstractPvmAtomicOperationTransitionNotifyListenerTake extends Ab
         return $execution->getTransition();
     }
 
-    protected function getEventName(): ?string
+    public function getEventName(): ?string
     {
         return ExecutionListenerInterface::EVENTNAME_TAKE;
     }

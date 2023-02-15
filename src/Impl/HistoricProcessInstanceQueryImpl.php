@@ -67,7 +67,7 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
     protected bool $isOrQueryActive = false;
     protected $queryVariableNameToValuesMap = [];
 
-    public function __construct(CommandExecutorInterface $commandExecutor = null)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
         $this->queries[] = $this;
@@ -380,7 +380,7 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
     public function executeCount(CommandContext $commandContext): int
     {
         $this->checkQueryOk();
-        EnsureUtil::ensureVariablesInitialized();
+        $this->ensureVariablesInitialized();
         return $commandContext
             ->getHistoricProcessInstanceManager()
             ->findHistoricProcessInstanceCountByQueryCriteria($this);
@@ -389,7 +389,7 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
     public function executeList(CommandContext $commandContext, ?Page $page): array
     {
         $this->checkQueryOk();
-        EnsureUtil::ensureVariablesInitialized();
+        $this->ensureVariablesInitialized();
         return $commandContext
             ->getHistoricProcessInstanceManager()
             ->findHistoricProcessInstancesByQueryCriteria($this, $page);
@@ -398,7 +398,7 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
     public function executeIdsList(CommandContext $commandContext): array
     {
         $this->checkQueryOk();
-        EnsureUtil::ensureVariablesInitialized();
+        $this->ensureVariablesInitialized();
         return $commandContext
             ->getHistoricProcessInstanceManager()
             ->findHistoricProcessInstanceIds($this);
@@ -407,7 +407,7 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
     public function executeDeploymentIdMappingsList(CommandContext $commandContext): array
     {
         $this->checkQueryOk();
-        EnsureUtil::ensureVariablesInitialized();
+        $this->ensureVariablesInitialized();
         return $commandContext
             ->getHistoricProcessInstanceManager()
             ->findDeploymentIdMappingsByQueryCriteria($this);

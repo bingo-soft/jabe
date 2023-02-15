@@ -35,12 +35,12 @@ class ValueFieldsImpl implements ValueFieldsInterface
         $this->text2 = $textValue2;
     }
 
-    public function getIntValue(): ?int
+    public function getLongValue(): ?int
     {
         return $this->intValue;
     }
 
-    public function setIntValue(int $intValue): void
+    public function setLongValue(?int $intValue): void
     {
         $this->intValue = $intValue;
     }

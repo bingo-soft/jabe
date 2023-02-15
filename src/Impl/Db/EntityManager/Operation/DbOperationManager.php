@@ -44,7 +44,8 @@ class DbOperationManager
         if (self::$insertTypeComparator === null) {
             self::$insertTypeComparator = new EntityTypeComparatorForInserts();
             self::$modificationTypeComparator = new EntityTypeComparatorForModifications();
-            self::$insertOperationComparator = self::$modificationOperationComparator = new DbEntityOperationComparator();
+            self::$insertOperationComparator = new DbEntityOperationComparator();
+            self::$modificationOperationComparator = new DbEntityOperationComparator();
             self::$bulkOperationComparator = new DbBulkOperationComparator();
         }
         $this->inserts = new TreeMap(self::$insertTypeComparator);
@@ -110,13 +111,17 @@ class DbOperationManager
      * @param operationsForFlush */
     protected function addSortedInserts(array &$flush): void
     {
+        $keys = [];
+        foreach ($this->inserts as $key => $ops) {
+            $keys[] = $key;
+        }
         foreach ($this->inserts->getArrayCopy() as $clazz => $operationsForType) {
             // add inserts to flush
             if (is_a($clazz, HasDbReferencesInterface::class, true)) {
                 // if this type has self references, we need to resolve the reference order
-                $flush = array_merge($flush, $this->sortByReferences($operationsForType->getArrayCopy()));
+                array_push($flush, ...$this->sortByReferences($operationsForType->getArrayCopy()));
             } else {
-                $flush = array_merge($flush, $operationsForType->getArrayCopy());
+                array_push($flush, ...$operationsForType->getArrayCopy());
             }
         }
     }
@@ -148,12 +153,13 @@ class DbOperationManager
             }
             // last perform bulk operations
             if ($this->bulkOperations->get($type) !== null) {
-                $flush = array_merge($flush, $this->bulkOperations->get($type)->getArrayCopy());
+                array_push($flush, ...$this->bulkOperations->get($type)->getArrayCopy());
+                //array_splice($flush, count($flush), 0, $this->bulkOperations->get($type)->getArrayCopy());
             }
         }
-
         //the very last perform bulk operations for which the order is important
-        $flush = array_merge($flush, $this->bulkOperationsInsertionOrder);
+        array_push($flush, ...$this->bulkOperationsInsertionOrder);
+        //array_splice($flush, count($flush), 0, $this->bulkOperationsInsertionOrder);
     }
 
     protected function addSortedModificationsForType(?string $type, array $preSortedOperations, array &$flush): void
@@ -161,9 +167,9 @@ class DbOperationManager
         if (!empty($preSortedOperations)) {
             if (is_a($type, HasDbReferencesInterface::class, true)) {
                 // if this type has self references, we need to resolve the reference order
-                $flush = array_merge($flush, $this->sortByReferences($preSortedOperations));
+                array_push($flush, ...$this->sortByReferences($preSortedOperations));
             } else {
-                $flush = array_merge($flush, $preSortedOperations);
+                array_push($flush, ...$preSortedOperations);
             }
         }
     }
@@ -177,9 +183,9 @@ class DbOperationManager
     protected function sortByReferences(array $preSorted): array
     {
         // copy the pre-sorted set and apply final sorting to list
-        $opList = $preSorted;
-
+        $opList = array_values($preSorted);
         for ($i = 0; $i < count($opList); $i += 1) {
+            //$keysOuter = array_keys($opList);
             $currentOperation = $opList[$i];
             $currentEntity = $currentOperation->getEntity();
             $currentReferences = $currentOperation->getFlushRelevantEntityReferences();
@@ -187,6 +193,7 @@ class DbOperationManager
             // check whether this operation must be placed after another operation
             $moveTo = $i;
             for ($k = $i + 1; $k < count($opList); $k += 1) {
+                //$keysInner = array_keys($opList);
                 $otherOperation = $opList[$k];
                 $otherEntity = $otherOperation->getEntity();
                 $otherReferences = $otherOperation->getFlushRelevantEntityReferences();
@@ -207,8 +214,8 @@ class DbOperationManager
             }
 
             if ($moveTo > $i) {
-                unset($opList[$i]);
-                $opList[$moveTo] = $currentOperation;
+                array_splice($opList, $i, 1, []);
+                array_splice($opList, $moveTo, 0, [ $currentOperation ]);
                 $i -= 1;
             }
         }

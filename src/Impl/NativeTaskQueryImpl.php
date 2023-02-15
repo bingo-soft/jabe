@@ -13,7 +13,6 @@ use Jabe\Task\{
 
 class NativeTaskQueryImpl extends AbstractNativeQuery implements NativeTaskQueryInterface
 {
-
     public function __construct($contextOrExecutor)
     {
         parent::__construct($contextOrExecutor);

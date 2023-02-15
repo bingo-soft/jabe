@@ -41,7 +41,7 @@ class CompensationEventActivityBehavior extends FlowNodeActivityBehavior
         }
     }
 
-    public function signal(ActivityExecutionInterface $execution, ?string $signalName, $signalData): void
+    public function signal(/*ActivityExecutionInterface*/$execution, ?string $signalName = null, $signalData = null, array $processVariables = []): void
     {
         // join compensating executions -
         // only wait for non-event-scope executions cause a compensation event subprocess consume the compensation event and

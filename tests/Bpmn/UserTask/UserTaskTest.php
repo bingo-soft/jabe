@@ -133,4 +133,31 @@ class UserTaskTest extends PluggableProcessEngineTest
 
         $this->testRule->assertProcessEnded($processInstance->getId());
     }
+
+    #[Deployment(resources: [ "tests/Resources/Bpmn/UserTask/UserTaskTest.testInputOutputParameters.bpmn"])]
+    public function testInputOutputParameters(): void
+    {
+        $processInstance = $this->runtimeService->startProcessInstanceByKey("ProcessWithParameters");
+        $tasks = $this->taskService->createTaskQuery()->processInstanceId($processInstance->getId())->list();
+        $this->taskService->complete($tasks[0]->getId(), ["record_id" => 128]);
+        $tasks = $this->taskService->createTaskQuery()->processInstanceId($processInstance->getId())->list();
+        $this->assertCount(1, $tasks);
+    }
+
+    #[Deployment(resources: [ "tests/Resources/Bpmn/UserTask/UserTaskTest.testParallelGatewayWithSubprocess.bpmn"])]
+    public function testParallelGatewayWithSubprocess(): void
+    {
+        $processInstance = $this->runtimeService->startProcessInstanceByKey("ProcessWithGatewayAndSubprocess");
+        $tasks = $this->taskService->createTaskQuery()->processInstanceId($processInstance->getId())->list();
+        $this->assertCount(2, $tasks);
+
+        $this->taskService->setVariablesLocal($tasks[0]->getId(), ["object_id" => 1, "record_id" => 101]);
+        $this->taskService->complete($tasks[0]->getId());
+
+        $this->taskService->setVariablesLocal($tasks[1]->getId(), ["object_id" => 1, "record_id" => 202]);
+        $this->taskService->complete($tasks[1]->getId());
+
+        $tasks = $this->taskService->createTaskQuery()->processInstanceId($processInstance->getId())->list();
+        $this->assertCount(2, $tasks);
+    }
 }

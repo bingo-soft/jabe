@@ -322,13 +322,13 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
         }
     }
 
-    public function getExecution(): ExecutionEntity
+    public function getExecution(): ?ExecutionEntity
     {
         $this->ensureExecutionInitialized();
         return $this->execution;
     }
 
-    public function setExecution(ExecutionEntity $execution): void
+    public function setExecution(?ExecutionEntity $execution): void
     {
         $this->execution = $execution;
         if ($this->execution === null) {

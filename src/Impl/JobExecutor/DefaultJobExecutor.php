@@ -15,12 +15,19 @@ class DefaultJobExecutor extends ThreadPoolJobExecutor
     protected int $corePoolSize = 4;
     protected int $maxPoolSize = 10;
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     protected function startExecutingJobs(): void
     {
         if ($this->threadPoolExecutor === null || $this->threadPoolExecutor->isShutdown()) {
             $threadPoolQueue = new ArrayBlockingQueue($this->queueSize);
             $this->threadPoolExecutor = new DefaultPoolExecutor($this->corePoolSize, 0, TimeUnit::MILLISECONDS, $threadPoolQueue);
             //$this->threadPoolExecutor->setRejectedExecutionHandler(...);
+            //getAcquireJobsRunnable()
+            $this->threadPoolExecutor->setScopeArguments($this->isActive, $this->acquireJobsRunnable->getIsJobAddedAtomic());
         }
 
         parent::startExecutingJobs();

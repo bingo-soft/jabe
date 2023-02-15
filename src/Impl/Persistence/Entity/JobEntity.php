@@ -55,7 +55,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
     protected $jobHandlerConfiguration = null;
 
     protected $exceptionByteArray;
-    protected $exceptionByteArrayId;
+    protected ?string $exceptionByteArrayId = null;
 
     protected $exceptionMessage;
 
@@ -83,7 +83,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
     // last failing activity id ///////////////////////
     protected $failedActivityId;
 
-    protected $persistedDependentEntities;
+    protected $persistedDependentEntities = [];
 
     public function execute(CommandContext $commandContext)
     {
@@ -159,7 +159,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         $commandContext->getJobManager()->deleteJob($this, !$executingJob);
 
         // Also delete the job's exception byte array
-        if ($this->exceptionByteArrayId !== null) {
+        if (isset($this->exceptionByteArrayId)) {
             $commandContext->getByteArrayManager()->deleteByteArrayById($this->exceptionByteArrayId);
         }
 
@@ -185,7 +185,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         $persistentState["jobHandlerConfiguration"] = $this->jobHandlerConfiguration;
         $persistentState["priority"] = $this->priority;
         $persistentState["tenantId"] = $this->tenantId;
-        if ($this->exceptionByteArrayId !== null) {
+        if (isset($this->exceptionByteArrayId)) {
             $persistentState["exceptionByteArrayId"] = $this->exceptionByteArrayId;
         }
         return $persistentState;
@@ -488,7 +488,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
     public function getExceptionByteArrayId(): ?string
     {
-        return $this->exceptionByteArrayId;
+        return isset($this->exceptionByteArrayId) ? $this->exceptionByteArrayId : null;
     }
 
     protected function getExceptionByteArray(): ?ByteArrayEntity
@@ -499,7 +499,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
     protected function ensureExceptionByteArrayInitialized(): void
     {
-        if ($this->exceptionByteArray === null && $this->exceptionByteArrayId !== null) {
+        if ($this->exceptionByteArray === null && isset($this->exceptionByteArrayId)) {
             $this->exceptionByteArray = Context::getCommandContext()
                 ->getDbEntityManager()
                 ->selectById(ByteArrayEntity::class, $this->exceptionByteArrayId);
@@ -643,7 +643,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
     {
         $referenceIdAndClass = [];
 
-        if ($this->exceptionByteArrayId !== null) {
+        if (isset($this->exceptionByteArrayId)) {
             $referenceIdAndClass[$this->exceptionByteArrayId] = ByteArrayEntity::class;
         }
 
@@ -657,7 +657,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
     public function postLoad(): void
     {
-        if ($this->exceptionByteArrayId !== null) {
+        if (isset($this->exceptionByteArrayId)) {
             $this->persistedDependentEntities = [];
             $this->persistedDependentEntities[$this->exceptionByteArrayId] = ByteArrayEntity::class;
         } else {

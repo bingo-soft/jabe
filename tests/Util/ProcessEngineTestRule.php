@@ -98,13 +98,24 @@ class ProcessEngineTestRule
             return $this->deploy($this->createDeploymentBuilder(), [], $instances);
         } elseif ($instances[0] instanceof BpmnModelInstanceInterface && count($instances) == 2) {
             return $this->deploy($this->createDeploymentBuilder(), [$instances[0]], [$instances[1]]);
+        } elseif ($instances[0] instanceof BpmnModelInstanceInterface) {
+            $models = [];
+            $it = 0;
+            foreach ($instances as $el) {
+                if ($el instanceof BpmnModelInstanceInterface) {
+                    $it += 1;
+                    $models[] = $el;
+                } else {
+                    break;
+                }
+            }
+            return $this->deploy($this->createDeploymentBuilder(), $models, []);
         } elseif ($instances[0] instanceof DeploymentBuilderInterface && count($instances) == 3) {
             $i = 0;
             foreach ($instances[1] as $bpmnModelInstance) {
                 $instances[0]->addModelInstance($i . "_" . self::DEFAULT_BPMN_RESOURCE_NAME, $bpmnModelInstance);
                 $i += 1;
             }
-
             foreach ($instances[2] as $resource) {
                 $instances[0]->addClasspathResource($resource);
             }
@@ -193,7 +204,7 @@ class ProcessEngineTestRule
      *
      * @see #executeAvailableJobs()
      */
-    public function executeAvailableJobs(...$args): void
+    public function executeAvailableJobs(string $processId, ...$args): void
     {
         if (is_int($args[0]) && count($args) == 1) {
             $jobsExecuted = 0;
@@ -213,8 +224,7 @@ class ProcessEngineTestRule
             $recursive = true;
         }
 
-        $jobs = $this->processEngine->getManagementService()->createJobQuery()->withRetriesLeft()->list();
-
+        $jobs = $this->processEngine->getManagementService()->createJobQuery()->processInstanceId($processId)->withRetriesLeft()->list();
         if (empty($jobs)) {
             if ($expectedExecutions != PHP_INT_MAX) {
                 assert($expectedExecutions == $jobsExecuted, "executed less jobs than expected.");
@@ -233,7 +243,7 @@ class ProcessEngineTestRule
         assert($jobsExecuted <= $expectedExecutions, "executed more jobs than expected.");
 
         if ($recursive) {
-            $this->executeAvailableJobs($jobsExecuted, $expectedExecutions, $recursive);
+            $this->executeAvailableJobs($processId, $jobsExecuted, $expectedExecutions, $recursive);
         }
     }
 

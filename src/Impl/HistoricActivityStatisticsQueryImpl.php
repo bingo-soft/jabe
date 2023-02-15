@@ -25,7 +25,7 @@ class HistoricActivityStatisticsQueryImpl extends AbstractQuery implements Histo
 
     protected $processInstanceIds = [];
 
-    public function __construct(?string $processDefinitionId, CommandExecutorInterface $commandExecutor)
+    public function __construct(?string $processDefinitionId = null, ?CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
         $this->processDefinitionId = $processDefinitionId;

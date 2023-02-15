@@ -74,7 +74,7 @@ class MessageEntity extends JobEntity
                 . ", jobHandlerType=" . $this->jobHandlerType
                 . ", jobHandlerConfiguration=" . $this->jobHandlerConfiguration
                 . ", exceptionByteArray=" . $this->exceptionByteArray
-                . ", exceptionByteArrayId=" . $this->exceptionByteArrayId
+                . ", exceptionByteArrayId=" . (isset($this->exceptionByteArrayId) ? $this->exceptionByteArrayId : null)
                 . ", exceptionMessage=" . $this->exceptionMessage
                 . ", deploymentId=" . $this->deploymentId
                 . "]";

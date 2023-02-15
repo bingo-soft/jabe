@@ -32,7 +32,7 @@ class IncidentQueryImpl extends AbstractQuery implements IncidentQueryInterface,
     protected $tenantIds = [];
     protected $jobDefinitionIds = [];
 
-    public function __construct(CommandExecutorInterface $commandExecutor)
+    public function __construct(?CommandExecutorInterface $commandExecutor = null)
     {
         parent::__construct($commandExecutor);
     }

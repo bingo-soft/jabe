@@ -17,6 +17,27 @@ class ErrorEventDefinition implements \Serializable
         $this->handlerActivityId = $handlerActivityId;
     }
 
+    public function serialize()
+    {
+        return json_encode([
+            'handlerActivityId' => $this->handlerActivityId,
+            'errorCode' => $this->errorCode,
+            'precedence' => $this->precedence,
+            'errorCodeVariable' => $this->errorCodeVariable,
+            'errorMessageVariable' => $this->errorMessageVariable
+        ]);
+    }
+
+    public function unserialize($data)
+    {
+        $json = json_decode($data);
+        $this->handlerActivityId = $json->handlerActivityId;
+        $this->errorCode = $json->errorCode;
+        $this->precedence = $json->precedence;
+        $this->errorCodeVariable = $json->errorCodeVariable;
+        $this->errorMessageVariable = $json->errorMessageVariable;
+    }
+
     public function getErrorCode(): ?string
     {
         return $this->errorCode;

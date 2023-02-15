@@ -17,7 +17,7 @@ class AcquirableJobEntity implements DbEntityInterface, HasDbRevisionInterface
 
     protected $lockOwner = null;
     protected $lockExpirationTime = null;
-    protected $duedate;
+    protected ?string $duedate = null;
 
     protected $processInstanceId = null;
 
@@ -64,9 +64,9 @@ class AcquirableJobEntity implements DbEntityInterface, HasDbRevisionInterface
         return $this->duedate;
     }
 
-    public function setDuedate(?string $duedate): void
+    public function setDuedate(/*?string|\DateTime*/$duedate = null): void
     {
-        $this->duedate = $duedate;
+        $this->duedate = $duedate instanceof \DateTime ? $duedate->format('c') : $duedate;
     }
 
     public function getLockOwner(): ?string

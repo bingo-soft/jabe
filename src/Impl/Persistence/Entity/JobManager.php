@@ -246,7 +246,8 @@ class JobManager extends AbstractManager
 
     public function findJobsByProcessInstanceId(?string $processInstanceId): array
     {
-        return $this->getDbEntityManager()->selectList("selectJobsByProcessInstanceId", $processInstanceId);
+        $jobs = $this->getDbEntityManager()->selectList("selectJobsByProcessInstanceId", $processInstanceId);
+        return $job;
     }
 
     public function findJobsByJobDefinitionId(?string $jobDefinitionId): array
