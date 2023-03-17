@@ -136,7 +136,7 @@ class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefinitionInt
         return $this->initial;
     }
 
-    public function setInitial(ActivityImpl $initial): void
+    public function setInitial(?ActivityImpl $initial): void
     {
         $this->initial = $initial;
     }

@@ -17,7 +17,7 @@ use Jabe\Impl\Bpmn\Delegate\{
 use Jabe\Impl\Context\Context;
 use Jabe\Impl\Util\ClassDelegateUtil;
 
-class DelegateExpressionExecutionListener implements ExecutionListener
+class DelegateExpressionExecutionListener implements ExecutionListenerInterface
 {
     //protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
@@ -30,7 +30,7 @@ class DelegateExpressionExecutionListener implements ExecutionListener
         $this->fieldDeclarations = $fieldDeclarations;
     }
 
-    public function notify(DelegateExecutionInterface $execution): void
+    public function notify(/*DelegateExecutionInterface*/$execution): void
     {
         // Note: we can't cache the result of the expression, because the
         // execution can change: eg. delegateExpression='${mySpringBeanFactory.randomSpringBean()}'

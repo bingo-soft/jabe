@@ -121,7 +121,7 @@ class EventSubscriptionDeclaration
 
     public function createSubscriptionForStartEvent(ProcessDefinitionEntity $processDefinition): EventSubscriptionEntity
     {
-        $eventSubscriptionEntity = new EventSubscriptionEntity($this->eventType);
+        $eventSubscriptionEntity = new EventSubscriptionEntity(null, $this->eventType);
 
         $scopeForExpression = StartProcessVariableScope::getSharedInstance();
         $eventName = $this->resolveExpressionOfEventName($scopeForExpression);

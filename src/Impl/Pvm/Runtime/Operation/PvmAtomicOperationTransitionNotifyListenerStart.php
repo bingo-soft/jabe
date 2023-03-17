@@ -42,7 +42,6 @@ class PvmAtomicOperationTransitionNotifyListenerStart extends PvmAtomicOperation
             // instance from the database
             $execution->setProcessInstanceStarting(false);
         }
-
         $execution->dispatchDelayedEventsAndPerformOperation(self::activityExecute());
     }
 

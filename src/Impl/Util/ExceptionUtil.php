@@ -51,14 +51,22 @@ class ExceptionUtil
     {
         $result = null;
 
-        if ($byteArray != null) {
-            $result = new ByteArrayEntity($name, $byteArray, $type);
+        if ($byteArray !== null) {
+            $result = new ByteArrayEntity($name, self::sanitizeByteArray($byteArray), $type);
             Context::getCommandContext()
             ->getByteArrayManager()
             ->insertByteArray($result);
         }
 
         return $result;
+    }
+
+    private static function sanitizeByteArray(?string $byteArray): ?string
+    {
+        if ($byteArray !== null) {
+            return str_replace('\\', '.', $byteArray);
+        }
+        return null;
     }
 
     protected static function getPersistenceCauseException(/*ServerException|PersistenceException*/$persistenceException): \Throwable

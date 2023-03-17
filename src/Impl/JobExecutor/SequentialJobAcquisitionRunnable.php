@@ -100,7 +100,7 @@ class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable
         if (array_key_exists($currentProcessEngine->getName(), $jobs)) {
             $additionalJobs = $jobs[$currentProcessEngine->getName()];
         }
-        //.get(currentProcessEngine.getName());
+
         if (!empty($additionalJobs)) {
             foreach ($additionalJobs as $jobBatch) {
                 //LOG.executeJobs(currentProcessEngine.getName(), jobBatch);

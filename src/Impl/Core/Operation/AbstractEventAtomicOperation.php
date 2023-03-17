@@ -20,7 +20,7 @@ abstract class AbstractEventAtomicOperation implements CoreAtomicOperationInterf
     public function execute(CoreExecution $execution): void
     {
         $scope = $this->getScope($execution);
-        $listeners = $this->getListeners($scope, $execution);
+        $listeners = $execution->hasFailedOnEndListeners() ? $this->getBuiltinListeners($scope) : $this->getListeners($scope, $execution);
         $listenerIndex = $execution->getListenerIndex();
 
         if ($listenerIndex == 0) {

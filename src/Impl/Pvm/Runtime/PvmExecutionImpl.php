@@ -725,11 +725,11 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         }
 
         $activityBehavior = $this->activity->getActivityBehavior();
-        try {
+        /*try {*/
             $activityBehavior->signal($this, $signalName, $signalData);
-        } catch (\Exception $e) {
+        /*} catch (\Exception $e) {
             throw new PvmException("couldn't process signal '" . $signalName . "' on activity '" . $this->activity->getId() . "': " . $e->getMessage(), $e);
-        }
+        }*/
     }
 
     public function take(): void
@@ -964,81 +964,18 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         return $childExecutions;
     }
 
-    public function leaveActivityViaTransition($outgoingTransition, ?array $_recyclableExecutions = []): void
+    public function leaveActivityViaTransition($outgoingTransition, ?array $recyclableExecutions = []): void
     {
         if ($outgoingTransition instanceof PvmTransitionInterface) {
-            $_transitions = [$outgoingTransition];
+            $transitions = [ $outgoingTransition ];
         } else {
-            $_transitions = $outgoingTransition;
+            $transitions = $outgoingTransition;
         }
-        $recyclableExecutions = [];
-        if (!empty($_recyclableExecutions)) {
-            $recyclableExecutions = $_recyclableExecutions;
-        }
-
-        // if recyclable executions size is greater
-        // than 1, then the executions are joined and
-        // the activity is left with 'this' execution,
-        // if it is not not the last concurrent execution.
-        // therefore it is necessary to remove the local
-        // variables (event if it is the last concurrent
-        // execution).
-        if (count($recyclableExecutions) > 1) {
-            $this->removeVariablesLocalInternal();
-        }
-
-        // mark all recyclable executions as ended
-        // if the list of recyclable executions also
-        // contains 'this' execution, then 'this' execution
-        // is also marked as ended. (if 'this' execution is
-        // pruned, then the local variables are not copied
-        // to the parent execution)
-        // this is a workaround to not delete all recyclable
-        // executions and create a new execution which leaves
-        // the activity.
-        foreach ($recyclableExecutions as $execution) {
-            $execution->setEnded(true);
-        }
-
-        // remove 'this' from recyclable executions to
-        // leave the activity with 'this' execution
-        // (when 'this' execution is the last concurrent
-        // execution, then 'this' execution will be pruned,
-        // and the activity is left with the scope
-        // execution)
-        foreach ($recyclableExecutions as $key => $execution) {
-            if ($execution == $this) {
-                unset($recyclableExecutions[$key]);
-            }
-        }
-
-        foreach ($recyclableExecutions as $execution) {
-            $execution->end(empty($_transitions));
-        }
-
-        $propagatingExecution = $this;
-        if ($this->getReplacedBy() !== null) {
-            $propagatingExecution = $this->getReplacedBy();
-        }
-
-        $propagatingExecution->isActive = true;
-        $propagatingExecution->isEnded = false;
-
-        if (empty($_transitions)) {
-            $propagatingExecution->end(!$propagatingExecution->isConcurrent());
-        } else {
-            $propagatingExecution->setTransitionsToTake($_transitions);
-            $propagatingExecution->performOperation(AtomicOperation::transitionNotifyListenerEnd());
-        }
+        $this->leaveActivityViaTransitions($transitions, $recyclableExecutions);
     }
 
-    public function leaveActivityViaTransitions(array $_transitions, array $_recyclableExecutions): void
+    public function leaveActivityViaTransitions(array $outgoingTransitions, ?array $recyclableExecutions = []): void
     {
-        $recyclableExecutions = [];
-        if (!empty($_recyclableExecutions)) {
-            $recyclableExecutions = $_recyclableExecutions;
-        }
-
         // if recyclable executions size is greater
         // than 1, then the executions are joined and
         // the activity is left with 'this' execution,
@@ -1086,7 +1023,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         // executions first.
         foreach ($recyclableExecutions as $execution) {
             $execution->setIgnoreAsync(true);
-            $execution->end(empty($_transitions));
+            $execution->end(empty($outgoingTransitions));
         }
 
         $propagatingExecution = $this;
@@ -1097,10 +1034,10 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         $propagatingExecution->isActive = true;
         $propagatingExecution->isEnded = false;
 
-        if (empty($_transitions)) {
+        if (empty($outgoingTransitions)) {
             $propagatingExecution->end(!$propagatingExecution->isConcurrent());
         } else {
-            $propagatingExecution->setTransitionsToTake($_transitions);
+            $propagatingExecution->setTransitionsToTake($outgoingTransitions);
             $propagatingExecution->performOperation(AbstractPvmEventAtomicOperation::transitionNotifyListenerEnd());
         }
     }
@@ -1165,7 +1102,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         foreach ($this->getExecutions() as $nestedExecution) {
             $result = $nestedExecution->findExecution($activityId);
             if ($result !== null) {
-                return result;
+                return $result;
             }
         }
         return null;
@@ -1421,7 +1358,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         $this->setParentExecution($parent);
 
         if ($currentParent !== null) {
-            $executions = &$parent->getExecutions();
+            $executions = &$currentParent->getExecutions();
             foreach ($executions as $key => $execution) {
                 if ($execution == $this) {
                     unset($executions[$key]);

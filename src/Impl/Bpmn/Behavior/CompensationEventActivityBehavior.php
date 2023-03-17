@@ -20,7 +20,7 @@ class CompensationEventActivityBehavior extends FlowNodeActivityBehavior
         $this->compensateEventDefinition = $compensateEventDefinition;
     }
 
-    public function execute(ActivityExecutionInterface $execution): void
+    public function execute(/*ActivityExecutionInterface*/$execution): void
     {
         $eventSubscriptions = $this->collectEventSubscriptions($execution);
         if (empty($eventSubscriptions)) {
@@ -46,7 +46,7 @@ class CompensationEventActivityBehavior extends FlowNodeActivityBehavior
         // join compensating executions -
         // only wait for non-event-scope executions cause a compensation event subprocess consume the compensation event and
         // do not have to compensate embedded subprocesses (which are still non-event-scope executions)
-        if (($execution->getNonEventScopeExecutions())) {
+        if (empty($execution->getNonEventScopeExecutions())) {
             $this->leave($execution);
         } else {
             $execution->forceUpdate();

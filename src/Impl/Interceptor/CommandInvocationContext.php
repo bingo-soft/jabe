@@ -129,8 +129,7 @@ class CommandInvocationContext
     public function rethrow(): void
     {
         if ($this->throwable !== null) {
-            $t = $this->throwable->getTrace()[0];
-            throw new ProcessEngineException(sprintf("exception while executing command: %s, %s.%s.%s", $this->throwable->getMessage(), $t["file"], $t["function"], $t["line"]), $this->throwable);
+            throw new ProcessEngineException(sprintf("exception while executing command: %s", $this->throwable->getMessage()), $this->throwable);
         }
     }
 

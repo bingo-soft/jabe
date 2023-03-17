@@ -24,7 +24,7 @@ class ThrowSignalEventActivityBehavior extends AbstractBpmnActivityBehavior
         $this->signalDefinition = $signalDefinition;
     }
 
-    public function execute(ActivityExecutionInterface $execution): void
+    public function execute(/*ActivityExecutionInterface*/$execution): void
     {
         $businessKey = $this->signalDefinition->getEventPayload()->getBusinessKey($execution);
         $variableMap = $this->signalDefinition->getEventPayload()->getInputVariables($execution);
@@ -32,7 +32,6 @@ class ThrowSignalEventActivityBehavior extends AbstractBpmnActivityBehavior
         $eventName = $this->signalDefinition->resolveExpressionOfEventName($execution);
         // trigger all event subscriptions for the signal (start and intermediate)
         $signalEventSubscriptions = $this->findSignalEventSubscriptions($eventName, $execution->getTenantId());
-
         foreach ($signalEventSubscriptions as $signalEventSubscription) {
             if ($this->isActiveEventSubscription($signalEventSubscription)) {
                 $signalEventSubscription->eventReceived($variableMap, null, $businessKey, $this->signalDefinition->isAsync());

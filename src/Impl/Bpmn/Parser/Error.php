@@ -30,7 +30,7 @@ class Error
         $this->errorCode = $errorCode;
     }
 
-    public function getErrorMessageExpression(): ParameterValueProviderInterface
+    public function getErrorMessageExpression(): ?ParameterValueProviderInterface
     {
         return $this->errorMessageExpression;
     }

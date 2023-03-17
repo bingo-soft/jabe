@@ -25,8 +25,8 @@ class HistoricActivityInstanceQueryImpl extends AbstractQuery implements Histori
     protected $activityNameLike;
     protected $activityType;
     protected $assignee;
-    protected $finished;
-    protected $unfinished;
+    protected bool $finished = false;
+    protected bool $unfinished = false;
     protected $startedBefore;
     protected $startedAfter;
     protected $finishedBefore;
@@ -332,7 +332,7 @@ class HistoricActivityInstanceQueryImpl extends AbstractQuery implements Histori
         return $this->finishedBefore;
     }
 
-    public function getActivityInstanceState(): ActivityInstanceState
+    public function getActivityInstanceState(): ?ActivityInstanceState
     {
         return $this->activityInstanceState;
     }

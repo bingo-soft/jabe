@@ -174,7 +174,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
      * Takes the given outgoing transitions, and potentially reusing
      * the given list of executions that were previously joined.
      */
-    public function leaveActivityViaTransitions(array $outgoingTransitions, array $joinedExecutions): void;
+    public function leaveActivityViaTransitions(array $outgoingTransitions, ?array $joinedExecutions = []): void;
 
     public function leaveActivityViaTransition($outgoingTransition, ?array $_recyclableExecutions = []): void;
 

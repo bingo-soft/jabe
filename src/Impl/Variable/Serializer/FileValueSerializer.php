@@ -51,7 +51,7 @@ class FileValueSerializer extends PrimitiveValueSerializer
         throw new \Exception("Currently no automatic conversation from UntypedValue to FileValue");
     }
 
-    public function readValue(ValueFieldsInterface $valueFields, bool $isTransient, bool $deserializeValue = false): FileValueInterface
+    public function readValue(ValueFieldsInterface $valueFields, bool $deserializeValue, bool $isTransient = false): FileValueInterface
     {
         $fileName = $valueFields->getTextValue();
         if ($fileName === null) {

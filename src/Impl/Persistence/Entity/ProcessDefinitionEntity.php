@@ -40,7 +40,7 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
     protected $diagramResourceName;
     protected bool $isGraphicalNotationDefined = false;
     protected $taskDefinitions = [];
-    protected $hasStartFormKey;
+    protected bool $hasStartFormKey = false;
     protected $suspensionState;
     protected $tenantId;
     protected $versionTag;

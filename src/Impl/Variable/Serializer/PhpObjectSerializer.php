@@ -23,47 +23,44 @@ class PhpObjectSerializer extends AbstractObjectValueSerializer
         return false;
     }
 
-    protected function deserializeFromByteArray(?string $bytes, /*string*/$objectTypeName)
+    protected function deserializeFromByteArray(?string $serialized, /*string*/$objectTypeName)
     {
-        /*if (!empty($bytes)) {
-            $bytes = str_replace('.', '\\', $bytes);
-            if (strpos($bytes, '[') === 0) {
-                $bytes = json_decode($bytes, true);
-                $res = [];
-                foreach ($bytes as $item) {
-                    $res[] = unserialize($item);
+        if (!empty($serialized)) {
+            $deserialized = $serialized;
+            preg_match_all("/(C:\d+:\\\?\")(.*?)(?=\\\\\"|\")/", $deserialized, $matches);
+            if (!empty($matches[2])) {
+                foreach ($matches[2] as $className) {
+                    $deserialized = str_replace($className, str_replace('.', '\\', $className), $deserialized);
                 }
-                return $res;
             }
-            return unserialize($bytes);
-        }*/
+            $deserialized = str_replace('.."', '\\"', $deserialized);
+            $deserialized = unserialize($deserialized);
+            return $deserialized;
+        }
         return null;
     }
 
     protected function serializeToByteArray($deserializedObject): ?string
     {
-        /*if (is_array($deserializedObject)) {
-            $res = [];
-            foreach ($deserializedObject as $item) {
-                $res[] = str_replace('\\', '.', serialize($item));
+        $serialized = serialize($deserializedObject);
+        preg_match_all("/(C:\d+:\\\?\")(.*?)(?=\\\\\"|\")/", $serialized, $matches);
+        if (!empty($matches[2])) {
+            foreach ($matches[2] as $className) {
+                $serialized = str_replace($className, str_replace('\\', '.', $className), $serialized);
             }
-            return json_encode($res);
-        }*/
-        $serialized = str_replace('\\', '.', serialize($deserializedObject));
+        }
+        $serialized = str_replace('\\"', '.."', $serialized);
         return $serialized;
     }
 
     protected function getTypeNameForDeserialized($deserializedObject): ?string
     {
-        /*if (is_array($deserializedObject)) {
-            return sprintf("Array[%s]", is_object($deserializedObject[0]) ? get_class($deserializedObject[0]) : gettype($deserializedObject[0]));
-        }*/
         return is_object($deserializedObject) ? get_class($deserializedObject) : gettype($deserializedObject);
     }
 
     protected function canSerializeValue($value): bool
     {
-        if (is_array($value) && !empty($value) && $value[0] instanceof \Serializable) {
+        if (is_array($value) && !empty($value) && (is_string($value[0]) || is_numeric($value[0]) || $value[0] instanceof \Serializable)) {
             return true;
         }
         return $value instanceof \Serializable;

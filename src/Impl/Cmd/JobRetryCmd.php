@@ -34,7 +34,7 @@ abstract class JobRetryCmd implements CommandInterface
     {
         if ($this->exception !== null) {
             $job->setExceptionMessage($this->exception->getMessage());
-            $job->setExceptionStacktrace($this->exception->getTraceAsString());
+            $job->setExceptionStacktrace(sprintf("MESSAGE: %s, TRACE: %s", $this->exception->getMessage(), $this->exception->getTraceAsString()));
         }
     }
 

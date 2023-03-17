@@ -25,8 +25,12 @@ abstract class AcquireJobsRunnable implements RunnableInterface
         if ($millis <= 0) {
             return;
         }
-        usleep(1000);
-        $millis = $millis > 1000 ? 999 : $millis;
+        if ($millis >= 1000) {
+            $millis /= 1000;
+            sleep($millis);
+        } else {
+            usleep($millis);
+        }
     }
 
     public function stop(): void

@@ -14,7 +14,6 @@ class ClassDelegateUtil
     public static function instantiateDelegate(?string $clazz, array $fieldDeclarations)
     {
         $artifactFactory = Context::getProcessEngineConfiguration()->getArtifactFactory();
-
         try {
             $object = $artifactFactory->getArtifact($clazz);
 

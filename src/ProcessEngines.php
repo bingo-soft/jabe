@@ -24,7 +24,7 @@ abstract class ProcessEngines
     protected static $processEngineInfos = [];
 
     /** Initializes all process engines that can be found on the classpath for
-     * resources <code>camunda.cfg.xml</code> (plain Activiti style configuration)
+     * resources <code>engine.cfg.xml</code> (plain Activiti style configuration)
      * and for resources <code>activiti-context.xml</code> (Spring style configuration). */
     public static function init(bool $forceCreate = true): void
     {
@@ -32,13 +32,13 @@ abstract class ProcessEngines
             /*ClassLoader classLoader = ReflectUtil.getClassLoader();
             Enumeration<URL> resources = null;
             try {
-                resources = classLoader.getResources("camunda.cfg.xml");
+                resources = classLoader.getResources("engine.cfg.xml");
             } catch (IOException e) {
                 try {
                     resources = classLoader.getResources("activiti.cfg.xml");
                 } catch(IOException ex) {
                     if (forceCreate) {
-                        throw new ProcessEngineException("problem retrieving camunda.cfg.xml and activiti.cfg.xml resources on the classpath: "+System.getProperty("java.class.path"), ex);
+                        throw new ProcessEngineException("problem retrieving engine.cfg.xml and activiti.cfg.xml resources on the classpath: "+System.getProperty("java.class.path"), ex);
                     } else {
                         return;
                     }
@@ -77,7 +77,7 @@ abstract class ProcessEngines
 
     /*protected static void initProcessEngineFromSpringResource(URL resource) {
         try {
-            Class< ? > springConfigurationHelperClass = ReflectUtil.loadClass("org.camunda.bpm.engine.spring.SpringConfigurationHelper");
+            Class< ? > springConfigurationHelperClass = ReflectUtil.loadClass("org.engine.bpm.engine.spring.SpringConfigurationHelper");
             Method method = springConfigurationHelperClass.getMethod("buildProcessEngine", new Class<?>[]{URL.class});
             ProcessEngine processEngine = (ProcessEngine) method.invoke(null, new Object[]{resource});
     

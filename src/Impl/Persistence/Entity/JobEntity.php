@@ -388,7 +388,6 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         $exceptionBytes = $exception;
 
         $byteArray = $this->getExceptionByteArray();
-
         if ($byteArray === null) {
             $byteArray = ExceptionUtil::createJobExceptionByteArray($exceptionBytes, ResourceTypes::runtime());
             $this->exceptionByteArrayId = $byteArray->getId();

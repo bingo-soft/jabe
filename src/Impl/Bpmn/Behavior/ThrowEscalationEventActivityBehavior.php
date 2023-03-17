@@ -20,7 +20,7 @@ class ThrowEscalationEventActivityBehavior extends AbstractBpmnActivityBehavior
         $this->escalation = $escalation;
     }
 
-    public function execute(ActivityExecutionInterface $execution): void
+    public function execute(/*ActivityExecutionInterface*/$execution): void
     {
         $currentActivity = $execution->getActivity();
 
@@ -31,7 +31,7 @@ class ThrowEscalationEventActivityBehavior extends AbstractBpmnActivityBehavior
         }
     }
 
-    protected function leaveExecution(ActivityExecutionInterface $execution, PvmActivityInterface $currentActivity, EscalationEventDefinition $escalationEventDefinition): void
+    protected function leaveExecution(ActivityExecutionInterface $execution, PvmActivityInterface $currentActivity, ?EscalationEventDefinition $escalationEventDefinition): void
     {
         // execution tree could have been expanded by triggering a non-interrupting event
         $replacingExecution = $execution->getReplacedBy();

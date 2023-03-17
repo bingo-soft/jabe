@@ -65,9 +65,12 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
         }
     }
 
-    public function getTypedValue(?bool $deserializeValue, bool $asTransientValue): TypedValueInterface
+    public function getTypedValue(?bool $deserializeValue = true, ?bool $asTransientValue = null): TypedValueInterface
     {
-        $deserializeValue = $deserializeValue ?? true;
+        if ($asTransientValue === null) {
+            $asTransientValue = $deserializeValue;
+            $deserializeValue = true;
+        }
         if (Context::getCommandContext() !== null) {
             // in some circumstances we must invalidate the cached value instead of returning it
 

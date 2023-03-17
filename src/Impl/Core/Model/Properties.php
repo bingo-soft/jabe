@@ -22,15 +22,16 @@ class Properties implements \Serializable
      * @return mixed the value to which the specified property key is mapped, or
      *         <code>null</code> if this properties contains no mapping for the property key
      */
-    public function get($property)
+    public function &get($property)
     {
         if ($this->contains($property)) {
             return $this->properties[$property->getName()];
         }
+        $ret = [];
         if ($property instanceof PropertyKey) {
-            return null;
+            $ret = null;
         }
-        return [];
+        return $ret;
     }
 
     public function sort(PropertyListKey $property, $callback): void
@@ -87,7 +88,7 @@ class Properties implements \Serializable
      */
     public function addListItem(PropertyListKey $property, $value): void
     {
-        $list = $this->get($property);
+        $list = &$this->get($property);
         $list[] = $value;
 
         if (!$this->contains($property)) {
@@ -124,7 +125,7 @@ class Properties implements \Serializable
      */
     public function putMapEntry(PropertyMapKey $property, $key, $value): void
     {
-        $map = $this->get($property);
+        $map = &$this->get($property);
         if (!$property->allowsOverwrite() && array_key_exists($key, $map)) {
             throw new ProcessEngineException("Cannot overwrite property key " . $key . ". Key already exists");
         }

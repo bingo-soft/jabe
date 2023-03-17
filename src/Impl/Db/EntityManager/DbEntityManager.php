@@ -383,7 +383,6 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
         ) {
             $handlingResult = OptimisticLockingResult::IGNORE;
         }
-
         switch ($handlingResult) {
             case OptimisticLockingResult::IGNORE:
                 break;

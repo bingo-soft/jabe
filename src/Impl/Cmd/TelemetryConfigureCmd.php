@@ -16,7 +16,7 @@ class TelemetryConfigureCmd implements CommandInterface
 
     protected const TELEMETRY_PROPERTY = "telemetry.enabled";
 
-    protected $telemetryEnabled;
+    protected bool $telemetryEnabled = false;
 
     public function __construct(bool $telemetryEnabled)
     {

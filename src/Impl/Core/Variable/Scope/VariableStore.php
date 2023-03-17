@@ -80,12 +80,11 @@ class VariableStore
 
     public function addVariable(CoreVariableInstanceInterface $value): void
     {
-
         if ($this->containsKey($value->getName())) {
             //throw ProcessEngineLogger.CORE_LOGGER.duplicateVariableInstanceException(value);
         } else {
-            $this->getVariablesMap()[$value->getName()] = $value;
-
+            $map = &$this->getVariablesMap();
+            $map[$value->getName()] = $value;
             foreach ($this->observers as $listener) {
                 $listener->onAdd($value);
             }
@@ -143,7 +142,6 @@ class VariableStore
     {
         if (!$this->isInitialized()) {
             $this->variables = [];
-
             foreach ($this->variablesProvider->provideVariables() as $variable) {
                 $this->variables[$variable->getName()] = $variable;
             }

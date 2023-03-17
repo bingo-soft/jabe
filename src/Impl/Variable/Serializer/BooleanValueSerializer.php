@@ -23,7 +23,7 @@ class BooleanValueSerializer extends PrimitiveValueSerializer
         return Variables::booleanValue(json_decode($untypedValue->getValue()), $untypedValue->isTransient());
     }
 
-    public function readValue(ValueFieldsInterface $valueFields, bool $asTransientValue, bool $deserializeValue = false): BooleanValueInterface
+    public function readValue(ValueFieldsInterface $valueFields, bool $deserializeValue, bool $isTransient = false): BooleanValueInterface
     {
         $boolValue = null;
         $intValue = $valueFields->getIntValue();
@@ -44,6 +44,6 @@ class BooleanValueSerializer extends PrimitiveValueSerializer
             $intValue = $boolValue ? self::TRUE : self::FALSE;
         }
 
-        $valueFields->setIntValue($intValue);
+        $valueFields->setLongValue($intValue);
     }
 }

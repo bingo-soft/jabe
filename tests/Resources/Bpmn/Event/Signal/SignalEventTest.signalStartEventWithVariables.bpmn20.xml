@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions id="definitions"
+	xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+	xmlns:extension="http://activiti.org/bpmn" 
+	targetNamespace="Examples">
+
+	<signal id="alertSignal_100" name="alert variables" />
+
+	<process id="startBySignal1_100" isExecutable="true">
+
+		<startEvent id="start">
+			<signalEventDefinition signalRef="alertSignal_100" />
+		</startEvent>
+
+		<sequenceFlow sourceRef="start" targetRef="task" />
+
+		<userTask id="task" name="start process task with variables"/>
+
+		<sequenceFlow sourceRef="task" targetRef="end" />
+
+		<endEvent id="end" />
+
+	</process>
+
+	
+
+</definitions>

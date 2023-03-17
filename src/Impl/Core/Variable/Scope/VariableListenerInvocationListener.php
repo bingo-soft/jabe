@@ -21,17 +21,17 @@ class VariableListenerInvocationListener implements VariableInstanceLifecycleLis
         $this->targetScope = $targetScope;
     }
 
-    public function onCreate(CoreVariableInstanceInterface $variable, AbstractVariableScope $sourceScope): void
+    public function onCreate(CoreVariableInstanceInterface $variable, ?AbstractVariableScope $sourceScope): void
     {
         $this->handleEvent(new VariableEvent($variable, VariableListenerInterface::CREATE, $sourceScope));
     }
 
-    public function onUpdate(CoreVariableInstanceInterface $variable, AbstractVariableScope $sourceScope): void
+    public function onUpdate(CoreVariableInstanceInterface $variable, ?AbstractVariableScope $sourceScope): void
     {
         $this->handleEvent(new VariableEvent($variable, VariableListenerInterface::UPDATE, $sourceScope));
     }
 
-    public function onDelete(CoreVariableInstanceInterface $variable, AbstractVariableScope $sourceScope): void
+    public function onDelete(CoreVariableInstanceInterface $variable, ?AbstractVariableScope $sourceScope): void
     {
         $this->handleEvent(new VariableEvent($variable, VariableListenerInterface::DELETE, $sourceScope));
     }

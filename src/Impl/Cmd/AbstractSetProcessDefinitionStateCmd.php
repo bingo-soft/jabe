@@ -151,7 +151,7 @@ abstract class AbstractSetProcessDefinitionStateCmd extends AbstractSetStateCmd
      * Subclasses should return the type of the JobHandler here. it will be used when
      * the user provides an execution date on which the actual state change will happen.
      */
-    abstract protected function getDelayedExecutionJobHandlerType(): ?string;
+    //abstract protected function getDelayedExecutionJobHandlerType(): ?string;
 
     /**
      * Subclasses should return the type of the AbstractSetJobDefinitionStateCmd here.

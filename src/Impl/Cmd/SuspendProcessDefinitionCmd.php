@@ -31,7 +31,7 @@ class SuspendProcessDefinitionCmd extends AbstractSetProcessDefinitionStateCmd
         return new SuspendJobDefinitionCmd($jobDefinitionSuspensionStateBuilder);
     }
 
-    protected function getNextCommand(UpdateProcessInstanceSuspensionStateBuilderImpl $processInstanceCommandBuilder): SuspendProcessInstanceCmd
+    protected function getNextCommand(/*UpdateProcessInstanceSuspensionStateBuilderImpl*/$processInstanceCommandBuilder = null)
     {
         return new SuspendProcessInstanceCmd($processInstanceCommandBuilder);
     }

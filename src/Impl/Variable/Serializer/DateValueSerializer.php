@@ -19,7 +19,7 @@ class DateValueSerializer extends PrimitiveValueSerializer
         return Variables::dateValue($untypedValue->getValue(), $untypedValue->isTransient());
     }
 
-    public function readValue(ValueFieldsInterface $valueFields, bool $isTransient, bool $deserializeValue = false): DateValueInterface
+    public function readValue(ValueFieldsInterface $valueFields, bool $deserializeValue, bool $isTransient = false): DateValueInterface
     {
         return Variables::dateValue($valueFields->getTextValue(), $isTransient);
     }

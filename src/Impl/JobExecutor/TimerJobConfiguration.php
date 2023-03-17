@@ -10,7 +10,7 @@ class TimerJobConfiguration implements JobHandlerConfigurationInterface
 
     protected $timerElementKey;
     protected $timerElementSecondaryKey;
-    protected $followUpJobCreated;
+    protected bool $followUpJobCreated = false;
 
     public function getTimerElementKey(): ?string
     {

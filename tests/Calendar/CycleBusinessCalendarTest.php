@@ -13,7 +13,7 @@ class CycleBusinessCalendarTest extends TestCase
         ClockUtil::reset();
     }
 
-    public function testSimpleCron(): void
+    private function testSimpleCron(): void
     {
         $businessCalendar = new CycleBusinessCalendar();
 

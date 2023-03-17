@@ -14,6 +14,7 @@ class ObjectValueImpl extends AbstractTypedValue implements ObjectValueInterface
     protected $serializationDataFormat;
     protected $serializedValue;
     protected $isDeserialized;
+    protected $deserializedValue_;
 
     public function __construct(
         $deserializedValue,
@@ -23,6 +24,7 @@ class ObjectValueImpl extends AbstractTypedValue implements ObjectValueInterface
         ?bool $isDeserialized = true,
         ?bool $isTransient = null
     ) {
+        $this->deserializedValue_ = $deserializedValue;
         parent::__construct($deserializedValue, ValueType::getObject());
 
         $this->serializedValue = $serializedValue;
@@ -82,7 +84,13 @@ class ObjectValueImpl extends AbstractTypedValue implements ObjectValueInterface
         if ($this->isDeserialized) {
             return parent::getValue();
         } else {
-            throw new \Exception("Object is not deserialized.");
+            $e = new \Exception();
+            $from = [];
+            for ($i = 0; $i < 26; $i += 1) {
+                $t = $e->getTrace()[$i];
+                $from[] = sprintf("%s.%s.%s", $t["file"], $t["function"], $t["line"]);
+            }
+            throw new \Exception("Object is not deserialized. " . implode(" <= ", $from));
         }
     }
 

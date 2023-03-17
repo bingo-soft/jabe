@@ -34,7 +34,6 @@ class ClassDelegateTaskListener extends ClassDelegate implements TaskListenerInt
     protected function getTaskListenerInstance(): TaskListenerInterface
     {
         $delegateInstance = ClassDelegateUtil::instantiateDelegate($this->className, $this->fieldDeclarations);
-
         if ($delegateInstance instanceof TaskListenerInterface) {
             return $delegateInstance;
         } else {

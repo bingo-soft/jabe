@@ -268,7 +268,7 @@ class BpmnDeployer extends AbstractDefinitionDeployer
     public function addEventSubscriptions(ProcessDefinitionEntity $processDefinition): void
     {
         $eventDefinitions = $processDefinition->getProperties()->get(BpmnProperties::eventSubscriptionDeclarations());
-        foreach (array_values($eventDefinitions) as $eventDefinition) {
+        foreach ($eventDefinitions as $key => $eventDefinition) {
             $this->addEventSubscription($processDefinition, $eventDefinition);
         }
     }

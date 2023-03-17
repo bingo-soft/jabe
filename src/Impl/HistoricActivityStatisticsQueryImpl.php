@@ -13,10 +13,10 @@ class HistoricActivityStatisticsQueryImpl extends AbstractQuery implements Histo
 {
     protected $processDefinitionId;
 
-    protected $includeFinished;
-    protected $includeCanceled;
-    protected $includeCompleteScope;
-    protected $includeIncidents;
+    protected bool $includeFinished = false;
+    protected bool $includeCanceled = false;
+    protected bool $includeCompleteScope = false;
+    protected bool $includeIncidents = false;
 
     protected $startedBefore;
     protected $startedAfter;

@@ -224,7 +224,7 @@ class LegacyBehavior
      */
     public static function isConcurrentScope(PvmExecutionImpl $propagatingExecution): bool
     {
-        return false;
+        return $propagatingExecution->isConcurrent() && $propagatingExecution->isScope();
     }
 
     /**

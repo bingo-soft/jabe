@@ -23,10 +23,10 @@ use Jabe\Runtime\ProcessInstanceInterface;
 
 abstract class AbstractDeleteProcessInstanceCmd
 {
-    protected $externallyTerminated;
+    protected bool $externallyTerminated = false;
     protected $deleteReason;
-    protected $skipCustomListeners;
-    protected $skipSubprocesses;
+    protected bool $skipCustomListeners = false;
+    protected bool $skipSubprocesses = false;
     protected bool $failIfNotExists = true;
 
     protected function checkDeleteProcessInstance(ExecutionEntity $execution, CommandContext $commandContext): void

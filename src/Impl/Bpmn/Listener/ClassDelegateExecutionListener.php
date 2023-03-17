@@ -39,7 +39,7 @@ class ClassDelegateExecutionListener extends ClassDelegate implements ExecutionL
     {
         $delegateInstance = ClassDelegateUtil::instantiateDelegate($this->className, $this->fieldDeclarations);
         if ($delegateInstance instanceof ExecutionListenerInterface) {
-            return $this->delegateInstance;
+            return $delegateInstance;
         } elseif ($delegateInstance instanceof PhpDelegateInterface) {
             return new ServiceTaskPhpDelegateActivityBehavior($delegateInstance);
         } else {

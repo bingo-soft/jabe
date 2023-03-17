@@ -377,7 +377,7 @@ abstract class ProcessEngineConfiguration
         $this->historyLevelCommand = new HistoryLevelSetupCommand();
     }
 
-    abstract public function buildProcessEngine();
+    abstract public function buildProcessEngine(bool $preventJobExecutorInitialization = false);
 
     public static function createProcessEngineConfigurationFromResourceDefault(): ProcessEngineConfiguration
     {

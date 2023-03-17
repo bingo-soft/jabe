@@ -26,19 +26,28 @@ class ServiceTaskPhpDelegateActivityBehavior extends TaskActivityBehavior implem
 
     public function performExecution(ActivityExecutionInterface $execution): void
     {
-        $this->execute($execution);
+        $this->executeDelegate($execution);
         $this->leave($execution);
     }
 
     public function notify(/*DelegateExecutionInterface*/$execution): void
     {
-        $this->execute($execution);
+        $this->executeDelegate($execution);
     }
 
     public function execute(/*DelegateExecutionInterface*/$execution): void
     {
+        if ($execution instanceof ActivityExecutionInterface) {
+            parent::execute($execution);
+        } else {
+            $this->executeDelegate($execution);
+        }
+    }
+
+    private function executeDelegate(/*DelegateExecutionInterface*/$execution): void
+    {
         Context::getProcessEngineConfiguration()
-            ->getDelegateInterceptor()
-            ->handleInvocation(new PhpDelegateInvocation($this->phpDelegate, $execution));
+        ->getDelegateInterceptor()
+        ->handleInvocation(new PhpDelegateInvocation($this->phpDelegate, $execution));
     }
 }

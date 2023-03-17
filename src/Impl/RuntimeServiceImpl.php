@@ -81,10 +81,10 @@ class RuntimeServiceImpl extends ServiceImpl implements RuntimeServiceInterface
         if (!empty($args) && is_string($args[0])) {
             $res->businessKey($args[0]);
         }
-        if (!empty($args) && is_array($args[0])) {
+        if (!empty($args) && (is_array($args[0]) || $args[0] instanceof VariableMapInterface)) {
             $res->setVariables($args[0]);
         }
-        if (!empty($args) && isset($args[1]) && is_array($args[1])) {
+        if (!empty($args) && isset($args[1]) && (is_array($args[1]) || $args[1] instanceof VariableMapInterface)) {
             $res->setVariables($args[1]);
         }
         return $res->execute();

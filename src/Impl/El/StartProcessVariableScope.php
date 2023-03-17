@@ -40,7 +40,7 @@ class StartProcessVariableScope implements VariableScopeInterface
         return "scope";
     }
 
-    public function getVariables(): array
+    public function getVariables(): \ArrayObject
     {
         return self::$EMPTY_VARIABLE_MAP;
     }
@@ -50,7 +50,7 @@ class StartProcessVariableScope implements VariableScopeInterface
         return $this->getVariables();
     }
 
-    public function getVariablesLocal(): array
+    public function getVariablesLocal(): \ArrayObject
     {
         return self::$EMPTY_VARIABLE_MAP;
     }
@@ -90,22 +90,22 @@ class StartProcessVariableScope implements VariableScopeInterface
         return [];
     }
 
-    public function setVariable(?string $variableName, $value): void
+    public function setVariable(?string $variableName, $value, ...$args): void
     {
         throw new \Exception("No execution active, no variables can be set");
     }
 
-    public function setVariableLocal(?string $variableName, $value): void
+    public function setVariableLocal(?string $variableName, $value, ...$args): void
     {
         throw new \Exception("No execution active, no variables can be set");
     }
 
-    public function setVariables(array $variables): void
+    public function setVariables(array $variables, ?bool $skipSerializationFormatCheck = null): void
     {
         throw new \Exception("No execution active, no variables can be set");
     }
 
-    public function setVariablesLocal(array $variables): void
+    public function setVariablesLocal($variables, ?bool $skipSerializationFormatCheck = null): void
     {
         throw new \Exception("No execution active, no variables can be set");
     }

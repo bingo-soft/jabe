@@ -18,7 +18,7 @@ class DefaultJobPriorityProvider extends DefaultPriorityProvider
 {
     //private final static JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
-    protected function getSpecificPriority(ExecutionEntity $execution, /*JobDeclaration*/$param, ?string $jobDefinitionId): ?int
+    protected function getSpecificPriority(?ExecutionEntity $execution, /*JobDeclaration*/$param, ?string $jobDefinitionId): ?int
     {
         $specificPriority = null;
         $jobDefinition = $this->getJobDefinitionFor($jobDefinitionId);
@@ -35,7 +35,7 @@ class DefaultJobPriorityProvider extends DefaultPriorityProvider
         return $specificPriority;
     }
 
-    protected function getProcessDefinitionPriority(ExecutionEntity $execution, /*JobDeclaration*/$jobDeclaration): ?int
+    protected function getProcessDefinitionPriority(?ExecutionEntity $execution, /*JobDeclaration*/$jobDeclaration): ?int
     {
         $processDefinition = $jobDeclaration->getProcessDefinition();
         return $this->getProcessDefinedPriority($processDefinition, BpmnParse::PROPERTYNAME_JOB_PRIORITY, $execution, $this->describeContext($jobDeclaration, $execution));
@@ -68,7 +68,7 @@ class DefaultJobPriorityProvider extends DefaultPriorityProvider
         //LOG.couldNotDeterminePriority(execution, value, e);
     }
 
-    protected function describeContext(JobDeclaration $jobDeclaration, ExecutionEntity $executionEntity): ?string
+    protected function describeContext(JobDeclaration $jobDeclaration, ?ExecutionEntity $executionEntity): ?string
     {
         return "Job " . $jobDeclaration->getActivityId()
             . "/" . $jobDeclaration->getJobHandlerType() . " instantiated "

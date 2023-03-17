@@ -40,7 +40,7 @@ interface TypedValueSerializerInterface
      *
      * @return TypedValueInterface the TypedValue
      */
-    public function readValue(ValueFieldsInterface $valueFields, bool $isTransient, bool $deserializeValue = false): TypedValueInterface;
+    public function readValue(ValueFieldsInterface $valueFields, bool $deserializeValue, bool $isTransient = false): TypedValueInterface;
 
     /**
      * Used for auto-detecting the value type of a variable.

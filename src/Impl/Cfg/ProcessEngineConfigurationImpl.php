@@ -1014,6 +1014,8 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
      */
     protected $builtinExceptionCodeProvider;
 
+    private bool $preventJobExecutorInitialization = false;
+
     public function __construct()
     {
         $this->repositoryService = new RepositoryServiceImpl();
@@ -1093,8 +1095,9 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
 
     // buildProcessEngine ///////////////////////////////////////////////////////
 
-    public function buildProcessEngine(): ProcessEngineInterface
+    public function buildProcessEngine(bool $preventJobExecutorInitialization = false): ProcessEngineInterface
     {
+        $this->preventJobExecutorInitialization = $preventJobExecutorInitialization;
         $this->init();
         $this->processEngine = new ProcessEngineImpl($this);
         $this->invokePostProcessEngineBuild($this->processEngine);
@@ -2257,7 +2260,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
 
     protected function initJobExecutor(): void
     {
-        if ($this->jobExecutor === null) {
+        if ($this->jobExecutor === null && !$this->preventJobExecutorInitialization) {
             $this->jobExecutor = new DefaultJobExecutor();
         }
 
@@ -2316,13 +2319,14 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
             }
         }
 
-        $this->jobExecutor->setAutoActivate($this->jobExecutorActivate);
-
-        if ($this->jobExecutor->getRejectedJobsHandler() === null) {
-            if ($this->customRejectedJobsHandler !== null) {
-                $this->jobExecutor->setRejectedJobsHandler($this->customRejectedJobsHandler);
-            } else {
-                $this->jobExecutor->setRejectedJobsHandler(new NotifyAcquisitionRejectedJobsHandler());
+        if (!$this->preventJobExecutorInitialization) {
+            $this->jobExecutor->setAutoActivate($this->jobExecutorActivate);
+            if ($this->jobExecutor->getRejectedJobsHandler() === null) {
+                if ($this->customRejectedJobsHandler !== null) {
+                    $this->jobExecutor->setRejectedJobsHandler($this->customRejectedJobsHandler);
+                } else {
+                    $this->jobExecutor->setRejectedJobsHandler(new NotifyAcquisitionRejectedJobsHandler());
+                }
             }
         }
 
@@ -3244,7 +3248,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
         return $this;
     }
 
-    public function getJobExecutor(): JobExecutor
+    public function getJobExecutor(): ?JobExecutor
     {
         return $this->jobExecutor;
     }
@@ -4578,7 +4582,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
         return $this;
     }
 
-    public function isJavaSerializationFormatEnabled(): bool
+    public function isPhpSerializationFormatEnabled(): bool
     {
         return $this->phpSerializationFormatEnabled;
     }

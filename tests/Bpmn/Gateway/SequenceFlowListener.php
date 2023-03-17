@@ -14,6 +14,5 @@ class SequenceFlowListener implements PhpDelegateInterface
         $processEngineServices = $execution->getProcessEngineServices();
         $runtimeService = $processEngineServices->getRuntimeService();
         $act = $runtimeService->getActivityInstance($execution->getProcessInstanceId());
-        fwrite(STDERR, "*** Hello world from Sequence Flow Listener ***\n");
     }
 }

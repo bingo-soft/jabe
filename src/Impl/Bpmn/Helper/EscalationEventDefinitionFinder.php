@@ -50,7 +50,7 @@ class EscalationEventDefinitionFinder implements TreeVisitorInterface
         return $escalationHandler->isSubProcessScope() && $escalationHandler == $this->throwEscalationActivity->getFlowScope();
     }
 
-    public function getEscalationEventDefinition(): EscalationEventDefinition
+    public function getEscalationEventDefinition(): ?EscalationEventDefinition
     {
         return $this->escalationEventDefinition;
     }

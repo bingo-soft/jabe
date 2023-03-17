@@ -83,7 +83,7 @@ class VariableInstanceHistoryListener implements VariableInstanceLifecycleListen
                 private $variableInstance;
                 private $sourceScope;
 
-                public function __construct(VariableInstanceEntity $variableInstance, AbstractVariableScope $sourceScope)
+                public function __construct(VariableInstanceEntity $variableInstance, ?AbstractVariableScope $sourceScope)
                 {
                     $this->variableInstance = $variableInstance;
                     $this->sourceScope = $sourceScope;

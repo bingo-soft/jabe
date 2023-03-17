@@ -84,7 +84,7 @@ class BpmnExceptionHandler
         self::propagateError($error->getCode(), $error->getMessage(), null, $execution);
     }
 
-    public static function propagateError(?string $errorCode, ?string $errorMessage, \Exception $origException, ActivityExecutionInterface $execution): void
+    public static function propagateError(?string $errorCode, ?string $errorMessage, ?\Exception $origException, ActivityExecutionInterface $execution): void
     {
         $walker = new ActivityExecutionHierarchyWalker($execution);
 

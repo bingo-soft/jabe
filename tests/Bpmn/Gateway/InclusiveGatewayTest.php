@@ -70,7 +70,7 @@ class InclusiveGatewayTest extends PluggableProcessEngineTest
     public function testMergingInclusiveGatewayAsync(): void
     {
         $pi = $this->runtimeService->startProcessInstanceByKey("inclusiveGwMerging", ["input" => 2]);
-        sleep(5);
+        //sleep(5);
         $list = $this->managementService->createJobQuery()->processInstanceId($pi->getId())->list();
         foreach ($list as $job) {
             $this->managementService->executeJob($job->getId());

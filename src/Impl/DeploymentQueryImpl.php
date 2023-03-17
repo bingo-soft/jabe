@@ -17,7 +17,7 @@ class DeploymentQueryImpl extends AbstractQuery implements DeploymentQueryInterf
     protected $deploymentId;
     protected $name;
     protected $nameLike;
-    protected $sourceQueryParamEnabled;
+    protected bool $sourceQueryParamEnabled = false;
     protected $source;
     protected $deploymentBefore;
     protected $deploymentAfter;

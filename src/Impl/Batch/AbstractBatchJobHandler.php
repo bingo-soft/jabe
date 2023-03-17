@@ -65,7 +65,6 @@ abstract class AbstractBatchJobHandler implements BatchJobHandlerInterface
     {
         // for mixed version SeedJob execution, there might be ids that have been processed
         // without updating the mappings, this is corrected here,
-        // see https://jira.camunda.com/browse/CAM-11188
         $elementsToRemove = $idMappings->getOverallIdCount() - count($ids);
         if ($elementsToRemove > 0) {
             foreach ($idMappings as $key => $deploymentMapping) {

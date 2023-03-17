@@ -27,7 +27,7 @@ class SuspendJobDefinitionCmd extends AbstractSetJobDefinitionStateCmd
         return TimerSuspendJobDefinitionHandler::TYPE;
     }
 
-    protected function getNextCommand(UpdateJobSuspensionStateBuilderImpl $jobCommandBuilder): SuspendJobCmd
+    protected function getNextCommand(/*UpdateJobSuspensionStateBuilderImpl*/$jobCommandBuilder = null): SuspendJobCmd
     {
         return new SuspendJobCmd($jobCommandBuilder);
     }

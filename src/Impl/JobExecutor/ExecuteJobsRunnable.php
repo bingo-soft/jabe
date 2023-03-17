@@ -27,7 +27,7 @@ class ExecuteJobsRunnable implements \Serializable, RunnableInterface
     //private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
     protected $jobIds;
-    protected $jobExecutor;
+    //protected $jobExecutor;
     protected $processEngine;
 
     protected static $loadedProcessEngineConfiguration;
@@ -37,7 +37,7 @@ class ExecuteJobsRunnable implements \Serializable, RunnableInterface
     {
         $this->jobIds = $jobIds;
         $this->processEngine = $processEngine;
-        $this->jobExecutor = $processEngine->getProcessEngineConfiguration()->getJobExecutor();
+        //$this->jobExecutor = $processEngine->getProcessEngineConfiguration()->getJobExecutor();
     }
 
     public function serialize()
@@ -54,12 +54,9 @@ class ExecuteJobsRunnable implements \Serializable, RunnableInterface
         $this->jobIds = $json->jobIds;
         if (self::$loadedProcessEngineConfiguration === null) {
             self::$loadedProcessEngineConfiguration = ProcessEngineConfiguration::createProcessEngineConfigurationFromResource($json->resource);
-            self::$loadedProcessEngine = self::$loadedProcessEngineConfiguration->buildProcessEngine();
-            $this->processEngine = self::$loadedProcessEngine;
-            $this->jobExecutor = self::$loadedProcessEngineConfiguration->getJobExecutor();
+            self::$loadedProcessEngine = self::$loadedProcessEngineConfiguration->buildProcessEngine(true);
         }
         $this->processEngine = self::$loadedProcessEngine;
-        $this->jobExecutor = self::$loadedProcessEngineConfiguration->getJobExecutor();
     }
 
     public function run(ThreadInterface $process, ...$args): void

@@ -11,7 +11,6 @@ class PvmAtomicOperationActivityStart extends PvmAtomicOperationActivityInstance
     protected function eventNotificationsCompleted(CoreExecution $execution): void
     {
         parent::eventNotificationsCompleted($execution);
-
         $execution->dispatchDelayedEventsAndPerformOperation(self::activityExecute());
     }
 

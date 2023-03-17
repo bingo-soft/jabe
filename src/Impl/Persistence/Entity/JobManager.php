@@ -236,6 +236,8 @@ class JobManager extends AbstractManager
         // don't apply default sorting
         $params["applyOrdering"] = !empty($orderingProperties);
 
+        
+
         return $this->getDbEntityManager()->selectList("selectNextJobsToExecute", $params, $page);
     }
 

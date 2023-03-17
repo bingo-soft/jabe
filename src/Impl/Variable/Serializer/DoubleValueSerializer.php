@@ -24,7 +24,7 @@ class DoubleValueSerializer extends PrimitiveValueSerializer
         $valueFields->setDoubleValue($value->getValue());
     }
 
-    public function readValue(ValueFieldsInterface $valueFields, bool $isTransient, bool $deserializeValue = false): DoubleValueInterface
+    public function readValue(ValueFieldsInterface $valueFields, bool $deserializeValue, bool $isTransient = false): DoubleValueInterface
     {
         return Variables::doubleValue($valueFields->getDoubleValue(), $isTransient);
     }

@@ -54,12 +54,12 @@ class CompensationUtil
             $compensatingExecution->setConcurrent(true);
         }
 
-        usort($this->eventSubscriptions, function (EventSubscriptionEntity $o1, EventSubscriptionEntity $o2) {
+        usort($eventSubscriptions, function (EventSubscriptionEntity $o1, EventSubscriptionEntity $o2) {
             return $o2->getCreated() < $o1->getCreated();
         });
 
-        foreach ($this->eventSubscriptions as $compensateEventSubscriptionEntity) {
-            $compensateEventSubscriptionEntity->eventReceived(null, $async);
+        foreach ($eventSubscriptions as $compensateEventSubscriptionEntity) {
+            $compensateEventSubscriptionEntity->eventReceived(null, null, null, $async);
         }
     }
 
@@ -91,7 +91,7 @@ class CompensationUtil
 
             // copy local variables to eventScopeExecution by value. This way,
             // the eventScopeExecution references a 'snapshot' of the local variables
-            $variables = $execution->getVariablesLocal();
+            $variables = $execution->getVariablesLocal()->asValueMap();
             foreach ($variables as $key => $value) {
                 $eventScopeExecution->setVariableLocal($key, $value);
             }
@@ -100,7 +100,7 @@ class CompensationUtil
             foreach ($eventSubscriptions as $eventSubscriptionEntity) {
                 $newSubscription = EventSubscriptionEntity::createAndInsert(
                     $eventScopeExecution,
-                    EventType::COMPENSATE,
+                    EventType::compensate(),
                     $eventSubscriptionEntity->getActivity()
                 );
                 $newSubscription->setConfiguration($eventSubscriptionEntity->getConfiguration());
@@ -117,7 +117,7 @@ class CompensationUtil
             $compensationHandler = self::getEventScopeCompensationHandler($execution);
             $eventSubscription = EventSubscriptionEntity::createAndInsert(
                 $scopeExecution,
-                EventType::COMPENSATE,
+                EventType::compensate(),
                 $compensationHandler
             );
             $eventSubscription->setConfiguration($eventScopeExecution->getId());
@@ -165,7 +165,7 @@ class CompensationUtil
 
         $scope = new \stdClass();
         $scope->scopeExecutionMapping = $scopeExecutionMapping;
-        $scope->subscriptions = $subscriptions;
+        $scope->subscriptions = &$subscriptions;
 
         $eventSubscriptionCollector = new class ($scope) implements TreeVisitorInterface {
             private $scope;
@@ -190,7 +190,7 @@ class CompensationUtil
             public function isFulfilled($element = null): bool
             {
                 $consumesCompensationProperty = $element->getProperty(BpmnParse::PROPERTYNAME_CONSUMES_COMPENSATION);
-                return empty($consumesCompensationProperty) || $consumesCompensationProperty == true;
+                return $consumesCompensationProperty === null || $consumesCompensationProperty === true;
             }
         });
 

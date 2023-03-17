@@ -20,9 +20,9 @@ use Jabe\Runtime\{
 abstract class AbstractProcessInstanceModificationCommand implements CommandInterface
 {
     public $processInstanceId;
-    protected $skipCustomListeners;
-    protected $skipIoMappings;
-    protected $externallyTerminated;
+    protected bool $skipCustomListeners = false;
+    protected bool $skipIoMappings = false;
+    protected bool $externallyTerminated = false;
 
     public function __construct(?string $processInstanceId)
     {

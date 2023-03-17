@@ -104,7 +104,12 @@ class TimerEntity extends JobEntity
         $businessCalendar = Context::getProcessEngineConfiguration()
             ->getBusinessCalendarManager()
             ->getBusinessCalendar(CycleBusinessCalendar::NAME);
-        return $businessCalendar->resolveDuedate($this->repeat, null, $this->repeatOffset);
+        $date = $businessCalendar->resolveDuedate($this->repeat, null, $this->repeatOffset);
+
+        if ($date instanceof \DateTime) {
+            return $date->format('c');
+        }
+        return null;
     }
 
     public function getRepeat(): ?string

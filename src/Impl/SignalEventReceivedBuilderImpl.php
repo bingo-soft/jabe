@@ -29,7 +29,7 @@ class SignalEventReceivedBuilderImpl implements SignalEventReceivedBuilderInterf
         $this->signalName = $signalName;
     }
 
-    public function setVariables(array $variables): SignalEventReceivedBuilder
+    public function setVariables(array $variables): SignalEventReceivedBuilderInterface
     {
         if (!empty($variables)) {
             if (empty($this->variables)) {
@@ -99,7 +99,7 @@ class SignalEventReceivedBuilderImpl implements SignalEventReceivedBuilderInterf
         return $this->isTenantIdSet;
     }
 
-    public function getVariables(): VariableMapInterface
+    public function getVariables(): ?VariableMapInterface
     {
         return $this->variables;
     }

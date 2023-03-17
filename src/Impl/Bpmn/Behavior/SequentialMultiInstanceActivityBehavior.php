@@ -31,7 +31,7 @@ class SequentialMultiInstanceActivityBehavior extends MultiInstanceActivityBehav
 
         $this->setLoopVariable($scopeExecution, self::NUMBER_OF_COMPLETED_INSTANCES, $nrOfCompletedInstances);
 
-        if ($loopCounter == nrOfInstances || $this->completionConditionSatisfied($scopeExecution)) {
+        if ($loopCounter == $nrOfInstances || $this->completionConditionSatisfied($scopeExecution)) {
             $this->leave($scopeExecution);
         } else {
             $innerActivity = $this->getInnerActivity($scopeExecution->getActivity());

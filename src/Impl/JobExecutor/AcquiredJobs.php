@@ -43,6 +43,11 @@ class AcquiredJobs
         return count($this->acquiredJobs);
     }
 
+    public function getAcquiredJobsIds(): array
+    {
+        return $this->acquiredJobs;
+    }
+
     public function removeJobId(?string $id): void
     {
         $this->numberOfJobsFailedToLock += 1;

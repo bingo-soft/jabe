@@ -65,7 +65,8 @@ class CorrelateMessageCmd extends AbstractCorrelateMessageCmd implements Command
             }
         } else {
             $correlationResult = $commandContext->runWithoutAuthorization(function () use ($scope, $commandContext, $correlationHandler, $correlationSet) {
-                return $correlationHandler->correlateMessage($commandContext, $scope->messageName, $correlationSet);
+                $correlationResult = $correlationHandler->correlateMessage($commandContext, $scope->messageName, $correlationSet);
+                return $correlationResult;
             });
 
             if ($correlationResult === null) {

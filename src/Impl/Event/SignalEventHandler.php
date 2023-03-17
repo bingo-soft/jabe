@@ -23,7 +23,7 @@ class SignalEventHandler extends EventHandlerImpl
 
     protected function handleStartEvent(
         EventSubscriptionEntity $eventSubscription,
-        array $payload,
+        $payload,
         ?string $businessKey,
         CommandContext $commandContext
     ): void {

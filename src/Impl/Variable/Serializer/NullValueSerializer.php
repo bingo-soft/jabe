@@ -31,7 +31,7 @@ class NullValueSerializer extends PrimitiveValueSerializer
         //
     }
 
-    public function readValue(ValueFieldsInterface $valueFields, bool $isTransient, bool $deserializeValue = false): NullValueImpl
+    public function readValue(ValueFieldsInterface $valueFields, bool $deserializeValue, bool $isTransient = false): NullValueImpl
     {
         return NullValueImpl::getInstance(false);
     }

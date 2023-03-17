@@ -1044,7 +1044,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         // remove event subscriptions which are not compensate event subscriptions
         $eventSubscriptions = $this->getEventSubscriptions();
         foreach ($eventSubscriptions as $eventSubscriptionEntity) {
-            if (!EventType::compensate()->name() == $eventSubscriptionEntity->getEventType()) {
+            if (EventType::compensate()->name() != $eventSubscriptionEntity->getEventType()) {
                 $eventSubscriptionEntity->delete();
             }
         }
@@ -1510,13 +1510,13 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
 
     // event subscription support //////////////////////////////////////////////
 
-    public function getEventSubscriptionsInternal(): array
+    public function &getEventSubscriptionsInternal(): array
     {
         $this->ensureEventSubscriptionsInitialized();
         return $this->eventSubscriptions;
     }
 
-    public function getEventSubscriptions(): array
+    public function &getEventSubscriptions(): array
     {
         return $this->getEventSubscriptionsInternal();
     }
@@ -1549,14 +1549,14 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
 
     protected function ensureEventSubscriptionsInitialized(): void
     {
-        if (empty($this->eventSubscriptions)) {
+        if ($this->eventSubscriptions === null) {
             $this->eventSubscriptions = Context::getCommandContext()->getEventSubscriptionManager()->findEventSubscriptionsByExecution($this->id);
         }
     }
 
     public function addEventSubscription(EventSubscriptionEntity $eventSubscriptionEntity): void
     {
-        $eventSubscriptionsInternal = $this->getEventSubscriptionsInternal();
+        $eventSubscriptionsInternal = &$this->getEventSubscriptionsInternal();
         $exists = false;
         foreach ($eventSubscriptionsInternal as $value) {
             if ($value == $eventSubscriptionEntity) {
@@ -1565,13 +1565,14 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
             }
         }
         if (!$exists) {
-            $this->eventSubscriptions[] = $eventSubscriptionEntity;
+            $eventSubscriptionsInternal[] = $eventSubscriptionEntity;
         }
     }
 
     public function removeEventSubscription(EventSubscriptionEntity $eventSubscriptionEntity): void
     {
-        foreach ($this->eventSubscriptions as $key => $value) {
+        $eventSubscriptions = &$this->getEventSubscriptionsInternal();
+        foreach ($eventSubscriptions as $key => $value) {
             if ($value == $eventSubscriptionEntity) {
                 unset($this->eventSubscriptions[$key]);
             }

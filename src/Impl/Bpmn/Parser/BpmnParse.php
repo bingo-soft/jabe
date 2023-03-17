@@ -852,7 +852,6 @@ class BpmnParse extends Parse
             }
             $sourceActivity = $parentScope->findActivity($sourceRef);
             $targetActivity = $parentScope->findActivity($targetRef);
-
             // an association may reference elements that are not parsed as activities
             // (like for instance text annotations so do not throw an exception if sourceActivity or targetActivity are null)
             // However, we make sure they reference 'something':
@@ -865,7 +864,7 @@ class BpmnParse extends Parse
                     if ($targetActivity === null && array_key_exists($targetRef, $compensationHandlers)) {
                         $targetActivity = $this->parseCompensationHandlerForCompensationBoundaryEvent($parentScope, $sourceActivity, $targetRef, $compensationHandlers);
                         foreach ($compensationHandlers as $key => $value) {
-                            if ($value == $targetActivity->getId()) {
+                            if ($key == $targetActivity->getId()) {
                                 unset($compensationHandlers[$key]);
                             }
                         }
@@ -1096,7 +1095,7 @@ class BpmnParse extends Parse
             $behavior = new EventSubProcessStartEventActivityBehavior();
 
             // parse isInterrupting
-            $isInterruptingAttr = $startEventElement->attribute(self::INTERRUPTING);
+            $isInterruptingAttr = $startEventElement->attribute(self::INTERRUPTING, "true");
             $isInterrupting = $isInterruptingAttr !== null && strtolower($isInterruptingAttr) === "true";
 
             if ($isInterrupting) {
@@ -1206,8 +1205,8 @@ class BpmnParse extends Parse
         $eventSubProcessActivity = $startEventActivity->getFlowScope()->getId();
         $definition = new ErrorEventDefinition($eventSubProcessActivity);
         if ($errorRef !== null) {
-            if (array_key_exists($errorRef, $errors)) {
-                $error = $errors[$errorRef];
+            if (array_key_exists($errorRef, $this->errors)) {
+                $error = $this->errors[$errorRef];
             }
             $errorCode = $error === null ? $errorRef : $error->getErrorCode();
             $definition->setErrorCode($errorCode);
@@ -1349,9 +1348,10 @@ class BpmnParse extends Parse
     * Assumes that an activity has at most one declaration of a certain eventType.
     */
     protected function activityAlreadyContainsJobDeclarationEventType(
-        array $jobDeclarationsForActivity,
-        EventSubscriptionJobDeclaration $jobDeclaration
+        ?array $jobDeclarationsForActivity,
+        EventSubscriptionJobDeclaration $jobDeclaration = null
     ): bool {
+        $jobDeclarationsForActivity ??= [];
         foreach ($jobDeclarationsForActivity as $declaration) {
             if ($declaration->getEventType() == $jobDeclaration->getEventType()) {
                 return true;
@@ -1378,7 +1378,7 @@ class BpmnParse extends Parse
         }
     }
 
-    protected function parseActivity(Element $activityElement, Element $parentElement, ScopeImpl $scopeElement): ?ActivityImpl
+    protected function parseActivity(Element $activityElement, ?Element $parentElement, ScopeImpl $scopeElement): ?ActivityImpl
     {
         $activity = null;
 
@@ -1522,7 +1522,7 @@ class BpmnParse extends Parse
         }
     }
 
-    public function parseIntermediateCatchEvent(Element $intermediateEventElement, ScopeImpl $scopeElement, ActivityImpl $eventBasedGateway): ?ActivityImpl
+    public function parseIntermediateCatchEvent(Element $intermediateEventElement, ScopeImpl $scopeElement, ?ActivityImpl $eventBasedGateway): ?ActivityImpl
     {
         $nestedActivity = $this->createActivityOnScope($intermediateEventElement, $scopeElement);
 
@@ -1675,7 +1675,7 @@ class BpmnParse extends Parse
             if ($escalation !== null && $escalation->getEscalationCode() === null) {
                 $this->addError("throwing escalation event must have an 'escalationCode'", $escalationEventDefinition, $nestedActivityImpl->getId());
             }
-            $activityBehavior = new ThrowEscalationEventActivityBehavior(escalation);
+            $activityBehavior = new ThrowEscalationEventActivityBehavior($escalation);
         } else { // None intermediate event
             $nestedActivityImpl->getProperties()->set(BpmnProperties::type(), ActivityTypes::INTERMEDIATE_EVENT_NONE_THROW);
             $activityBehavior = new IntermediateThrowNoneEventActivityBehavior();
@@ -2346,8 +2346,7 @@ class BpmnParse extends Parse
         $expression = $serviceTaskElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::PROPERTYNAME_EXPRESSION);
         $delegateExpression = $serviceTaskElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::PROPERTYNAME_DELEGATE_EXPRESSION);
         $resultVariableName = $this->parseResultVariable($serviceTaskElement);
-
-        if ($type !== null) {
+        if (!empty($type)) {
             if (strtolower($type) == "mail") {
                 $this->parseEmailServiceTask($activity, $serviceTaskElement, $this->parseFieldDeclarations($serviceTaskElement));
             } elseif (strtolower($type) == "shell") {
@@ -2362,7 +2361,7 @@ class BpmnParse extends Parse
                 $this->addError("'resultVariableName' not supported for " . $elementName . " elements using 'class'", $serviceTaskElement);
             }
             $activity->setActivityBehavior(new ClassDelegateActivityBehavior($className, $this->parseFieldDeclarations($serviceTaskElement)));
-        } elseif ($delegateExpression !== null) {
+        } elseif (!empty($delegateExpression)) {
             if ($resultVariableName !== null) {
                 $this->addError("'resultVariableName' not supported for " . $elementName . " elements using 'delegateExpression'", $serviceTaskElement);
             }
@@ -4229,7 +4228,7 @@ class BpmnParse extends Parse
 
         if (!empty($extensionsElement)) {
             // input data elements
-            foreach ($extensionsElement->elementsNS(self::BPMN_EXTENSIONS_NS_PREFIX, "in") as $inElement) {
+            foreach ($extensionsElement->elements("in") as $inElement) {
                 $businessKey = $inElement->attribute("businessKey");
 
                 if ($businessKey !== null && !empty($businessKey)) {
@@ -4254,9 +4253,8 @@ class BpmnParse extends Parse
 
         if ($extensionsElement !== null) {
             // output data elements
-            foreach ($extensionsElement->elementsNS(self::BPMN_EXTENSIONS_NS_PREFIX, "out") as $outElement) {
+            foreach ($extensionsElement->elements("out") as $outElement) {
                 $parameter = $this->parseCallableElementProvider($outElement, $callActivityElement->attribute("id"));
-
                 if ($this->attributeValueEquals($outElement, "local", "TRUE")) {
                     $callableElement->addOutputLocal($parameter);
                 } else {
@@ -4288,7 +4286,7 @@ class BpmnParse extends Parse
             $source = $parameterElement->attribute("source");
             if ($source !== null) {
                 if (!empty($source)) {
-                    $sourceValueProvider = new ConstantValueProvider(source);
+                    $sourceValueProvider = new ConstantValueProvider($source);
                 } else {
                     if ($strictValidation) {
                         $this->addError("Empty attribute 'source' when passing variables", $parameterElement, $ancestorElementId);
@@ -4603,12 +4601,13 @@ class BpmnParse extends Parse
         $extentionsElement = $scopeElement->element("extensionElements");
         $scopeElementId = $scopeElement->attribute("id");
         if (!empty($extentionsElement)) {
-            $listenerElements = $extentionsElement->elementsNS(self::BPMN_EXTENSIONS_NS_PREFIX, "executionListener");
+            //elementsNS => self::BPMN_EXTENSIONS_NS_PREFIX
+            $listenerElements = $extentionsElement->elements("executionListener");
             foreach ($listenerElements as $listenerElement) {
                 $eventName = $listenerElement->attribute("event");
                 if ($this->isValidEventNameForScope($eventName, $listenerElement, $scopeElementId)) {
-                    $listener = $this->parseExecutionListener($this->listenerElement, $scopeElementId);
-                    if (empty($listener)) {
+                    $listener = $this->parseExecutionListener($listenerElement, $scopeElementId);
+                    if ($listener !== null) {
                         $scope->addExecutionListener($eventName, $listener);
                     }
                 }
@@ -4665,16 +4664,15 @@ class BpmnParse extends Parse
         $expression = $executionListenerElement->attribute(self::PROPERTYNAME_EXPRESSION);
         $delegateExpression = $executionListenerElement->attribute(self::PROPERTYNAME_DELEGATE_EXPRESSION);
         $scriptElement = $executionListenerElement->elementNS(BpmnParser::BPMN_EXTENSIONS_NS, "script");
-
-        if ($className !== null) {
+        if (!empty($className)) {
             if (empty($className)) {
                 $this->addError("Attribute 'class' cannot be empty", $executionListenerElement, $ancestorElementId);
             } else {
                 $executionListener = new ClassDelegateExecutionListener($className, $this->parseFieldDeclarations($executionListenerElement));
             }
-        } elseif ($expression !== null) {
+        } elseif (!empty($expression)) {
             $executionListener = new ExpressionExecutionListener($this->expressionManager->createExpression($expression));
-        } elseif ($delegateExpression !== null) {
+        } elseif (!empty($delegateExpression)) {
             if (empty($delegateExpression)) {
                 $this->addError("Attribute 'delegateExpression' cannot be empty", $executionListenerElement, $ancestorElementId);
             } else {

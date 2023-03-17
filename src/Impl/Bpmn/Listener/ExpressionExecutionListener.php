@@ -17,7 +17,7 @@ class ExpressionExecutionListener implements ExecutionListenerInterface
         $this->expression = $expression;
     }
 
-    public function notify(DelegateExecutionInterface $execution): void
+    public function notify(/*DelegateExecutionInterface*/$execution): void
     {
         // Return value of expression is ignored
         $this->expression->getValue($execution);

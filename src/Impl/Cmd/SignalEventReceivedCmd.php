@@ -12,6 +12,7 @@ use Jabe\Impl\Interceptor\{
     CommandContext
 };
 use Jabe\Impl\Persistence\Entity\EventSubscriptionEntity;
+use Jabe\Impl\Util\EnsureUtil;
 
 class SignalEventReceivedCmd implements CommandInterface
 {

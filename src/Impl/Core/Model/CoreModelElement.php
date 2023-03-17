@@ -181,7 +181,7 @@ abstract class CoreModelElement implements \Serializable
         if ($index < 0) {
             $listeners[] = $listener;
         } else {
-            $listeners[$index] = $listener;
+            array_splice($listeners, $index, 0, [ $listener ]);
         }
     }
 

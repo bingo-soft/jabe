@@ -43,7 +43,7 @@ class EventSubscriptionJobDeclaration extends JobDeclaration
             $message->setProcessDefinitionId($processDefinition->getId());
             $message->setProcessDefinitionKey($processDefinition->getKey());
         }
-
+        
         // TODO: support payload
         // if(payload !== null) {
         //   message.setEventPayload(payload);

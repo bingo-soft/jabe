@@ -322,6 +322,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
                     $skipPhpSerializationFormatCheck = $args[1] ?? false;
                 }
             }
+            $sourceActivityExecution ??= $this->getSourceActivityVariableScope();
             $skipPhpSerializationFormatCheck ??= false;
 
             if (!$skipPhpSerializationFormatCheck) {
@@ -329,7 +330,6 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
             }
 
             $variableStore = $this->getVariableStore();
-
             if ($variableStore->containsKey($variableName)) {
                 $existingInstance = $variableStore->getVariable($variableName);
                 $previousValue = $existingInstance->getTypedValue(false);
@@ -392,7 +392,7 @@ abstract class AbstractVariableScope implements VariableScopeInterface, Variable
 
     protected function invokeVariableLifecycleListenersUpdate(
         CoreVariableInstanceInterface $variableInstance,
-        AbstractVariableScope $sourceScope,
+        ?AbstractVariableScope $sourceScope,
         ?array $lifecycleListeners = []
     ): void {
         if (empty($lifecycleListeners)) {

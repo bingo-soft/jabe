@@ -11,7 +11,7 @@ class TerminateEndEventActivityBehavior extends FlowNodeActivityBehavior
         parent::__construct();
     }
 
-    public function execute(ActivityExecutionInterface $execution): void
+    public function execute(/*ActivityExecutionInterface*/$execution): void
     {
         // we are the last execution inside this scope: calling end() ends this scope.
         $execution->end(true);

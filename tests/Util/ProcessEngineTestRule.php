@@ -157,7 +157,7 @@ class ProcessEngineTestRule
         return $this->processEngine->getRepositoryService()->createDeployment();
     }
 
-    public function waitForJobExecutorToProcessAllJobs(int $maxMillisToWait = 0): void
+    public function waitForJobExecutorToProcessAllJobs(string $processInstanceId, int $maxMillisToWait = 0): void
     {
         $processEngineConfiguration = $this->processEngine->getProcessEngineConfiguration();
         $jobExecutor = $processEngineConfiguration->getJobExecutor();
@@ -166,27 +166,28 @@ class ProcessEngineTestRule
         try {
             $areJobsAvailable = true;
             $isTimeLimitExceeded = false;
+            $intervalMillis = 1;
             try {
                 $cur = time();
                 while ($areJobsAvailable && !$isTimeLimitExceeded) {
                     usleep($intervalMillis * 1000);
-                    $areJobsAvailable = $this->areJobsAvailable();
+                    $areJobsAvailable = $this->areJobsAvailable($processInstanceId);
                     $isTimeLimitExceeded = (time() - $cur) * 1000 >= $maxMillisToWait;
                 }
             } catch (\Exception $e) {
             } finally {
             }
             if ($areJobsAvailable) {
-                throw new ProcessEngineException("time limit of " . $maxMillisToWait . " was exceeded");
+                throw new \Exception("time limit of " . $maxMillisToWait . " was exceeded");
             }
         } finally {
             $jobExecutor->shutdown();
         }
     }
 
-    protected function areJobsAvailable(): bool
+    protected function areJobsAvailable(string $processInstanceId): bool
     {
-        $list = $this->processEngine->getManagementService()->createJobQuery()->list();
+        $list = $this->processEngine->getManagementService()->createJobQuery()->processInstanceId($processInstanceId)->list();
         foreach ($list as $job) {
             if (!$job->isSuspended() && $job->getRetries() > 0 && ($job->getDuedate() == null || ClockUtil::getCurrentTime()->getTimestamp() > (new \DateTime($job->getDuedate()))->getTimestamp())) {
                 return true;

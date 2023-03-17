@@ -16,12 +16,12 @@ class CalledProcessDefinitionImpl implements CalledProcessDefinitionInterface
     protected $name;
     protected int $version = 0;
     protected $deploymentId;
-    protected $suspended;
+    protected bool $suspended = false;
     protected $tenantId;
     protected $versionTag;
     protected $historyTimeToLive;
     protected bool $isStartableInTasklist = false;
-    protected $hasStartFormKey;
+    protected bool $hasStartFormKey = false;
     protected $diagramResourceName;
     protected $resourceName;
 

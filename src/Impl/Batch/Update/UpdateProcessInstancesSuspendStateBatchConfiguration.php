@@ -9,7 +9,7 @@ use Jabe\Impl\Batch\{
 
 class UpdateProcessInstancesSuspendStateBatchConfiguration extends BatchConfiguration
 {
-    protected $suspended;
+    protected $suspended = false;
 
     public function __construct(array $ids, $mappingsOrSuspended, $suspended = null)
     {

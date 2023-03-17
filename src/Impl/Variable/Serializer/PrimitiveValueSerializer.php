@@ -2,7 +2,10 @@
 
 namespace Jabe\Impl\Variable\Serializer;
 
-use Jabe\Variable\Type\PrimitiveValueTypeInterface;
+use Jabe\Variable\Type\{
+    PrimitiveValueTypeInterface,
+    ValueTypeInterface
+};
 use Jabe\Variable\Value\TypedValueInterface;
 
 abstract class PrimitiveValueSerializer extends AbstractTypedValueSerializer
@@ -21,7 +24,7 @@ abstract class PrimitiveValueSerializer extends AbstractTypedValueSerializer
         return $this->valueType->getName();
     }
 
-    public function getType(): PrimitiveValueTypeInterface
+    public function getType(): ValueTypeInterface
     {
         return parent::getType();
     }

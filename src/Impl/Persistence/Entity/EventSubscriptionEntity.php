@@ -61,23 +61,23 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
     }
 
     // processing /////////////////////////////
-    public function eventReceived($payload, $payloadLocal, $businessKey, bool $processASync): void
+    public function eventReceived($payload = null, $payloadLocal = null, ?string $businessKey = null, bool $processAsync = false): void
     {
-        if ($processASync) {
+        if ($processAsync) {
             $this->scheduleEventAsync($payload, $payloadLocal, $businessKey);
         } else {
             $this->processEventSync($payload, $payloadLocal, $businessKey);
         }
     }
 
-    protected function processEventSync($payload, $payloadLocal, ?string $businessKey): void
+    protected function processEventSync($payload = null, $payloadLocal = null, ?string $businessKey = null): void
     {
         $eventHandler = Context::getProcessEngineConfiguration()->getEventHandler($this->eventType);
         EnsureUtil::ensureNotNull("Could not find eventhandler for event of type '" . $this->eventType . "'", "eventHandler", $eventHandler);
         $eventHandler->handleEvent($this, $payload, $payloadLocal, $businessKey, Context::getCommandContext());
     }
 
-    protected function scheduleEventAsync($payload, $payloadLocal, ?string $businessKey): void
+    protected function scheduleEventAsync($payload = null, $payloadLocal = null, ?string $businessKey = null): void
     {
         $asyncDeclaration = $this->getJobDeclaration();
 
@@ -108,7 +108,7 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
         $this->addToExecution();
     }
 
-    public static function createAndInsert(ExecutionEntity $executionEntity, EventType $eventType, ActivityImpl $activity, ?string $configuration): EventSubscriptionEntity
+    public static function createAndInsert(ExecutionEntity $executionEntity, EventType $eventType, ActivityImpl $activity, ?string $configuration = null): EventSubscriptionEntity
     {
         $eventSubscription = new EventSubscriptionEntity($executionEntity, $eventType);
         $eventSubscription->setActivity($activity);

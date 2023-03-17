@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions id="definitions"
+	xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+	xmlns:extension="http://activiti.org/bpmn" 
+	targetNamespace="Examples">
+
+	<signal id="alertSignal" name="alertMulti" />
+	<signal id="abortSignal" name="abortMulti" />
+
+	<process id="startByTwoSignals" isExecutable="true">
+
+		<startEvent id="start">
+			<signalEventDefinition signalRef="alertSignal" />
+		</startEvent>
+		
+		<sequenceFlow sourceRef="start" targetRef="alertTask" />
+
+		<userTask id="alertTask" name="multiple start signal events alert task"/>
+
+		<sequenceFlow sourceRef="alertTask" targetRef="end" />
+
+		<startEvent id="abortStart">
+			<signalEventDefinition signalRef="abortSignal" />
+		</startEvent>
+		
+		<sequenceFlow sourceRef="abortStart" targetRef="abortTask" />
+
+		<userTask id="abortTask" name="multiple start signal events abort task"/>
+		
+		<sequenceFlow sourceRef="abortStart" targetRef="end" />
+
+		<endEvent id="end" />
+
+	</process>
+	
+</definitions>

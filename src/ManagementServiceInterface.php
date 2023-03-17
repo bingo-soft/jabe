@@ -60,7 +60,7 @@ interface ManagementServiceInterface
      * @return a new ProcessApplicationRegistration
      *
      * @throws AuthorizationException
-     *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+     *          If the user is not a member of the group Groups#ADMIN.
      */
     public function registerProcessApplication(?string $deploymentId, ProcessApplicationReferenceInterface $reference): ProcessApplicationRegistrationInterface;
 
@@ -75,7 +75,7 @@ interface ManagementServiceInterface
      *          indicates whether the process definitions should be removed from the deployment cache
      *
      * @throws AuthorizationException
-     *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+     *          If the user is not a member of the group Groups#ADMIN.
      */
     public function unregisterProcessApplication($deploymentIds, bool $removeProcessDefinitionsFromCache): void;
 
@@ -85,7 +85,7 @@ interface ManagementServiceInterface
      *         currently registered.
      *
      * @throws AuthorizationException
-     *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+     *          If the user is not a member of the group Groups#ADMIN.
      */
     public function getProcessApplicationForDeployment(?string $deploymentId): ?string;
 
@@ -93,7 +93,7 @@ interface ManagementServiceInterface
      * Get the mapping containing {table name, row count} entries of the database schema.
      *
      * @throws AuthorizationException
-     *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+     *          If the user is not a member of the group Groups#ADMIN.
      */
     public function getTableCount(): array;
 
@@ -102,7 +102,7 @@ interface ManagementServiceInterface
      * Execution or the like.
      *
      * @throws AuthorizationException
-     *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+     *          If the user is not a member of the group Groups#ADMIN.
      */
     public function getTableName(?string $entityClass): ?string;
 
@@ -111,7 +111,7 @@ interface ManagementServiceInterface
     * Returns null when no table exists with the given name.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+    *          If the user is not a member of the group Groups#ADMIN.
     */
     public function getTableMetaData(?string $tableName): TableMetaData;
 
@@ -120,7 +120,7 @@ interface ManagementServiceInterface
     * containing specific sections of table row data.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+    *          If the user is not a member of the group Groups#ADMIN.
     */
     public function createTablePageQuery(): TablePageQueryInterface;
 
@@ -667,7 +667,7 @@ interface ManagementServiceInterface
     * @return a map of all properties.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+    *          If the user is not a member of the group Groups#ADMIN.
     */
     public function getProperties(): array;
 
@@ -679,7 +679,7 @@ interface ManagementServiceInterface
     * @param value the new value for the property.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+    *          If the user is not a member of the group Groups#ADMIN.
     */
     public function setProperty(?string $name, ?string $value): void;
 
@@ -689,7 +689,7 @@ interface ManagementServiceInterface
     * @param name the name of the property to delete
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+    *          If the user is not a member of the group Groups#ADMIN.
     */
     public function deleteProperty(?string $name): void;
 
@@ -699,7 +699,7 @@ interface ManagementServiceInterface
     * @param licenseKey the license key string.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+    *          If the user is not a member of the group Groups#ADMIN.
     */
     public function setLicenseKey(?string $licenseKey): void;
 
@@ -707,7 +707,7 @@ interface ManagementServiceInterface
     * Get the stored license key string or <code>null</code> if no license is set.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+    *          If the user is not a member of the group Groups#ADMIN.
     */
     public function getLicenseKey(): ?string;
 
@@ -715,7 +715,7 @@ interface ManagementServiceInterface
     * Deletes the stored license key. If no license key is set, the request is ignored.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+    *          If the user is not a member of the group Groups#ADMIN.
     */
     public function deleteLicenseKey(): void;
 
@@ -724,7 +724,7 @@ interface ManagementServiceInterface
     *  Note: will always return an empty string
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+    *          If the user is not a member of the group Groups#ADMIN.
     */
     public function databaseSchemaUpgrade(Connection $connection, ?string $catalog, ?string $schema): ?string;
 
@@ -751,7 +751,7 @@ interface ManagementServiceInterface
     * This set is only relevant, if the engine configuration property <code>jobExecutorDeploymentAware</code> is set.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+    *          If the user is not a member of the group Groups#ADMIN.
     */
     public function getRegisteredDeployments(): array;
 
@@ -761,7 +761,7 @@ interface ManagementServiceInterface
     * If set to false, the job executor will execute any job.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+    *          If the user is not a member of the group Groups#ADMIN.
     */
     public function registerDeploymentForJobExecutor(?string $deploymentId): void;
 
@@ -771,7 +771,7 @@ interface ManagementServiceInterface
     * jobs for the given deployment will no longer get acquired.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+    *          If the user is not a member of the group Groups#ADMIN.
     */
     public function unregisterDeploymentForJobExecutor(?string $deploymentId): void;
 
@@ -781,7 +781,7 @@ interface ManagementServiceInterface
     * @return int the history level
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+    *          If the user is not a member of the group Groups#ADMIN.
     */
     public function getHistoryLevel(): int;
 
@@ -797,7 +797,7 @@ interface ManagementServiceInterface
     * are matched in that regard.
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+    *          If the user is not a member of the group Groups#ADMIN.
     *
     * @param timestamp or null
     * @param reporter or null
@@ -827,7 +827,7 @@ interface ManagementServiceInterface
     * If the timestamp is null, all metrics will be deleted
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+    *          If the user is not a member of the group Groups#ADMIN.
     *
     * @param timestamp or <code>null</code>
     */
@@ -909,7 +909,7 @@ interface ManagementServiceInterface
     * Enable/disable sending telemetry data to Camunda
     *
     * @throws AuthorizationException
-    *          If the user is not a member of the group Groups#CAMUNDA_ADMIN.
+    *          If the user is not a member of the group Groups#ADMIN.
     */
     public function toggleTelemetry(bool $enabled): void;
 

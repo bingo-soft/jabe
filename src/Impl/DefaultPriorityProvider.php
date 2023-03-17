@@ -82,7 +82,7 @@ abstract class DefaultPriorityProvider implements PriorityProviderInterface
         }
     }
 
-    public function determinePriority(ExecutionEntity $execution, $param, ?string $jobDefinitionId): int
+    public function determinePriority(?ExecutionEntity $execution, $param, ?string $jobDefinitionId): int
     {
         if ($param !== null || $execution !== null) {
             $specificPriority = $this->getSpecificPriority($execution, $param, $jobDefinitionId);
@@ -131,7 +131,7 @@ abstract class DefaultPriorityProvider implements PriorityProviderInterface
      * @param errorMsgHead the error message header which is used if the evaluation fails
      * @return int the priority defined in the given process
      */
-    protected function getProcessDefinedPriority(ProcessDefinitionImpl $processDefinition, ?string $propertyKey, ExecutionEntity $execution, ?string $errorMsgHead): ?int
+    protected function getProcessDefinedPriority(ProcessDefinitionImpl $processDefinition, ?string $propertyKey, ?ExecutionEntity $execution, ?string $errorMsgHead): ?int
     {
         if ($processDefinition !== null) {
             $priorityProvider = $processDefinition->getProperty($propertyKey);

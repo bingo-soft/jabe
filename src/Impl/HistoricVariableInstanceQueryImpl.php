@@ -342,17 +342,17 @@ class HistoricVariableInstanceQueryImpl extends AbstractQuery implements Histori
         return $this->variableNameLike;
     }
 
-    public function getQueryVariableValue(): QueryVariableValue
+    public function getQueryVariableValue(): ?QueryVariableValue
     {
         return $this->queryVariableValue;
     }
 
-    public function getVariableNamesIgnoreCase(): bool
+    public function getVariableNamesIgnoreCase(): ?bool
     {
         return $this->variableNamesIgnoreCase;
     }
 
-    public function getVariableValuesIgnoreCase(): bool
+    public function getVariableValuesIgnoreCase(): ?bool
     {
         return $this->variableValuesIgnoreCase;
     }

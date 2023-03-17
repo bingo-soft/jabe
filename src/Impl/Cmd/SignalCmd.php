@@ -58,7 +58,6 @@ class SignalCmd implements CommandInterface, \Serializable
         if (!empty($this->processVariables)) {
             $execution->setVariables($this->processVariables);
         }
-
         $execution->signal($this->signalName, $this->signalData);
         return null;
     }

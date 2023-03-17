@@ -17,7 +17,7 @@ class ErrorDeclarationForProcessInstanceFinder implements TreeVisitorInterface
     protected $errorEventDefinition;
     protected $currentActivity;
 
-    public function __construct(\Exception $exception, ?string $errorCode, ?PvmActivityInterface $currentActivity)
+    public function __construct(?\Exception $exception, ?string $errorCode, ?PvmActivityInterface $currentActivity)
     {
         $this->exception = $exception;
         $this->errorCode = $errorCode;
@@ -34,7 +34,7 @@ class ErrorDeclarationForProcessInstanceFinder implements TreeVisitorInterface
                 (($this->exception !== null && $errorEventDefinition->catchesException($this->exception)) ||
                 ($this->exception === null && $errorEventDefinition->catchesError($this->errorCode)))
             ) {
-                $errorHandlerActivity = $activityHandler;
+                $this->errorHandlerActivity = $activityHandler;
                 $this->errorEventDefinition = $errorEventDefinition;
                 break;
             }

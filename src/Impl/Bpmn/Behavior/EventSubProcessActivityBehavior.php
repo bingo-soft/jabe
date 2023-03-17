@@ -21,7 +21,7 @@ class EventSubProcessActivityBehavior extends SubProcessActivityBehavior
         }
     }
 
-    public function concurrentChildExecutionEnded(ActivityExecutionInterface $scopeExecution, ActivityExecutionInterface $endedExecution): void
+    public function concurrentChildExecutionEnded(?ActivityExecutionInterface $scopeExecution, ?ActivityExecutionInterface $endedExecution): void
     {
         // Check whether legacy behavior needs to be performed.
         // Legacy behavior means that the event subprocess is not a scope and as a result does not

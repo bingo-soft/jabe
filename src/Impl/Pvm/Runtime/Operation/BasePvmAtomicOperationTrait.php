@@ -67,7 +67,7 @@ trait BasePvmAtomicOperationTrait
         return self::$ACTIVITY_START_CONCURRENT;
     }
 
-    public static function activityStartCancelScope(): PvmAtomicOperationInterface
+    public static function activityStartInterruptScope(): PvmAtomicOperationInterface
     {
         if (self::$ACTIVITY_START_INTERRUPT_SCOPE === null) {
             self::$ACTIVITY_START_INTERRUPT_SCOPE = new PvmAtomicOperationActivityStartInterruptEventScope();
@@ -75,7 +75,7 @@ trait BasePvmAtomicOperationTrait
         return self::$ACTIVITY_START_INTERRUPT_SCOPE;
     }
 
-    public static function activityStartInterruptScope(): PvmAtomicOperationInterface
+    public static function activityStartCancelScope(): PvmAtomicOperationInterface
     {
         if (self::$ACTIVITY_START_CANCEL_SCOPE === null) {
             self::$ACTIVITY_START_CANCEL_SCOPE = new PvmAtomicOperationActivityStartCancelScope();

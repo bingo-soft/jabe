@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions id="definitions"
+	xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+	xmlns:extension="http://activiti.org/bpmn" 
+	targetNamespace="Examples">
+	
+	<signal id="alertSignal_2" name="alert simple intermediate" />
+
+	<process id="throwSignal_1" isExecutable="true">
+
+		<startEvent id="start" />
+
+		<sequenceFlow sourceRef="start" targetRef="signalEvent_3" />
+
+		<intermediateThrowEvent id="signalEvent_3" name="Alert" >
+			<signalEventDefinition signalRef="alertSignal_2" />			
+		</intermediateThrowEvent>
+
+		<sequenceFlow sourceRef="signalEvent_3" targetRef="end" />
+
+		<endEvent id="end" />
+
+	</process>
+
+</definitions>

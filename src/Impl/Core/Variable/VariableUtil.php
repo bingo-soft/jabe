@@ -77,7 +77,8 @@ class VariableUtil
     ): void {
         if (!empty($variables)) {
             if ($variables instanceof VariableMapInterface) {
-                foreach (array_keys($variables->asValueMap()) as $variableName) {
+                //foreach (array_keys($variables->asValueMap()) as $variableName) {
+                foreach ($variables->keySet() as $variableName) {
                     $value = $variables->getValueTyped($variableName);
                     $setVariableFunction->apply($variableName, $value);
                 }

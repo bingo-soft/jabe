@@ -37,7 +37,8 @@ class ClassDelegateActivityBehavior extends AbstractBpmnActivityBehavior
     {
         $scope = $this;
         $this->executeWithErrorPropagation($execution, function () use ($scope, $execution) {
-            $scope->getActivityBehaviorInstance($execution)->execute($execution);
+            $activity = $scope->getActivityBehaviorInstance($execution);
+            $activity->execute($execution);
             return null;
         });
     }
