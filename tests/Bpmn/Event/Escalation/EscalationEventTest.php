@@ -49,7 +49,6 @@ class EscalationEventTest extends PluggableProcessEngineTest
     #[Deployment(resources: ["tests/Resources/Bpmn/Event/Escalation/EscalationEventTest.testThrowEscalationEventHierarchical.bpmn20.xml"])]
     public function testThrowEscalationEventHierarchical(): void
     {
-
         $processInstance = $this->runtimeService->startProcessInstanceByKey("escalationProcess");
         // when throw an escalation event inside the subprocess
 
@@ -189,7 +188,6 @@ class EscalationEventTest extends PluggableProcessEngineTest
      */
     private function testImplicitNonInterruptingEscalationBoundaryEvent(): void
     {
-
         $processInstance = $this->runtimeService->startProcessInstanceByKey("escalationProcess");
         // when throw an escalation event inside the subprocess
 
@@ -203,7 +201,6 @@ class EscalationEventTest extends PluggableProcessEngineTest
     #[Deployment(resources: ["tests/Resources/Bpmn/Event/Escalation/EscalationEventTest.testInterruptingEscalationBoundaryEvent.bpmn20.xml"])]
     public function testInterruptingEscalationBoundaryEvent(): void
     {
-
         $processInstance = $this->runtimeService->startProcessInstanceByKey("escalationProcess");
         // when throw an escalation event inside the subprocess
 
@@ -269,6 +266,9 @@ class EscalationEventTest extends PluggableProcessEngineTest
         $this->assertEquals(42, $this->runtimeService->getVariable($processInstanceId, "output"));
 
         $task = $this->taskService->createTaskQuery()->taskName("task after catched escalation")->singleResult();
+        $this->taskService->complete($task->getId());
+
+        $task = $this->taskService->createTaskQuery()->taskName("task after thrown escalation")->singleResult();
         $this->taskService->complete($task->getId());
     }
 
@@ -406,6 +406,9 @@ class EscalationEventTest extends PluggableProcessEngineTest
         // and set the escalationCode of the escalation event to the declared variable
         $this->assertEquals("escalationCode", $this->runtimeService->getVariable($task->getExecutionId(), "escalationCodeVar"));
         $this->taskService->complete($task->getId());
+
+        $task = $this->taskService->createTaskQuery()->taskName("task after thrown escalation")->singleResult();
+        $this->taskService->complete($task->getId());
     }
 
     #[Deployment(resources: ["tests/Resources/Bpmn/Event/Escalation/EscalationEventTest.throwEscalationEvent.bpmn20.xml", "tests/Resources/Bpmn/Event/Escalation/EscalationEventTest.testNonInterruptingRetrieveEscalationCodeInSuperProcessWithoutEscalationCode.bpmn20.xml"])]
@@ -419,6 +422,9 @@ class EscalationEventTest extends PluggableProcessEngineTest
 
         // and set the escalationCode of the escalation event to the declared variable
         $this->assertEquals("escalationCode", $this->runtimeService->getVariable($task->getExecutionId(), "escalationCodeVar"));
+        $this->taskService->complete($task->getId());
+
+        $task = $this->taskService->createTaskQuery()->taskName("task after thrown escalation")->singleResult();
         $this->taskService->complete($task->getId());
     }
 
