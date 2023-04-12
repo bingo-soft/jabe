@@ -20,7 +20,7 @@ class GetUnlockedTimersByDuedateCmd implements CommandInterface
         $this->page = $page;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return Context::getCommandContext()
             ->getJobManager()

@@ -32,7 +32,8 @@ class OptimizeService extends ServiceImpl
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
-            new OptimizeCompletedHistoricActivityInstanceQueryCmd($finishedAfter, $finishedAt, $maxResults)
+            new OptimizeCompletedHistoricActivityInstanceQueryCmd($finishedAfter, $finishedAt, $maxResults),
+            ...$this->commandExecutor->getState()
         );
     }
 
@@ -42,7 +43,8 @@ class OptimizeService extends ServiceImpl
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
-            new OptimizeRunningHistoricActivityInstanceQueryCmd($startedAfter, $startedAt, $maxResults)
+            new OptimizeRunningHistoricActivityInstanceQueryCmd($startedAfter, $startedAt, $maxResults),
+            ...$this->commandExecutor->getState()
         );
     }
 
@@ -52,7 +54,8 @@ class OptimizeService extends ServiceImpl
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
-            new OptimizeCompletedHistoricTaskInstanceQueryCmd($finishedAfter, $finishedAt, $maxResults)
+            new OptimizeCompletedHistoricTaskInstanceQueryCmd($finishedAfter, $finishedAt, $maxResults),
+            ...$this->commandExecutor->getState()
         );
     }
 
@@ -62,7 +65,8 @@ class OptimizeService extends ServiceImpl
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
-            new OptimizeRunningHistoricTaskInstanceQueryCmd($startedAfter, $startedAt, $maxResults)
+            new OptimizeRunningHistoricTaskInstanceQueryCmd($startedAfter, $startedAt, $maxResults),
+            ...$this->commandExecutor->getState()
         );
     }
 
@@ -72,7 +76,8 @@ class OptimizeService extends ServiceImpl
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
-            new OptimizeHistoricUserOperationsLogQueryCmd($occurredAfter, $occurredAt, $maxResults)
+            new OptimizeHistoricUserOperationsLogQueryCmd($occurredAfter, $occurredAt, $maxResults),
+            ...$this->commandExecutor->getState()
         );
     }
 
@@ -82,7 +87,8 @@ class OptimizeService extends ServiceImpl
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
-            new OptimizeHistoricIdentityLinkLogQueryCmd($occurredAfter, $occurredAt, $maxResults)
+            new OptimizeHistoricIdentityLinkLogQueryCmd($occurredAfter, $occurredAt, $maxResults),
+            ...$this->commandExecutor->getState()
         );
     }
 
@@ -92,7 +98,8 @@ class OptimizeService extends ServiceImpl
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
-            new OptimizeCompletedHistoricProcessInstanceQueryCmd($finishedAfter, $finishedAt, $maxResults)
+            new OptimizeCompletedHistoricProcessInstanceQueryCmd($finishedAfter, $finishedAt, $maxResults),
+            ...$this->commandExecutor->getState()
         );
     }
 
@@ -102,7 +109,8 @@ class OptimizeService extends ServiceImpl
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
-            new OptimizeRunningHistoricProcessInstanceQueryCmd($startedAfter, $startedAt, $maxResults)
+            new OptimizeRunningHistoricProcessInstanceQueryCmd($startedAfter, $startedAt, $maxResults),
+            ...$this->commandExecutor->getState()
         );
     }
 
@@ -113,7 +121,8 @@ class OptimizeService extends ServiceImpl
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
-            new OptimizeHistoricVariableUpdateQueryCmd($occurredAfter, $occurredAt, $excludeObjectValues, $maxResults)
+            new OptimizeHistoricVariableUpdateQueryCmd($occurredAfter, $occurredAt, $excludeObjectValues, $maxResults),
+            ...$this->commandExecutor->getState()
         );
     }
 
@@ -123,7 +132,8 @@ class OptimizeService extends ServiceImpl
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
-            new OptimizeCompletedHistoricIncidentsQueryCmd($finishedAfter, $finishedAt, $maxResults)
+            new OptimizeCompletedHistoricIncidentsQueryCmd($finishedAfter, $finishedAt, $maxResults),
+            ...$this->commandExecutor->getState()
         );
     }
 
@@ -133,7 +143,8 @@ class OptimizeService extends ServiceImpl
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
-            new OptimizeOpenHistoricIncidentsQueryCmd($createdAfter, $createdAt, $maxResults)
+            new OptimizeOpenHistoricIncidentsQueryCmd($createdAfter, $createdAt, $maxResults),
+            ...$this->commandExecutor->getState()
         );
     }
 
@@ -143,7 +154,8 @@ class OptimizeService extends ServiceImpl
         int $maxResults
     ): array {
         return $this->commandExecutor->execute(
-            new OptimizeHistoricDecisionInstanceQueryCmd(evaluatedAfter, evaluatedAt, $maxResults)
+            new OptimizeHistoricDecisionInstanceQueryCmd($evaluatedAfter, $evaluatedAt, $maxResults),
+            ...$this->commandExecutor->getState()
         );
     }
 }

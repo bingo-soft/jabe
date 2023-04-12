@@ -52,7 +52,7 @@ class AddIdentityLinkForProcessDefinitionCmd implements CommandInterface, \Seria
         }
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $processDefinition = Context::getCommandContext()
             ->getProcessDefinitionManager()

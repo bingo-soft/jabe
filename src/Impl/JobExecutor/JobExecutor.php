@@ -28,14 +28,13 @@ abstract class JobExecutor
     protected $jobAcquisitionThread;
 
     protected bool $isAutoActivate = false;
-    protected $isActive;
-
     protected int $maxJobsPerAcquisition = 3;
 
     // waiting when job acquisition is idle
-    protected int $waitTimeInMillis = 5 * 1000;
+    public const WAIT_TIME_IN_MILLIS = 5 * 1000;
+    protected int $waitTimeInMillis = self::WAIT_TIME_IN_MILLIS;
     protected int $waitIncreaseFactor = 2;
-    protected int $maxWait = 60 * 1000;
+    protected int $maxWait = 30 * 1000;
 
     // backoff when job acquisition fails to lock all jobs
     protected int $backoffTimeInMillis = 0;
@@ -48,37 +47,46 @@ abstract class JobExecutor
     protected int $backoffDecreaseThreshold = 100;
 
     protected $lockOwner;
-    protected int $lockTimeInMillis = 5 * 60 * 1000;
+    protected int $lockTimeInMillis = 5 * 30 * 1000;
 
-    public function __construct()
+    protected $state = [];
+
+    public function __construct(...$args)
     {
         $className = ClassNameUtil::getClassNameWithoutPackage(get_class($this));
         $this->name = "JobExecutor[$className]";
         $this->lockOwner = Uuid::uuid1();
-        $this->isActive = new \Swoole\Atomic(0);
+        if (!empty($args)) {
+            $this->state = $args;
+        }
+    }
+
+    public function getState(): array
+    {
+        return $this->state;
     }
 
     public function start(): void
     {
-        if ($this->isActive->get()) {
+        if ($this->state[0]->get()) {
             return;
         }
         //LOG.startingUpJobExecutor(getClass().getName());
         $this->ensureInitialization();
         $this->startExecutingJobs();
-        $this->isActive->set(1);
+        $this->state[0]->set(1);
     }
 
     public function shutdown(): void
     {
-        if (!$this->isActive->get()) {
+        if (!$this->state[0]->get()) {
             return;
         }
         //LOG.shuttingDownTheJobExecutor(getClass().getName());
         $this->acquireJobsRunnable->stop();
         $this->stopExecutingJobs();
         $this->ensureCleanup();
-        $this->isActive->set(0);
+        $this->state[0]->set(0);
     }
 
     protected function ensureInitialization(): void
@@ -86,7 +94,7 @@ abstract class JobExecutor
         if ($this->acquireJobsCmdFactory === null) {
             $this->acquireJobsCmdFactory =  new DefaultAcquireJobsCommandFactory($this);
         }
-        $this->acquireJobsRunnable = new SequentialJobAcquisitionRunnable($this);
+        $this->acquireJobsRunnable = new SequentialJobAcquisitionRunnable($this, ...$this->state);
     }
 
     protected function ensureCleanup(): void
@@ -97,9 +105,6 @@ abstract class JobExecutor
 
     public function jobWasAdded(): void
     {
-        if ($this->isActive->get()) {
-            $this->acquireJobsRunnable->jobWasAdded();
-        }
     }
 
     public function registerProcessEngine(ProcessEngineImpl $processEngine): void
@@ -123,14 +128,14 @@ abstract class JobExecutor
         }
 
         // if we unregister the last process engine, auto-shutdown the jobexecutor
-        if (empty($this->processEngines) && $this->isActive->get()) {
+        if (empty($this->processEngines) && $this->state[0]->get()) {
             $this->shutdown();
         }
     }
 
-    abstract protected function startExecutingJobs(): void;
+    abstract protected function startExecutingJobs(...$args): void;
     abstract protected function stopExecutingJobs(): void;
-    abstract public function executeJobs(array $jobIds, ?ProcessEngineImpl $processEngine = null): void;
+    abstract public function executeJobs(array $jobIds, ?ProcessEngineImpl $processEngine = null, ...$args): void;
 
     /**
      * Deprecated: use {@link #executeJobs(List, ProcessEngineImpl)} instead
@@ -349,7 +354,7 @@ abstract class JobExecutor
 
     public function isActive(): bool
     {
-        return $this->isActive->get();
+        return $this->state[0]->get();
     }
 
     public function getRejectedJobsHandler(): ?RejectedJobsHandlerInterface
@@ -362,12 +367,12 @@ abstract class JobExecutor
         $this->rejectedJobsHandler = $rejectedJobsHandler;
     }
 
-    protected function startJobAcquisitionThread(): void
+    protected function startJobAcquisitionThread(...$args): void
     {
         if ($this->jobAcquisitionThread === null) {
             $jobs = $this->acquireJobsRunnable;
-            $this->jobAcquisitionThread = new InterruptibleProcess(function ($process) use ($jobs) {
-                $jobs->run($process);
+            $this->jobAcquisitionThread = new InterruptibleProcess(function ($process) use ($jobs, $args) {
+                $jobs->run($process, ...$args);
             });
             $this->jobAcquisitionThread->start();
         }

@@ -326,7 +326,7 @@ class ProcessEngineTestRule
                     $this->job = $job;
                 }
 
-                public function execute(CommandContext $commandContext)
+                public function execute(CommandContext $commandContext, ...$args)
                 {
                     $jobManager = $commandContext->getJobManager();
 

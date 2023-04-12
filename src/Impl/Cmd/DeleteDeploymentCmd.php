@@ -25,10 +25,9 @@ class DeleteDeploymentCmd implements CommandInterface, \Serializable
     //private final static TransactionLogger TX_LOG = ProcessEngineLogger.TX_LOGGER;
 
     protected $deploymentId;
-    protected $cascade;
-
-    protected $skipCustomListeners;
-    protected $skipIoMappings;
+    protected bool $cascade = false;
+    protected bool $skipCustomListeners = false;
+    protected bool $skipIoMappings = false;
 
     public function __construct(?string $deploymentId, bool $cascade, bool $skipCustomListeners, bool $skipIoMappings)
     {
@@ -57,7 +56,7 @@ class DeleteDeploymentCmd implements CommandInterface, \Serializable
         $this->skipIoMappings = $json->skipIoMappings;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("deploymentId", "deploymentId", $this->deploymentId);
 

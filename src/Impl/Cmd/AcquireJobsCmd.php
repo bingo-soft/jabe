@@ -35,7 +35,7 @@ class AcquireJobsCmd implements CommandInterface, OptimisticLockingListenerInter
         $this->numJobsToAcquire = $numJobsToAcquire;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $this->acquiredJobs = new AcquiredJobs($this->numJobsToAcquire);
 
@@ -93,7 +93,7 @@ class AcquireJobsCmd implements CommandInterface, OptimisticLockingListenerInter
 
         $lockTimeInMillis = $this->jobExecutor->getLockTimeInMillis();
 
-        $date = new \DateTime(ClockUtil::getCurrentTime()->format('c'));
+        $date = new \DateTime(ClockUtil::getCurrentTime(...$this->jobExecutor->getState())->format('c'));
         $date->modify('+ ' . $lockTimeInMillis . ' milliseconds');
         $job->setLockExpirationTime($date->format('c'));
     }

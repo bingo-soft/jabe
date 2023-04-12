@@ -10,7 +10,7 @@ use Jabe\Management\Metrics;
 
 class SuccessfulJobListener implements CommandInterface
 {
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $this->logJobSuccess($commandContext);
         return null;

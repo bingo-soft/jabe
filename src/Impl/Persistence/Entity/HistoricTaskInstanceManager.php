@@ -28,6 +28,11 @@ use Jabe\Impl\Util\EnsureUtil;
 
 class HistoricTaskInstanceManager extends AbstractHistoricManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     /**
      * Deletes all data related with tasks, which belongs to specified process instance ids.
      * @param processInstanceIds

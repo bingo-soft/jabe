@@ -35,7 +35,7 @@ class SetTaskPriorityCmd implements CommandInterface, \Serializable
         $this->priority = $json->priority;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("taskId", "taskId", $this->taskId);
 

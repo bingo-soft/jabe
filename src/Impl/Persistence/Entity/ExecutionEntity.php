@@ -437,7 +437,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
         $execution->cachedEntityState = 0;
     }
 
-    public function start(?VariableMapInterface $variables = null, ?VariableMapInterface $formProperties = null): void
+    public function start(?VariableMapInterface $variables = null, ?VariableMapInterface $formProperties = null, ...$args): void
     {
         if ($this->getSuperExecution() === null) {
             $this->setRootProcessInstanceId($this->processInstanceId);
@@ -448,7 +448,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
 
         // determine tenant Id if null
         $this->provideTenantId($variables, $formProperties);
-        parent::start($variables, $formProperties);
+        parent::start($variables, $formProperties, ...$args);
     }
 
     public function startWithoutExecuting(?VariableMapInterface $variables = null): void
@@ -601,7 +601,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
 
     // methods that translate to operations /////////////////////////////////////
 
-    public function performOperation($operation): void
+    public function performOperation($operation, ...$args): void
     {
         if ($operation instanceof AtomicOperationInterface) {
             $async = !$this->isIgnoreAsync() && $operation->isAsync($this);
@@ -610,9 +610,9 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
                 $this->ensureNotSuspended();
             }
             Context::getCommandInvocationContext()
-            ->performOperation($operation, $this, $async);
+            ->performOperation($operation, $this, $async, ...$args);
         } else {
-            parent::performOperation($operation);
+            parent::performOperation($operation, ...$args);
         }
     }
 
@@ -862,12 +862,12 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
     /**
      * generates an activity instance id
      */
-    protected function generateActivityInstanceId(?string $activityId): ?string
+    protected function generateActivityInstanceId(?string $activityId, ...$args): ?string
     {
         if ($activityId == $this->processDefinitionId) {
             return $this->processInstanceId;
         } else {
-            $nextId = Context::getProcessEngineConfiguration()->getIdGenerator()->getNextId();
+            $nextId = Context::getProcessEngineConfiguration()->getIdGenerator()->getNextId(...$args);
 
             $compositeId = $activityId . ":" . $nextId;
             if (strlen($compositeId) > 64) {

@@ -35,7 +35,7 @@ class GetDeploymentBpmnModelInstanceCmd implements CommandInterface, \Serializab
         $this->processDefinitionId = $json->processDefinitionId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $configuration = Context::getProcessEngineConfiguration();
         $deploymentCache = $configuration->getDeploymentCache();

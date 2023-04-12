@@ -118,7 +118,8 @@ class RuntimeServiceImpl extends ServiceImpl implements RuntimeServiceInterface
                 $deleteReason,
                 $skipCustomListeners,
                 $skipSubprocesses
-            )
+            ),
+            ...$this->commandExecutor->getState()
         );
     }
 
@@ -267,12 +268,15 @@ class RuntimeServiceImpl extends ServiceImpl implements RuntimeServiceInterface
         HistoricProcessInstanceQueryInterface $historicProcessInstanceQuery = null,
         array $variables = []
     ): BatchInterface {
-        return $this->commandExecutor->execute(new SetVariablesToProcessInstancesBatchCmd(
-            $processInstanceIds,
-            $processInstanceQuery,
-            $historicProcessInstanceQuery,
-            $variables
-        ));
+        return $this->commandExecutor->execute(
+            new SetVariablesToProcessInstancesBatchCmd(
+                $processInstanceIds,
+                $processInstanceQuery,
+                $historicProcessInstanceQuery,
+                $variables
+            ),
+            ...$this->commandExecutor->getState()
+        );
     }
 
     public function removeVariable(?string $executionId, ?string $variableName): void
@@ -402,7 +406,7 @@ class RuntimeServiceImpl extends ServiceImpl implements RuntimeServiceInterface
         if (!empty($processVariables)) {
             $res->setVariables($processVariables);
         }
-        $res->correlateStartMessage();
+        return $res->correlateStartMessage();
     }
 
     public function startProcessInstanceByMessageAndProcessDefinitionId(?string $messageName, ?string $processDefinitionId, ?string $businessKey = null, array $processVariables = []): ProcessInstanceInterface
@@ -414,7 +418,7 @@ class RuntimeServiceImpl extends ServiceImpl implements RuntimeServiceInterface
         if (!empty($processVariables)) {
             $res->setVariables($processVariables);
         }
-        $res->correlateStartMessage();
+        return $res->correlateStartMessage();
     }
 
     public function signalEventReceived(?string $signalName, ?string $executionId = null, array $processVariables = []): void

@@ -16,12 +16,12 @@ class TimerDeclarationType
 
     public static function calendarName(?string $type): ?string
     {
-        switch (strtolower($type)) {
-            case 'date':
+        switch ($type) {
+            case self::DATE:
                 return self::DATE;
-            case 'duration':
+            case self::DURATION:
                 return self::DURATION;
-            case 'cycle':
+            case self::CYCLE:
                 return self::CYCLE;
             default:
                 return null;

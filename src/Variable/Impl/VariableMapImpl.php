@@ -119,7 +119,7 @@ class VariableMapImpl extends \ArrayObject implements VariableMapInterface, \Ser
         return null;
     }
 
-    public function putAll(array $m)
+    public function putAll($m)
     {
         if ($m !== null) {
             if ($m instanceof VariableMapImpl) {

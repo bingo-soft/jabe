@@ -30,7 +30,7 @@ class UpdateProcessInstancesSuspendStateBatchCmd extends AbstractUpdateProcessIn
         parent::__construct($commandExecutor, $builder, $suspending);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $elementConfiguration = $this->collectProcessInstanceIds($commandContext);
 

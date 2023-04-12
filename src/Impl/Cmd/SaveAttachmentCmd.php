@@ -18,7 +18,7 @@ class SaveAttachmentCmd implements CommandInterface
         $this->attachment = $attachment;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $updateAttachment = $commandContext
             ->getDbEntityManager()

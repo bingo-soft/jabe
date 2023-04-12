@@ -40,7 +40,7 @@ class SetUserPictureCmd implements CommandInterface, \Serializable
         $this->picture = unserialize($json->picture);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("userId", "userId", $this->userId);
 
@@ -57,7 +57,7 @@ class SetUserPictureCmd implements CommandInterface, \Serializable
             $pictureInfo = new IdentityInfoEntity();
             $pictureInfo->setUserId($this->userId);
             $pictureInfo->setKey("picture");
-            $commandContext->getDbEntityManager()->insert($pictureInfo);
+            $commandContext->getDbEntityManager()->insert($pictureInfo, ...$args);
         }
 
         $byteArrayEntity = new ByteArrayEntity($this->picture->getMimeType(), $this->picture->getBytes(), ResourceTypes::repository());

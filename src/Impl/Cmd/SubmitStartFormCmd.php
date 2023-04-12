@@ -40,7 +40,7 @@ class SubmitStartFormCmd implements CommandInterface, \Serializable
         $this->businessKey = $json->businessKey;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $processEngineConfiguration = Context::getProcessEngineConfiguration();
         $deploymentCache = $processEngineConfiguration->getDeploymentCache();

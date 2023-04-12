@@ -51,7 +51,7 @@ class DeleteTaskCmd implements CommandInterface, \Serializable
         $this->deleteReason = $json->deleteReason;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         if ($this->taskId !== null) {
             $this->deleteTask($this->taskId, $commandContext);

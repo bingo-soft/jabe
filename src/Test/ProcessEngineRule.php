@@ -151,7 +151,7 @@ class ProcessEngineRule implements ProcessEngineServicesInterface
 
     public function setCurrentTime(\DateTime $currentTime): void
     {
-        ClockUtil::setCurrentTime($currentTime);
+        ClockUtil::setCurrentTime($currentTime, ...$this->processEngine->getProcessEngineConfiguration()->getJobExecutorState());
     }
 
     public function getConfigurationResource(): ?string

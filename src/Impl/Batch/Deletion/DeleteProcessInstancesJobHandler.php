@@ -53,7 +53,7 @@ class DeleteProcessInstancesJobHandler extends AbstractBatchJobHandler
         return new DeleteProcessInstanceBatchConfiguration($processIdsForJob, null, $configuration->getDeleteReason(), $configuration->isSkipCustomListeners(), $configuration->isSkipSubprocesses(), $configuration->isFailIfNotExists());
     }
 
-    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId, ...$args): void
     {
         $configurationEntity = $commandContext
             ->getDbEntityManager()

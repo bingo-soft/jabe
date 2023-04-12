@@ -11,13 +11,16 @@ abstract class AcquireJobsRunnable implements RunnableInterface
 
     protected $jobExecutor;
     protected bool $isInterrupted = false;
-    protected $isJobAdded;
+    protected $sharedMem;
     protected $monitor;
+    protected $state = [];
 
-    public function __construct(JobExecutor $jobExecutor)
+    public function __construct(JobExecutor $jobExecutor, ...$args)
     {
         $this->jobExecutor = $jobExecutor;
-        $this->isJobAdded = new \Swoole\Atomic(0);
+        if (!empty($args)) {
+            $this->state = $args;
+        }
     }
 
     protected function suspendAcquisition(int $millis): void
@@ -39,21 +42,16 @@ abstract class AcquireJobsRunnable implements RunnableInterface
 
     public function jobWasAdded(): void
     {
-        $this->isJobAdded->set(1);
+        $this->state[1]->set(1);
     }
 
     protected function clearJobAddedNotification(): void
     {
-        $this->isJobAdded->set(0);
+        $this->state[1]->set(0);
     }
 
-    public function isJobAdded(): bool
+    public function isJobAdded(): \Swoole\Atomic
     {
-        return $this->isJobAdded->get();
-    }
-
-    public function getIsJobAddedAtomic(): \Swoole\Atomic
-    {
-        return $this->isJobAdded;
+        return $this->state[1];
     }
 }

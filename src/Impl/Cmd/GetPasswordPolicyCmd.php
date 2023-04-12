@@ -9,7 +9,7 @@ use Jabe\Impl\Interceptor\{
 
 class GetPasswordPolicyCmd implements CommandInterface
 {
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $processEngineConfiguration = $commandContext->getProcessEngineConfiguration();
         if ($processEngineConfiguration->isEnablePasswordPolicy()) {

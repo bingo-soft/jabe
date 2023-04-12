@@ -26,6 +26,11 @@ use Jabe\Management\{
 
 class StatisticsManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function getStatisticsGroupedByProcessDefinitionVersion(ProcessDefinitionStatisticsQueryImpl $query, ?Page $page): array
     {
         $this->configureQuery($query);

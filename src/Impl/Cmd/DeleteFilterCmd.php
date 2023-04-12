@@ -30,7 +30,7 @@ class DeleteFilterCmd implements CommandInterface, \Serializable
         $this->filterId = $json->filterId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $commandContext->getOperationLogManager()->logFilterOperation(UserOperationLogEntryInterface::OPERATION_TYPE_DELETE, $this->filterId);
 

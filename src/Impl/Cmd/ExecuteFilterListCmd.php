@@ -15,7 +15,7 @@ class ExecuteFilterListCmd extends AbstractExecuteFilterCmd implements CommandIn
         parent::__construct($filterId, $extendingQuery);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $query = $this->getFilterQuery($commandContext);
         $query->enableMaxResultsLimit();

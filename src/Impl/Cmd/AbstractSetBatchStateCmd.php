@@ -26,7 +26,7 @@ abstract class AbstractSetBatchStateCmd implements CommandInterface
         $this->batchId = $batchId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("Batch id must not be null", "batch id", $this->batchId);
 

@@ -41,7 +41,11 @@ class BpmnParseUtil
     */
     public static function findExtensionElement(Element $element, ?string $extensionElementName): ?Element
     {
-        return $element->element("extensionElements");
+        $extensionElements = $element->element("extensionElements");
+        if (!empty($extensionElements)) {
+            return $extensionElements->element($extensionElementName);
+        }
+        return null;
     }
 
     /**

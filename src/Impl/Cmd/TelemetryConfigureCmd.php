@@ -23,7 +23,7 @@ class TelemetryConfigureCmd implements CommandInterface
         $this->telemetryEnabled = $telemetryEnabled;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $authorizationManager = $commandContext->getAuthorizationManager();
         $authorizationManager->checkAdminOrPermission("checkConfigureTelemetry");

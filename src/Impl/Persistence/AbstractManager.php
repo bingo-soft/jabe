@@ -53,9 +53,18 @@ use Jabe\Impl\Persistence\Entity\{
 
 abstract class AbstractManager implements SessionInterface
 {
+    protected $jobExecutorState = [];
+
+    public function __construct(...$args)
+    {
+        if (!empty($args)) {
+            $this->jobExecutorState = $args;
+        }
+    }
+
     public function insert(DbEntityInterface $dbEntity): void
     {
-        $this->getDbEntityManager()->insert($dbEntity);
+        $this->getDbEntityManager()->insert($dbEntity, ...$this->jobExecutorState);
     }
 
     public function delete(DbEntityInterface $dbEntity): void

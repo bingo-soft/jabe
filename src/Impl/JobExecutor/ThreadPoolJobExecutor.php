@@ -9,14 +9,14 @@ class ThreadPoolJobExecutor extends JobExecutor
 {
     protected $threadPoolExecutor;
 
-    public function __construct()
+    public function __construct(...$args)
     {
-        parent::__construct();
+        parent::__construct(...$args);
     }
 
-    protected function startExecutingJobs(): void
+    protected function startExecutingJobs(...$args): void
     {
-        $this->startJobAcquisitionThread();
+        $this->startJobAcquisitionThread(...$args);
     }
 
     protected function stopExecutingJobs(): void
@@ -24,7 +24,7 @@ class ThreadPoolJobExecutor extends JobExecutor
         $this->stopJobAcquisitionThread();
     }
 
-    public function executeJobs(array $jobIds, ?ProcessEngineImpl $processEngine = null): void
+    public function executeJobs(array $jobIds, ?ProcessEngineImpl $processEngine = null, ...$args): void
     {
         try {
             $runnable = $this->getExecuteJobsRunnable($jobIds, $processEngine);

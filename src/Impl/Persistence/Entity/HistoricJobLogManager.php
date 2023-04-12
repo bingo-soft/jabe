@@ -30,6 +30,11 @@ class HistoricJobLogManager extends AbstractHistoricManager
 {
     // select /////////////////////////////////////////////////////////////////
 
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function findHistoricJobLogById(?string $historicJobLogId): ?HistoricJobLogEventEntity
     {
         return $this->getDbEntityManager()->selectOne("selectHistoricJobLog", $historicJobLogId);

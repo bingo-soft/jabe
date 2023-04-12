@@ -18,7 +18,7 @@ class DeleteUserOperationLogEntryCmd implements CommandInterface
         $this->entryId = $entryId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "entryId", $this->entryId);
 

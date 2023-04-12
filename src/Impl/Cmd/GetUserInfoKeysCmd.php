@@ -33,7 +33,7 @@ class GetUserInfoKeysCmd implements CommandInterface, \Serializable
         $this->userInfoType = $json->userInfoType;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return $commandContext
             ->getIdentityInfoManager()

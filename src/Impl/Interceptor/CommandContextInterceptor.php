@@ -26,7 +26,7 @@ class CommandContextInterceptor extends CommandInterceptor
         $this->alwaysOpenNew = $alwaysOpenNew;
     }
 
-    public function execute(CommandInterface $command)
+    public function execute(CommandInterface $command, ...$args)
     {
         $context = null;
 
@@ -57,7 +57,10 @@ class CommandContextInterceptor extends CommandInterceptor
             Context::setProcessEngineConfiguration($this->processEngineConfiguration);
 
             // delegate to next interceptor in chain
-            return $this->next->execute($command);
+            if (empty($args) && !empty($this->getState())) {
+                $args = $this->getState();
+            }
+            return $this->next->execute($command, ...$args);
         } catch (\Throwable $t) {
             $commandInvocationContext->trySetThrowable($t);
         } finally {

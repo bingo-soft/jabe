@@ -14,6 +14,11 @@ use Jabe\Impl\Persistence\AbstractManager;
 
 class HistoricStatisticsManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function getHistoricStatisticsGroupedByActivity(HistoricActivityStatisticsQueryImpl $query, ?Page $page): array
     {
         if ($this->ensureHistoryReadOnProcessDefinition($query)) {

@@ -50,7 +50,7 @@ class DeleteProcessInstancesCmd extends AbstractDeleteProcessInstanceCmd impleme
         $this->failIfNotExists = $json->failIfNotExists;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         foreach ($this->processInstanceIds as $processInstanceId) {
             $this->deleteProcessInstance($commandContext, $this->processInstanceId, $this->deleteReason, $this->skipCustomListeners, $this->externallyTerminated, false, $this->skipSubprocesses);

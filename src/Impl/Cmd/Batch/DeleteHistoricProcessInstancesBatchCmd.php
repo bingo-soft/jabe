@@ -44,7 +44,7 @@ class DeleteHistoricProcessInstancesBatchCmd implements CommandInterface
         $this->deleteReason = $deleteReason;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $elementConfiguration = $this->collectHistoricProcessInstanceIds($commandContext);
 

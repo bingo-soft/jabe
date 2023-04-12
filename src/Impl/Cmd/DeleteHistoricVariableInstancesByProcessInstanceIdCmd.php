@@ -40,7 +40,7 @@ class DeleteHistoricVariableInstancesByProcessInstanceIdCmd implements CommandIn
         $this->processInstanceId = $json->processInstanceId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotEmpty(BadUserRequestException::class, "processInstanceId", $this->processInstanceId);
 

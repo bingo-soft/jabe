@@ -25,9 +25,14 @@ use Jabe\Repository\{
 
 class DeploymentManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function insertDeployment(DeploymentEntity $deployment): void
     {
-        $this->getDbEntityManager()->insert($deployment);
+        $this->getDbEntityManager()->insert($deployment, ...$this->jobExecutorState);
         $this->createDefaultAuthorizations($deployment);
 
         foreach ($deployment->getResources() as $resource) {

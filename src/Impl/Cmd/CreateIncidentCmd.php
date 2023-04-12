@@ -29,7 +29,7 @@ class CreateIncidentCmd implements CommandInterface
         $this->message = $message;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("Execution id cannot be null", "executionId", $this->executionId);
         EnsureUtil::ensureNotNull(BadUserRequestException::class, "incidentType", $this->incidentType);

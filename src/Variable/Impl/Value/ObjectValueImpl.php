@@ -84,13 +84,7 @@ class ObjectValueImpl extends AbstractTypedValue implements ObjectValueInterface
         if ($this->isDeserialized) {
             return parent::getValue();
         } else {
-            $e = new \Exception();
-            $from = [];
-            for ($i = 0; $i < 26; $i += 1) {
-                $t = $e->getTrace()[$i];
-                $from[] = sprintf("%s.%s.%s", $t["file"], $t["function"], $t["line"]);
-            }
-            throw new \Exception("Object is not deserialized. " . implode(" <= ", $from));
+            throw new \Exception("Object is not deserialized.");
         }
     }
 

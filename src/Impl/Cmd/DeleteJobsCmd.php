@@ -23,7 +23,7 @@ class DeleteJobsCmd implements CommandInterface
         $this->cascade = $cascade;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $jobToDelete = null;
         foreach ($this->jobIds as $jobId) {

@@ -20,7 +20,7 @@ class OptimizeCompletedHistoricActivityInstanceQueryCmd implements CommandInterf
         $this->maxResults = $maxResults;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return $commandContext->getOptimizeManager()->getCompletedHistoricActivityInstances($this->finishedAfter, $this->finishedAt, $this->maxResults);
     }

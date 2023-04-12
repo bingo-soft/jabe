@@ -35,6 +35,11 @@ use Jabe\Impl\Util\EncryptionUtil;
 
 class DbReadOnlyIdentityServiceProvider extends AbstractManager implements ReadOnlyIdentityProviderInterface
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     // users /////////////////////////////////////////
     public function findUserById(?string $userId): ?UserEntity
     {

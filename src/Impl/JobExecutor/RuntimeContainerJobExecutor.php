@@ -12,7 +12,7 @@ use Jabe\Impl\ProcessEngineImpl;
 
 class RuntimeContainerJobExecutor extends JobExecutor
 {
-    protected function startExecutingJobs(): void
+    protected function startExecutingJobs(...$args): void
     {
         $runtimeContainerDelegate = $this->getRuntimeContainerDelegate();
 
@@ -27,7 +27,7 @@ class RuntimeContainerJobExecutor extends JobExecutor
       // nothing to do
     }
 
-    public function executeJobs(array $jobIds, ProcessEngineImpl $processEngine): void
+    public function executeJobs(array $jobIds, ProcessEngineImpl $processEngine = null, ...$args): void
     {
         $runtimeContainerDelegate = $this->getRuntimeContainerDelegate();
         $executorService = $runtimeContainerDelegate->getExecutorService();

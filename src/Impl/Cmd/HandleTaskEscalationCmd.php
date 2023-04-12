@@ -45,7 +45,7 @@ class HandleTaskEscalationCmd implements CommandInterface, \Serializable
         EnsureUtil::ensureNotEmpty(BadUserRequestException::class, "escalationCode", escalationCode);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $this->validateInput();
 

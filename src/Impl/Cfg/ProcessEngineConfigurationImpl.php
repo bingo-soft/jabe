@@ -1016,8 +1016,25 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
 
     private bool $preventJobExecutorInitialization = false;
 
+    //JobExecutor state for synchronization
+    protected $isActive;
+    protected $isJobAdded;
+    protected $processLock;
+
+    //ClockUtil state synchronization
+    protected $isClockReset;
+    protected $currentTimestamp;
+
     public function __construct()
     {
+        $this->setJobExecutorState(
+            new \Swoole\Atomic(0), //isActive
+            new \Swoole\Atomic(0), //isJobAdded
+            new \Swoole\Lock(SWOOLE_MUTEX), //database simple mutex,
+            new \Swoole\Atomic(0), //isClockReset
+            new \Swoole\Atomic\Long(0) //Current time timestamp in seconds
+        );
+
         $this->repositoryService = new RepositoryServiceImpl();
         $this->runtimeService = new RuntimeServiceImpl();
         $this->historyService = new HistoryServiceImpl();
@@ -1032,6 +1049,20 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
         //protected DecisionService decisionService = new DecisionServiceImpl();
         $this->optimizeService = new OptimizeService();
         $this->dbEntityCacheKeyMapping = DbEntityCacheKeyMapping::defaultEntityCacheKeyMapping();
+    }
+
+    public function getJobExecutorState(): array
+    {
+        return [$this->isActive, $this->isJobAdded, $this->processLock, $this->isClockReset, $this->currentTimestamp];
+    }
+
+    public function setJobExecutorState(...$args): void
+    {
+        $this->isActive = $args[0];
+        $this->isJobAdded = $args[1];
+        $this->processLock = $args[2];
+        $this->isClockReset = $args[3];
+        $this->currentTimestamp = $args[4];
     }
 
     /**
@@ -1098,6 +1129,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
     public function buildProcessEngine(bool $preventJobExecutorInitialization = false): ProcessEngineInterface
     {
         $this->preventJobExecutorInitialization = $preventJobExecutorInitialization;
+        //Process must be reset in case of context switch
         $this->init();
         $this->processEngine = new ProcessEngineImpl($this);
         $this->invokePostProcessEngineBuild($this->processEngine);
@@ -1593,6 +1625,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
     {
         if ($this->commandExecutorTxRequired === null) {
             $this->commandExecutorTxRequired = $this->initInterceptorChain($this->commandInterceptorsTxRequired);
+            $this->commandExecutorTxRequired->setState(...$this->getJobExecutorState());
         }
     }
 
@@ -1600,6 +1633,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
     {
         if ($this->commandExecutorTxRequiresNew === null) {
             $this->commandExecutorTxRequiresNew = $this->initInterceptorChain($this->commandInterceptorsTxRequiresNew);
+            $this->commandExecutorTxRequiresNew->setState(...$this->getJobExecutorState());
         }
     }
 
@@ -1881,7 +1915,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
     protected function initIdentityProviderSessionFactory(): void
     {
         if ($this->identityProviderSessionFactory === null) {
-            $this->identityProviderSessionFactory = new GenericManagerFactory(DbIdentityServiceProvider::class);
+            $this->identityProviderSessionFactory = new GenericManagerFactory(DbIdentityServiceProvider::class, ...$this->getJobExecutorState());
         }
     }
 
@@ -1891,50 +1925,49 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
             $this->sessionFactories = [];
 
             $this->initPersistenceProviders();
+            $this->addSessionFactory(new DbEntityManagerFactory($this->idGenerator, ...$this->getJobExecutorState()));
 
-            $this->addSessionFactory(new DbEntityManagerFactory($this->idGenerator));
-
-            $this->addSessionFactory(new GenericManagerFactory(AttachmentManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(CommentManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(DeploymentManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(ExecutionManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(HistoricActivityInstanceManager::class));
+            $this->addSessionFactory(new GenericManagerFactory(AttachmentManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(CommentManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(DeploymentManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(ExecutionManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(HistoricActivityInstanceManager::class, ...$this->getJobExecutorState()));
             //$this->addSessionFactory(new GenericManagerFactory(HistoricCaseActivityInstanceManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(HistoricStatisticsManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(HistoricDetailManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(HistoricProcessInstanceManager::class));
+            $this->addSessionFactory(new GenericManagerFactory(HistoricStatisticsManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(HistoricDetailManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(HistoricProcessInstanceManager::class, ...$this->getJobExecutorState()));
             //$this->addSessionFactory(new GenericManagerFactory(HistoricCaseInstanceManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(UserOperationLogManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(HistoricTaskInstanceManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(HistoricVariableInstanceManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(HistoricIncidentManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(HistoricIdentityLinkLogManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(HistoricJobLogManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(HistoricExternalTaskLogManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(IdentityInfoManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(IdentityLinkManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(JobManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(JobDefinitionManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(ProcessDefinitionManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(PropertyManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(ResourceManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(ByteArrayManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(TableDataManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(TaskManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(TaskReportManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(VariableInstanceManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(EventSubscriptionManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(StatisticsManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(IncidentManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(AuthorizationManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(FilterManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(MeterLogManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(ExternalTaskManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(ReportManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(BatchManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(HistoricBatchManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(TenantManager::class));
-            $this->addSessionFactory(new GenericManagerFactory(SchemaLogManager::class));
+            $this->addSessionFactory(new GenericManagerFactory(UserOperationLogManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(HistoricTaskInstanceManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(HistoricVariableInstanceManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(HistoricIncidentManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(HistoricIdentityLinkLogManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(HistoricJobLogManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(HistoricExternalTaskLogManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(IdentityInfoManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(IdentityLinkManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(JobManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(JobDefinitionManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(ProcessDefinitionManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(PropertyManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(ResourceManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(ByteArrayManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(TableDataManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(TaskManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(TaskReportManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(VariableInstanceManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(EventSubscriptionManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(StatisticsManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(IncidentManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(AuthorizationManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(FilterManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(MeterLogManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(ExternalTaskManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(ReportManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(BatchManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(HistoricBatchManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(TenantManager::class, ...$this->getJobExecutorState()));
+            $this->addSessionFactory(new GenericManagerFactory(SchemaLogManager::class, ...$this->getJobExecutorState()));
 
             /*$this->addSessionFactory(new GenericManagerFactory(CaseDefinitionManager::class));
             $this->addSessionFactory(new GenericManagerFactory(CaseExecutionManager::class));
@@ -1944,9 +1977,9 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
             $this->addSessionFactory(new GenericManagerFactory(DecisionRequirementsDefinitionManager::class));
             $this->addSessionFactory(new GenericManagerFactory(HistoricDecisionInstanceManager::class));*/
 
-            $this->addSessionFactory(new GenericManagerFactory(FormDefinitionManager::class));
+            $this->addSessionFactory(new GenericManagerFactory(FormDefinitionManager::class, ...$this->getJobExecutorState()));
 
-            $this->addSessionFactory(new GenericManagerFactory(OptimizeManager::class));
+            $this->addSessionFactory(new GenericManagerFactory(OptimizeManager::class, ...$this->getJobExecutorState()));
 
             $this->sessionFactories[ReadOnlyIdentityProviderInterface::class] = $this->identityProviderSessionFactory;
 
@@ -2261,7 +2294,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
     protected function initJobExecutor(): void
     {
         if ($this->jobExecutor === null && !$this->preventJobExecutorInitialization) {
-            $this->jobExecutor = new DefaultJobExecutor();
+            $this->jobExecutor = new DefaultJobExecutor(...$this->getJobExecutorState());
         }
 
         $this->jobHandlers = [];
@@ -3047,6 +3080,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
     public function setCommandExecutorTxRequired(CommandExecutorInterface $commandExecutorTxRequired): ProcessEngineConfigurationImpl
     {
         $this->commandExecutorTxRequired = $commandExecutorTxRequired;
+        $this->commandExecutorTxRequired->setState(...$this->getJobExecutorState());
         return $this;
     }
 
@@ -3091,6 +3125,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
     public function setCommandExecutorTxRequiresNew(CommandExecutorInterface $commandExecutorTxRequiresNew): ProcessEngineConfigurationImpl
     {
         $this->commandExecutorTxRequiresNew = $commandExecutorTxRequiresNew;
+        $this->commandExecutorTxRequiresNew->setState(...$this->getJobExecutorState());
         return $this;
     }
 

@@ -24,7 +24,7 @@ class SetExternalTasksRetriesBatchCmd extends AbstractSetExternalTaskRetriesCmd
         parent::__construct($builder);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $elementConfiguration = $this->collectExternalTaskIds($commandContext);
 

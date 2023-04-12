@@ -121,7 +121,7 @@ class SignalEventTest extends PluggableProcessEngineTest
             $this->assertEquals(0, $this->runtimeService->createProcessInstanceQuery()->processInstanceId($processInstance1->getId())->count());
             $this->assertEquals(0, $this->managementService->createJobQuery()->processInstanceId($processInstance1->getId())->count());
         } finally {
-            ClockUtil::setCurrentTime(new \DateTime('now'));
+            ClockUtil::setCurrentTime(new \DateTime('now'), ...$this->processEngineConfiguration->getJobExecutorState());
         }
     }
 
@@ -338,7 +338,7 @@ class SignalEventTest extends PluggableProcessEngineTest
         // start a process instance to throw a signal
         $processInstance = $this->runtimeService->startProcessInstanceByKey("throwSignal_1");
         sleep(120);
-        // the signal should start a new process instance        
+        // the signal should start a new process instance
         $this->assertEquals(1, $this->taskService->createTaskQuery()->taskName("start process task simple intermediate")->count());
         $task = $this->taskService->createTaskQuery()->taskName("start process task simple intermediate")->singleResult();
         $this->taskService->complete($task->getId());
@@ -459,7 +459,7 @@ class SignalEventTest extends PluggableProcessEngineTest
     public function testAsyncSignalStartEventJobPropertiesDueDateSet(): void
     {
         $testTime = (new \DateTime())->setTimestamp(1457326800);
-        ClockUtil::setCurrentTime($testTime);
+        ClockUtil::setCurrentTime($testTime, ...$this->processEngineConfiguration->getJobExecutorState());
         $this->processEngineConfiguration->setEnsureJobDueDateNotNull(true);
 
         /*$catchingProcessDefinition = $this->repositoryService
@@ -487,7 +487,7 @@ class SignalEventTest extends PluggableProcessEngineTest
         $this->assertEquals($testTime, new \DateTime($asyncJob->getDuedate()));
         $this->assertNull($asyncJob->getDeploymentId());
         sleep(15);
-        ClockUtil::setCurrentTime(new \DateTime('now'));
+        ClockUtil::setCurrentTime(new \DateTime('now'), ...$this->processEngineConfiguration->getJobExecutorState());
     }
 
     #[Deployment(resources: ["tests/Resources/Bpmn/Event/Signal/SignalEventTest.signalStartEventAsync.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.throwAlertSignalAsyncAndStart.bpmn20.xml"])]

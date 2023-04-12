@@ -16,7 +16,7 @@ abstract class AbstractInstanceCancellationCmd extends AbstractProcessInstanceMo
         $this->cancellationReason = $cancellationReason ?? "Cancellation due to process instance modifcation";
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $sourceInstanceExecution = $this->determineSourceInstanceExecution($commandContext);
 

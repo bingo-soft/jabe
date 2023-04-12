@@ -14,7 +14,7 @@ abstract class PvmAtomicOperationCreateScope implements PvmAtomicOperationInterf
 
     //private final static PvmLogger LOG = PvmLogger.PVM_LOGGER;
 
-    public function execute(PvmExecutionImpl $execution): void
+    public function execute(PvmExecutionImpl $execution, ...$args): void
     {
         // reset activity instance id before creating the scope
         $execution->setActivityInstanceId($execution->getParentActivityInstanceId());
@@ -35,11 +35,11 @@ abstract class PvmAtomicOperationCreateScope implements PvmAtomicOperationInterf
         }
 
 
-        $this->scopeCreated($propagatingExecution);
+        $this->scopeCreated($propagatingExecution, ...$args);
     }
 
     /**
      * Called with the propagating execution
      */
-    abstract protected function scopeCreated(PvmExecutionImpl $execution): void;
+    abstract protected function scopeCreated(PvmExecutionImpl $execution, ...$args): void;
 }

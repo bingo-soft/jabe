@@ -17,7 +17,7 @@ class GetHistoricExternalTaskLogErrorDetailsCmd implements CommandInterface
         $this->historicExternalTaskLogId = $historicExternalTaskLogId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("historicExternalTaskLogId", "historicExternalTaskLogId", $this->historicExternalTaskLogId);
 

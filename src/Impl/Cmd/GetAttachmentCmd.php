@@ -30,7 +30,7 @@ class GetAttachmentCmd implements CommandInterface, \Serializable
         $this->attachmentId = $json->attachmentId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return $commandContext
             ->getDbEntityManager()

@@ -11,11 +11,11 @@ use Jabe\Impl\Core\Instance\CoreExecution;
 
 abstract class PvmAtomicOperationActivityInstanceStart extends AbstractPvmEventAtomicOperation
 {
-    protected function eventNotificationsStarted(CoreExecution $execution): CoreExecution
+    protected function eventNotificationsStarted(CoreExecution $execution, ...$args): CoreExecution
     {
         $execution->incrementSequenceCounter();
         $execution->activityInstanceStarting();
-        $execution->enterActivityInstance();
+        $execution->enterActivityInstance(...$args);
         $execution->setTransition(null);
 
         return $execution;

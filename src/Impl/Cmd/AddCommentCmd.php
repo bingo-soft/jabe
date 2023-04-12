@@ -56,7 +56,7 @@ class AddCommentCmd implements CommandInterface, \Serializable
         $this->message = $json->message;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         if ($this->processInstanceId === null && $this->taskId === null) {
             throw new ProcessEngineException("Process instance id and task id is null");

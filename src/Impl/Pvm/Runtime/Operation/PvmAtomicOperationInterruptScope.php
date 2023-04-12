@@ -9,7 +9,7 @@ abstract class PvmAtomicOperationInterruptScope implements PvmAtomicOperationInt
 {
     use BasePvmAtomicOperationTrait;
 
-    public function execute(PvmExecutionImpl $execution): void
+    public function execute(PvmExecutionImpl $execution, ...$args): void
     {
         $interruptingActivity = $this->getInterruptingActivity($execution);
 

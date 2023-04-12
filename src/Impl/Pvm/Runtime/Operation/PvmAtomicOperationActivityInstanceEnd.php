@@ -19,7 +19,7 @@ abstract class PvmAtomicOperationActivityInstanceEnd extends AbstractPvmEventAto
 {
     //private final static PvmLogger LOG = ProcessEngineLogger.PVM_LOGGER;
 
-    protected function eventNotificationsStarted(CoreExecution $execution): CoreExecution
+    protected function eventNotificationsStarted(CoreExecution $execution, ...$args): CoreExecution
     {
         $execution->incrementSequenceCounter();
 

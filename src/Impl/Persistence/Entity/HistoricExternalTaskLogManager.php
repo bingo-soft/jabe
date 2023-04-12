@@ -27,6 +27,11 @@ use Jabe\Impl\Util\EnsureUtil;
 
 class HistoricExternalTaskLogManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function findHistoricExternalTaskLogById(?string $historicExternalTaskLogId): ?HistoricExternalTaskLogEntity
     {
         return $this->getDbEntityManager()->selectOne("selectHistoricExternalTaskLog", $historicExternalTaskLogId);

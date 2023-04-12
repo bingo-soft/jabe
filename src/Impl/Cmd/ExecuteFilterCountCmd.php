@@ -15,7 +15,7 @@ class ExecuteFilterCountCmd extends AbstractExecuteFilterCmd implements CommandI
         parent::__construct($filterId, $extendingQuery);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $filter = $this->getFilter($commandContext);
         return $filter->getQuery()->count();

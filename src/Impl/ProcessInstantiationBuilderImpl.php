@@ -117,12 +117,12 @@ class ProcessInstantiationBuilderImpl implements ProcessInstantiationBuilderInte
         return $this;
     }
 
-    public function execute(bool $skipCustomListeners = false, bool $skipIoMappings = false)
+    public function execute(bool $skipCustomListeners = false, bool $skipIoMappings = false, ...$args)
     {
-        return $this->executeWithVariablesInReturn($skipCustomListeners, $skipIoMappings);
+        return $this->executeWithVariablesInReturn($skipCustomListeners, $skipIoMappings, ...$args);
     }
 
-    public function executeWithVariablesInReturn(bool $skipCustomListeners = false, bool $skipIoMappings = false): ProcessInstanceWithVariablesInterface
+    public function executeWithVariablesInReturn(bool $skipCustomListeners = false, bool $skipIoMappings = false, ...$args): ProcessInstanceWithVariablesInterface
     {
         EnsureUtil::ensureOnlyOneNotNull("either process definition id or key must be set", $this->processDefinitionId, $this->processDefinitionKey);
 
@@ -148,7 +148,7 @@ class ProcessInstantiationBuilderImpl implements ProcessInstantiationBuilderInte
             $command = new StartProcessInstanceAtActivitiesCmd($this);
         }
 
-        return $this->commandExecutor->execute($command);
+        return $this->commandExecutor->execute($command, ...$args);
     }
 
     public function getProcessDefinitionId(): ?string

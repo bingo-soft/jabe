@@ -6,6 +6,11 @@ use Jabe\Impl\Persistence\AbstractManager;
 
 class PropertyManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function findPropertyById(?string $propertyId): ?PropertyEntity
     {
         return $this->getDbEntityManager()->selectById(PropertyEntity::class, $propertyId);

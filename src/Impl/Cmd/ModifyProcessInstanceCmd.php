@@ -29,7 +29,7 @@ class ModifyProcessInstanceCmd implements CommandInterface
         $this->writeOperationLog = $writeOperationLog;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $processInstanceId = $this->builder->getProcessInstanceId();
 

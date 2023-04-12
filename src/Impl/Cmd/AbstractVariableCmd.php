@@ -47,7 +47,7 @@ abstract class AbstractVariableCmd implements CommandInterface, \Serializable
         return $this;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $this->commandContext = $commandContext;
 

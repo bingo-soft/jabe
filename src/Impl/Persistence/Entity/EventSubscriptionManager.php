@@ -23,6 +23,11 @@ use Jabe\Impl\Util\EnsureUtil;
 
 class EventSubscriptionManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     //protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
     /** keep track of subscriptions created in the current command */

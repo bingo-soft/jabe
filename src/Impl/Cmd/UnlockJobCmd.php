@@ -27,7 +27,7 @@ class UnlockJobCmd implements CommandInterface
         return Context::getCommandContext()->getJobManager()->findJobById($this->jobId);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $job = $this->getJob();
 

@@ -20,7 +20,7 @@ class ExecuteFilterListPageCmd extends AbstractExecuteFilterCmd implements Comma
         $this->maxResults = $maxResults;
     }
 
-    public function execute(CommandContext $commandContext): array
+    public function execute(CommandContext $commandContext, ...$args): array
     {
         $query = $this->getFilterQuery($commandContext);
         $query->enableMaxResultsLimit();

@@ -17,6 +17,11 @@ class FormDefinitionManager extends AbstractManager implements AbstractResourceD
 {
     //protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function findLatestDefinitionByKey(?string $key): ?FormDefinitionEntity
     {
         $formDefinitions = $this->getDbEntityManager()->selectList("selectLatestFormDefinitionByKey", $this->configureParameterizedQuery($key));

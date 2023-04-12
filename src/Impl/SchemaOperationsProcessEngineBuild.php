@@ -18,7 +18,7 @@ class SchemaOperationsProcessEngineBuild implements SchemaOperationsCommandInter
 {
     //private final static EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $databaseSchemaUpdate = Context::getProcessEngineConfiguration()->getDatabaseSchemaUpdate();
         $persistenceSession = $commandContext->getSession(PersistenceSessionInterface::class);

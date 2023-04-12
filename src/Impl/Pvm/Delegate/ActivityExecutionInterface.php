@@ -26,7 +26,7 @@ interface ActivityExecutionInterface extends DelegateExecutionInterface
     public function getActivity(): ?PvmActivityInterface;
 
     /** invoked to notify the execution that a new activity instance is started */
-    public function enterActivityInstance(): void;
+    public function enterActivityInstance(...$args): void;
 
     /** invoked to notify the execution that an activity instance is ended. */
     public function leaveActivityInstance(): void;

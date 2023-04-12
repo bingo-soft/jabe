@@ -4,5 +4,5 @@ namespace Jabe\Impl\Cfg;
 
 interface IdGeneratorInterface
 {
-    public function getNextId(): ?string;
+    public function getNextId(...$args): ?string;
 }

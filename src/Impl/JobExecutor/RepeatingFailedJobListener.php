@@ -19,7 +19,7 @@ class RepeatingFailedJobListener implements TransactionListenerInterface
         $this->jobId = $jobId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $cmd = new CreateNewTimerJobCommand($this->jobId);
         $this->commandExecutor->execute($cmd);

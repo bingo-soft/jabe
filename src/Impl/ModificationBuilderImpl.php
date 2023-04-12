@@ -27,8 +27,8 @@ class ModificationBuilderImpl implements ModificationBuilderInterface
     protected $processInstanceIds;
     protected $instructions;
     protected $processDefinitionId;
-    protected $skipCustomListeners;
-    protected $skipIoMappings;
+    protected bool $skipCustomListeners = false;
+    protected bool $skipIoMappings = false;
     protected $annotation;
 
     public function __construct(CommandExecutorInterface $commandExecutor, ?string $processDefinitionId)

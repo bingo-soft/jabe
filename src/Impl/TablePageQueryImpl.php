@@ -55,7 +55,7 @@ class TablePageQueryImpl extends ListQueryParameterObject implements TablePageQu
         return $this->commandExecutor->execute($this);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $commandContext->getAuthorizationManager()->checkAdmin();
         return $commandContext

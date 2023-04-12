@@ -35,7 +35,7 @@ class DeleteMetricsCmd implements CommandInterface, \Serializable
         $this->reporter = $json->reporter;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $commandContext->getAuthorizationManager()->checkAdminOrPermission("checkDeleteMetrics");
 

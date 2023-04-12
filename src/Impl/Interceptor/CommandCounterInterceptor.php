@@ -14,10 +14,13 @@ class CommandCounterInterceptor extends CommandInterceptor
         $this->processEngineConfiguration = $processEngineConfiguration;
     }
 
-    public function execute(CommandInterface $command)
+    public function execute(CommandInterface $command, ...$args)
     {
         try {
-            return $this->next->execute($command);
+            if (empty($args) && !empty($this->getState())) {
+                $args = $this->getState();
+            }
+            return $this->next->execute($command, ...$args);
         } finally {
             $telemetryRegistry = $this->processEngineConfiguration->getTelemetryRegistry();
             if ($telemetryRegistry !== null && $telemetryRegistry->isCollectingTelemetryDataEnabled()) {

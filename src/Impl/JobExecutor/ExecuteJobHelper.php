@@ -47,7 +47,8 @@ class ExecuteJobHelper
         CommandExecutorInterface $commandExecutor,
         ?JobFailureCollector $jobFailureCollector = null,
         ?CommandInterface $cmd = null,
-        ?ProcessEngineConfigurationImpl $configuration = null
+        ?ProcessEngineConfigurationImpl $configuration = null,
+        ...$args
     ): void {
         if ($jobFailureCollector === null) {
             $jobFailureCollector = new JobFailureCollector($nextJobId);
@@ -57,7 +58,7 @@ class ExecuteJobHelper
         }
 
         try {
-            $commandExecutor->execute($cmd);
+            $commandExecutor->execute($cmd, ...$args);
         } catch (\Exception $exception) {
             self::handleJobFailure($nextJobId, $jobFailureCollector, $exception);
             // throw the original exception to indicate the ExecuteJobCmd failed

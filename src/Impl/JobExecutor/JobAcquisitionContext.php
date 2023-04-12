@@ -11,11 +11,10 @@ class JobAcquisitionContext
     protected $additionalJobBatchesByEngine = [];
     protected $acquisitionException;
     protected $acquisitionTime;
-    protected $isJobAdded;
+    protected bool $isJobAdded = false;
 
     public function __construct()
     {
-        $this->isJobAdded = new \Swoole\Atomic(0);
     }
 
     public function submitRejectedBatch(?string $engineName, array $jobIds): void
@@ -45,7 +44,7 @@ class JobAcquisitionContext
         $this->acquiredJobsByEngine = [];
         $this->acquisitionException = null;
         $this->acquisitionTime = 0;
-        $this->isJobAdded->set(0);
+        $this->isJobAdded = false;
     }
 
     /**
@@ -129,13 +128,13 @@ class JobAcquisitionContext
         return $this->acquisitionException;
     }
 
-    public function setJobAdded(\Swoole\Atomic $isJobAdded): void
+    public function setJobAdded(bool $isJobAdded): void
     {
         $this->isJobAdded = $isJobAdded;
     }
 
     public function isJobAdded(): bool
     {
-        return $this->isJobAdded->get();
+        return $this->isJobAdded;
     }
 }

@@ -30,7 +30,7 @@ class GetTaskFormCmd implements CommandInterface, \Serializable
         $this->taskId = $json->taskId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $taskManager = $commandContext->getTaskManager();
         $task = $taskManager->findTaskById($this->taskId);

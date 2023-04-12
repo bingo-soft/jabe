@@ -14,7 +14,7 @@ class ElValueProvider implements ParameterValueProviderInterface
         $this->expression = $expression;
     }
 
-    public function getValue(VariableScopeInterface $variableScope)
+    public function getValue(?VariableScopeInterface $variableScope)
     {
         return $this->expression->getValue($variableScope);
     }

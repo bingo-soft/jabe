@@ -33,7 +33,7 @@ class GetTaskAttachmentCmd implements CommandInterface, \Serializable
         $this->attachmentId = $json->attachmentId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return $commandContext
             ->getAttachmentManager()

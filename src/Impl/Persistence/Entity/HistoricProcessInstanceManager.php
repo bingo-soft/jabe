@@ -32,6 +32,11 @@ use Jabe\Impl\Util\{
 
 class HistoricProcessInstanceManager extends AbstractHistoricManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function findHistoricProcessInstance(?string $processInstanceId): ?HistoricProcessInstanceEntity
     {
         if ($this->isHistoryEnabled()) {

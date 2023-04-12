@@ -16,7 +16,7 @@ class CreateFilterCmd implements CommandInterface
         $this->resourceType = $resourceType;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return $commandContext
             ->getFilterManager()

@@ -9,7 +9,7 @@ use Jabe\Impl\Interceptor\{
 
 class CreateTenantQueryCmd implements CommandInterface
 {
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return $commandContext
             ->getReadOnlyIdentityProvider()

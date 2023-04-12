@@ -34,7 +34,7 @@ class GetDeploymentProcessModelCmd implements CommandInterface, \Serializable
         $this->processDefinitionId = $json->processDefinitionId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $processDefinition = Context::getProcessEngineConfiguration()
             ->getDeploymentCache()

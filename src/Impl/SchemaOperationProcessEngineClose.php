@@ -11,7 +11,7 @@ use Jabe\Impl\Interceptor\{
 
 class SchemaOperationProcessEngineClose implements CommandInterface
 {
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $databaseSchemaUpdate = Context::getProcessEngineConfiguration()->getDatabaseSchemaUpdate();
         if (ProcessEngineConfiguration::DB_SCHEMA_UPDATE_CREATE_DROP == $databaseSchemaUpdate) {

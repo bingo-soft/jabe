@@ -14,7 +14,7 @@ class ScriptInvocation extends DelegateInvocation
     protected $script;
     protected $scope;
 
-    public function __construct(ExecutableScript $script, VariableScopeInterface $scope, ?BaseDelegateExecutionInterface $contextExecution)
+    public function __construct(ExecutableScript $script, ?VariableScopeInterface $scope, ?BaseDelegateExecutionInterface $contextExecution)
     {
         parent::__construct($contextExecution, null);
         $this->script = $script;

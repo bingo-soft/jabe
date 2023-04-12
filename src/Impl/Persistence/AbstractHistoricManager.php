@@ -16,8 +16,9 @@ class AbstractHistoricManager extends AbstractManager
     protected $isHistoryEnabled;// = !historyLevel.equals(HistoryLevel.HISTORY_LEVEL_NONE);
     protected $isHistoryLevelFullEnabled;// = historyLevel.equals(HistoryLevel.HISTORY_LEVEL_FULL);
 
-    public function __construct()
+    public function __construct(...$args)
     {
+        parent::__construct(...$args);
         $this->historyLevel = Context::getProcessEngineConfiguration()->getHistoryLevel();
         $this->isHistoryEnabled = $this->historyLevel != HistoryLevel::historyLevelNone();
         $this->isHistoryLevelFullEnabled = $this->historyLevel == HistoryLevel::historyLevelFull();

@@ -23,7 +23,7 @@ class DeleteDeploymentFailCmd extends AbstractCommand
         $this->processApplicationReference = $processApplicationReference;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $scope = $this;
         $commandContext->runWithoutAuthorization(function () use ($scope, $commandContext) {

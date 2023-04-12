@@ -29,7 +29,7 @@ class UnlockUserCmd implements CommandInterface, \Serializable
         $this->userId = $json->userId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $commandContext->getAuthorizationManager()->checkAdmin();
 

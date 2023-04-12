@@ -11,11 +11,11 @@ use Jabe\Impl\Persistence\Entity\{
 
 abstract class TimerChangeProcessDefinitionSuspensionStateJobHandler implements JobHandlerInterface
 {
-    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId, ...$args): void
     {
         $cmd = $this->getCommand($configuration);
         $cmd->disableLogUserOperation();
-        $cmd->execute($commandContext);
+        $cmd->execute($commandContext, ...$args);
     }
 
     abstract protected function getCommand(ProcessDefinitionSuspensionStateConfiguration $configuration): AbstractSetProcessDefinitionStateCmd;

@@ -12,7 +12,7 @@ interface JobHandlerInterface
 {
     public function getType(): ?string;
 
-    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void;
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId, ...$args): void;
 
     public function newConfiguration(?string $canonicalString): JobHandlerConfigurationInterface;
 

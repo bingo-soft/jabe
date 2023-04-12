@@ -40,7 +40,7 @@ class GetTaskVariableCmd implements CommandInterface, \Serializable
         $this->isLocal = $json->isLocal;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("taskId", "taskId", $this->taskId);
         EnsureUtil::ensureNotNull("variableName", "variableName", $this->variableName);

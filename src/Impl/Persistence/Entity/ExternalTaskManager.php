@@ -32,8 +32,9 @@ class ExternalTaskManager extends AbstractManager
 {
     public static $EXT_TASK_PRIORITY_ORDERING_PROPERTY;
 
-    public function __construct()
+    public function __construct(...$args)
     {
+        parent::__construct(...$args);
         self::extTaskPriorityOrderingProperty();
     }
 
@@ -52,7 +53,7 @@ class ExternalTaskManager extends AbstractManager
 
     public function insert(ExternalTaskEntity $externalTask): void
     {
-        $this->getDbEntityManager()->insert($externalTask);
+        $this->getDbEntityManager()->insert($externalTask, ...$this->jobExecutorState);
         $this->fireExternalTaskAvailableEvent();
     }
 
@@ -190,7 +191,7 @@ class ExternalTaskManager extends AbstractManager
             ->addTransactionListener(
                 TransactionState::COMMITTED,
                 new class () implements TransactionListenerInterface {
-                    public function execute(CommandContext $commandContext)
+                    public function execute(CommandContext $commandContext, ...$args)
                     {
                         ProcessEngineImpl::extTaskConditions()->signalAll();
                     }

@@ -20,7 +20,7 @@ class UnregisterProcessApplicationCmd implements CommandInterface
         $this->removeProcessesFromCache = $removeProcessesFromCache;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         if (empty($this->deploymentIds)) {
             throw new ProcessEngineException("Deployment Ids cannot be null.");

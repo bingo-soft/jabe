@@ -46,7 +46,7 @@ class SetJobDuedateCmd implements CommandInterface, \Serializable
         $this->cascade = $json->cascade;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $job = $commandContext->getJobManager()
                 ->findJobById($this->jobId);

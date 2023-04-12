@@ -11,9 +11,14 @@ class DbEntityManagerFactory implements SessionFactoryInterface
 {
     protected $idGenerator;
 
-    public function __construct(IdGeneratorInterface $idGenerator)
+    protected $jobExecutorState = [];
+
+    public function __construct(IdGeneratorInterface $idGenerator, ...$args)
     {
         $this->idGenerator = $idGenerator;
+        if (!empty($args)) {
+            $this->jobExecutorState = $args;
+        }
     }
 
     public function getSessionType(): ?string

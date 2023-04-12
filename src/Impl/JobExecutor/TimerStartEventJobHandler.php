@@ -20,7 +20,7 @@ class TimerStartEventJobHandler extends TimerEventJobHandler
         return self::TYPE;
     }
 
-    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
+    public function execute(JobHandlerConfigurationInterface $configuration, ?ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId, ...$args): void
     {
         $deploymentCache = Context::getProcessEngineConfiguration()
                 ->getDeploymentCache();
@@ -29,17 +29,17 @@ class TimerStartEventJobHandler extends TimerEventJobHandler
         $processDefinition = $deploymentCache->findDeployedLatestProcessDefinitionByKeyAndTenantId($definitionKey, $tenantId);
 
         try {
-            $this->startProcessInstance($commandContext, $tenantId, $processDefinition);
+            $this->startProcessInstance($commandContext, $tenantId, $processDefinition, ...$args);
         } catch (\Exception $e) {
             throw $e;
         }
     }
 
-    protected function startProcessInstance(CommandContext $commandContext, ?string $tenantId, ProcessDefinitionInterface $processDefinition): void
+    protected function startProcessInstance(CommandContext $commandContext, ?string $tenantId, ProcessDefinitionInterface $processDefinition, ...$args): void
     {
         if (!$processDefinition->isSuspended()) {
             $runtimeService = $commandContext->getProcessEngineConfiguration()->getRuntimeService();
-            $runtimeService->createProcessInstanceByKey($processDefinition->getKey())->processDefinitionTenantId($tenantId)->execute();
+            $runtimeService->createProcessInstanceByKey($processDefinition->getKey())->processDefinitionTenantId($tenantId)->execute(false, false, ...$args);
         } else {
             //LOG.ignoringSuspendedJob(processDefinition);
         }

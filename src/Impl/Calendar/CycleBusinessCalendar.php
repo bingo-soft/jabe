@@ -15,7 +15,7 @@ class CycleBusinessCalendar implements BusinessCalendarInterface
 
     public const NAME = "cycle";
 
-    public function resolveDuedate(?string $duedateDescription, $startDate = null, int $repeatOffset = 0): ?\DateTime
+    public function resolveDuedate(?string $duedateDescription, $startDate = null, int $repeatOffset = 0, ...$args): ?\DateTime
     {
         try {
             if (strpos($duedateDescription, "R") === 0) {
@@ -24,7 +24,7 @@ class CycleBusinessCalendar implements BusinessCalendarInterface
                 return $durationHelper->getDateAfter($startDate);
             } else {
                 $cron = new CronExpression($duedateDescription);
-                return $cron->getNextRunDate($startDate ?? ClockUtil::getCurrentTime());
+                return $cron->getNextRunDate($startDate ?? ClockUtil::getCurrentTime(...$args));
             }
         } catch (\Exception $e) {
             //throw LOG.exceptionWhileParsingCronExpresison(duedateDescription, e);

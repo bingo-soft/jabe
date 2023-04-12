@@ -23,7 +23,7 @@ class StartProcessInstanceCmd implements CommandInterface
         $this->instantiationBuilder = $instantiationBuilder;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $processDefinition = (new GetDeployedProcessDefinitionCmd($this->instantiationBuilder, false))->execute($commandContext);
 
@@ -34,8 +34,9 @@ class StartProcessInstanceCmd implements CommandInterface
         // Start the process instance
         $processInstance = $processDefinition->createProcessInstance(
             $this->instantiationBuilder->getBusinessKey(),
-            //$this->instantiationBuilder->getCaseInstanceId()
-            null
+            null,
+            null,
+            ...$args
         );
 
         if ($this->instantiationBuilder->getTenantId() !== null) {
@@ -44,7 +45,7 @@ class StartProcessInstanceCmd implements CommandInterface
 
         $variablesListener = new ExecutionVariableSnapshotObserver($processInstance);
 
-        $processInstance->start($this->instantiationBuilder->getVariables());
+        $processInstance->start($this->instantiationBuilder->getVariables(), null, ...$args);
 
         $commandContext->getOperationLogManager()->logProcessInstanceOperation(
             UserOperationLogEntryInterface::OPERATION_TYPE_CREATE,

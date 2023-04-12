@@ -9,6 +9,11 @@ use Jabe\Impl\Util\ClockUtil;
 
 class ByteArrayManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     /**
      * Deletes the ByteArrayEntity with the given id from the database.
      * Important: this operation will NOT do any optimistic locking, to avoid loading the
@@ -23,7 +28,7 @@ class ByteArrayManager extends AbstractManager
     public function insertByteArray(ByteArrayEntity $arr): void
     {
         $arr->setCreateTime(ClockUtil::getCurrentTime()->format('c'));
-        $this->getDbEntityManager()->insert($arr);
+        $this->getDbEntityManager()->insert($arr, ...$this->jobExecutorState);
     }
 
     public function addRemovalTimeToByteArraysByRootProcessInstanceId(?string $rootProcessInstanceId, ?string $removalTime): void

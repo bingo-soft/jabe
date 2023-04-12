@@ -4,11 +4,11 @@
              xmlns:extension="http://activiti.org/bpmn"
              targetNamespace="Examples">
 
-  <process id="process" isExecutable="true">
+  <process id="process20" isExecutable="true">
 
     <startEvent id="theStart">
       <timerEventDefinition>
-        <timeCycle>0 0/5 * * * ?</timeCycle>
+        <timeCycle>*/5 * * * ?</timeCycle>
       </timerEventDefinition>
     </startEvent>
 

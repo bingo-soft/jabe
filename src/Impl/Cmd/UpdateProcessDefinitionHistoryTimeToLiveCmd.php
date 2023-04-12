@@ -40,7 +40,7 @@ class UpdateProcessDefinitionHistoryTimeToLiveCmd implements CommandInterface, \
         $this->historyTimeToLive = $json->historyTimeToLive;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $this->checkAuthorization($commandContext);
         EnsureUtil::ensureNotNull(BadUserRequestException::class, "processDefinitionId", $this->processDefinitionId);

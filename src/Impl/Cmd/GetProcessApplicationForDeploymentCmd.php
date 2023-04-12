@@ -17,7 +17,7 @@ class GetProcessApplicationForDeploymentCmd implements CommandInterface
         $this->deploymentId = $deploymentId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $commandContext->getAuthorizationManager()->checkAdminOrPermission("checkReadProcessApplicationForDeployment");
 

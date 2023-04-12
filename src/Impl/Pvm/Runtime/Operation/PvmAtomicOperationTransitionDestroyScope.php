@@ -31,7 +31,7 @@ class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperationInte
         return false;
     }
 
-    public function execute(PvmExecutionImpl $execution): void
+    public function execute(PvmExecutionImpl $execution, ...$args): void
     {
         // calculate the propagating execution
         $propagatingExecution = $execution;

@@ -18,7 +18,7 @@ class DetermineHistoryLevelCmd implements CommandInterface
         $this->historyLevels = $historyLevels;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $databaseHistoryLevel = HistoryLevelSetupCommand::databaseHistoryLevel($commandContext);
 

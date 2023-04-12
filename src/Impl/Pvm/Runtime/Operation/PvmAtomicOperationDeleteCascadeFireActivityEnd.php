@@ -18,10 +18,10 @@ use Jabe\Impl\Core\Instance\CoreExecution;
 
 class PvmAtomicOperationDeleteCascadeFireActivityEnd extends PvmAtomicOperationActivityInstanceEnd
 {
-    protected function eventNotificationsStarted(CoreExecution $execution): CoreExecution
+    protected function eventNotificationsStarted(CoreExecution $execution, ...$args): CoreExecution
     {
         $execution->setCanceled(true);
-        return parent::eventNotificationsStarted($execution);
+        return parent::eventNotificationsStarted($execution, ...$args);
     }
 
     protected function getScope(CoreExecution $execution): CoreModelElement

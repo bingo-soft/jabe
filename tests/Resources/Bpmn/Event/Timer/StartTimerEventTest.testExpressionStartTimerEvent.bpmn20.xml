@@ -4,7 +4,7 @@
              xmlns:extension="http://activiti.org/bpmn"
              targetNamespace="Examples">
 
-    <process id="startTimerEventExample" name="Timer start event example" isExecutable="true">
+    <process id="startTimerEventExample802" name="Timer start event example" isExecutable="true">
 
         <startEvent id="theStart">
             <timerEventDefinition>
@@ -22,7 +22,7 @@
 
     </process>
     <bpmndi:BPMNDiagram id="diagram">
-       <bpmndi:BPMNPlane bpmnElement="startTimerEventExample" id="startTimerEventExample_di">
+       <bpmndi:BPMNPlane bpmnElement="startTimerEventExample802" id="startTimerEventExample_di">
           <bpmndi:BPMNShape bpmnElement="theStart" id="theStart_di">
              <omgdc:Bounds height="30.0" width="30.0" x="114.0" y="185.0"/>
           </bpmndi:BPMNShape>

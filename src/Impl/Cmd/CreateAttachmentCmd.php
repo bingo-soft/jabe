@@ -47,7 +47,7 @@ class CreateAttachmentCmd implements CommandInterface
         $this->url = $url;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         if ($this->taskId !== null) {
             $this->task = $commandContext

@@ -12,7 +12,7 @@ use Jabe\Impl\Persistence\Entity\{
 
 class DefaultCallableElementTenantIdProvider implements ParameterValueProviderInterface
 {
-    public function getValue(VariableScopeInterface $execution)
+    public function getValue(?VariableScopeInterface $execution)
     {
         if ($execution instanceof ExecutionEntity) {
             return $this->getProcessDefinitionTenantId($execution);

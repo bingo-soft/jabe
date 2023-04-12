@@ -34,7 +34,7 @@ class FindActiveActivityIdsCmd implements CommandInterface, \Serializable
         $this->executionId = $json->executionId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("executionId", "executionId", $this->executionId);
 

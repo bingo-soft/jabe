@@ -39,8 +39,8 @@ class DeleteProcessInstanceBatchCmd implements CommandInterface
     protected $processInstanceIds = [];
     protected $processInstanceQuery;
     protected $historicProcessInstanceQuery;
-    protected $skipCustomListeners;
-    protected $skipSubprocesses;
+    protected bool $skipCustomListeners = false;
+    protected bool $skipSubprocesses = false;
 
     public function __construct(
         array $processInstances,
@@ -58,7 +58,7 @@ class DeleteProcessInstanceBatchCmd implements CommandInterface
         $this->skipSubprocesses = $skipSubprocesses;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $elementConfiguration = $this->collectProcessInstanceIds($commandContext);
 

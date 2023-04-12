@@ -225,9 +225,9 @@ class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategyInterface
     public function getWaitTime(): int
     {
         if ($this->idleLevel > 0) {
-            return $this->calculateIdleTime();
+            return rand(0, $this->calculateIdleTime());
         } elseif ($this->backoffLevel > 0) {
-            return $this->calculateBackoffTime();
+            return rand(0, $this->calculateBackoffTime());
         } elseif ($this->executionSaturated) {
             return $this->executionSaturationWaitTime;
         } else {

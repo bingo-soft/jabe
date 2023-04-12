@@ -22,7 +22,7 @@ class PvmAtomicOperationActivityInitStack implements PvmAtomicOperationInterface
         return "activity-stack-init";
     }
 
-    public function execute(PvmExecutionImpl $execution): void
+    public function execute(PvmExecutionImpl $execution, ...$args): void
     {
         $executionStartContext = $execution->getScopeInstantiationContext();
 

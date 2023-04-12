@@ -17,7 +17,7 @@ class DeleteDeploymentListenerCmd extends AbstractCommand
         $this->deploymentIds = $deploymentIds;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $scope = $this;
         $commandContext->runWithoutAuthorization(function () use ($scope, $commandContext) {

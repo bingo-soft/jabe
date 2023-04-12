@@ -40,7 +40,7 @@ class DeleteHistoricVariableInstanceCmd implements CommandInterface, \Serializab
         $this->variableInstanceId = $json->variableInstanceId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotEmpty(BadUserRequestException::class, "variableInstanceId", $this->variableInstanceId);
 

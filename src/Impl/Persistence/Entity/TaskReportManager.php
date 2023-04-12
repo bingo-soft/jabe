@@ -18,6 +18,11 @@ use Jabe\Impl\Persistence\AbstractManager;
 
 class TaskReportManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function createTaskCountByCandidateGroupReport(TaskReportImpl $query): array
     {
         $this->configureQuery($query);

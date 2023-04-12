@@ -35,7 +35,7 @@ class PvmAtomicOperationActivityEnd implements PvmAtomicOperationInterface
         return false;
     }
 
-    public function execute(PvmExecutionImpl $execution): void
+    public function execute(PvmExecutionImpl $execution, ...$args): void
     {
         // restore activity instance id
         if (empty($execution->getActivityInstanceId())) {

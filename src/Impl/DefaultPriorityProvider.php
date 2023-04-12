@@ -53,7 +53,7 @@ abstract class DefaultPriorityProvider implements PriorityProviderInterface
      * @param errorMessageHeading the heading which is used for the error message
      * @return int the valid priority value
      */
-    protected function evaluateValueProvider(ParameterValueProviderInterface $valueProvider, ExecutionEntity $execution, ?string $errorMessageHeading): int
+    protected function evaluateValueProvider(ParameterValueProviderInterface $valueProvider, ?ExecutionEntity $execution, ?string $errorMessageHeading): int
     {
         $value = null;
         try {
@@ -66,7 +66,7 @@ abstract class DefaultPriorityProvider implements PriorityProviderInterface
                 $value = $this->getDefaultPriorityOnResolutionFailure();
                 $this->logNotDeterminingPriority($execution, $value, $e);
             } else {
-                throw e;
+                throw $e;
             }
         }
 

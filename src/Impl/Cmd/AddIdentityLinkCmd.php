@@ -72,7 +72,7 @@ abstract class AddIdentityLinkCmd implements CommandInterface, \Serializable
         }
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("taskId", "taskId", $this->taskId);
 

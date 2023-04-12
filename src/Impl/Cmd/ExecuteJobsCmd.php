@@ -48,7 +48,7 @@ class ExecuteJobsCmd implements CommandInterface, \Serializable
         $this->jobId = $json->jobId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("jobId", "jobId", $this->jobId);
 
@@ -103,7 +103,7 @@ class ExecuteJobsCmd implements CommandInterface, \Serializable
             // register as command context close lister to intercept exceptions on flush
             $commandContext->registerCommandContextListener($this->jobFailureCollector);
             $commandContext->setCurrentJob($job);
-            $job->execute($commandContext);
+            $job->execute($commandContext, ...$args);
         } catch (\Exception $t) {
             $failedActivityId = Context::getCommandInvocationContext()
                 ->getProcessDataContext()

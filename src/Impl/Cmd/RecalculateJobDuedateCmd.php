@@ -2,6 +2,7 @@
 
 namespace Jabe\Impl\Cmd;
 
+use Concurrent\ThreadInterface;
 use Jabe\ProcessEngineException;
 use Jabe\History\UserOperationLogEntryInterface;
 use Jabe\Impl\Bpmn\Parser\BpmnParse;
@@ -55,7 +56,7 @@ class RecalculateJobDuedateCmd implements CommandInterface, \Serializable
         $this->creationDateBased = $json->creationDateBased;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $job = $commandContext->getJobManager()->findJobById($this->jobId);
         EnsureUtil::ensureNotNull("No job found with id '" . $this->jobId . "'", "job", $job);
@@ -84,7 +85,7 @@ class RecalculateJobDuedateCmd implements CommandInterface, \Serializable
                 $this->creationDateBased = $creationDateBased;
             }
 
-            public function run()
+            public function run(ThreadInterface $process = null, ...$args): void
             {
                 $this->timerDeclaration->resolveAndSetDuedate($this->timer->getExecution(), $this->timer, $this->creationDateBased);
             }

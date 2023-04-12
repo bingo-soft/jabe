@@ -23,6 +23,15 @@ class CycleBusinessCalendarTest extends TestCase
         $this->assertEquals(\DateTime::createFromFormat("Y-m-d H:i", "2011-04-01 00:00"), $duedate);
     }
 
+    public function testIntervalRepeats(): void
+    {
+        $businessCalendar = new CycleBusinessCalendar();
+        ClockUtil::setCurrentTime(\DateTime::createFromFormat("Y-m-d H:i:s", "2023-03-21 12:40:59"));
+        $duedate = $businessCalendar->resolveDuedate('R2/2023-03-21T12:41:44/PT5S', null, 0);
+        var_dump($duedate);
+        //for R2/2023-03-21T12:40:44+03:00/PT5S
+    }
+
     public function testSimpleDuration(): void
     {
         $businessCalendar = new CycleBusinessCalendar();

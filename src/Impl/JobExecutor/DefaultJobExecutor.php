@@ -3,6 +3,7 @@
 namespace Jabe\Impl\JobExecutor;
 
 use Jabe\Impl\ProcessEngineLogger;
+use Jabe\Impl\Util\ClockUtil;
 use Concurrent\Queue\ArrayBlockingQueue;
 use Concurrent\Executor\DefaultPoolExecutor;
 use Concurrent\TimeUnit;
@@ -12,25 +13,26 @@ class DefaultJobExecutor extends ThreadPoolJobExecutor
     //private final static JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
     protected $queueSize = ArrayBlockingQueue::DEFAULT_CAPACITY;
-    protected int $corePoolSize = 4;
-    protected int $maxPoolSize = 10;
+    protected int $corePoolSize = 6;
+    protected int $maxPoolSize = 18;
 
-    public function __construct()
+    public function __construct(...$args)
     {
-        parent::__construct();
+        parent::__construct(...$args);
     }
 
-    protected function startExecutingJobs(): void
+    protected function startExecutingJobs(...$args): void
     {
+        $state = empty($args) ? $this->getState() : $args;
         if ($this->threadPoolExecutor === null || $this->threadPoolExecutor->isShutdown()) {
             $threadPoolQueue = new ArrayBlockingQueue($this->queueSize);
             $this->threadPoolExecutor = new DefaultPoolExecutor($this->corePoolSize, 0, TimeUnit::MILLISECONDS, $threadPoolQueue);
             //$this->threadPoolExecutor->setRejectedExecutionHandler(...);
             //getAcquireJobsRunnable()
-            $this->threadPoolExecutor->setScopeArguments($this->isActive, $this->acquireJobsRunnable->getIsJobAddedAtomic());
+            $this->threadPoolExecutor->setScopeArguments(...$state);
         }
 
-        parent::startExecutingJobs();
+        parent::startExecutingJobs(...$state);
     }
 
     protected function stopExecutingJobs(): void

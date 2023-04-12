@@ -37,7 +37,7 @@ class GetUserAccountCmd implements CommandInterface, \Serializable
         $this->accountName = $json->accountName;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return $commandContext
             ->getIdentityInfoManager()

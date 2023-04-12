@@ -85,7 +85,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
     protected $persistedDependentEntities = [];
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $execution = null;
         if ($this->executionId !== null) {
@@ -98,16 +98,15 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
         // increment sequence counter before job execution
         $this->incrementSequenceCounter();
-
-        $this->preExecute($commandContext);
+        $this->preExecute($commandContext, ...$args);
         $jobHandler = $this->getJobHandler();
         $configuration = $this->getJobHandlerConfiguration();
         EnsureUtil::ensureNotNull("Cannot find job handler '" . $this->jobHandlerType . "' from job '" . $this . "'", "jobHandler", $jobHandler);
-        $jobHandler->execute($configuration, $execution, $commandContext, $this->tenantId);
+        $jobHandler->execute($configuration, $execution, $commandContext, $this->tenantId, ...$args);
         $this->postExecute($commandContext);
     }
 
-    protected function preExecute(CommandContext $commandContext): void
+    protected function preExecute(CommandContext $commandContext, ...$args): void
     {
         // nothing to do
     }
@@ -124,7 +123,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         // nothing to do
     }
 
-    public function insert(): void
+    public function insert(...$args): void
     {
         $commandContext = Context::getCommandContext();
 
@@ -139,7 +138,7 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
 
         $commandContext
         ->getJobManager()
-        ->insertJob($this);
+        ->insertJob($this, ...$args);
     }
 
     public function delete(?bool $incidentResolved = false): void

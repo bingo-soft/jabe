@@ -10,7 +10,7 @@ use Jabe\Impl\Interceptor\{
 
 abstract class AbstractWritableIdentityServiceCmd implements CommandInterface
 {
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         // check identity service implementation
         if (!array_key_exists(WritableIdentityProviderInterface::class, $commandContext->getSessionFactories())) {

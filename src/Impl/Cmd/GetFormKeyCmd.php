@@ -36,7 +36,7 @@ class GetFormKeyCmd implements CommandInterface
         $this->processDefinitionId = $processDefinitionId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $processEngineConfiguration = Context::getProcessEngineConfiguration();
         $deploymentCache = $processEngineConfiguration->getDeploymentCache();

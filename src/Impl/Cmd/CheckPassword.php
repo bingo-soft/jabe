@@ -33,7 +33,7 @@ class CheckPassword implements CommandInterface, \Serializable
         $this->password = $json->password;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return $commandContext->getReadOnlyIdentityProvider()->checkPassword($this->userId, $this->password);
     }

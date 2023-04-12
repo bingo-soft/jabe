@@ -65,7 +65,7 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
 
             if ($superExecution !== null) {
                 // create a new incident
-                $newIncident = $this->create($this->incidentType);
+                $newIncident = self::create($this->incidentType);
                 $newIncident->setExecution($superExecution);
                 $newIncident->setActivityId($superExecution->getCurrentActivityId());
                 $newIncident->setFailedActivityId($superExecution->getCurrentActivityId());
@@ -77,7 +77,7 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
                 $newIncident->setRootCauseIncidentId($rootCauseIncidentId);
 
                 // insert new incident (and create a new historic incident)
-                $this->insert($newIncident);
+                self::insert($newIncident);
 
                 // add new incident to result set
                 $createdIncidents[] = $newIncident;
@@ -118,7 +118,7 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
         }
 
         // insert new incident (and create a new historic incident)
-        $this->insert($newIncident);
+        self::insert($newIncident);
 
         return $newIncident;
     }

@@ -31,7 +31,7 @@ class GetStartFormCmd implements CommandInterface, \Serializable
         $this->processDefinitionId = $json->processDefinitionId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $processEngineConfiguration = Context::getProcessEngineConfiguration();
         $deploymentCache = $processEngineConfiguration->getDeploymentCache();

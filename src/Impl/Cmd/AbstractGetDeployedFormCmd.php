@@ -28,7 +28,7 @@ abstract class AbstractGetDeployedFormCmd implements CommandInterface
 
     protected $commandContext;
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $this->commandContext = $commandContext;
         $this->checkAuthorization();

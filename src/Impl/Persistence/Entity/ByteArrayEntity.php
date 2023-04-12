@@ -93,6 +93,9 @@ class ByteArrayEntity implements \Serializable, DbEntityInterface, HasDbRevision
     public function setBytes(/*string|resource*/$bytes): void
     {
         $this->bytes = is_resource($bytes) ? stream_get_contents($bytes) : $bytes;
+        if (strpos($this->bytes, '\\') !== false) {
+            $this->bytes = str_replace('\\', '.', $this->bytes);
+        }
     }
 
     public function getRevision(): ?int

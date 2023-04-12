@@ -3,7 +3,7 @@
   xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
   xmlns:extension="http://activiti.org/bpmn"
   targetNamespace="Examples"
-  xmlns:tns="Examples">
+  >
   
   <message id="messageId_one" name="messageName_one" />
   <message id="messageId_two" name="messageName_two" />

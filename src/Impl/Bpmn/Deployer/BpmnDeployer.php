@@ -294,7 +294,7 @@ class BpmnDeployer extends AbstractDefinitionDeployer
 
         if ($this->isSameMessageEventSubscriptionAlreadyPresent($messageEventDefinition, $tenantId)) {
             //throw LOG.messageEventSubscriptionWithSameNameExists(processDefinition->getResourceName(), messageEventDefinition->getUnresolvedEventName());
-            throw new \Exception("messageEventSubscriptionWithSameNameExists");
+            throw new \Exception("messageEventSubscriptionWithSameNameExists: " . $messageEventDefinition->getUnresolvedEventName());
         }
 
         $newSubscription = $messageEventDefinition->createSubscriptionForStartEvent($processDefinition);
@@ -356,7 +356,7 @@ class BpmnDeployer extends AbstractDefinitionDeployer
             if ($this->isSubscriptionOfDifferentTypeAsDeclaration($subscriptionEntity, $eventSubscription)) {
                 foreach ($filteredSubscriptions as $key => $value) {
                     if ($value == $subscriptionEntity) {
-                        unset($filteredSubscriptions[$subscriptionEntity]);
+                        unset($filteredSubscriptions[$key]);
                     }
                 }
             }

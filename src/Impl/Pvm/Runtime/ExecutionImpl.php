@@ -232,7 +232,7 @@ class ExecutionImpl extends PvmExecutionImpl implements ActivityExecutionInterfa
     /**
      * generates an activity instance id
      */
-    protected function generateActivityInstanceId(?string $activityId): ?string
+    protected function generateActivityInstanceId(?string $activityId, ...$args): ?string
     {
         self::$idGenerator += 1;
         $nextId = self::$idGenerator;

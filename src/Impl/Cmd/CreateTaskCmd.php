@@ -17,7 +17,7 @@ class CreateTaskCmd implements CommandInterface
         $this->taskId = $taskId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $this->checkCreateTask($commandContext);
 

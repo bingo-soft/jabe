@@ -41,7 +41,7 @@ class SignalEventHandler extends EventHandlerImpl
             //LOG.debugIgnoringEventSubscription(eventSubscription, processDefinitionId);
         } else {
             $signalStartEvent = $processDefinition->findActivity($eventSubscription->getActivityId());
-            $processInstance = $processDefinition->createProcessInstance($businessKey, $signalStartEvent);
+            $processInstance = $processDefinition->createProcessInstance($businessKey, null, $signalStartEvent);
             $processInstance->start($payload);
         }
     }

@@ -7,9 +7,14 @@ use Jabe\Impl\Persistence\AbstractManager;
 
 class ResourceManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function insertResource(ResourceEntity $resource): void
     {
-        $this->getDbEntityManager()->insert($resource);
+        $this->getDbEntityManager()->insert($resource, ...$this->jobExecutorState);
     }
 
     public function deleteResourcesByDeploymentId(?string $deploymentId): void

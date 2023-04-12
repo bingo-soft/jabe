@@ -12,7 +12,7 @@ class GetTelemetryDataCmd implements CommandInterface
 {
     private $configuration;
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $commandContext->getAuthorizationManager()->checkAdminOrPermission("checkReadTelemetryData");
 

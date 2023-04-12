@@ -12,7 +12,7 @@ class StrongUuidGenerator implements IdGeneratorInterface
     {
     }
 
-    public function getNextId(): ?string
+    public function getNextId(...$args): ?string
     {
         return Uuid::uuid1();
     }

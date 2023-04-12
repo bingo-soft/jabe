@@ -30,7 +30,7 @@ class GetTableNameCmd implements CommandInterface, \Serializable
         $this->entityClass = $json->entityClass;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("entityClass", "entityClass", $this->entityClass);
 

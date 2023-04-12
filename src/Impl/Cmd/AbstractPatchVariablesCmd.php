@@ -23,7 +23,7 @@ abstract class AbstractPatchVariablesCmd implements CommandInterface, \Serializa
         $this->isLocal = $isLocal;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $this->getSetVariableCmd()->disableLogUserOperation()->execute($commandContext);
         $this->getRemoveVariableCmd()->disableLogUserOperation()->execute($commandContext);

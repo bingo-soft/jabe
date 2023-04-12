@@ -60,7 +60,7 @@ abstract class AbstractCorrelateMessageCmd
         $processDefinitionEntity = $correlationResult->getProcessDefinitionEntity();
 
         $messageStartEvent = $processDefinitionEntity->findActivity($correlationResult->getStartEventActivityId());
-        $processInstance = $processDefinitionEntity->createProcessInstance($this->builder->getBusinessKey(), $messageStartEvent);
+        $processInstance = $processDefinitionEntity->createProcessInstance($this->builder->getBusinessKey(), null, $messageStartEvent);
 
         if ($this->variablesEnabled) {
             $this->variablesListener = new ExecutionVariableSnapshotObserver($processInstance, false, $this->deserializeVariableValues);

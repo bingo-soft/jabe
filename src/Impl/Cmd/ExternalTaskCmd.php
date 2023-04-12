@@ -24,7 +24,7 @@ abstract class ExternalTaskCmd implements CommandInterface
         $this->externalTaskId = $externalTaskId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("externalTaskId", "externalTaskId", $this->externalTaskId);
         $this->validateInput();

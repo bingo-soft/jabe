@@ -18,7 +18,7 @@ class RegisterDeploymentCmd implements CommandInterface
         $this->deploymentId = $deploymentId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $deployment = $commandContext->getDeploymentManager()->findDeploymentById($this->deploymentId);
 

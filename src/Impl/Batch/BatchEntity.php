@@ -357,9 +357,8 @@ class BatchEntity implements BatchInterface, DbEntityInterface, HasDbReferencesI
 
     protected function calculateMonitorJobDueDate(): ?string
     {
-        $pollTime = Context::getCommandContext()
-            ->getProcessEngineConfiguration()
-            ->getBatchPollTime();
+        $conf = Context::getCommandContext()->getProcessEngineConfiguration();
+        $pollTime = $conf->getBatchPollTime();
         $dueTime = ClockUtil::getCurrentTime()->getTimestamp() + $pollTime;
         return (new \DateTime())->setTimestamp($dueTime)->format('c');
     }

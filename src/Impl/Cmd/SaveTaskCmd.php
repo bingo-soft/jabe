@@ -42,7 +42,7 @@ class SaveTaskCmd implements CommandInterface, \Serializable
         $this->task = unserialize($json->task);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("task", "task", $this->task);
         $this->validateStandaloneTask($this->task, $commandContext);

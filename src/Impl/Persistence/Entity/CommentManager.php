@@ -20,6 +20,11 @@ use Jabe\Task\{
 
 class CommentManager extends AbstractHistoricManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function delete(DbEntityInterface $dbEntity): void
     {
         $this->checkHistoryEnabled();

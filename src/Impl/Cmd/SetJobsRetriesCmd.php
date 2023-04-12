@@ -37,7 +37,7 @@ class SetJobsRetriesCmd extends AbstractSetJobRetriesCmd implements CommandInter
         $this->retries = $json->retries;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         foreach ($this->jobIds as $id) {
             $this->setJobRetriesByJobId($id, $this->retries, $commandContext);

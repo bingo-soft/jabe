@@ -21,6 +21,11 @@ use Jabe\Impl\Persistence\AbstractHistoricManager;
 
 class HistoricIncidentManager extends AbstractHistoricManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function findHistoricIncidentCountByQueryCriteria(HistoricIncidentQueryImpl $query): int
     {
         $this->configureQuery($query);

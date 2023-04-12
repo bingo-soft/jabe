@@ -29,7 +29,7 @@ abstract class AbstractSetStateCmd implements CommandInterface
         $this->executionDate = $executionDate;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $this->checkParameters($commandContext);
         $this->checkAuthorization($commandContext);

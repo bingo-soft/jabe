@@ -33,7 +33,7 @@ class DeleteUserInfoCmd implements CommandInterface, \Serializable
         $this->key = $json->key;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $commandContext
             ->getIdentityInfoManager()

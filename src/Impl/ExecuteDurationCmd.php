@@ -17,7 +17,7 @@ class ExecuteDurationCmd implements CommandInterface
         $this->scope = $scope;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return $this->scope->executeDuration($commandContext);
     }

@@ -34,7 +34,7 @@ class GetDeploymentResourceForIdCmd implements CommandInterface, \Serializable
         $this->resourceId = $json->resourceId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("deploymentId", "deploymentId", $this->deploymentId);
         EnsureUtil::ensureNotNull("resourceId", "resourceId", $this->resourceId);

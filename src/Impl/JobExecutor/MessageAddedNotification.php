@@ -12,14 +12,15 @@ class MessageAddedNotification implements TransactionListenerInterface
 
     protected $jobExecutor;
 
-    public function __construct(JobExecutor $jobExecutor)
+    //jobExecutor can be null for queued tasks
+    public function __construct(?JobExecutor $jobExecutor)
     {
         $this->jobExecutor = $jobExecutor;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         //LOG.debugNotifyingJobExecutor("notifying job executor of new job");
-        $this->jobExecutor->jobWasAdded();
+        //$this->jobExecutor->jobWasAdded();
     }
 }

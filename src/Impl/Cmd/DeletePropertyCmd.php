@@ -25,7 +25,7 @@ class DeletePropertyCmd implements CommandInterface
         $this->name = $name;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $commandContext->getAuthorizationManager()->checkAdminOrPermission("checkDeleteProperty");
 

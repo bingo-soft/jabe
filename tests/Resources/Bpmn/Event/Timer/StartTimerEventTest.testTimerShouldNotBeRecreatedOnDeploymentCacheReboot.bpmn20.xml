@@ -4,11 +4,11 @@
              xmlns:extension="http://activiti.org/bpmn"
              targetNamespace="Examples">
 
-    <process id="startTimer" name="Timer start event example" isExecutable="true">
+    <process id="startTimer1" name="Timer start event example" isExecutable="true">
 
         <startEvent id="theStart">
             <timerEventDefinition>
-                <timeDuration>PT5M</timeDuration>
+                <timeDuration>PT1M</timeDuration>
             </timerEventDefinition>
         </startEvent>    
 

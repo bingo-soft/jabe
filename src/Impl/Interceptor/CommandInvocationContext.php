@@ -62,14 +62,14 @@ class CommandInvocationContext
         $this->performOperation($executionOperation, $execution, true);
     }
 
-    public function performOperation(AtomicOperationInterface $executionOperation, ExecutionEntity $execution, ?bool $performAsync = false): void
+    public function performOperation(AtomicOperationInterface $executionOperation, ExecutionEntity $execution, ?bool $performAsync = false, ...$args): void
     {
         $invocation = new AtomicOperationInvocation($executionOperation, $execution, $performAsync);
         array_unshift($this->queuedInvocations, $invocation);
-        $this->performNext();
+        $this->performNext(...$args);
     }
 
-    public function performNext(): void
+    public function performNext(...$args): void
     {
         $nextInvocation = $this->queuedInvocations[0];
         if ($nextInvocation->operation->isAsyncCapable() && $this->isExecuting) {
@@ -86,13 +86,13 @@ class CommandInvocationContext
         } else {
             if (!$nextInvocation->operation->isAsyncCapable()) {
                 // if operation is not async capable, perform right away.
-                $this->invokeNext();
+                $this->invokeNext(...$args);
             } else {
                 try {
                     $this->isExecuting = true;
                     while (!empty($this->queuedInvocations)) {
                         // assumption: all operations are executed within the same process application...
-                        $this->invokeNext();
+                        $this->invokeNext(...$args);
                     }
                 } finally {
                     $this->isExecuting = false;
@@ -101,12 +101,12 @@ class CommandInvocationContext
         }
     }
 
-    protected function invokeNext(): void
+    protected function invokeNext(...$args): void
     {
         $invocation = array_shift($this->queuedInvocations);
         try {
             if ($invocation !== null) {
-                $invocation->execute($this->bpmnStackTrace, $this->processDataContext);
+                $invocation->execute($this->bpmnStackTrace, $this->processDataContext, ...$args);
             }
         } catch (\Exception $e) {
             // log bpmn stacktrace

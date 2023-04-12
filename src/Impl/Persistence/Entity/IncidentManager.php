@@ -15,6 +15,11 @@ use Jabe\Runtime\IncidentInterface;
 
 class IncidentManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function findIncidentsByExecution(?string $id): array
     {
         return $this->getDbEntityManager()->selectList("selectIncidentsByExecutionId", $id);

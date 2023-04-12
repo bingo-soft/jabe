@@ -59,7 +59,7 @@ class SetUserInfoCmd implements CommandInterface, \Serializable
         $this->accountDetails = $json->accountDetails;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $commandContext
             ->getIdentityInfoManager()

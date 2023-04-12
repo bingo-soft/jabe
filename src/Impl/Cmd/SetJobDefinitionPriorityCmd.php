@@ -38,7 +38,7 @@ class SetJobDefinitionPriorityCmd implements CommandInterface
         $this->cascade = $cascade;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "jobDefinitionId", $this->jobDefinitionId);
 

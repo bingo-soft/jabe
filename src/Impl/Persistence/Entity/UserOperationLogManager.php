@@ -39,6 +39,11 @@ use Jabe\Impl\Util\{
 
 class UserOperationLogManager extends AbstractHistoricManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function findOperationLogById(?string $entryId): ?UserOperationLogEntryInterface
     {
         return $this->getDbEntityManager()->selectById(UserOperationLogEntryEventEntity::class, $entryId);

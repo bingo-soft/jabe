@@ -14,6 +14,11 @@ use Jabe\Impl\Persistence\AbstractManager;
 
 class VariableInstanceManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function findVariableInstancesByTaskId(?string $taskId): array
     {
         return $this->findVariableInstancesByTaskIdAndVariableNames($taskId, null);

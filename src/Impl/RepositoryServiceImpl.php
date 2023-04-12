@@ -149,7 +149,7 @@ class RepositoryServiceImpl extends ServiceImpl implements RepositoryServiceInte
 
     public function createDeploymentQuery(): DeploymentQueryInterface
     {
-        return new DeploymentQueryImpl(commandExecutor);
+        return new DeploymentQueryImpl($this->commandExecutor);
     }
 
     public function getProcessDefinition(?string $processDefinitionId): ProcessDefinitionInterface

@@ -225,7 +225,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         $this->start(null, $formProperties);
     }
 
-    public function start(?VariableMapInterface $variables = null, ?VariableMapInterface $formProperties = null): void
+    public function start(?VariableMapInterface $variables = null, ?VariableMapInterface $formProperties = null, ...$args): void
     {
         $this->initialize();
 
@@ -241,7 +241,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
 
         $this->initializeTimerDeclarations();
 
-        $this->performOperation(AtomicOperation::processStart());
+        $this->performOperation(AtomicOperation::processStart(), ...$args);
     }
 
     /**
@@ -1259,10 +1259,10 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         $this->activity = $activity;
     }
 
-    public function enterActivityInstance(): void
+    public function enterActivityInstance(...$args): void
     {
         $activity = $this->getActivity();
-        $this->activityInstanceId = $this->generateActivityInstanceId($activity->getId());
+        $this->activityInstanceId = $this->generateActivityInstanceId($activity->getId(), ...$args);
 
         //LOG.debugEnterActivityInstance(this, getParentActivityInstanceId());
 
@@ -1299,7 +1299,7 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         $this->activityInstanceEndListenersFailed = true;
     }
 
-    abstract protected function generateActivityInstanceId(?string $activityId): ?string;
+    abstract protected function generateActivityInstanceId(?string $activityId, ...$args): ?string;
 
     public function leaveActivityInstance(): void
     {

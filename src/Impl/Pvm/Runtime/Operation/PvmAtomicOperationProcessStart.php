@@ -33,7 +33,7 @@ class PvmAtomicOperationProcessStart extends AbstractPvmEventAtomicOperation
         return ExecutionListenerInterface::EVENTNAME_START;
     }
 
-    protected function eventNotificationsStarted(CoreExecution $execution): CoreExecution
+    protected function eventNotificationsStarted(CoreExecution $execution, ...$args): CoreExecution
     {
         // restoring the starting flag in case this operation is executed
         // asynchronously

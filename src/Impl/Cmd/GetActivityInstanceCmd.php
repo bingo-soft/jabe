@@ -40,7 +40,7 @@ class GetActivityInstanceCmd implements CommandInterface
         $this->processInstanceId = $processInstanceId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("processInstanceId", "processInstanceId", $this->processInstanceId);
         $executionList = $this->loadProcessInstance($this->processInstanceId, $commandContext);

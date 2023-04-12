@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_7FrToMrfEeOyYYI9xhG4Cw" exporter="camunda modeler" exporterVersion="2.5.0" targetNamespace="http://activiti.org/bpmn">
-  <bpmn2:process id="testProcess" isExecutable="true">
+  <bpmn2:process id="testProcess01" isExecutable="true">
     <bpmn2:intermediateCatchEvent id="IntermediateCatchEvent_1">
       <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
@@ -21,9 +21,9 @@
     </bpmn2:eventBasedGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="EventBasedGateway_1" targetRef="IntermediateCatchEvent_1"/>
   </bpmn2:process>
-  <bpmn2:message id="Message_1" name="message"/>
+  <bpmn2:message id="Message_1" name="message010"/>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="testProcess">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="testProcess01">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="StartEvent_1">
         <dc:Bounds height="36.0" width="36.0" x="144.0" y="205.0"/>
         <bpmndi:BPMNLabel>

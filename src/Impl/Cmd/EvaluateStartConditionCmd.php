@@ -27,7 +27,7 @@ class EvaluateStartConditionCmd implements CommandInterface
         $this->builder = $builder;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $conditionHandler = $commandContext->getProcessEngineConfiguration()->getConditionHandler();
         $conditionSet = new ConditionSet($this->builder);
@@ -59,7 +59,7 @@ class EvaluateStartConditionCmd implements CommandInterface
         $processDefinitionEntity = $result->getProcessDefinition();
 
         $startEvent = $processDefinitionEntity->findActivity($result->getActivity()->getActivityId());
-        $processInstance = $processDefinitionEntity->createProcessInstance($this->builder->getBusinessKey(), $startEvent);
+        $processInstance = $processDefinitionEntity->createProcessInstance($this->builder->getBusinessKey(), null, $startEvent);
         $processInstance->start($this->builder->getVariables());
 
         return $processInstance;

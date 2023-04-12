@@ -34,6 +34,11 @@ use Jabe\Impl\Util\ClockUtil;
 
 class HistoricBatchManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function findBatchCountByQueryCriteria(HistoricBatchQueryImpl $historicBatchQuery): int
     {
         $this->configureQuery($historicBatchQuery);

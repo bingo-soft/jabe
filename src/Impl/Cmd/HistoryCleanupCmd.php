@@ -37,7 +37,7 @@ class HistoryCleanupCmd implements CommandInterface
         $this->immediatelyDue = $immediatelyDue;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         if (self::$HISTORY_CLEANUP_JOB_DECLARATION === null) {
             self::$HISTORY_CLEANUP_JOB_DECLARATION = new HistoryCleanupJobDeclaration();

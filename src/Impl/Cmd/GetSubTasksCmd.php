@@ -30,7 +30,7 @@ class GetSubTasksCmd implements CommandInterface, \Serializable
         $this->parentTaskId = $json->parentTaskId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return (new TaskQueryImpl())
             ->taskParentTaskId($this->parentTaskId)

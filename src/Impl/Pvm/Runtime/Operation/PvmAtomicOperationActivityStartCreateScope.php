@@ -22,9 +22,9 @@ class PvmAtomicOperationActivityStartCreateScope extends PvmAtomicOperationCreat
         return "activity-start-create-scope";
     }
 
-    protected function scopeCreated(PvmExecutionImpl $execution): void
+    protected function scopeCreated(PvmExecutionImpl $execution, ...$args): void
     {
         $execution->setIgnoreAsync(false);
-        $execution->performOperation(self::activityStart());
+        $execution->performOperation(self::activityStart(), ...$args);
     }
 }

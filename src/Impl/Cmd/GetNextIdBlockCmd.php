@@ -17,7 +17,7 @@ class GetNextIdBlockCmd implements CommandInterface
         $this->idBlockSize = $idBlockSize;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $property = $commandContext
             ->getPropertyManager()

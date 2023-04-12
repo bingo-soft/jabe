@@ -29,7 +29,7 @@ class GetProcessInstanceCommentsCmd implements CommandInterface, \Serializable
         $this->processInstanceId = $json->processInstanceId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return $commandContext
             ->getAttachmentManager()

@@ -42,7 +42,7 @@ class SetRemovalTimeToHistoricProcessInstancesCmd implements CommandInterface
         $this->builder = $builder;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         if ($this->builder->getQuery() === null && $this->builder->getIds() === null) {
             throw new BadUserRequestException("Neither query nor ids provided.");

@@ -306,9 +306,9 @@ class BpmnParse extends Parse
     {
         parent::execute(); // schema validation
 
-        /*try {*/
-        $this->parseRootElement();
-        /*} catch (BpmnParseException $e) {
+        try {
+            $this->parseRootElement();
+        } catch (BpmnParseException $e) {
             $this->addError($e);
         } catch (\Exception $e) {
             //LOG.parsingFailure(e);
@@ -322,11 +322,10 @@ class BpmnParse extends Parse
             //if ($this->hasWarnings()) {
             //    $this->logWarnings();
             //}
-            //if ($this->hasErrors()) {
-            //    $this->throwExceptionForErrors();
-            //}
-        }*/
-
+            if ($this->hasErrors()) {
+                $this->throwExceptionForErrors();
+            }
+        }
         return $this;
     }
 
@@ -983,9 +982,9 @@ class BpmnParse extends Parse
     {
         $initial = null;
         // validate that there is s single none start event / timer start event:
-        $exclusiveStartEventTypes = ["startEvent", "startTimerEvent"];
+        $exclusiveStartEventTypes = ["STARTEVENT", "STARTTIMEREVENT"];
         foreach ($startEventActivities as $activityImpl) {
-            if (in_array($activityImpl->getProperty(BpmnProperties::type()->getName()), $exclusiveStartEventTypes)) {
+            if (in_array(strtoupper($activityImpl->getProperty(BpmnProperties::type()->getName())), $exclusiveStartEventTypes)) {
                 if ($initial === null) {
                     $initial = $activityImpl;
                 } else {
@@ -3356,7 +3355,7 @@ class BpmnParse extends Parse
             // The boundary event is attached to an activity, reference by the
             // 'attachedToRef' attribute
             $attachedToRef = $boundaryEventElement->attribute("attachedToRef");
-            if (empty($ttachedToRef)) {
+            if (empty($attachedToRef)) {
                 $this->addError("AttachedToRef is required when using a timerEventDefinition", $boundaryEventElement);
             }
 
@@ -4942,7 +4941,7 @@ class BpmnParse extends Parse
     protected function hasConnector(Element $element): bool
     {
         $extensionElements = $element->element("extensionElements");
-        return empty($extensionElements) && $extensionElements->element("connector") !== null;
+        return !empty($extensionElements) && $extensionElements->element("connector") !== null;
     }
 
     public function getJobDeclarations(): array
@@ -4971,7 +4970,8 @@ class BpmnParse extends Parse
                 $this->addError($e, $activity->getId());
             }
 
-            if ($inputOutput !== null) {
+            if (!empty($inputOutput)) {
+                var_dump($inputOutput);
                 if ($this->checkActivityInputOutputSupported($activityElement, $activity, $inputOutput)) {
                     $activity->setIoMapping($inputOutput);
 
@@ -4995,20 +4995,22 @@ class BpmnParse extends Parse
 
     protected function checkActivityInputOutputSupported(Element $activityElement, ActivityImpl $activity, IoMapping $inputOutput): bool
     {
-        $tagName = $activityElement->getTagName();
+        $tagName = strtoupper($activityElement->getTagName());
 
         if (
-            !(strpos(strtolower($tagName), "task") !== false
-            || strpos($tagName, "Event") !== false
-            || $tagName == "transaction"
-            || $tagName == "subProcess"
-            || $tagName == "callActivity")
+            !(
+                strpos($tagName, "TASK") !== false
+                || strpos($tagName, "EVENT") !== false
+                || $tagName == "TRANSACTION"
+                || $tagName == "SUBPROCESS"
+                || $tagName == "CALLACTIVITY"
+            )
         ) {
             $this->addError("extension:inputOutput mapping unsupported for element type '" . $tagName . "'.", $activityElement);
             return false;
         }
         $triggeredByEvent = $activityElement->attribute("triggeredByEvent");
-        if ($tagName == "subProcess" && ($triggeredByEvent !== null && strtolower($triggeredByEvent) === "true")) {
+        if ($tagName == "SUBPROCESS" && ($triggeredByEvent !== null && strtolower($triggeredByEvent) === "true")) {
             $this->addError("extension:inputOutput mapping unsupported for element type '" . $tagName . "' with attribute 'triggeredByEvent = true'.", $activityElement);
             return false;
         }
@@ -5022,9 +5024,9 @@ class BpmnParse extends Parse
 
     protected function checkActivityOutputParameterSupported(Element $activityElement, ActivityImpl $activity): bool
     {
-        $tagName = $activityElement->getTagName();
+        $tagName = strtoupper($activityElement->getTagName());
 
-        if ($tagName == "endEvent") {
+        if ($tagName == "ENDEVENT") {
             $this->addError("extension:outputParameter not allowed for element type '" . $tagName . "'.", $activityElement);
             return true;
         } elseif ($this->getMultiInstanceScope($activity) !== null) {

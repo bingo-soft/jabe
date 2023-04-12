@@ -471,7 +471,7 @@ abstract class TestHelper
     {
         $processEngineConfiguration->getCommandExecutorTxRequired()
         ->execute(new class () implements CommandInterface {
-            public function execute(CommandContext $commandContext)
+            public function execute(CommandContext $commandContext, ...$args)
             {
                 $commandContext->getSession(PersistenceSessionInterface::class)->dbSchemaCreate();
                 return null;
@@ -488,7 +488,7 @@ abstract class TestHelper
     {
         $processEngineConfiguration->getCommandExecutorTxRequired()
         ->execute(new class () implements CommandInterface {
-            public function execute(CommandContext $commandContext)
+            public function execute(CommandContext $commandContext, ...$args)
             {
                 $commandContext->getDbSqlSession()->dbSchemaDrop();
                 return null;
@@ -505,7 +505,7 @@ abstract class TestHelper
     {
         $processEngineConfiguration->getCommandExecutorTxRequired()
         ->execute(new class () implements CommandInterface {
-            public function execute(CommandContext $commandContext)
+            public function execute(CommandContext $commandContext, ...$args)
             {
                 $dbEntityManager = $commandContext->getDbEntityManager();
                 $historyLevelProperty = $dbEntityManager->selectById(PropertyEntity::class, "historyLevel");
@@ -531,7 +531,7 @@ abstract class TestHelper
     {
         $processEngineConfiguration->getCommandExecutorTxRequired()
         ->execute(new class () implements CommandInterface {
-            public function execute(CommandContext $commandContext)
+            public function execute(CommandContext $commandContext, ...$args)
             {
                 $dbEntityManager = $commandContext->getDbEntityManager();
                 $property = $dbEntityManager->selectById(PropertyEntity::class, "historyLevel");
@@ -575,7 +575,7 @@ abstract class TestHelper
     {
         $processEngineConfiguration->getCommandExecutorTxRequired()
         ->execute(new class () implements CommandInterface {
-            public function execute(CommandContext $commandContext)
+            public function execute(CommandContext $commandContext, ...$args)
             {
                 $dbEntityManager = $commandContext->getDbEntityManager();
                 $installationIdProperty = $dbEntityManager->selectById(PropertyEntity::class, "engine.installation.id");

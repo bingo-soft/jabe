@@ -27,11 +27,19 @@ use Jabe\Runtime\{
 
 class ExecutionManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     //protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
-    public function insertExecution(ExecutionEntity $execution): void
+    public function insertExecution(ExecutionEntity $execution, ...$args): void
     {
-        $this->getDbEntityManager()->insert($execution);
+        if (empty($args)) {
+            $args = $this->jobExecutorState;
+        }
+        $this->getDbEntityManager()->insert($execution, ...$args);
         $this->createDefaultAuthorizations($execution);
     }
 

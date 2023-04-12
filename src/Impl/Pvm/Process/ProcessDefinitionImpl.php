@@ -37,13 +37,13 @@ class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefinitionInt
         }
     }
 
-    public function createProcessInstance(?string $businessKey = null, ?string $caseInstanceId = null, ?ActivityImpl $initial = null): PvmProcessInstanceInterface
+    public function createProcessInstance(?string $businessKey = null, ?string $caseInstanceId = null, ?ActivityImpl $initial = null, ...$args): PvmProcessInstanceInterface
     {
         $this->ensureDefaultInitialExists();
         if ($initial === null) {
             $initial = $this->initial;
         }
-        $processInstance = $this->createProcessInstanceForInitial($initial);
+        $processInstance = $this->createProcessInstanceForInitial($initial, ...$args);
 
         $processInstance->setBusinessKey($businessKey);
         //processInstance.setCaseInstanceId(caseInstanceId);
@@ -52,13 +52,13 @@ class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefinitionInt
     }
 
     /** creates a process instance using the provided activity as initial */
-    public function createProcessInstanceForInitial(ActivityImpl $initial): PvmProcessInstanceInterface
+    public function createProcessInstanceForInitial(ActivityImpl $initial, ...$args): PvmProcessInstanceInterface
     {
         if ($initial === null) {
             throw new \Exception("Cannot start process instance, initial activity where the process instance should start is null");
         }
 
-        $processInstance = $this->newProcessInstance();
+        $processInstance = $this->newProcessInstance(...$args);
 
         $processInstance->setStarting(true);
         $processInstance->setProcessDefinition($this);
@@ -73,7 +73,7 @@ class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefinitionInt
         return $processInstance;
     }
 
-    protected function newProcessInstance(): PvmExecutionImpl
+    protected function newProcessInstance(...$args): PvmExecutionImpl
     {
         return new ExecutionImpl();
     }

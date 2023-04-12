@@ -38,6 +38,8 @@ class PluggableProcessEngineTest extends TestCase
     //protected DecisionService decisionService;
     protected bool $initialized = false;
 
+    protected $currentTime;
+
     protected function setUp(): void
     {
         $this->initializeServices();
@@ -55,6 +57,10 @@ class PluggableProcessEngineTest extends TestCase
 
             $this->processEngine = $this->engineRule->getProcessEngine();
             $this->processEngineConfiguration = $this->engineRule->getProcessEngineConfiguration();
+
+            if ($this->currentTime !== null) {
+                ClockUtil::setCurrentTime($this->currentTime, ...$this->processEngineConfiguration->getJobExecutorState());
+            }
 
             $this->repositoryService = $this->processEngine->getRepositoryService();
             $this->runtimeService = $this->processEngine->getRuntimeService();
@@ -113,7 +119,7 @@ class PluggableProcessEngineTest extends TestCase
                     $this->job = $job;
                 }
 
-                public function execute(CommandContext $commandContext)
+                public function execute(CommandContext $commandContext, ...$args)
                 {
                     $commandContext->getJobManager()->deleteJob($this->job);
                     return null;

@@ -17,14 +17,14 @@ abstract class AbstractEventAtomicOperation implements CoreAtomicOperationInterf
         return false;
     }
 
-    public function execute(CoreExecution $execution): void
+    public function execute(CoreExecution $execution, ...$args): void
     {
         $scope = $this->getScope($execution);
         $listeners = $execution->hasFailedOnEndListeners() ? $this->getBuiltinListeners($scope) : $this->getListeners($scope, $execution);
         $listenerIndex = $execution->getListenerIndex();
 
         if ($listenerIndex == 0) {
-            $execution = $this->eventNotificationsStarted($execution);
+            $execution = $this->eventNotificationsStarted($execution, ...$args);
         }
         if (!$this->isSkipNotifyListeners($execution)) {
             if (count($listeners) > $listenerIndex) {
@@ -72,7 +72,7 @@ abstract class AbstractEventAtomicOperation implements CoreAtomicOperationInterf
         return false;
     }
 
-    protected function eventNotificationsStarted(CoreExecution $execution): CoreExecution
+    protected function eventNotificationsStarted(CoreExecution $execution, ...$args): CoreExecution
     {
         // do nothing
         return $execution;

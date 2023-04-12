@@ -17,6 +17,11 @@ use Jabe\Impl\Persistence\AbstractHistoricManager;
 
 class HistoricDetailManager extends AbstractHistoricManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function deleteHistoricDetailsByProcessInstanceIds(array $historicProcessInstanceIds): void
     {
         $parameters = [];

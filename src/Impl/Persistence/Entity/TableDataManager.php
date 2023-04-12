@@ -54,8 +54,9 @@ class TableDataManager extends AbstractManager
     public static $apiTypeToTableNameMap = [];
     public static $persistentObjectToTableNameMap = [];
 
-    public function __construct()
+    public function __construct(...$args)
     {
+        parent::__construct(...$args);
         self::$persistentObjectToTableNameMap[TaskEntity::class] = "ACT_RU_TASK";
         self::$persistentObjectToTableNameMap[ExternalTaskEntity::class] = "ACT_RU_EXT_TASK";
         self::$persistentObjectToTableNameMap[ExecutionEntity::class] = "ACT_RU_EXECUTION";

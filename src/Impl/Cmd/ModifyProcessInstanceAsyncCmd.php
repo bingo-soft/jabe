@@ -39,7 +39,7 @@ class ModifyProcessInstanceAsyncCmd implements CommandInterface
         $this->builder = $builder;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $processInstanceId = $this->builder->getProcessInstanceId();
 

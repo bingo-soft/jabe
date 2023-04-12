@@ -13,7 +13,7 @@ class ListValueProvider implements ParameterValueProviderInterface
         $this->providerList = $providerList;
     }
 
-    public function getValue(VariableScopeInterface $variableScope)
+    public function getValue(?VariableScopeInterface $variableScope)
     {
         $valueList = [];
         foreach ($this->providerList as $provider) {

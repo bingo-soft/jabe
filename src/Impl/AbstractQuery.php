@@ -160,7 +160,7 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
         return $this->evaluateExpressionsAndExecuteList(Context::getCommandContext(), null);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         if ($this->resultType == self::RESULT_TYPES['LIST']) {
             return $this->evaluateExpressionsAndExecuteList($commandContext, null);

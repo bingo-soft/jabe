@@ -22,7 +22,7 @@ class DeleteProcessDefinitionsByKeyCmd extends AbstractDeleteProcessDefinitionCm
         $this->isTenantIdSet = $isTenantIdSet;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("processDefinitionKey", "processDefinitionKey", $this->processDefinitionKey);
 

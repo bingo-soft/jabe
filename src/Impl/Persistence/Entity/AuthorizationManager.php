@@ -73,6 +73,11 @@ use Jabe\Impl\Util\ResourceTypeUtil;
 
 class AuthorizationManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     //protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
     // Used instead of Collections.emptyList() as mybatis uses reflection to call methods
@@ -104,7 +109,7 @@ class AuthorizationManager extends AbstractManager
     public function insert(DbEntityInterface $authorization): void
     {
         $this->checkAuthorization(Permissions::create(), Resources::authorization(), null);
-        $this->getDbEntityManager()->insert($authorization);
+        $this->getDbEntityManager()->insert($authorization, ...$this->jobExecutorState);
     }
 
     public function selectAuthorizationByQueryCriteria(AuthorizationQueryImpl $authorizationQuery): array

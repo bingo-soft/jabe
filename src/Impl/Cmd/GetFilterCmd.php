@@ -29,7 +29,7 @@ class GetFilterCmd implements CommandInterface, \Serializable
         $this->filterId = $json->filterId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return $commandContext
             ->getFilterManager()

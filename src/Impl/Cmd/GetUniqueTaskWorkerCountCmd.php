@@ -33,7 +33,7 @@ class GetUniqueTaskWorkerCountCmd implements CommandInterface, \Serializable
         $this->endTime = $json->endTime;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return $commandContext->getMeterLogManager()->findUniqueTaskWorkerCount($this->startTime, $this->endTime);
     }

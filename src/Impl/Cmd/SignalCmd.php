@@ -42,7 +42,7 @@ class SignalCmd implements CommandInterface, \Serializable
         $this->processVariables = $json->processVariables;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("executionId is null", "executionId", $this->executionId);
 

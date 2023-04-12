@@ -22,7 +22,7 @@ class DbSchemaUpgradeCmd implements CommandInterface
         $this->schema = $schema;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $commandContext->getAuthorizationManager()->checkAdmin();
         $dbSqlSessionFactory = $commandContext->getSessionFactories()[DbSqlSession::class];

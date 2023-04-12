@@ -13,7 +13,7 @@ class IdBlock
         $this->lastId = $lastId;
     }
 
-    public function getNextId(): int
+    public function getNextId(...$args): int
     {
         return $this->nextId;
     }

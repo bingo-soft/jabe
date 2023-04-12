@@ -27,7 +27,7 @@ class FailedJobListener implements CommandInterface
         $this->jobFailureCollector = $jobFailureCollector;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $this->initTotalRetries($commandContext);
 

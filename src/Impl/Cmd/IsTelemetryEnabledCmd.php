@@ -12,7 +12,7 @@ class IsTelemetryEnabledCmd implements CommandInterface
 {
     //protected static final TelemetryLogger LOG = ProcessEngineLogger.TELEMETRY_LOGGER;
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $authorizationManager = $commandContext->getAuthorizationManager();
         $authorizationManager->checkAdminOrPermission("checkReadTelemetryCollectionStatusData");

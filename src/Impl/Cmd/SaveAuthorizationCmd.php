@@ -31,7 +31,7 @@ class SaveAuthorizationCmd implements CommandInterface
         EnsureUtil::ensureNotNull("Authorization 'resourceType' cannot be null.", "authorization.getResource()", $this->authorization->getResource());
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $authorizationManager = $commandContext->getAuthorizationManager();
 

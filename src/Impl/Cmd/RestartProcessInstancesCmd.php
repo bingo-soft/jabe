@@ -38,7 +38,7 @@ class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCmd
         parent::__construct($commandExecutor, $builder);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $instructions = $this->builder->getInstructions();
 

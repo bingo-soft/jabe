@@ -4,7 +4,7 @@ namespace Jabe\Impl\Interceptor;
 
 abstract class AbstractCommand implements CommandInterface
 {
-    abstract public function execute(CommandContext $commandContext);
+    abstract public function execute(CommandContext $commandContext, ...$args);
 
     /**
      * @return bool - true if the CrdbTransactionRetryInterceptor

@@ -16,7 +16,7 @@ class MetricsCollectionCmd implements CommandInterface
         $this->logs = $logs;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         foreach ($this->logs as $meterLogEntity) {
             $commandContext->getMeterLogManager()->insert($meterLogEntity);

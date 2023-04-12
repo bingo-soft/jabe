@@ -16,7 +16,7 @@ class GetStartFormVariablesCmd extends AbstractGetFormVariablesCmd
         parent::__construct($resourceId, $formVariableNames, $deserializeObjectValues);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $resourceId = $this->resourceId;
         $startFormData = $commandContext->runWithoutAuthorization(function () use ($commandContext, $resourceId) {

@@ -2,19 +2,19 @@
 <definitions id="definitions" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
   xmlns:extension="http://activiti.org/bpmn" targetNamespace="Examples">
 
-  <process id="shouldEvaluateExpressionStartTimerEventInEventSubprocess" isExecutable="true">
+  <process id="shouldEvaluateExpressionStartTimerEventInEventSubprocess1" isExecutable="true">
 
     <startEvent id="startEvent" />
 
-    <sequenceFlow id="sequenceFlow_1" sourceRef="startEvent" targetRef="processUserTask" />
+    <sequenceFlow id="sequenceFlow_1" sourceRef="startEvent" targetRef="processUserTask1" />
 
-    <userTask id="processUserTask" name="process user task" />
+    <userTask id="processUserTask1" name="process user task" />
 
-    <sequenceFlow id="sequenceFlow_5" sourceRef="processUserTask" targetRef="endEvent" />
+    <sequenceFlow id="sequenceFlow_5" sourceRef="processUserTask1" targetRef="endEvent" />
 
     <endEvent id="endEvent" />
 
-    <subProcess id="subProcess" name="Subprocess" triggeredByEvent="true">
+    <subProcess id="subProcess1" name="Subprocess" triggeredByEvent="true">
 
       <startEvent id="subprocessStartEvent" isInterrupting="false">
         <timerEventDefinition>
@@ -22,11 +22,11 @@
         </timerEventDefinition>
       </startEvent>
 
-      <sequenceFlow id="sequenceFlow_2" sourceRef="subprocessStartEvent" targetRef="subprocessUserTask" />
+      <sequenceFlow id="sequenceFlow_2" sourceRef="subprocessStartEvent" targetRef="subprocessUserTask1" />
 
-      <userTask id="subprocessUserTask" name="subprocess user task" />
+      <userTask id="subprocessUserTask1" name="subprocess user task" />
 
-      <sequenceFlow id="sequenceFlow_3" sourceRef="subprocessUserTask" targetRef="subprocessEndEvent" />
+      <sequenceFlow id="sequenceFlow_3" sourceRef="subprocessUserTask1" targetRef="subprocessEndEvent" />
 
       <endEvent id="subprocessEndEvent" />
 

@@ -29,7 +29,7 @@ class PurgeDatabaseAndCacheCmd implements CommandInterface
         "ACT_GE_SCHEMA_LOG"
     ];
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $purgeReport = new PurgeReport();
 

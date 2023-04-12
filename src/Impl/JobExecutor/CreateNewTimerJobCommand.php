@@ -16,7 +16,7 @@ class CreateNewTimerJobCommand implements CommandInterface
         $this->jobId = $jobId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $failedJob = $commandContext
             ->getJobManager()

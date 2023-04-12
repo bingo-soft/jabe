@@ -24,7 +24,7 @@ class ActivityBeforeInstantiationCmd extends AbstractInstantiationCmd
         $this->activityId = $activityId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $processInstance = $commandContext->getExecutionManager()->findExecutionById($this->processInstanceId);
         $processDefinition = $processInstance->getProcessDefinition();

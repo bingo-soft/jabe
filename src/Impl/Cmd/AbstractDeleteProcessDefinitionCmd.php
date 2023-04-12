@@ -16,9 +16,9 @@ use Jabe\Impl\Util\EnsureUtil;
 
 abstract class AbstractDeleteProcessDefinitionCmd implements CommandInterface, \Serializable
 {
-    protected $cascade;
-    protected $skipCustomListeners;
-    protected $skipIoMappings;
+    protected bool $cascade = false;
+    protected bool $skipCustomListeners = false;
+    protected bool $skipIoMappings = false;
 
     public function serialize()
     {

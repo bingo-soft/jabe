@@ -10,8 +10,8 @@ use Jabe\Impl\Batch\{
 class ModificationBatchConfiguration extends BatchConfiguration
 {
     protected $instructions = [];
-    protected $skipCustomListeners;
-    protected $skipIoMappings;
+    protected bool $skipCustomListeners = false;
+    protected bool $skipIoMappings = false;
     protected $processDefinitionId;
 
     public function __construct(

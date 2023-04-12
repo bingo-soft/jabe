@@ -16,7 +16,7 @@ class CreateAuthorizationCommand implements CommandInterface
         $this->type = $type;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return $commandContext->getAuthorizationManager()->createNewAuthorization($this->type);
     }

@@ -33,6 +33,11 @@ class MeterLogManager extends AbstractManager
     public const DELETE_TASK_METER_BY_REMOVAL_TIME = "deleteTaskMetricsByRemovalTime";
     public const DELETE_TASK_METER_BY_IDS = "deleteTaskMeterLogEntriesByIds";
 
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function insert(DbEntityInterface $meterLogEntity): void
     {
         $this->getDbEntityManager()

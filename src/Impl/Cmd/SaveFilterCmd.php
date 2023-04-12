@@ -32,7 +32,7 @@ class SaveFilterCmd implements CommandInterface, \Serializable
         $this->filter = unserialize($json->filter);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("filter", "filter", $this->filter);
 

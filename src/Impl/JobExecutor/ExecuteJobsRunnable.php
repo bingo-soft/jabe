@@ -16,6 +16,7 @@ use Jabe\Impl\Interceptor\{
     CommandExecutorInterface,
     ProcessDataContext
 };
+use Jabe\Impl\Util\ClockUtil;
 use Concurrent\{
     ExecutorServiceInterface,
     RunnableInterface,
@@ -25,13 +26,13 @@ use Concurrent\{
 class ExecuteJobsRunnable implements \Serializable, RunnableInterface
 {
     //private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
-
     protected $jobIds;
-    //protected $jobExecutor;
+    protected $resource;
     protected $processEngine;
 
     protected static $loadedProcessEngineConfiguration;
     protected static $loadedProcessEngine;
+    protected bool $queued = false;
 
     public function __construct(array $jobIds, ProcessEngineImpl $processEngine)
     {
@@ -50,19 +51,17 @@ class ExecuteJobsRunnable implements \Serializable, RunnableInterface
 
     public function unserialize($data)
     {
+        $this->queued = true;
         $json = json_decode($data);
         $this->jobIds = $json->jobIds;
-        if (self::$loadedProcessEngineConfiguration === null) {
-            self::$loadedProcessEngineConfiguration = ProcessEngineConfiguration::createProcessEngineConfigurationFromResource($json->resource);
-            self::$loadedProcessEngine = self::$loadedProcessEngineConfiguration->buildProcessEngine(true);
-        }
-        $this->processEngine = self::$loadedProcessEngine;
+        $this->resource = $json->resource;
     }
 
-    public function run(ThreadInterface $process, ...$args): void
+    public function run(ThreadInterface $process = null, ...$args): void
     {
-        $jobExecutorContext = new JobExecutorContext();
+        $this->ensureProcessEngineConfigurationExists(...$args);
 
+        $jobExecutorContext = new JobExecutorContext();
         $currentProcessorJobQueue = $jobExecutorContext->getCurrentProcessorJobQueue();
         $engineConfiguration = $this->processEngine->getProcessEngineConfiguration();
         $commandExecutor = $engineConfiguration->getCommandExecutorTxRequired();
@@ -74,7 +73,7 @@ class ExecuteJobsRunnable implements \Serializable, RunnableInterface
                 if ($args[0]->get()) {
                     $jobFailureCollector = new JobFailureCollector($nextJobId);
                     try {
-                        $this->executeJob($nextJobId, $commandExecutor, $jobFailureCollector);
+                        $this->executeJob($nextJobId, $commandExecutor, $jobFailureCollector, ...$args);
                     } finally {
                         /*
                         * clear MDC of potential leftovers from command execution
@@ -102,9 +101,23 @@ class ExecuteJobsRunnable implements \Serializable, RunnableInterface
         }
     }
 
-    protected function executeJob(?string $nextJobId, CommandExecutorInterface $commandExecutor, JobFailureCollector $jobFailureCollector): void
+    private function ensureProcessEngineConfigurationExists(...$args): void
     {
-        ExecuteJobHelper::executeJob($nextJobId, $commandExecutor, $jobFailureCollector, new ExecuteJobsCmd($nextJobId, $jobFailureCollector), $this->processEngine->getProcessEngineConfiguration());
+        if ($this->queued) {
+            if (self::$loadedProcessEngineConfiguration === null) {
+                self::$loadedProcessEngineConfiguration = ProcessEngineConfiguration::createProcessEngineConfigurationFromResource($this->resource);
+                self::$loadedProcessEngineConfiguration->setJobExecutorState(...$args);
+                self::$loadedProcessEngine = self::$loadedProcessEngineConfiguration->buildProcessEngine(true);
+            }
+        }
+        if ($this->processEngine === null && self::$loadedProcessEngine !== null) {
+            $this->processEngine = self::$loadedProcessEngine;
+        }
+    }
+
+    protected function executeJob(?string $nextJobId, CommandExecutorInterface $commandExecutor, JobFailureCollector $jobFailureCollector, ...$args): void
+    {
+        ExecuteJobHelper::executeJob($nextJobId, $commandExecutor, $jobFailureCollector, new ExecuteJobsCmd($nextJobId, $jobFailureCollector), $this->processEngine->getProcessEngineConfiguration(), ...$args);
     }
 
     protected function unlockJob(?string $nextJobId, CommandExecutorInterface $commandExecutor): void

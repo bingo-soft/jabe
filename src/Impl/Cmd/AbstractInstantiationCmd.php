@@ -76,7 +76,7 @@ abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificat
         return $this->variablesLocal;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $processInstance = $commandContext->getExecutionManager()->findExecutionById($this->processInstanceId);
 

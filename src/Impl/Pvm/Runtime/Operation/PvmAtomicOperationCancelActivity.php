@@ -11,7 +11,7 @@ abstract class PvmAtomicOperationCancelActivity implements PvmAtomicOperationInt
 {
     use BasePvmAtomicOperationTrait;
 
-    public function execute(PvmExecutionImpl $execution): void
+    public function execute(PvmExecutionImpl $execution, ...$args): void
     {
         // Assumption: execution is scope
         $cancellingActivity = $execution->getNextActivity();

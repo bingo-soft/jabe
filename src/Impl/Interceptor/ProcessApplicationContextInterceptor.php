@@ -24,9 +24,12 @@ class ProcessApplicationContextInterceptor extends CommandInterceptor
         $this->processEngineConfiguration = $processEngineConfiguration;
     }
 
-    public function execute(CommandInterface $command)
+    public function execute(CommandInterface $command, ...$args)
     {
         $processApplicationIdentifier = ProcessApplicationContextImpl::get();
+        if (empty($args) && !empty($this->getState())) {
+            $args = $this->getState();
+        }
         if ($processApplicationIdentifier !== null) {
             // clear the identifier so this interceptor does not apply to nested commands
             ProcessApplicationContextImpl::clear();
@@ -35,8 +38,8 @@ class ProcessApplicationContextInterceptor extends CommandInterceptor
                 $reference = $this->getPaReference($processApplicationIdentifier);
                 $scope = $this;
                 return Context::executeWithinProcessApplication(
-                    function () use ($scope, $command) {
-                        return $scope->next->execute($command);
+                    function () use ($scope, $command, $args) {
+                        return $scope->next->execute($command, ...$args);
                     },
                     $reference
                 );
@@ -45,7 +48,7 @@ class ProcessApplicationContextInterceptor extends CommandInterceptor
                 ProcessApplicationContextImpl::set($processApplicationIdentifier);
             }
         } else {
-            return $this->next->execute($command);
+            return $this->next->execute($command, ...$args);
         }
     }
 

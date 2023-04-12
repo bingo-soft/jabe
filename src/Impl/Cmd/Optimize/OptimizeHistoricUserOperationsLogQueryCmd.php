@@ -20,7 +20,7 @@ class OptimizeHistoricUserOperationsLogQueryCmd implements CommandInterface
         $this->maxResults = $maxResults;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return $commandContext->getOptimizeManager()->getHistoricUserOperationLogs($this->occurreAfter, $this->occurreAt, $this->maxResults);
     }

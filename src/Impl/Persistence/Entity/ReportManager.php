@@ -11,6 +11,11 @@ use Jabe\Impl\Persistence\AbstractManager;
 
 class ReportManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function selectHistoricProcessInstanceDurationReport(HistoricProcessInstanceReportImpl $query): array
     {
         $this->configureQuery($query);

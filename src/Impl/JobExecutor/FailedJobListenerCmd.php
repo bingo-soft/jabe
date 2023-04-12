@@ -21,7 +21,7 @@ class FailedJobListenerCmd implements CommandInterface
         $this->listener = $listener;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $job = $commandContext
             ->getJobManager()

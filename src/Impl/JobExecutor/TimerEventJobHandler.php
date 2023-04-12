@@ -13,7 +13,7 @@ abstract class TimerEventJobHandler implements JobHandlerInterface
 
     public function newConfiguration(?string $canonicalString): JobHandlerConfigurationInterface
     {
-        $configParts = explode('\\' . self::JOB_HANDLER_CONFIG_PROPERTY_DELIMITER, $canonicalString);
+        $configParts = explode(self::JOB_HANDLER_CONFIG_PROPERTY_DELIMITER, $canonicalString);
 
         if (count($configParts) > 3) {
             throw new ProcessEngineException("Illegal timer job handler configuration: '" . $canonicalString
@@ -25,7 +25,7 @@ abstract class TimerEventJobHandler implements JobHandlerInterface
 
         // depending on the job configuration, the next parts can be a task listener id and/or the follow-up-job flag
         for ($i = 1; $i < count($configParts); $i += 1) {
-            $this->adjustConfiguration($configuration, $configParts[i]);
+            $this->adjustConfiguration($configuration, $configParts[$i]);
         }
 
         return $configuration;
@@ -36,7 +36,7 @@ abstract class TimerEventJobHandler implements JobHandlerInterface
         if (strpos($configPart, self::JOB_HANDLER_CONFIG_TASK_LISTENER_PREFIX) === 0) {
             $configuration->setTimerElementSecondaryKey(substr($configPart, strlen(self::JOB_HANDLER_CONFIG_TASK_LISTENER_PREFIX)));
         } else {
-            $configuration->followUpJobCreated = self::JOB_HANDLER_CONFIG_PROPERTY_FOLLOW_UP_JOB_CREATED == $configPart;
+            $configuration->setFollowUpJobCreated(self::JOB_HANDLER_CONFIG_PROPERTY_FOLLOW_UP_JOB_CREATED == $configPart);
         }
     }
 

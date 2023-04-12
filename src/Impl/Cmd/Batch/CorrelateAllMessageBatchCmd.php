@@ -50,7 +50,7 @@ class CorrelateAllMessageBatchCmd implements CommandInterface
         $this->historicProcessInstanceQuery = $asyncBuilder->getHistoricProcessInstanceQuery();
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureAtLeastOneNotNull(
             "No process instances found.",

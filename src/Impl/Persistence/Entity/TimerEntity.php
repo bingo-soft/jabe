@@ -54,7 +54,7 @@ class TimerEntity extends JobEntity
         }
     }
 
-    protected function preExecute(CommandContext $commandContext): void
+    protected function preExecute(CommandContext $commandContext, ...$args): void
     {
         if ($this->getJobHandler() instanceof TimerEventJobHandler) {
             $configuration = $this->getJobHandlerConfiguration();
@@ -62,7 +62,7 @@ class TimerEntity extends JobEntity
                 // this timer is a repeating timer and
                 // a follow up timer job has not been scheduled yet
 
-                $newDueDate = $this->calculateRepeat();
+                $newDueDate = $this->calculateRepeat(...$args);
 
                 if ($newDueDate !== null) {
                     // the listener is added to the transaction as SYNC on ROLLABCK,
@@ -78,7 +78,7 @@ class TimerEntity extends JobEntity
                     );
 
                     // create a new timer job
-                    $this->createNewTimerJob($newDueDate);
+                    $this->createNewTimerJob($newDueDate, ...$args);
                 }
             }
         }
@@ -89,23 +89,22 @@ class TimerEntity extends JobEntity
         return new RepeatingFailedJobListener($commandExecutor, $this->getId());
     }
 
-    public function createNewTimerJob(?string $dueDate): void
+    public function createNewTimerJob(?string $dueDate, ...$args): void
     {
         // create new timer job
         $newTimer = new TimerEntity($this);
         $newTimer->setDuedate($dueDate);
         Context::getCommandContext()
             ->getJobManager()
-            ->schedule($newTimer);
+            ->schedule($newTimer, ...$args);
     }
 
-    public function calculateRepeat(): ?string
+    public function calculateRepeat(...$args): ?string
     {
         $businessCalendar = Context::getProcessEngineConfiguration()
             ->getBusinessCalendarManager()
             ->getBusinessCalendar(CycleBusinessCalendar::NAME);
-        $date = $businessCalendar->resolveDuedate($this->repeat, null, $this->repeatOffset);
-
+        $date = $businessCalendar->resolveDuedate($this->repeat, null, $this->repeatOffset, ...$args);
         if ($date instanceof \DateTime) {
             return $date->format('c');
         }

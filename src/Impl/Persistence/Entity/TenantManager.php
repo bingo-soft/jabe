@@ -15,6 +15,11 @@ use Jabe\Impl\Persistence\AbstractManager;
 
 class TenantManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function configureTenantCheck(TenantCheck $tenantCheck): void
     {
         if ($this->isTenantCheckEnabled()) {

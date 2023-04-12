@@ -56,7 +56,7 @@ class CompleteTaskCmd implements CommandInterface, \Serializable
         $this->deserializeReturnedVariables = $json->deserializeReturnedVariables;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("taskId", "taskId", $this->taskId);
 

@@ -6,6 +6,11 @@ use Jabe\Impl\Persistence\AbstractManager;
 
 class IdentityInfoManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function deleteUserInfoByUserIdAndKey(?string $userId, ?string $key): void
     {
         $identityInfoEntity = $this->findUserInfoByUserIdAndKey($userId, $key);
@@ -98,7 +103,7 @@ class IdentityInfoManager extends AbstractManager
             $identityInfoEntity->setKey($key);
             $identityInfoEntity->setValue($value);
             $identityInfoEntity->setPasswordBytes($storedPassword);
-            $this->getDbEntityManager()->insert($identityInfoEntity);
+            $this->getDbEntityManager()->insert($identityInfoEntity, ...$this->jobExecutorState);
             if ($accountDetails !== null) {
                 $this->insertAccountDetails($identityInfoEntity, $accountDetails, array_keys($accountDetails));
             }
@@ -113,7 +118,7 @@ class IdentityInfoManager extends AbstractManager
             $identityInfoDetail->setParentId($identityInfoEntity->getId());
             $identityInfoDetail->setKey($newKey);
             $identityInfoDetail->setValue($accountDetails[$newKey]);
-            $this->getDbEntityManager()->insert($identityInfoDetail);
+            $this->getDbEntityManager()->insert($identityInfoDetail, ...$this->jobExecutorState);
         }
     }
 

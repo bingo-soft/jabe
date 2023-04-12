@@ -17,7 +17,7 @@ class TimerCatchIntermediateEventJobHandler extends TimerEventJobHandler
         return self::TYPE;
     }
 
-    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId, ...$args): void
     {
         $activityId = $configuration->getTimerElementKey();
         $intermediateEventActivity = $execution->getProcessDefinition()->findActivity($activityId);

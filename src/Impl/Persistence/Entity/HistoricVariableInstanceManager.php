@@ -20,6 +20,11 @@ use Jabe\Impl\Persistence\AbstractHistoricManager;
 
 class HistoricVariableInstanceManager extends AbstractHistoricManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function deleteHistoricVariableInstanceByVariableInstanceId(?string $historicVariableInstanceId): void
     {
         if ($this->isHistoryEnabled()) {
@@ -119,7 +124,7 @@ class HistoricVariableInstanceManager extends AbstractHistoricManager
     public function deleteHistoricVariableInstancesByTaskId(?string $taskId): void
     {
         if ($this->isHistoryEnabled()) {
-            $historicProcessVariableQuery = (new HistoricVariableInstanceQueryImpl())->taskIdIn($taskId);
+            $historicProcessVariableQuery = (new HistoricVariableInstanceQueryImpl())->taskIdIn([$taskId]);
             $historicProcessVariables = $historicProcessVariableQuery->list();
             foreach ($historicProcessVariables as $historicProcessVariable) {
                 $this->historicProcessVariable->delete();

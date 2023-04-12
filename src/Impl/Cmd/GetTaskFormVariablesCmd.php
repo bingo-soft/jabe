@@ -20,7 +20,7 @@ class GetTaskFormVariablesCmd extends AbstractGetFormVariablesCmd
         parent::__construct($taskId, $variableNames, $deserializeObjectValues);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $taskManager = $commandContext->getTaskManager();
         $task = $taskManager->findTaskById($this->resourceId);

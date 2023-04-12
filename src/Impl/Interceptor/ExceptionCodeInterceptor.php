@@ -36,10 +36,13 @@ class ExceptionCodeInterceptor extends CommandInterceptor
         $this->customExceptionCodeProvider = $customExceptionCodeProvider;
     }
 
-    public function execute(CommandInterface $command)
+    public function execute(CommandInterface $command, ...$args)
     {
         try {
-            return $this->next->execute($command);
+            if (empty($args) && !empty($this->getState())) {
+                $args = $this->getState();
+            }
+            return $this->next->execute($command, ...$args);
         } catch (ProcessEngineException $pex) {
             $this->assignCodeToException($pex);
             throw $pex;

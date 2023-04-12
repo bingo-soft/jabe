@@ -13,7 +13,7 @@ class AddUserIdentityLinkCmd extends AddIdentityLinkCmd
         parent::__construct($taskId, $userId, null, $type);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         parent::execute($commandContext);
 

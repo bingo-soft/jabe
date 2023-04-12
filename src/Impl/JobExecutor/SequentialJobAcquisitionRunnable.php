@@ -18,13 +18,13 @@ class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable
 
     protected $acquisitionContext;
 
-    public function __construct(JobExecutor $jobExecutor)
+    public function __construct(JobExecutor $jobExecutor, ...$args)
     {
-        parent::__construct($jobExecutor);
+        parent::__construct($jobExecutor, ...$args);
         $this->acquisitionContext = $this->initializeAcquisitionContext();
     }
 
-    public function run(ThreadInterface $process, ...$args): void
+    public function run(ThreadInterface $process = null, ...$args): void
     {
         //LOG.startingToAcquireJobs(jobExecutor.getName());
         $acquisitionStrategy = $this->initializeAcquisitionStrategy();
@@ -42,15 +42,14 @@ class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable
                         continue;
                     }
                     $acquiredJobs = $this->acquireJobs($this->acquisitionContext, $acquisitionStrategy, $currentProcessEngine);
-                    $this->executeJobs($this->acquisitionContext, $currentProcessEngine, $acquiredJobs);
+                    $this->executeJobs($this->acquisitionContext, $currentProcessEngine, $acquiredJobs, ...$args);
                 }
             } catch (\Exception $e) {
                 //LOG.exceptionDuringJobAcquisition(e);
                 $this->acquisitionContext->setAcquisitionException($e);
             } finally {
             }
-
-            $this->acquisitionContext->setJobAdded($this->isJobAdded);
+            $this->acquisitionContext->setJobAdded(isset($acquiredJobs) ? $acquiredJobs->size() > 0 : false);
             $this->configureNextAcquisitionCycle($this->acquisitionContext, $acquisitionStrategy);
             //The clear had to be done after the configuration, since a hint can be
             //appear in the suspend and the flag shouldn't be cleaned in this case.
@@ -69,7 +68,7 @@ class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable
 
     protected function initializeAcquisitionContext(): JobAcquisitionContext
     {
-        return new JobAcquisitionContext();
+        return new JobAcquisitionContext($this->state[1]->get());
     }
 
     /**
@@ -92,7 +91,7 @@ class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable
         return $this->acquisitionContext;
     }
 
-    protected function executeJobs(JobAcquisitionContext $context, ProcessEngineImpl $currentProcessEngine, AcquiredJobs $acquiredJobs): void
+    protected function executeJobs(JobAcquisitionContext $context, ProcessEngineImpl $currentProcessEngine, AcquiredJobs $acquiredJobs, ...$args): void
     {
         // submit those jobs that were acquired in previous cycles but could not be scheduled for execution
         $additionalJobs = null;
@@ -104,14 +103,14 @@ class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable
         if (!empty($additionalJobs)) {
             foreach ($additionalJobs as $jobBatch) {
                 //LOG.executeJobs(currentProcessEngine.getName(), jobBatch);
-                $this->jobExecutor->executeJobs($jobBatch, $currentProcessEngine);
+                $this->jobExecutor->executeJobs($jobBatch, $currentProcessEngine, ...$args);
             }
         }
 
         // submit those jobs that were acquired in the current cycle
         foreach ($acquiredJobs->getJobIdBatches() as $jobIds) {
             //LOG.executeJobs(currentProcessEngine.getName(), jobIds);
-            $this->jobExecutor->executeJobs($jobIds, $currentProcessEngine);
+            $this->jobExecutor->executeJobs($jobIds, $currentProcessEngine, ...$args);
         }
     }
 

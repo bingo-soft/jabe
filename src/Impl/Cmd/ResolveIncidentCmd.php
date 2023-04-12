@@ -21,7 +21,7 @@ class ResolveIncidentCmd implements CommandInterface
         $this->incidentId = $incidentId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $incident = $commandContext->getIncidentManager()->findIncidentById($this->incidentId);
 

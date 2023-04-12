@@ -24,7 +24,7 @@ class DeleteLicenseKeyCmd extends LicenseCmd implements CommandInterface
         $this->updateTelemetry = $updateTelemetry;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $commandContext->getAuthorizationManager()->checkAdminOrPermission("checkDeleteLicenseKey");
 

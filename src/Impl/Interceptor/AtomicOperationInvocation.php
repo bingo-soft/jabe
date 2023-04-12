@@ -37,7 +37,7 @@ class AtomicOperationInvocation
         $this->performAsync = $performAsync;
     }
 
-    public function execute(BpmnStackTrace $stackTrace, ProcessDataContext $processDataContext): void
+    public function execute(BpmnStackTrace $stackTrace, ProcessDataContext $processDataContext, ...$args): void
     {
         if (
             $this->operation != AtomicOperation::activityStartCancelScope()
@@ -88,7 +88,7 @@ class AtomicOperationInvocation
             Context::setExecutionContext($this->execution);
             if (!$this->performAsync) {
                 //LOG.debugExecutingAtomicOperation(operation, execution);
-                $this->operation->execute($this->execution);
+                $this->operation->execute($this->execution, ...$args);
             } else {
                 $this->execution->scheduleAtomicOperationAsync($this);
             }

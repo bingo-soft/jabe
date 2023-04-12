@@ -29,7 +29,7 @@ class BatchSetVariablesHandler extends AbstractBatchJobHandler
 {
     public static $JOB_DECLARATION;
 
-    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId): void
+    public function execute(JobHandlerConfigurationInterface $configuration, ExecutionEntity $execution, CommandContext $commandContext, ?string $tenantId, ...$args): void
     {
         $byteArrayId = $configuration->getConfigurationByteArrayId();
         $byteArray = $this->findByteArrayById($byteArrayId, $commandContext);

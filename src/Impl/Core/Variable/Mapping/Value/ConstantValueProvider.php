@@ -13,7 +13,7 @@ class ConstantValueProvider implements ParameterValueProviderInterface
         $this->value = $value;
     }
 
-    public function getValue(VariableScopeInterface $scope)
+    public function getValue(?VariableScopeInterface $scope)
     {
         return $this->value;
     }

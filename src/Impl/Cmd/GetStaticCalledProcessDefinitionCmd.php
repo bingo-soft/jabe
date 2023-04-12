@@ -39,7 +39,7 @@ class GetStaticCalledProcessDefinitionCmd implements CommandInterface
         return $callActivities;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $processDefinition = (new GetDeployedProcessDefinitionCmd($this->processDefinitionId, true))->execute($commandContext);
 

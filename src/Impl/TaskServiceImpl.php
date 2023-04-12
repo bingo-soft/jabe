@@ -75,7 +75,7 @@ class TaskServiceImpl extends ServiceImpl implements TaskServiceInterface
 
     public function saveTask(TaskInterface $task): void
     {
-        $this->commandExecutor->execute(new SaveTaskCmd(task));
+        $this->commandExecutor->execute(new SaveTaskCmd($task));
     }
 
     public function deleteTask(?string $taskId, $cascadeOrReason = false): void

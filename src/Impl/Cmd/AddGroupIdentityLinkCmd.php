@@ -13,7 +13,7 @@ class AddGroupIdentityLinkCmd extends AddIdentityLinkCmd
         parent::__construct($taskId, null, $groupId, $type);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         parent::execute($commandContext);
 

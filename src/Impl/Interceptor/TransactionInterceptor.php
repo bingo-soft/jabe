@@ -25,7 +25,7 @@ class TransactionInterceptor extends CommandInterceptor
         $this->processEngineConfiguration = $processEngineConfiguration;
     }
 
-    public function execute(CommandInterface $command)
+    public function execute(CommandInterface $command, ...$args)
     {
         $existing = $this->isExisting();
         $isNew = !$existing || $this->requiresNew;
@@ -34,7 +34,10 @@ class TransactionInterceptor extends CommandInterceptor
         }
         $result = null;
         try {
-            $result = $this->next->execute($command);
+            if (empty($args) && !empty($this->getState())) {
+                $args = $this->getState();
+            }
+            $result = $this->next->execute($command, ...$args);
         } catch (\Exception $ex) {
             $this->doRollback();
             throw $ex;

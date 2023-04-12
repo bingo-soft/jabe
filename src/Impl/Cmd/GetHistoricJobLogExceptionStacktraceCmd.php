@@ -17,7 +17,7 @@ class GetHistoricJobLogExceptionStacktraceCmd implements CommandInterface
         $this->historicJobLogId = $historicJobLogId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("historicJobLogId", "historicJobLogId", $this->historicJobLogId);
 

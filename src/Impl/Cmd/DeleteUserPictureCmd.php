@@ -17,7 +17,7 @@ class DeleteUserPictureCmd implements CommandInterface
         $this->userId = $userId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("UserId", "UserId", $this->userId);
 

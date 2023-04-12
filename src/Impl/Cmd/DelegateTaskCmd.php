@@ -39,7 +39,7 @@ class DelegateTaskCmd implements CommandInterface, \Serializable
         $this->userId = $json->userId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("taskId", "taskId", $this->taskId);
 

@@ -82,7 +82,7 @@ class TimerDeclarationImpl extends JobDeclaration
         $this->initializeConfiguration($timer->getExecution(), $timer);
     }
 
-    protected function initializeConfiguration(ExecutionEntity $context, TimerEntity $job): void
+    protected function initializeConfiguration(?ExecutionEntity $context, TimerEntity $job): void
     {
         $dueDateString = $this->resolveAndSetDuedate($context, $job, false);
 
@@ -95,7 +95,7 @@ class TimerDeclarationImpl extends JobDeclaration
         }
     }
 
-    public function resolveAndSetDuedate(ExecutionEntity $context, TimerEntity $job, bool $creationDateBased): ?string
+    public function resolveAndSetDuedate(?ExecutionEntity $context, TimerEntity $job, bool $creationDateBased): ?string
     {
         $businessCalendar = Context::getProcessEngineConfiguration()
             ->getBusinessCalendarManager()

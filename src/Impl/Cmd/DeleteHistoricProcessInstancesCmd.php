@@ -41,7 +41,7 @@ class DeleteHistoricProcessInstancesCmd implements CommandInterface, \Serializab
         $this->failIfNotExists = $json->failIfNotExists;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotEmpty(BadUserRequestException::class, "processInstanceIds", $this->processInstanceIds);
         EnsureUtil::ensureNotContainsNull("processInstanceId is null", "processInstanceIds", $this->processInstanceIds);

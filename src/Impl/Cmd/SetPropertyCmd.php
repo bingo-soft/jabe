@@ -22,7 +22,7 @@ class SetPropertyCmd implements CommandInterface
         $this->value = $value;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $commandContext->getAuthorizationManager()->checkAdminOrPermission("checkSetProperty");
 

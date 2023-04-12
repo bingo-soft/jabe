@@ -32,7 +32,7 @@ class GetDeployedProcessDefinitionCmd implements CommandInterface
         $this->checkReadPermission = $checkReadPermission;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureOnlyOneNotNull("either process definition id or key must be set", $this->processDefinitionId, $this->processDefinitionKey);
 

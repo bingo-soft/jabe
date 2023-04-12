@@ -15,6 +15,11 @@ use Jabe\Management\{
 
 class SchemaLogManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function findSchemaLogEntryCountByQueryCriteria(SchemaLogQueryInterface $schemaLogQuery): int
     {
         if ($this->isAuthorized()) {

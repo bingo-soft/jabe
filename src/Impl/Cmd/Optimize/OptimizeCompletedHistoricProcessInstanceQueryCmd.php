@@ -20,7 +20,7 @@ class OptimizeCompletedHistoricProcessInstanceQueryCmd implements CommandInterfa
         $this->maxResults = $maxResults;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return $commandContext->getOptimizeManager()->getCompletedHistoricProcessInstances($this->finishedAfter, $this->finishedAt, $this->maxResults);
     }

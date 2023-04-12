@@ -22,11 +22,11 @@ use Jabe\Repository\ProcessDefinitionInterface;
 class DeleteProcessDefinitionsByIdsCmd implements CommandInterface, \Serializable
 {
     protected $processDefinitionIds = [];
-    protected $cascadeToHistory;
-    protected $cascadeToInstances;
-    protected $skipCustomListeners;
-    protected $writeUserOperationLog;
-    protected $skipIoMappings;
+    protected bool $cascadeToHistory = false;
+    protected bool $cascadeToInstances = false;
+    protected bool $skipCustomListeners = false;
+    protected bool $writeUserOperationLog = false;
+    protected bool $skipIoMappings = false;
 
     public function __construct(
         ?array $processDefinitionIds,
@@ -67,7 +67,7 @@ class DeleteProcessDefinitionsByIdsCmd implements CommandInterface, \Serializabl
         $this->writeUserOperationLog = $json->writeUserOperationLog;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("processDefinitionIds", "processDefinitionIds", $this->processDefinitionIds);
 

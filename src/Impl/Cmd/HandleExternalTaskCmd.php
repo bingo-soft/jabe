@@ -20,7 +20,7 @@ abstract class HandleExternalTaskCmd extends ExternalTaskCmd
         $this->workerId = $workerId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $this->validateInput();
 

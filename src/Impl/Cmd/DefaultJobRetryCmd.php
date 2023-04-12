@@ -43,7 +43,7 @@ class DefaultJobRetryCmd extends JobRetryCmd
         parent::__construct($jobId, $exception);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $job = $this->getJob();
 

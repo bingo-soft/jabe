@@ -81,10 +81,15 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
     protected $persistenceSession;
     protected bool $isIgnoreForeignKeysForNextFlush = false;
 
-    public function __construct(IdGeneratorInterface $idGenerator, PersistenceSessionInterface $persistenceSession = null)
+    protected $jobExecutorState = [];
+
+    public function __construct(IdGeneratorInterface $idGenerator, PersistenceSessionInterface $persistenceSession = null, ...$args)
     {
         $this->idGenerator = $idGenerator;
         $this->persistenceSession = $persistenceSession;
+        if (!empty($args)) {
+            $this->jobExecutorState = $args;
+        }
         if ($this->persistenceSession !== null) {
             $this->persistenceSession->addEntityLoadListener($this);
         }
@@ -328,7 +333,6 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
                     // Top level persistence exception
                     $failure = $failedOperation->getFailure();
                     //throw LOG.flushDbOperationException(allOperations, failedOperation, failure);
-                    var_dump($failure);
                     throw new \Exception("flushDbOperationException");
                 } else {
                     // This branch should never be reached and the exception thus indicates a bug
@@ -503,10 +507,13 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
         }
     }
 
-    public function insert(DbEntityInterface $dbEntity): void
+    public function insert(DbEntityInterface $dbEntity, ...$args): void
     {
         // generate Id if not present
-        $this->ensureHasId($dbEntity);
+        if (empty($args)) {
+            $args = $this->jobExecutorState;
+        }
+        $this->ensureHasId($dbEntity, ...$args);
 
         $this->validateId($dbEntity);
 
@@ -633,10 +640,10 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
         return $this->dbEntityCache->isDeleted($object);
     }
 
-    protected function ensureHasId(DbEntityInterface $dbEntity): void
+    protected function ensureHasId(DbEntityInterface $dbEntity, ...$args): void
     {
         if ($dbEntity->getId() === null) {
-            $nextId = $this->idGenerator->getNextId();
+            $nextId = $this->idGenerator->getNextId(...$args);
             $dbEntity->setId($nextId);
         }
     }

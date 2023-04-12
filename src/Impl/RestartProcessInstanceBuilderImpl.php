@@ -24,10 +24,10 @@ class RestartProcessInstanceBuilderImpl implements RestartProcessInstanceBuilder
     protected $instructions = [];
     protected $processDefinitionId;
     protected $query;
-    protected $initialVariables;
-    protected $skipCustomListeners;
-    protected $skipIoMappings;
-    protected $withoutBusinessKey;
+    protected bool $initialVariables = false;
+    protected bool $skipCustomListeners = false;
+    protected bool $skipIoMappings = false;
+    protected bool $withoutBusinessKey = false;
 
     public function __construct($processDefinitionIdOrExecutor, ?string $processDefinitionId = null)
     {

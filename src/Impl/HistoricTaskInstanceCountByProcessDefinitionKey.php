@@ -17,7 +17,7 @@ class HistoricTaskInstanceCountByProcessDefinitionKey implements CommandInterfac
         $this->scope = $scope;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return $this->scope->executeCountByProcessDefinitionKey($commandContext);
     }

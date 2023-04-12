@@ -21,7 +21,7 @@ class DeleteBatchCmd implements CommandInterface
         $this->cascadeToHistory = $cascadeToHistory;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("Batch id must not be null", "batch id", $this->batchId);
 

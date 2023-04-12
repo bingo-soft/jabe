@@ -21,6 +21,11 @@ use Jabe\Impl\Persistence\AbstractHistoricManager;
 
 class HistoricIdentityLinkLogManager extends AbstractHistoricManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function findHistoricIdentityLinkLogCountByQueryCriteria(HistoricIdentityLinkLogQueryImpl $query): int
     {
         $this->configureQuery($query);

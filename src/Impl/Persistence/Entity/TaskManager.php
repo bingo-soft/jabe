@@ -18,9 +18,14 @@ use Jabe\Impl\Util\EnsureUtil;
 
 class TaskManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function insertTask(TaskEntity $task): void
     {
-        $this->getDbEntityManager()->insert($task);
+        $this->getDbEntityManager()->insert($task, ...$this->jobExecutorState);
         $this->createDefaultAuthorizations($task);
     }
 

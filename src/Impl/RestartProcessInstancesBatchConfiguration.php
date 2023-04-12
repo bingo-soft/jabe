@@ -11,10 +11,10 @@ class RestartProcessInstancesBatchConfiguration extends BatchConfiguration
 {
     protected $instructions = [];
     protected $processDefinitionId;
-    protected $initialVariables;
-    protected $skipCustomListeners;
-    protected $skipIoMappings;
-    protected $withoutBusinessKey;
+    protected bool $initialVariables = false;
+    protected bool $skipCustomListeners = false;
+    protected bool $skipIoMappings = false;
+    protected bool $withoutBusinessKey = false;
 
     public function __construct(
         array $processInstanceIds,

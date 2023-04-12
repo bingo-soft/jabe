@@ -14,10 +14,14 @@ class GenericManagerFactory implements SessionFactoryInterface
     //protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
     protected $managerImplementation;
+    protected $jobExecutorState = [];
 
-    public function __construct(?string $className)
+    public function __construct(?string $className, ...$args)
     {
         $this->managerImplementation = $className;
+        if (!empty($args)) {
+            $this->jobExecutorState = $args;
+        }
     }
 
     public function getSessionType(): ?string
@@ -29,7 +33,7 @@ class GenericManagerFactory implements SessionFactoryInterface
     {
         try {
             $managerImplementation = $this->managerImplementation;
-            return new $managerImplementation();
+            return new $managerImplementation(...$this->jobExecutorState);
         } catch (\Exception $e) {
             //throw LOG.instantiateSessionException(managerImplementation.getName(), e);
             throw $e;

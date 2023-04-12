@@ -35,7 +35,7 @@ class StartProcessInstanceAtActivitiesCmd implements CommandInterface
         $this->instantiationBuilder = $instantiationBuilder;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $processDefinition = (new GetDeployedProcessDefinitionCmd($this->instantiationBuilder, false))->execute($commandContext);
 

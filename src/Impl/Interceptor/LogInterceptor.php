@@ -9,11 +9,14 @@ class LogInterceptor extends CommandInterceptor
 {
     //private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
-    public function execute(CommandInterface $command)
+    public function execute(CommandInterface $command, ...$args)
     {
         //LOG.debugStartingCommand(command);
         try {
-            return $this->next->execute($command);
+            if (empty($args) && !empty($this->getState())) {
+                $args = $this->getState();
+            }
+            return $this->next->execute($command, ...$args);
         } finally {
             //LOG.debugFinishingCommand(command);
         }

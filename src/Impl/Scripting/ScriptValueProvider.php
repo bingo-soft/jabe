@@ -17,7 +17,7 @@ class ScriptValueProvider implements ParameterValueProviderInterface
         $this->script = $script;
     }
 
-    public function getValue(VariableScopeInterface $variableScope)
+    public function getValue(?VariableScopeInterface $variableScope)
     {
         $invocation = new ScriptInvocation($this->script, $variableScope);
         try {

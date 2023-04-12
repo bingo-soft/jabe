@@ -43,7 +43,7 @@ class GetExecutionVariablesCmd implements CommandInterface, \Serializable
         $this->deserializeValue = $json->deserializeValue;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("executionId", "executionId", $this->executionId);
 

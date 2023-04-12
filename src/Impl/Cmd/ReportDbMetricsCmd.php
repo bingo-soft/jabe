@@ -11,7 +11,7 @@ use Jabe\Impl\Interceptor\{
 
 class ReportDbMetricsCmd implements CommandInterface
 {
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $engineConfiguration = Context::getProcessEngineConfiguration();
 

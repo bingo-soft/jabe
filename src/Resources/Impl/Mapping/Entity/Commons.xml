@@ -182,20 +182,20 @@
 	  <when test="index != 0 and (index+1)%1000 == 0 and (index+1) &lt; sizeOfIds">
 		) or ${fieldName} IN (
 	  </when>
-	  <when test="index == sizeOfIds -1"></when>
-	  <otherwise> ,</otherwise>
+	  <when test="index == sizeOfIds-1"></when>
+	  <otherwise>,</otherwise>
 	  </choose>
 	</foreach>
 	)
   </sql>
 
   <sql id="applyInForPaginatedCollection">
-    <bind name="sizeOfIds" value="listOfIds.size" />
+    <bind name="sizeOfIds" value="count(listOfIds)" />
     <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedSql" />
   </sql>
 
   <sql id="applyInForPaginatedArray">
-    <bind name="sizeOfIds" value="listOfIds.length" />
+    <bind name="sizeOfIds" value="count(listOfIds)" />
     <include refid="src/Resources/Impl/Mapping/Entity/Commons.applyInForPaginatedSql" />
   </sql>
 

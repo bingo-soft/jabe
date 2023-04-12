@@ -17,9 +17,9 @@ class PvmAtomicOperationTransitionCreateScope extends PvmAtomicOperationCreateSc
         return "transition-create-scope";
     }
 
-    protected function scopeCreated(PvmExecutionImpl $execution): void
+    protected function scopeCreated(PvmExecutionImpl $execution, ...$args): void
     {
-        $execution->performOperation(self::transitionNotifyListenerStart());
+        $execution->performOperation(self::transitionNotifyListenerStart(), ...$args);
     }
 
     public function isAsyncCapable(): bool

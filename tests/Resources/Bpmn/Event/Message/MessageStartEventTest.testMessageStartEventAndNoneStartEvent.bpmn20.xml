@@ -3,14 +3,14 @@
   xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
   xmlns:extension="http://activiti.org/bpmn"
   targetNamespace="Examples"
-  xmlns:tns="Examples">
+  >
   
   <message id="newInvoice" name="newInvoiceMessage" />
   
   <process id="testProcess" isExecutable="true">
   
     <startEvent id="messageStart" >
-    	<messageEventDefinition messageRef="tns:newInvoice" />
+    	<messageEventDefinition messageRef="newInvoice" />
     </startEvent>
     
     <startEvent id="noneStart" />

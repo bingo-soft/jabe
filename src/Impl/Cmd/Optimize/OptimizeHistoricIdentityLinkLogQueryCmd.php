@@ -20,7 +20,7 @@ class OptimizeHistoricIdentityLinkLogQueryCmd implements CommandInterface
         $this->maxResults = $maxResults;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return $commandContext->getOptimizeManager()->getHistoricIdentityLinkLogs($this->occurreAfter, $this->occurreAt, $this->maxResults);
     }

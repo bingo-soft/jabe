@@ -33,7 +33,7 @@ class GetUserInfoCmd implements CommandInterface, \Serializable
         $this->key = $json->key;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $identityInfo = $commandContext
             ->getIdentityInfoManager()

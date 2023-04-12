@@ -46,7 +46,7 @@ class FetchExternalTasksCmd implements CommandInterface
         $this->usePriority = $usePriority;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $this->validateInput();
 

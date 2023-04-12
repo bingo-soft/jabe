@@ -12,7 +12,7 @@ class SetTaskOwnerCmd extends AddIdentityLinkCmd
         parent::__construct($taskId, $userId, null, IdentityLinkType::OWNER);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         parent::execute($commandContext);
         $this->task->logUserOperation(UserOperationLogEntryInterface::OPERATION_TYPE_SET_OWNER);

@@ -10,7 +10,7 @@ use Jabe\Impl\Interceptor\{
 
 class IsIdentityServiceReadOnlyCmd implements CommandInterface
 {
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return !array_key_exists(WritableIdentityProviderInterface::class, $commandContext->getSessionFactories());
     }

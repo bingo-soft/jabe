@@ -49,7 +49,7 @@ class SubmitTaskFormCmd implements CommandInterface, \Serializable
         $this->deserializeValues = $json->deserializeValues;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("taskId", "taskId", $this->taskId);
         $taskManager = $commandContext->getTaskManager();

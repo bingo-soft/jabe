@@ -31,7 +31,7 @@ class RepositoryServiceTest extends PluggableProcessEngineTest
     {
         $commandExecutor = $this->processEngineConfiguration->getCommandExecutorTxRequired();
         $commandExecutor->execute(new class () implements CommandInterface {
-            public function execute(CommandContext $commandContext)
+            public function execute(CommandContext $commandContext, ...$args)
             {
                 $commandContext->getHistoricJobLogManager()->deleteHistoricJobLogsByHandlerType(TimerActivateProcessDefinitionHandler::TYPE);
                 return null;

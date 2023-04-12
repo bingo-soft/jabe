@@ -46,7 +46,7 @@ class MessageEventReceivedCmd implements CommandInterface, \Serializable
         $this->processVariables = $json->processVariables;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("executionId", "executionId", $this->executionId);
 

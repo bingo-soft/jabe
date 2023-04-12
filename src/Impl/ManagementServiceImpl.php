@@ -155,11 +155,13 @@ class ManagementServiceImpl extends ServiceImpl implements ManagementServiceInte
     {
         if ($historicQueryOrRetries instanceof HistoricProcessInstanceQueryInterface) {
             return $this->commandExecutor->execute(
-                new SetJobsRetriesByProcessBatchCmd($ids, $queryOrRetries, $historicQueryOrRetries, $retries)
+                new SetJobsRetriesByProcessBatchCmd($ids, $queryOrRetries, $historicQueryOrRetries, $retries),
+                ...$this->commandExecutor->getState()
             );
         } elseif ($queryOrRetries instanceof ProcessInstanceQueryInterface && $retries === null) {
             return $this->commandExecutor->execute(
-                new SetJobsRetriesByProcessBatchCmd($ids, $queryOrRetries, null, $historicQueryOrRetries)
+                new SetJobsRetriesByProcessBatchCmd($ids, $queryOrRetries, null, $historicQueryOrRetries),
+                ...$this->commandExecutor->getState()
             );
         } elseif ($ids instanceof JobQueryInterface) {
             return $this->commandExecutor->execute(new SetJobsRetriesBatchCmd(null, $ids, $queryOrRetries));

@@ -14,7 +14,7 @@ use Jabe\Impl\Util\EnsureUtil;
 class SaveUserCmd extends AbstractWritableIdentityServiceCmd implements CommandInterface, \Serializable
 {
     protected $user;
-    protected $skipPasswordPolicy;
+    protected bool $skipPasswordPolicy = false;
 
     public function __construct(UserInterface $user, bool $skipPasswordPolicy = false)
     {

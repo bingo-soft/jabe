@@ -17,7 +17,7 @@ class UnregisterDeploymentCmd implements CommandInterface
         $this->deploymentIds = is_string($deployments) ? [ $deployments ] : $deployments;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $commandContext->getAuthorizationManager()->checkAdminOrPermission("checkUnregisterDeployment");
         $deployments = &Context::getProcessEngineConfiguration()->getRegisteredDeployments();

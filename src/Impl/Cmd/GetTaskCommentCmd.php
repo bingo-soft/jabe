@@ -34,7 +34,7 @@ class GetTaskCommentCmd implements CommandInterface, \Serializable
         $this->commentId = $json->commentId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("taskId", "taskId", $this->taskId);
         EnsureUtil::ensureNotNull("commentId", "commentId", $this->commentId);

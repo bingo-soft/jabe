@@ -54,7 +54,7 @@ class SetVariablesToProcessInstancesBatchCmd implements CommandInterface
         $this->variables = $variables;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("variables", "variables", $this->variables);
         EnsureUtil::ensureNotEmpty(BadUserRequestException::class, "variables", $this->variables);

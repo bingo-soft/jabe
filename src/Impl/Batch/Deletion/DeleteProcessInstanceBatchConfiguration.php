@@ -10,8 +10,8 @@ use Jabe\Impl\Batch\{
 class DeleteProcessInstanceBatchConfiguration extends BatchConfiguration
 {
     protected $deleteReason;
-    protected $skipCustomListeners;
-    protected $skipSubprocesses;
+    protected bool $skipCustomListeners = false;
+    protected bool $skipSubprocesses = false;
 
     public function __construct(array $ids, DeploymentMappings $mappings = null, ?string $deleteReason = null, bool $skipCustomListeners = true, bool $skipSubprocesses = true, bool $failIfNotExists = false)
     {

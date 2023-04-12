@@ -22,7 +22,7 @@ class DeleteDeploymentFailListener implements TransactionListenerInterface
         $this->commandExecutor = $commandExecutor;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         //we can not use commandContext parameter here, as it can be in inconsistent state
         $this->commandExecutor->execute(new DeleteDeploymentFailCmd($this->deploymentId, $this->processApplicationReference));

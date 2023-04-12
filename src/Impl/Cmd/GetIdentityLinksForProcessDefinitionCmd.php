@@ -31,7 +31,7 @@ class GetIdentityLinksForProcessDefinitionCmd implements CommandInterface, \Seri
         $this->processDefinitionId = $json->processDefinitionId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $processDefinition = Context::getCommandContext()
             ->getProcessDefinitionManager()

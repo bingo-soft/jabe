@@ -16,10 +16,15 @@ use Jabe\Impl\Persistence\AbstractManager;
 
 class BatchManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function insertBatch(BatchEntity $batch): void
     {
         $batch->setCreateUserId($this->getCommandContext()->getAuthenticatedUserId());
-        $this->getDbEntityManager()->insert($batch);
+        $this->getDbEntityManager()->insert($batch, ...$this->jobExecutorState);
     }
 
     public function findBatchById(?string $id): BatchEntity

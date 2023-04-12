@@ -17,6 +17,11 @@ use Jabe\Impl\Persistence\AbstractHistoricManager;
 
 class HistoricActivityInstanceManager extends AbstractHistoricManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function deleteHistoricActivityInstancesByProcessInstanceIds(array $historicProcessInstanceIds): void
     {
         $this->getDbEntityManager()->deletePreserveOrder(
@@ -28,7 +33,7 @@ class HistoricActivityInstanceManager extends AbstractHistoricManager
 
     public function insertHistoricActivityInstance(HistoricActivityInstanceEntity $historicActivityInstance): void
     {
-        $this->getDbEntityManager()->insert($historicActivityInstance);
+        $this->getDbEntityManager()->insert($historicActivityInstance, ...$this->jobExecutorState);
     }
 
     public function findHistoricActivityInstance(?string $activityId, ?string $processInstanceId): ?HistoricActivityInstanceEntity

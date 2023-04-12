@@ -35,7 +35,7 @@ class CorrelateMessageCmd extends AbstractCorrelateMessageCmd implements Command
         $this->startMessageOnly = $startMessageOnly;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureAtLeastOneNotNull(
             "At least one of the following correlation criteria has to be present: " .
@@ -56,7 +56,7 @@ class CorrelateMessageCmd extends AbstractCorrelateMessageCmd implements Command
                 return $correlationHandler->correlateStartMessages($commandContext, $scope->messageName, $correlationSet);
             });
             if (empty($correlationResults)) {
-                throw new MismatchingMessageCorrelationException($this->messageName, "No process definition matches the parameters");
+                throw new MismatchingMessageCorrelationException(sprintf("No process definition matches the parameters, message name: %s", $this->messageName));
             } elseif (count($correlationResults) > 1) {
                 //throw LOG.exceptionCorrelateMessageToSingleProcessDefinition(messageName, correlationResults.size(), correlationSet);
                 throw new \Exception("exceptionCorrelateMessageToSingleProcessDefinition");

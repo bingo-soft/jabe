@@ -3,7 +3,7 @@
              xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
              xmlns:extension="http://activiti.org/bpmn"
              targetNamespace="Examples"
-             xmlns:tns="Examples">
+             >
 
   <process id="process" isExecutable="true">
 
@@ -12,7 +12,7 @@
     <sequenceFlow id="flow1" sourceRef="theStart" targetRef="messageThrow" />
 
     <intermediateThrowEvent id="messageThrow">
-      <messageEventDefinition extension:class="org.camunda.bpm.engine.test.bpmn.event.message.DummyServiceTask" />
+      <messageEventDefinition extension:class="Tests.Bpmn.Event.Message.DummyServiceTask" />
     </intermediateThrowEvent>
   	
     <sequenceFlow id="flow2" sourceRef="messageThrow" targetRef="theEnd" />

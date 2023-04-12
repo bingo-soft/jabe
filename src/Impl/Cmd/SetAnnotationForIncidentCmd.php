@@ -29,7 +29,7 @@ class SetAnnotationForIncidentCmd implements CommandInterface
         $this->annotation = $annotation;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull(NotValidException::class, "incident id", $this->incidentId);
 

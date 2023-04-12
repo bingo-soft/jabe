@@ -10,8 +10,8 @@ use Jabe\Impl\Interceptor\{
 class DeleteProcessInstanceCmd extends AbstractDeleteProcessInstanceCmd implements CommandInterface, \Serializable
 {
     protected $processInstanceId;
-    protected $skipIoMappings;
-    protected $skipSubprocesses;
+    protected bool $skipIoMappings = false;
+    protected bool $skipSubprocesses = false;
 
     public function __construct(
         ?string $processInstanceId,
@@ -55,7 +55,7 @@ class DeleteProcessInstanceCmd extends AbstractDeleteProcessInstanceCmd implemen
         $this->skipIoMappings = $json->skipIoMappings;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $this->deleteProcessInstance($commandContext, $this->processInstanceId, $this->deleteReason, $this->skipCustomListeners, $this->externallyTerminated, $this->skipIoMappings, $this->skipSubprocesses);
         return null;

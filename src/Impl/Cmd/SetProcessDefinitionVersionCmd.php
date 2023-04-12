@@ -39,7 +39,7 @@ class SetProcessDefinitionVersionCmd implements CommandInterface, \Serializable
         $this->processDefinitionVersion = $processDefinitionVersion;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $configuration = $commandContext->getProcessEngineConfiguration();
 

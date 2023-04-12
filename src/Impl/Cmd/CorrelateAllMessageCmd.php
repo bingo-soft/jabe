@@ -28,7 +28,7 @@ class CorrelateAllMessageCmd extends AbstractCorrelateMessageCmd implements Comm
         parent::__construct($messageCorrelationBuilderImpl, $collectVariables, $deserializeVariableValues);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureAtLeastOneNotNull(
             "At least one of the following correlation criteria has to be present: " .

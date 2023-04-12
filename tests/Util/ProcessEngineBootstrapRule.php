@@ -80,7 +80,7 @@ class ProcessEngineBootstrapRule
                     $this->job = $job;
                 }
 
-                public function execute(CommandContext $commandContext)
+                public function execute(CommandContext $commandContext, ...$args)
                 {
                     $commandContext->getJobManager()->deleteJob($this->job);
                     $commandContext->getHistoricJobLogManager()->deleteHistoricJobLogByJobId($this->job->getId());

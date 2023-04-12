@@ -15,6 +15,11 @@ use Jabe\Impl\Persistence\AbstractManager;
 
 class JobDefinitionManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function findById(?string $jobDefinitionId): ?JobDefinitionEntity
     {
         return $this->getDbEntityManager()->selectById(JobDefinitionEntity::class, $jobDefinitionId);

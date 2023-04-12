@@ -8,7 +8,7 @@ abstract class PvmAtomicOperationCreateConcurrentExecution implements PvmAtomicO
 {
     use BasePvmAtomicOperationTrait;
 
-    public function execute(PvmExecutionImpl $execution): void
+    public function execute(PvmExecutionImpl $execution, ...$args): void
     {
         // Invariant: execution is the Scope Execution for the activity's flow scope.
         $activityToStart = $execution->getNextActivity();

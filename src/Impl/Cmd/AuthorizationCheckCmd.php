@@ -33,7 +33,7 @@ class AuthorizationCheckCmd implements CommandInterface
         $this->validate($userId, $groupIds, $permission, $resource);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $authorizationManager = $commandContext->getAuthorizationManager();
         if ($authorizationManager->isPermissionDisabled($this->permission)) {

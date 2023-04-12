@@ -6,6 +6,11 @@ use Jabe\Impl\Persistence\AbstractManager;
 
 class IdentityLinkManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function findIdentityLinksByTaskId(?string $taskId): array
     {
         return $this->getDbEntityManager()->selectList("selectIdentityLinksByTask", $taskId);

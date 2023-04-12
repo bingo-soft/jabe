@@ -19,13 +19,29 @@ class DbIdGenerator implements IdGeneratorInterface
         $this->reset();
     }
 
-    public function getNextId(): ?string
+    public function getNextId(...$args): ?string
     {
-        if ($this->lastId < $this->nextId) {
-            $this->getNewBlock();
+        $lock = null;
+        if (!empty($args)) {
+            foreach ($args as $arg) {
+                if ($arg instanceof \Swoole\Lock) {
+                    $lock = $arg;
+                    $lock->lock();
+                    break;
+                }
+            }
         }
-        $_nextId = $this->nextId++;
-        return strval($_nextId);
+        try {
+            if ($this->lastId < $this->nextId) {
+                $this->getNewBlock();
+            }
+            $nextId = $this->nextId++;
+            return strval($nextId);
+        } finally {
+            if ($lock !== null) {
+                $lock->unlock();
+            }
+        }
     }
 
     protected function getNewBlock(): void

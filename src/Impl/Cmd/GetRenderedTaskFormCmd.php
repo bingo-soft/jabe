@@ -35,7 +35,7 @@ class GetRenderedTaskFormCmd implements CommandInterface, \Serializable
         $this->formEngineName = $json->formEngineName;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $taskManager = $commandContext->getTaskManager();
         $task = $taskManager->findTaskById($this->taskId);

@@ -32,7 +32,7 @@ class DeleteTaskMetricsCmd implements CommandInterface, \Serializable
         $this->timestamp = $json->timestamp;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $commandContext->getAuthorizationManager()->checkAdminOrPermission("checkDeleteTaskMetrics");
 

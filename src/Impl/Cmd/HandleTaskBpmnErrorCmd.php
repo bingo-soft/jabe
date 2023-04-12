@@ -30,7 +30,7 @@ class HandleTaskBpmnErrorCmd implements CommandInterface, \Serializable
         EnsureUtil::ensureNotEmpty(BadUserRequestException::class, "errorCode", $this->errorCode);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $this->validateInput();
 

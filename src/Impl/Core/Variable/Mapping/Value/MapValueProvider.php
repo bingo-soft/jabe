@@ -13,7 +13,7 @@ class MapValueProvider implements ParameterValueProviderInterface
         $this->providerMap = $providerMap;
     }
 
-    public function getValue(VariableScopeInterface $variableScope)
+    public function getValue(?VariableScopeInterface $variableScope)
     {
         $valueMap = [];
         foreach ($this->providerMap as $pair) {

@@ -50,7 +50,7 @@ class CreateMigrationPlanCmd implements CommandInterface
         $this->migrationBuilder = $migrationPlanBuilderImpl;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $sourceProcessDefinition = $this->getProcessDefinition($commandContext, $this->migrationBuilder->getSourceProcessDefinitionId(), "Source");
         $targetProcessDefinition = $this->getProcessDefinition($commandContext, $this->migrationBuilder->getTargetProcessDefinitionId(), "Target");

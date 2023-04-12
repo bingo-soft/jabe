@@ -114,7 +114,7 @@ class MetricsQueryImpl extends ListQueryParameterObject implements \Serializable
         return $this->commandExecutor->execute($this);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         if ($this->callback !== null) {
             return $this->callback->execute($commandContext);

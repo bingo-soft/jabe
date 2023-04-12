@@ -27,7 +27,7 @@ class ActivityCancellationCmd extends AbstractProcessInstanceModificationCommand
         $this->activityId = $activityId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $activityInstanceTree = $this->getActivityInstanceTree($commandContext);
         $commands = $this->createActivityInstanceCancellations($activityInstanceTree, $commandContext);

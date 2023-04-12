@@ -20,7 +20,7 @@ class UpdateProcessInstancesSuspendStateCmd extends AbstractUpdateProcessInstanc
         parent::__construct($commandExecutor, $builder, $suspendstate);
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $processInstanceIds = $this->collectProcessInstanceIds($commandContext)->getIds();
 

@@ -18,6 +18,11 @@ use Jabe\Impl\Util\EnsureUtil;
 
 class FilterManager extends AbstractManager
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function createNewFilter(?string $resourceType): FilterInterface
     {
         $this->checkAuthorization(Permissions::create(), Resources::filter(), AuthorizationInterface::ANY);
@@ -31,7 +36,7 @@ class FilterManager extends AbstractManager
 
         if ($filter->getId() === null) {
             $this->checkAuthorization(Permissions::create(), Resources::filter(), AuthorizationInterface::ANY);
-            $this->getDbEntityManager()->insert($filter);
+            $this->getDbEntityManager()->insert($filter, ...$this->jobExecutorState);
             $this->createDefaultAuthorizations($filter);
         } else {
             $this->checkAuthorization(Permissions::update(), Resources::filter(), $filter->getId());

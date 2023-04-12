@@ -30,7 +30,7 @@ class MetricsCollectionTask extends TimerTask
         $this->commandExecutor = $commandExecutor;
     }
 
-    public function run(ThreadInterface $process, ...$args): void
+    public function run(ThreadInterface $process = null, ...$args): void
     {
         try {
             $this->collectMetrics();

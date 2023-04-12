@@ -26,7 +26,7 @@ abstract class AbstractSetJobsRetriesBatchCmd implements CommandInterface
 {
     protected int $retries = 0;
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $elementConfiguration = $this->collectJobIds($commandContext);
 

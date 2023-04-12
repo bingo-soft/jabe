@@ -36,6 +36,11 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
 
     // users ////////////////////////////////////////////////////////
 
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     public function createNewUser(?string $userId): UserEntity
     {
         $this->checkAuthorization(Permissions::create(), Resources::user(), null);
@@ -53,7 +58,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
         if ($userEntity->getRevision() == 0) {
             $operation = IdentityOperationResult::OPERATION_CREATE;
             $this->checkAuthorization(Permissions::create(), Resources::user(), null);
-            $this->getDbEntityManager()->insert($userEntity);
+            $this->getDbEntityManager()->insert($userEntity, ...$this->jobExecutorState);
             $this->createDefaultAuthorizations($userEntity);
         } else {
             $operation = IdentityOperationResult::OPERATION_UPDATE;
@@ -184,7 +189,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
         if ($groupEntity->getRevision() == 0) {
             $operation = IdentityOperationResult::OPERATION_CREATE;
             $this->checkAuthorization(Permissions::create(), Resources::group(), null);
-            $this->getDbEntityManager()->insert($groupEntity);
+            $this->getDbEntityManager()->insert($groupEntity, ...$this->jobExecutorState);
             $this->createDefaultAuthorizations($group);
         } else {
             $operation = IdentityOperationResult::OPERATION_UPDATE;
@@ -235,7 +240,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
         if ($tenantEntity->getRevision() == 0) {
             $operation = IdentityOperationResult::OPERATION_CREATE;
             $this->checkAuthorization(Permissions::create(), Resources::tenant(), null);
-            $this->getDbEntityManager()->insert($tenantEntity);
+            $this->getDbEntityManager()->insert($tenantEntity, ...$this->jobExecutorState);
             $this->createDefaultAuthorizations($tenant);
         } else {
             $operation = IdentityOperationResult::OPERATION_UPDATE;
@@ -270,7 +275,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
         $membership = new MembershipEntity();
         $membership->setUser($user);
         $membership->setGroup($group);
-        $this->getDbEntityManager()->insert($membership);
+        $this->getDbEntityManager()->insert($membership, ...$this->jobExecutorState);
         $this->createDefaultMembershipAuthorizations($userId, $groupId);
         return new IdentityOperationResult(null, IdentityOperationResult::OPERATION_CREATE);
     }
@@ -313,7 +318,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
         $membership->setTenant($tenant);
         $membership->setUser($user);
 
-        $this->getDbEntityManager()->insert($membership);
+        $this->getDbEntityManager()->insert($membership, ...$this->jobExecutorState);
 
         $this->createDefaultTenantMembershipAuthorizations($tenant, $user);
         return new IdentityOperationResult(null, IdentityOperationResult::OPERATION_CREATE);
@@ -333,7 +338,7 @@ class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implem
         $membership->setTenant($tenant);
         $membership->setGroup($group);
 
-        $this->getDbEntityManager()->insert($membership);
+        $this->getDbEntityManager()->insert($membership, ...$this->jobExecutorState);
 
         $this->createDefaultTenantMembershipAuthorizations($tenant, $group);
         return new IdentityOperationResult(null, IdentityOperationResult::OPERATION_CREATE);

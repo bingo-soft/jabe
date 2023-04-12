@@ -19,7 +19,7 @@ class SetLicenseKeyCmd extends LicenseCmd implements CommandInterface
         $this->licenseKey = $licenseKey;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("licenseKey", "licenseKey", $this->licenseKey);
 

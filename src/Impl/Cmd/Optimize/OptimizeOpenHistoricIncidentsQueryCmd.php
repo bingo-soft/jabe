@@ -20,7 +20,7 @@ class OptimizeOpenHistoricIncidentsQueryCmd implements CommandInterface
         $this->maxResults = $maxResults;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return $commandContext->getOptimizeManager()->getOpenHistoricIncidents($this->createdAfter, $this->createdAt, $this->maxResults);
     }

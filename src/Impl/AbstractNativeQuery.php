@@ -92,7 +92,7 @@ abstract class AbstractNativeQuery implements CommandInterface, NativeQueryInter
         return $this->executeCount(Context::getCommandContext(), $this->getParameterMap());
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         if ($this->resultType == self::RESULT_TYPES['LIST']) {
             return $this->executeList($commandContext, $this->getParameterMap(), 0, PHP_INT_MAX);

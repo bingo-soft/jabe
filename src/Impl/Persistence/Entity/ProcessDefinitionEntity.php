@@ -70,7 +70,7 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         }
     }
 
-    protected function newProcessInstance(): PvmExecutionImpl
+    protected function newProcessInstance(...$args): PvmExecutionImpl
     {
         $newExecution = ExecutionEntity::createNewExecution();
 
@@ -81,12 +81,12 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
         return $newExecution;
     }
 
-    public function createProcessInstance(?string $businessKey = null, ?string $caseInstanceId = null, ?ActivityImpl $initial = null): ExecutionEntity
+    public function createProcessInstance(?string $businessKey = null, ?string $caseInstanceId = null, ?ActivityImpl $initial = null, ...$args): ExecutionEntity
     {
         if ($initial !== null) {
             $this->ensureNotSuspended();
 
-            $processInstance = $this->createProcessInstanceForInitial($initial);
+            $processInstance = $this->createProcessInstanceForInitial($initial, ...$args);
 
             // do not reset executions (CAM-2557)!
             // processInstance->setExecutions(new ArrayList<ExecutionEntity>());
@@ -114,7 +114,7 @@ class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDe
 
             return $processInstance;
         } else {
-            return parent::createProcessInstance($businessKey, $caseInstanceId, $initial);
+            return parent::createProcessInstance($businessKey, $caseInstanceId, $initial, ...$args);
         }
     }
 

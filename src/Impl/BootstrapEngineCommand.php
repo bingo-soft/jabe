@@ -28,7 +28,7 @@ class BootstrapEngineCommand implements ProcessEngineBootstrapCommandInterface
     //protected static final String TELEMETRY_PROPERTY_NAME = "camunda.telemetry.enabled";
     protected const INSTALLATION_PROPERTY_NAME = "jabe.installation.id";
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $this->initializeInstallationId($commandContext);
 

@@ -30,7 +30,7 @@ class GetDeploymentResourceNamesCmd implements CommandInterface, \Serializable
         $this->deploymentId = $json->deploymentId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("deploymentId", "deploymentId", $this->deploymentId);
 

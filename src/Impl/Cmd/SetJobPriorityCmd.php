@@ -25,7 +25,7 @@ class SetJobPriorityCmd implements CommandInterface
         $this->priority = $priority;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("job id must not be null", "jobId", $this->jobId);
 

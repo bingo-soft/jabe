@@ -30,7 +30,7 @@ class GetExternalTaskErrorDetailsCmd implements CommandInterface, \Serializable
         $this->externalTaskId = $json->externalTaskId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("externalTaskId", "externalTaskId", $this->externalTaskId);
 

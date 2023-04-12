@@ -23,7 +23,7 @@ class DeleteAuthorizationCmd implements CommandInterface
         $this->authorizationId = $authorizationId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $authorizationManager = $commandContext->getAuthorizationManager();
 

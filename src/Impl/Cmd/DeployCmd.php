@@ -75,7 +75,7 @@ class DeployCmd implements CommandInterface
         $this->deploymentBuilder = $deploymentBuilder;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         return $this->doExecute($commandContext);
     }

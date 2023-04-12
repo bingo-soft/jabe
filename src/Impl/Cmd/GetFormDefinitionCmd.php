@@ -21,7 +21,7 @@ class GetFormDefinitionCmd implements CommandInterface
         $this->deploymentId = $deploymentId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $binding = $this->formRef->getBinding();
         $key = $this->formRef->getKey();

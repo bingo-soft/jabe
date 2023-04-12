@@ -22,7 +22,7 @@ class ProcessInstanceModificationCmd extends AbstractModificationCmd
         $this->writeUserOperationLog = $writeUserOperationLog;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         $instructions = $this->builder->getInstructions();
         EnsureUtil::ensureNotEmpty("Modification instructions cannot be empty", "instructions", $instructions);

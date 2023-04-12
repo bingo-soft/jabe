@@ -19,7 +19,7 @@ class DeleteHistoricBatchCmd implements CommandInterface
         $this->batchId = $batchId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("Historic batch id must not be null", "historic batch id", $this->batchId);
 

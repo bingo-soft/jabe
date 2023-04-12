@@ -86,7 +86,7 @@ class TelemetrySendingTask extends TimerTask
         $this->telemetryRequestTimeout = $telemetryRequestTimeout;
     }
 
-    public function run(ThreadInterface $process, ...$args): void
+    public function run(ThreadInterface $process = null, ...$args): void
     {
         //LOG.startTelemetrySendingTask();
 
@@ -106,7 +106,7 @@ class TelemetrySendingTask extends TimerTask
                 $this->scope = $scope;
             }
 
-            public function run(ThreadInterface $process, ...$args): void
+            public function run(ThreadInterface $process = null, ...$args): void
             {
                 $this->scope->updateAndSendData(true, true);
             }

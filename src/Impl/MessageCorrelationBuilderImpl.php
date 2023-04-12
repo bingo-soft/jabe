@@ -195,14 +195,14 @@ class MessageCorrelationBuilderImpl implements MessageCorrelationBuilderInterfac
 
     public function startMessageOnly(): MessageCorrelationBuilderInterface
     {
-        EnsureUtil::ensureFalse("Either startMessageOnly or executionsOnly can be set", "executionsOnly", $this->executionsOnly);
+        EnsureUtil::ensureFalse("Either startMessageOnly or executionsOnly can be set", $this->executionsOnly);
         $this->startMessagesOnly = true;
         return $this;
     }
 
     public function executionsOnly(): MessageCorrelationBuilderInterface
     {
-        EnsureUtil::ensureFalse("Either startMessageOnly or executionsOnly can be set", "startMessagesOnly", $this->startMessagesOnly);
+        EnsureUtil::ensureFalse("Either startMessageOnly or executionsOnly can be set", $this->startMessagesOnly);
         $this->executionsOnly = true;
         return $this;
     }

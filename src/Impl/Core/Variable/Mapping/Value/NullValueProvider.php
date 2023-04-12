@@ -6,7 +6,7 @@ use Jabe\Delegate\VariableScopeInterface;
 
 class NullValueProvider implements ParameterValueProviderInterface
 {
-    public function getValue(VariableScopeInterface $variableScope)
+    public function getValue(?VariableScopeInterface $variableScope)
     {
         return null;
     }

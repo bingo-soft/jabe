@@ -24,13 +24,18 @@ use Jabe\Repository\ProcessDefinitionInterface;
 
 class ProcessDefinitionManager extends AbstractManager implements AbstractResourceDefinitionManagerInterface
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+    }
+
     //protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
     // insert ///////////////////////////////////////////////////////////
 
     public function insertProcessDefinition(ProcessDefinitionEntity $processDefinition): void
     {
-        $this->getDbEntityManager()->insert($processDefinition);
+        $this->getDbEntityManager()->insert($processDefinition, ...$this->jobExecutorState);
         $this->createDefaultAuthorizations($processDefinition);
     }
 

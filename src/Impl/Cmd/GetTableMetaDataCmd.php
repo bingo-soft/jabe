@@ -30,7 +30,7 @@ class GetTableMetaDataCmd implements CommandInterface, \Serializable
         $this->tableName = $json->tableName;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("tableName", "tableName", $this->tableName);
 

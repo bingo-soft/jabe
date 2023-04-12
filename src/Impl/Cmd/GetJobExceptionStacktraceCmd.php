@@ -30,7 +30,7 @@ class GetJobExceptionStacktraceCmd implements CommandInterface, \Serializable
         $this->jobId = $json->jobId;
     }
 
-    public function execute(CommandContext $commandContext)
+    public function execute(CommandContext $commandContext, ...$args)
     {
         EnsureUtil::ensureNotNull("jobId", "jobId", $this->jobId);
 
