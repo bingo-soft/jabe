@@ -41,6 +41,6 @@
 
   </properties>
 
-  <!--<bean id="uuidGenerator" class="org.camunda.bpm.engine.impl.persistence.StrongUuidGenerator" />-->
+  <!--<bean id="uuidGenerator" class="StrongUuidGenerator" />-->
 
 </configuration>

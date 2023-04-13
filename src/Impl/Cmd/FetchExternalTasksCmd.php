@@ -63,7 +63,6 @@ class FetchExternalTasksCmd implements CommandInterface
         foreach ($externalTasks as $entity) {
             $fetchInstruction = $this->fetchInstructions[$entity->getTopicName()];
 
-            // retrieve the execution first to detect concurrent modifications @https://jira.camunda.com/browse/CAM-10750
             $execution = $entity->getExecution(false);
 
             if ($execution !== null) {

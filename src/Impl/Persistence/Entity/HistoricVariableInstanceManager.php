@@ -127,7 +127,7 @@ class HistoricVariableInstanceManager extends AbstractHistoricManager
             $historicProcessVariableQuery = (new HistoricVariableInstanceQueryImpl())->taskIdIn([$taskId]);
             $historicProcessVariables = $historicProcessVariableQuery->list();
             foreach ($historicProcessVariables as $historicProcessVariable) {
-                $this->historicProcessVariable->delete();
+                $historicProcessVariable->delete();
             }
         }
     }

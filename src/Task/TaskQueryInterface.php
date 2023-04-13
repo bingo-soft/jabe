@@ -30,14 +30,14 @@ interface TaskQueryInterface extends QueryInterface
 
     /**
      * Only select tasks with a name matching the parameter.
-     * The syntax is that of SQL: for example usage: nameLike(%camunda%).
+     * The syntax is that of SQL: for example usage: nameLike(%jabe%).
      * The query will match the names of tasks in a case-insensitive way.
      */
     public function taskNameLike(?string $nameLike): TaskQueryInterface;
 
     /**
      * Only select tasks with a name not matching the parameter.
-     * The syntax is that of SQL: for example usage: nameNotLike(%camunda%)
+     * The syntax is that of SQL: for example usage: nameNotLike(%jabe%)
      * The query will match the names of tasks in a case-insensitive way.
      */
     public function taskNameNotLike(?string $nameNotLike): TaskQueryInterface;
@@ -50,7 +50,7 @@ interface TaskQueryInterface extends QueryInterface
 
     /**
      * Only select tasks with a description matching the parameter .
-     * The syntax is that of SQL: for example usage: descriptionLike(%camunda%)
+     * The syntax is that of SQL: for example usage: descriptionLike(%jabe%)
      * The query will match the descriptions of tasks in a case-insensitive way.
      */
     public function taskDescriptionLike(?string $descriptionLike): TaskQueryInterface;
@@ -81,7 +81,7 @@ interface TaskQueryInterface extends QueryInterface
     public function taskAssigneeExpression(?string $assigneeExpression): TaskQueryInterface;
 
     /** Only select tasks which are matching the given user.
-     *  The syntax is that of SQL: for example usage: nameLike(%camunda%)*/
+     *  The syntax is that of SQL: for example usage: nameLike(%jabe%)*/
     public function taskAssigneeLike(?string $assignee): TaskQueryInterface;
 
     /**
@@ -338,11 +338,11 @@ interface TaskQueryInterface extends QueryInterface
     public function processInstanceBusinessKeyIn(array $processInstanceBusinessKeys): TaskQueryInterface;
 
     /** Only select tasks matching the given process instance business key.
-     *  The syntax is that of SQL: for example usage: nameLike(%camunda%)*/
+     *  The syntax is that of SQL: for example usage: nameLike(%jabe%)*/
     public function processInstanceBusinessKeyLike(?string $processInstanceBusinessKey): TaskQueryInterface;
 
     /** Only select tasks matching the given process instance business key described by the given expression.
-     *  The syntax is that of SQL: for example usage: processInstanceBusinessKeyLikeExpression("${ '%camunda%' }")*/
+     *  The syntax is that of SQL: for example usage: processInstanceBusinessKeyLikeExpression("${ '%jabe%' }")*/
     public function processInstanceBusinessKeyLikeExpression(?string $processInstanceBusinessKeyExpression): TaskQueryInterface;
 
     /** Only select tasks for the given execution. */
@@ -381,7 +381,7 @@ interface TaskQueryInterface extends QueryInterface
 
     /**
      * Only select tasks with a taskDefinitionKey that match the given parameter.
-     *  The syntax is that of SQL: for example usage: taskDefinitionKeyLike("%camunda%").
+     *  The syntax is that of SQL: for example usage: taskDefinitionKeyLike("%jabe%").
      * The task definition key is the id of the userTask:
      * <userTask id="xxx" .../>
      **/

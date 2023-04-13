@@ -35,6 +35,14 @@ class InclusiveGatewayTest extends PluggableProcessEngineTest
         parent::setUp();
     }
 
+    protected function tearDown(): void
+    {
+        $deployments = $this->repositoryService->createDeploymentQuery()->list();
+        foreach ($deployments as $deployment) {
+            $this->repositoryService->deleteDeployment($deployment->getId(), true);
+        }
+    }
+
     #[Deployment(resources: [ "tests/Resources/Bpmn/Gateway/InclusiveGatewayTest.testDivergingInclusiveGateway.bpmn20.xml"])]
     public function testDivergingInclusiveGateway(): void
     {

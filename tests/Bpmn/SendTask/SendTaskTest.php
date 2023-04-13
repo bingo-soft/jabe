@@ -17,6 +17,14 @@ class SendTaskTest extends PluggableProcessEngineTest
         parent::setUp();
     }
 
+    protected function tearDown(): void
+    {
+        $deployments = $this->repositoryService->createDeploymentQuery()->list();
+        foreach ($deployments as $deployment) {
+            $this->repositoryService->deleteDeployment($deployment->getId(), true);
+        }
+    }
+
     #[Deployment(resources: [ "tests/Resources/Bpmn/SendTask/SendTaskTest.testPhpDelegate.bpmn20.xml"])]
     public function testPhpDelegate(): void
     {

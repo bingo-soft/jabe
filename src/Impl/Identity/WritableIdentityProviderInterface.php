@@ -48,7 +48,7 @@ interface WritableIdentityProviderInterface extends SessionInterface
      * Allows unlocking a User object.
      * @param userId the id of the User object to delete.
      * @return IdentityOperationResult the operation result object.
-     * @throws AuthorizationException if the user is not CAMUNDA_ADMIN
+     * @throws AuthorizationException if the user is not ADMIN
      */
     public function unlockUser(?string $userId): IdentityOperationResult;
 

@@ -34,7 +34,7 @@ class GetFormDefinitionCmd implements CommandInterface
         } elseif ($binding == DefaultFormHandler::FORM_REF_BINDING_VERSION) {
             $definition = $manager->findDefinitionByKeyVersionAndTenantId($key, $this->formRef->getVersion(), null);
         } else {
-            throw new BadUserRequestException("Unsupported binding type for camundaFormRef. Expected to be one of "
+            throw new BadUserRequestException("Unsupported binding type for formRef. Expected to be one of "
                 . DefaultFormHandler::ALLOWED_FORM_REF_BINDINGS . " but was:" . $binding);
         }
 

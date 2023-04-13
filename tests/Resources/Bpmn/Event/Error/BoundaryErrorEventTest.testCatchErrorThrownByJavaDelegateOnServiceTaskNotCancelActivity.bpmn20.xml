@@ -9,7 +9,7 @@
     <startEvent id="theStart" />
     <sequenceFlow id="flow1" sourceRef="theStart" targetRef="serviceTask" />
     
-    <serviceTask id="serviceTask" extension:class="org.camunda.bpm.engine.test.bpmn.event.error.ThrowBpmnErrorDelegate" />
+    <serviceTask id="serviceTask" extension:class="error.ThrowBpmnErrorDelegate" />
     
     <boundaryEvent id="catchError" attachedToRef="serviceTask">
       <errorEventDefinition />

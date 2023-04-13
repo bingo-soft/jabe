@@ -9,10 +9,6 @@ interface LicenseKeyDataInterface
      */
     public function getCustomer(): ?string;
 
-    /**
-     * Camunda uses different license types e.g., when one license includes usage
-     * of Cawemo enterprise.
-     */
     public function getType(): ?string;
 
     /**
@@ -26,8 +22,7 @@ interface LicenseKeyDataInterface
     public function isUnlimited(): bool;
 
     /**
-     * A collection of features that are enabled through this license. Features
-     * could be Camunda BPM, Optimize or Cawemo.
+     * A collection of features that are enabled through this license.
      */
     public function getFeatures(): array;
 

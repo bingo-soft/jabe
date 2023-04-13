@@ -11,7 +11,7 @@
     <startEvent id="theStart" />
     <sequenceFlow id="flow1" sourceRef="theStart" targetRef="serviceTask" />
     
-    <serviceTask id="serviceTask" extension:class="org.camunda.bpm.engine.test.bpmn.event.error.ThrowSpecializedExceptionDelegate" />
+    <serviceTask id="serviceTask" extension:class="error.ThrowSpecializedExceptionDelegate" />
     
     <boundaryEvent id="catchException" attachedToRef="serviceTask">
       <errorEventDefinition errorRef="myException"/>

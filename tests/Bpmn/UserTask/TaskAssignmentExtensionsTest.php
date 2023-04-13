@@ -43,6 +43,10 @@ class TaskAssignmentExtensionsTest extends PluggableProcessEngineTest
         $this->identityService->deleteUser("gonzo");
         $this->identityService->deleteGroup("accountancy");
         $this->identityService->deleteGroup("management");
+        $deployments = $this->repositoryService->createDeploymentQuery()->list();
+        foreach ($deployments as $deployment) {
+            $this->repositoryService->deleteDeployment($deployment->getId(), true);
+        }
     }
 
     #[Deployment(resources: [ "tests/Resources/Bpmn/UserTask/TaskAssignmentExtensionsTest.testAssigneeExtension.bpmn20.xml"])]

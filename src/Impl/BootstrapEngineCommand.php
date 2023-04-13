@@ -25,7 +25,7 @@ use Ramsey\Uuid\Uuid;
 class BootstrapEngineCommand implements ProcessEngineBootstrapCommandInterface
 {
     //private final static EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
-    //protected static final String TELEMETRY_PROPERTY_NAME = "camunda.telemetry.enabled";
+    //protected static final String TELEMETRY_PROPERTY_NAME = "jabe.telemetry.enabled";
     protected const INSTALLATION_PROPERTY_NAME = "jabe.installation.id";
 
     public function execute(CommandContext $commandContext, ...$args)

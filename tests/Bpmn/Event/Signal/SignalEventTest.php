@@ -38,6 +38,14 @@ class SignalEventTest extends PluggableProcessEngineTest
         parent::setUp();
     }
 
+    protected function tearDown(): void
+    {
+        $deployments = $this->repositoryService->createDeploymentQuery()->list();
+        foreach ($deployments as $deployment) {
+            $this->repositoryService->deleteDeployment($deployment->getId(), true);
+        }
+    }
+
     #[Deployment(resources: ["tests/Resources/Bpmn/Event/Signal/SignalEventTests.catchAlertSignal.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.throwAlertSignal.bpmn20.xml"])]
     public function testSignalCatchIntermediate(): void
     {
@@ -615,7 +623,11 @@ class SignalEventTest extends PluggableProcessEngineTest
         $this->assertNotNull($taskBefore);
         $this->assertEquals("task in subprocess", $taskBefore->getName());
 
-        sleep(90);
+        //sleep(90);
+        $job = $this->managementService->createJobQuery()->processInstanceId($processInstance->getId())->singleResult();
+        $this->assertNotNull($job);
+
+        $this->managementService->executeJob($job->getId());
 
         $taskAfter = $this->taskService->createTaskQuery()->processInstanceId($processInstance->getId())->singleResult();
         $this->assertNotNull($taskAfter);

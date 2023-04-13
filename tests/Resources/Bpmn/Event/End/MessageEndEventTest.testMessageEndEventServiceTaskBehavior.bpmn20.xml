@@ -35,7 +35,7 @@
      </endEvent>
   
      <endEvent id="classEnd">
-       <messageEventDefinition extension:class="org.camunda.bpm.engine.test.bpmn.event.end.DummyServiceTask" />
+       <messageEventDefinition extension:class="end.DummyServiceTask" />
      </endEvent>
     
   </process>

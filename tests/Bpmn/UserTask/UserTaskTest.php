@@ -41,6 +41,10 @@ class UserTaskTest extends PluggableProcessEngineTest
         $this->identityService->deleteUser("kermit");
         $this->identityService->deleteGroup("accountancy");
         $this->identityService->deleteGroup("management");
+        $deployments = $this->repositoryService->createDeploymentQuery()->list();
+        foreach ($deployments as $deployment) {
+            $this->repositoryService->deleteDeployment($deployment->getId(), true);
+        }
     }
 
     #[Deployment(resources: [ "tests/Resources/Bpmn/UserTask/UserTaskTest.testTaskPropertiesNotNull.bpmn20.xml"])]

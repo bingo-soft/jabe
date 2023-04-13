@@ -11,7 +11,7 @@ class GetLicenseKeyCmd extends LicenseCmd implements CommandInterface
 {
     public function execute(CommandContext $commandContext, ...$args)
     {
-        $commandContext->getAuthorizationManager()->checkCamundaAdminOrPermission("checkReadLicenseKey");
+        $commandContext->getAuthorizationManager()->checkAdminOrPermission("checkReadLicenseKey");
 
         // case I: license is stored as BLOB
         $licenseResource = $commandContext->getResourceManager()->findLicenseKeyResource();

@@ -10,20 +10,19 @@ interface InternalsInterface
     public function getDatabase(): DatabaseInterface;
 
     /**
-     * Information about the application server Camunda is running on.
+     * Information about the application server engine is running on.
      */
     public function getApplicationServer(): ApplicationServerInterface;
 
     /**
-     * Information about the Camunda license key issued for enterprise editions of
-     * Camunda Platform. May be null when no license is used.
+     * Information about the license key issued for enterprise editions
      */
     public function getLicenseKey(): LicenseKeyDataInterface;
 
     /**
-     * Information about the number of command executions performed by the Camunda
+     * Information about the number of command executions performed by the
      * engine. If telemetry sending is enabled, the number of executions per
-     * command resets on sending the data to Camunda. Retrieving the data through
+     * command resets on sending the data to engine. Retrieving the data through
      * ManagementService#getTelemetryData() will not reset the count.
      */
     public function getCommands(): array;
@@ -37,7 +36,7 @@ interface InternalsInterface
      *   <li>The number of executed decision instances.</li>
      *   <li>The number of executed decision elements.</li>
      * </ul>
-     * The metrics reset on sending the data to Camunda. Retrieving the data
+     * The metrics reset on sending the data to engine. Retrieving the data
      * through ManagementService#getTelemetryData() will not reset the
      * count.
      */

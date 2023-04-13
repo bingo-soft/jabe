@@ -70,6 +70,6 @@ class FormDefinitionDeployer extends AbstractDefinitionDeployer
 
     protected function addDefinitionToDeploymentCache(DeploymentCache $deploymentCache, /*FormDefinitionEntity*/$definition): void
     {
-        $deploymentCache->addCamundaFormDefinition($definition);
+        $deploymentCache->addFormDefinition($definition);
     }
 }

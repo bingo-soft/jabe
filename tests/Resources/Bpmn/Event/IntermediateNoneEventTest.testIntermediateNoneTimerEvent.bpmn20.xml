@@ -11,7 +11,7 @@
 
         <intermediateThrowEvent  id="noneEvent">
           <extensionElements>
-            <extension:executionListener class="org.camunda.bpm.engine.test.bpmn.event.IntermediateNoneEventTest$MyExecutionListener" event="start" />
+            <extension:executionListener class="IntermediateNoneEventTest$MyExecutionListener" event="start" />
           </extensionElements>        
         </intermediateThrowEvent>
 

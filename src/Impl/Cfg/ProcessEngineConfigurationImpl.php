@@ -718,7 +718,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
     //protected DmnHistoryEventProducer dmnHistoryEventProducer;
 
     /**
-     * As an instance of {@link org.camunda.bpm.engine.impl.history.handler.CompositeHistoryEventHandler}
+     * As an instance of CompositeHistoryEventHandler
      * it contains all the provided history event handlers that process history events.
      */
     protected $historyEventHandler;

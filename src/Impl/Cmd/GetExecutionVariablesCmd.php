@@ -8,6 +8,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Persistence\Entity\ExecutionEntity;
 use Jabe\Impl\Util\EnsureUtil;
+use Jabe\Variable\Impl\VariableMapImpl;
 
 class GetExecutionVariablesCmd implements CommandInterface, \Serializable
 {

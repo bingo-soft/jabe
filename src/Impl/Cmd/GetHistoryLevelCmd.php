@@ -12,7 +12,7 @@ class GetHistoryLevelCmd implements CommandInterface
 {
     public function execute(CommandContext $commandContext, ...$args)
     {
-        $commandContext->getAuthorizationManager()->checkCamundaAdminOrPermission("checkReadHistoryLevel");
+        $commandContext->getAuthorizationManager()->checkAdminOrPermission("checkReadHistoryLevel");
         return Context::getProcessEngineConfiguration()->getHistoryLevel()->getId();
     }
 

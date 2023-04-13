@@ -4,7 +4,7 @@ namespace Jabe\Form;
 
 interface FormDataInterface
 {
-    /** User-defined reference to a form. In the camunda tasklist application,
+    /** User-defined reference to a form. In the tasklist application,
      * it is assumed that the form key specifies a resource in the deployment
      * which is the template for the form.  But users are free to
      * use this property differently. */

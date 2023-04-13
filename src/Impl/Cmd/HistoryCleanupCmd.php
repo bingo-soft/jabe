@@ -49,7 +49,7 @@ class HistoryCleanupCmd implements CommandInterface
         $authorizationManager = $commandContext->getAuthorizationManager();
         $processEngineConfiguration = $commandContext->getProcessEngineConfiguration();
 
-        $authorizationManager->checkCamundaAdmin();
+        $authorizationManager->checkAdmin();
 
         //validate
         if (!$this->willBeScheduled()) {

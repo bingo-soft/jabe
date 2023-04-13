@@ -4,9 +4,13 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bingo-soft/jabe/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/bingo-soft/jabe/?branch=main)
 
 
-# Jabe - Just Another Bpmn Engine
+# Jabe - Just Another BPMN Engine
 
-Jabe (/dʒæbi/) - is a full-fledged framework for workflow and process automation. Its core consists of XML model, on top of which you can create custom models with domain-specific elements and relationships. It also implements BPMN model fully compatible with BPMN 2.0 specification.
+Jabe (/dʒæbi/) - is a powerful and flexible BPMN workflow engine. It is designed to streamline the creation and management of BPMN workflows by providing developers with an array of functionality to build, deploy, and manage workflows with ease.
+
+Unlike other popular BPMN engines, such as Activity, Camunda and Flowable, Jabe allows to create Service Tasks using PHP language. In future releases Jabe is planning to implement a domain-specific language for writing Script Tasks in PHP.
+
+At current stage of development Jabe does not have REST API, but its core API is sufficient to integrate and enhance your applications.
 
 # Installation
 
@@ -22,75 +26,9 @@ composer require bingo-soft/jabe
 ./vendor/bin/phpunit ./tests
 ```
 
-# Current state
-
-- XML model - done
-- BPMN model - done
-- DMN model - not yet
-- CMMN model - not yet
-- Engine - under heavy development
-
-# Example 1
-
-```php
-//create new invoice business process
-
-Bpmn::getInstance()->createProcess()
-        ->executable()
-        ->startEvent()
-          ->name("Invoice received")
-          ->formKey("embedded:app:forms/start-form.html")
-        ->userTask()
-          ->name("Assign Approver")
-          ->formKey("embedded:app:forms/assign-approver.html")
-          ->assignee("demo")
-        ->userTask("approveInvoice")
-          ->name("Approve Invoice")
-          ->formKey("embedded:app:forms/approve-invoice.html")
-          ->assignee('${approver}')
-        ->exclusiveGateway()
-          ->name("Invoice approved?")
-          ->gatewayDirection("Diverging")
-        ->condition("yes", '${approved}')
-        ->userTask()
-          ->name("Prepare Bank Transfer")
-          ->formKey("embedded:app:forms/prepare-bank-transfer.html")
-          ->candidateGroups("accounting")
-        ->serviceTask()
-          ->name("Archive Invoice")
-          ->setClass("org.test.bpm.example.invoice.service.ArchiveInvoiceService")
-        ->endEvent()
-          ->name("Invoice processed")
-        ->moveToLastGateway()
-        ->condition("no", '${!approved}')
-        ->userTask()
-          ->name("Review Invoice")
-          ->formKey("embedded:app:forms/review-invoice.html" )
-          ->assignee("demo")
-         ->exclusiveGateway()
-          ->name("Review successful?")
-          ->gatewayDirection("Diverging")
-        ->condition("no", '${!clarified}')
-        ->endEvent()
-          ->name("Invoice not processed")
-        ->moveToLastGateway()
-        ->condition("yes", '${clarified}')
-        ->connectTo("approveInvoice")
-        ->done();
-```
-
-# Example 2
-
-```php
-// Read business process from file
-
-$fd = fopen('test.bpmn', 'r+');
-$modelInstance = Bpmn::readModelFromStream($fd);
-```
-
 ## Acknowledgements
 
-jabe draws inspiration from [camunda](https://github.com/camunda/camunda-bpm-platform) and [flowable](https://github.com/flowable/flowable-engine) libraries.
+Jabe draws inspiration from [camunda](https://github.com/camunda/camunda-bpm-platform) and [flowable](https://github.com/flowable/flowable-engine) libraries.
 
 ## License
 

@@ -37,6 +37,14 @@ class CompensateEventTest extends PluggableProcessEngineTest
         parent::setUp();
     }
 
+    protected function tearDown(): void
+    {
+        $deployments = $this->repositoryService->createDeploymentQuery()->list();
+        foreach ($deployments as $deployment) {
+            $this->repositoryService->deleteDeployment($deployment->getId(), true);
+        }
+    }
+
     public function testCompensateOrder(): void
     {
         //given two process models, only differ in order of the activities

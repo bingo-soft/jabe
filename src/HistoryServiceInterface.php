@@ -380,7 +380,7 @@ interface HistoryServiceInterface
     public function createCleanableHistoricBatchReport(): CleanableHistoricBatchReportInterface;
 
     /**
-     * Creates a query to search for {@link org.camunda.bpm.engine.batch.history.HistoricBatch} instances.
+     * Creates a query to search for HistoricBatch instances.
      */
     public function createHistoricBatchQuery(): HistoricBatchQueryInterface;
 

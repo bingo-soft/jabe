@@ -18,6 +18,14 @@ class ReceiveTaskTest extends PluggableProcessEngineTest
         parent::setUp();
     }
 
+    protected function tearDown(): void
+    {
+        $deployments = $this->repositoryService->createDeploymentQuery()->list();
+        foreach ($deployments as $deployment) {
+            $this->repositoryService->deleteDeployment($deployment->getId(), true);
+        }
+    }
+
     private function getEventSubscriptionList(string $processInstanceId, ?string $activityId = null): array
     {
         if ($activityId !== null) {

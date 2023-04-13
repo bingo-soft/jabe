@@ -42,7 +42,6 @@ abstract class AbstractRenderFormDelegate
     protected const IS_OPEN_ATTRIBUTE = "is-open";
     protected const DATEPICKER_POPUP_ATTRIBUTE = "datepicker-popup";
 
-    /* camunda attributes */
     //protected const CAM_VARIABLE_TYPE_ATTRIBUTE = "cam-variable-type";
     //protected const CAM_VARIABLE_NAME_ATTRIBUTE = "cam-variable-name";
     //protected const CAM_SCRIPT_ATTRIBUTE = "cam-script";

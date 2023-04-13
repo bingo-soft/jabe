@@ -39,4 +39,12 @@ class Error
     {
         $this->errorMessageExpression = $errorMessageExpression;
     }
+
+    public function getMessage(): ?string
+    {
+        if ($this->errorMessageExpression !== null) {
+            return $this->errorMessageExpression->getValue();
+        }
+        return null;
+    }
 }

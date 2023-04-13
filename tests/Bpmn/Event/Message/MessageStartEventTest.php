@@ -75,8 +75,6 @@ class MessageStartEventTest extends PluggableProcessEngineTest
         }
     }
 
-    // SEE: https://app.camunda.com/jira/browse/CAM-1448
-
     public function testEmptyMessageNameFails(): void
     {
         $this->expectException(\Exception::class);

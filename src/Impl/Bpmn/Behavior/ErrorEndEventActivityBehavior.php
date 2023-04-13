@@ -11,7 +11,7 @@ class ErrorEndEventActivityBehavior extends AbstractBpmnActivityBehavior
     protected $errorCode;
     private $errorMessageExpression;
 
-    public function __construct(?string $errorCode, ?ParameterValueProviderInterfce $errorMessage)
+    public function __construct(?string $errorCode, ?ParameterValueProviderInterface $errorMessage)
     {
         parent::__construct();
         $this->errorCode = $errorCode;

@@ -255,7 +255,7 @@ abstract class ProcessEngineConfiguration
      * Expression syntax should be used.
      *
      * <p>If not defined, the general pattern is used. Only alphanumeric
-     * values (or 'camunda-admin') will be accepted.</p>
+     * values will be accepted.</p>
      */
     protected $userResourceWhitelistPattern;
 
@@ -265,7 +265,7 @@ abstract class ProcessEngineConfiguration
      * Expression syntax should be used.
      *
      * <p>If not defined, the general pattern is used. Only alphanumeric
-     * values (or 'camunda-admin') will be accepted.</p>
+     * values will be accepted.</p>
      */
     protected $groupResourceWhitelistPattern;
 
@@ -275,7 +275,7 @@ abstract class ProcessEngineConfiguration
      * Expression syntax should be used.
      *
      * <p>If not defined, the general pattern is used. Only alphanumeric
-     * values (or 'camunda-admin') will be accepted.</p>
+     * values will be accepted.</p>
      */
     protected $tenantResourceWhitelistPattern;
 

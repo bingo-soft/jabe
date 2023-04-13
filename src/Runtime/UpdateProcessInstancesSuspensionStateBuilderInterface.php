@@ -17,7 +17,7 @@ interface UpdateProcessInstancesSuspensionStateBuilderInterface extends UpdatePr
      * hierarchy.
      * </p>
      *
-     * @throws org.camunda.bpm.engine.BadUserRequestException
+     * @throws BadUserRequestException
      *           If no process Instances are found
      *           If a process Instance is set to null
      * @throws AuthorizationException
@@ -60,7 +60,7 @@ interface UpdateProcessInstancesSuspensionStateBuilderInterface extends UpdatePr
      * hierarchy.
      * </p>
      *
-     * @throws org.camunda.bpm.engine.BadUserRequestException
+     * @throws BadUserRequestException
      *           If no process Instances are found
      *           If a process Instance is set to null
      * @throws AuthorizationException

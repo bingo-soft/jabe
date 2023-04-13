@@ -513,7 +513,7 @@ class AuthorizationManager extends AbstractManager
      * @param authentication
      *          authentication to check, cannot be <code>null</code>
      * @return bool true if the given authentication contains the group
-     *         Groups#CAMUNDA_ADMIN or the user
+     *         Groups#ADMIN or the user
      */
     public function isAdmin(Authentication $authentication): bool
     {

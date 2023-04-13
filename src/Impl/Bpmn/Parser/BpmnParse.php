@@ -242,7 +242,7 @@ class BpmnParse extends Parse
     protected $processDefinitions = [];
 
     /** Mapping of found errors in BPMN 2.0 file */
-    protected $errors = [];
+    protected $errorsMap = [];
 
     /** Mapping of found escalation elements */
     protected $escalations = [];
@@ -495,7 +495,7 @@ class BpmnParse extends Parse
                 $error->setErrorMessageExpression($this->createParameterValueProvider($errorMessage, $this->expressionManager));
             }
 
-            $this->errors[$id] = $error;
+            $this->errorsMap[$id] = $error;
         }
     }
 
@@ -1204,8 +1204,8 @@ class BpmnParse extends Parse
         $eventSubProcessActivity = $startEventActivity->getFlowScope()->getId();
         $definition = new ErrorEventDefinition($eventSubProcessActivity);
         if ($errorRef !== null) {
-            if (array_key_exists($errorRef, $this->errors)) {
-                $error = $this->errors[$errorRef];
+            if (array_key_exists($errorRef, $this->errorsMap)) {
+                $error = $this->errorsMap[$errorRef];
             }
             $errorCode = $error === null ? $errorRef : $error->getErrorCode();
             $definition->setErrorCode($errorCode);
@@ -1707,12 +1707,11 @@ class BpmnParse extends Parse
     {
         $activityRef = $compensateEventDefinitionElement->attribute("activityRef");
         $waitForCompletion = strtolower($compensateEventDefinitionElement->attribute("waitForCompletion", "TRUE")) == "true";
-
         if ($activityRef !== null) {
             if ($scopeElement->findActivityAtLevelOfSubprocess($activityRef) === null) {
                 $isTriggeredByEvent = $scopeElement->getProperties()->get(BpmnProperties::triggeredByEvent());
                 $type = $scopeElement->getProperty(BpmnProperties::type()->getName());
-                if (($isTriggeredByEvent !== null && strtolower($isTriggeredByEvent) === "true") && "subProcess" == $type) {
+                if ($isTriggeredByEvent === true && "subprocess" == strtolower($type)) {
                     $scopeElement = $scopeElement->getFlowScope();
                 }
                 if ($scopeElement->findActivityAtLevelOfSubprocess($activityRef) === null) {
@@ -2326,9 +2325,9 @@ class BpmnParse extends Parse
 
     /**
     * @param elementName
-    * @param serviceTaskElement the element that contains the camunda service task definition
+    * @param serviceTaskElement the element that contains the jabe service task definition
     *   (e.g. extension:class attributes)
-    * @param camundaPropertiesElement the element that contains the extension:properties extension elements
+    * @param propertiesElement the element that contains the extension:properties extension elements
     *   that apply to this service task. Usually, but not always, this is the same as serviceTaskElement
     * @param scope
     * @return
@@ -2548,7 +2547,7 @@ class BpmnParse extends Parse
         $topicAttributeValue = $element->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, $topicAttribute);
 
         if ($topicAttributeValue === null) {
-            $this->addError("External tasks must specify a 'topic' attribute in the camunda namespace", $element);
+            $this->addError("External tasks must specify a 'topic' attribute", $element);
             return null;
         } else {
             return $this->createParameterValueProvider($topicAttributeValue, $this->expressionManager);
@@ -2828,7 +2827,6 @@ class BpmnParse extends Parse
 
         $this->parseExecutionListenersOnScope($receiveTaskElement, $activity);
 
-        // please check https://app.camunda.com/jira/browse/CAM-10989
         if ($receiveTaskElement->attribute("messageRef") !== null) {
             $activity->setScope(true);
             $activity->setEventScope($activity);
@@ -3241,8 +3239,8 @@ class BpmnParse extends Parse
                     $this->addError("'errorRef' attribute is mandatory on error end event", $errorEventDefinition, $activityId);
                 } else {
                     $error = null;
-                    if (array_key_exists($errorRef, $this->errors)) {
-                        $error = $this->errors[$errorRef];
+                    if (array_key_exists($errorRef, $this->errorsMap)) {
+                        $error = $this->errorsMap[$errorRef];
                     }
                     if ($error !== null && (empty($error->getErrorCode()))) {
                         $this->addError(
@@ -3466,7 +3464,7 @@ class BpmnParse extends Parse
                 $error = null;
                 if ($errorRef !== null) {
                     $expression = $errorEventDefinitionElement->attribute("expression");
-                    $error = array_key_exists($errorRef, $this->errors) ? $this->errors[$errorRef] : null;
+                    $error = array_key_exists($errorRef, $this->errorsMap) ? $this->errorsMap[$errorRef] : null;
                     $definition = new ErrorEventDefinition($activity->getId(), $this->expressionManager->createExpression($expression));
                     $definition->setErrorCode($error === null ? $errorRef : $error->getErrorCode());
                     $this->setErrorCodeVariableOnErrorEventDefinition($errorEventDefinitionElement, $definition);
@@ -3733,8 +3731,8 @@ class BpmnParse extends Parse
         $error = null;
         $definition = new ErrorEventDefinition($boundaryEventActivity->getId());
         if ($errorRef !== null) {
-            if (array_key_exists($errorRef, $this->errors)) {
-                $error = $this->errors[$errorRef];
+            if (array_key_exists($errorRef, $this->errorsMap)) {
+                $error = $this->errorsMap[$errorRef];
             }
             $definition->setErrorCode($error === null ? $errorRef : $error->getErrorCode());
         }
@@ -4971,7 +4969,6 @@ class BpmnParse extends Parse
             }
 
             if (!empty($inputOutput)) {
-                var_dump($inputOutput);
                 if ($this->checkActivityInputOutputSupported($activityElement, $activity, $inputOutput)) {
                     $activity->setIoMapping($inputOutput);
 

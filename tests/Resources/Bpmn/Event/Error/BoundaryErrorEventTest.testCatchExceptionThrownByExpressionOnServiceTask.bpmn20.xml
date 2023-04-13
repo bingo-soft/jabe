@@ -4,7 +4,7 @@
   xmlns:extension="http://activiti.org/bpmn"
   targetNamespace="Examples">
   
-  <error id="myException" errorCode="org.camunda.bpm.engine.test.bpmn.event.error.MyBusinessException"/>
+  <error id="myException" errorCode="error.MyBusinessException"/>
   
   <process id="testCatchExceptionThrownByExpressionOnServiceTask" isExecutable="true">
   

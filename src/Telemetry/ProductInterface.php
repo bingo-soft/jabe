@@ -5,7 +5,7 @@ namespace Jabe\Telemetry;
 interface ProductInterface
 {
     /**
-     * The name of the product (i.e., Camunda BPM Runtime).
+     * The name of the product
      */
     public function getName(): ?string;
 
@@ -21,7 +21,7 @@ interface ProductInterface
 
     /**
      * Information about the technical internals and the environment of the
-     * Camunda installation.
+     * engine installation.
      */
     public function getInternals(): InternalsInterface;
 }

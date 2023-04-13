@@ -20,6 +20,14 @@ class TaskPriorityExtensionsTest extends PluggableProcessEngineTest
     private const NAMESPACE = "xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL'";
     private const TARGET_NAMESPACE = "targetNamespace='" . BpmnParse::BPMN_EXTENSIONS_NS_PREFIX . "'";
 
+    protected function tearDown(): void
+    {
+        $deployments = $this->repositoryService->createDeploymentQuery()->list();
+        foreach ($deployments as $deployment) {
+            $this->repositoryService->deleteDeployment($deployment->getId(), true);
+        }
+    }
+
     #[Deployment(resources: [ "tests/Resources/Bpmn/UserTask/TaskPriorityExtensionsTest.testPriorityExtension.bpmn20.xml"])]
     public function testPriorityExtension(): void
     {

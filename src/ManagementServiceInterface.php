@@ -834,7 +834,7 @@ interface ManagementServiceInterface
     public function deleteTaskMetrics(?string $timestamp = null): void;
 
     /**
-    * Creates a query to search for {@link org.camunda.bpm.engine.batch.Batch} instances.
+    * Creates a query to search for Batch instances.
     *
     * @since 7.5
     */
@@ -906,7 +906,7 @@ interface ManagementServiceInterface
     public function createSchemaLogQuery(): SchemaLogQueryInterface;
 
     /**
-    * Enable/disable sending telemetry data to Camunda
+    * Enable/disable sending telemetry data
     *
     * @throws AuthorizationException
     *          If the user is not a member of the group Groups#ADMIN.
@@ -914,7 +914,7 @@ interface ManagementServiceInterface
     public function toggleTelemetry(bool $enabled): void;
 
     /**
-    * Checks how sending telemetry data to Camunda is configured
+    * Checks how sending telemetry data is configured
     * @return
     *   <ul>
     *     <li><code>null</code> if the configuration is not defined so far,

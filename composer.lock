@@ -330,16 +330,16 @@
         },
         {
             "name": "bingo-soft/sax",
-            "version": "1.2.5",
+            "version": "1.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/sax.git",
-                "reference": "fde92d5f4ee442d8a320eceab0dae265fba512db"
+                "reference": "d8f393c032bdf4d829f03c97d56f099465e707e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/sax/zipball/fde92d5f4ee442d8a320eceab0dae265fba512db",
-                "reference": "fde92d5f4ee442d8a320eceab0dae265fba512db",
+                "url": "https://api.github.com/repos/bingo-soft/sax/zipball/d8f393c032bdf4d829f03c97d56f099465e707e0",
+                "reference": "d8f393c032bdf4d829f03c97d56f099465e707e0",
                 "shasum": ""
             },
             "require": {
@@ -375,9 +375,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/sax/issues",
-                "source": "https://github.com/bingo-soft/sax/tree/1.2.5"
+                "source": "https://github.com/bingo-soft/sax/tree/1.2.6"
             },
-            "time": "2023-04-11T12:13:53+00:00"
+            "time": "2023-04-13T12:16:31+00:00"
         },
         {
             "name": "bingo-soft/script",
