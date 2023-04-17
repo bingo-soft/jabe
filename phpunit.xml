@@ -4,6 +4,7 @@
          colors="true" convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
+         cacheResult="false"
 >
     <testsuites>
         <testsuite name="BpmPlatform Test Suite">

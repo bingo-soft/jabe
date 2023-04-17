@@ -161,11 +161,15 @@ abstract class ProcessEngineConfiguration
     protected $databaseVendor;
     protected $databaseVersion;
     protected $databaseSchemaUpdate = self::DB_SCHEMA_UPDATE_FALSE;
-    //default Postgresql connection run inside the container
-    protected $dbDriver = 'pdo_pgsql';
-    protected $dbUrl = 'pgsql:host=172.24.64.93;port=5432;dbname=engine;';
-    protected $dbUsername = 'postgres';
-    protected $dbPassword = 'postgres';
+    //default Database connection run inside the container, make sure environment variables are set
+    protected $dbDriver;
+    protected $dbUrl;
+    protected $dbHost;
+    protected $dbPort;
+    protected $dbName;
+    protected $dbUsername;
+    protected $dbPassword;
+    //---------------------------------------------------
     protected int $dbMaxActiveConnections = 0;
     protected int $dbMaxIdleConnections = 0;
     protected int $dbMaxCheckoutTime = 0;
@@ -358,21 +362,22 @@ abstract class ProcessEngineConfiguration
 
     public function __construct()
     {
-        $this->mailServerHost = getenv('MAIL_HOST', true);
-        $this->mailServerUsername = getenv('MAIL_USER', true); // by default no name and password are provided, which
-        $this->mailServerPassword = getenv('MAIL_PASSWORD', true); // means no authentication for mail server
-        $this->mailServerPort = getenv('MAIL_PORT', true);
-        $this->useTLS = json_decode(getenv('MAIL_USE_TLS', true));
-        $this->mailServerDefaultFrom = getenv('MAIL_USE_FROM', true);
+        $this->mailServerHost = getenv('MAIL_JABE_HOST', true);
+        $this->mailServerUsername = getenv('MAIL_JABE_USER', true); // by default no name and password are provided, which
+        $this->mailServerPassword = getenv('MAIL_JABE_PASSWORD', true); // means no authentication for mail server
+        $this->mailServerPort = getenv('MAIL_JABE_PORT', true);
+        $this->useTLS = json_decode(getenv('MAIL_JABE_USE_TLS', true));
+        $this->mailServerDefaultFrom = getenv('MAIL_JABE_USE_FROM', true);
 
-        /*$this->dbDriver = getenv('DB_DRIVER', true);
-        $this->dbHost = getenv('DB_HOST', true);
-        $this->dbUsername = getenv('DB_USER', true);
-        $this->dbPassword = getenv('DB_PASSWORD', true);
-        $this->dbName = getenv('DB_NAME', true);
-        $this->dbPort = getenv('DB_PORT', true);*/
+        $this->dbDriver = getenv('DB_JABE_DRIVER', true);
+        $this->dbUrl = getenv('DB_JABE_URL', true);
+        $this->dbHost = getenv('DB_JABE_HOST', true);
+        $this->dbPort = getenv('DB_JABE_PORT', true);
+        $this->dbName = getenv('DB_JABE_NAME', true);
+        $this->dbUsername = getenv('DB_JABE_USER', true);
+        $this->dbPassword = getenv('DB_JABE_PASSWORD', true);
 
-        $this->schemaOperationsCommand = new SchemaOperationsProcessEngineBuild();
+        //$this->schemaOperationsCommand = new SchemaOperationsProcessEngineBuild();
         $this->bootstrapCommand = new BootstrapEngineCommand();
         $this->historyLevelCommand = new HistoryLevelSetupCommand();
     }

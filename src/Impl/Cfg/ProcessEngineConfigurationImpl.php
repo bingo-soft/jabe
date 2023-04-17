@@ -1027,6 +1027,8 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
 
     public function __construct()
     {
+        parent::__construct();
+
         $this->setJobExecutorState(
             new \Swoole\Atomic(0), //isActive
             new \Swoole\Atomic(0), //isJobAdded
@@ -1692,16 +1694,28 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
     protected function initDataSource(): void
     {
         if ($this->dataSource === null) {
-            if ($this->dbUrl !== null) {
-                if (($this->dbDriver === null) || ($this->dbUrl === null) || ($this->dbUsername === null)) {
-                    throw new ProcessEngineException("DataSource properties have to be specified in a process engine configuration");
-                }
 
-                $this->dataSource = new UnpooledDataSource($this->dbDriver, $this->dbUrl, $this->dbUsername, $this->dbPassword);
-
-                //@ATTENTION
-                $this->dataSource->setDefaultTransactionIsolationLevel(2);
+            if (($this->dbDriver === null) || ($this->dbUsername === null)) {
+                throw new ProcessEngineException("DataSource properties have to be specified in a process engine configuration");
             }
+
+            $this->dataSource = new UnpooledDataSource($this->dbDriver, $this->dbUrl, $this->dbUsername, $this->dbPassword);
+
+            $props = [];
+            if ($this->dbHost !== null) {
+                $props['host'] = $this->dbHost;
+            }
+            if ($this->dbPort !== null) {
+                $props['port'] = $this->dbPort;
+            }
+            if ($this->dbName !== null) {
+                $props['dbname'] = $this->dbName;
+            }
+            $this->dataSource->setDriverProperties($props);
+
+            //@ATTENTION
+            $this->dataSource->setDefaultTransactionIsolationLevel(2);
+            //}
         }
 
         if ($this->databaseType === null) {
