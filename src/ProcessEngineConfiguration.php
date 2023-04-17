@@ -392,20 +392,7 @@ abstract class ProcessEngineConfiguration
 
     public static function createProcessEngineConfigurationFromResource(?string $resource, ?string $beanName = "processEngineConfiguration"): ProcessEngineConfiguration
     {
-        try {
-            return BeansConfigurationHelper::parseProcessEngineConfigurationFromResource($resource, $beanName);
-        } catch (\Throwable $t) {
-            $messages = [];
-            for ($i = 0; $i < 10; $i += 1) {
-                try {
-                    $trace = $t->getTrace()[$i];
-                    $messages[] = sprintf("%s.%s.%s", $trace['file'], $trace['function'], $trace['line']);
-                } catch (\Exception $e) {
-                    //ignore
-                }
-            }
-            throw new \Exception(sprintf("Error when parsing configuration file: %s, stack: %s", $resource, implode(" <= ", $messages)));
-        }
+        return BeansConfigurationHelper::parseProcessEngineConfigurationFromResource($resource, $beanName);
     }
 
     public function getResource(): ?string

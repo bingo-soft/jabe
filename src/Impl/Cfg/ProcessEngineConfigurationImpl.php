@@ -387,7 +387,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
 
     public const DEFAULT_WS_SYNC_FACTORY = "CxfWebServiceClientFactory";
 
-    public const DEFAULT_MYBATIS_MAPPING_FILE = "/Resources/Impl/Mapping/Mappings.xml";
+    public const DEFAULT_MYBATIS_MAPPING_FILE = "Resources/Impl/Mapping/Mappings.xml";
 
     public const DEFAULT_FAILED_JOB_LISTENER_MAX_RETRIES = 3;
 
@@ -1836,7 +1836,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
 
                 self::initSqlSessionFactoryProperties($properties, $this->databaseTablePrefix, $this->databaseType);
 
-                $parser = new MyBatisXMLConfigBuilder($inputStream, "", $properties);
+                $parser = new MyBatisXMLConfigBuilder($inputStream, "", $properties, [ dirname(dirname(dirname(__DIR__))) ]);
                 $configuration = $parser->getConfiguration();
                 $configuration->setEnvironment($environment);
                 $configuration = $parser->parse();
@@ -1921,7 +1921,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
 
     protected function getMyBatisXmlConfigurationStream()
     {
-        $path = dirname(dirname(__DIR__)) . self::DEFAULT_MYBATIS_MAPPING_FILE;
+        $path = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . self::DEFAULT_MYBATIS_MAPPING_FILE;
         try {
             return ReflectUtil::getResourceAsStream($path);
         } catch (\Throwable $t) {

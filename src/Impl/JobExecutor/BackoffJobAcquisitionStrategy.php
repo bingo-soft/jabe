@@ -272,7 +272,7 @@ class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategyInterface
         $numJobsToAcquire = null;
         if (array_key_exists($processEngine, $this->jobsToAcquire)) {
             $numJobsToAcquire = $this->jobsToAcquire[$processEngine];
-            return $this->numJobsToAcquire;
+            return $numJobsToAcquire;
         }
         return $this->baseNumJobsToAcquire;
     }
