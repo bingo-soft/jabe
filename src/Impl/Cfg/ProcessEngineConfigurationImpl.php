@@ -387,7 +387,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
 
     public const DEFAULT_WS_SYNC_FACTORY = "CxfWebServiceClientFactory";
 
-    public const DEFAULT_MYBATIS_MAPPING_FILE = "src/Resources/Impl/Mapping/Mappings.xml";
+    public const DEFAULT_MYBATIS_MAPPING_FILE = "/Resources/Impl/Mapping/Mappings.xml";
 
     public const DEFAULT_FAILED_JOB_LISTENER_MAX_RETRIES = 3;
 
@@ -1921,7 +1921,12 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
 
     protected function getMyBatisXmlConfigurationStream()
     {
-        return ReflectUtil::getResourceAsStream(self::DEFAULT_MYBATIS_MAPPING_FILE);
+        $path = dirname(dirname(__DIR__)) . self::DEFAULT_MYBATIS_MAPPING_FILE;
+        try {
+            return ReflectUtil::getResourceAsStream($path);
+        } catch (\Throwable $t) {
+            throw new \Exception(sprintf("Error when parsing mybatis configuration file: %s", $path));
+        }
     }
 
     // session factories ////////////////////////////////////////////////////////
