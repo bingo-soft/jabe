@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "37921c37e1f0353536dd841550271f2e",
+    "content-hash": "a3f5128a4f9e63484131db644a4fd60d",
     "packages": [
         {
             "name": "bingo-soft/bpmn",
-            "version": "1.0.3",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/bpmn.git",
-                "reference": "85e563f2f13b0b834aa3ff91b32aafe57162c4a0"
+                "reference": "fa1d6c29a3ad9e000ebc6195f289242624e1521f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/bpmn/zipball/85e563f2f13b0b834aa3ff91b32aafe57162c4a0",
-                "reference": "85e563f2f13b0b834aa3ff91b32aafe57162c4a0",
+                "url": "https://api.github.com/repos/bingo-soft/bpmn/zipball/fa1d6c29a3ad9e000ebc6195f289242624e1521f",
+                "reference": "fa1d6c29a3ad9e000ebc6195f289242624e1521f",
                 "shasum": ""
             },
             "require": {
@@ -58,9 +58,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/bpmn/issues",
-                "source": "https://github.com/bingo-soft/bpmn/tree/1.0.3"
+                "source": "https://github.com/bingo-soft/bpmn/tree/1.1.0"
             },
-            "time": "2023-04-07T11:07:52+00:00"
+            "time": "2023-04-27T09:52:31+00:00"
         },
         {
             "name": "bingo-soft/concurrent",

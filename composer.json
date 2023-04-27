@@ -25,7 +25,7 @@
         "dragonmantank/cron-expression": "^3.3",
         "symfony/event-dispatcher": "^6.0",
         "guzzlehttp/guzzle": "^7.0",
-        "bingo-soft/bpmn": "^1.0",
+        "bingo-soft/bpmn": "^1.1",
         "bingo-soft/sax": "^1.2",
         "bingo-soft/util": "^1.6",
         "bingo-soft/el": "^1.1",

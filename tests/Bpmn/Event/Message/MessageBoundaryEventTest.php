@@ -36,7 +36,7 @@ class MessageBoundaryEventTest extends PluggableProcessEngineTest
             $this->repositoryService->deleteDeployment($deployment->getId(), true);
         }
     }
-
+    
     #[Deployment(resources: ["tests/Resources/Bpmn/Event/Message/MessageBoundaryEventTest.testSingleBoundaryMessageEvent.bpmn20.xml"])]
     public function testSingleBoundaryMessageEvent(): void
     {

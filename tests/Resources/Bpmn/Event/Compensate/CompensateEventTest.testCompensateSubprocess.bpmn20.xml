@@ -3,7 +3,6 @@
   xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
   xmlns:extension="http://activiti.org/bpmn"
   targetNamespace="Examples">
-	
 	<process id="compensateProcess" isExecutable="true">
 
 		<startEvent id="start" />
@@ -50,7 +49,7 @@
 		<sequenceFlow sourceRef="throwCompensate" targetRef="beforeEnd" />
 		<sequenceFlow sourceRef="beforeEnd" targetRef="end" />
 		
-		<receiveTask id="beforeEnd" />
+		<receiveTask id="beforeEnd"/>
 		
 		<endEvent id="end" />
 	</process>

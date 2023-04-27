@@ -39,10 +39,10 @@ class CompensateEventTest extends PluggableProcessEngineTest
 
     protected function tearDown(): void
     {
-        $deployments = $this->repositoryService->createDeploymentQuery()->list();
+        /*$deployments = $this->repositoryService->createDeploymentQuery()->list();
         foreach ($deployments as $deployment) {
             $this->repositoryService->deleteDeployment($deployment->getId(), true);
-        }
+        }*/
     }
 
     public function testCompensateOrder(): void
@@ -71,13 +71,16 @@ class CompensateEventTest extends PluggableProcessEngineTest
     }
 
     #[Deployment(resources: [ "tests/Resources/Bpmn/Event/Compensate/CompensateEventTest.testCompensateSubprocess.bpmn20.xml"])]
-    public function testCompensateSubprocess(): void
+    public function testCompensateSubprocess123(): void
     {
         $processInstance = $this->runtimeService->startProcessInstanceByKey("compensateProcess");
 
         $this->assertEquals(5, $this->runtimeService->getVariable($processInstance->getId(), "undoBookHotel"));
 
-        $this->runtimeService->signal($processInstance->getId());
+        $execution = $this->runtimeService->createExecutionQuery()
+                          ->processInstanceId($processInstance->getId())->activityId("beforeEnd")->singleResult();
+
+        $this->runtimeService->signal($execution->getId(), null, ["hello" => "world"], ["hi" => "there"]); /* $processInstance->getId() -> same, hi => there will go to variables */
         $this->testRule->assertProcessEnded($processInstance->getId());
     }
 

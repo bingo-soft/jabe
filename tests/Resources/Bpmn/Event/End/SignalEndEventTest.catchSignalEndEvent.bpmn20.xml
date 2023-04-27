@@ -4,7 +4,7 @@
 	xmlns:extension="http://activiti.org/bpmn" 
 	targetNamespace="Examples">
   
-  <signal id="mySignal" name="alert" />
+  <signal id="mySignal" name="test alert" />
 
 	<process id="catchSignalEndEvent" isExecutable="true">
 
