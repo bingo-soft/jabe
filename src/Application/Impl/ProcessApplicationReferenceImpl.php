@@ -33,6 +33,7 @@ class ProcessApplicationReferenceImpl implements ProcessApplicationReferenceInte
         $application = $this->processApplication->get();
         if ($application === null) {
             //throw LOG.processApplicationUnavailableException(name);
+            fwrite(STDERR, "Process application unavailable: $name\n");
         } else {
             return $application;
         }

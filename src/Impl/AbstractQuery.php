@@ -138,6 +138,7 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
             case self::RESULT_TYPES['LIST']:
                 return $this->evaluateExpressionsAndExecuteList(Context::getCommandContext(), null);
             default:
+                fwrite(STDERR, "Abstract query unknown result type!\n");
                 throw new ProcessEngineException("Unknown result type!");
         }
     }
@@ -219,6 +220,7 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
         if (count($results) == 1) {
             return $results[0];
         } elseif (count($results) > 1) {
+            fwrite(STDERR, "Query return " . count($results) . " results instead of max 1\n");
             throw new ProcessEngineException("Query return " . count($results) . " results instead of max 1");
         }
         return null;

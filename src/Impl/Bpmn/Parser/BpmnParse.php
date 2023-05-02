@@ -2881,6 +2881,7 @@ class BpmnParse extends Parse
         foreach ($this->parseListeners as $parseListener) {
             $parseListener->parseUserTask($userTaskElement, $scope, $activity);
         }
+        $properties = BpmnParseUtil::parseExtensionProperties($userTaskElement);
         return $activity;
     }
 
@@ -3061,7 +3062,7 @@ class BpmnParse extends Parse
         }
 
         // Task listeners
-        $this->parseTaskListeners($taskElement, $activity, $taskDefinition);
+        $this->parseTaskExtensions($taskElement, $activity, $taskDefinition);
 
         // Due date
         $dueDateExpression = $taskElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, self::DUE_DATE_EXTENSION);
@@ -3125,7 +3126,7 @@ class BpmnParse extends Parse
         return $result;
     }
 
-    protected function parseTaskListeners(Element $userTaskElement, ActivityImpl $activity, TaskDefinition $taskDefinition): void
+    protected function parseTaskExtensions(Element $userTaskElement, ActivityImpl $activity, TaskDefinition $taskDefinition): void
     {
         $extentionsElement = $userTaskElement->element("extensionElements");
         if ($extentionsElement !== null) {
@@ -3150,6 +3151,9 @@ class BpmnParse extends Parse
                     $this->addError("Attribute 'event' is mandatory on taskListener", $userTaskElement);
                 }
             }
+
+            $properties = BpmnParseUtil::parseExtensionProperties($userTaskElement);
+            $activity->getProperties()->set(BpmnProperties::extensionProperties(), $properties);
         }
     }
 

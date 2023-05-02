@@ -229,13 +229,12 @@ class BpmnParseUtil
         }
     }
 
-
     public static function parseExtensionProperties(Element $element): array
     {
         $propertiesMap = [];
         $propertiesElement = self::findExtensionElement($element, "properties");
         if ($propertiesElement !== null) {
-            $properties = $propertiesElement->elements(BpmnParse::BPMN_EXTENSIONS_NS_PREFIX . ":property");
+            $properties = $propertiesElement->elements("property");
             foreach ($properties as $property) {
                 $propertiesMap[$property->attribute("name")] = $property->attribute("value");
             }

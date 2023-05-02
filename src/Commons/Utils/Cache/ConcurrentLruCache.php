@@ -18,6 +18,7 @@ class ConcurrentLruCache implements CacheInterface
     public function __construct(int $capacity)
     {
         if ($capacity < 0) {
+            fwrite(STDERR, "Illegal argument for cache capacity\n");
             throw new \Exception("Illegal argument for cache capacity");
         }
         $this->capacity = $capacity;
@@ -44,6 +45,7 @@ class ConcurrentLruCache implements CacheInterface
     public function put($key, $value): void
     {
         if ($key === null || $value === null) {
+            fwrite(STDERR, "Concurrent LRU Cache got null pointer\n");
             throw new \Exception("NullPointer");
         }
 

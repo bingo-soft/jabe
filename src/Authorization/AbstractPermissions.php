@@ -23,6 +23,7 @@ abstract class AbstractPermissions implements PermissionInterface
                 $i += 1;
             }
         } else {
+            fwrite(STDERR, sprintf("Permission %s not found", $name) . "\n");
             throw new PermissionNotFound(sprintf("Permission %s not found", $name));
         }
     }

@@ -139,6 +139,7 @@ abstract class AbstractNativeQuery implements CommandInterface, NativeQueryInter
         if (count($results) == 1) {
             return $results[0];
         } elseif (count($results) > 1) {
+            fwrite(STDERR, "Query return " . count($results) . " results instead of max 1\n");
             throw new ProcessEngineException("Query return " . count($results) . " results instead of max 1");
         }
         return null;

@@ -175,6 +175,7 @@ abstract class AbstractDefinitionDeployer implements DeployerInterface
             $key = $definition->getKey();
 
             if (in_array($key, $keys)) {
+                fwrite(STDERR, "The deployment contains definitions with the same key '" . $key . "' (id attribute), this is not allowed\n");
                 throw new ProcessEngineException("The deployment contains definitions with the same key '" . $key . "' (id attribute), this is not allowed");
             }
 

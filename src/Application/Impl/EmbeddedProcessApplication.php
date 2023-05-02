@@ -32,6 +32,7 @@ class EmbeddedProcessApplication extends AbstractProcessApplication
         try {
             return $callable();
         } catch (\Exception $e) {
+            fwrite(STDERR, $e->getMessage() . "\n");
             //throw LOG.processApplicationExecutionException(e);
         }
     }
