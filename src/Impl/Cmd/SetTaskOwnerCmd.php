@@ -2,6 +2,7 @@
 
 namespace Jabe\Impl\Cmd;
 
+use Jabe\History\UserOperationLogEntryInterface;
 use Jabe\Impl\Interceptor\CommandContext;
 use Jabe\Task\IdentityLinkType;
 
