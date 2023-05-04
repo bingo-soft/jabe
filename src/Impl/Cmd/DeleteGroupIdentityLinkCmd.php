@@ -24,4 +24,9 @@ class DeleteGroupIdentityLinkCmd extends DeleteIdentityLinkCmd
 
         return null;
     }
+
+    public function isRetryable(): bool
+    {
+        return false;
+    }
 }
