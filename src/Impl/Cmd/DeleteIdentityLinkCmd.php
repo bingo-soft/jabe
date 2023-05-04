@@ -77,19 +77,19 @@ abstract class DeleteIdentityLinkCmd implements CommandInterface, \Serializable
         EnsureUtil::ensureNotNull("taskId", "taskId", $this->taskId);
 
         $taskManager = $commandContext->getTaskManager();
-        $task = $taskManager->findTaskById($this->taskId);
-        EnsureUtil::ensureNotNull("Cannot find task with id " . $this->taskId, "task", $task);
+        $this->task = $taskManager->findTaskById($this->taskId);
+        EnsureUtil::ensureNotNull("Cannot find task with id " . $this->taskId, "task", $this->task);
 
-        $this->checkDeleteIdentityLink($task, $commandContext);
+        $this->checkDeleteIdentityLink($this->task, $commandContext);
 
         if (IdentityLinkType::ASSIGNEE == $this->type) {
-            $task->setAssignee(null);
+            $this->task->setAssignee(null);
         } elseif (IdentityLinkType::OWNER == $this->type) {
-            $task->setOwner(null);
+            $this->task->setOwner(null);
         } else {
-            $task->deleteIdentityLink($this->userId, $this->groupId, $this->type);
+            $this->task->deleteIdentityLink($this->userId, $this->groupId, $this->type);
         }
-        $task->triggerUpdateEvent();
+        $this->task->triggerUpdateEvent();
 
         return null;
     }
