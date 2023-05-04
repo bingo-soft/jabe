@@ -64,10 +64,10 @@ class GetIdentityLinksForTaskCmd implements CommandInterface, \Serializable
             $identityLink->setUserId($task->getOwner());
             $identityLink->setTask($task);
             $identityLink->setType(IdentityLinkType::OWNER);
-            $identityLinks->add($identityLink);
+            $identityLinks[] = $identityLink;
         }
 
-        return $task->getIdentityLinks();
+        return $identityLinks;
     }
 
     protected function checkGetIdentityLink(TaskEntity $task, CommandContext $commandContext): void
