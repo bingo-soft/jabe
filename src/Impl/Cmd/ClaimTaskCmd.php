@@ -54,7 +54,7 @@ class ClaimTaskCmd implements CommandInterface, \Serializable
                 if ($task->getAssignee() != $this->userId) {
                     // When the task is already claimed by another user, throw exception. Otherwise, ignore
                     // this, post-conditions of method already met.
-                    throw new TaskAlreadyClaimedException($task->getId(), $task->getAssignee());
+                    throw new TaskAlreadyClaimedException(sprintf("Task id: %s, task assignee: %s", $task->getId(), $task->getAssignee()));
                 }
             } else {
                 $task->setAssignee($this->userId);
