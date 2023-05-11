@@ -310,13 +310,13 @@ class BpmnParse extends Parse
             $this->parseRootElement();
         } catch (BpmnParseException $e) {
             $this->addError($e);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //LOG.parsingFailure(e);
             // ALL unexpected exceptions should bubble up since they are not handled
             // accordingly by underlying parse-methods and the process can't be
             // deployed
             //throw LOG.parsingProcessException(e);
-            throw new \Exception("parsingProcessException");
+            throw new \Exception("parsingProcessException: " . $e->getMessage());
         } finally {
             //@TODO
             //if ($this->hasWarnings()) {
