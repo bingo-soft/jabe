@@ -117,16 +117,16 @@
         },
         {
             "name": "bingo-soft/el",
-            "version": "1.1.9",
+            "version": "1.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/el.git",
-                "reference": "ecc77ffb67359a7255703134bc7e681ada9401fb"
+                "reference": "c87d0f2b1c554ec729b5d2c627370fa2a424de4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/el/zipball/ecc77ffb67359a7255703134bc7e681ada9401fb",
-                "reference": "ecc77ffb67359a7255703134bc7e681ada9401fb",
+                "url": "https://api.github.com/repos/bingo-soft/el/zipball/c87d0f2b1c554ec729b5d2c627370fa2a424de4d",
+                "reference": "c87d0f2b1c554ec729b5d2c627370fa2a424de4d",
                 "shasum": ""
             },
             "require": {
@@ -162,9 +162,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/el/issues",
-                "source": "https://github.com/bingo-soft/el/tree/1.1.9"
+                "source": "https://github.com/bingo-soft/el/tree/1.1.10"
             },
-            "time": "2023-02-06T08:45:05+00:00"
+            "time": "2023-05-11T13:20:50+00:00"
         },
         {
             "name": "bingo-soft/heap",

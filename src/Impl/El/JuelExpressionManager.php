@@ -147,9 +147,13 @@ class JuelExpressionManager implements ExpressionManagerInterface, ElProviderCom
                 $this->functions = $functions;
             }
 
-            public function resolveFunction(?string $prefix, ?string $localName): \ReflectionMethod
+            public function resolveFunction(?string $prefix, ?string $localName)
             {
-                return $this->functions[$localName];
+                if (array_key_exists($localName, $this->functions)) {
+                    return $this->functions[$localName];
+                } elseif (function_exists($localName)) {
+                    return new \ReflectionFunction($localName);
+                }
             }
         };
         return $functionMapper;

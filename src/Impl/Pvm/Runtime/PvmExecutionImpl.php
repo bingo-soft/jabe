@@ -725,11 +725,11 @@ abstract class PvmExecutionImpl extends CoreExecution implements ActivityExecuti
         }
 
         $activityBehavior = $this->activity->getActivityBehavior();
-        /*try {*/
+        try {
             $activityBehavior->signal($this, $signalName, $signalData);
-        /*} catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw new PvmException("couldn't process signal '" . $signalName . "' on activity '" . $this->activity->getId() . "': " . $e->getMessage(), $e);
-        }*/
+        }
     }
 
     public function take(): void
