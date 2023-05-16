@@ -21,7 +21,7 @@ class SingleQueryVariableValueCondition extends AbstractQueryVariableValueCondit
     protected $longValue;
     protected $doubleValue;
     protected $type;
-    protected $findNulledEmptyStrings;
+    protected bool $findNulledEmptyStrings = false;
 
     public function __construct(QueryVariableValue $variableValue)
     {
@@ -48,7 +48,7 @@ class SingleQueryVariableValueCondition extends AbstractQueryVariableValueCondit
     }
 
 
-    protected function determineSerializer(VariableSerializersInterface $serializers, TypedValue $value): TypedValueSerializer
+    protected function determineSerializer(VariableSerializersInterface $serializers, TypedValueInterface $value): TypedValueSerializerInterface
     {
         $serializer = $serializers->findSerializerForValue($value);
 

@@ -69,14 +69,14 @@ class DefaultCorrelationHandler implements CorrelationHandlerInterface
     {
         $query = new ExecutionQueryImpl();
 
-        $correlationKeys = $correlationSet->getCorrelationKeys();
+        $correlationKeys = $correlationSet->getCorrelationKeys()->asValueMap();
         if (!empty($correlationKeys)) {
             foreach ($correlationKeys as $key => $value) {
                 $query->processVariableValueEquals($key, $value);
             }
         }
 
-        $localCorrelationKeys = $correlationSet->getLocalCorrelationKeys();
+        $localCorrelationKeys = $correlationSet->getLocalCorrelationKeys()->asValueMap();
         if (!empty($localCorrelationKeys)) {
             foreach ($localCorrelationKeys as $key => $value) {
                 $query->variableValueEquals($key, $value);

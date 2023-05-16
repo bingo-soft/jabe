@@ -10,6 +10,7 @@ use Jabe\Runtime\{
     MessageCorrelationAsyncBuilderInterface,
     ProcessInstanceQueryInterface
 };
+use Jabe\Variable\VariableMapInterface;
 use Jabe\Variable\Impl\VariableMapImpl;
 
 class MessageCorrelationAsyncBuilderImpl implements MessageCorrelationAsyncBuilderInterface
@@ -111,7 +112,7 @@ class MessageCorrelationAsyncBuilderImpl implements MessageCorrelationAsyncBuild
         return $this->historicProcessInstanceQuery;
     }
 
-    public function getPayloadProcessInstanceVariables(): array
+    public function getPayloadProcessInstanceVariables(): ?VariableMapInterface
     {
         return $this->payloadProcessInstanceVariables;
     }

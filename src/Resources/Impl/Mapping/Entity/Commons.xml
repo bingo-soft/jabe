@@ -9,11 +9,11 @@
   <!-- This snippet is used by all queries that allow filtering by variable values -->
   <sql id="variableValueConditions">
 
-    <if test="queryVariableValue.operatorName.equals('NOT_EQUALS') || queryVariableValue.operatorName.equals('NOT_LIKE')">NOT</if><!-- NOT_EQUALS and NOT_LIKE use the same conditions as EQUALS and LIKE -->
+    <if test="queryVariableValue.operatorName == 'NOT_EQUALS' || queryVariableValue.operatorName == 'NOT_LIKE' || queryVariableValue.operatorName == 'not_equals' || queryVariableValue.operatorName == 'not_like'">NOT</if><!-- NOT_EQUALS and NOT_LIKE use the same conditions as EQUALS and LIKE -->
     (
     <foreach collection="queryVariableValue.valueConditions" item="valueCondition" separator="or">
       <trim prefix="(" prefixOverrides="and" suffix=")">
-        <if test="!valueCondition.type.equals('null')">
+        <if test="valueCondition.type != 'null'">
           <!-- When type of value is null, type doesn't matter! -->
           and ${varPrefix}${varTypeField} is not null and ${varPrefix}${varTypeField} = #{valueCondition.type}
         </if>
@@ -29,7 +29,7 @@
                 <otherwise>${varPrefix}TEXT_</otherwise>
               </choose>
               <choose>
-                <when test="queryVariableValue.operatorName.contains('LIKE')">LIKE</when>
+                <when test="str_contains(queryVariableValue.operatorName, 'LIKE') || str_contains(queryVariableValue.operatorName, 'like')">LIKE</when>
                 <otherwise><include refid="src/Resources/Impl/Mapping/Entity/Commons.executionVariableOperator" /></otherwise>
               </choose>
               <choose>
@@ -37,18 +37,18 @@
                 <otherwise>#{valueCondition.textValue}</otherwise>
               </choose>
               ${collationForCaseSensitivity}
-              <if test="queryVariableValue.operatorName.contains('LIKE')">ESCAPE ${escapeChar}</if>
+              <if test="str_contains(queryVariableValue.operatorName, 'LIKE') || str_contains(queryVariableValue.operatorName, 'like')">ESCAPE ${escapeChar}</if>
             </otherwise>
           </choose>
         </if>
-        <if test="valueCondition.textValue2 != null and !valueCondition.type.equals('string')">
+        <if test="valueCondition.textValue2 != null and valueCondition.type != 'string'">
           and ${varPrefix}TEXT2_ is not null and ${varPrefix}TEXT2_
           <choose>
-            <when test="queryVariableValue.operatorName.contains('LIKE')">LIKE</when>
+            <when test="str_contains(queryVariableValue.operatorName, 'LIKE') || str_contains(queryVariableValue.operatorName, 'like')">LIKE</when>
             <otherwise><include refid="src/Resources/Impl/Mapping/Entity/Commons.executionVariableOperator" /></otherwise>
           </choose>
           #{valueCondition.textValue2}
-          <if test="queryVariableValue.operatorName.contains('LIKE')">ESCAPE ${escapeChar}</if>
+          <if test="str_contains(queryVariableValue.operatorName, 'LIKE') || str_contains(queryVariableValue.operatorName, 'like')">ESCAPE ${escapeChar}</if>
         </if>
     
         <if test="valueCondition.longValue != null">
@@ -86,12 +86,12 @@
 
   <sql id="executionVariableOperator">
     <choose>
-      <when test="queryVariableValue.operatorName.equals('EQUALS')">=</when>
-      <when test="queryVariableValue.operatorName.equals('NOT_EQUALS')">=</when><!-- Note: NOT_EQUALS is handled by negating the condition -->
-      <when test="queryVariableValue.operatorName.equals('GREATER_THAN')">&gt;</when>
-      <when test="queryVariableValue.operatorName.equals('GREATER_THAN_OR_EQUAL')">&gt;=</when>
-      <when test="queryVariableValue.operatorName.equals('LESS_THAN')">&lt;</when>
-      <when test="queryVariableValue.operatorName.equals('LESS_THAN_OR_EQUAL')">&lt;=</when>
+      <when test="queryVariableValue.operatorName == 'EQUALS' || queryVariableValue.operatorName == 'equals'">=</when>
+      <when test="queryVariableValue.operatorName == 'NOT_EQUALS' || queryVariableValue.operatorName == 'not_equals'">=</when><!-- Note: NOT_EQUALS is handled by negating the condition -->
+      <when test="queryVariableValue.operatorName == 'GREATER_THAN' || queryVariableValue.operatorName == 'greater_than'">&gt;</when>
+      <when test="queryVariableValue.operatorName == 'GREATER_THAN_OR_EQUAL' || queryVariableValue.operatorName == 'greater_than_or_equal'">&gt;=</when>
+      <when test="queryVariableValue.operatorName == 'LESS_THAN' || queryVariableValue.operatorName == 'less_than'">&lt;</when>
+      <when test="queryVariableValue.operatorName == 'LESS_THAN_OR_EQUAL' || queryVariableValue.operatorName == 'less_than_or_equal'">&lt;=</when>
    </choose>
   </sql>
   
@@ -188,9 +188,9 @@
 
   <sql id="periodUnitFunction">
     <choose>
-      <when test="reportPeriodUnitName.equals('MONTH')">${constant.datepart.month}</when>
-      <when test="reportPeriodUnitName.equals('QUARTER')">${constant.datepart.quarter}</when>
-      <when test="reportPeriodUnitName.equals('MINUTE')">${constant.datepart.minute}</when>
+      <when test="reportPeriodUnitName == 'MONTH'">${constant.datepart.month}</when>
+      <when test="reportPeriodUnitName == 'QUARTER'">${constant.datepart.quarter}</when>
+      <when test="reportPeriodUnitName =='MINUTE'">${constant.datepart.minute}</when>
     </choose>
   </sql>
 </mapper>

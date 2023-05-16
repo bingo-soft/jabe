@@ -3,6 +3,7 @@
 namespace Jabe\Impl;
 
 use Jabe\Impl\Variable\Serializer\VariableSerializersInterface;
+use Jabe\Variable\Value\TypedValueInterface;
 
 abstract class AbstractQueryVariableValueCondition
 {
@@ -13,7 +14,7 @@ abstract class AbstractQueryVariableValueCondition
         $this->wrappedQueryValue = $variableValue;
     }
 
-    abstract public function initializeValue(VariableSerializersInterface $serializers, ?string $dbType): void;
+    abstract public function initializeValue(VariableSerializersInterface $serializers, ?TypedValueInterface $typedValue, ?string $dbType): void;
 
     abstract public function getDisjunctiveConditions(): array;
 }

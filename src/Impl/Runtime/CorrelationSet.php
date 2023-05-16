@@ -3,6 +3,8 @@
 namespace Jabe\Impl\Runtime;
 
 use Jabe\Impl\MessageCorrelationBuilderImpl;
+use Jabe\Variable\VariableMapInterface;
+use Jabe\Variable\Impl\VariableMapImpl;
 
 class CorrelationSet
 {
@@ -19,8 +21,8 @@ class CorrelationSet
     {
         $this->businessKey = $builder->getBusinessKey();
         $this->processInstanceId = $builder->getProcessInstanceId();
-        $this->correlationKeys = $builder->getCorrelationProcessInstanceVariables() ?? [];
-        $this->localCorrelationKeys = $builder->getCorrelationLocalVariables() ?? [];
+        $this->correlationKeys = $builder->getCorrelationProcessInstanceVariables() ?? new VariableMapImpl();
+        $this->localCorrelationKeys = $builder->getCorrelationLocalVariables() ?? new VariableMapImpl();
         $this->processDefinitionId = $builder->getProcessDefinitionId();
         $this->tenantId = $builder->getTenantId();
         $this->isTenantIdSet = $builder->isTenantIdSet();
@@ -32,12 +34,12 @@ class CorrelationSet
         return $this->businessKey;
     }
 
-    public function getCorrelationKeys(): array
+    public function getCorrelationKeys(): VariableMapInterface
     {
         return $this->correlationKeys;
     }
 
-    public function getLocalCorrelationKeys(): array
+    public function getLocalCorrelationKeys(): VariableMapInterface
     {
         return $this->localCorrelationKeys;
     }

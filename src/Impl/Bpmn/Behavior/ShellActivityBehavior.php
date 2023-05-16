@@ -67,7 +67,7 @@ class ShellActivityBehavior extends AbstractBpmnActivityBehavior
         $this->directoryStr = $this->getStringFromField($this->directory, $execution);
     }
 
-    public function execute(ActivityExecutionInterface $execution): void
+    public function execute(/*ActivityExecutionInterface*/$execution): void
     {
         $this->readFields($execution);
 

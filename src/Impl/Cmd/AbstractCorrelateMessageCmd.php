@@ -51,7 +51,9 @@ abstract class AbstractCorrelateMessageCmd
     protected function triggerExecution(CommandContext $commandContext, CorrelationHandlerResult $correlationResult): void
     {
         $executionId = $correlationResult->getExecutionEntity()->getId();
-        $command = new MessageEventReceivedCmd($this->messageName, $executionId, $this->builder->getPayloadProcessInstanceVariables(), $this->builder->getPayloadProcessInstanceVariablesLocal(), $this->builder->isExclusiveCorrelation());
+        $processVariables = $this->builder->getPayloadProcessInstanceVariables();
+        $localVariables = $this->builder->getPayloadProcessInstanceVariablesLocal();
+        $command = new MessageEventReceivedCmd($this->messageName, $executionId, ($processVariables ? $processVariables->asValueMap() : []), ($localVariables ? $localVariables->asValueMap() : []), $this->builder->isExclusiveCorrelation());
         $command->execute($commandContext);
     }
 

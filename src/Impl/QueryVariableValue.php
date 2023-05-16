@@ -26,6 +26,30 @@ class QueryVariableValue implements \Serializable
         $this->variableValueIgnoreCase = $variableValueIgnoreCase;
     }
 
+    public function serialize()
+    {
+        return json_encode([
+            'name' => $this->name,
+            'value' => serialize($this->value),
+            'operator' => $this->operator,
+            'local' => $this->local,
+            'variableNameIgnoreCase' => $this->variableNameIgnoreCase,
+            'variableValueIgnoreCase' => $this->variableValueIgnoreCase
+        ]);
+    }
+
+    public function unserialize($data)
+    {
+        $json = json_decode($data);
+        $this->name = $json->name;
+        $this->value = unserialize($json->value);
+        $this->operator = $json->operator;
+        $this->source = $json->source;
+        $this->local = $json->local;
+        $this->variableNameIgnoreCase = $json->variableNameIgnoreCase;
+        $this->variableValueIgnoreCase = $json->variableValueIgnoreCase;
+    }
+
     public function initialize(VariableSerializersInterface $serializers, ?string $dbType): void
     {
         if ($this->value->getType() !== null && $this->value->getType()->isAbstract()) {
@@ -34,7 +58,7 @@ class QueryVariableValue implements \Serializable
             $this->valueCondition = new SingleQueryVariableValueCondition($this);
         }
 
-        $this->valueCondition->initializeValue($serializers, $dbType);
+        $this->valueCondition->initializeValue($serializers, null, $dbType);
     }
 
     public function getValueConditions(): array
