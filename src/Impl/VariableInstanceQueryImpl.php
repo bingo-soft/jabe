@@ -18,7 +18,7 @@ use Jabe\Runtime\{
     VariableInstanceQueryInterface
 };
 
-class VariableInstanceQueryImpl extends AbstractVariableQueryImpl implements VariableInstanceQueryInterface, \Serializable
+class VariableInstanceQueryImpl extends AbstractVariableQueryImpl implements VariableInstanceQueryInterface
 {
     //private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
@@ -44,9 +44,9 @@ class VariableInstanceQueryImpl extends AbstractVariableQueryImpl implements Var
         parent::__construct($commandExecutor);
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'variableId' => $this->variableId,
             'variableName' => $this->variableName,
             'variableNames' => $this->variableNames,
@@ -60,25 +60,24 @@ class VariableInstanceQueryImpl extends AbstractVariableQueryImpl implements Var
             'tenantIds' => $this->tenantIds,
             'isByteArrayFetchingEnabled' => $this->isByteArrayFetchingEnabled,
             'isCustomObjectDeserializationEnabled' => $this->isCustomObjectDeserializationEnabled
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->variableId = $json->variableId;
-        $this->variableName = $json->variableName;
-        $this->variableNames = $json->variableNames;
-        $this->variableNameLike = $json->variableNameLike;
-        $this->executionIds = $json->executionIds;
-        $this->processInstanceIds = $json->processInstanceIds;
-        $this->taskIds = $json->taskIds;
-        $this->batchIds = $json->batchIds;
-        $this->variableScopeIds = $json->variableScopeIds;
-        $this->activityInstanceIds = $json->activityInstanceIds;
-        $this->tenantIds = $json->tenantIds;
-        $this->isByteArrayFetchingEnabled = $json->isByteArrayFetchingEnabled;
-        $this->isCustomObjectDeserializationEnabled = $json->isCustomObjectDeserializationEnabled;
+        $this->variableId = $data['variableId'];
+        $this->variableName = $data['variableName'];
+        $this->variableNames = $data['variableNames'];
+        $this->variableNameLike = $data['variableNameLike'];
+        $this->executionIds = $data['executionIds'];
+        $this->processInstanceIds = $data['processInstanceIds'];
+        $this->taskIds = $data['taskIds'];
+        $this->batchIds = $data['batchIds'];
+        $this->variableScopeIds = $data['variableScopeIds'];
+        $this->activityInstanceIds = $data['activityInstanceIds'];
+        $this->tenantIds = $data['tenantIds'];
+        $this->isByteArrayFetchingEnabled = $data['isByteArrayFetchingEnabled'];
+        $this->isCustomObjectDeserializationEnabled = $data['isCustomObjectDeserializationEnabled'];
     }
 
     public function variableId(?string $id): VariableInstanceQueryInterface

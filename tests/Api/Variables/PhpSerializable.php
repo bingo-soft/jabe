@@ -2,7 +2,7 @@
 
 namespace Tests\Api\Variables;
 
-class PhpSerializable implements \Serializable
+class PhpSerializable
 {
     private $property;
 
@@ -11,17 +11,16 @@ class PhpSerializable implements \Serializable
         $this->property = $property;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'property' => $this->property
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->property = $json->property;
+        $this->property = $data['property'];
     }
 
     public function getProperty(): string

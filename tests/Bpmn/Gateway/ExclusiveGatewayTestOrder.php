@@ -2,15 +2,15 @@
 
 namespace Tests\Bpmn\Gateway;
 
-class ExclusiveGatewayTestOrder implements \Serializable
+class ExclusiveGatewayTestOrder
 {
     private int $price;
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'price' => $this->price
-        ]);
+        ];
     }
 
     public function __toString()
@@ -18,10 +18,9 @@ class ExclusiveGatewayTestOrder implements \Serializable
         return "price=" . $this->price;
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->price = $json->price;
+        $this->price = $data['price'];
     }
 
     public function __construct(int $price)

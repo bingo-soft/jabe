@@ -4,7 +4,7 @@ namespace Jabe\Variable\Value;
 
 use Jabe\Variable\Type\ValueTypeInterface;
 
-interface TypedValueInterface extends \Serializable
+interface TypedValueInterface
 {
     /**
      * The actual value. May be null in case the value is null.

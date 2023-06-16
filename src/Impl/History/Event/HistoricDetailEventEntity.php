@@ -83,9 +83,9 @@ class HistoricDetailEventEntity extends HistoryEvent
             ->delete($this);
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'eventType' => $this->eventType,
             'executionId' => $this->executionId,
@@ -98,24 +98,23 @@ class HistoricDetailEventEntity extends HistoryEvent
             'timestamp' => $this->timestamp,
             'tenantId' => $this->tenantId,
             'userOperationId' => $this->userOperationId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->eventType = $json->eventType;
-        $this->executionId = $json->executionId;
-        $this->processDefinitionId = $json->processDefinitionId;
-        $this->processInstanceId = $json->processInstanceId;
-        $this->rootProcessInstanceId = $json->rootProcessInstanceId;
-        $this->removalTime = $json->removalTime;
-        $this->activityInstanceId = $json->activityInstanceId;
-        $this->taskId = $json->taskId;
-        $this->timestamp = $json->timestamp;
-        $this->tenantId = $json->tenantId;
-        $this->userOperationId = $json->userOperationId;
+        $this->id = $data['id'];
+        $this->eventType = $data['eventType'];
+        $this->executionId = $data['executionId'];
+        $this->processDefinitionId = $data['processDefinitionId'];
+        $this->processInstanceId = $data['processInstanceId'];
+        $this->rootProcessInstanceId = $data['rootProcessInstanceId'];
+        $this->removalTime = $data['removalTime'];
+        $this->activityInstanceId = $data['activityInstanceId'];
+        $this->taskId = $data['taskId'];
+        $this->timestamp = $data['timestamp'];
+        $this->tenantId = $data['tenantId'];
+        $this->userOperationId = $data['userOperationId'];
     }
 
     public function __toString()

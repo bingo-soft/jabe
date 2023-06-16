@@ -8,7 +8,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class GetDeploymentResourceForIdCmd implements CommandInterface, \Serializable
+class GetDeploymentResourceForIdCmd implements CommandInterface
 {
     protected $deploymentId;
     protected $resourceId;
@@ -19,19 +19,18 @@ class GetDeploymentResourceForIdCmd implements CommandInterface, \Serializable
         $this->resourceId = $resourceId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'deploymentId' => $this->deploymentId,
             'resourceId' => $this->resourceId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->deploymentId = $json->deploymentId;
-        $this->resourceId = $json->resourceId;
+        $this->deploymentId = $data['deploymentId'];
+        $this->resourceId = $data['resourceId'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

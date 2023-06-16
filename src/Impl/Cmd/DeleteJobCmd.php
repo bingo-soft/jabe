@@ -14,7 +14,7 @@ use Jabe\Impl\Persistence\Entity\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class DeleteJobCmd implements CommandInterface, \Serializable
+class DeleteJobCmd implements CommandInterface
 {
     protected $jobId;
 
@@ -23,17 +23,16 @@ class DeleteJobCmd implements CommandInterface, \Serializable
         $this->jobId = $jobId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'jobId' => $this->jobId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->jobId = $json->jobId;
+        $this->jobId = $data['jobId'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

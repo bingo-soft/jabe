@@ -9,7 +9,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class GetIdentityLinksForProcessDefinitionCmd implements CommandInterface, \Serializable
+class GetIdentityLinksForProcessDefinitionCmd implements CommandInterface
 {
     protected $processDefinitionId;
 
@@ -18,17 +18,16 @@ class GetIdentityLinksForProcessDefinitionCmd implements CommandInterface, \Seri
         $this->processDefinitionId = $processDefinitionId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'processDefinitionId' => $this->processDefinitionId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->processDefinitionId = $json->processDefinitionId;
+        $this->processDefinitionId = $data['processDefinitionId'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

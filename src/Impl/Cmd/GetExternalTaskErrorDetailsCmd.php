@@ -8,7 +8,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class GetExternalTaskErrorDetailsCmd implements CommandInterface, \Serializable
+class GetExternalTaskErrorDetailsCmd implements CommandInterface
 {
     private $externalTaskId;
 
@@ -17,17 +17,16 @@ class GetExternalTaskErrorDetailsCmd implements CommandInterface, \Serializable
         $this->externalTaskId = $externalTaskId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'externalTaskId' => $this->externalTaskId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->externalTaskId = $json->externalTaskId;
+        $this->externalTaskId = $data['externalTaskId'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

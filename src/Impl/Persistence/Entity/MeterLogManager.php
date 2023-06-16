@@ -173,7 +173,7 @@ class MeterLogManager extends AbstractManager
     public function findTaskMetricsForCleanup(int $batchSize, int $timeToLive, int $minuteFrom, int $minuteTo): array
     {
         $queryParameters = [];
-        $queryParameters["currentTimestamp"] = ClockUtil::getCurrentTime()->format('c');
+        $queryParameters["currentTimestamp"] = ClockUtil::getCurrentTime()->format('Y-m-d H:i:s');
         $queryParameters["timeToLive"] = $timeToLive;
         if ($minuteTo - $minuteFrom + 1 < 60) {
             $queryParameters["minuteFrom"] = $minuteFrom;

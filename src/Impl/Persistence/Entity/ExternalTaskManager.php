@@ -80,7 +80,7 @@ class ExternalTaskManager extends AbstractManager
 
         $parameters = [];
         $parameters["topics"] = $queryFilters;
-        $parameters["now"] = ClockUtil::getCurrentTime()->format('c');
+        $parameters["now"] = ClockUtil::getCurrentTime()->format('Y-m-d H:i:s');
         $parameters["applyOrdering"] = $usePriority;
         $orderingProperties = [];
         $orderingProperties[] = self::$EXT_TASK_PRIORITY_ORDERING_PROPERTY;

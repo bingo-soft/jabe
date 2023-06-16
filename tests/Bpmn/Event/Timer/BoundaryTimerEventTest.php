@@ -32,6 +32,10 @@ class BoundaryTimerEventTest extends PluggableProcessEngineTest
     protected function tearDown(): void
     {
         ClockUtil::resetClock(...$this->processEngineConfiguration->getJobExecutorState());
+        $deployments = $this->repositoryService->createDeploymentQuery()->list();
+        foreach ($deployments as $deployment) {
+            $this->repositoryService->deleteDeployment($deployment->getId(), true);
+        }
     }
 
     #[Deployment(resources: ["tests/Resources/Bpmn/Event/Timer/BoundaryTimerEventTest.testMultipleTimersOnUserTask.bpmn20.xml"])]
@@ -48,7 +52,7 @@ class BoundaryTimerEventTest extends PluggableProcessEngineTest
 
         // After setting the clock to time '1 hour and 5 seconds', the second timer should fire
         ClockUtil::setCurrentTime((new \DateTime())->setTimestamp($startTime->getTimestamp() + ((60 * 60) + 5)), ...$this->processEngineConfiguration->getJobExecutorState());
-        sleep(35);
+        sleep(50);
         $this->assertEquals(0, $jobQuery->count());
 
         // which means that the third task is reached
@@ -70,7 +74,7 @@ class BoundaryTimerEventTest extends PluggableProcessEngineTest
         $timer = $this->managementService->createJobQuery()->processInstanceId($processInstance->getId())->timers()->singleResult();
         $this->managementService->executeJob($timer->getId());
 
-        $task = $this->taskService->createTaskQuery()->singleResult();
+        $task = $this->taskService->createTaskQuery()->processInstanceId($processInstance->getId())->singleResult();
         $this->assertEquals("task outside subprocess", $task->getName());
 
         $this->runtimeService->deleteProcessInstance($processInstance->getId());
@@ -94,7 +98,7 @@ class BoundaryTimerEventTest extends PluggableProcessEngineTest
         // After setting the clock to time '1 hour and 5 seconds', the second timer should fire
         ClockUtil::setCurrentTime((new \DateTime())->setTimestamp($startTime->getTimestamp() + ((60 * 60) + 5)), ...$this->processEngineConfiguration->getJobExecutorState());
 
-        sleep(35);
+        sleep(50);
 
         $this->assertEquals(0, $jobQuery->count());
 
@@ -128,12 +132,12 @@ class BoundaryTimerEventTest extends PluggableProcessEngineTest
         $this->assertNotEquals($oldDate, $jobUpdated->getDuedate());
         $this->assertTrue($oldDate < $jobUpdated->getDuedate());
 
-        $expectedDate = (new \DateTime())->setTimestamp(strtotime("+1 hours", strtotime($currentTime->format('c'))));
+        $expectedDate = (new \DateTime())->setTimestamp(strtotime("+1 hours", strtotime($currentTime->format('Y-m-d H:i:s'))));
         $this->assertEquals($expectedDate, new \DateTime($jobUpdated->getDuedate()));
 
         // After setting the clock to time '1 hour and 6 min', the second timer should fire
-        ClockUtil::setCurrentTime((new \DateTime())->setTimestamp(strtotime("+1 hours +6 minutes", strtotime($currentTime->format('c')))), ...$this->processEngineConfiguration->getJobExecutorState());
-        sleep(35);
+        ClockUtil::setCurrentTime((new \DateTime())->setTimestamp(strtotime("+1 hours +6 minutes", strtotime($currentTime->format('Y-m-d H:i:s')))), ...$this->processEngineConfiguration->getJobExecutorState());
+        sleep(50);
         $this->assertEquals(0, $jobQuery->count());
 
         // which means the process has ended
@@ -168,7 +172,7 @@ class BoundaryTimerEventTest extends PluggableProcessEngineTest
         // After setting the clock to time '1 hour and 15 seconds', the second timer should fire
         ClockUtil::setCurrentTime((new \DateTime())->setTimestamp($startTime->getTimestamp() + 3615), ...$this->processEngineConfiguration->getJobExecutorState());
 
-        sleep(35);
+        sleep(50);
         $this->assertEquals(0, $jobQuery->count());
 
         // which means the process has ended
@@ -200,7 +204,7 @@ class BoundaryTimerEventTest extends PluggableProcessEngineTest
 
         // After setting the clock to time '16 minutes', the timer should fire
         ClockUtil::setCurrentTime((new \DateTime())->setTimestamp($startTime->getTimestamp() + 7200), ...$this->processEngineConfiguration->getJobExecutorState());
-        sleep(35);
+        sleep(50);
         $this->assertEquals(0, $jobQuery->count());
 
         // which means the process has ended
@@ -232,7 +236,7 @@ class BoundaryTimerEventTest extends PluggableProcessEngineTest
 
         // After setting the clock to time '16 minutes', the timer should fire
         ClockUtil::setCurrentTime((new \DateTime())->setTimestamp($startTime->getTimestamp() + 960), ...$this->processEngineConfiguration->getJobExecutorState());
-        sleep(35);
+        sleep(50);
         $this->assertEquals(0, $jobQuery->count());
 
         // which means the process has ended

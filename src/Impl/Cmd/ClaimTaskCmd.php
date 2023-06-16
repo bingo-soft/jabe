@@ -14,7 +14,7 @@ use Jabe\Impl\Persistence\Entity\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class ClaimTaskCmd implements CommandInterface, \Serializable
+class ClaimTaskCmd implements CommandInterface
 {
     protected $taskId;
     protected $userId;
@@ -25,19 +25,18 @@ class ClaimTaskCmd implements CommandInterface, \Serializable
         $this->userId = $userId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'userId' => $this->userId,
             'taskId' => $this->taskId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->userId = $json->userId;
-        $this->taskId = $json->taskId;
+        $this->userId = $data['userId'];
+        $this->taskId = $data['taskId'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

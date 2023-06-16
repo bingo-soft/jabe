@@ -9,7 +9,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class GetRenderedTaskFormCmd implements CommandInterface, \Serializable
+class GetRenderedTaskFormCmd implements CommandInterface
 {
     protected $taskId;
     protected $formEngineName;
@@ -20,19 +20,18 @@ class GetRenderedTaskFormCmd implements CommandInterface, \Serializable
         $this->formEngineName = $formEngineName;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'taskId' => $this->taskId,
             'formEngineName' => $this->formEngineName
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->taskId = $json->taskId;
-        $this->formEngineName = $json->formEngineName;
+        $this->taskId = $data['taskId'];
+        $this->formEngineName = $data['formEngineName'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

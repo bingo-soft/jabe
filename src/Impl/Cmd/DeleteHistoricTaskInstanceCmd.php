@@ -13,7 +13,7 @@ use Jabe\Impl\Persistence\Entity\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class DeleteHistoricTaskInstanceCmd implements CommandInterface, \Serializable
+class DeleteHistoricTaskInstanceCmd implements CommandInterface
 {
     protected $taskId;
 
@@ -22,17 +22,16 @@ class DeleteHistoricTaskInstanceCmd implements CommandInterface, \Serializable
         $this->taskId = $taskId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'taskId' => $this->taskId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->taskId = $json->taskId;
+        $this->taskId = $data['taskId'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

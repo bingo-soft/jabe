@@ -28,7 +28,7 @@ use Jabe\Impl\Util\{
 };
 use Jabe\Query\QueryInterface;
 
-class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface, HasDbRevisionInterface, HasDbReferencesInterface, DbEntityLifecycleAwareInterface
+class FilterEntity implements FilterInterface, DbEntityInterface, HasDbRevisionInterface, HasDbReferencesInterface, DbEntityLifecycleAwareInterface
 {
     //protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
     public static $queryConverter;
@@ -49,9 +49,9 @@ class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface,
         }
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'resourceType' => $this->resourceType,
             'name' => $this->name,
@@ -59,19 +59,18 @@ class FilterEntity implements FilterInterface, \Serializable, DbEntityInterface,
             'query' => serialize($this->query),
             'properties' => $this->properties,
             'revision' => $this->revision
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->resourceType = $json->resourceType;
-        $this->name = $json->name;
-        $this->owner = $json->owner;
-        $this->query = unserialize($json->query);
-        $this->properties = $json->properties;
-        $this->revision = $json->revision;
+        $this->id = $data['id'];
+        $this->resourceType = $data['resourceType'];
+        $this->name = $data['name'];
+        $this->owner = $data['owner'];
+        $this->query = unserialize($data['query']);
+        $this->properties = $data['properties'];
+        $this->revision = $data['revision'];
     }
 
     public function setId(?string $id): void

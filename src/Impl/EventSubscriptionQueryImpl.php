@@ -9,7 +9,7 @@ use Jabe\Impl\Interceptor\{
 use Jabe\Impl\Util\EnsureUtil;
 use Jabe\Runtime\EventSubscriptionQueryInterface;
 
-class EventSubscriptionQueryImpl extends AbstractQuery implements \Serializable, EventSubscriptionQueryInterface
+class EventSubscriptionQueryImpl extends AbstractQuery implements EventSubscriptionQueryInterface
 {
     protected $eventSubscriptionId;
     protected $eventName;
@@ -27,9 +27,9 @@ class EventSubscriptionQueryImpl extends AbstractQuery implements \Serializable,
         parent::__construct($commandExecutor);
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'eventSubscriptionId' => $this->eventSubscriptionId,
             'eventName' => $this->eventName,
             'eventType' => $this->eventType,
@@ -39,21 +39,20 @@ class EventSubscriptionQueryImpl extends AbstractQuery implements \Serializable,
             'isTenantIdSet' => $this->isTenantIdSet,
             'tenantIds' => $this->tenantIds,
             'includeEventSubscriptionsWithoutTenantId' => $this->includeEventSubscriptionsWithoutTenantId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->eventSubscriptionId = $json->eventSubscriptionId;
-        $this->eventName = $json->eventName;
-        $this->eventType = $json->eventType;
-        $this->executionId = $json->executionId;
-        $this->processInstanceId = $json->processInstanceId;
-        $this->activityId = $json->activityId;
-        $this->isTenantIdSet = $json->isTenantIdSet;
-        $this->tenantIds = $json->tenantIds;
-        $this->includeEventSubscriptionsWithoutTenantId = $json->includeEventSubscriptionsWithoutTenantId;
+        $this->eventSubscriptionId = $data['eventSubscriptionId'];
+        $this->eventName = $data['eventName'];
+        $this->eventType = $data['eventType'];
+        $this->executionId = $data['executionId'];
+        $this->processInstanceId = $data['processInstanceId'];
+        $this->activityId = $data['activityId'];
+        $this->isTenantIdSet = $data['isTenantIdSet'];
+        $this->tenantIds = $data['tenantIds'];
+        $this->includeEventSubscriptionsWithoutTenantId = $data['includeEventSubscriptionsWithoutTenantId'];
     }
 
     public function eventSubscriptionId(?string $id): EventSubscriptionQueryInterface

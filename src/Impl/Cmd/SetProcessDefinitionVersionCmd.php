@@ -25,7 +25,7 @@ use Jabe\Impl\Persistence\Entity\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class SetProcessDefinitionVersionCmd implements CommandInterface, \Serializable
+class SetProcessDefinitionVersionCmd implements CommandInterface
 {
     private $processInstanceId;
     private $processDefinitionVersion;

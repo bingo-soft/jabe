@@ -7,7 +7,7 @@ use Jabe\Impl\Interceptor\{
     CommandContext
 };
 
-class DeleteProcessInstanceCmd extends AbstractDeleteProcessInstanceCmd implements CommandInterface, \Serializable
+class DeleteProcessInstanceCmd extends AbstractDeleteProcessInstanceCmd implements CommandInterface
 {
     protected $processInstanceId;
     protected bool $skipIoMappings = false;
@@ -31,9 +31,9 @@ class DeleteProcessInstanceCmd extends AbstractDeleteProcessInstanceCmd implemen
         $this->failIfNotExists = $failIfNotExists;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'processInstanceId' => $this->processInstanceId,
             'deleteReason' => $this->deleteReason,
             'skipCustomListeners' => $this->skipCustomListeners,
@@ -41,18 +41,17 @@ class DeleteProcessInstanceCmd extends AbstractDeleteProcessInstanceCmd implemen
             'skipIoMappings' => $this->skipIoMappings,
             'skipSubprocesses' => $this->skipSubprocesses,
             'failIfNotExists' => $this->failIfNotExists
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->processInstanceId = $json->processInstanceId;
-        $this->deleteReason = $json->deleteReason;
-        $this->skipCustomListeners = $json->skipCustomListeners;
-        $this->externallyTerminated = $json->externallyTerminated;
-        $this->skipIoMappings = $json->skipIoMappings;
-        $this->skipIoMappings = $json->skipIoMappings;
+        $this->processInstanceId = $data['processInstanceId'];
+        $this->deleteReason = $data['deleteReason'];
+        $this->skipCustomListeners = $data['skipCustomListeners'];
+        $this->externallyTerminated = $data['externallyTerminated'];
+        $this->skipIoMappings = $data['skipIoMappings'];
+        $this->skipIoMappings = $data['skipIoMappings'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

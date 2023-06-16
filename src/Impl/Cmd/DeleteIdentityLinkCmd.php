@@ -14,7 +14,7 @@ use Jabe\Impl\Persistence\Entity\{
 use Jabe\Task\IdentityLinkType;
 use Jabe\Impl\Util\EnsureUtil;
 
-abstract class DeleteIdentityLinkCmd implements CommandInterface, \Serializable
+abstract class DeleteIdentityLinkCmd implements CommandInterface
 {
     protected $userId;
 
@@ -35,23 +35,22 @@ abstract class DeleteIdentityLinkCmd implements CommandInterface, \Serializable
         $this->type = $type;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'taskId' => $this->taskId,
             'userId' => $this->userId,
             'groupId' => $this->groupId,
             'type' => $this->type
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->taskId = $json->taskId;
-        $this->userId = $json->userId;
-        $this->groupId = $json->groupId;
-        $this->type = $json->type;
+        $this->taskId = $data['taskId'];
+        $this->userId = $data['userId'];
+        $this->groupId = $data['groupId'];
+        $this->type = $data['type'];
     }
 
     protected function validateParams(?string $userId, ?string $groupId, ?string $type, ?string $taskId): void

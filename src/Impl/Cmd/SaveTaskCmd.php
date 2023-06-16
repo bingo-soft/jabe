@@ -20,7 +20,7 @@ use Jabe\Impl\Util\EnsureUtil;
 use Jabe\Management\Metrics;
 use Jabe\Task\TaskInterface;
 
-class SaveTaskCmd implements CommandInterface, \Serializable
+class SaveTaskCmd implements CommandInterface
 {
     protected $task;
 
@@ -29,17 +29,16 @@ class SaveTaskCmd implements CommandInterface, \Serializable
         $this->task = $task;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'task' => serialize($this->task)
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->task = unserialize($json->task);
+        $this->task = unserialize($data['task']);
     }
 
     public function execute(CommandContext $commandContext, ...$args)

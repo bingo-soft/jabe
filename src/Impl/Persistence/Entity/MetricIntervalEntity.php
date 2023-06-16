@@ -6,7 +6,7 @@ use Jabe\Impl\Db\DbEntityInterface;
 use Jabe\Impl\Metrics\Util\MetricsUtil;
 use Jabe\Management\MetricIntervalValueInterface;
 
-class MetricIntervalEntity implements MetricIntervalValueInterface, DbEntityInterface, \Serializable
+class MetricIntervalEntity implements MetricIntervalValueInterface, DbEntityInterface
 {
     protected $timestamp;
 
@@ -23,25 +23,24 @@ class MetricIntervalEntity implements MetricIntervalValueInterface, DbEntityInte
         $this->reporter = $reporter;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'name' => $this->name,
             'reporter' => $this->reporter,
             'value' => $this->value,
             'timestamp' => $this->timestamp
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->name = $json->name;
-        $this->reporter = $json->reporter;
-        $this->value = $json->value;
-        $this->timestamp = $json->timestamp;
+        $this->id = $data['id'];
+        $this->name = $data['name'];
+        $this->reporter = $data['reporter'];
+        $this->value = $data['value'];
+        $this->timestamp = $data['timestamp'];
     }
 
     public function getTimestamp(): ?string

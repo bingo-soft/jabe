@@ -6,7 +6,7 @@ use Jabe\Impl\Db\DbEntityInterface;
 use Jabe\Repository\ResourceInterface;
 use Jabe\Impl\Util\ClassNameUtil;
 
-class ResourceEntity implements \Serializable, DbEntityInterface, ResourceInterface
+class ResourceEntity implements DbEntityInterface, ResourceInterface
 {
     protected $id;
     protected $name;
@@ -106,9 +106,9 @@ class ResourceEntity implements \Serializable, DbEntityInterface, ResourceInterf
         $this->createTime = $createTime;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'name' => $this->name,
             'deploymentId' => $this->deploymentId,
@@ -116,19 +116,18 @@ class ResourceEntity implements \Serializable, DbEntityInterface, ResourceInterf
             'tenantId' => $this->tenantId,
             'type' => $this->type,
             'createTime' => $this->createTime
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->name = $json->name;
-        $this->deploymentId = $json->deploymentId;
-        $this->generated = $json->generated;
-        $this->tenantId = $json->tenantId;
-        $this->type = $json->type;
-        $this->createTime = $json->createTime;
+        $this->id = $data['id'];
+        $this->name = $data['name'];
+        $this->deploymentId = $data['deploymentId'];
+        $this->generated = $data['generated'];
+        $this->tenantId = $data['tenantId'];
+        $this->type = $data['type'];
+        $this->createTime = $data['createTime'];
     }
 
     public function __toString()

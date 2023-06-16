@@ -739,14 +739,14 @@ class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl impleme
 
     private function calculateBeforeMidnight(?string $date): ?string
     {
-        return (new \DateTime())->setTimestamp(strtotime("+1 day -1 second", strtotime($date)))->format('c');
+        return (new \DateTime())->setTimestamp(strtotime("+1 day -1 second", strtotime($date)))->format('Y-m-d H:i:s');
     }
 
     private function calculateMidnight(?string $date): ?string
     {
         $date = new \DateTime($date);
         $date->setTime(0, 0, 0, 0);
-        return $date->format('c');
+        return $date->format('Y-m-d H:i:s');
     }
 
     public function isRootProcessInstances(): bool

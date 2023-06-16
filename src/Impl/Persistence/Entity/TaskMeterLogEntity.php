@@ -7,7 +7,7 @@ use Jabe\Impl\Db\{
     HasDbReferencesInterface
 };
 
-class TaskMeterLogEntity implements DbEntityInterface, HasDbReferencesInterface, \Serializable
+class TaskMeterLogEntity implements DbEntityInterface, HasDbReferencesInterface
 {
     protected $id;
 
@@ -23,21 +23,20 @@ class TaskMeterLogEntity implements DbEntityInterface, HasDbReferencesInterface,
         }
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'timestamp' => $this->timestamp,
             'assigneeHash' => $this->assigneeHash
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->timestamp = $json->timestamp;
-        $this->assigneeHash = $json->assigneeHash;
+        $this->id = $data['id'];
+        $this->timestamp = $data['timestamp'];
+        $this->assigneeHash = $data['assigneeHash'];
     }
 
     protected function createHashAsLong(?string $assignee): int

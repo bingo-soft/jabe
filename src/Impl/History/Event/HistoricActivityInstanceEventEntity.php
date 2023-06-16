@@ -172,9 +172,9 @@ class HistoricActivityInstanceEventEntity extends HistoricScopeInstanceEvent
         $this->rootProcessInstanceId = $rootProcessInstanceId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'eventType' => $this->eventType,
             'executionId' => $this->executionId,
             'processDefinitionId' => $this->processDefinitionId,
@@ -192,28 +192,27 @@ class HistoricActivityInstanceEventEntity extends HistoricScopeInstanceEvent
             'startTime' => $this->startTime,
             'endTime' => $this->endTime,
             'tenantId' => $this->tenantId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->eventType = $json->eventType;
-        $this->executionId = $json->executionId;
-        $this->processDefinitionId = $json->processDefinitionId;
-        $this->processInstanceId = $json->processInstanceId;
-        $this->rootProcessInstanceId = $json->rootProcessInstanceId;
-        $this->activityId = $json->activityId;
-        $this->activityType = $json->activityType;
-        $this->activityInstanceId = $json->activityInstanceId;
-        $this->activityInstanceState = $json->activityInstanceState;
-        $this->calledProcessInstanceId = $json->calledProcessInstanceId;
-        $this->taskId = $json->taskId;
-        $this->taskAssignee = $json->taskAssignee;
-        $this->durationInMillis = $json->durationInMillis;
-        $this->startTime = $json->startTime;
-        $this->endTime = $json->endTime;
-        $this->tenantId = $json->tenantId;
+        $this->eventType = $data['eventType'];
+        $this->executionId = $data['executionId'];
+        $this->processDefinitionId = $data['processDefinitionId'];
+        $this->processInstanceId = $data['processInstanceId'];
+        $this->rootProcessInstanceId = $data['rootProcessInstanceId'];
+        $this->activityId = $data['activityId'];
+        $this->activityType = $data['activityType'];
+        $this->activityInstanceId = $data['activityInstanceId'];
+        $this->activityInstanceState = $data['activityInstanceState'];
+        $this->calledProcessInstanceId = $data['calledProcessInstanceId'];
+        $this->taskId = $data['taskId'];
+        $this->taskAssignee = $data['taskAssignee'];
+        $this->durationInMillis = $data['durationInMillis'];
+        $this->startTime = $data['startTime'];
+        $this->endTime = $data['endTime'];
+        $this->tenantId = $data['tenantId'];
     }
 
     public function __toString()

@@ -9,7 +9,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class SaveGroupCmd extends AbstractWritableIdentityServiceCmd implements CommandInterface, \Serializable
+class SaveGroupCmd extends AbstractWritableIdentityServiceCmd implements CommandInterface
 {
     protected $group;
 
@@ -18,17 +18,16 @@ class SaveGroupCmd extends AbstractWritableIdentityServiceCmd implements Command
         $this->group = $group;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'group' => serialize($this->group)
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->group = unserialize($json->group);
+        $this->group = unserialize($data['group']);
     }
 
     protected function executeCmd(CommandContext $commandContext)

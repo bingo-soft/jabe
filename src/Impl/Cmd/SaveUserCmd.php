@@ -11,7 +11,7 @@ use Jabe\Impl\Interceptor\{
 use Jabe\Impl\Persistence\Entity\UserEntity;
 use Jabe\Impl\Util\EnsureUtil;
 
-class SaveUserCmd extends AbstractWritableIdentityServiceCmd implements CommandInterface, \Serializable
+class SaveUserCmd extends AbstractWritableIdentityServiceCmd implements CommandInterface
 {
     protected $user;
     protected bool $skipPasswordPolicy = false;
@@ -22,19 +22,18 @@ class SaveUserCmd extends AbstractWritableIdentityServiceCmd implements CommandI
         $this->skipPasswordPolicy = $skipPasswordPolicy;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'user' => serialize($this->user),
             'skipPasswordPolicy' => $this->skipPasswordPolicy
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->user = unserialize($json->user);
-        $this->skipPasswordPolicy = $json->skipPasswordPolicy;
+        $this->user = unserialize($data['user']);
+        $this->skipPasswordPolicy = $data['skipPasswordPolicy'];
     }
 
     protected function executeCmd(CommandContext $commandContext)

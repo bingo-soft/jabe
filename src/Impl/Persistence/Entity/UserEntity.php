@@ -13,7 +13,7 @@ use Jabe\Impl\Db\{
 };
 use Jabe\Impl\Util\ClassNameUtil;
 
-class UserEntity implements UserInterface, \Serializable, DbEntityInterface, HasDbRevisionInterface
+class UserEntity implements UserInterface, DbEntityInterface, HasDbRevisionInterface
 {
     protected $id;
     protected int $revision = 0;
@@ -183,9 +183,9 @@ class UserEntity implements UserInterface, \Serializable, DbEntityInterface, Has
         return $this->newPassword !== null;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'revision' => $this->revision,
             'firstName' => $this->firstName,
@@ -195,21 +195,20 @@ class UserEntity implements UserInterface, \Serializable, DbEntityInterface, Has
             'salt' => $this->salt,
             'lockExpirationTime' => $this->lockExpirationTime,
             'attempts' => $this->attempts
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->revision = $json->revision;
-        $this->firstName = $json->firstName;
-        $this->lastName = $json->lastName;
-        $this->email = $json->email;
-        $this->password = $json->password;
-        $this->salt = $json->salt;
-        $this->lockExpirationTime = $json->lockExpirationTime;
-        $this->attempts = $json->attempts;
+        $this->id = $data['id'];
+        $this->revision = $data['revision'];
+        $this->firstName = $data['firstName'];
+        $this->lastName = $data['lastName'];
+        $this->email = $data['email'];
+        $this->password = $data['password'];
+        $this->salt = $data['salt'];
+        $this->lockExpirationTime = $data['lockExpirationTime'];
+        $this->attempts = $data['attempts'];
     }
 
     public function __toString()

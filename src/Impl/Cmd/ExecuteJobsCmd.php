@@ -21,7 +21,7 @@ use Jabe\Impl\Persistence\Entity\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class ExecuteJobsCmd implements CommandInterface, \Serializable
+class ExecuteJobsCmd implements CommandInterface
 {
     //private final static JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
@@ -35,17 +35,16 @@ class ExecuteJobsCmd implements CommandInterface, \Serializable
         $this->jobFailureCollector = $jobFailureCollector;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'jobId' => $this->jobId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->jobId = $json->jobId;
+        $this->jobId = $data['jobId'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

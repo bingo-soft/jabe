@@ -7,7 +7,7 @@ use Jabe\Variable\VariableMapInterface;
 use Jabe\Variable\Context\VariableContextInterface;
 use Jabe\Variable\Value\TypedValueInterface;
 
-class VariableMapImpl extends \ArrayObject implements VariableMapInterface, \Serializable, VariableContextInterface
+class VariableMapImpl extends \ArrayObject implements VariableMapInterface, VariableContextInterface
 {
     protected $variables = [];
 
@@ -157,14 +157,14 @@ class VariableMapImpl extends \ArrayObject implements VariableMapInterface, \Ser
         return $stringBuilder;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode($this->variables, true);
+        return $this->variables;
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $this->variables = json_decode($data, true);
+        $this->variables = $data;
     }
 
     public function asValueMap(): array

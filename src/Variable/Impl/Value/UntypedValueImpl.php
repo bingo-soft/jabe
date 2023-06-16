@@ -31,19 +31,18 @@ class UntypedValueImpl implements TypedValueInterface
         return sprintf("Untyped value '%s', isTransient = %s", json_encode($this->value), $this->isTransient);
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'value' => $this->value,
             'isTransient' => $this->isTransient
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->value = $json->value;
-        $this->isTransient = $json->isTransient;
+        $this->value = $data['value'];
+        $this->isTransient = $data['isTransient'];
     }
 
     public function isTransient(): bool

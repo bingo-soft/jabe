@@ -360,7 +360,7 @@ class BatchEntity implements BatchInterface, DbEntityInterface, HasDbReferencesI
         $conf = Context::getCommandContext()->getProcessEngineConfiguration();
         $pollTime = $conf->getBatchPollTime();
         $dueTime = ClockUtil::getCurrentTime()->getTimestamp() + $pollTime;
-        return (new \DateTime())->setTimestamp($dueTime)->format('c');
+        return (new \DateTime())->setTimestamp($dueTime)->format('Y-m-d H:i:s');
     }
 
     public function deleteMonitorJob(): void

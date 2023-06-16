@@ -7,7 +7,7 @@ use Jabe\Impl\Interceptor\{
     CommandContext
 };
 
-class UnlockUserCmd implements CommandInterface, \Serializable
+class UnlockUserCmd implements CommandInterface
 {
     private $userId;
 
@@ -16,17 +16,16 @@ class UnlockUserCmd implements CommandInterface, \Serializable
         $this->userId = $userId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'userId' => $this->userId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->userId = $json->userId;
+        $this->userId = $data['userId'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

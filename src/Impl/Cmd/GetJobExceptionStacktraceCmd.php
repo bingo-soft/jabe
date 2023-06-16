@@ -8,7 +8,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class GetJobExceptionStacktraceCmd implements CommandInterface, \Serializable
+class GetJobExceptionStacktraceCmd implements CommandInterface
 {
     private $jobId;
 
@@ -17,17 +17,16 @@ class GetJobExceptionStacktraceCmd implements CommandInterface, \Serializable
         $this->jobId = $jobId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'jobId' => $this->jobId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->jobId = $json->jobId;
+        $this->jobId = $data['jobId'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

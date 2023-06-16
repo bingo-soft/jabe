@@ -7,7 +7,7 @@ use Jabe\Impl\Interceptor\{
     CommandContext
 };
 
-class CheckPassword implements CommandInterface, \Serializable
+class CheckPassword implements CommandInterface
 {
     private $userId;
     private $password;
@@ -18,19 +18,18 @@ class CheckPassword implements CommandInterface, \Serializable
         $this->password = $password;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'userId' => $this->userId,
             'password' => $this->password
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->userId = $json->userId;
-        $this->password = $json->password;
+        $this->userId = $data['userId'];
+        $this->password = $data['password'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

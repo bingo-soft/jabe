@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Bpmn\SendTask;
+namespace Tests\Bpmn\ReceiveTask;
 
 use Jabe\Impl\Bpmn\Parser\BpmnParse;
 use Jabe\Impl\Event\EventType;

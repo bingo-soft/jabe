@@ -8,7 +8,7 @@ use Jabe\Impl\Interceptor\{
     CommandContext
 };
 
-abstract class AbstractPatchVariablesCmd implements CommandInterface, \Serializable
+abstract class AbstractPatchVariablesCmd implements CommandInterface
 {
     protected $entityId;
     protected $variables = [];

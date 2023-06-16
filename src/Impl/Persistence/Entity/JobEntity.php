@@ -35,7 +35,7 @@ use Jabe\Runtime\{
 };
 use Jabe\Impl\Util\ClassNameUtil;
 
-abstract class JobEntity extends AcquirableJobEntity implements \Serializable, HasDbReferencesInterface, JobInterface, DbEntityInterface, HasDbRevisionInterface, DbEntityLifecycleAwareInterface
+abstract class JobEntity extends AcquirableJobEntity implements HasDbReferencesInterface, JobInterface, DbEntityInterface, HasDbRevisionInterface, DbEntityLifecycleAwareInterface
 {
     //private final static EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
@@ -683,9 +683,9 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
         $this->failedActivityId = $failedActivityId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'revision' => $this->revision,
             'duedate' => $this->duedate,
@@ -704,29 +704,28 @@ abstract class JobEntity extends AcquirableJobEntity implements \Serializable, H
             'deploymentId' => $this->deploymentId,
             'priority' => $this->priority,
             'tenantId' => $this->tenantId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->revision = $json->revision;
-        $this->lockOwner = $json->lockOwner;
-        $this->lockExpirationTime = $json->lockExpirationTime;
-        $this->executionId = $json->executionId;
-        $this->processInstanceId = $json->processInstanceId;
-        $this->isExclusive = $json->isExclusive;
-        $this->jobDefinitionId = $json->jobDefinitionId;
-        $this->jobHandlerType = $json->jobHandlerType;
-        $this->jobHandlerConfiguration = $json->jobHandlerConfiguration;
-        $this->exceptionByteArray = unserialize($json->exceptionByteArray);
-        $this->exceptionByteArrayId = $json->exceptionByteArrayId;
-        $this->exceptionMessage = $json->exceptionMessage;
-        $this->failedActivityId = $json->failedActivityId;
-        $this->deploymentId = $json->deploymentId;
-        $this->priority = $json->priority;
-        $this->tenantId = $json->tenantId;
+        $this->id = $data['id'];
+        $this->revision = $data['revision'];
+        $this->lockOwner = $data['lockOwner'];
+        $this->lockExpirationTime = $data['lockExpirationTime'];
+        $this->executionId = $data['executionId'];
+        $this->processInstanceId = $data['processInstanceId'];
+        $this->isExclusive = $data['isExclusive'];
+        $this->jobDefinitionId = $data['jobDefinitionId'];
+        $this->jobHandlerType = $data['jobHandlerType'];
+        $this->jobHandlerConfiguration = $data['jobHandlerConfiguration'];
+        $this->exceptionByteArray = unserialize($data['exceptionByteArray']);
+        $this->exceptionByteArrayId = $data['exceptionByteArrayId'];
+        $this->exceptionMessage = $data['exceptionMessage'];
+        $this->failedActivityId = $data['failedActivityId'];
+        $this->deploymentId = $data['deploymentId'];
+        $this->priority = $data['priority'];
+        $this->tenantId = $data['tenantId'];
     }
 
     public function __toString()

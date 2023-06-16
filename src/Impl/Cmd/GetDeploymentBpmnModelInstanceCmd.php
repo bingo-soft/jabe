@@ -10,7 +10,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class GetDeploymentBpmnModelInstanceCmd implements CommandInterface, \Serializable
+class GetDeploymentBpmnModelInstanceCmd implements CommandInterface
 {
     protected $processDefinitionId;
 
@@ -22,17 +22,16 @@ class GetDeploymentBpmnModelInstanceCmd implements CommandInterface, \Serializab
         $this->processDefinitionId = $processDefinitionId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'processDefinitionId' => $this->processDefinitionId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->processDefinitionId = $json->processDefinitionId;
+        $this->processDefinitionId = $data['processDefinitionId'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

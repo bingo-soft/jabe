@@ -21,7 +21,7 @@ use Jabe\Impl\History\Producer\HistoryEventProducerInterface;
 use Jabe\Task\IdentityLinkInterface;
 use Jabe\Impl\Util\ClassNameUtil;
 
-class IdentityLinkEntity implements \Serializable, IdentityLinkInterface, DbEntityInterface, HasDbReferencesInterface
+class IdentityLinkEntity implements IdentityLinkInterface, DbEntityInterface, HasDbReferencesInterface
 {
     //protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
@@ -251,9 +251,9 @@ class IdentityLinkEntity implements \Serializable, IdentityLinkInterface, DbEnti
         return $referenceIdAndClass;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'type' => $this->type,
             'userId' => $this->userId,
@@ -261,18 +261,17 @@ class IdentityLinkEntity implements \Serializable, IdentityLinkInterface, DbEnti
             'taskId' => $this->taskId,
             'processDefId' => $this->processDefId,
             'tenantId' => $this->tenantId,
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->userId = $json->userId;
-        $this->groupId = $json->groupId;
-        $this->taskId = $json->taskId;
-        $this->processDefId = $json->processDefId;
-        $this->tenantId = $json->tenantId;
+        $this->id = $data['id'];
+        $this->userId = $data['userId'];
+        $this->groupId = $data['groupId'];
+        $this->taskId = $data['taskId'];
+        $this->processDefId = $data['processDefId'];
+        $this->tenantId = $data['tenantId'];
     }
 
     public function __toString()

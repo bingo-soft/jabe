@@ -8,7 +8,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class CreateTenantCmd extends AbstractWritableIdentityServiceCmd implements CommandInterface, \Serializable
+class CreateTenantCmd extends AbstractWritableIdentityServiceCmd implements CommandInterface
 {
     protected $tenantId;
 
@@ -18,17 +18,16 @@ class CreateTenantCmd extends AbstractWritableIdentityServiceCmd implements Comm
         $this->tenantId = $tenantId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'tenantId' => $this->tenantId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->tenantId = $json->tenantId;
+        $this->tenantId = $data['tenantId'];
     }
 
     protected function executeCmd(CommandContext $commandContext)

@@ -69,10 +69,10 @@ class TaskDecorator
             $dueDate = $dueDateExpression->getValue($variableScope);
             if ($dueDate !== null) {
                 if ($dueDate instanceof \DateTime) {
-                    $task->setDueDate($dueDate->format('c'));
+                    $task->setDueDate($dueDate->format('Y-m-d H:i:s'));
                 } elseif (is_string($dueDate)) {
                     $businessCalendar = $this->getBusinessCalender();
-                    $task->setDueDate($businessCalendar->resolveDuedate($dueDate/*, $task*/)->format('c'));
+                    $task->setDueDate($businessCalendar->resolveDuedate($dueDate/*, $task*/)->format('Y-m-d H:i:s'));
                 } else {
                     throw new ProcessEngineException("Due date expression does not resolve to a Date or Date string: " .
                         $dueDateExpression->getExpressionText());
@@ -88,10 +88,10 @@ class TaskDecorator
             $followUpDate = $followUpDateExpression->getValue($variableScope);
             if ($followUpDate !== null) {
                 if ($followUpDate instanceof \DateTime) {
-                    $task->setFollowUpDate($followUpDate->format('c'));
+                    $task->setFollowUpDate($followUpDate->format('Y-m-d H:i:s'));
                 } elseif (is_string($followUpDate)) {
                     $businessCalendar = $this->getBusinessCalender();
-                    $task->setFollowUpDate($businessCalendar->resolveDuedate($followUpDate/*, $task*/)->format('c'));
+                    $task->setFollowUpDate($businessCalendar->resolveDuedate($followUpDate/*, $task*/)->format('Y-m-d H:i:s'));
                 } else {
                     throw new ProcessEngineException("Follow up date expression does not resolve to a Date or Date string: " .
                         $followUpDateExpression->getExpressionText());

@@ -18,7 +18,7 @@ use Jabe\Impl\Persistence\Entity\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class DeleteHistoricVariableInstancesByProcessInstanceIdCmd implements CommandInterface, \Serializable
+class DeleteHistoricVariableInstancesByProcessInstanceIdCmd implements CommandInterface
 {
     private $processInstanceId;
 
@@ -27,17 +27,16 @@ class DeleteHistoricVariableInstancesByProcessInstanceIdCmd implements CommandIn
         $this->processInstanceId = $processInstanceId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'processInstanceId' => $this->processInstanceId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->processInstanceId = $json->processInstanceId;
+        $this->processInstanceId = $data['processInstanceId'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

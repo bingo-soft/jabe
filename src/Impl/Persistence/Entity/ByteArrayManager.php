@@ -27,7 +27,7 @@ class ByteArrayManager extends AbstractManager
 
     public function insertByteArray(ByteArrayEntity $arr): void
     {
-        $arr->setCreateTime(ClockUtil::getCurrentTime()->format('c'));
+        $arr->setCreateTime(ClockUtil::getCurrentTime()->format('Y-m-d H:i:s'));
         $this->getDbEntityManager()->insert($arr, ...$this->jobExecutorState);
     }
 

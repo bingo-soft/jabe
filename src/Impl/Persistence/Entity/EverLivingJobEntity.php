@@ -48,9 +48,9 @@ class EverLivingJobEntity extends JobEntity
         }
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'revision' => $this->revision,
             'duedate' => $this->duedate,
@@ -66,26 +66,25 @@ class EverLivingJobEntity extends JobEntity
             'exceptionByteArrayId' => $this->exceptionByteArrayId,
             'exceptionMessage' => $this->exceptionMessage,
             'deploymentId' => $this->deploymentId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->revision = $json->revision;
-        $this->lockOwner = $json->lockOwner;
-        $this->lockExpirationTime = $json->lockExpirationTime;
-        $this->executionId = $json->executionId;
-        $this->processInstanceId = $json->processInstanceId;
-        $this->isExclusive = $json->isExclusive;
-        $this->retries = $json->retries;
-        $this->jobHandlerType = $json->jobHandlerType;
-        $this->jobHandlerConfiguration = $json->jobHandlerConfiguration;
-        $this->exceptionByteArray = unserialize($json->exceptionByteArray);
-        $this->exceptionByteArrayId = $json->exceptionByteArrayId;
-        $this->exceptionMessage = $json->exceptionMessage;
-        $this->deploymentId = $json->deploymentId;
+        $this->id = $data['id'];
+        $this->revision = $data['revision'];
+        $this->lockOwner = $data['lockOwner'];
+        $this->lockExpirationTime = $data['lockExpirationTime'];
+        $this->executionId = $data['executionId'];
+        $this->processInstanceId = $data['processInstanceId'];
+        $this->isExclusive = $data['isExclusive'];
+        $this->retries = $data['retries'];
+        $this->jobHandlerType = $data['jobHandlerType'];
+        $this->jobHandlerConfiguration = $data['jobHandlerConfiguration'];
+        $this->exceptionByteArray = unserialize($data['exceptionByteArray']);
+        $this->exceptionByteArrayId = $data['exceptionByteArrayId'];
+        $this->exceptionMessage = $data['exceptionMessage'];
+        $this->deploymentId = $data['deploymentId'];
     }
 
     public function __toString()

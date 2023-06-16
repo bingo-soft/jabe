@@ -106,7 +106,7 @@ class TimerEntity extends JobEntity
             ->getBusinessCalendar(CycleBusinessCalendar::NAME);
         $date = $businessCalendar->resolveDuedate($this->repeat, null, $this->repeatOffset, ...$args);
         if ($date instanceof \DateTime) {
-            return $date->format('c');
+            return $date->format('Y-m-d H:i:s');
         }
         return null;
     }
@@ -143,9 +143,9 @@ class TimerEntity extends JobEntity
         return $persistentState;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'revision' => $this->revision,
             'duedate' => $this->duedate,
@@ -165,14 +165,13 @@ class TimerEntity extends JobEntity
             'priority' => $this->priority,
             'tenantId' => $this->tenantId,
             'repeat' => $this->repeat
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
         parent::unserialize($data);
-        $json = json_decode($data);
-        $this->repeat = $json->repeat;
+        $this->repeat = $data['repeat'];
     }
 
     public function __toString()

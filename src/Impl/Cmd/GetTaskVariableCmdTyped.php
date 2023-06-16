@@ -10,7 +10,7 @@ use Jabe\Impl\Interceptor\{
 use Jabe\Impl\Persistence\Entity\TaskEntity;
 use Jabe\Impl\Util\EnsureUtil;
 
-class GetTaskVariableCmdTyped implements CommandInterface, \Serializable
+class GetTaskVariableCmdTyped implements CommandInterface
 {
     protected $taskId;
     protected $variableName;
@@ -25,23 +25,22 @@ class GetTaskVariableCmdTyped implements CommandInterface, \Serializable
         $this->deserializeValue = $deserializeValue;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'taskId' => $this->taskId,
             'variableName' => $this->variableName,
             'isLocal' => $this->isLocal,
             'deserializeValue' => $this->deserializeValue
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->taskId = $json->taskId;
-        $this->variableName = $json->variableName;
-        $this->isLocal = $json->isLocal;
-        $this->deserializeValue = $json->deserializeValue;
+        $this->taskId = $data['taskId'];
+        $this->variableName = $data['variableName'];
+        $this->isLocal = $data['isLocal'];
+        $this->deserializeValue = $data['deserializeValue'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

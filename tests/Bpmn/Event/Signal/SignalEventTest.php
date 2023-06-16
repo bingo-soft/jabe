@@ -88,19 +88,12 @@ class SignalEventTest extends PluggableProcessEngineTest
         $this->assertEquals("catchSignal", $this->runtimeService->getVariable($pi->getId(), "processName"));
     }
 
-    #[Deployment(resources: [ "tests/Resources/Bpmn/Event/Signal/SignalEventTests.catchAlertSignal.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.throwAlertSignalAsynch.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.catchAlertSignal2.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.throwAlertSignalAsynch2.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.catchAlertSignal3.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.throwAlertSignalAsynch3.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.catchAlertSignal4.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.throwAlertSignalAsynch4.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.catchAlertSignal5.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.throwAlertSignalAsynch5.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.catchAlertSignal6.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.throwAlertSignalAsynch6.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.catchAlertSignal7.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.throwAlertSignalAsynch7.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.catchAlertSignal8.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.throwAlertSignalAsynch8.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.catchAlertSignal9.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.throwAlertSignalAsynch9.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.catchAlertSignal10.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.throwAlertSignalAsynch10.bpmn20.xml"])]
+    #[Deployment(resources: [ "tests/Resources/Bpmn/Event/Signal/SignalEventTests.catchAlertSignal.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.throwAlertSignalAsynch.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.catchAlertSignal2.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.throwAlertSignalAsynch2.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.catchAlertSignal3.bpmn20.xml", "tests/Resources/Bpmn/Event/Signal/SignalEventTests.throwAlertSignalAsynch3.bpmn20.xml"])]
     public function testSignalCatchIntermediateAsynch(): void
     {
         $processInstance1 = $this->runtimeService->startProcessInstanceByKey("catchSignal");
         $processInstance12 = $this->runtimeService->startProcessInstanceByKey("catchSignal2");
         $processInstance13 = $this->runtimeService->startProcessInstanceByKey("catchSignal3");
-        $processInstance14 = $this->runtimeService->startProcessInstanceByKey("catchSignal4");
-        $processInstance15 = $this->runtimeService->startProcessInstanceByKey("catchSignal5");
-        $processInstance16 = $this->runtimeService->startProcessInstanceByKey("catchSignal6");
-        $processInstance17 = $this->runtimeService->startProcessInstanceByKey("catchSignal7");
-        $processInstance18 = $this->runtimeService->startProcessInstanceByKey("catchSignal8");
-        $processInstance19 = $this->runtimeService->startProcessInstanceByKey("catchSignal9");
-        $processInstance110 = $this->runtimeService->startProcessInstanceByKey("catchSignal10");
 
         $this->assertEquals(1, $this->createEventSubscriptionQuery()->processInstanceId($processInstance1->getId())->count());
         $this->assertEquals(1, $this->runtimeService->createProcessInstanceQuery()->processInstanceId($processInstance1->getId())->count());
@@ -108,13 +101,6 @@ class SignalEventTest extends PluggableProcessEngineTest
         $processInstance2 = $this->runtimeService->startProcessInstanceByKey("throwSignal");
         $processInstance22 = $this->runtimeService->startProcessInstanceByKey("throwSignal2");
         $processInstance23 = $this->runtimeService->startProcessInstanceByKey("throwSignal3");
-        $processInstance24 = $this->runtimeService->startProcessInstanceByKey("throwSignal4");
-        $processInstance25 = $this->runtimeService->startProcessInstanceByKey("throwSignal5");
-        $processInstance26 = $this->runtimeService->startProcessInstanceByKey("throwSignal6");
-        $processInstance27 = $this->runtimeService->startProcessInstanceByKey("throwSignal7");
-        $processInstance28 = $this->runtimeService->startProcessInstanceByKey("throwSignal8");
-        $processInstance29 = $this->runtimeService->startProcessInstanceByKey("throwSignal9");
-        $processInstance210 = $this->runtimeService->startProcessInstanceByKey("throwSignal10");
 
         $this->assertEquals(1, $this->createEventSubscriptionQuery()->processInstanceId($processInstance1->getId())->count() + $this->createEventSubscriptionQuery()->processInstanceId($processInstance2->getId())->count());
         $this->assertEquals(1, $this->runtimeService->createProcessInstanceQuery()->processInstanceId($processInstance1->getId())->count() + $this->runtimeService->createProcessInstanceQuery()->processInstanceId($processInstance2->getId())->count());
@@ -124,7 +110,7 @@ class SignalEventTest extends PluggableProcessEngineTest
         try {
             $now = new \DateTime('now');
             //$this->testRule->waitForJobExecutorToProcessAllJobs($processInstance110->getId(), 120000);
-            sleep(120);
+            sleep(90);
             $this->assertEquals(0, $this->createEventSubscriptionQuery()->processInstanceId($processInstance1->getId())->count());
             $this->assertEquals(0, $this->runtimeService->createProcessInstanceQuery()->processInstanceId($processInstance1->getId())->count());
             $this->assertEquals(0, $this->managementService->createJobQuery()->processInstanceId($processInstance1->getId())->count());

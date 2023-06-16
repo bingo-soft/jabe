@@ -13,7 +13,7 @@ use Jabe\Management\{
     JobDefinitionQueryInterface
 };
 
-class JobDefinitionQueryImpl extends AbstractQuery implements JobDefinitionQueryInterface, \Serializable
+class JobDefinitionQueryImpl extends AbstractQuery implements JobDefinitionQueryInterface
 {
     protected $id;
     protected $activityIds = [];
@@ -32,9 +32,9 @@ class JobDefinitionQueryImpl extends AbstractQuery implements JobDefinitionQuery
         parent::__construct($commandExecutor);
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'activityIds' => $this->activityIds,
             'processDefinitionId' => $this->processDefinitionId,
@@ -46,23 +46,22 @@ class JobDefinitionQueryImpl extends AbstractQuery implements JobDefinitionQuery
             'isTenantIdSet' => $this->isTenantIdSet,
             'tenantIds' => $this->tenantIds,
             'includeJobDefinitionsWithoutTenantId' => $this->includeJobDefinitionsWithoutTenantId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->activityIds = $json->activityIds;
-        $this->processDefinitionId = $json->processDefinitionId;
-        $this->processDefinitionKey = $json->processDefinitionKey;
-        $this->jobType = $json->jobType;
-        $this->jobConfiguration = $json->jobConfiguration;
-        $this->suspensionState = unserialize($json->suspensionState);
-        $this->withOverridingJobPriority = $json->withOverridingJobPriority;
-        $this->isTenantIdSet = $json->isTenantIdSet;
-        $this->tenantIds = $json->tenantIds;
-        $this->includeJobDefinitionsWithoutTenantId = $json->includeJobDefinitionsWithoutTenantId;
+        $this->id = $data['id'];
+        $this->activityIds = $data['activityIds'];
+        $this->processDefinitionId = $data['processDefinitionId'];
+        $this->processDefinitionKey = $data['processDefinitionKey'];
+        $this->jobType = $data['jobType'];
+        $this->jobConfiguration = $data['jobConfiguration'];
+        $this->suspensionState = unserialize($data['suspensionState']);
+        $this->withOverridingJobPriority = $data['withOverridingJobPriority'];
+        $this->isTenantIdSet = $data['isTenantIdSet'];
+        $this->tenantIds = $data['tenantIds'];
+        $this->includeJobDefinitionsWithoutTenantId = $data['includeJobDefinitionsWithoutTenantId'];
     }
 
     public function jobDefinitionId(?string $jobDefinitionId): JobDefinitionQueryInterface

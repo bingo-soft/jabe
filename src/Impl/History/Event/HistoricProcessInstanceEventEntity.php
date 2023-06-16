@@ -122,9 +122,9 @@ class HistoricProcessInstanceEventEntity extends HistoricScopeInstanceEvent
         $this->state = $state;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'eventType' => $this->eventType,
             'executionId' => $this->executionId,
@@ -142,29 +142,28 @@ class HistoricProcessInstanceEventEntity extends HistoricScopeInstanceEvent
             'endTime' => $this->endTime,
             'endActivityId' => $this->endActivityId,
             'startActivityId' => $this->startActivityId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->eventType = $json->eventType;
-        $this->executionId = $json->executionId;
-        $this->processDefinitionId = $json->processDefinitionId;
-        $this->processInstanceId = $json->processInstanceId;
-        $this->rootProcessInstanceId = $json->rootProcessInstanceId;
-        $this->removalTime = $json->removalTime;
-        $this->tenantId = $json->tenantId;
-        $this->businessKey = $json->businessKey;
-        $this->startUserId = $json->startUserId;
-        $this->superProcessInstanceId = $json->superProcessInstanceId;
-        $this->deleteReason = $json->deleteReason;
-        $this->durationInMillis = $json->durationInMillis;
-        $this->startTime = $json->startTime;
-        $this->endTime = $json->endTime;
-        $this->endActivityId = $json->endActivityId;
-        $this->startActivityId = $json->startActivityId;
+        $this->id = $data['id'];
+        $this->eventType = $data['eventType'];
+        $this->executionId = $data['executionId'];
+        $this->processDefinitionId = $data['processDefinitionId'];
+        $this->processInstanceId = $data['processInstanceId'];
+        $this->rootProcessInstanceId = $data['rootProcessInstanceId'];
+        $this->removalTime = $data['removalTime'];
+        $this->tenantId = $data['tenantId'];
+        $this->businessKey = $data['businessKey'];
+        $this->startUserId = $data['startUserId'];
+        $this->superProcessInstanceId = $data['superProcessInstanceId'];
+        $this->deleteReason = $data['deleteReason'];
+        $this->durationInMillis = $data['durationInMillis'];
+        $this->startTime = $data['startTime'];
+        $this->endTime = $data['endTime'];
+        $this->endActivityId = $data['endActivityId'];
+        $this->startActivityId = $data['startActivityId'];
     }
 
     public function __toString()

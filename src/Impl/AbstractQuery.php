@@ -261,7 +261,7 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
 
             // automatically convert DateTime to date
             if ($value instanceof \DateTime) {
-                $value = $value->format('c');
+                $value = $value->format('Y-m-d H:i:s');
             }
 
             try {

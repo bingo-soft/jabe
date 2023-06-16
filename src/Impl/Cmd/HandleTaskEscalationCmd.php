@@ -9,7 +9,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class HandleTaskEscalationCmd implements CommandInterface, \Serializable
+class HandleTaskEscalationCmd implements CommandInterface
 {
     protected $taskId;
     protected $escalationCode;
@@ -22,21 +22,20 @@ class HandleTaskEscalationCmd implements CommandInterface, \Serializable
         $this->variables = $variables;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'taskId' => $this->taskId,
             'escalationCode' => $this->escalationCode,
             'variables' => $this->variables
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->taskId = $json->taskId;
-        $this->escalationCode = $json->escalationCode;
-        $this->variables = $json->variables;
+        $this->taskId = $data['taskId'];
+        $this->escalationCode = $data['escalationCode'];
+        $this->variables = $data['variables'];
     }
 
     protected function validateInput(): void

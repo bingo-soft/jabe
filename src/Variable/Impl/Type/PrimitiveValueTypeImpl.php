@@ -33,19 +33,18 @@ abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl implements P
         return "PrimitiveValueType[" . $this->getName() . "]";
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'name' => $this->getName(),
             'phpType' => $this->phpType
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->name = $json->name;
-        $this->phpType = $json->phpType;
+        $this->name = $data['name'];
+        $this->phpType = $data['phpType'];
     }
 
     public function getValueInfo(TypedValueInterface $typedValue): array

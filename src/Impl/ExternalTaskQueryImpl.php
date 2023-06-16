@@ -321,6 +321,6 @@ class ExternalTaskQueryImpl extends AbstractQuery implements ExternalTaskQueryIn
 
     public function getNow(): ?string
     {
-        return ClockUtil::getCurrentTime()->format('c');
+        return ClockUtil::getCurrentTime()->format('Y-m-d H:i:s');
     }
 }

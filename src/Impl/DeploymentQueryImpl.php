@@ -12,7 +12,7 @@ use Jabe\Impl\Util\{
 };
 use Jabe\Repository\DeploymentQueryInterface;
 
-class DeploymentQueryImpl extends AbstractQuery implements DeploymentQueryInterface, \Serializable
+class DeploymentQueryImpl extends AbstractQuery implements DeploymentQueryInterface
 {
     protected $deploymentId;
     protected $name;
@@ -31,9 +31,9 @@ class DeploymentQueryImpl extends AbstractQuery implements DeploymentQueryInterf
         parent::__construct($commandExecutor);
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'deploymentId' => $this->deploymentId,
             'name' => $this->name,
             'nameLike' => $this->nameLike,
@@ -44,22 +44,21 @@ class DeploymentQueryImpl extends AbstractQuery implements DeploymentQueryInterf
             'isTenantIdSet' => $this->isTenantIdSet,
             'tenantIds' => $this->tenantIds,
             'includeDeploymentsWithoutTenantId' => $this->includeDeploymentsWithoutTenantId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->deploymentId = $json->deploymentId;
-        $this->name = $json->name;
-        $this->nameLike = $json->nameLike;
-        $this->sourceQueryParamEnabled = $json->sourceQueryParamEnabled;
-        $this->source = $json->source;
-        $this->deploymentBefore = $json->deploymentBefore;
-        $this->deploymentAfter = $json->deploymentAfter;
-        $this->isTenantIdSet = $json->isTenantIdSet;
-        $this->tenantIds = $json->tenantIds;
-        $this->includeDeploymentsWithoutTenantId = $json->includeDeploymentsWithoutTenantId;
+        $this->deploymentId = $data['deploymentId'];
+        $this->name = $data['name'];
+        $this->nameLike = $data['nameLike'];
+        $this->sourceQueryParamEnabled = $data['sourceQueryParamEnabled'];
+        $this->source = $data['source'];
+        $this->deploymentBefore = $data['deploymentBefore'];
+        $this->deploymentAfter = $data['deploymentAfter'];
+        $this->isTenantIdSet = $data['isTenantIdSet'];
+        $this->tenantIds = $data['tenantIds'];
+        $this->includeDeploymentsWithoutTenantId = $data['includeDeploymentsWithoutTenantId'];
     }
 
     public function deploymentId(?string $deploymentId): DeploymentQueryImpl

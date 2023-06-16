@@ -70,7 +70,7 @@ class JobManager extends AbstractManager
         if (empty($args)) {
             $args = $this->jobExecutorState;
         }
-        $job->setCreateTime(ClockUtil::getCurrentTime(...$args)->format('c'));
+        $job->setCreateTime(ClockUtil::getCurrentTime(...$args)->format('Y-m-d H:i:s'));
 
         $this->getDbEntityManager()->insert($job, ...$args);
         $this->getHistoricJobLogManager()->fireJobCreatedEvent($job);
@@ -213,7 +213,7 @@ class JobManager extends AbstractManager
         $engineConfiguration = Context::getProcessEngineConfiguration();
 
         $params = [];
-        $now = ClockUtil::getCurrentTime(...$this->jobExecutorState)->format('c');
+        $now = ClockUtil::getCurrentTime(...$this->jobExecutorState)->format('Y-m-d H:i:s');
         $params["now"] = $now;
         $params["alwaysSetDueDate"] = $this->isEnsureJobDueDateNotNull();
         $params["deploymentAware"] = $engineConfiguration->isJobExecutorDeploymentAware();

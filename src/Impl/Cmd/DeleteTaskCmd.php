@@ -14,7 +14,7 @@ use Jabe\Impl\Persistence\Entity\{
     TaskManager
 };
 
-class DeleteTaskCmd implements CommandInterface, \Serializable
+class DeleteTaskCmd implements CommandInterface
 {
     protected $taskId;
     protected $taskIds = [];
@@ -32,23 +32,22 @@ class DeleteTaskCmd implements CommandInterface, \Serializable
         $this->deleteReason = $deleteReason;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'taskId' => $this->taskId,
             'taskIds' => $this->taskIds,
             'cascade' => $this->cascade,
             'deleteReason' => $this->deleteReason
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->taskId = $json->taskId;
-        $this->taskIds = $json->taskIds;
-        $this->cascade = $json->cascade;
-        $this->deleteReason = $json->deleteReason;
+        $this->taskId = $data['taskId'];
+        $this->taskIds = $data['taskIds'];
+        $this->cascade = $data['cascade'];
+        $this->deleteReason = $data['deleteReason'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

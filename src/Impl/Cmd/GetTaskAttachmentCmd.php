@@ -7,7 +7,7 @@ use Jabe\Impl\Interceptor\{
     CommandContext
 };
 
-class GetTaskAttachmentCmd implements CommandInterface, \Serializable
+class GetTaskAttachmentCmd implements CommandInterface
 {
     protected $attachmentId;
     protected $taskId;
@@ -18,19 +18,18 @@ class GetTaskAttachmentCmd implements CommandInterface, \Serializable
         $this->taskId = $taskId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'taskId' => $this->taskId,
             'attachmentId' => $this->attachmentId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->taskId = $json->taskId;
-        $this->attachmentId = $json->attachmentId;
+        $this->taskId = $data['taskId'];
+        $this->attachmentId = $data['attachmentId'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

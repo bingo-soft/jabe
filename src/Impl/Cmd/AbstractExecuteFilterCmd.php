@@ -8,7 +8,7 @@ use Jabe\Impl\Util\EnsureUtil;
 use Jabe\Query\QueryInterface;
 use Jabe\Task\TaskQueryInterface;
 
-abstract class AbstractExecuteFilterCmd implements \Serializable
+abstract class AbstractExecuteFilterCmd
 {
     protected $filterId;
     protected $extendingQuery;
@@ -19,19 +19,18 @@ abstract class AbstractExecuteFilterCmd implements \Serializable
         $this->extendingQuery = $extendingQuery;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'filterId' => $this->filterId,
             'extendingQuery' => serialize($this->extendingQuery)
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->filterId = $json->filterId;
-        $this->extendingQuery = unserialize($json->extendingQuery);
+        $this->filterId = $data['filterId'];
+        $this->extendingQuery = unserialize($data['extendingQuery']);
     }
 
     protected function getFilter(CommandContext $commandContext): FilterInterface

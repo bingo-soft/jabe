@@ -24,7 +24,7 @@ class ReportDbMetricsValueCmd implements CommandInterface
 
     public function execute(CommandContext $commandContext, ...$args)
     {
-        $commandContext->getMeterLogManager()->insert(new MeterLogEntity($this->name, $this->reporterId, $this->value, ClockUtil::getCurrentTime()->format('c')));
+        $commandContext->getMeterLogManager()->insert(new MeterLogEntity($this->name, $this->reporterId, $this->value, ClockUtil::getCurrentTime()->format('Y-m-d H:i:s')));
         return null;
     }
 

@@ -8,14 +8,14 @@ use Jabe\Form\{
     FormPropertyInterface
 };
 
-class FormDataImpl implements FormDataInterface, \Serializable
+class FormDataImpl implements FormDataInterface
 {
     protected $formKey;
     protected $deploymentId;
     protected $formProperties = [];
     protected $formFields = [];
 
-    public function serialize()
+    public function __serialize(): array
     {
         $formProperties = [];
         foreach ($this->formProperties as $prop) {
@@ -25,28 +25,27 @@ class FormDataImpl implements FormDataInterface, \Serializable
         foreach ($this->formFields as $field) {
             $formFields[] = serialize($field);
         }
-        return json_encode([
+        return [
             'formKey' => $this->formKey,
             'deploymentId' => $this->deploymentId,
             'formProperties' => $formProperties,
             'formFields' => $formFields
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->formKey = $json->formKey;
-        $this->deploymentId = $json->deploymentId;
+        $this->formKey = $data['formKey'];
+        $this->deploymentId = $data['deploymentId'];
 
         $props = [];
-        foreach ($json->formProperties as $prop) {
+        foreach ($data['formProperties'] as $prop) {
             $props[] = unserialize($prop);
         }
         $this->formProperties = $props;
 
         $fields = [];
-        foreach ($json->formFields as $field) {
+        foreach ($data['formFields'] as $field) {
             $fields[] = unserialize($field);
         }
         $this->formFields = $fields;

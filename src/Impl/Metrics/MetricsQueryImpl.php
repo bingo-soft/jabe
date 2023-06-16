@@ -15,7 +15,7 @@ use Jabe\Management\{
     MetricsQueryInterface
 };
 
-class MetricsQueryImpl extends ListQueryParameterObject implements \Serializable, CommandInterface, MetricsQueryInterface
+class MetricsQueryImpl extends ListQueryParameterObject implements CommandInterface, MetricsQueryInterface
 {
     public const DEFAULT_LIMIT_SELECT_INTERVAL = 200;
     public const DEFAULT_SELECT_INTERVAL = 15 * 60;
@@ -38,9 +38,9 @@ class MetricsQueryImpl extends ListQueryParameterObject implements \Serializable
         $this->interval = self::DEFAULT_SELECT_INTERVAL;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'name' => $this->name,
             'reporter' => $this->reporter,
             'startDate' => $this->startDate,
@@ -49,20 +49,19 @@ class MetricsQueryImpl extends ListQueryParameterObject implements \Serializable
             'endDateMilliseconds' => $this->endDateMilliseconds,
             'interval' => $this->interval,
             'aggregateByReporter' => $this->aggregateByReporter
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->name = $json->name;
-        $this->reporter = $json->reporter;
-        $this->startDate = $json->startDate;
-        $this->endDate = $json->endDate;
-        $this->startDateMilliseconds = $json->startDateMilliseconds;
-        $this->endDateMilliseconds = $json->endDateMilliseconds;
-        $this->interval = $json->interval;
-        $this->aggregateByReporter = $json->aggregateByReporter;
+        $this->name = $data['name'];
+        $this->reporter = $data['reporter'];
+        $this->startDate = $data['startDate'];
+        $this->endDate = $data['endDate'];
+        $this->startDateMilliseconds = $data['startDateMilliseconds'];
+        $this->endDateMilliseconds = $data['endDateMilliseconds'];
+        $this->interval = $data['interval'];
+        $this->aggregateByReporter = $data['aggregateByReporter'];
     }
 
     public function name(?string $name): MetricsQueryImpl

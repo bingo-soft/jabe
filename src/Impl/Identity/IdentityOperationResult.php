@@ -13,18 +13,18 @@ class IdentityOperationResult
     protected $value;
     protected $operation;
 
-    public function __construct(?\Serializable $value, ?string $operation)
+    public function __construct($value, ?string $operation)
     {
         $this->value = $value;
         $this->operation = $operation;
     }
 
-    public function getValue(): \Serializable
+    public function getValue()
     {
         return $this->value;
     }
 
-    public function setValue(\Serializable $value): void
+    public function setValue($value): void
     {
         $this->value = $value;
     }

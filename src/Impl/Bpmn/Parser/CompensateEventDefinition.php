@@ -2,24 +2,23 @@
 
 namespace Jabe\Impl\Bpmn\Parser;
 
-class CompensateEventDefinition implements \Serializable
+class CompensateEventDefinition
 {
     protected $activityRef;
     protected $waitForCompletion;
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'activityRef' => $this->activityRef,
             'waitForCompletion' => $this->waitForCompletion
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->activityRef = $json->activityRef;
-        $this->waitForCompletion = $json->waitForCompletion;
+        $this->activityRef = $data['activityRef'];
+        $this->waitForCompletion = $data['waitForCompletion'];
     }
 
     public function getActivityRef(): ?string

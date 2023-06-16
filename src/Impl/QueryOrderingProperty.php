@@ -8,7 +8,7 @@ use Jabe\Task\{
 };
 use Jabe\Query\QueryPropertyInterface;
 
-class QueryOrderingProperty implements \Serializable
+class QueryOrderingProperty
 {
 
     public const RELATION_VARIABLE = "variable";
@@ -32,30 +32,29 @@ class QueryOrderingProperty implements \Serializable
         }
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
         $relationConditions = [];
         foreach ($this->relationConditions as $cond) {
             $relationConditions[] = serialize($cond);
         }
-        return json_encode([
+        return [
             'relation' => $this->relation,
             'queryProperty' => serialize($this->queryProperty),
             'direction' => serialize($this->direction),
             'relationConditions' => $relationConditions
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
         $relationConditions = [];
-        foreach ($json->relationConditions as $cond) {
+        foreach ($data['relationConditions'] as $cond) {
             $relationConditions[] = unserialize($cond);
         }
-        $this->relation = $json->relation;
-        $this->queryProperty = unserialize($json->queryProperty);
-        $this->direction = unserialize($json->direction);
+        $this->relation = $data['relation'];
+        $this->queryProperty = unserialize($data['queryProperty']);
+        $this->direction = unserialize($data['direction']);
         $this->relationConditions = $relationConditions;
     }
 

@@ -10,7 +10,7 @@ use Jabe\Repository\{
 };
 use Jabe\Impl\Util\ClassNameUtil;
 
-class DeploymentEntity implements \Serializable, DeploymentWithDefinitionsInterface, DbEntityInterface
+class DeploymentEntity implements DeploymentWithDefinitionsInterface, DbEntityInterface
 {
     protected $id;
     protected $name;
@@ -21,13 +21,13 @@ class DeploymentEntity implements \Serializable, DeploymentWithDefinitionsInterf
     protected $source;
     protected $tenantId;
 
-    public function serialize()
+    public function __serialize(): array
     {
         $resources = [];
         foreach ($this->resources as $resouce) {
             $resources[] = serialize($resouce);
         }
-        return json_encode([
+        return [
             'id' => $this->id,
             'name' => $this->name,
             'resources' => $resources,
@@ -36,24 +36,23 @@ class DeploymentEntity implements \Serializable, DeploymentWithDefinitionsInterf
             'isNew' => $this->isNew,
             'source' => $this->source,
             'tenantId' => $this->tenantId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->name = $json->name;
+        $this->id = $data['id'];
+        $this->name = $data['name'];
         $resources = [];
-        foreach ($json->resources as $resource) {
+        foreach ($data['resources'] as $resource) {
             $resources[] = unserialize($resource);
         }
         $this->resources = $resources;
-        $this->deploymentTime = $json->deploymentTime;
-        $this->validatingSchema = $json->validatingSchema;
-        $this->isNew = $json->isNew;
-        $this->source = $json->source;
-        $this->tenantId = $json->tenantId;
+        $this->deploymentTime = $data['deploymentTime'];
+        $this->validatingSchema = $data['validatingSchema'];
+        $this->isNew = $data['isNew'];
+        $this->source = $data['source'];
+        $this->tenantId = $data['tenantId'];
     }
 
     /**
@@ -185,7 +184,7 @@ class DeploymentEntity implements \Serializable, DeploymentWithDefinitionsInterf
         if (is_string($deploymentTime)) {
             $this->deploymentTime = $deploymentTime;
         } elseif ($deploymentTime instanceof \DateTime) {
-            $this->deploymentTime = $deploymentTime->format('c');
+            $this->deploymentTime = $deploymentTime->format('Y-m-d H:i:s');
         }
     }
 

@@ -14,7 +14,7 @@ use Jabe\Runtime\{
     JobInterface
 };
 
-class PluggableProcessEngineTest extends TestCase
+abstract class PluggableProcessEngineTest extends TestCase
 {
     protected $engineRule;
     protected $testRule;

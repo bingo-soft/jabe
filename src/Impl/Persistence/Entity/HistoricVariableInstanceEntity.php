@@ -25,7 +25,7 @@ use Jabe\Repository\ResourceTypes;
 use Jabe\Variable\Value\TypedValueInterface;
 use Jabe\Impl\Util\ClassNameUtil;
 
-class HistoricVariableInstanceEntity implements ValueFieldsInterface, HistoricVariableInstanceInterface, DbEntityInterface, HasDbRevisionInterface, HistoricEntityInterface, \Serializable, DbEntityLifecycleAwareInterface
+class HistoricVariableInstanceEntity implements ValueFieldsInterface, HistoricVariableInstanceInterface, DbEntityInterface, HasDbRevisionInterface, HistoricEntityInterface, DbEntityLifecycleAwareInterface
 {
     //protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
@@ -428,9 +428,9 @@ class HistoricVariableInstanceEntity implements ValueFieldsInterface, HistoricVa
         $this->removalTime = $removalTime;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'processDefinitionKey' => $this->processDefinitionKey,
             'processDefinitionId' => $this->processDefinitionId,
@@ -448,29 +448,28 @@ class HistoricVariableInstanceEntity implements ValueFieldsInterface, HistoricVa
             'textValue' => $this->textValue,
             'textValue2' => $this->textValue2,
             'state' => $this->state
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->processDefinitionKey = $json->processDefinitionKey;
-        $this->processDefinitionId = $json->processDefinitionId;
-        $this->rootProcessInstanceId = $json->rootProcessInstanceId;
-        $this->removalTime = $json->removalTime;
-        $this->processInstanceId = $json->processInstanceId;
-        $this->taskId = $json->taskId;
-        $this->executionId = $json->executionId;
-        $this->tenantId = $json->tenantId;
-        $this->name = $json->name;
-        $this->createTime = $json->createTime;
-        $this->revision = $json->revision;
-        $this->longValue = $json->longValue;
-        $this->doubleValue = $json->doubleValue;
-        $this->textValue = $json->textValue;
-        $this->textValue2 = $json->textValue2;
-        $this->state = $json->state;
+        $this->id = $data['id'];
+        $this->processDefinitionKey = $data['processDefinitionKey'];
+        $this->processDefinitionId = $data['processDefinitionId'];
+        $this->rootProcessInstanceId = $data['rootProcessInstanceId'];
+        $this->removalTime = $data['removalTime'];
+        $this->processInstanceId = $data['processInstanceId'];
+        $this->taskId = $data['taskId'];
+        $this->executionId = $data['executionId'];
+        $this->tenantId = $data['tenantId'];
+        $this->name = $data['name'];
+        $this->createTime = $data['createTime'];
+        $this->revision = $data['revision'];
+        $this->longValue = $data['longValue'];
+        $this->doubleValue = $data['doubleValue'];
+        $this->textValue = $data['textValue'];
+        $this->textValue2 = $data['textValue2'];
+        $this->state = $data['state'];
     }
 
     public function __toString()

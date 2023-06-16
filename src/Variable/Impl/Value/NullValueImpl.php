@@ -47,12 +47,12 @@ class NullValueImpl implements TypedValueInterface
         return "Untyped 'null' value";
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return serialize("Untyped 'null' value");
+        return ["Untyped 'null' value"];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
     }
 

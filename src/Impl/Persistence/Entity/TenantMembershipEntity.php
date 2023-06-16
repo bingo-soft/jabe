@@ -4,7 +4,7 @@ namespace Jabe\Impl\Persistence\Entity;
 
 use Jabe\Impl\Db\DbEntityInterface;
 
-class TenantMembershipEntity implements \Serializable, DbEntityInterface
+class TenantMembershipEntity implements DbEntityInterface
 {
     protected $tenant;
     protected $user;
@@ -81,23 +81,22 @@ class TenantMembershipEntity implements \Serializable, DbEntityInterface
         $this->tenant = $tenant;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'tenant' => serialize($this->tenant),
             'user' => serialize($this->user),
             'group' => serialize($this->group),
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->tenant = unserialize($json->tenant);
-        $this->user = unserialize($json->user);
-        $this->group = unserialize($json->group);
+        $this->id = $data['id'];
+        $this->tenant = unserialize($data['tenant']);
+        $this->user = unserialize($data['user']);
+        $this->group = unserialize($data['group']);
     }
 
     public function __toString()

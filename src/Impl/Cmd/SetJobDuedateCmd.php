@@ -13,7 +13,7 @@ use Jabe\Impl\Persistence\Entity\{
     TimerEntity
 };
 
-class SetJobDuedateCmd implements CommandInterface, \Serializable
+class SetJobDuedateCmd implements CommandInterface
 {
     private $jobId;
     private $newDuedate;
@@ -29,21 +29,20 @@ class SetJobDuedateCmd implements CommandInterface, \Serializable
         $this->cascade = $cascade;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'jobId' => $this->jobId,
             'newDuedate' => $this->newDuedate,
             'cascade' => $this->cascade
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->jobId = $json->jobId;
-        $this->newDuedate = $json->newDuedate;
-        $this->cascade = $json->cascade;
+        $this->jobId = $data['jobId'];
+        $this->newDuedate = $data['newDuedate'];
+        $this->cascade = $data['cascade'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

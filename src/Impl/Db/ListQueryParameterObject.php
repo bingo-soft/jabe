@@ -2,7 +2,7 @@
 
 namespace Jabe\Impl\Db;
 
-class ListQueryParameterObject implements \Serializable
+class ListQueryParameterObject
 {
     protected $authCheck;
 
@@ -106,32 +106,31 @@ class ListQueryParameterObject implements \Serializable
         $this->orderingProperties = $orderingProperties;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
         $orderingProperties = [];
         foreach ($this->orderingProperties as $prop) {
             $orderingProperties[] = serialize($prop);
         }
-        return json_encode([
+        return [
             'parameter' => $this->parameter,
             'firstResult' => $this->firstResult,
             'maxResults' => $this->maxResults,
             'authCheck' => serialize($this->authCheck),
             'tenantCheck' => serialize($this->tenantCheck),
             'orderingProperties' => $orderingProperties
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->parameter = $json->parameter;
-        $this->firstResult = $json->firstResult;
-        $this->maxResults = $json->maxResults;
-        $this->authCheck = unserialize($json->authCheck);
-        $this->tenantCheck = unserialize($json->tenantCheck);
+        $this->parameter = $data['parameter'];
+        $this->firstResult = $data['firstResult'];
+        $this->maxResults = $data['maxResults'];
+        $this->authCheck = unserialize($data['authCheck']);
+        $this->tenantCheck = unserialize($data['tenantCheck']);
         $props = [];
-        foreach ($json->orderingProperties as $prop) {
+        foreach ($data['orderingProperties'] as $prop) {
             $props[] = unserialize($prop);
         }
         $this->orderingProperties = $props;

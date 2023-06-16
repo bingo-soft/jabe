@@ -80,12 +80,12 @@ abstract class ProcessEngines
             Class< ? > springConfigurationHelperClass = ReflectUtil.loadClass("org.engine.bpm.engine.spring.SpringConfigurationHelper");
             Method method = springConfigurationHelperClass.getMethod("buildProcessEngine", new Class<?>[]{URL.class});
             ProcessEngine processEngine = (ProcessEngine) method.invoke(null, new Object[]{resource});
-    
+   
             String processEngineName = processEngine.getName();
             ProcessEngineInfo processEngineInfo = new ProcessEngineInfoImpl(processEngineName, resource.toString(), null);
             processEngineInfosByName.put(processEngineName, processEngineInfo);
             processEngineInfosByResourceUrl.put(resource.toString(), processEngineInfo);
-    
+   
         } catch (Exception e) {
             throw new ProcessEngineException("couldn't initialize process engine from spring configuration resource "+resource.toString()+": "+e.getMessage(), e);
         }

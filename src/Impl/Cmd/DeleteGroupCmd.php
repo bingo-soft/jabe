@@ -8,7 +8,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class DeleteGroupCmd extends AbstractWritableIdentityServiceCmd implements CommandInterface, \Serializable
+class DeleteGroupCmd extends AbstractWritableIdentityServiceCmd implements CommandInterface
 {
     private $groupId;
 
@@ -17,17 +17,16 @@ class DeleteGroupCmd extends AbstractWritableIdentityServiceCmd implements Comma
         $this->groupId = $groupId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'groupId' => $this->groupId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->groupId = $json->groupId;
+        $this->groupId = $data['groupId'];
     }
 
     protected function executeCmd(CommandContext $commandContext)

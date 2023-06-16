@@ -8,7 +8,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Persistence\Entity\IdentityInfoEntity;
 
-class SetUserInfoCmd implements CommandInterface, \Serializable
+class SetUserInfoCmd implements CommandInterface
 {
     protected $userId;
     protected $userPassword;
@@ -36,27 +36,26 @@ class SetUserInfoCmd implements CommandInterface, \Serializable
         }
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'userId' => $this->userId,
             'type' => $this->type,
             'key' => $this->key,
             'value' => $this->value,
             'accountPassword' => $this->accountPassword,
             'accountDetails' => $this->accountDetails
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->userId = $json->userId;
-        $this->type = $json->type;
-        $this->key = $json->key;
-        $this->value = $json->value;
-        $this->accountPassword = $json->accountPassword;
-        $this->accountDetails = $json->accountDetails;
+        $this->userId = $data['userId'];
+        $this->type = $data['type'];
+        $this->key = $data['key'];
+        $this->value = $data['value'];
+        $this->accountPassword = $data['accountPassword'];
+        $this->accountDetails = $data['accountDetails'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

@@ -7,7 +7,7 @@ use Jabe\Impl\Interceptor\{
     CommandContext
 };
 
-class GetProcessInstanceCommentsCmd implements CommandInterface, \Serializable
+class GetProcessInstanceCommentsCmd implements CommandInterface
 {
     protected $processInstanceId;
 
@@ -16,17 +16,16 @@ class GetProcessInstanceCommentsCmd implements CommandInterface, \Serializable
         $this->processInstanceId = $taskId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'processInstanceId' => $this->processInstanceId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->processInstanceId = $json->processInstanceId;
+        $this->processInstanceId = $data['processInstanceId'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

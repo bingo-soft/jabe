@@ -374,16 +374,16 @@ class JsonTaskQueryConverter extends JsonObjectConverter
             $query->activityInstanceIdIn(JsonUtil::getArray($json, self::ACTIVITY_INSTANCE_ID_IN));
         }
         if (property_exists($json, self::CREATED)) {
-            $query->taskCreatedOn((new \DateTime())->setTimestamp(JsonUtil::getLong($json, self::CREATED))->format('c'));
+            $query->taskCreatedOn((new \DateTime())->setTimestamp(JsonUtil::getLong($json, self::CREATED))->format('Y-m-d H:i:s'));
         }
         if (property_exists($json, self::CREATED_BEFORE)) {
-            $query->taskCreatedBefore((new \DateTime())->setTimestamp(JsonUtil::getLong($json, self::CREATED_BEFORE))->format('c'));
+            $query->taskCreatedBefore((new \DateTime())->setTimestamp(JsonUtil::getLong($json, self::CREATED_BEFORE))->format('Y-m-d H:i:s'));
         }
         if (property_exists($json, self::CREATED_AFTER)) {
-            $query->taskCreatedAfter((new \DateTime())->setTimestamp(JsonUtil::getLong($json, self::CREATED_AFTER))->format('c'));
+            $query->taskCreatedAfter((new \DateTime())->setTimestamp(JsonUtil::getLong($json, self::CREATED_AFTER))->format('Y-m-d H:i:s'));
         }
         if (property_exists($json, self::UPDATED_AFTER)) {
-            $query->taskUpdatedAfter((new \DateTime())->setTimestamp(JsonUtil::getLong($json, self::UPDATED_AFTER))->format('c'));
+            $query->taskUpdatedAfter((new \DateTime())->setTimestamp(JsonUtil::getLong($json, self::UPDATED_AFTER))->format('Y-m-d H:i:s'));
         }
         if (property_exists($json, self::KEY)) {
             $query->taskDefinitionKey(JsonUtil::getString($json, self::KEY));
@@ -431,25 +431,25 @@ class JsonTaskQueryConverter extends JsonObjectConverter
             addVariables(query, JsonUtil::getArray($json, self::CASE_INSTANCE_VARIABLES), false, false);
         }*/
         if (property_exists($json, self::DUE)) {
-            $query->dueDate((new \DateTime())->setTimestamp(JsonUtil::getLong($json, self::DUE))->format('c'));
+            $query->dueDate((new \DateTime())->setTimestamp(JsonUtil::getLong($json, self::DUE))->format('Y-m-d H:i:s'));
         }
         if (property_exists($json, self::DUE_BEFORE)) {
-            $query->dueBefore((new \DateTime())->setTimestamp(JsonUtil::getLong($json, self::DUE_BEFORE))->format('c'));
+            $query->dueBefore((new \DateTime())->setTimestamp(JsonUtil::getLong($json, self::DUE_BEFORE))->format('Y-m-d H:i:s'));
         }
         if (property_exists($json, self::DUE_AFTER)) {
-            $query->dueAfter((new \DateTime())->setTimestamp(JsonUtil::getLong($json, self::DUE_AFTER))->format('c'));
+            $query->dueAfter((new \DateTime())->setTimestamp(JsonUtil::getLong($json, self::DUE_AFTER))->format('Y-m-d H:i:s'));
         }
         if (property_exists($json, self::WITHOUT_DUE_DATE)) {
             $query->withoutDueDate();
         }
         if (property_exists($json, self::FOLLOW_UP)) {
-            $query->followUpDate((new \DateTime())->setTimestamp(JsonUtil::getLong($json, self::FOLLOW_UP))->format('c'));
+            $query->followUpDate((new \DateTime())->setTimestamp(JsonUtil::getLong($json, self::FOLLOW_UP))->format('Y-m-d H:i:s'));
         }
         if (property_exists($json, self::FOLLOW_UP_BEFORE)) {
-            $query->followUpBefore((new \DateTime())->setTimestamp(JsonUtil::getLong($json, self::FOLLOW_UP_BEFORE))->format('c'));
+            $query->followUpBefore((new \DateTime())->setTimestamp(JsonUtil::getLong($json, self::FOLLOW_UP_BEFORE))->format('Y-m-d H:i:s'));
         }
         if (property_exists($json, self::FOLLOW_UP_AFTER)) {
-            $query->followUpAfter((new \DateTime())->setTimestamp(JsonUtil::getLong($json, self::FOLLOW_UP_AFTER))->format('c'));
+            $query->followUpAfter((new \DateTime())->setTimestamp(JsonUtil::getLong($json, self::FOLLOW_UP_AFTER))->format('Y-m-d H:i:s'));
         }
         if (property_exists($json, self::FOLLOW_UP_NULL_ACCEPTED)) {
             $query->setFollowUpNullAccepted(JsonUtil::getBoolean($json, self::FOLLOW_UP_NULL_ACCEPTED));

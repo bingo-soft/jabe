@@ -24,7 +24,7 @@ use Jabe\Impl\Util\{
 };
 use Jabe\Runtime\EventSubscriptionInterface;
 
-class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInterface, HasDbRevisionInterface, HasDbReferencesInterface, \Serializable
+class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInterface, HasDbRevisionInterface, HasDbReferencesInterface
 {
     // persistent state ///////////////////////////
     protected $id;
@@ -49,7 +49,7 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
     //only for mybatis
     public function __construct(?ExecutionEntity $executionEntity = null, ?EventType $eventType = null)
     {
-        $this->created = ClockUtil::getCurrentTime()->format('c');
+        $this->created = ClockUtil::getCurrentTime()->format('Y-m-d H:i:s');
         $this->eventType = $eventType !== null ? $eventType->name() : null;
 
         if ($executionEntity !== null) {
@@ -379,9 +379,9 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
              . "]";
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'eventType' => $this->eventType,
             'eventName' => $this->eventName,
@@ -392,22 +392,21 @@ class EventSubscriptionEntity implements EventSubscriptionInterface, DbEntityInt
             'configuration' => $this->configuration,
             'revision' => $this->revision,
             'created' => $this->created
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->eventType = $json->eventType;
-        $this->eventName = $json->eventName;
-        $this->executionId = $json->executionId;
-        $this->processInstanceId = $json->processInstanceId;
-        $this->activityId = $json->activityId;
-        $this->tenantId = $json->tenantId;
-        $this->configuration = $json->configuration;
-        $this->revision = $json->revision;
-        $this->created = $json->created;
+        $this->id = $data['id'];
+        $this->eventType = $data['eventType'];
+        $this->eventName = $data['eventName'];
+        $this->executionId = $data['executionId'];
+        $this->processInstanceId = $data['processInstanceId'];
+        $this->activityId = $data['activityId'];
+        $this->tenantId = $data['tenantId'];
+        $this->configuration = $data['configuration'];
+        $this->revision = $data['revision'];
+        $this->created = $data['created'];
     }
 
     public function getDependentEntities(): array

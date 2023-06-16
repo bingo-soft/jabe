@@ -69,7 +69,7 @@ use Jabe\Task\{
 use Bpmn\BpmnModelInstanceInterface;
 use Bpmn\Instance\UserTaskInterface;
 
-class TaskEntity extends AbstractVariableScope implements TaskInterface, DelegateTaskInterface, \Serializable, DbEntityInterface, HasDbRevisionInterface, HasDbReferencesInterface, CommandContextListenerInterface, VariablesProviderInterface
+class TaskEntity extends AbstractVariableScope implements TaskInterface, DelegateTaskInterface, DbEntityInterface, HasDbRevisionInterface, HasDbReferencesInterface, CommandContextListenerInterface, VariablesProviderInterface
 {
     protected static $DEFAULT_VARIABLE_LIFECYCLE_LISTENERS;
 
@@ -161,15 +161,15 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         if (is_string($data)) {
             $this->id = $data;
             $this->isIdentityLinksInitialized = true;
-            $this->setCreateTime(ClockUtil::getCurrentTime()->format('c'));
+            $this->setCreateTime(ClockUtil::getCurrentTime()->format('Y-m-d H:i:s'));
             $this->lifecycleState = TaskState::STATE_INIT;
         } elseif (is_int($data)) {
             $this->isIdentityLinksInitialized = true;
-            $this->setCreateTime(ClockUtil::getCurrentTime()->format('c'));
+            $this->setCreateTime(ClockUtil::getCurrentTime()->format('Y-m-d H:i:s'));
             $this->lifecycleState = $data;
         } elseif ($data instanceof ExecutionEntity) {
             $this->isIdentityLinksInitialized = true;
-            $this->setCreateTime(ClockUtil::getCurrentTime()->format('c'));
+            $this->setCreateTime(ClockUtil::getCurrentTime()->format('Y-m-d H:i:s'));
             $this->lifecycleState = TaskState::STATE_INIT;
             $this->setExecution($data);
             $this->skipCustomListeners = $data->isSkipCustomListeners();
@@ -369,9 +369,9 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
         $this->setAssignee($this->owner);
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'name' => $this->name,
             'revision' => $this->revision,
@@ -388,28 +388,27 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
             'delegationState' => $this->delegationState,
             'tenantId' => $this->tenantId,
             'suspensionState' => $this->suspensionState
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->name = $json->name;
-        $this->revision = $json->revision;
-        $this->assignee = $json->assignee;
-        $this->owner = $json->owner;
-        $this->priority = $json->priority;
-        $this->executionId = $json->executionId;
-        $this->processDefinitionId = $json->processDefinitionId;
-        $this->createTime = $json->createTime;
-        $this->description = $json->description;
-        $this->dueDate = $json->dueDate;
-        $this->followUpDate = $json->followUpDate;
-        $this->parentTaskId = $json->parentTaskId;
-        $this->delegationState = $json->delegationState;
-        $this->tenantId = $json->tenantId;
-        $this->suspensionState = $json->suspensionState;
+        $this->id = $data['id'];
+        $this->name = $data['name'];
+        $this->revision = $data['revision'];
+        $this->assignee = $data['assignee'];
+        $this->owner = $data['owner'];
+        $this->priority = $data['priority'];
+        $this->executionId = $data['executionId'];
+        $this->processDefinitionId = $data['processDefinitionId'];
+        $this->createTime = $data['createTime'];
+        $this->description = $data['description'];
+        $this->dueDate = $data['dueDate'];
+        $this->followUpDate = $data['followUpDate'];
+        $this->parentTaskId = $data['parentTaskId'];
+        $this->delegationState = $data['delegationState'];
+        $this->tenantId = $data['tenantId'];
+        $this->suspensionState = $data['suspensionState'];
     }
 
     public function getPersistentState()
@@ -835,7 +834,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
 
     public function setAssignee(?string $assignee): void
     {
-        $timestamp = ClockUtil::getCurrentTime()->format('c');
+        $timestamp = ClockUtil::getCurrentTime()->format('Y-m-d H:i:s');
         $this->ensureTaskActive();
         $this->registerCommandContextCloseListener();
 
@@ -1670,7 +1669,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
             $this->assignee !== null && array_key_exists(self::ASSIGNEE, $this->propertyChanges)
         ) {
             // assignee has changed and is not null, so mark a new task worker
-            $commandContext->getMeterLogManager()->insert(new TaskMeterLogEntity($this->assignee, ClockUtil::getCurrentTime()->format('c')));
+            $commandContext->getMeterLogManager()->insert(new TaskMeterLogEntity($this->assignee, ClockUtil::getCurrentTime()->format('Y-m-d H:i:s')));
         }
     }
 

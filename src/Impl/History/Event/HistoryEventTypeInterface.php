@@ -2,7 +2,7 @@
 
 namespace Jabe\Impl\History\Event;
 
-interface HistoryEventTypeInterface extends \Serializable
+interface HistoryEventTypeInterface
 {
     /**
      * The type of the entity.

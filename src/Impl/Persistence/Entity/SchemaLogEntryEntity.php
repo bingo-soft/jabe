@@ -6,7 +6,7 @@ use Jabe\Impl\Db\DbEntityInterface;
 use Jabe\Management\SchemaLogEntryInterface;
 use Jabe\Impl\Util\ClassNameUtil;
 
-class SchemaLogEntryEntity implements SchemaLogEntryInterface, DbEntityInterface, \Serializable
+class SchemaLogEntryEntity implements SchemaLogEntryInterface, DbEntityInterface
 {
     protected $id;
     protected $timestamp;
@@ -53,21 +53,20 @@ class SchemaLogEntryEntity implements SchemaLogEntryInterface, DbEntityInterface
         return $persistentState;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'timestamp' => $this->timestamp,
             'value' => $this->value
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->timestamp = $json->timestamp;
-        $this->version = $json->version;
+        $this->id = $data['id'];
+        $this->timestamp = $data['timestamp'];
+        $this->version = $data['version'];
     }
 
     public function __toString()

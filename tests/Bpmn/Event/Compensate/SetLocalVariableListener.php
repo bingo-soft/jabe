@@ -7,7 +7,7 @@ use Jabe\Delegate\{
     ExecutionListenerInterface
 };
 
-class SetLocalVariableListener implements ExecutionListenerInterface, \Serializable
+class SetLocalVariableListener implements ExecutionListenerInterface
 {
     protected $variableName;
     protected $variableValue;
@@ -18,19 +18,18 @@ class SetLocalVariableListener implements ExecutionListenerInterface, \Serializa
         $this->variableValue = $variableValue;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'variableName' => $this->variableName,
             'variableValue' => $this->variableValue
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->variableName = $json->variableName;
-        $this->variableValue = $json->variableValue;
+        $this->variableName = $data['variableName'];
+        $this->variableValue = $data['variableValue'];
     }
 
     public function notify($execution): void

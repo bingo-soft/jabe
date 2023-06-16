@@ -8,7 +8,7 @@ use Jabe\Impl\{
 };
 use Jabe\Impl\Context\Context;
 
-class TopicFetchInstruction implements \Serializable
+class TopicFetchInstruction
 {
     protected $topicName;
     protected $businessKey;
@@ -33,9 +33,9 @@ class TopicFetchInstruction implements \Serializable
         $this->lockDuration = $lockDuration;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'topicName' => $this->topicName,
             'businessKey' => $this->businessKey,
             'processDefinitionId' => $this->processDefinitionId,
@@ -50,26 +50,25 @@ class TopicFetchInstruction implements \Serializable
             'deserializeVariables' => $this->deserializeVariables,
             'localVariables' => $this->localVariables,
             'includeExtensionProperties' => $this->includeExtensionProperties,
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->topicName = $json->topicName;
-        $this->businessKey = $json->businessKey;
-        $this->processDefinitionId = $json->processDefinitionId;
-        $this->processDefinitionKey = $json->processDefinitionKey;
-        $this->processDefinitionKeys = $json->processDefinitionKeys;
-        $this->processDefinitionVersionTag = $json->processDefinitionVersionTag;
-        $this->isTenantIdSet = $json->isTenantIdSet;
-        $this->tenantIds = $json->tenantIds;
-        $this->variablesToFetch = $json->variablesToFetch;
-        $this->filterVariables = $json->filterVariables;
-        $this->lockDuration = $json->lockDuration;
-        $this->deserializeVariables = $json->deserializeVariables;
-        $this->localVariables = $json->localVariables;
-        $this->includeExtensionProperties = $json->includeExtensionProperties;
+        $this->topicName = $data['topicName'];
+        $this->businessKey = $data['businessKey'];
+        $this->processDefinitionId = $data['processDefinitionId'];
+        $this->processDefinitionKey = $data['processDefinitionKey'];
+        $this->processDefinitionKeys = $data['processDefinitionKeys'];
+        $this->processDefinitionVersionTag = $data['processDefinitionVersionTag'];
+        $this->isTenantIdSet = $data['isTenantIdSet'];
+        $this->tenantIds = $data['tenantIds'];
+        $this->variablesToFetch = $data['variablesToFetch'];
+        $this->filterVariables = $data['filterVariables'];
+        $this->lockDuration = $data['lockDuration'];
+        $this->deserializeVariables = $data['deserializeVariables'];
+        $this->localVariables = $data['localVariables'];
+        $this->includeExtensionProperties = $data['includeExtensionProperties'];
     }
 
     public function getVariablesToFetch(): array

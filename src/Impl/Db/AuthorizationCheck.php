@@ -4,7 +4,7 @@ namespace Jabe\Impl\Db;
 
 use Jabe\Authorization\Permissions;
 
-class AuthorizationCheck implements \Serializable
+class AuthorizationCheck
 {
     /**
      * If true authorization check is enabled. for This switch is
@@ -49,25 +49,24 @@ class AuthorizationCheck implements \Serializable
         $this->isRevokeAuthorizationCheckEnabled = $isRevokeAuthorizationCheckEnabled;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'authUserId' => $this->authUserId,
             'authGroupIds' => $this->authGroupIds,
             'historicInstancePermissionsEnabled' => $this->historicInstancePermissionsEnabled,
             'useLeftJoin' => $this->useLeftJoin,
             'isRevokeAuthorizationCheckEnabled' => $this->isRevokeAuthorizationCheckEnabled
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->authUserId = $json->authUserId;
-        $this->authGroupIds = $json->authGroupIds;
-        $this->historicInstancePermissionsEnabled = $json->historicInstancePermissionsEnabled;
-        $this->useLeftJoin = $json->useLeftJoin;
-        $this->isRevokeAuthorizationCheckEnabled = $json->isRevokeAuthorizationCheckEnabled;
+        $this->authUserId = $data['authUserId'];
+        $this->authGroupIds = $data['authGroupIds'];
+        $this->historicInstancePermissionsEnabled = $data['historicInstancePermissionsEnabled'];
+        $this->useLeftJoin = $data['useLeftJoin'];
+        $this->isRevokeAuthorizationCheckEnabled = $data['isRevokeAuthorizationCheckEnabled'];
     }
 
     // getters / setters /////////////////////////////////////////

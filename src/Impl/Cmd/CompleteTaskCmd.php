@@ -15,7 +15,7 @@ use Jabe\Impl\Persistence\Entity\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class CompleteTaskCmd implements CommandInterface, \Serializable
+class CompleteTaskCmd implements CommandInterface
 {
     protected $taskId;
     protected $variables = [];
@@ -37,23 +37,22 @@ class CompleteTaskCmd implements CommandInterface, \Serializable
         $this->deserializeReturnedVariables = $deserializeReturnedVariables;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'taskId' => $this->taskId,
             'variables' => $this->variables,
             'returnVariables' => $this->returnVariables,
             'deserializeReturnedVariables' => $this->deserializeReturnedVariables,
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->taskId = $json->taskId;
-        $this->variables = $json->variables;
-        $this->returnVariables = $json->returnVariables;
-        $this->deserializeReturnedVariables = $json->deserializeReturnedVariables;
+        $this->taskId = $data['taskId'];
+        $this->variables = $data['variables'];
+        $this->returnVariables = $data['returnVariables'];
+        $this->deserializeReturnedVariables = $data['deserializeReturnedVariables'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

@@ -12,7 +12,7 @@ use Jabe\Task\{
 };
 use Jabe\Impl\Util\ClassNameUtil;
 
-class CommentEntity implements CommentInterface, EventInterface, DbEntityInterface, HistoricEntityInterface, \Serializable
+class CommentEntity implements CommentInterface, EventInterface, DbEntityInterface, HistoricEntityInterface
 {
     public const TYPE_EVENT = "event";
     public const TYPE_COMMENT = "comment";
@@ -33,9 +33,9 @@ class CommentEntity implements CommentInterface, EventInterface, DbEntityInterfa
     protected $rootProcessInstanceId;
     protected $removalTime;
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'type' => $this->type,
             'userId' => $this->userId,
@@ -48,24 +48,23 @@ class CommentEntity implements CommentInterface, EventInterface, DbEntityInterfa
             'tenantId' => $this->tenantId,
             'rootProcessInstanceId' => $this->rootProcessInstanceId,
             'removalTime' => $this->removalTime
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->type = $json->type;
-        $this->userId = $json->userId;
-        $this->time = $json->time;
-        $this->taskId = $json->taskId;
-        $this->processInstanceId = $json->processInstanceId;
-        $this->action = $json->action;
-        $this->message = $json->message;
-        $this->fullMessage = $json->fullMessage;
-        $this->tenantId = $json->tenantId;
-        $this->rootProcessInstanceId = $json->rootProcessInstanceId;
-        $this->removalTime = $json->removalTime;
+        $this->id = $data['id'];
+        $this->type = $data['type'];
+        $this->userId = $data['userId'];
+        $this->time = $data['time'];
+        $this->taskId = $data['taskId'];
+        $this->processInstanceId = $data['processInstanceId'];
+        $this->action = $data['action'];
+        $this->message = $data['message'];
+        $this->fullMessage = $data['fullMessage'];
+        $this->tenantId = $data['tenantId'];
+        $this->rootProcessInstanceId = $data['rootProcessInstanceId'];
+        $this->removalTime = $data['removalTime'];
     }
 
     public function getPersistentState()

@@ -14,7 +14,7 @@ use Jabe\Impl\Persistence\Entity\{
 use Jabe\Impl\Util\EnsureUtil;
 use Jabe\Repository\ResourceTypes;
 
-class SetUserPictureCmd implements CommandInterface, \Serializable
+class SetUserPictureCmd implements CommandInterface
 {
     protected $userId;
     protected $picture;
@@ -25,19 +25,18 @@ class SetUserPictureCmd implements CommandInterface, \Serializable
         $this->picture = $picture;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'userId' => $this->userId,
             'picture' => serialize($this->picture)
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->userId = $json->userId;
-        $this->picture = unserialize($json->picture);
+        $this->userId = $data['userId'];
+        $this->picture = unserialize($data['picture']);
     }
 
     public function execute(CommandContext $commandContext, ...$args)

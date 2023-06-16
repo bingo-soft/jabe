@@ -64,7 +64,7 @@ class HistoricBatchManager extends AbstractManager
     public function findHistoricBatchIdsForCleanup(int $batchSize, array $batchOperationsForHistoryCleanup, int $minuteFrom, int $minuteTo): array
     {
         $queryParameters = [];
-        $queryParameters["currentTimestamp"] = ClockUtil::getCurrentTime()->format('c');
+        $queryParameters["currentTimestamp"] = ClockUtil::getCurrentTime()->format('Y-m-d H:i:s');
         $queryParameters["map"]  = $batchOperationsForHistoryCleanup;
         if ($minuteTo - $minuteFrom + 1 < 60) {
             $queryParameters["minuteFrom"] = $minuteFrom;
@@ -145,7 +145,7 @@ class HistoricBatchManager extends AbstractManager
 
     public function findCleanableHistoricBatchesReportByCriteria(CleanableHistoricBatchReportImpl $query, ?Page $page, array $batchOperationsForHistoryCleanup): array
     {
-        $query->setCurrentTimestamp(ClockUtil::getCurrentTime()->format('c'));
+        $query->setCurrentTimestamp(ClockUtil::getCurrentTime()->format('Y-m-d H:i:s'));
         $query->setParameter($batchOperationsForHistoryCleanup);
         $props = &$query->getOrderingProperties();
         $props[] = new QueryOrderingProperty(new QueryPropertyImpl("TYPE_"), Direction::ascending());
@@ -158,7 +158,7 @@ class HistoricBatchManager extends AbstractManager
 
     public function findCleanableHistoricBatchesReportCountByCriteria(CleanableHistoricBatchReportImpl $query, array $batchOperationsForHistoryCleanup): int
     {
-        $query->setCurrentTimestamp(ClockUtil::getCurrentTime()->format('c'));
+        $query->setCurrentTimestamp(ClockUtil::getCurrentTime()->format('Y-m-d H:i:s'));
         $query->setParameter($batchOperationsForHistoryCleanup);
         if (empty($batchOperationsForHistoryCleanup)) {
             return $this->getDbEntityManager()->selectOne("selectOnlyFinishedBatchesReportEntitiesCount", $query);

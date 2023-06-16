@@ -9,7 +9,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class HandleTaskBpmnErrorCmd implements CommandInterface, \Serializable
+class HandleTaskBpmnErrorCmd implements CommandInterface
 {
     protected $taskId;
     protected $errorCode;

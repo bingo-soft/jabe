@@ -205,9 +205,9 @@ class UserOperationLogEntryEventEntity extends HistoryEvent implements UserOpera
         $this->annotation = $annotation;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'eventType' => $this->eventType,
             'executionId' => $this->executionId,
@@ -232,36 +232,35 @@ class UserOperationLogEntryEventEntity extends HistoryEvent implements UserOpera
             'entityType' => $this->entityType,
             'category' => $this->category,
             'annotation' => $this->annotation
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->eventType = $json->eventType;
-        $this->executionId = $json->executionId;
-        $this->processDefinitionId = $json->processDefinitionId;
-        $this->processInstanceId = $json->processInstanceId;
-        $this->rootProcessInstanceId = $json->rootProcessInstanceId;
-        $this->tenantId = $json->tenantId;
-        $this->taskId = $json->taskId;
-        $this->deploymentId = $json->deploymentId;
-        $this->processDefinitionKey = $json->processDefinitionKey;
-        $this->jobId = $json->jobId;
-        $this->jobDefinitionId = $json->jobDefinitionId;
-        $this->batchId = $json->batchId;
-        $this->operationId = $json->operationId;
-        $this->operationType = $json->operationType;
-        $this->userId = $json->userId;
-        $this->timestamp = $json->timestamp;
-        $this->property = $json->property;
-        $this->orgValue = $json->orgValue;
-        $this->newValue = $json->newValue;
-        $this->externalTaskId = $json->externalTaskId;
-        $this->entityType = $json->entityType;
-        $this->category = $json->category;
-        $this->annotation = $json->annotation;
+        $this->id = $data['id'];
+        $this->eventType = $data['eventType'];
+        $this->executionId = $data['executionId'];
+        $this->processDefinitionId = $data['processDefinitionId'];
+        $this->processInstanceId = $data['processInstanceId'];
+        $this->rootProcessInstanceId = $data['rootProcessInstanceId'];
+        $this->tenantId = $data['tenantId'];
+        $this->taskId = $data['taskId'];
+        $this->deploymentId = $data['deploymentId'];
+        $this->processDefinitionKey = $data['processDefinitionKey'];
+        $this->jobId = $data['jobId'];
+        $this->jobDefinitionId = $data['jobDefinitionId'];
+        $this->batchId = $data['batchId'];
+        $this->operationId = $data['operationId'];
+        $this->operationType = $data['operationType'];
+        $this->userId = $data['userId'];
+        $this->timestamp = $data['timestamp'];
+        $this->property = $data['property'];
+        $this->orgValue = $data['orgValue'];
+        $this->newValue = $data['newValue'];
+        $this->externalTaskId = $data['externalTaskId'];
+        $this->entityType = $data['entityType'];
+        $this->category = $data['category'];
+        $this->annotation = $data['annotation'];
     }
 
     public function __toString()

@@ -4,24 +4,23 @@ namespace Jabe\Impl\Bpmn\Parser;
 
 use Jabe\Impl\El\ExpressionInterface;
 
-class SignalDefinition implements \Serializable
+class SignalDefinition
 {
     protected $id;
     protected $name;
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'name' => serialize($this->name)
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->name = unserialize($json->name);
+        $this->id = $data['id'];
+        $this->name = unserialize($data['name']);
     }
 
     public function getId(): ?string

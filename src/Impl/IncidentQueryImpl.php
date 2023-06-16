@@ -12,7 +12,7 @@ use Jabe\Runtime\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class IncidentQueryImpl extends AbstractQuery implements IncidentQueryInterface, \Serializable
+class IncidentQueryImpl extends AbstractQuery implements IncidentQueryInterface
 {
     protected $id;
     protected $incidentType;
@@ -37,9 +37,9 @@ class IncidentQueryImpl extends AbstractQuery implements IncidentQueryInterface,
         parent::__construct($commandExecutor);
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'incidentType' => $this->incidentType,
             'incidentMessage' => $this->incidentMessage,
@@ -57,29 +57,28 @@ class IncidentQueryImpl extends AbstractQuery implements IncidentQueryInterface,
             'configuration' => $this->configuration,
             'tenantIds' => $this->tenantIds,
             'jobDefinitionIds' => $this->jobDefinitionIds
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->incidentType = $json->incidentType;
-        $this->incidentMessage = $json->incidentMessage;
-        $this->incidentMessageLike = $json->incidentMessageLike;
-        $this->executionId = $json->executionId;
-        $this->incidentTimestampBefore = $json->incidentTimestampBefore;
-        $this->incidentTimestampAfter = $json->incidentTimestampAfter;
-        $this->activityId = $json->activityId;
-        $this->failedActivityId = $json->failedActivityId;
-        $this->processInstanceId = $json->processInstanceId;
-        $this->processDefinitionId = $json->processDefinitionId;
-        $this->processDefinitionKeys = $json->processDefinitionKeys;
-        $this->causeIncidentId = $json->causeIncidentId;
-        $this->rootCauseIncidentId = $json->rootCauseIncidentId;
-        $this->configuration = $json->configuration;
-        $this->tenantIds = $json->tenantIds;
-        $this->jobDefinitionIds = $json->jobDefinitionIds;
+        $this->id = $data['id'];
+        $this->incidentType = $data['incidentType'];
+        $this->incidentMessage = $data['incidentMessage'];
+        $this->incidentMessageLike = $data['incidentMessageLike'];
+        $this->executionId = $data['executionId'];
+        $this->incidentTimestampBefore = $data['incidentTimestampBefore'];
+        $this->incidentTimestampAfter = $data['incidentTimestampAfter'];
+        $this->activityId = $data['activityId'];
+        $this->failedActivityId = $data['failedActivityId'];
+        $this->processInstanceId = $data['processInstanceId'];
+        $this->processDefinitionId = $data['processDefinitionId'];
+        $this->processDefinitionKeys = $data['processDefinitionKeys'];
+        $this->causeIncidentId = $data['causeIncidentId'];
+        $this->rootCauseIncidentId = $data['rootCauseIncidentId'];
+        $this->configuration = $data['configuration'];
+        $this->tenantIds = $data['tenantIds'];
+        $this->jobDefinitionIds = $data['jobDefinitionIds'];
     }
 
     public function incidentId(?string $incidentId): IncidentQueryInterface

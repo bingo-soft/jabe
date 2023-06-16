@@ -8,7 +8,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class DeleteMembershipCmd extends AbstractWritableIdentityServiceCmd implements CommandInterface, \Serializable
+class DeleteMembershipCmd extends AbstractWritableIdentityServiceCmd implements CommandInterface
 {
     private $userId;
     private $groupId;
@@ -19,19 +19,18 @@ class DeleteMembershipCmd extends AbstractWritableIdentityServiceCmd implements 
         $this->groupId = $groupId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'userId' => $this->userId,
             'groupId' => $this->groupId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->userId = $json->userId;
-        $this->groupId = $json->groupId;
+        $this->userId = $data['userId'];
+        $this->groupId = $data['groupId'];
     }
 
     protected function executeCmd(CommandContext $commandContext)

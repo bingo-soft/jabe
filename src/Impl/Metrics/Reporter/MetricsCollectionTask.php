@@ -51,7 +51,7 @@ class MetricsCollectionTask extends TimerTask
                 $meter->getName(),
                 $this->reporterId,
                 $meter->getAndClear(),
-                ClockUtil::getCurrentTime()->format('c')
+                ClockUtil::getCurrentTime()->format('Y-m-d H:i:s')
             );
         }
         $this->commandExecutor->execute(new MetricsCollectionCmd($logs));

@@ -4,7 +4,7 @@ namespace Jabe\Impl\Pvm;
 
 use Jabe\Impl\Core\Model\Properties;
 
-interface PvmProcessElementInterface extends \Serializable
+interface PvmProcessElementInterface
 {
     /**
      * The id of the element

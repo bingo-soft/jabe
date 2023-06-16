@@ -9,7 +9,7 @@ use Jabe\Impl\Db\{
 use Jabe\Impl\Repository\ResourceDefinitionEntityInterface;
 use Jabe\Repository\FormDefinitionInterface;
 
-class FormDefinitionEntity implements FormDefinitionInterface, ResourceDefinitionEntityInterface, DbEntityInterface, HasDbRevisionInterface, \Serializable
+class FormDefinitionEntity implements FormDefinitionInterface, ResourceDefinitionEntityInterface, DbEntityInterface, HasDbRevisionInterface
 {
     protected $id;
     protected int $revision = 1;
@@ -27,9 +27,9 @@ class FormDefinitionEntity implements FormDefinitionInterface, ResourceDefinitio
         $this->tenantId = $tenantId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'revision' => $this->revision,
             'key' => $this->key,
@@ -37,19 +37,18 @@ class FormDefinitionEntity implements FormDefinitionInterface, ResourceDefinitio
             'deploymentId' => $this->deploymentId,
             'resourceName' => $this->resourceName,
             'tenantId' => $this->tenantId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->revision = $json->revision;
-        $this->key = $json->key;
-        $this->version = $json->version;
-        $this->deploymentId = $json->deploymentId;
-        $this->resourceName = $json->resourceName;
-        $this->tenantId = $json->tenantId;
+        $this->id = $data['id'];
+        $this->revision = $data['revision'];
+        $this->key = $data['key'];
+        $this->version = $data['version'];
+        $this->deploymentId = $data['deploymentId'];
+        $this->resourceName = $data['resourceName'];
+        $this->tenantId = $data['tenantId'];
     }
 
     public function getId(): ?string

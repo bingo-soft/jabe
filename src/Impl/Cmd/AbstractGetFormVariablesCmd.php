@@ -7,7 +7,7 @@ use Jabe\Form\FormFieldInterface;
 use Jabe\Impl\Interceptor\CommandInterface;
 use Jabe\Variable\Value\TypedValueInterface;
 
-abstract class AbstractGetFormVariablesCmd implements CommandInterface, \Serializable
+abstract class AbstractGetFormVariablesCmd implements CommandInterface
 {
     public $resourceId;
     public $formVariableNames;
@@ -20,21 +20,20 @@ abstract class AbstractGetFormVariablesCmd implements CommandInterface, \Seriali
         $this->deserializeObjectValues = $deserializeObjectValues;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'resourceId' => $this->resourceId,
             'formVariableNames' => $this->formVariableNames,
             'deserializeObjectValues' => $this->deserializeObjectValues
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->resourceId = $json->resourceId;
-        $this->formVariableNames = $json->formVariableNames;
-        $this->deserializeObjectValues = $json->deserializeObjectValues;
+        $this->resourceId = $data['resourceId'];
+        $this->formVariableNames = $data['formVariableNames'];
+        $this->deserializeObjectValues = $data['deserializeObjectValues'];
     }
 
     protected function createVariable(FormFieldInterface $formField, VariableScopeInterface $variableScope): ?TypedValueInterface

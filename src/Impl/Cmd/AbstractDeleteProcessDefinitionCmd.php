@@ -14,27 +14,26 @@ use Jabe\Impl\Persistence\Entity\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-abstract class AbstractDeleteProcessDefinitionCmd implements CommandInterface, \Serializable
+abstract class AbstractDeleteProcessDefinitionCmd implements CommandInterface
 {
     protected bool $cascade = false;
     protected bool $skipCustomListeners = false;
     protected bool $skipIoMappings = false;
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'cascade' => $this->cascade,
             'skipCustomListeners' => $this->skipCustomListeners,
             'skipIoMappings' => $this->skipIoMappings
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->cascade = $json->cascade;
-        $this->skipCustomListeners = $json->skipCustomListeners;
-        $this->skipIoMappings = $json->skipIoMappings;
+        $this->cascade = $data['cascade'];
+        $this->skipCustomListeners = $data['skipCustomListeners'];
+        $this->skipIoMappings = $data['skipIoMappings'];
     }
 
     protected function deleteProcessDefinitionCmd(CommandContext $commandContext, ?string $processDefinitionId, bool $cascade, bool $skipCustomListeners, bool $skipIoMappings): void

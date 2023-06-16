@@ -27,7 +27,7 @@ class PhpObjectSerializer extends AbstractObjectValueSerializer
     {
         if (!empty($serialized)) {
             $deserialized = $serialized;
-            preg_match_all("/(C:\d+:\\\?\")(.*?)(?=\\\\\"|\")/", $deserialized, $matches);
+            preg_match_all("/([C|O]+:\d+:\\\?\")(.*?)(?=\\\\\"|\")/", $deserialized, $matches);
             if (!empty($matches[2])) {
                 foreach ($matches[2] as $className) {
                     $deserialized = str_replace($className, str_replace('.', '\\', $className), $deserialized);
@@ -43,7 +43,7 @@ class PhpObjectSerializer extends AbstractObjectValueSerializer
     protected function serializeToByteArray($deserializedObject): ?string
     {
         $serialized = serialize($deserializedObject);
-        preg_match_all("/(C:\d+:\\\?\")(.*?)(?=\\\\\"|\")/", $serialized, $matches);
+        preg_match_all("/([C|O]+:\d+:\\\?\")(.*?)(?=\\\\\"|\")/", $serialized, $matches);
         if (!empty($matches[2])) {
             foreach ($matches[2] as $className) {
                 $serialized = str_replace($className, str_replace('\\', '.', $className), $serialized);
@@ -60,9 +60,9 @@ class PhpObjectSerializer extends AbstractObjectValueSerializer
 
     protected function canSerializeValue($value): bool
     {
-        if (is_array($value) && !empty($value) && (is_string($value[0]) || is_numeric($value[0]) || $value[0] instanceof \Serializable)) {
+        if (is_array($value) && !empty($value) && (is_string($value[0]) || is_numeric($value[0]) || (is_object($value[0]) && method_exists($value[0], "__serialize")))) {
             return true;
         }
-        return $value instanceof \Serializable;
+        return is_object($value) && method_exists($value, "__serialize");
     }
 }

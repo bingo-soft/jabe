@@ -9,7 +9,7 @@ use Jabe\Impl\Db\{
 };
 use Jabe\Impl\Util\ClassNameUtil;
 
-class GroupEntity implements GroupInterface, \Serializable, DbEntityInterface, HasDbRevisionInterface
+class GroupEntity implements GroupInterface, DbEntityInterface, HasDbRevisionInterface
 {
     protected $id;
     protected int $revision = 0;
@@ -74,23 +74,22 @@ class GroupEntity implements GroupInterface, \Serializable, DbEntityInterface, H
         $this->revision = $revision;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'name' => $this->name,
             'revision' => $this->revision,
             'type' => $this->type
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->name = $json->name;
-        $this->revision = $json->revision;
-        $this->type = $json->type;
+        $this->id = $data['id'];
+        $this->name = $data['name'];
+        $this->revision = $data['revision'];
+        $this->type = $data['type'];
     }
 
     public function __toString()

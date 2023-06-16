@@ -34,9 +34,9 @@ class HistoricFormPropertyEventEntity extends HistoricDetailEventEntity
         return $this->timestamp;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'eventType' => $this->eventType,
             'executionId' => $this->executionId,
@@ -47,22 +47,21 @@ class HistoricFormPropertyEventEntity extends HistoricDetailEventEntity
             'activityInstanceId' => $this->activityInstanceId,
             'taskId' => $this->taskId,
             'tenantId' => $this->tenantId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->eventType = $json->eventType;
-        $this->executionId = $json->executionId;
-        $this->processDefinitionId = $json->processDefinitionId;
-        $this->processInstanceId = $json->processInstanceId;
-        $this->propertyId = $json->propertyId;
-        $this->propertyValue = $json->propertyValue;
-        $this->activityInstanceId = $json->activityInstanceId;
-        $this->taskId = $json->taskId;
-        $this->tenantId = $json->tenantId;
+        $this->id = $data['id'];
+        $this->eventType = $data['eventType'];
+        $this->executionId = $data['executionId'];
+        $this->processDefinitionId = $data['processDefinitionId'];
+        $this->processInstanceId = $data['processInstanceId'];
+        $this->propertyId = $data['propertyId'];
+        $this->propertyValue = $data['propertyValue'];
+        $this->activityInstanceId = $data['activityInstanceId'];
+        $this->taskId = $data['taskId'];
+        $this->tenantId = $data['tenantId'];
     }
 
     public function __toString()

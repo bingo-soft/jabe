@@ -11,7 +11,7 @@ use Jabe\Impl\Persistence\Entity\TaskEntity;
 use Jabe\Impl\Util\EnsureUtil;
 use Jabe\Variable\Impl\VariableMapImpl;
 
-class GetTaskVariablesCmd implements CommandInterface, \Serializable
+class GetTaskVariablesCmd implements CommandInterface
 {
     protected $taskId;
     protected $variableNames = [];
@@ -26,23 +26,22 @@ class GetTaskVariablesCmd implements CommandInterface, \Serializable
         $this->deserializeValues = $deserializeValues;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'taskId' => $this->taskId,
             'variableNames' => $this->variableNames,
             'isLocal' => $this->isLocal,
             'deserializeValues' => $this->deserializeValues
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->taskId = $json->taskId;
-        $this->variableNames = $json->variableNames;
-        $this->isLocal = $json->isLocal;
-        $this->deserializeValues = $json->deserializeValues;
+        $this->taskId = $data['taskId'];
+        $this->variableNames = $data['variableNames'];
+        $this->isLocal = $data['isLocal'];
+        $this->deserializeValues = $data['deserializeValues'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

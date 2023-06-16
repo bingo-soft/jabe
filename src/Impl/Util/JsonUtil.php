@@ -56,7 +56,7 @@ class JsonUtil
             if (is_string($date)) {
                 $jsonObject->{$name} = $date;
             } elseif ($date instanceof \DateTime) {
-                $jsonObject->{$name} = $date->format('c');
+                $jsonObject->{$name} = $date->format('Y-m-d H:i:s');
             }
         }
     }

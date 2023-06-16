@@ -10,7 +10,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class SaveFilterCmd implements CommandInterface, \Serializable
+class SaveFilterCmd implements CommandInterface
 {
     protected $filter;
 
@@ -19,17 +19,16 @@ class SaveFilterCmd implements CommandInterface, \Serializable
         $this->filter = $filter;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'filter' => serialize($this->filter)
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->filter = unserialize($json->filter);
+        $this->filter = unserialize($data['filter']);
     }
 
     public function execute(CommandContext $commandContext, ...$args)

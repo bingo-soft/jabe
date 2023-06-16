@@ -93,23 +93,22 @@ class FileValueImpl implements FileValueInterface
                . ", type=" . $this->type . ", isTransient=" . $this->isTransient . "]";
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'mimeType' => $this->mimeType,
             'filename' => $this->filename,
             'type' => serialize($this->type),
             'isTransient' => $this->isTransient
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->mimeType = $json->mimeType;
-        $this->filename = $json->filename;
-        $this->type = unserialize($json->type);
-        $this->isTransient = $json->isTransient;
+        $this->mimeType = $data['mimeType'];
+        $this->filename = $data['filename'];
+        $this->type = unserialize($data['type']);
+        $this->isTransient = $data['isTransient'];
     }
 
     public function isTransient(): bool

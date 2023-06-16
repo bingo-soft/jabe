@@ -9,7 +9,7 @@ use Jabe\Impl\Db\{
 use Jabe\Impl\Identity\AccountInterface;
 use Jabe\Impl\Util\ClassNameUtil;
 
-class IdentityInfoEntity implements DbEntityInterface, HasDbRevisionInterface, AccountInterface, \Serializable
+class IdentityInfoEntity implements DbEntityInterface, HasDbRevisionInterface, AccountInterface
 {
     public const TYPE_USERACCOUNT = "account";
     public const TYPE_USERINFO = "userinfo";
@@ -148,9 +148,9 @@ class IdentityInfoEntity implements DbEntityInterface, HasDbRevisionInterface, A
         $this->details = $details;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'revision' => $this->revision,
             'type' => $this->type,
@@ -160,21 +160,20 @@ class IdentityInfoEntity implements DbEntityInterface, HasDbRevisionInterface, A
             'password' => $this->password,
             'parentId' => $this->parentId,
             'details' => $this->details
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->revision = $json->revision;
-        $this->type = $json->type;
-        $this->userId = $json->userId;
-        $this->key = $json->key;
-        $this->value = $json->value;
-        $this->password = $json->password;
-        $this->parentId = $json->parentId;
-        $this->details = $json->details;
+        $this->id = $data['id'];
+        $this->revision = $data['revision'];
+        $this->type = $data['type'];
+        $this->userId = $data['userId'];
+        $this->key = $data['key'];
+        $this->value = $data['value'];
+        $this->password = $data['password'];
+        $this->parentId = $data['parentId'];
+        $this->details = $data['details'];
     }
 
     public function __toString()

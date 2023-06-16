@@ -509,18 +509,17 @@ class HistoryEventTypes implements HistoryEventTypeInterface
         return $this->eventName;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'entityType' => $this->entityType,
             'eventName' => $this->eventName
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->entityType = $json->entityType;
-        $this->eventName = $json->eventName;
+        $this->entityType = $data['entityType'];
+        $this->eventName = $data['eventName'];
     }
 }

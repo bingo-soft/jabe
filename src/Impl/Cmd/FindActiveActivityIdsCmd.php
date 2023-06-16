@@ -12,7 +12,7 @@ use Jabe\Impl\Persistence\Entity\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class FindActiveActivityIdsCmd implements CommandInterface, \Serializable
+class FindActiveActivityIdsCmd implements CommandInterface
 {
     protected $executionId;
 
@@ -21,17 +21,16 @@ class FindActiveActivityIdsCmd implements CommandInterface, \Serializable
         $this->executionId = $executionId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'executionId' => $this->executionId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->executionId = $json->executionId;
+        $this->executionId = $data['executionId'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

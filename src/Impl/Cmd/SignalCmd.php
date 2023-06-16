@@ -8,7 +8,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class SignalCmd implements CommandInterface, \Serializable
+class SignalCmd implements CommandInterface
 {
     protected $executionId;
     protected $signalName;
@@ -23,23 +23,22 @@ class SignalCmd implements CommandInterface, \Serializable
         $this->processVariables = $processVariables;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'executionId' => $this->executionId,
             'signalName' => $this->signalName,
             'signalData' => $this->signalData,
             'processVariables' => $this->processVariables
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->executionId = $json->executionId;
-        $this->signalName = $json->signalName;
-        $this->signalData = $json->signalData;
-        $this->processVariables = $json->processVariables;
+        $this->executionId = $data['executionId'];
+        $this->signalName = $data['signalName'];
+        $this->signalData = $data['signalData'];
+        $this->processVariables = $data['processVariables'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

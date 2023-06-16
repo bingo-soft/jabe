@@ -8,7 +8,7 @@ use Jabe\Delegate\{
     VariableListenerInterface
 };
 
-abstract class CoreModelElement implements \Serializable
+abstract class CoreModelElement
 {
     protected $id;
     protected $name;
@@ -185,20 +185,19 @@ abstract class CoreModelElement implements \Serializable
         }
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'name' => $this->name,
             'properties' => serialize($this->properties)
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->name = $json->name;
-        $this->properties = unserialize($json->properties);
+        $this->id = $data['id'];
+        $this->name = $data['name'];
+        $this->properties = unserialize($data['properties']);
     }
 }

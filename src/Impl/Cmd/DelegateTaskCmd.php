@@ -13,7 +13,7 @@ use Jabe\Impl\Persistence\Entity\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class DelegateTaskCmd implements CommandInterface, \Serializable
+class DelegateTaskCmd implements CommandInterface
 {
     protected $taskId;
     protected $userId;
@@ -24,19 +24,18 @@ class DelegateTaskCmd implements CommandInterface, \Serializable
         $this->userId = $userId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'taskId' => $this->taskId,
             'userId' => $this->userId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->taskId = $json->taskId;
-        $this->userId = $json->userId;
+        $this->taskId = $data['taskId'];
+        $this->userId = $data['userId'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

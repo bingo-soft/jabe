@@ -12,7 +12,7 @@ use Jabe\Impl\Util\EnsureUtil;
 use Jabe\Task\DelegationState;
 use Jabe\Variable\Variables;
 
-class SubmitTaskFormCmd implements CommandInterface, \Serializable
+class SubmitTaskFormCmd implements CommandInterface
 {
     protected $taskId;
     protected $properties = [];
@@ -30,23 +30,22 @@ class SubmitTaskFormCmd implements CommandInterface, \Serializable
         $this->deserializeValues = $deserializeValues;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'taskId' => $this->taskId,
             'properties' => serialize($this->properties),
             'returnVariables' => $this->returnVariables,
             'deserializeValues' => $this->deserializeValues
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->taskId = $json->taskId;
-        $this->properties = unserialize($json->properties);
-        $this->returnVariables = $json->returnVariables;
-        $this->deserializeValues = $json->deserializeValues;
+        $this->taskId = $data['taskId'];
+        $this->properties = unserialize($data['properties']);
+        $this->returnVariables = $data['returnVariables'];
+        $this->deserializeValues = $data['deserializeValues'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

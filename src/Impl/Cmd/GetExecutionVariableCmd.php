@@ -9,7 +9,7 @@ use Jabe\Impl\Interceptor\{
 use Jabe\Impl\Persistence\Entity\ExecutionEntity;
 use Jabe\Impl\Util\EnsureUtil;
 
-class GetExecutionVariableCmd implements CommandInterface, \Serializable
+class GetExecutionVariableCmd implements CommandInterface
 {
     protected $executionId;
     protected $variableName;
@@ -22,21 +22,20 @@ class GetExecutionVariableCmd implements CommandInterface, \Serializable
         $this->isLocal = $isLocal;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'executionId' => $this->executionId,
             'variableName' => $this->variableName,
             'isLocal' => $this->isLocal
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->executionId = $json->executionId;
-        $this->variableName = $json->variableName;
-        $this->isLocal = $json->isLocal;
+        $this->executionId = $data['executionId'];
+        $this->variableName = $data['variableName'];
+        $this->isLocal = $data['isLocal'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

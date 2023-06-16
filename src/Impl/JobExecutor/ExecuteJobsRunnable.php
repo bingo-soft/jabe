@@ -23,7 +23,7 @@ use Concurrent\{
     ThreadInterface
 };
 
-class ExecuteJobsRunnable implements \Serializable, RunnableInterface
+class ExecuteJobsRunnable implements RunnableInterface
 {
     //private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
     protected $jobIds;
@@ -41,20 +41,19 @@ class ExecuteJobsRunnable implements \Serializable, RunnableInterface
         //$this->jobExecutor = $processEngine->getProcessEngineConfiguration()->getJobExecutor();
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'jobIds' => $this->jobIds,
             'resource' => $this->processEngine->getProcessEngineConfiguration()->getResource()
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
         $this->queued = true;
-        $json = json_decode($data);
-        $this->jobIds = $json->jobIds;
-        $this->resource = $json->resource;
+        $this->jobIds = $data['jobIds'];
+        $this->resource = $data['resource'];
     }
 
     public function run(ThreadInterface $process = null, ...$args): void

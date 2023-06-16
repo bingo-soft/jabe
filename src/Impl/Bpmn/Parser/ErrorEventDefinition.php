@@ -4,7 +4,7 @@ namespace Jabe\Impl\Bpmn\Parser;
 
 use Jabe\ProcessEngineException;
 
-class ErrorEventDefinition implements \Serializable
+class ErrorEventDefinition
 {
     protected $handlerActivityId;
     protected $errorCode;
@@ -17,25 +17,24 @@ class ErrorEventDefinition implements \Serializable
         $this->handlerActivityId = $handlerActivityId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'handlerActivityId' => $this->handlerActivityId,
             'errorCode' => $this->errorCode,
             'precedence' => $this->precedence,
             'errorCodeVariable' => $this->errorCodeVariable,
             'errorMessageVariable' => $this->errorMessageVariable
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->handlerActivityId = $json->handlerActivityId;
-        $this->errorCode = $json->errorCode;
-        $this->precedence = $json->precedence;
-        $this->errorCodeVariable = $json->errorCodeVariable;
-        $this->errorMessageVariable = $json->errorMessageVariable;
+        $this->handlerActivityId = $data['handlerActivityId'];
+        $this->errorCode = $data['errorCode'];
+        $this->precedence = $data['precedence'];
+        $this->errorCodeVariable = $data['errorCodeVariable'];
+        $this->errorMessageVariable = $data['errorMessageVariable'];
     }
 
     public function getErrorCode(): ?string

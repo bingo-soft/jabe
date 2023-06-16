@@ -93,9 +93,9 @@ class AcquireJobsCmd implements CommandInterface, OptimisticLockingListenerInter
 
         $lockTimeInMillis = $this->jobExecutor->getLockTimeInMillis();
 
-        $date = new \DateTime(ClockUtil::getCurrentTime(...$this->jobExecutor->getState())->format('c'));
+        $date = new \DateTime(ClockUtil::getCurrentTime(...$this->jobExecutor->getState())->format('Y-m-d H:i:s'));
         $date->modify('+ ' . $lockTimeInMillis . ' milliseconds');
-        $job->setLockExpirationTime($date->format('c'));
+        $job->setLockExpirationTime($date->format('Y-m-d H:i:s'));
     }
 
     public function getEntityType(): ?string

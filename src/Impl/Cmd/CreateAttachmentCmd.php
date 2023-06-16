@@ -66,7 +66,7 @@ class CreateAttachmentCmd implements CommandInterface
         $attachment->setTaskId($this->taskId);
         $attachment->setProcessInstanceId($this->processInstanceId);
         $attachment->setUrl($this->url);
-        $attachment->setCreateTime(ClockUtil::getCurrentTime()->format('c'));
+        $attachment->setCreateTime(ClockUtil::getCurrentTime()->format('Y-m-d H:i:s'));
 
         if ($this->task !== null) {
             $execution = $this->task->getExecution();

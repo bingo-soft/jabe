@@ -13,7 +13,7 @@ use Jabe\Impl\Persistence\Entity\{
     TaskEntity
 };
 
-class DeleteAttachmentCmd implements CommandInterface, \Serializable
+class DeleteAttachmentCmd implements CommandInterface
 {
     protected $attachmentId;
 
@@ -22,17 +22,16 @@ class DeleteAttachmentCmd implements CommandInterface, \Serializable
         $this->attachmentId = $attachmentId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'attachmentId' => $this->attachmentId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->attachmentId = $json->attachmentId;
+        $this->attachmentId = $data['attachmentId'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

@@ -10,7 +10,7 @@ use Jabe\Impl\Interceptor\{
 use Jabe\Impl\Persistence\Entity\TaskEntity;
 use Jabe\Impl\Util\EnsureUtil;
 
-class SetTaskPriorityCmd implements CommandInterface, \Serializable
+class SetTaskPriorityCmd implements CommandInterface
 {
     protected $priority;
     protected $taskId;
@@ -21,19 +21,18 @@ class SetTaskPriorityCmd implements CommandInterface, \Serializable
         $this->priority = $priority;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'taskId' => $this->taskId,
             'priority' => $this->priority
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->taskId = $json->taskId;
-        $this->priority = $json->priority;
+        $this->taskId = $data['taskId'];
+        $this->priority = $data['priority'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

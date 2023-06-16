@@ -10,7 +10,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Persistence\Entity\PropertyChange;
 
-class DeleteTaskMetricsCmd implements CommandInterface, \Serializable
+class DeleteTaskMetricsCmd implements CommandInterface
 {
     protected $timestamp;
 
@@ -19,17 +19,16 @@ class DeleteTaskMetricsCmd implements CommandInterface, \Serializable
         $this->timestamp = $timestamp;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'timestamp' => $this->timestamp
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->timestamp = $json->timestamp;
+        $this->timestamp = $data['timestamp'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

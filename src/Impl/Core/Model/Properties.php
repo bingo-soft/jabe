@@ -4,7 +4,7 @@ namespace Jabe\Impl\Core\Model;
 
 use Jabe\ProcessEngineException;
 
-class Properties implements \Serializable
+class Properties
 {
     protected $properties = [];
 
@@ -159,14 +159,14 @@ class Properties implements \Serializable
         return $this->properties;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode($this->properties);
+        return $this->properties;
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $this->properties = json_decode($data, true);
+        $this->properties = $data;
     }
 
     public function __toString()

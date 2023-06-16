@@ -449,7 +449,7 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
         }
         $dt = new \DateTime();
         $dt->setTimestamp(ClockUtil::getCurrentTime()->getTimestamp() + $retryDuration);
-        $this->lockExpirationTime = $dt->format('c');
+        $this->lockExpirationTime = $dt->format('Y-m-d H:i:s');
         $this->produceHistoricExternalTaskFailedEvent();
         $this->setRetriesAndManageIncidents($retries);
     }
@@ -511,7 +511,7 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
         $this->workerId = $workerId;
         $dt = new \DateTime();
         $dt->setTimestamp(ClockUtil::getCurrentTime()->getTimestamp() + $lockDuration);
-        $this->lockExpirationTime = $dt->format('c');
+        $this->lockExpirationTime = $dt->format('Y-m-d H:i:s');
     }
 
     public function getExecution(?bool $validateExistence = true): ExecutionEntity
@@ -662,7 +662,7 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
         $this->ensureActive();
         $dt = new \DateTime();
         $dt->setTimestamp(ClockUtil::getCurrentTime()->getTimestamp() + $newLockExpirationTime);
-        $newTime = $dt->format('c');
+        $newTime = $dt->format('Y-m-d H:i:s');
         $this->lockExpirationTime = $newTime;
     }
 

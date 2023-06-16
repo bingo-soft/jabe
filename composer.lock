@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "28bf7d0dc35ddf3f811730970d661ce9",
+    "content-hash": "41250d93f14e942a839a72e8028012ed",
     "packages": [
         {
             "name": "bingo-soft/bpmn",
-            "version": "1.1.0",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/bpmn.git",
-                "reference": "fa1d6c29a3ad9e000ebc6195f289242624e1521f"
+                "reference": "0ff30235e2efb2c2411e7ad776681e976347988a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/bpmn/zipball/fa1d6c29a3ad9e000ebc6195f289242624e1521f",
-                "reference": "fa1d6c29a3ad9e000ebc6195f289242624e1521f",
+                "url": "https://api.github.com/repos/bingo-soft/bpmn/zipball/0ff30235e2efb2c2411e7ad776681e976347988a",
+                "reference": "0ff30235e2efb2c2411e7ad776681e976347988a",
                 "shasum": ""
             },
             "require": {
@@ -58,22 +58,22 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/bpmn/issues",
-                "source": "https://github.com/bingo-soft/bpmn/tree/1.1.0"
+                "source": "https://github.com/bingo-soft/bpmn/tree/1.1.2"
             },
-            "time": "2023-04-27T09:52:31+00:00"
+            "time": "2023-05-30T08:00:42+00:00"
         },
         {
             "name": "bingo-soft/concurrent",
-            "version": "1.3.2",
+            "version": "1.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/concurrent.git",
-                "reference": "c9e85cf59c00daffe79f5152955396f023e5082f"
+                "reference": "6cb11150e465e07a85ccb2aa0e189fd4eee22196"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/concurrent/zipball/c9e85cf59c00daffe79f5152955396f023e5082f",
-                "reference": "c9e85cf59c00daffe79f5152955396f023e5082f",
+                "url": "https://api.github.com/repos/bingo-soft/concurrent/zipball/6cb11150e465e07a85ccb2aa0e189fd4eee22196",
+                "reference": "6cb11150e465e07a85ccb2aa0e189fd4eee22196",
                 "shasum": ""
             },
             "require": {
@@ -111,22 +111,22 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/concurrent/issues",
-                "source": "https://github.com/bingo-soft/concurrent/tree/1.3.2"
+                "source": "https://github.com/bingo-soft/concurrent/tree/1.3.3"
             },
-            "time": "2023-04-03T09:27:39+00:00"
+            "time": "2023-06-13T14:52:21+00:00"
         },
         {
             "name": "bingo-soft/el",
-            "version": "1.1.10",
+            "version": "1.1.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/el.git",
-                "reference": "c87d0f2b1c554ec729b5d2c627370fa2a424de4d"
+                "reference": "1063bdd07341b04d4c99a6a1c9091759ed0656fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/el/zipball/c87d0f2b1c554ec729b5d2c627370fa2a424de4d",
-                "reference": "c87d0f2b1c554ec729b5d2c627370fa2a424de4d",
+                "url": "https://api.github.com/repos/bingo-soft/el/zipball/1063bdd07341b04d4c99a6a1c9091759ed0656fd",
+                "reference": "1063bdd07341b04d4c99a6a1c9091759ed0656fd",
                 "shasum": ""
             },
             "require": {
@@ -162,9 +162,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/el/issues",
-                "source": "https://github.com/bingo-soft/el/tree/1.1.10"
+                "source": "https://github.com/bingo-soft/el/tree/1.1.11"
             },
-            "time": "2023-05-11T13:20:50+00:00"
+            "time": "2023-06-13T12:00:25+00:00"
         },
         {
             "name": "bingo-soft/heap",
@@ -274,23 +274,23 @@
         },
         {
             "name": "bingo-soft/mybatis",
-            "version": "1.2.12",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/mybatis.git",
-                "reference": "5fa0565456f5776c59844c1a4ee1a793e8a25f8a"
+                "reference": "d78e8d1ef0a0f48734c61bb9b76fd0075934fd24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/mybatis/zipball/5fa0565456f5776c59844c1a4ee1a793e8a25f8a",
-                "reference": "5fa0565456f5776c59844c1a4ee1a793e8a25f8a",
+                "url": "https://api.github.com/repos/bingo-soft/mybatis/zipball/d78e8d1ef0a0f48734c61bb9b76fd0075934fd24",
+                "reference": "d78e8d1ef0a0f48734c61bb9b76fd0075934fd24",
                 "shasum": ""
             },
             "require": {
-                "bingo-soft/heap": "^1.7",
-                "bingo-soft/juel": "^1.7",
-                "bingo-soft/sax": "^1.1",
-                "bingo-soft/util": "^1.6",
+                "bingo-soft/heap": "*",
+                "bingo-soft/juel": "*",
+                "bingo-soft/sax": "*",
+                "bingo-soft/util": "*",
                 "doctrine/dbal": "^3.5",
                 "php": "^8.1"
             },
@@ -324,9 +324,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/mybatis/issues",
-                "source": "https://github.com/bingo-soft/mybatis/tree/1.2.12"
+                "source": "https://github.com/bingo-soft/mybatis/tree/1.4.0"
             },
-            "time": "2023-04-17T13:59:56+00:00"
+            "time": "2023-06-16T09:08:35+00:00"
         },
         {
             "name": "bingo-soft/sax",
@@ -438,16 +438,16 @@
         },
         {
             "name": "bingo-soft/util",
-            "version": "1.6.4",
+            "version": "1.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/util.git",
-                "reference": "a1d297693e26cd4e09a50c11f1de916f9dd70aa0"
+                "reference": "e3bceffdfe252ba8102f339b41b2c53f6406244b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/util/zipball/a1d297693e26cd4e09a50c11f1de916f9dd70aa0",
-                "reference": "a1d297693e26cd4e09a50c11f1de916f9dd70aa0",
+                "url": "https://api.github.com/repos/bingo-soft/util/zipball/e3bceffdfe252ba8102f339b41b2c53f6406244b",
+                "reference": "e3bceffdfe252ba8102f339b41b2c53f6406244b",
                 "shasum": ""
             },
             "require": {
@@ -483,9 +483,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/util/issues",
-                "source": "https://github.com/bingo-soft/util/tree/1.6.4"
+                "source": "https://github.com/bingo-soft/util/tree/1.6.5"
             },
-            "time": "2023-01-13T05:42:03+00:00"
+            "time": "2023-06-13T11:56:41+00:00"
         },
         {
             "name": "bingo-soft/xml",

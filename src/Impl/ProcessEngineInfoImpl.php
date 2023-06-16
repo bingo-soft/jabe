@@ -4,7 +4,7 @@ namespace Jabe\Impl;
 
 use Jabe\ProcessEngineInfoInterface;
 
-class ProcessEngineInfoImpl implements \Serializable, ProcessEngineInfoInterface
+class ProcessEngineInfoImpl implements ProcessEngineInfoInterface
 {
     private $name;
     private $resourceUrl;
@@ -17,21 +17,20 @@ class ProcessEngineInfoImpl implements \Serializable, ProcessEngineInfoInterface
         $this->exception = $exception;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'name' => $this->name,
             'resourceUrl' => $this->resourceUrl,
             'exception' => $this->exception
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->name = $json->name;
-        $this->resourceUrl = $json->resourceUrl;
-        $this->exception = $json->exception;
+        $this->name = $data['name'];
+        $this->resourceUrl = $data['resourceUrl'];
+        $this->exception = $data['exception'];
     }
 
     public function getName(): ?string

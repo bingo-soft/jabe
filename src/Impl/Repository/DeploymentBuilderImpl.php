@@ -31,7 +31,7 @@ use Bpmn\{
     BpmnModelInstanceInterface
 };
 
-class DeploymentBuilderImpl implements DeploymentBuilderInterface, \Serializable
+class DeploymentBuilderImpl implements DeploymentBuilderInterface
 {
     //private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
@@ -52,9 +52,9 @@ class DeploymentBuilderImpl implements DeploymentBuilderInterface, \Serializable
         $this->repositoryService = $repositoryService;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'deployment' => serialize($this->deployment),
             'isDuplicateFilterEnabled' => $this->isDuplicateFilterEnabled,
             'deployChangedOnly' => $this->deployChangedOnly,
@@ -63,20 +63,19 @@ class DeploymentBuilderImpl implements DeploymentBuilderInterface, \Serializable
             'deployments' => $this->deployments,
             'deploymentResourcesById' => $this->deploymentResourcesById,
             'deploymentResourcesByName' => $this->deploymentResourcesByName
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->deployment = unserialize($json->deployment);
-        $this->isDuplicateFilterEnabled = $json->isDuplicateFilterEnabled;
-        $this->deployChangedOnly = $json->deployChangedOnly;
-        $this->processDefinitionsActivationDate = $json->processDefinitionsActivationDate;
-        $this->nameFromDeployment = $json->nameFromDeployment;
-        $this->deployments = $json->deployments;
-        $this->deploymentResourcesById = $json->deploymentResourcesById;
-        $this->deploymentResourcesByName = $json->deploymentResourcesByName;
+        $this->deployment = unserialize($data['deployment']);
+        $this->isDuplicateFilterEnabled = $data['isDuplicateFilterEnabled'];
+        $this->deployChangedOnly = $data['deployChangedOnly'];
+        $this->processDefinitionsActivationDate = $data['processDefinitionsActivationDate'];
+        $this->nameFromDeployment = $data['nameFromDeployment'];
+        $this->deployments = $data['deployments'];
+        $this->deploymentResourcesById = $data['deploymentResourcesById'];
+        $this->deploymentResourcesByName = $data['deploymentResourcesByName'];
     }
 
     public function addInputStream(?string $resourceName, $inputStream): DeploymentBuilderInterface

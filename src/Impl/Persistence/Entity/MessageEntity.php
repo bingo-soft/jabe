@@ -25,9 +25,9 @@ class MessageEntity extends JobEntity
         return self::TYPE;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'revision' => $this->revision,
             'duedate' => $this->duedate,
@@ -47,14 +47,13 @@ class MessageEntity extends JobEntity
             'priority' => $this->priority,
             'tenantId' => $this->tenantId,
             'repeat' => $this->repeat
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
         parent::unserialize($data);
-        $json = json_decode($data);
-        $this->repeat = $json->repeat;
+        $this->repeat = $data['repeat'];
     }
 
     public function __toString()

@@ -10,7 +10,7 @@ use Jabe\Impl\Persistence\Entity\ExecutionEntity;
 use Jabe\Impl\Util\EnsureUtil;
 use Jabe\Variable\Impl\VariableMapImpl;
 
-class GetExecutionVariablesCmd implements CommandInterface, \Serializable
+class GetExecutionVariablesCmd implements CommandInterface
 {
     protected $executionId;
     protected $variableNames;
@@ -25,23 +25,22 @@ class GetExecutionVariablesCmd implements CommandInterface, \Serializable
         $this->deserializeValues = $deserializeValues;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'executionId' => $this->executionId,
             'variableNames' => $this->variableNames,
             'isLocal' => $this->isLocal,
             'deserializeValue' => $this->deserializeValue
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->executionId = $json->executionId;
-        $this->variableNames = $json->variableNames;
-        $this->isLocal = $json->isLocal;
-        $this->deserializeValue = $json->deserializeValue;
+        $this->executionId = $data['executionId'];
+        $this->variableNames = $data['variableNames'];
+        $this->isLocal = $data['isLocal'];
+        $this->deserializeValue = $data['deserializeValue'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

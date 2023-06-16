@@ -26,7 +26,7 @@ use Jabe\Task\{
     EventInterface
 };
 
-class AddCommentCmd implements CommandInterface, \Serializable
+class AddCommentCmd implements CommandInterface
 {
     protected $taskId;
     protected $processInstanceId;
@@ -39,21 +39,20 @@ class AddCommentCmd implements CommandInterface, \Serializable
         $this->message = $message;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'taskId' => $this->taskId,
             'processInstanceId' => $this->processInstanceId,
             'message' => $this->message
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->taskId = $json->taskId;
-        $this->processInstanceId = $json->processInstanceId;
-        $this->message = $json->message;
+        $this->taskId = $data['taskId'];
+        $this->processInstanceId = $data['processInstanceId'];
+        $this->message = $data['message'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)
@@ -68,7 +67,7 @@ class AddCommentCmd implements CommandInterface, \Serializable
         $comment = new CommentEntity();
         $comment->setUserId($userId);
         $comment->setType(CommentEntity::TYPE_COMMENT);
-        $comment->setTime(ClockUtil::getCurrentTime()->format('c'));
+        $comment->setTime(ClockUtil::getCurrentTime()->format('Y-m-d H:i:s'));
         $comment->setTaskId($this->taskId);
         $comment->setProcessInstanceId($this->processInstanceId);
         $comment->setAction(EventInterface::ACTION_ADD_COMMENT);

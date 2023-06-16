@@ -4,7 +4,7 @@ namespace Jabe\Impl\Form;
 
 use Jabe\Form\FormFieldValidationConstraintInterface;
 
-class FormFieldValidationConstraintImpl implements FormFieldValidationConstraintInterface, \Serializable
+class FormFieldValidationConstraintImpl implements FormFieldValidationConstraintInterface
 {
     protected $name;
     protected $configuration;
@@ -15,19 +15,18 @@ class FormFieldValidationConstraintImpl implements FormFieldValidationConstraint
         $this->configuration = $configuration;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'name' => $this->name,
             'configuration' => serialize($this->configuration)
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->name = $json->name;
-        $this->configuration = $json->configuration;
+        $this->name = $data['name'];
+        $this->configuration = $data['configuration'];
     }
 
     public function getName(): ?string

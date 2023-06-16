@@ -34,21 +34,20 @@ class AbstractTypedValue implements TypedValueInterface
         return sprintf("Value '%s' of type '%s', isTransient=%s", $this->value, $this->type, $this->isTransient);
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'value' => $this->value,
             'type' => serialize($this->type),
             'isTransient' => $this->isTransient
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->value = $json->value;
-        $this->type = unserialize($json->type);
-        $this->isTransient = $json->isTransient;
+        $this->value = $data['value'];
+        $this->type = unserialize($data['type']);
+        $this->isTransient = $data['isTransient'];
     }
 
     public function isTransient(): bool

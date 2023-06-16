@@ -15,7 +15,7 @@ class ClockUtil
     public static function setCurrentTime($currentTime, ...$args): void
     {
         if ($currentTime instanceof \DateTime) {
-            $currentTime = $currentTime->format('c');
+            $currentTime = $currentTime->format('Y-m-d H:i:s');
         }
         self::$CURRENT_TIME = $currentTime;
 
@@ -47,9 +47,9 @@ class ClockUtil
     {
         $currentTime = self::$CURRENT_TIME;
         if (self::$IS_CLOCK_RESET !== null && self::$IS_CLOCK_RESET->get()) {
-            $currentTime = (new \DateTime())->setTimestamp(self::$CURRENT_TIMESTAMP->get())->format('c');
+            $currentTime = (new \DateTime())->setTimestamp(self::$CURRENT_TIMESTAMP->get())->format('Y-m-d H:i:s');
         } elseif (!empty($args) && $args[3]->get()) {
-            $currentTime = (new \DateTime())->setTimestamp($args[4]->get())->format('c');
+            $currentTime = (new \DateTime())->setTimestamp($args[4]->get())->format('Y-m-d H:i:s');
         }
 
         if (self::$OFFSET_IN_MILLIS == 0) {

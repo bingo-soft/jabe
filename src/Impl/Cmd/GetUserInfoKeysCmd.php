@@ -7,7 +7,7 @@ use Jabe\Impl\Interceptor\{
     CommandContext
 };
 
-class GetUserInfoKeysCmd implements CommandInterface, \Serializable
+class GetUserInfoKeysCmd implements CommandInterface
 {
     protected $userId;
     protected $userInfoType;
@@ -18,19 +18,18 @@ class GetUserInfoKeysCmd implements CommandInterface, \Serializable
         $this->userInfoType = $userInfoType;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'userId' => $this->userId,
             'userInfoType' => $this->userInfoType
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->userId = $json->userId;
-        $this->userInfoType = $json->userInfoType;
+        $this->userId = $data['userId'];
+        $this->userInfoType = $data['userInfoType'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

@@ -8,7 +8,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class SetJobsRetriesCmd extends AbstractSetJobRetriesCmd implements CommandInterface, \Serializable
+class SetJobsRetriesCmd extends AbstractSetJobRetriesCmd implements CommandInterface
 {
     protected $jobIds;
     protected $retries;
@@ -22,19 +22,18 @@ class SetJobsRetriesCmd extends AbstractSetJobRetriesCmd implements CommandInter
         $this->retries = $retries;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'jobIds' => $this->jobIds,
             'retries' => $this->retries
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->jobIds = $json->jobIds;
-        $this->retries = $json->retries;
+        $this->jobIds = $data['jobIds'];
+        $this->retries = $data['retries'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

@@ -10,7 +10,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class GetRenderedStartFormCmd implements CommandInterface, \Serializable
+class GetRenderedStartFormCmd implements CommandInterface
 {
     protected $processDefinitionId;
     protected $formEngineName;
@@ -22,19 +22,18 @@ class GetRenderedStartFormCmd implements CommandInterface, \Serializable
         $this->formEngineName = $engineName;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'processDefinitionId' => $this->processDefinitionId,
             'formEngineName' => $this->formEngineName
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->processDefinitionId = $json->processDefinitionId;
-        $this->formEngineName = $json->formEngineName;
+        $this->processDefinitionId = $data['processDefinitionId'];
+        $this->formEngineName = $data['formEngineName'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

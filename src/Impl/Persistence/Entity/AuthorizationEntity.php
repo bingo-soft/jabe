@@ -21,7 +21,7 @@ use Jabe\Impl\Db\{
 };
 use Jabe\Impl\Util\ClassNameUtil;
 
-class AuthorizationEntity implements AuthorizationInterface, DbEntityInterface, HasDbReferencesInterface, HasDbRevisionInterface, \Serializable
+class AuthorizationEntity implements AuthorizationInterface, DbEntityInterface, HasDbReferencesInterface, HasDbRevisionInterface
 {
     //protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
     //private static final long serialVersionUID = 1L;
@@ -309,9 +309,9 @@ class AuthorizationEntity implements AuthorizationInterface, DbEntityInterface, 
         return $referenceIdAndClass;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'revision' => $this->revision,
             'authorizationType' => $this->authorizationType,
@@ -320,20 +320,19 @@ class AuthorizationEntity implements AuthorizationInterface, DbEntityInterface, 
             'groupId' => $this->groupId,
             'resourceType' => $this->resourceType,
             'resourceId' => $this->resourceId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->revision = $json->revision;
-        $this->authorizationType = $json->authorizationType;
-        $this->permissions = $json->permissions;
-        $this->userId = $json->userId;
-        $this->groupId = $json->groupId;
-        $this->resourceType = $json->resourceType;
-        $this->resourceId = $json->resourceId;
+        $this->id = $data['id'];
+        $this->revision = $data['revision'];
+        $this->authorizationType = $data['authorizationType'];
+        $this->permissions = $data['permissions'];
+        $this->userId = $data['userId'];
+        $this->groupId = $data['groupId'];
+        $this->resourceType = $data['resourceType'];
+        $this->resourceId = $data['resourceId'];
     }
 
     public function __toString()

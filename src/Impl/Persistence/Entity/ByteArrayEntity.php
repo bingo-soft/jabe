@@ -9,7 +9,7 @@ use Jabe\Impl\Db\{
 use Jabe\Repository\ResourceTypeInterface;
 use Jabe\Impl\Util\ClassNameUtil;
 
-class ByteArrayEntity implements \Serializable, DbEntityInterface, HasDbRevisionInterface
+class ByteArrayEntity implements DbEntityInterface, HasDbRevisionInterface
 {
     private static $PERSISTENTSTATE_NULL;
 
@@ -158,9 +158,9 @@ class ByteArrayEntity implements \Serializable, DbEntityInterface, HasDbRevision
         $this->removalTime = $removalTime;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'revision' => $this->revision,
             'name' => $this->name,
@@ -170,21 +170,20 @@ class ByteArrayEntity implements \Serializable, DbEntityInterface, HasDbRevision
             'createTime' => $this->createTime,
             'rootProcessInstanceId' => $this->rootProcessInstanceId,
             'removalTime' => $this->removalTime
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->revision = $json->revision;
-        $this->name = $json->name;
-        $this->deploymentId = $json->deploymentId;
-        $this->tenantId = $json->tenantId;
-        $this->type = $json->type;
-        $this->createTime = $json->createTime;
-        $this->rootProcessInstanceId = $json->rootProcessInstanceId;
-        $this->removalTime = $json->removalTime;
+        $this->id = $data['id'];
+        $this->revision = $data['revision'];
+        $this->name = $data['name'];
+        $this->deploymentId = $data['deploymentId'];
+        $this->tenantId = $data['tenantId'];
+        $this->type = $data['type'];
+        $this->createTime = $data['createTime'];
+        $this->rootProcessInstanceId = $data['rootProcessInstanceId'];
+        $this->removalTime = $data['removalTime'];
     }
 
     public function __toString()

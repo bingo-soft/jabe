@@ -8,7 +8,7 @@ use Jabe\Impl\Db\{
     HasDbRevisionInterface
 };
 
-class TenantEntity implements TenantInterface, \Serializable, DbEntityInterface, HasDbRevisionInterface
+class TenantEntity implements TenantInterface, DbEntityInterface, HasDbRevisionInterface
 {
     protected $id;
     protected $name;
@@ -62,21 +62,20 @@ class TenantEntity implements TenantInterface, \Serializable, DbEntityInterface,
         $this->revision = $revision;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'name' => $this->name,
             'revision' => $this->revision
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->name = $json->name;
-        $this->revision = $json->revision;
+        $this->id = $data['id'];
+        $this->name = $data['name'];
+        $this->revision = $data['revision'];
     }
 
     public function __toString()

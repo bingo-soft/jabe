@@ -20,7 +20,7 @@ use Jabe\Impl\Persistence\Entity\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class DeleteDeploymentCmd implements CommandInterface, \Serializable
+class DeleteDeploymentCmd implements CommandInterface
 {
     //private final static TransactionLogger TX_LOG = ProcessEngineLogger.TX_LOGGER;
 
@@ -37,23 +37,22 @@ class DeleteDeploymentCmd implements CommandInterface, \Serializable
         $this->skipIoMappings = $skipIoMappings;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'deploymentId' => $this->deploymentId,
             'cascade' => $this->cascade,
             'skipCustomListeners' => $this->skipCustomListeners,
             'skipIoMappings' => $this->skipIoMappings
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->deploymentId = $json->deploymentId;
-        $this->cascade = $json->cascade;
-        $this->skipCustomListeners = $json->skipCustomListeners;
-        $this->skipIoMappings = $json->skipIoMappings;
+        $this->deploymentId = $data['deploymentId'];
+        $this->cascade = $data['cascade'];
+        $this->skipCustomListeners = $data['skipCustomListeners'];
+        $this->skipIoMappings = $data['skipIoMappings'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

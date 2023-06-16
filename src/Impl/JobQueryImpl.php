@@ -19,7 +19,7 @@ use Jabe\Runtime\{
     JobQueryInterface
 };
 
-class JobQueryImpl extends AbstractQuery implements JobQueryInterface, \Serializable
+class JobQueryImpl extends AbstractQuery implements JobQueryInterface
 {
     protected $activityId;
     protected $id;
@@ -56,9 +56,9 @@ class JobQueryImpl extends AbstractQuery implements JobQueryInterface, \Serializ
         parent::__construct($commandExecutor);
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'activityId' => $this->activityId,
             'ids' => $this->ids,
@@ -88,41 +88,40 @@ class JobQueryImpl extends AbstractQuery implements JobQueryInterface, \Serializ
             'isTenantIdSet' => $this->isTenantIdSet,
             'tenantIds' => $this->tenantIds,
             'includeJobsWithoutTenantId' => $this->includeJobsWithoutTenantId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->activityId = $json->activityId;
-        $this->ids = $json->ids;
-        $this->jobDefinitionId = $json->jobDefinitionId;
-        $this->processInstanceId = $json->processInstanceId;
-        $this->processInstanceIds = $json->processInstanceIds;
-        $this->executionId = $json->executionId;
-        $this->processDefinitionId = $json->processDefinitionId;
-        $this->processDefinitionKey = $json->processDefinitionKey;
-        $this->retriesLeft = $json->retriesLeft;
-        $this->executable = $json->executable;
-        $this->onlyTimers = $json->onlyTimers;
-        $this->onlyMessages = $json->onlyMessages;
-        $this->duedateHigherThan = $json->duedateHigherThan;
-        $this->duedateLowerThan = $json->duedateLowerThan;
-        $this->duedateHigherThanOrEqual = $json->duedateHigherThanOrEqual;
-        $this->duedateLowerThanOrEqual = $json->duedateLowerThanOrEqual;
-        $this->createdBefore = $json->createdBefore;
-        $this->createdAfter = $json->createdAfter;
-        $this->priorityHigherThanOrEqual = $json->priorityHigherThanOrEqual;
-        $this->priorityLowerThanOrEqual = $json->priorityLowerThanOrEqual;
-        $this->withException = $json->withException;
-        $this->exceptionMessage = $json->exceptionMessage;
-        $this->failedActivityId = $json->failedActivityId;
-        $this->noRetriesLeft = $json->noRetriesLeft;
-        $this->suspensionState = unserialize($json->suspensionState);
-        $this->isTenantIdSet = $json->isTenantIdSet;
-        $this->tenantIds = $json->tenantIds;
-        $this->includeJobsWithoutTenantId = $json->includeJobsWithoutTenantId;
+        $this->id = $data['id'];
+        $this->activityId = $data['activityId'];
+        $this->ids = $data['ids'];
+        $this->jobDefinitionId = $data['jobDefinitionId'];
+        $this->processInstanceId = $data['processInstanceId'];
+        $this->processInstanceIds = $data['processInstanceIds'];
+        $this->executionId = $data['executionId'];
+        $this->processDefinitionId = $data['processDefinitionId'];
+        $this->processDefinitionKey = $data['processDefinitionKey'];
+        $this->retriesLeft = $data['retriesLeft'];
+        $this->executable = $data['executable'];
+        $this->onlyTimers = $data['onlyTimers'];
+        $this->onlyMessages = $data['onlyMessages'];
+        $this->duedateHigherThan = $data['duedateHigherThan'];
+        $this->duedateLowerThan = $data['duedateLowerThan'];
+        $this->duedateHigherThanOrEqual = $data['duedateHigherThanOrEqual'];
+        $this->duedateLowerThanOrEqual = $data['duedateLowerThanOrEqual'];
+        $this->createdBefore = $data['createdBefore'];
+        $this->createdAfter = $data['createdAfter'];
+        $this->priorityHigherThanOrEqual = $data['priorityHigherThanOrEqual'];
+        $this->priorityLowerThanOrEqual = $data['priorityLowerThanOrEqual'];
+        $this->withException = $data['withException'];
+        $this->exceptionMessage = $data['exceptionMessage'];
+        $this->failedActivityId = $data['failedActivityId'];
+        $this->noRetriesLeft = $data['noRetriesLeft'];
+        $this->suspensionState = unserialize($data['suspensionState']);
+        $this->isTenantIdSet = $data['isTenantIdSet'];
+        $this->tenantIds = $data['tenantIds'];
+        $this->includeJobsWithoutTenantId = $data['includeJobsWithoutTenantId'];
     }
 
     public function jobId(?string $jobId): JobQueryInterface
@@ -472,7 +471,7 @@ class JobQueryImpl extends AbstractQuery implements JobQueryInterface, \Serializ
 
     public function getNow(): ?string
     {
-        return ClockUtil::getCurrentTime()->format('c');
+        return ClockUtil::getCurrentTime()->format('Y-m-d H:i:s');
     }
 
     public function isWithException(): bool

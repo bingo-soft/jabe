@@ -10,18 +10,18 @@ use Jabe\Impl\Core\Model\PropertyKey;
 use Jabe\Impl\El\FixedValue;
 use Jabe\Impl\Persistence\Entity\ExecutionEntity;
 
-class RecorderExecutionListener implements ExecutionListenerInterface, \Serializable
+class RecorderExecutionListener implements ExecutionListenerInterface
 {
     private $parameter;
 
     private static $recordedEvents = [];
 
-    public function serialize()
+    public function __serialize(): array
     {
         $recordedEvents = [];
         foreach (self::$recordedEvents as $event) {
             $serialized = serialize($event);
-            preg_match_all("/(C:\d+:\\\?\")(.*?)(?=\\\\\"|\")/", $serialized, $matches);
+            preg_match_all("/([C|O]+:\d+:\\\?\")(.*?)(?=\\\\\"|\")/", $serialized, $matches);
             if (!empty($matches[2])) {
                 foreach ($matches[2] as $className) {
                     $serialized = str_replace($className, str_replace('\\', '.', $className), $serialized);
@@ -29,18 +29,17 @@ class RecorderExecutionListener implements ExecutionListenerInterface, \Serializ
             }
             $recordedEvents[] = serialize($serialized);
         }
-        return json_encode([
+        return [
             'recordedEvents' => $recordedEvents
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
         $recordedEvents = [];
-        foreach ($json->recordedEvents as $event) {
+        foreach ($data['recordedEvents'] as $event) {
             $eventStr = unserialize($event);
-            preg_match_all("/(C:\d+:\\\?\")(.*?)(?=\\\\\"|\")/", $eventStr, $matches);
+            preg_match_all("/([C|O]+:\d+:\\\?\")(.*?)(?=\\\\\"|\")/", $eventStr, $matches);
             if (!empty($matches[2])) {
                 foreach ($matches[2] as $className) {
                     $eventStr = str_replace($className, str_replace('.', '\\', $className), $eventStr);

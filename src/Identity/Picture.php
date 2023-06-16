@@ -2,7 +2,7 @@
 
 namespace Jabe\Identity;
 
-class Picture implements \Serializable
+class Picture
 {
     protected $bytes;
     protected $mimeType;
@@ -13,19 +13,18 @@ class Picture implements \Serializable
         $this->mimeType = $mimeType;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'bytes' => $this->bytes,
             'mimeType' => $this->mimeType
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->bytes = $json->bytes;
-        $this->mimeType = $json->mimeType;
+        $this->bytes = $data['bytes'];
+        $this->mimeType = $data['mimeType'];
     }
 
     public function getBytes(): ?string

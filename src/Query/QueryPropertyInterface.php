@@ -2,7 +2,7 @@
 
 namespace Jabe\Query;
 
-interface QueryPropertyInterface extends \Serializable
+interface QueryPropertyInterface
 {
     public function getName(): ?string;
     public function getFunction(): ?string;

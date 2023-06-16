@@ -34,7 +34,7 @@ use Jabe\Runtime\VariableInstanceInterface;
 use Jabe\Variable\Value\TypedValueInterface;
 use Jabe\Impl\Util\ClassNameUtil;
 
-class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableInstanceInterface, ValueFieldsInterface, DbEntityInterface, DbEntityLifecycleAwareInterface, TypedValueUpdateListenerInterface, HasDbRevisionInterface, HasDbReferencesInterface, \Serializable
+class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableInstanceInterface, ValueFieldsInterface, DbEntityInterface, DbEntityLifecycleAwareInterface, TypedValueUpdateListenerInterface, HasDbRevisionInterface, HasDbReferencesInterface
 {
     //protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
@@ -637,9 +637,9 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
         } */
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'revision' => $this->revision,
             'name' => $this->name,
@@ -656,28 +656,27 @@ class VariableInstanceEntity implements VariableInstanceInterface, CoreVariableI
             'byteArrayValueId' => $this->byteArrayValueId,
             'configuration' => $this->configuration,
             'isConcurrentLocal' => $this->isConcurrentLocal
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->revision = $json->revision;
-        $this->name = $json->name;
-        $this->processDefinitionId = $json->processDefinitionId;
-        $this->processInstanceId = $json->processInstanceId;
-        $this->executionId = $json->executionId;
-        $this->taskId = $json->taskId;
-        $this->activityInstanceId = $json->activityInstanceId;
-        $this->tenantId = $json->tenantId;
-        $this->longValue = $json->longValue;
-        $this->doubleValue = $json->doubleValue;
-        $this->textValue = $json->textValue;
-        $this->textValue2 = $json->textValue2;
-        $this->byteArrayValueId = $json->byteArrayValueId;
-        $this->configuration = $json->configuration;
-        $this->isConcurrentLocal = $json->isConcurrentLocal;
+        $this->id = $data['id'];
+        $this->revision = $data['revision'];
+        $this->name = $data['name'];
+        $this->processDefinitionId = $data['processDefinitionId'];
+        $this->processInstanceId = $data['processInstanceId'];
+        $this->executionId = $data['executionId'];
+        $this->taskId = $data['taskId'];
+        $this->activityInstanceId = $data['activityInstanceId'];
+        $this->tenantId = $data['tenantId'];
+        $this->longValue = $data['longValue'];
+        $this->doubleValue = $data['doubleValue'];
+        $this->textValue = $data['textValue'];
+        $this->textValue2 = $data['textValue2'];
+        $this->byteArrayValueId = $data['byteArrayValueId'];
+        $this->configuration = $data['configuration'];
+        $this->isConcurrentLocal = $data['isConcurrentLocal'];
     }
 
     public function __toString()

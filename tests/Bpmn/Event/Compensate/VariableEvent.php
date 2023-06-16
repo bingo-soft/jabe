@@ -2,30 +2,29 @@
 
 namespace Tests\Bpmn\Event\Compensate;
 
-class VariableEvent implements \Serializable
+class VariableEvent
 {
     public $variableName;
     public $variableValue;
     public $activityInstanceId;
     public $eventName;
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'variableName' => $this->variableName,
             'variableValue' => $this->variableValue,
             'activityInstanceId' => $this->activityInstanceId,
             'eventName' => $this->eventName
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->variableName = $json->variableName;
-        $this->variableValue = $json->variableValue;
-        $this->activityInstanceId = $json->activityInstanceId;
-        $this->eventName = $json->eventName;
+        $this->variableName = $data['variableName'];
+        $this->variableValue = $data['variableValue'];
+        $this->activityInstanceId = $data['activityInstanceId'];
+        $this->eventName = $data['eventName'];
     }
 
     public function getVariableName(): string

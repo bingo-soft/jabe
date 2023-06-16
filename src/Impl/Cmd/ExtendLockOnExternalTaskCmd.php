@@ -31,7 +31,7 @@ class ExtendLockOnExternalTaskCmd extends HandleExternalTaskCmd
             "Cannot extend a lock that expired",
             "lockExpirationTime",
             $externalTask->getLockExpirationTime(),
-            ClockUtil::getCurrentTime()->format('c')
+            ClockUtil::getCurrentTime()->format('Y-m-d H:i:s')
         );
         $externalTask->extendLock($this->newLockTime);
     }

@@ -8,7 +8,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class GetTaskCommentCmd implements CommandInterface, \Serializable
+class GetTaskCommentCmd implements CommandInterface
 {
     protected $taskId;
     protected $commentId;
@@ -19,19 +19,18 @@ class GetTaskCommentCmd implements CommandInterface, \Serializable
         $this->commentId = $commentId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'taskId' => $this->taskId,
             'commentId' => $this->commentId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->taskId = $json->taskId;
-        $this->commentId = $json->commentId;
+        $this->taskId = $data['taskId'];
+        $this->commentId = $data['commentId'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

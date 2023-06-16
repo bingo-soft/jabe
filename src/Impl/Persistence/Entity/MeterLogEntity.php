@@ -7,7 +7,7 @@ use Jabe\Impl\Db\{
     HasDbReferencesInterface
 };
 
-class MeterLogEntity implements DbEntityInterface, HasDbReferencesInterface, \Serializable
+class MeterLogEntity implements DbEntityInterface, HasDbReferencesInterface
 {
     protected $id;
 
@@ -30,27 +30,26 @@ class MeterLogEntity implements DbEntityInterface, HasDbReferencesInterface, \Se
         $this->milliseconds = $ut * 1000;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'name' => $this->name,
             'reporter' => $this->reporter,
             'value' => $this->value,
             'timestamp' => $this->timestamp,
             'milliseconds' => $this->milliseconds,
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->name = $json->name;
-        $this->reporter = $json->reporter;
-        $this->value = $json->value;
-        $this->timestamp = $json->timestamp;
-        $this->milliseconds = $json->milliseconds;
+        $this->id = $data['id'];
+        $this->name = $data['name'];
+        $this->reporter = $data['reporter'];
+        $this->value = $data['value'];
+        $this->timestamp = $data['timestamp'];
+        $this->milliseconds = $data['milliseconds'];
     }
 
     public function getId(): ?string

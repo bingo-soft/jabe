@@ -7,7 +7,7 @@ use Jabe\Impl\Interceptor\{
     CommandContext
 };
 
-class GetUniqueTaskWorkerCountCmd implements CommandInterface, \Serializable
+class GetUniqueTaskWorkerCountCmd implements CommandInterface
 {
     protected $startTime;
     protected $endTime;
@@ -18,19 +18,18 @@ class GetUniqueTaskWorkerCountCmd implements CommandInterface, \Serializable
         $this->endTime = $endTime;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'startTime' => $this->startTime,
             'endTime' => $this->endTime
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->startTime = $json->startTime;
-        $this->endTime = $json->endTime;
+        $this->startTime = $data['startTime'];
+        $this->endTime = $data['endTime'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

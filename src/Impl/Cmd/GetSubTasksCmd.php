@@ -8,7 +8,7 @@ use Jabe\Impl\Interceptor\{
     CommandContext
 };
 
-class GetSubTasksCmd implements CommandInterface, \Serializable
+class GetSubTasksCmd implements CommandInterface
 {
     protected $parentTaskId;
 
@@ -17,17 +17,16 @@ class GetSubTasksCmd implements CommandInterface, \Serializable
         $this->parentTaskId = $parentTaskId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'parentTaskId' => $this->parentTaskId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->parentTaskId = $json->parentTaskId;
+        $this->parentTaskId = $data['parentTaskId'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

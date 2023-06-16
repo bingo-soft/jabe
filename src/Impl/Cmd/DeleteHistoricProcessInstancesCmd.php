@@ -15,7 +15,7 @@ use Jabe\Impl\Interceptor\{
 use Jabe\Impl\Persistence\Entity\PropertyChange;
 use Jabe\Impl\Util\EnsureUtil;
 
-class DeleteHistoricProcessInstancesCmd implements CommandInterface, \Serializable
+class DeleteHistoricProcessInstancesCmd implements CommandInterface
 {
     protected $processInstanceIds;
     protected $failIfNotExists;
@@ -26,19 +26,18 @@ class DeleteHistoricProcessInstancesCmd implements CommandInterface, \Serializab
         $this->failIfNotExists = $failIfNotExists;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'processInstanceIds' => $this->processInstanceIds,
             'failIfNotExists' => $this->failIfNotExists
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->processInstanceIds = $json->processInstanceIds;
-        $this->failIfNotExists = $json->failIfNotExists;
+        $this->processInstanceIds = $data['processInstanceIds'];
+        $this->failIfNotExists = $data['failIfNotExists'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

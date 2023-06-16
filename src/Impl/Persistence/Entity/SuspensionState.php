@@ -2,7 +2,7 @@
 
 namespace Jabe\Impl\Persistence\Entity;
 
-class SuspensionState implements \Serializable
+class SuspensionState
 {
     protected int $stateCode = 0;
 
@@ -12,19 +12,18 @@ class SuspensionState implements \Serializable
 
     private static $SUSPENDED;
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'stateCode' => $this->stateCode,
             'name' => $this->name
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->stateCode = $json->stateCode;
-        $this->name = $json->name;
+        $this->stateCode = $data['stateCode'];
+        $this->name = $data['name'];
     }
 
     public static function active(): SuspensionState

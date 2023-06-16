@@ -7,7 +7,7 @@ use Jabe\Impl\Interceptor\{
     CommandContext
 };
 
-class DeleteProcessInstancesCmd extends AbstractDeleteProcessInstanceCmd implements CommandInterface, \Serializable
+class DeleteProcessInstancesCmd extends AbstractDeleteProcessInstanceCmd implements CommandInterface
 {
     protected $processInstanceIds = [];
 
@@ -27,27 +27,26 @@ class DeleteProcessInstancesCmd extends AbstractDeleteProcessInstanceCmd impleme
         $this->failIfNotExists = $failIfNotExists;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'processInstanceIds' => $this->processInstanceIds,
             'deleteReason' => $this->deleteReason,
             'skipCustomListeners' => $this->skipCustomListeners,
             'externallyTerminated' => $this->externallyTerminated,
             'skipSubprocesses' => $this->skipSubprocesses,
             'failIfNotExists' => $this->failIfNotExists
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->processInstanceIds = $json->processInstanceIds;
-        $this->deleteReason = $json->deleteReason;
-        $this->skipCustomListeners = $json->skipCustomListeners;
-        $this->externallyTerminated = $json->externallyTerminated;
-        $this->skipSubprocesses = $json->skipSubprocesses;
-        $this->failIfNotExists = $json->failIfNotExists;
+        $this->processInstanceIds = $data['processInstanceIds'];
+        $this->deleteReason = $data['deleteReason'];
+        $this->skipCustomListeners = $data['skipCustomListeners'];
+        $this->externallyTerminated = $data['externallyTerminated'];
+        $this->skipSubprocesses = $data['skipSubprocesses'];
+        $this->failIfNotExists = $data['failIfNotExists'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

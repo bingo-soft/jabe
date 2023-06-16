@@ -43,6 +43,10 @@ class StartTimerEventTest extends PluggableProcessEngineTest
     protected function tearDown(): void
     {
         ClockUtil::resetClock(...$this->processEngineConfiguration->getJobExecutorState());
+        /*$deployments = $this->repositoryService->createDeploymentQuery()->list();
+        foreach ($deployments as $deployment) {
+            $this->repositoryService->deleteDeployment($deployment->getId(), true);
+        }*/
     }
 
     #[Deployment(resources: ["tests/Resources/Bpmn/Event/Timer/StartTimerEventTest.testDurationStartTimerEvent.bpmn20.xml"])]
@@ -223,7 +227,7 @@ class StartTimerEventTest extends PluggableProcessEngineTest
         $newDate = $jobQuery->singleResult()->getDuedate();
         $this->assertNotEquals($oldDate, $newDate);
         $this->assertTrue($oldDate < $newDate);
-        $expectedDate = (new \DateTime())->setTimestamp(strtotime("+2 hours", strtotime($currentTime->format('c'))));
+        $expectedDate = (new \DateTime())->setTimestamp(strtotime("+2 hours", strtotime($currentTime->format('Y-m-d H:i:s'))));
         $this->assertEquals($expectedDate, new \DateTime($newDate));
 
         // move the clock forward 2 hours and 2 min
@@ -256,7 +260,7 @@ class StartTimerEventTest extends PluggableProcessEngineTest
         $this->assertEquals(0, $processInstanceQuery->count());
 
         $jobUpdated = $jobQuery->singleResult();
-        $expectedDate = (new \DateTime())->setTimestamp(strtotime("+2 hours", strtotime((new \DateTime($jobUpdated->getCreateTime()))->format('c'))));
+        $expectedDate = (new \DateTime())->setTimestamp(strtotime("+2 hours", strtotime((new \DateTime($jobUpdated->getCreateTime()))->format('Y-m-d H:i:s'))));
         $this->assertEquals($expectedDate, new \DateTime($jobUpdated->getDuedate()));
 
         // move the clock forward 2 hours and 1 minute
@@ -1404,7 +1408,7 @@ class StartTimerEventTest extends PluggableProcessEngineTest
         $newDuedate = $jobQuery->singleResult()->getDuedate();
         $this->assertNotEquals($oldDueDate, $newDuedate);
         $this->assertTrue($oldDueDate < $newDuedate);
-        $expectedDate = (new \DateTime())->setTimestamp(strtotime("+70 seconds", strtotime($currentTime->format('c'))));
+        $expectedDate = (new \DateTime())->setTimestamp(strtotime("+70 seconds", strtotime($currentTime->format('Y-m-d H:i:s'))));
         $this->assertEquals($expectedDate, new \DateTime($newDuedate));
         $this->managementService->executeJob($jobId);
         $this->assertEquals(1, count($this->taskService->createTaskQuery()->processDefinitionKey("process70")->taskName("taskInSubprocess")->list()));
@@ -1530,10 +1534,4 @@ class StartTimerEventTest extends PluggableProcessEngineTest
             return null;
         }
     }
-    /*
-    private void cleanDB() {
-        String jobId = $this->managementService->createJobQuery().singleResult().getId();
-        CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
-        commandExecutor.execute(new DeleteJobsCmd(jobId, true));
-    }*/
 }

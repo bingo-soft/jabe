@@ -8,7 +8,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class GetTableNameCmd implements CommandInterface, \Serializable
+class GetTableNameCmd implements CommandInterface
 {
     private $entityClass;
 
@@ -17,17 +17,16 @@ class GetTableNameCmd implements CommandInterface, \Serializable
         $this->entityClass = $entityClass;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'entityClass' => $this->entityClass
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->entityClass = $json->entityClass;
+        $this->entityClass = $data['entityClass'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

@@ -18,7 +18,7 @@ use Jabe\Impl\Util\{
     EnsureUtil
 };
 
-abstract class JobDeclaration implements \Serializable
+abstract class JobDeclaration
 {
     /** the id of the associated persistent jobDefinitionId */
     protected $jobDefinitionId;
@@ -38,25 +38,24 @@ abstract class JobDeclaration implements \Serializable
         $this->jobHandlerType = $jobHandlerType;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'jobDefinitionId' => $this->jobDefinitionId,
             'jobHandlerType' => $this->jobHandlerType,
             'jobHandlerConfiguration' => $this->jobHandlerConfigurationl,
             'jobConfiguration' => $this->jobConfiguration,
             'exclusive' => $this->exclusive
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->jobDefinitionId = $json->jobDefinitionId;
-        $this->jobHandlerType = $json->jobHandlerType;
-        $this->jobHandlerConfiguration = $json->jobHandlerConfiguration;
-        $this->jobConfiguration = $json->jobConfiguration;
-        $this->exclusive = $json->exclusive;
+        $this->jobDefinitionId = $data['jobDefinitionId'];
+        $this->jobHandlerType = $data['jobHandlerType'];
+        $this->jobHandlerConfiguration = $data['jobHandlerConfiguration'];
+        $this->jobConfiguration = $data['jobConfiguration'];
+        $this->exclusive = $data['exclusive'];
     }
 
     // Job instance factory //////////////////////////////////////////
@@ -198,7 +197,7 @@ abstract class JobDeclaration implements \Serializable
     {
         $processEngineConfiguration = Context::getProcessEngineConfiguration();
         if ($processEngineConfiguration !== null && ($processEngineConfiguration->isJobExecutorAcquireByDueDate() || $processEngineConfiguration->isEnsureJobDueDateNotNull())) {
-            return ClockUtil::getCurrentTime()->format('c');
+            return ClockUtil::getCurrentTime()->format('Y-m-d H:i:s');
         } else {
             return null;
         }

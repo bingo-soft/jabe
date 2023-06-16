@@ -4,7 +4,7 @@ namespace Jabe\Impl;
 
 use Jabe\Query\QueryPropertyInterface;
 
-class QueryPropertyImpl implements QueryPropertyInterface, \Serializable
+class QueryPropertyImpl implements QueryPropertyInterface
 {
     protected $name;
     protected $function;
@@ -39,19 +39,18 @@ class QueryPropertyImpl implements QueryPropertyInterface, \Serializable
         return $this->name == $obj->name && $this->function == $obj->function;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'name' => $this->name,
             'function' => $this->function
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->name = $json->name;
-        $this->function = $json->function;
+        $this->name = $data['name'];
+        $this->function = $data['function'];
     }
 
     public function __toString()

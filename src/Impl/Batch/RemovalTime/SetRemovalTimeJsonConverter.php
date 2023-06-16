@@ -42,7 +42,7 @@ class SetRemovalTimeJsonConverter extends JsonObjectConverter
     public function toObject(\stdClass $jsonObject, bool $isOrQuery = false)
     {
         $removalTimeMills = JsonUtil::getLong($jsonObject, self::REMOVAL_TIME);
-        $removalTime = $removalTimeMills > 0 ? (new \DateTime())->setTimestamp($removalTimeMills / 1000)->format('c') : null;
+        $removalTime = $removalTimeMills > 0 ? (new \DateTime())->setTimestamp($removalTimeMills / 1000)->format('Y-m-d H:i:s') : null;
 
         $instanceIds =  JsonUtil::asStringList(JsonUtil::getArray($jsonObject, self::IDS));
 

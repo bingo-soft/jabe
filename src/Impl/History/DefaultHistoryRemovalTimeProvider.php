@@ -93,6 +93,6 @@ class DefaultHistoryRemovalTimeProvider implements HistoryRemovalTimeProviderInt
 
         $removalTime = new \DateTime();
         $removalTime->setTimestamp($offsetTimestamp);
-        return $removalTime->format('c');
+        return $removalTime->format('Y-m-d H:i:s');
     }
 }

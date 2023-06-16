@@ -10,7 +10,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class AddIdentityLinkForProcessDefinitionCmd implements CommandInterface, \Serializable
+class AddIdentityLinkForProcessDefinitionCmd implements CommandInterface
 {
     protected $processDefinitionId;
 
@@ -26,21 +26,20 @@ class AddIdentityLinkForProcessDefinitionCmd implements CommandInterface, \Seria
         $this->groupId = $groupId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'processDefinitionId' => $this->processDefinitionId,
             'userId' => $this->userId,
             'groupId' => $this->groupId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->processDefinitionId = $json->processDefinitionId;
-        $this->userId = $json->userId;
-        $this->groupId = $json->groupId;
+        $this->processDefinitionId = $data['processDefinitionId'];
+        $this->userId = $data['userId'];
+        $this->groupId = $data['groupId'];
     }
 
     protected function validateParams(?string $userId, ?string $groupId, ?string $processDefinitionId): void

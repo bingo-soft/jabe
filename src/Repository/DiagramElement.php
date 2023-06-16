@@ -2,7 +2,7 @@
 
 namespace Jabe\Repository;
 
-abstract class DiagramElement implements \Serializable
+abstract class DiagramElement
 {
     protected $id = null;
 
@@ -29,17 +29,16 @@ abstract class DiagramElement implements \Serializable
         return "id=" . $this->getId();
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
+        $this->id = $data['id'];
     }
 
     abstract public function isNode(): bool;

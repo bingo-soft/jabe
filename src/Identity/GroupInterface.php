@@ -2,7 +2,7 @@
 
 namespace Jabe\Identity;
 
-interface GroupInterface extends \Serializable
+interface GroupInterface
 {
     public function getId(): ?string;
 

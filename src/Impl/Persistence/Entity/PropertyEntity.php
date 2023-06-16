@@ -10,7 +10,7 @@ use Jabe\Impl\Db\{
 };
 use Jabe\Impl\Util\ClassNameUtil;
 
-class PropertyEntity implements DbEntityInterface, HasDbRevisionInterface, \Serializable
+class PropertyEntity implements DbEntityInterface, HasDbRevisionInterface
 {
     //protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
     private $name;
@@ -76,21 +76,20 @@ class PropertyEntity implements DbEntityInterface, HasDbRevisionInterface, \Seri
         return $this->revision + 1;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'name' => $this->name,
             'revision' => $this->revision,
             'value' => $this->value
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->name = $json->name;
-        $this->revision = $json->revision;
-        $this->value = $json->value;
+        $this->name = $data['name'];
+        $this->revision = $data['revision'];
+        $this->value = $data['value'];
     }
 
     public function __toString()

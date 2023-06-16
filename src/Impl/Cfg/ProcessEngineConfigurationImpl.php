@@ -1694,7 +1694,6 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
     protected function initDataSource(): void
     {
         if ($this->dataSource === null) {
-
             if (($this->dbDriver === null) || ($this->dbUsername === null)) {
                 throw new ProcessEngineException("DataSource properties have to be specified in a process engine configuration");
             }
@@ -1711,6 +1710,11 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
             if ($this->dbName !== null) {
                 $props['dbname'] = $this->dbName;
             }
+
+            if (array_key_exists($this->dbDriver, self::$databaseDriverOptions)) {
+                $props[UnpooledDataSource::DRIVER_OPTIONS] = self::$databaseDriverOptions[$this->dbDriver];
+            }
+
             $this->dataSource->setDriverProperties($props);
 
             //@ATTENTION
@@ -1723,11 +1727,31 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
         }
     }
 
-    protected const MY_SQL_PRODUCT_NAME = "MySQL";
-    protected const MARIA_DB_PRODUCT_NAME = "MariaDB";
-    protected const POSTGRES_DB_PRODUCT_NAME = "PostgreSQL";
-    protected const CRDB_DB_PRODUCT_NAME = "CockroachDB";
-    protected static $databaseTypeMappings = [self::POSTGRES_DB_PRODUCT_NAME => "postgres"];
+    protected const MY_SQL_PRODUCT_NAME = "mysql";
+    protected const MARIA_DB_PRODUCT_NAME = "mysql";
+    protected const POSTGRES_DB_PRODUCT_NAME = "postgresql";
+    protected static $databaseTypeMappings = [
+        self::MY_SQL_PRODUCT_NAME => "mysql",
+        self::MARIA_DB_PRODUCT_NAME => "mysql",
+        self::POSTGRES_DB_PRODUCT_NAME => "postgres"
+    ];
+    protected static $databaseDriverOptions = [
+        'pdo_mysql' => [
+            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+            \PDO::ATTR_EMULATE_PREPARES => true,
+            \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => false,
+            UnpooledDataSource::RECONNECT_ATTEMPTS_OPTION => 5,
+            UnpooledDataSource::RECONNECT_DELAY_OPTION => 1
+        ],
+        'pdo_pgsql' => [
+            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+            \PDO::ATTR_EMULATE_PREPARES => true,
+            UnpooledDataSource::RECONNECT_ATTEMPTS_OPTION => 5,
+            UnpooledDataSource::RECONNECT_DELAY_OPTION => 1
+        ]
+    ];
 
     /*protected static function getDefaultDatabaseTypeMappings(): array
     {
@@ -1765,6 +1789,9 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
     {
         //$connection = null;
         try {
+            $connection = $this->dataSource->getConnection();
+            $platform = $connection->getDatabasePlatform();
+            $databaseProductName = $platform->getName();
             //$connection = $this->dataSource->getConnection();
             //DatabaseMetaData databaseMetaData = connection->getMetaData();
             //String databaseProductName = databaseMetaData->getDatabaseProductName();
@@ -1775,7 +1802,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
                 databaseProductName = checkForCrdb(connection);
             }*/
             //LOG.debugDatabaseproductName(databaseProductName);
-            $this->databaseType = self::$databaseTypeMappings[self::POSTGRES_DB_PRODUCT_NAME];
+            $this->databaseType = self::$databaseTypeMappings[$databaseProductName];
             //ensureNotNull("couldn't deduct database type from database product name '" + databaseProductName + "'", "databaseType", databaseType);
             //LOG.debugDatabaseType(databaseType);
 

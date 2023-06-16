@@ -133,7 +133,7 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
         // decorate new incident
         $newIncident = new IncidentEntity();
         $newIncident->setId($incidentId);
-        $newIncident->setIncidentTimestamp(ClockUtil::getCurrentTime()->format('c'));
+        $newIncident->setIncidentTimestamp(ClockUtil::getCurrentTime()->format('Y-m-d H:i:s'));
         $newIncident->setIncidentType($incidentType);
         $newIncident->setCauseIncidentId($incidentId);
         $newIncident->setRootCauseIncidentId($incidentId);
@@ -497,9 +497,9 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
         $this->annotation = $annotation;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'incidentTimestamp' => $this->incidentTimestamp,
             'incidentType' => $this->incidentType,
@@ -515,27 +515,26 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
             'jobDefinitionId' => $this->jobDefinitionId,
             'failedActivityId' => $this->failedActivityId,
             'annotation' => $this->annotation,
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->incidentTimestamp = $json->incidentTimestamp;
-        $this->incidentType = $json->incidentType;
-        $this->executionId = $json->executionId;
-        $this->activityId = $json->activityId;
-        $this->processInstanceId = $json->processInstanceId;
-        $this->processDefinitionId = $json->processDefinitionId;
-        $this->causeIncidentId = $json->causeIncidentId;
-        $this->rootCauseIncidentId = $json->rootCauseIncidentId;
-        $this->configuration = $json->configuration;
-        $this->tenantId = $json->tenantId;
-        $this->incidentMessage = $json->incidentMessage;
-        $this->jobDefinitionId = $json->jobDefinitionId;
-        $this->failedActivityId = $json->failedActivityId;
-        $this->annotation = $json->annotation;
+        $this->id = $data['id'];
+        $this->incidentTimestamp = $data['incidentTimestamp'];
+        $this->incidentType = $data['incidentType'];
+        $this->executionId = $data['executionId'];
+        $this->activityId = $data['activityId'];
+        $this->processInstanceId = $data['processInstanceId'];
+        $this->processDefinitionId = $data['processDefinitionId'];
+        $this->causeIncidentId = $data['causeIncidentId'];
+        $this->rootCauseIncidentId = $data['rootCauseIncidentId'];
+        $this->configuration = $data['configuration'];
+        $this->tenantId = $data['tenantId'];
+        $this->incidentMessage = $data['incidentMessage'];
+        $this->jobDefinitionId = $data['jobDefinitionId'];
+        $this->failedActivityId = $data['failedActivityId'];
+        $this->annotation = $data['annotation'];
     }
 
     public function __toString()

@@ -7,7 +7,7 @@ use Jabe\Impl\Interceptor\{
     CommandContext
 };
 
-class DeleteUserInfoCmd implements CommandInterface, \Serializable
+class DeleteUserInfoCmd implements CommandInterface
 {
     protected $userId;
     protected $key;
@@ -18,19 +18,18 @@ class DeleteUserInfoCmd implements CommandInterface, \Serializable
         $this->key = $key;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'userId' => $this->userId,
             'key' => $this->key
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->userId = $json->userId;
-        $this->key = $json->key;
+        $this->userId = $data['userId'];
+        $this->key = $data['key'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

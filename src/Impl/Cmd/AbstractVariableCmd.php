@@ -13,7 +13,7 @@ use Jabe\Impl\Pvm\Runtime\{
     PvmExecutionImpl
 };
 
-abstract class AbstractVariableCmd implements CommandInterface, \Serializable
+abstract class AbstractVariableCmd implements CommandInterface
 {
     protected $commandContext;
     protected $entityId;
@@ -26,19 +26,18 @@ abstract class AbstractVariableCmd implements CommandInterface, \Serializable
         $this->isLocal = $isLocal;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'entityId' => $this->entityId,
             'isLocal' => $this->isLocal
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->entityId = $json->entityId;
-        $this->isLocal = $json->isLocal;
+        $this->entityId = $data['entityId'];
+        $this->isLocal = $data['isLocal'];
     }
 
     public function disableLogUserOperation(): AbstractVariableCmd

@@ -8,7 +8,7 @@ use Jabe\Delegate\{
     VariableScopeInterface
 };
 
-class VariableDeclaration implements \Serializable
+class VariableDeclaration
 {
     protected $name;
     protected $type;
@@ -99,19 +99,18 @@ class VariableDeclaration implements \Serializable
         return "VariableDeclaration[" . $this->name . ":" . $this->type . "]";
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'name' => $this->name,
             'type' => $this->type
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->name = $json->name;
-        $this->type = $json->type;
+        $this->name = $data['name'];
+        $this->type = $data['type'];
     }
 
     public function getName(): ?string

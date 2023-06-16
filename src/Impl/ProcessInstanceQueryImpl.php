@@ -19,7 +19,7 @@ use Jabe\Runtime\{
     ProcessInstanceQueryInterface
 };
 
-class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements ProcessInstanceQueryInterface, \Serializable
+class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements ProcessInstanceQueryInterface
 {
     protected $processInstanceId;
     protected $businessKey;
@@ -59,13 +59,13 @@ class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements Proc
         $this->queries[] = $this;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
         $queries = [];
         foreach ($queries as $query) {
             $queries[] = serialize($query);
         }
-        return json_encode([
+        return [
             'processInstanceId' => $this->processInstanceId,
             'businessKey' => $this->businessKey,
             'businessKeyLike' => $this->businessKeyLike,
@@ -91,12 +91,11 @@ class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl implements Proc
             'isProcessDefinitionWithoutTenantId' => $this->isProcessDefinitionWithoutTenantId,
             'queries' => $queries,
             'isOrQueryActive' => $this->isOrQueryActive,
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
         $queries = [];
         foreach ($data->queries as $query) {
             $queries[] = unserialize($query);

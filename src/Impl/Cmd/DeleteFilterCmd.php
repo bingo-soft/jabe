@@ -8,7 +8,7 @@ use Jabe\Impl\Interceptor\{
     CommandContext
 };
 
-class DeleteFilterCmd implements CommandInterface, \Serializable
+class DeleteFilterCmd implements CommandInterface
 {
     protected $filterId;
 
@@ -17,17 +17,16 @@ class DeleteFilterCmd implements CommandInterface, \Serializable
         $this->filterId = $filterId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'filterId' => $this->filterId
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->filterId = $json->filterId;
+        $this->filterId = $data['filterId'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

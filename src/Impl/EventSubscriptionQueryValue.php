@@ -2,7 +2,7 @@
 
 namespace Jabe\Impl;
 
-class EventSubscriptionQueryValue implements \Serializable
+class EventSubscriptionQueryValue
 {
     protected $eventType;
     protected $eventName;
@@ -13,19 +13,18 @@ class EventSubscriptionQueryValue implements \Serializable
         $this->eventType = $eventType;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'eventName' => $this->eventName,
             'eventType' => $this->eventType
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->eventName = $json->eventName;
-        $this->eventType = $json->eventType;
+        $this->eventName = $data['eventName'];
+        $this->eventType = $data['eventType'];
     }
 
     public function getEventType(): ?string

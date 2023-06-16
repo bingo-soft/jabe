@@ -9,7 +9,7 @@ use Jabe\Form\{
 };
 use Jabe\Variable\Value\TypedValueInterface;
 
-class FormFieldImpl implements FormFieldInterface, \Serializable
+class FormFieldImpl implements FormFieldInterface
 {
     protected $businessKey;
     protected $id;
@@ -20,13 +20,13 @@ class FormFieldImpl implements FormFieldInterface, \Serializable
     protected $validationConstraints = [];
     protected $properties = [];
 
-    public function serialize()
+    public function __serialize(): array
     {
         $validationConstraints = [];
         foreach ($this->validationConstraints as $constraint) {
             $validationConstraints[] = serialize($constraint);
         }
-        return json_encode([
+        return [
             'businessKey' => $this->businessKey,
             'id' => $this->id,
             'label' => $this->label,
@@ -34,19 +34,18 @@ class FormFieldImpl implements FormFieldInterface, \Serializable
             'value' => serialize($this->value),
             'type' => serialize($this->type),
             'properties' => $this->properties
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->businessKey = $json->businessKey;
-        $this->id = $json->id;
-        $this->label = $json->label;
-        $this->defaultValue = unserialize($json->defaultValue);
-        $this->value = unserialize($json->value);
-        $this->type = unserialize($json->type);
-        $this->properties = $json->properties;
+        $this->businessKey = $data['businessKey'];
+        $this->id = $data['id'];
+        $this->label = $data['label'];
+        $this->defaultValue = unserialize($data['defaultValue']);
+        $this->value = unserialize($data['value']);
+        $this->type = unserialize($data['type']);
+        $this->properties = $data['properties'];
     }
 
     // getters / setters ///////////////////////////////////////////

@@ -14,7 +14,7 @@ use Jabe\Impl\Persistence\Entity\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class UpdateProcessDefinitionHistoryTimeToLiveCmd implements CommandInterface, \Serializable
+class UpdateProcessDefinitionHistoryTimeToLiveCmd implements CommandInterface
 {
     protected $processDefinitionId;
     protected $historyTimeToLive;
@@ -25,19 +25,18 @@ class UpdateProcessDefinitionHistoryTimeToLiveCmd implements CommandInterface, \
         $this->historyTimeToLive = $historyTimeToLive;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'processDefinitionId' => $this->processDefinitionId,
             'historyTimeToLive' => $this->historyTimeToLive
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->processDefinitionId = $json->processDefinitionId;
-        $this->historyTimeToLive = $json->historyTimeToLive;
+        $this->processDefinitionId = $data['processDefinitionId'];
+        $this->historyTimeToLive = $data['historyTimeToLive'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

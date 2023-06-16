@@ -5,7 +5,7 @@ namespace Jabe\Impl\Persistence\Entity;
 use Jabe\Impl\Db\DbEntityInterface;
 use Jabe\Impl\Util\ClassNameUtil;
 
-class MembershipEntity implements \Serializable, DbEntityInterface
+class MembershipEntity implements DbEntityInterface
 {
     protected $user;
     protected $group;
@@ -66,21 +66,20 @@ class MembershipEntity implements \Serializable, DbEntityInterface
         return $this->group->getId();
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'user' => serialize($this->user),
             'group' => serialize($this->group)
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->user = unserialize($json->user);
-        $this->group = unserialize($json->group);
+        $this->id = $data['id'];
+        $this->user = unserialize($data['user']);
+        $this->group = unserialize($data['group']);
     }
 
     public function __toString()

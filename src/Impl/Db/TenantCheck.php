@@ -2,7 +2,7 @@
 
 namespace Jabe\Impl\Db;
 
-class TenantCheck implements \Serializable
+class TenantCheck
 {
     /**
      * If <code>true</code> then the process engine performs tenant checks to
@@ -14,19 +14,18 @@ class TenantCheck implements \Serializable
     /** the ids of the authenticated tenants */
     protected $authTenantIds = [];
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'isTenantCheckEnabled' => $this->isTenantCheckEnabled,
             'authTenantIds' => $this->authTenantIds
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->isTenantCheckEnabled = $json->isTenantCheckEnabled;
-        $this->authTenantIds = $json->authTenantIds;
+        $this->isTenantCheckEnabled = $data['isTenantCheckEnabled'];
+        $this->authTenantIds = $data['authTenantIds'];
     }
 
     public function isTenantCheckEnabled(): bool

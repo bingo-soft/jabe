@@ -8,7 +8,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class GetTableMetaDataCmd implements CommandInterface, \Serializable
+class GetTableMetaDataCmd implements CommandInterface
 {
     protected $tableName;
 
@@ -17,17 +17,16 @@ class GetTableMetaDataCmd implements CommandInterface, \Serializable
         $this->tableName = $tableName;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'tableName' => $this->tableName
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->tableName = $json->tableName;
+        $this->tableName = $data['tableName'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

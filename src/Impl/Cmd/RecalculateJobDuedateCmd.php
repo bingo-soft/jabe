@@ -29,7 +29,7 @@ use Jabe\Impl\Pvm\Process\ActivityImpl;
 use Concurrent\RunnableInterface;
 use Jabe\Impl\Util\EnsureUtil;
 
-class RecalculateJobDuedateCmd implements CommandInterface, \Serializable
+class RecalculateJobDuedateCmd implements CommandInterface
 {
     private $jobId;
     private $creationDateBased;
@@ -41,19 +41,18 @@ class RecalculateJobDuedateCmd implements CommandInterface, \Serializable
         $this->creationDateBased = $creationDateBased;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'jobId' => $this->jobId,
             'creationDateBased' => $this->creationDateBased
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->jobId = $json->jobId;
-        $this->creationDateBased = $json->creationDateBased;
+        $this->jobId = $data['jobId'];
+        $this->creationDateBased = $data['creationDateBased'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

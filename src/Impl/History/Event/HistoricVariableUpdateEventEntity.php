@@ -146,9 +146,9 @@ class HistoricVariableUpdateEventEntity extends HistoricDetailEventEntity
         return $this->isInitial;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'eventType' => $this->eventType,
             'executionId' => $this->executionId,
@@ -168,31 +168,30 @@ class HistoricVariableUpdateEventEntity extends HistoricDetailEventEntity
             'byteArrayId' => $this->byteArrayId,
             'scopeActivityInstanceId' => $this->scopeActivityInstanceId,
             'isInitial' => $this->isInitial
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->eventType = $json->eventType;
-        $this->executionId = $json->executionId;
-        $this->processDefinitionId = $json->processDefinitionId;
-        $this->processInstanceId = $json->processInstanceId;
-        $this->activityInstanceId = $json->activityInstanceId;
-        $this->taskId = $json->taskId;
-        $this->timestamp = $json->timestamp;
-        $this->tenantId = $json->tenantId;
-        $this->variableName = $json->variableName;
-        $this->variableInstanceId = $json->variableInstanceId;
-        $this->revision = $json->revision;
-        $this->serializerName = $json->serializerName;
-        $this->longValue = $json->longValue;
-        $this->textValue = $json->textValue;
-        $this->textValue2 = $json->textValue2;
-        $this->byteArrayId = $json->byteArrayId;
-        $this->scopeActivityInstanceId = $json->scopeActivityInstanceId;
-        $this->isInitial = $json->isInitial;
+        $this->id = $data['id'];
+        $this->eventType = $data['eventType'];
+        $this->executionId = $data['executionId'];
+        $this->processDefinitionId = $data['processDefinitionId'];
+        $this->processInstanceId = $data['processInstanceId'];
+        $this->activityInstanceId = $data['activityInstanceId'];
+        $this->taskId = $data['taskId'];
+        $this->timestamp = $data['timestamp'];
+        $this->tenantId = $data['tenantId'];
+        $this->variableName = $data['variableName'];
+        $this->variableInstanceId = $data['variableInstanceId'];
+        $this->revision = $data['revision'];
+        $this->serializerName = $data['serializerName'];
+        $this->longValue = $data['longValue'];
+        $this->textValue = $data['textValue'];
+        $this->textValue2 = $data['textValue2'];
+        $this->byteArrayId = $data['byteArrayId'];
+        $this->scopeActivityInstanceId = $data['scopeActivityInstanceId'];
+        $this->isInitial = $data['isInitial'];
     }
 
     public function __toString()

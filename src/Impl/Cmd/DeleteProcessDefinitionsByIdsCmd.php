@@ -19,7 +19,7 @@ use Jabe\Impl\Persistence\Entity\{
 use Jabe\Impl\Util\EnsureUtil;
 use Jabe\Repository\ProcessDefinitionInterface;
 
-class DeleteProcessDefinitionsByIdsCmd implements CommandInterface, \Serializable
+class DeleteProcessDefinitionsByIdsCmd implements CommandInterface
 {
     protected $processDefinitionIds = [];
     protected bool $cascadeToHistory = false;
@@ -44,27 +44,26 @@ class DeleteProcessDefinitionsByIdsCmd implements CommandInterface, \Serializabl
         $this->writeUserOperationLog = $writeUserOperationLog;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'processDefinitionIds' => $this->processDefinitionIds,
             'cascadeToHistory' => $this->cascadeToHistory,
             'cascadeToInstances' => $this->cascadeToInstances,
             'skipCustomListeners' => $this->skipCustomListeners,
             'skipIoMappings' => $this->skipIoMappings,
             'writeUserOperationLog' => $this->writeUserOperationLog
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->processDefinitionIds = $json->processDefinitionIds;
-        $this->cascadeToHistory = $json->cascadeToHistory;
-        $this->cascadeToInstances = $json->cascadeToInstances;
-        $this->skipCustomListeners = $json->skipCustomListeners;
-        $this->skipIoMappings = $json->skipIoMappings;
-        $this->writeUserOperationLog = $json->writeUserOperationLog;
+        $this->processDefinitionIds = $data['processDefinitionIds'];
+        $this->cascadeToHistory = $data['cascadeToHistory'];
+        $this->cascadeToInstances = $data['cascadeToInstances'];
+        $this->skipCustomListeners = $data['skipCustomListeners'];
+        $this->skipIoMappings = $data['skipIoMappings'];
+        $this->writeUserOperationLog = $data['writeUserOperationLog'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

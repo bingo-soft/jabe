@@ -4,7 +4,7 @@ namespace Jabe\Variable\Type;
 
 use Jabe\Variable\Value\TypedValueInterface;
 
-interface ValueTypeInterface extends \Serializable
+interface ValueTypeInterface
 {
     public const VALUE_INFO_TRANSIENT = "transient";
 

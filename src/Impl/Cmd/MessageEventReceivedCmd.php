@@ -9,7 +9,7 @@ use Jabe\Impl\Interceptor\{
 };
 use Jabe\Impl\Util\EnsureUtil;
 
-class MessageEventReceivedCmd implements CommandInterface, \Serializable
+class MessageEventReceivedCmd implements CommandInterface
 {
     protected $executionId;
     protected $processVariables = [];
@@ -26,24 +26,23 @@ class MessageEventReceivedCmd implements CommandInterface, \Serializable
         $this->exclusive = $exclusive;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'executionId' => $this->executionId,
             'messageName' => $this->messageName,
             'processVariables' => $this->processVariables,
             'processVariablesLocal' => $this->processVariablesLocal,
             'exclusive' => $this->exclusive
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->executionId = $json->executionId;
-        $this->messageName = $json->messageName;
-        $this->processVariables = $json->processVariables;
-        $this->processVariables = $json->processVariables;
+        $this->executionId = $data['executionId'];
+        $this->messageName = $data['messageName'];
+        $this->processVariables = $data['processVariables'];
+        $this->processVariables = $data['processVariables'];
     }
 
     public function execute(CommandContext $commandContext, ...$args)

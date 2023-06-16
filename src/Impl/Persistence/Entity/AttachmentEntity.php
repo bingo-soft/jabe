@@ -10,7 +10,7 @@ use Jabe\Impl\Db\{
 use Jabe\Task\AttachmentInterface;
 use Jabe\Impl\Util\ClassNameUtil;
 
-class AttachmentEntity implements AttachmentInterface, DbEntityInterface, HasDbRevisionInterface, HistoricEntityInterface, \Serializable
+class AttachmentEntity implements AttachmentInterface, DbEntityInterface, HasDbRevisionInterface, HistoricEntityInterface
 {
     protected $id;
     protected int $revision = 0;
@@ -180,9 +180,9 @@ class AttachmentEntity implements AttachmentInterface, DbEntityInterface, HasDbR
         $this->rootProcessInstanceId = $rootProcessInstanceId;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'revision' => $this->revision,
             'name' => $this->name,
@@ -197,26 +197,25 @@ class AttachmentEntity implements AttachmentInterface, DbEntityInterface, HasDbR
             'content' => $this->content,
             'tenantId' => $this->tenantId,
             'createTime' => $this->createTime
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->revision = $json->revision;
-        $this->name = $json->name;
-        $this->description = $json->description;
-        $this->type = $json->type;
-        $this->taskId = $json->taskId;
-        $this->processInstanceId = $json->processInstanceId;
-        $this->rootProcessInstanceId = $json->rootProcessInstanceId;
-        $this->removalTime = $json->removalTime;
-        $this->url = $json->url;
-        $this->contentId = $json->contentId;
-        $this->content = $json->content;
-        $this->tenantId = $json->tenantId;
-        $this->createTime = $json->createTime;
+        $this->id = $data['id'];
+        $this->revision = $data['revision'];
+        $this->name = $data['name'];
+        $this->description = $data['description'];
+        $this->type = $data['type'];
+        $this->taskId = $data['taskId'];
+        $this->processInstanceId = $data['processInstanceId'];
+        $this->rootProcessInstanceId = $data['rootProcessInstanceId'];
+        $this->removalTime = $data['removalTime'];
+        $this->url = $data['url'];
+        $this->contentId = $data['contentId'];
+        $this->content = $data['content'];
+        $this->tenantId = $data['tenantId'];
+        $this->createTime = $data['createTime'];
     }
 
     public function __toString()

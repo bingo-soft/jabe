@@ -10,7 +10,7 @@ use Jabe\Impl\Db\{
 use Jabe\Impl\JobExecutor\JobDeclaration;
 use Jabe\Management\JobDefinitionInterface;
 
-class JobDefinitionEntity implements JobDefinitionInterface, HasDbRevisionInterface, HasDbReferencesInterface, DbEntityInterface, \Serializable
+class JobDefinitionEntity implements JobDefinitionInterface, HasDbRevisionInterface, HasDbReferencesInterface, DbEntityInterface
 {
     protected $id;
     protected int $revision = 0;
@@ -53,9 +53,9 @@ class JobDefinitionEntity implements JobDefinitionInterface, HasDbRevisionInterf
         $this->suspensionState = SuspensionStateImpl::active()->getStateCode();
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'id' => $this->id,
             'processDefinitionId' => $this->processDefinitionId,
             'processDefinitionKey' => $this->processDefinitionKey,
@@ -65,22 +65,21 @@ class JobDefinitionEntity implements JobDefinitionInterface, HasDbRevisionInterf
             'jobPriority' => $this->jobPriority,
             'tenantId' => $this->tenantId,
             'deploymentId' => $this->deploymentId,
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->id = $json->id;
-        $this->processDefinitionId = $json->processDefinitionId;
-        $this->processDefinitionKey = $json->processDefinitionKey;
-        $this->activityId = $json->activityId;
-        $this->jobType = $json->jobType;
-        $this->jobConfiguration = $json->jobConfiguration;
-        $this->suspensionState = $json->suspensionState;
-        $this->jobPriority = $json->jobPriority;
-        $this->tenantId = $json->tenantId;
-        $this->deploymentId = $json->deploymentId;
+        $this->id = $data['id'];
+        $this->processDefinitionId = $data['processDefinitionId'];
+        $this->processDefinitionKey = $data['processDefinitionKey'];
+        $this->activityId = $data['activityId'];
+        $this->jobType = $data['jobType'];
+        $this->jobConfiguration = $data['jobConfiguration'];
+        $this->suspensionState = $data['suspensionState'];
+        $this->jobPriority = $data['jobPriority'];
+        $this->tenantId = $data['tenantId'];
+        $this->deploymentId = $data['deploymentId'];
     }
 
     public function getPersistentState()

@@ -24,17 +24,16 @@ abstract class AbstractValueTypeImpl implements ValueTypeInterface
         return $this->name;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'name' => $this->name
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->name = $json->name;
+        $this->name = $data['name'];
     }
 
     public function isAbstract(): bool

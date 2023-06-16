@@ -6,7 +6,7 @@ use Jabe\Impl\Variable\Serializer\VariableSerializersInterface;
 use Jabe\Variable\Variables;
 use Jabe\Variable\Value\TypedValueInterface;
 
-class QueryVariableValue implements \Serializable
+class QueryVariableValue
 {
     protected $name;
     protected $value;
@@ -26,28 +26,27 @@ class QueryVariableValue implements \Serializable
         $this->variableValueIgnoreCase = $variableValueIgnoreCase;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return json_encode([
+        return [
             'name' => $this->name,
             'value' => serialize($this->value),
             'operator' => $this->operator,
             'local' => $this->local,
             'variableNameIgnoreCase' => $this->variableNameIgnoreCase,
             'variableValueIgnoreCase' => $this->variableValueIgnoreCase
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $json = json_decode($data);
-        $this->name = $json->name;
-        $this->value = unserialize($json->value);
-        $this->operator = $json->operator;
-        $this->source = $json->source;
-        $this->local = $json->local;
-        $this->variableNameIgnoreCase = $json->variableNameIgnoreCase;
-        $this->variableValueIgnoreCase = $json->variableValueIgnoreCase;
+        $this->name = $data['name'];
+        $this->value = unserialize($data['value']);
+        $this->operator = $data['operator'];
+        $this->source = $data['source'];
+        $this->local = $data['local'];
+        $this->variableNameIgnoreCase = $data['variableNameIgnoreCase'];
+        $this->variableValueIgnoreCase = $data['variableValueIgnoreCase'];
     }
 
     public function initialize(VariableSerializersInterface $serializers, ?string $dbType): void

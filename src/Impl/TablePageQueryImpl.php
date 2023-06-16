@@ -13,7 +13,7 @@ use Jabe\Management\{
     TablePageQueryInterface
 };
 
-class TablePageQueryImpl extends ListQueryParameterObject implements TablePageQueryInterface, CommandInterface, \Serializable
+class TablePageQueryImpl extends ListQueryParameterObject implements TablePageQueryInterface, CommandInterface
 {
     protected $commandExecutor;
     protected $tableName;

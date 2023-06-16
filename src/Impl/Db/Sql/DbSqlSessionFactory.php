@@ -14,9 +14,11 @@ use MyBatis\Session\SqlSessionFactoryInterface;
 
 class DbSqlSessionFactory implements SessionFactoryInterface
 {
+    public const MYSQL = "mysql";
     public const POSTGRES = "postgres";
+    public const MARIADB = "mariadb";
 
-    public const SUPPORTED_DATABASES = [ self::POSTGRES ];
+    public const SUPPORTED_DATABASES = [ self::MYSQL, self::POSTGRES, self::MARIADB ];
 
     protected static $databaseSpecificStatements = [];
 
@@ -121,6 +123,7 @@ class DbSqlSessionFactory implements SessionFactoryInterface
     {
         if (self::$initialized == false) {
             self::$initialized = true;
+            //Postgresql
             self::$databaseSpecificLimitBeforeStatements[self::POSTGRES] = "";
             self::$optimizeDatabaseSpecificLimitBeforeWithoutOffsetStatements[self::POSTGRES] = "";
             self::$databaseSpecificLimitAfterStatements[self::POSTGRES] = "LIMIT #{maxResults} OFFSET #{firstResult}";
@@ -221,6 +224,103 @@ class DbSqlSessionFactory implements SessionFactoryInterface
 
             self::$databaseSpecificDaysComparator[self::POSTGRES] = 'EXTRACT (DAY FROM #{currentTimestamp} - ${date}) >= ${days}';
             self::$databaseSpecificNumericCast[self::POSTGRES] = "";
+
+            //Mysql and MariaDb
+            foreach ([self::MYSQL, self::MARIADB] as $mysqlLikeDatabase) {
+                self::$databaseSpecificLimitBeforeStatements[$mysqlLikeDatabase] = "";
+                self::$optimizeDatabaseSpecificLimitBeforeWithoutOffsetStatements[$mysqlLikeDatabase] = "";
+                self::$databaseSpecificLimitAfterStatements[$mysqlLikeDatabase] = "LIMIT #{maxResults} OFFSET #{firstResult}";
+                self::$optimizeDatabaseSpecificLimitAfterWithoutOffsetStatements[$mysqlLikeDatabase] = "LIMIT #{maxResults}";
+                self::$databaseSpecificLimitBeforeWithoutOffsetStatements[$mysqlLikeDatabase] = "";
+                self::$databaseSpecificLimitAfterWithoutOffsetStatements[$mysqlLikeDatabase] = "LIMIT #{maxResults}";
+                self::$databaseSpecificInnerLimitAfterStatements[$mysqlLikeDatabase] = self::$databaseSpecificLimitAfterStatements[$mysqlLikeDatabase];
+                self::$databaseSpecificLimitBetweenStatements[$mysqlLikeDatabase] = "";
+                self::$databaseSpecificLimitBetweenFilterStatements[$mysqlLikeDatabase] = "";
+                self::$databaseSpecificLimitBetweenAcquisitionStatements[$mysqlLikeDatabase] = "";
+                self::$databaseSpecificOrderByStatements[$mysqlLikeDatabase] = self::$defaultOrderBy;
+                self::$databaseSpecificLimitBeforeNativeQueryStatements[$mysqlLikeDatabase] = "";
+                self::$databaseSpecificDistinct[$mysqlLikeDatabase] = "distinct";
+                self::$databaseSpecificNumericCast[$mysqlLikeDatabase] = "";
+
+                self::$databaseSpecificCountDistinctBeforeStart[$mysqlLikeDatabase] = self::$defaultDistinctCountBeforeStart;
+                self::$databaseSpecificCountDistinctBeforeEnd[$mysqlLikeDatabase] = self::$defaultDistinctCountBeforeEnd;
+                self::$databaseSpecificCountDistinctAfterEnd[$mysqlLikeDatabase] = self::$defaultDistinctCountAfterEnd;
+
+                self::$databaseSpecificEscapeChar[$mysqlLikeDatabase] = "'\\\\'";
+
+                self::$databaseSpecificBitAnd1[$mysqlLikeDatabase] = "";
+                self::$databaseSpecificBitAnd2[$mysqlLikeDatabase] = " & ";
+                self::$databaseSpecificBitAnd3[$mysqlLikeDatabase] = "";
+                self::$databaseSpecificDatepart1[$mysqlLikeDatabase] = "";
+                self::$databaseSpecificDatepart2[$mysqlLikeDatabase] = "(";
+                self::$databaseSpecificDatepart3[$mysqlLikeDatabase] = ")";
+
+                self::$databaseSpecificDummyTable[$mysqlLikeDatabase] = "";
+                self::$databaseSpecificTrueConstant[$mysqlLikeDatabase] = "1";
+                self::$databaseSpecificFalseConstant[$mysqlLikeDatabase] = "0";
+                self::$databaseSpecificIfNull[$mysqlLikeDatabase] = "IFNULL";
+
+                self::$databaseSpecificDaysComparator[$mysqlLikeDatabase] = 'DATEDIFF(#{currentTimestamp}, ${date}) >= ${days}"';
+
+                self::$databaseSpecificCollationForCaseSensitivity[$mysqlLikeDatabase] = "";
+ 
+                self::$databaseSpecificAuthJoinStart[$mysqlLikeDatabase] = "=";
+                self::$databaseSpecificAuthJoinEnd[$mysqlLikeDatabase] = "";
+                self::$databaseSpecificAuthJoinSeparator[$mysqlLikeDatabase] = "OR AUTH.RESOURCE_ID_ =";
+
+                self::$databaseSpecificAuth1JoinStart[$mysqlLikeDatabase] = "=";
+                self::$databaseSpecificAuth1JoinEnd[$mysqlLikeDatabase] = "";
+                self::$databaseSpecificAuth1JoinSeparator[$mysqlLikeDatabase] = "OR AUTH1.RESOURCE_ID_ =";
+
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "toggleForeignKey", "toggleForeignKey_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "selectDeploymentsByQueryCriteria", "selectDeploymentsByQueryCriteria_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "selectDeploymentCountByQueryCriteria", "selectDeploymentCountByQueryCriteria_mysql");
+
+                // related to CAM-8064
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "deleteExceptionByteArraysByIds", "deleteExceptionByteArraysByIds_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "deleteErrorDetailsByteArraysByIds", "deleteErrorDetailsByteArraysByIds_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "deleteHistoricDetailsByIds", "deleteHistoricDetailsByIds_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "deleteHistoricDetailByteArraysByIds", "deleteHistoricDetailByteArraysByIds_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "deleteHistoricIdentityLinksByTaskProcessInstanceIds", "deleteHistoricIdentityLinksByTaskProcessInstanceIds_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "deleteHistoricIdentityLinksByTaskCaseInstanceIds", "deleteHistoricIdentityLinksByTaskCaseInstanceIds_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "deleteHistoricDecisionInputInstanceByteArraysByDecisionInstanceIds", "deleteHistoricDecisionInputInstanceByteArraysByDecisionInstanceIds_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "deleteHistoricDecisionOutputInstanceByteArraysByDecisionInstanceIds", "deleteHistoricDecisionOutputInstanceByteArraysByDecisionInstanceIds_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "deleteHistoricVariableInstanceByIds", "deleteHistoricVariableInstanceByIds_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "deleteHistoricVariableInstanceByteArraysByIds", "deleteHistoricVariableInstanceByteArraysByIds_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "deleteCommentsByIds", "deleteCommentsByIds_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "deleteAttachmentByteArraysByIds", "deleteAttachmentByteArraysByIds_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "deleteAttachmentByIds", "deleteAttachmentByIds_mysql");
+
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "deleteHistoricIncidentsByBatchIds", "deleteHistoricIncidentsByBatchIds_mysql");
+
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "updateUserOperationLogByRootProcessInstanceId", "updateUserOperationLogByRootProcessInstanceId_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "updateExternalTaskLogByRootProcessInstanceId", "updateExternalTaskLogByRootProcessInstanceId_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "updateHistoricIncidentsByRootProcessInstanceId", "updateHistoricIncidentsByRootProcessInstanceId_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "updateHistoricIncidentsByBatchId", "updateHistoricIncidentsByBatchId_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "updateIdentityLinkLogByRootProcessInstanceId", "updateIdentityLinkLogByRootProcessInstanceId_mysql");
+
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "updateUserOperationLogByProcessInstanceId", "updateUserOperationLogByProcessInstanceId_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "updateExternalTaskLogByProcessInstanceId", "updateExternalTaskLogByProcessInstanceId_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "updateHistoricIncidentsByProcessInstanceId", "updateHistoricIncidentsByProcessInstanceId_mysql");
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "updateIdentityLinkLogByProcessInstanceId", "updateIdentityLinkLogByProcessInstanceId_mysql");
+
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "updateOperationLogAnnotationByOperationId", "updateOperationLogAnnotationByOperationId_mysql");
+
+                self::addDatabaseSpecificStatement($mysqlLikeDatabase, "updateByteArraysByBatchId", "updateByteArraysByBatchId_mysql");
+
+                $constants = [];
+                $constants["constant.event"] = "'event'";
+                $constants["constant.op_message"] = "CONCAT(NEW_VALUE_, '_|_', PROPERTY_)";
+                $constants["constant_for_update"] = "for update";
+                $constants["constant.datepart.quarter"] = "QUARTER";
+                $constants["constant.datepart.month"] = "MONTH";
+                $constants["constant.datepart.minute"] = "MINUTE";
+                $constants["constant.null.startTime"] = "null START_TIME_";
+                $constants["constant.varchar.cast"] = '\'${key}\'';
+                $constants["constant.integer.cast"] = "NULL";
+                $constants["constant.null.reporter"] = "NULL AS REPORTER_";
+                self::$dbSpecificConstants[$mysqlLikeDatabase] = $constants;
+            }
         }
     }
 
