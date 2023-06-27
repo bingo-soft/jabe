@@ -5,6 +5,9 @@
 
 
 # Jabe - Just Another BPMN Engine
+  ![horiz logo](https://github.com/johnsantosDev/jabe/assets/92297941/4139fe15-ef33-4022-a310-ea23d2b45f7f)
+
+
 
 Jabe (/dʒæbi/) - is a powerful and flexible BPMN workflow engine. It is designed to streamline the creation and management of BPMN workflows by providing developers with an array of functionality to build, deploy, and manage workflows with ease.
 
