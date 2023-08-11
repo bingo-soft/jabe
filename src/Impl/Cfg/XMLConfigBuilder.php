@@ -23,7 +23,6 @@ class XMLConfigBuilder
 
     public function build(): ProcessEngineConfiguration
     {
-        $this->parsed = true;
         $this->parseConfiguration($this->parser->evalNode("/configuration"));
         $this->configuration->setResource($this->resource);
         return $this->configuration;

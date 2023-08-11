@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  mysql_db:
+    image: mysql:8
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: engine
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+    volumes:
+      - ./Db:/docker-entrypoint-initdb.d
+  starter:
+    build: ./EngineStarterService
+    depends_on:
+     - mysql_db
+    environment:
+      DB_JABE_DRIVER: pdo_mysql
+      DB_JABE_HOST: mysql_db
+      DB_JABE_PORT: 3306
+      DB_JABE_USER: test
+      DB_JABE_PASSWORD: test
+      DB_JABE_NAME: engine
+

@@ -274,16 +274,16 @@
         },
         {
             "name": "bingo-soft/mybatis",
-            "version": "1.4.0",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/mybatis.git",
-                "reference": "d78e8d1ef0a0f48734c61bb9b76fd0075934fd24"
+                "reference": "aecaeadf9149586456d3d3703276705ed1c17b6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/mybatis/zipball/d78e8d1ef0a0f48734c61bb9b76fd0075934fd24",
-                "reference": "d78e8d1ef0a0f48734c61bb9b76fd0075934fd24",
+                "url": "https://api.github.com/repos/bingo-soft/mybatis/zipball/aecaeadf9149586456d3d3703276705ed1c17b6b",
+                "reference": "aecaeadf9149586456d3d3703276705ed1c17b6b",
                 "shasum": ""
             },
             "require": {
@@ -324,9 +324,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/mybatis/issues",
-                "source": "https://github.com/bingo-soft/mybatis/tree/1.4.0"
+                "source": "https://github.com/bingo-soft/mybatis/tree/1.4.1"
             },
-            "time": "2023-06-16T09:08:35+00:00"
+            "time": "2023-08-11T06:43:02+00:00"
         },
         {
             "name": "bingo-soft/sax",

@@ -1,0 +1,19 @@
+{
+    "name": "bingo/test",
+    "description": "test",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "EngineStarterService\\": "./src"
+        }
+    },
+    "require": {
+        "bingo-soft/jabe": "^1.5",
+        "symfony/process": "^6.2",
+        "guzzlehttp/guzzle": "^7.6",
+        "predis/predis": "^2.1"
+    },
+    "config": {
+        "secure-http": false
+    }
+}
