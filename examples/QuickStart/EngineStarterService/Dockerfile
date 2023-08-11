@@ -63,6 +63,7 @@ RUN cd /tmp && wget https://pecl.php.net/get/swoole-${SWOOLE_VERSION}.tgz && \
 COPY php.ini /usr/local/etc/php/php.ini
 COPY src /usr/src/engine
 COPY composer.json /usr/src/composer.json
+COPY composer.lock /usr/src/composer.lock
 
 # Install dependencies
 RUN cd /usr/src/ && composer update --no-dev

@@ -15,6 +15,8 @@ class XMLConfigBuilder
 
     private $resource;
 
+    private $configuration;
+
     public function __construct($resource)
     {
         $this->resource = $resource;
