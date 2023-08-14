@@ -297,6 +297,15 @@ class ExceptionUtil
 
     public static function wrapPersistenceException(\Throwable $ex): ProcessEngineException
     {
-        return new ProcessEngineException(self::PERSISTENCE_EXCEPTION_MESSAGE .  $ex->getMessage(), $ex);
+        $from = [];
+        for ($i = 0; $i < 30; $i += 1) {
+            try {
+                $t = $ex->getTrace()[$i];
+                $from[] = sprintf("%s.%s.%s", $t['file'], $t['function'], $t['line']);
+            } catch (\Throwable $tt) {
+
+            }
+        }
+        return new ProcessEngineException(self::PERSISTENCE_EXCEPTION_MESSAGE .  $ex->getMessage() . " " . implode(" <= ", $from), $ex);
     }
 }

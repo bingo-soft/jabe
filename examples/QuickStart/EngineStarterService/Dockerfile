@@ -66,7 +66,7 @@ COPY composer.json /usr/src/composer.json
 COPY composer.lock /usr/src/composer.lock
 
 # Install dependencies
-RUN cd /usr/src/ && composer update --no-dev
-
+#RUN cd /usr/src/ && composer update --no-dev
+COPY vendor /usr/src/vendor
 WORKDIR /usr/src/engine
 CMD [ "php", "./index.php" ]

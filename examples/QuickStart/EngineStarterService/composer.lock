@@ -219,16 +219,16 @@
         },
         {
             "name": "bingo-soft/jabe",
-            "version": "1.5.5",
+            "version": "1.5.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/jabe.git",
-                "reference": "6e403662f6192065b852e8be9a2f45e29c7ef5f8"
+                "reference": "115938753306f35710bcbc96905efe0d7ca62ff5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/jabe/zipball/6e403662f6192065b852e8be9a2f45e29c7ef5f8",
-                "reference": "6e403662f6192065b852e8be9a2f45e29c7ef5f8",
+                "url": "https://api.github.com/repos/bingo-soft/jabe/zipball/115938753306f35710bcbc96905efe0d7ca62ff5",
+                "reference": "115938753306f35710bcbc96905efe0d7ca62ff5",
                 "shasum": ""
             },
             "require": {
@@ -282,22 +282,22 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/jabe/issues",
-                "source": "https://github.com/bingo-soft/jabe/tree/1.5.5"
+                "source": "https://github.com/bingo-soft/jabe/tree/1.5.6"
             },
-            "time": "2023-08-14T07:49:46+00:00"
+            "time": "2023-08-14T08:02:55+00:00"
         },
         {
             "name": "bingo-soft/juel",
-            "version": "1.8.9",
+            "version": "1.8.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/juel.git",
-                "reference": "5e5cef1fc569707765f68e64f8d89bba1954075d"
+                "reference": "cc622013ecbedc623d74a31ff8da0f391c2608e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/juel/zipball/5e5cef1fc569707765f68e64f8d89bba1954075d",
-                "reference": "5e5cef1fc569707765f68e64f8d89bba1954075d",
+                "url": "https://api.github.com/repos/bingo-soft/juel/zipball/cc622013ecbedc623d74a31ff8da0f391c2608e6",
+                "reference": "cc622013ecbedc623d74a31ff8da0f391c2608e6",
                 "shasum": ""
             },
             "require": {
@@ -337,9 +337,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/juel/issues",
-                "source": "https://github.com/bingo-soft/juel/tree/1.8.9"
+                "source": "https://github.com/bingo-soft/juel/tree/1.8.10"
             },
-            "time": "2023-06-13T11:44:30+00:00"
+            "time": "2023-08-14T08:00:29+00:00"
         },
         {
             "name": "bingo-soft/mybatis",

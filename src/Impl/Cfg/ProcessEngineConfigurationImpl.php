@@ -1740,7 +1740,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
             \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
             \PDO::ATTR_EMULATE_PREPARES => true,
-            \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => false,
+            \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
             UnpooledDataSource::RECONNECT_ATTEMPTS_OPTION => 5,
             UnpooledDataSource::RECONNECT_DELAY_OPTION => 1
         ],
@@ -1845,7 +1845,6 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
         if ($this->isUseSharedSqlSessionFactory) {
             $this->sqlSessionFactory = $this->cachedSqlSessionFactory;
         }
-
         if ($this->sqlSessionFactory === null) {
             $inputStream = null;
             //try {
