@@ -9,7 +9,7 @@ abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl implements P
 {
     protected $phpType;
 
-    public function __construct(?string $name = null, ?string $phpType)
+    public function __construct(?string $name = null, ?string $phpType = null)
     {
         if ($name === null) {
             $name = strtolower($phpType);
