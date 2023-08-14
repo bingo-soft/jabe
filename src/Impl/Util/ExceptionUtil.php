@@ -18,7 +18,7 @@ class ExceptionUtil
 {
     public const PERSISTENCE_EXCEPTION_MESSAGE = "An exception occurred in the " .
         "persistence layer. Please check the server logs for a detailed message and the entire " .
-        "exception stack trace.";
+        "exception stack trace. ";
 
     public static function getExceptionStacktrace($obj): ?string
     {
@@ -297,6 +297,6 @@ class ExceptionUtil
 
     public static function wrapPersistenceException(\Throwable $ex): ProcessEngineException
     {
-        return new ProcessEngineException(self::PERSISTENCE_EXCEPTION_MESSAGE, $ex);
+        return new ProcessEngineException(self::PERSISTENCE_EXCEPTION_MESSAGE .  $ex->getMessage(), $ex);
     }
 }

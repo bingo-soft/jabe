@@ -1,21 +1,27 @@
 version: '3.1'
 services:
   mysql_db:
-    image: mysql:8
+    image: mysql:8.1.0
     restart: always
     ports:
-      - "3307:3306"
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: engine
       MYSQL_USER: test
       MYSQL_PASSWORD: test
+  migration:
+    build: ./Migration
+    depends_on:
+      - mysql_db
     volumes:
-      - ./Db:/docker-entrypoint-initdb.d
+      - ../../src/Resources/Db/MySQL:/flyway/sql
+    command: "-url=jdbc:mysql://mysql_db:3306?allowPublicKeyRetrieval=true&useSSL=false -schemas=engine -user=test -password=test -connectRetries=60 migrate"    
   starter:
     build: ./EngineStarterService
     depends_on:
      - mysql_db
+     - migration
     environment:
       DB_JABE_DRIVER: pdo_mysql
       DB_JABE_HOST: mysql_db
