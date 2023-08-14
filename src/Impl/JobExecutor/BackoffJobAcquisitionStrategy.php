@@ -97,7 +97,7 @@ class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategyInterface
         if ($this->baseIdleWaitTime > 0 && $this->maxIdleWaitTime > 0 && $this->idleIncreaseFactor > 0 && $this->maxIdleWaitTime >= $this->baseIdleWaitTime) {
             // the maximum level that produces an idle time <= maxIdleTime:
             // see class docs for an explanation
-            $this->maxIdleLevel = $this->log($this->idleIncreaseFactor, $this->maxIdleWaitTime / $this->baseIdleWaitTime) + 1;
+            $this->maxIdleLevel = intval($this->log($this->idleIncreaseFactor, $this->maxIdleWaitTime / $this->baseIdleWaitTime) + 1);
 
             // + 1 to get the minimum level that produces an idle time > maxIdleTime
             $this->maxIdleLevel += 1;

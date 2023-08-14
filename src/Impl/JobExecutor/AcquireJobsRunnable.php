@@ -30,7 +30,7 @@ abstract class AcquireJobsRunnable implements RunnableInterface
         }
         if ($millis >= 1000) {
             $millis /= 1000;
-            sleep($millis);
+            sleep(intval($millis));
         } else {
             usleep($millis);
         }

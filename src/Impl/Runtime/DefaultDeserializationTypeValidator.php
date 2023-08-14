@@ -43,7 +43,7 @@ class DefaultDeserializationTypeValidator implements WhitelistingDeserialization
         return in_array($className, $this->allowedClasses);
     }
 
-    protected function extractElements(?string $allowedElements = '', array &$set): void
+    protected function extractElements(?string $allowedElements = '', array &$set = []): void
     {
         if (!empty($set)) {
             $set = [];
