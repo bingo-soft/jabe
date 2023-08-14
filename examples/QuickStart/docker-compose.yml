@@ -25,7 +25,7 @@ services:
     environment:
       DB_JABE_DRIVER: pdo_mysql
       DB_JABE_HOST: mysql_db
-      DB_JABE_PORT: 3307
+      DB_JABE_PORT: 3306
       DB_JABE_USER: test
       DB_JABE_PASSWORD: test
       DB_JABE_NAME: engine

@@ -219,16 +219,16 @@
         },
         {
             "name": "bingo-soft/jabe",
-            "version": "1.5.4",
+            "version": "1.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/jabe.git",
-                "reference": "5bf9479037cc2dcb1eafe9b5567328e47a6d7f6a"
+                "reference": "6e403662f6192065b852e8be9a2f45e29c7ef5f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/jabe/zipball/5bf9479037cc2dcb1eafe9b5567328e47a6d7f6a",
-                "reference": "5bf9479037cc2dcb1eafe9b5567328e47a6d7f6a",
+                "url": "https://api.github.com/repos/bingo-soft/jabe/zipball/6e403662f6192065b852e8be9a2f45e29c7ef5f8",
+                "reference": "6e403662f6192065b852e8be9a2f45e29c7ef5f8",
                 "shasum": ""
             },
             "require": {
@@ -282,9 +282,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/jabe/issues",
-                "source": "https://github.com/bingo-soft/jabe/tree/1.5.4"
+                "source": "https://github.com/bingo-soft/jabe/tree/1.5.5"
             },
-            "time": "2023-08-14T06:42:14+00:00"
+            "time": "2023-08-14T07:49:46+00:00"
         },
         {
             "name": "bingo-soft/juel",

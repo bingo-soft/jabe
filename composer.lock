@@ -219,16 +219,16 @@
         },
         {
             "name": "bingo-soft/juel",
-            "version": "1.8.4",
+            "version": "1.8.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/juel.git",
-                "reference": "99a1f2550b6f2fddf793ca5403af502ff001c38d"
+                "reference": "cc622013ecbedc623d74a31ff8da0f391c2608e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/juel/zipball/99a1f2550b6f2fddf793ca5403af502ff001c38d",
-                "reference": "99a1f2550b6f2fddf793ca5403af502ff001c38d",
+                "url": "https://api.github.com/repos/bingo-soft/juel/zipball/cc622013ecbedc623d74a31ff8da0f391c2608e6",
+                "reference": "cc622013ecbedc623d74a31ff8da0f391c2608e6",
                 "shasum": ""
             },
             "require": {
@@ -268,9 +268,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/juel/issues",
-                "source": "https://github.com/bingo-soft/juel/tree/1.8.4"
+                "source": "https://github.com/bingo-soft/juel/tree/1.8.10"
             },
-            "time": "2023-04-03T14:56:38+00:00"
+            "time": "2023-08-14T08:00:29+00:00"
         },
         {
             "name": "bingo-soft/mybatis",
