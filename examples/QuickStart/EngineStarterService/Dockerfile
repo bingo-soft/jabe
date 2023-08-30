@@ -51,6 +51,23 @@ RUN mkdir -p $HOME/librdkafka && \
     pecl install rdkafka && \
     echo "extension=rdkafka.so" > /usr/local/etc/php/conf.d/10-rdkafka.ini
 
+# Install Phalcon
+ENV PHALCON_VERSION=5.2.1
+RUN set -xe && \
+        docker-php-source extract && \
+        # Install ext-phalcon
+        curl -LO https://github.com/phalcon/cphalcon/archive/v${PHALCON_VERSION}.tar.gz && \
+        tar xzf /v${PHALCON_VERSION}.tar.gz && \
+        docker-php-ext-install -j $(getconf _NPROCESSORS_ONLN) \
+            /cphalcon-${PHALCON_VERSION}/build/phalcon \
+        && \
+        # Remove all temp files
+        rm -r \
+            /v${PHALCON_VERSION}.tar.gz \
+            /cphalcon-${PHALCON_VERSION} \
+        && \
+        docker-php-source delete
+
 # Install Swoole module
 RUN cd /tmp && wget https://pecl.php.net/get/swoole-${SWOOLE_VERSION}.tgz && \
     tar zxvf swoole-${SWOOLE_VERSION}.tgz && \
@@ -66,7 +83,9 @@ COPY composer.json /usr/src/composer.json
 COPY composer.lock /usr/src/composer.lock
 
 # Install dependencies
-#RUN cd /usr/src/ && composer update --no-dev
-COPY vendor /usr/src/vendor
+RUN cd /usr/src/ && composer update --no-dev
+#COPY vendor /usr/src/vendor
 WORKDIR /usr/src/engine
-CMD [ "php", "./index.php" ]
+COPY ./start.sh start.sh
+RUN  chmod +x start.sh
+CMD ./start.sh

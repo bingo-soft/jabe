@@ -8,7 +8,7 @@
         }
     },
     "require": {
-        "bingo-soft/jabe": "^1.5",
+        "bingo-soft/jabe": "*",
         "symfony/process": "^6.2",
         "guzzlehttp/guzzle": "^7.6",
         "predis/predis": "^2.1"

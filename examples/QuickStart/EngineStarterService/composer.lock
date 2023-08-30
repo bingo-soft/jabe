@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f738ad1c109f5bb7f96d54e2e69a228f",
+    "content-hash": "d22c1b8deff52c9560ba3e18f140a0da",
     "packages": [
         {
             "name": "bingo-soft/bpmn",
@@ -219,16 +219,16 @@
         },
         {
             "name": "bingo-soft/jabe",
-            "version": "1.5.6",
+            "version": "1.5.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/jabe.git",
-                "reference": "115938753306f35710bcbc96905efe0d7ca62ff5"
+                "reference": "6a69d6c7bd898af8f8bbe58f5f9cfd25a1b61eb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/jabe/zipball/115938753306f35710bcbc96905efe0d7ca62ff5",
-                "reference": "115938753306f35710bcbc96905efe0d7ca62ff5",
+                "url": "https://api.github.com/repos/bingo-soft/jabe/zipball/6a69d6c7bd898af8f8bbe58f5f9cfd25a1b61eb2",
+                "reference": "6a69d6c7bd898af8f8bbe58f5f9cfd25a1b61eb2",
                 "shasum": ""
             },
             "require": {
@@ -282,9 +282,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/jabe/issues",
-                "source": "https://github.com/bingo-soft/jabe/tree/1.5.6"
+                "source": "https://github.com/bingo-soft/jabe/tree/1.5.7"
             },
-            "time": "2023-08-14T08:02:55+00:00"
+            "time": "2023-08-14T14:52:55+00:00"
         },
         {
             "name": "bingo-soft/juel",
