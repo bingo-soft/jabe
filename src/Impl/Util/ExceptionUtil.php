@@ -298,7 +298,7 @@ class ExceptionUtil
     public static function wrapPersistenceException(\Throwable $ex): ProcessEngineException
     {
         $from = [];
-        for ($i = 0; $i < 30; $i += 1) {
+        for ($i = 0; $i < 50; $i += 1) {
             try {
                 $t = $ex->getTrace()[$i];
                 $from[] = sprintf("%s.%s.%s", $t['file'], $t['function'], $t['line']);
