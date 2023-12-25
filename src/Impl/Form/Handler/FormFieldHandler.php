@@ -72,7 +72,7 @@ class FormFieldHandler
             $formValue = null;
             try {
                 $formValue = $this->type->convertToFormValue($value);
-            } catch (\Exception $exception) {
+            } catch (\Throwable $exception) {
                 throw $exception;
             }
             $formField->setValue($formValue);

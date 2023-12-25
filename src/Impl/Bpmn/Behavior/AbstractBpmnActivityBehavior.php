@@ -72,7 +72,7 @@ class AbstractBpmnActivityBehavior extends FlowNodeActivityBehavior
             if (is_callable($toExecute)) {
                 $toExecute();
             }
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             if ($activityInstanceId == $execution->getActivityInstanceId()) {
                 try {
                     BpmnExceptionHandler::propagateException($execution, $ex);

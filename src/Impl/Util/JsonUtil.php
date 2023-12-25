@@ -83,7 +83,7 @@ class JsonUtil
             if (is_array($data)) {
                 return (object) $data;
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw $e;
         }
     }
@@ -121,7 +121,7 @@ class JsonUtil
             $stringValue = null;
             try {
                 $stringValue = json_encode($entry);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 //LOG.logJsonException(e);
             }
 
@@ -150,7 +150,7 @@ class JsonUtil
             $jsonObject = null;
             try {
                 $jsonObject = (object) $element;
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 //LOG.logJsonException(e);
             }
 
@@ -207,7 +207,7 @@ class JsonUtil
         if ($json !== null && $memberName !== null && property_exists($json, $memberName)) {
             try {
                 return boolval(json_decode($json->{$memberName}));
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 //LOG.logJsonException(e);
                 return false;
             }
@@ -227,7 +227,7 @@ class JsonUtil
         } else {
             try {
                 return json_encode($json);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 return "";
             }
         }
@@ -238,7 +238,7 @@ class JsonUtil
         if ($json !== null && $memberName !== null && property_exists($json, $memberName)) {
             try {
                 return intval($json->{$memberName});
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 //LOG.logJsonException(e);
                 return 0;
             }

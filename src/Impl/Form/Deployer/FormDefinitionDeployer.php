@@ -37,7 +37,7 @@ class FormDefinitionDeployer extends AbstractDefinitionDeployer
             $formDefinitionKey = $formJsonObject->id;
             $definition = new FormDefinitionEntity($formDefinitionKey, $deployment->getId(), $resource->getName(), $deployment->getTenantId());
             return [$definition];
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // form could not be parsed, throw exception if strict parsing is not disabled
             if (!$this->getCommandContext()->getProcessEngineConfiguration()->isDisableStrictFormParsing()) {
                 //throw LOG.exceptionDuringFormParsing(e.getMessage(), resource.getName());

@@ -592,16 +592,16 @@ class CommandContext
                 $commandContext = Context::getCommandContext();
             }
             $authorizationEnabled = $commandContext->isAuthorizationCheckEnabled();
-            /*try {*/
+            try {
                 $commandContext->disableAuthorizationCheck();
                 return $command();
-            /*} catch (\Exception $e) {*/
-               //throw new ProcessEngineException($e->getMessage(), $e);
-            /*} finally {
+            } catch (\Throwable $e) {
+                throw new ProcessEngineException($e->getMessage(), $e);
+            } finally {
                 if ($authorizationEnabled) {
                     $commandContext->enableAuthorizationCheck();
                 }
-            }*/
+            }
         } elseif ($command instanceof CommandInterface) {
             $commandContext = Context::getCommandContext();
             return $this->runWithoutAuthorization(

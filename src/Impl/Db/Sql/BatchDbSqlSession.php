@@ -35,7 +35,7 @@ class BatchDbSqlSession extends DbSqlSession
             try {
                 // stage operation
                 $this->executeDbOperation($operation);
-            } catch (\Exception $ex) {
+            } catch (\Throwable $ex) {
                 // exception is wrapped later
                 throw $ex;
             }
@@ -45,7 +45,7 @@ class BatchDbSqlSession extends DbSqlSession
         try {
             // applies all operations
             $batchResults = $this->flushBatchOperations();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return $this->postProcessBatchFailure($operations, $e);
         }
 

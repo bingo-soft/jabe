@@ -92,7 +92,7 @@ class OptimizeHistoricVariableUpdateQueryCmd implements CommandInterface
                 if ($this->shouldFetchValue($entity)) {
                     try {
                         $entity->getTypedValue(false);
-                    } catch (\Exception $t) {
+                    } catch (\Throwable $t) {
                         // do not fail if one of the variables fails to load
                         //LOG.exceptionWhileGettingValueForVariable(t);
                     }

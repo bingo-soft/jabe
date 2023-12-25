@@ -20,7 +20,7 @@ abstract class BaseLogger
             $logger->componentId = $componentId;
             $logger->delegateLogger = new ExtLogger($name);
             return $logger;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             fwrite(STDERR, sprintf("Unable to instantiate logger '%s'", $loggerClass) . "\n");
             throw new \Exception(sprintf("Unable to instantiate logger '%s'", $loggerClass));
         }

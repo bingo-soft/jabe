@@ -24,7 +24,7 @@ class ScriptValueProvider implements ParameterValueProviderInterface
             Context::getProcessEngineConfiguration()
             ->getDelegateInterceptor()
             ->handleInvocation($invocation);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw new ProcessEngineException($e->getMessage());
         }
         return $invocation->getInvocationResult();

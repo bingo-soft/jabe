@@ -314,7 +314,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
             $flushResult = null;
             try {
                 $flushResult = $this->persistenceSession->executeDbOperations($operationsToFlush);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 // Top level persistence exception
                 //throw LOG.flushDbOperationUnexpectedException(allOperations, e);
                 throw new \Exception("flushDbOperationUnexpectedException");

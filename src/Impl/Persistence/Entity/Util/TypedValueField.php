@@ -95,7 +95,7 @@ class TypedValueField implements DbEntityLifecycleAwareInterface, CommandContext
                 if ($this->notifyOnImplicitUpdates && $this->isMutableValue($this->cachedValue)) {
                     Context::getCommandContext()->registerCommandContextListener($this);
                 }
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 // intercept the error message
                 $this->errorMessage = $e->getMessage();
                 throw $e;

@@ -55,7 +55,7 @@ class SaveTaskCmd implements CommandInterface
                 $this->task->insert();
                 $operation = UserOperationLogEntryInterface::OPERATION_TYPE_CREATE;
                 $this->task->executeMetrics(Metrics::ACTIVTY_INSTANCE_START, $commandContext);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 throw new NotValidException($e->getMessage(), $e);
             }
 

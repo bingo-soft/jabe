@@ -58,7 +58,7 @@ class ParseUtil
                     if ($durationHelper->isRepeat()) {
                         $retries = $durationHelper->getTimes();
                     }
-                } catch (\Exception $e) {
+                } catch (\Throwable $e) {
                     //LOG.logParsingRetryIntervals(intervals[0], e);
                     return null;
                 }

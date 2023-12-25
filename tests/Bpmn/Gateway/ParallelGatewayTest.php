@@ -169,7 +169,7 @@ class ParallelGatewayTest extends PluggableProcessEngineTest
                 foreach ($list as $job) {
                     $this->managementService->executeJob($job->getId());
                 }
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 //ignore, because job could be run by the job executor
             }
         }
@@ -193,7 +193,7 @@ class ParallelGatewayTest extends PluggableProcessEngineTest
                 foreach ($list as $job) {
                     $this->managementService->executeJob($job->getId());
                 }
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 //ignore, because job could be run by the job executor
             }
         }
@@ -339,7 +339,7 @@ class ParallelGatewayTest extends PluggableProcessEngineTest
         // when
         try {
             $this->runtimeService->signal($execution->getId());
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $exceptionOccurred = $e;
         }
 

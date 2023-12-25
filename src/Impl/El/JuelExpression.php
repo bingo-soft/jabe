@@ -48,7 +48,7 @@ class JuelExpression implements ExpressionInterface
             throw new ProcessEngineException("Unknown method used in expression: " . $this->expressionText, $mnfe);
         } catch (ELException $ele) {
             throw new ProcessEngineException("Error while evaluating expression: " . $this->expressionText, $ele);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw new ProcessEngineException("Error while evaluating expression: " . $this->expressionText, $e);
         }
     }
@@ -61,7 +61,7 @@ class JuelExpression implements ExpressionInterface
             Context::getProcessEngineConfiguration()
                 ->getDelegateInterceptor()
                 ->handleInvocation($invocation);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw new ProcessEngineException("Error while evaluating expression: " . $this->expressionText, $e);
         }
     }

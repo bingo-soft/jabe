@@ -109,7 +109,7 @@ class TaskDecorator
                 if (is_string($priority)) {
                     try {
                         $task->setPriority(intval($priority));
-                    } catch (\Exception $e) {
+                    } catch (\Throwable $e) {
                         throw new ProcessEngineException("Priority does not resolve to a number: " . $priority, $e);
                     }
                 } elseif (is_numeric($priority)) {

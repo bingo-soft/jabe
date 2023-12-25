@@ -86,7 +86,7 @@ class ProcessDiagramLayoutFactory
         try {
             $meta = stream_get_meta_data($bpmnXmlStream);
             $bpmnModel->loadXML(fread($bpmnXmlStream, filesize($meta['uri'])));
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw new ProcessEngineException("Error while parsing BPMN model.", $e);
         }
         return $bpmnModel;
@@ -162,7 +162,7 @@ class ProcessDiagramLayoutFactory
             try {
                 $meta = stream_get_meta_data($resource);
                 $image = (new PImage())->read($meta['uri']);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 throw new ProcessEngineException("Error while reading process diagram image.", $e);
             }
             $diagramBoundsImage = $this->getDiagramBoundsFromImage($image, $offsetTop, $offsetBottom);

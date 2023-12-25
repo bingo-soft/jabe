@@ -56,7 +56,7 @@ class SimpleDbSqlSession extends DbSqlSession
         try {
             $this->executeInsertEntity($insertStatement, $dbEntity);
             $this->entityInsertPerformed($operation, 1, null);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->entityInsertPerformed($operation, 0, $e);
         }
     }
@@ -74,7 +74,7 @@ class SimpleDbSqlSession extends DbSqlSession
         try {
             $nrOfRowsDeleted = $this->executeDelete($deleteStatement, $dbEntity);
             $this->entityDeletePerformed($operation, $nrOfRowsDeleted, null);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->entityDeletePerformed($operation, 0, $e);
         }
     }
@@ -88,7 +88,7 @@ class SimpleDbSqlSession extends DbSqlSession
         try {
             $rowsAffected = $this->executeDelete($statement, $parameter);
             $this->bulkDeletePerformed($operation, $rowsAffected, null);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->bulkDeletePerformed($operation, 0, $e);
         }
     }
@@ -107,7 +107,7 @@ class SimpleDbSqlSession extends DbSqlSession
         try {
             $rowsAffected = $this->executeUpdate($updateStatement, $dbEntity);
             $this->entityUpdatePerformed($operation, $rowsAffected, null);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->entityUpdatePerformed($operation, 0, $e);
         }
     }
@@ -120,7 +120,7 @@ class SimpleDbSqlSession extends DbSqlSession
         try {
             $rowsAffected = $this->executeUpdate($statement, $parameter);
             $this->bulkUpdatePerformed($operation, $rowsAffected, null);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->bulkUpdatePerformed($operation, 0, $e);
         }
     }

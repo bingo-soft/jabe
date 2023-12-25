@@ -123,7 +123,7 @@ class TelemetrySendingTask extends TimerTask
         if ($sendData) {
             try {
                 $this->sendData($mergedData);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 // so that we send it again the next time
                 $this->restoreDynamicData($dynamicData);
                 throw $e;
@@ -270,7 +270,7 @@ class TelemetrySendingTask extends TimerTask
                     $triesLeft -= 1;
                     $runnable->run();
                     $requestSuccessful = true;
-                } catch (\Exception $e) {
+                } catch (\Throwable $e) {
                     //LOG.exceptionWhileSendingTelemetryData(e);
                 }
             } while (!$requestSuccessful && $triesLeft > 0);

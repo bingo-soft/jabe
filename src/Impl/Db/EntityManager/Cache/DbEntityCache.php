@@ -56,7 +56,7 @@ class DbEntityCache
             }
             try {
                 return $dbEntity;
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 //throw LOG.entityCacheLookupException(type, id, dbEntity.getClass(), e);
                 throw new \Exception("entityCacheLookupException");
             }

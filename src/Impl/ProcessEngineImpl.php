@@ -135,7 +135,7 @@ class ProcessEngineImpl implements ProcessEngineInterface
 
         try {
             $this->commandExecutorSchemaOperations->execute($this->processEngineConfiguration->getProcessEngineBootstrapCommand());
-        } catch (\Exception $ole) {
+        } catch (\Throwable $ole) {
             throw $ole;
             // if an OLE occurred during the process engine bootstrap, we suppress it
             // since all the data has already been persisted by a previous process engine bootstrap

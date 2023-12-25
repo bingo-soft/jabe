@@ -174,7 +174,7 @@ class ProcessEngineTestRule
                     $areJobsAvailable = $this->areJobsAvailable($processInstanceId);
                     $isTimeLimitExceeded = (time() - $cur) * 1000 >= $maxMillisToWait;
                 }
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
             } finally {
             }
             if ($areJobsAvailable) {
@@ -237,7 +237,7 @@ class ProcessEngineTestRule
             try {
                 $this->processEngine->getManagementService()->executeJob($job->getId());
                 $jobsExecuted += 1;
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
             }
         }
 

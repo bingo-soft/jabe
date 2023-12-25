@@ -29,7 +29,7 @@ class ThreadPoolJobExecutor extends JobExecutor
         try {
             $runnable = $this->getExecuteJobsRunnable($jobIds, $processEngine);
             $this->threadPoolExecutor->execute($runnable);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->logRejectedExecution($processEngine, count($jobIds));
             $this->rejectedJobsHandler->jobsRejected($jobIds, $processEngine, $this);
         }

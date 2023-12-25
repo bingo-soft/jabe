@@ -84,7 +84,7 @@ class DelegateFormFieldValidator implements FormFieldValidatorInterface
             Context::getProcessEngineConfiguration()
             ->getDelegateInterceptor()
             ->handleInvocation($invocation);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw $e;
         }
 

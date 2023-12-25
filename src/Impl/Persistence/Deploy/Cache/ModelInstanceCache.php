@@ -58,7 +58,7 @@ abstract class ModelInstanceCache
             $bpmnModelInstance = $this->readModelFromStream($inputStream);
             $this->instanceCache->put($definitionEntity->getId(), $bpmnModelInstance);
             return $bpmnModelInstance;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->throwLoadModelException($definitionEntity->getId(), $e);
         } finally {
             try {
@@ -78,7 +78,7 @@ abstract class ModelInstanceCache
             try {
                 $this->instanceCache->remove($definition->getId());
                 $this->definitionCache->removeDefinitionFromCache($definition->getId());
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $this->logRemoveEntryFromDeploymentCacheFailure($definition->getId(), $e);
             }
         }

@@ -35,7 +35,7 @@ abstract class AbstractEventAtomicOperation implements CoreAtomicOperationInterf
 
                 try {
                     $execution->invokeListener($listener);
-                } catch (\Exception $ex) {
+                } catch (\Throwable $ex) {
                     $this->eventNotificationsFailed($execution, $ex);
                     // do not continue listener invocation once a listener has failed
                     return;

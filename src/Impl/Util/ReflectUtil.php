@@ -46,7 +46,7 @@ class ReflectUtil
     {
         try {
             return new $className();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //throw LOG.exceptionWhileInstantiatingClass(className, e);
             throw new \Exception(sprintf("exceptionWhileInstantiatingClass %s", $className));
         }
@@ -60,7 +60,7 @@ class ReflectUtil
         try {
             $ref = new \ReflectionClass($object);
             return $ref->getProperty($fieldName);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return null;
         }
     }
@@ -69,7 +69,7 @@ class ReflectUtil
     {
         try {
             $field->setValue($object, $value);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //throw LOG.exceptionWhileSettingField(field, object, value, e);
             throw $e;
         }
@@ -92,7 +92,7 @@ class ReflectUtil
                 }
             }
             return null;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //throw LOG.unableToAccessMethod(setterName, clazz.getName());
             throw new \Exception("unableToAccessMethod");
         }
@@ -120,7 +120,7 @@ class ReflectUtil
                 }
             }
             return null;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return null;
         }
     }

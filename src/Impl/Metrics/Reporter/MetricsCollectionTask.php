@@ -34,10 +34,10 @@ class MetricsCollectionTask extends TimerTask
     {
         try {
             $this->collectMetrics();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             try {
                 //LOG.couldNotCollectAndLogMetrics(e);
-            } catch (\Exception $ex) {
+            } catch (\Throwable $ex) {
                 // ignore if log can't be written
             }
         }

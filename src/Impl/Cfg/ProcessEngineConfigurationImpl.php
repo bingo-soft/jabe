@@ -1368,7 +1368,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
     {
         try {
             ParseUtil::parseHistoryTimeToLive($this->historyTimeToLive);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //throw LOG.invalidPropertyValue("historyTimeToLive", historyTimeToLive, e);
             throw new \Exception("historyTimeToLive");
         }
@@ -1378,7 +1378,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
     {
         try {
             ParseUtil::parseHistoryTimeToLive($this->batchOperationHistoryTimeToLive);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //throw LOG.invalidPropertyValue("batchOperationHistoryTimeToLive", batchOperationHistoryTimeToLive, e);
             throw new \Exception("batchOperationHistoryTimeToLive");
         }
@@ -1393,7 +1393,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
                 }
                 try {
                     ParseUtil::parseHistoryTimeToLive($timeToLive);
-                } catch (\Exception $e) {
+                } catch (\Throwable $e) {
                     //throw LOG.invalidPropertyValue("history time to live for " + batchOperation + " batch operations", timeToLive, e);
                     throw new \Exception("history time to live ...");
                 }
@@ -1747,7 +1747,6 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
         'pdo_pgsql' => [
             \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-            \PDO::ATTR_EMULATE_PREPARES => true,
             UnpooledDataSource::RECONNECT_ATTEMPTS_OPTION => 5,
             UnpooledDataSource::RECONNECT_DELAY_OPTION => 1
         ]
@@ -1807,14 +1806,14 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
             //LOG.debugDatabaseType(databaseType);
 
             //$this->initDatabaseVendorAndVersion(databaseMetaData);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //LOG.databaseConnectionAccessException(e);
         } finally {
             /*try {
                 if ($connection !== null) {
                     $connection->close();
                 }
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 //LOG.databaseConnectionCloseException(e);
             }*/
         }
@@ -1878,7 +1877,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
                 if ($this->isUseSharedSqlSessionFactory) {
                     $this->cachedSqlSessionFactory = $this->sqlSessionFactory;
                 }
-            /*} catch (\Exception $e) {
+            /*} catch (\Throwable $e) {
                 throw new ProcessEngineException("Error while building ibatis SqlSessionFactory: " . $e->getMessage());
             } finally {
                 IoUtil::closeSilently($inputStream);

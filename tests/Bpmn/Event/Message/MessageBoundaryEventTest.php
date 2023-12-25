@@ -126,7 +126,7 @@ class MessageBoundaryEventTest extends PluggableProcessEngineTest
         // this should then throw an exception because execution2 no longer exists
         try {
             $this->runtimeService->messageEventReceived("messageName_2", $execution2->getId());
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //
         }
 
@@ -187,7 +187,7 @@ class MessageBoundaryEventTest extends PluggableProcessEngineTest
         // this should then throw an exception because execution2 no longer exists
         try {
             $this->runtimeService->messageEventReceived("messageName_2", $execution2->getId());
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //
         }
 

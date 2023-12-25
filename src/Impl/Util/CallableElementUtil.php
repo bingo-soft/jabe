@@ -47,7 +47,7 @@ class CallableElementUtil
         try {
             $processDefinitionKey = $callableElement->getDefinitionKey($emptyVariableScope);
             return self::getCalledProcessDefinition($emptyVariableScope, $callableElement, $processDefinitionKey, $targetTenantId);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //UTIL_LOGGER.debugCouldNotResolveCallableElement(callingProcessDefinitionId, activityId, e);
             return null;
         }

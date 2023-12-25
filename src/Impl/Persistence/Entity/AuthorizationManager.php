@@ -490,13 +490,13 @@ class AuthorizationManager extends AbstractManager
                         $checker->$permissionCheck();
                     }
                 }
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $authorizationException = $e;
             }
 
             try {
                 $this->checkAdmin();
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $adminException = $e;
             }
 

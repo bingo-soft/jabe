@@ -182,13 +182,13 @@ class Context
                 $wrappedCallback = new ProcessApplicationClassloaderInterceptor($callback);
                 // execute wrapped callback
                 return $processApplication->execute($wrappedCallback, $invocationContext);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 // unwrap exception
                 throw new ProcessEngineException("Unexpected exeption while executing within process application ", $e);
             } finally {
                 self::removeCurrentProcessApplication();
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw new ProcessEngineException("Cannot switch to process application '" . $paName . "' for execution: " . $e->getMessage(), $e);
         }
     }

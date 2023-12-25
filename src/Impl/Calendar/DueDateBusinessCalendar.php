@@ -26,7 +26,7 @@ class DueDateBusinessCalendar implements BusinessCalendarInterface
             } else {
                 return new \DateTime($duedateDescription);
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw $e;
         }
     }

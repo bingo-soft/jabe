@@ -71,7 +71,7 @@ class HistoryLevelSetupCommand implements CommandInterface
         try {
             $historyLevelProperty =  $commandContext->getPropertyManager()->findPropertyById("historyLevel");
             return $historyLevelProperty !== null ? intval($historyLevelProperty->getValue()) : null;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //LOG.couldNotSelectHistoryLevel(e.getMessage());
             return null;
         }

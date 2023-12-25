@@ -26,7 +26,7 @@ class ClassDelegateTaskListener extends ClassDelegate implements TaskListenerInt
             Context::getProcessEngineConfiguration()
             ->getDelegateInterceptor()
             ->handleInvocation(new TaskListenerInvocation($taskListenerInstance, $delegateTask));
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw new ProcessEngineException("Exception while invoking TaskListener: " . $e->getMessage(), $e);
         }
     }

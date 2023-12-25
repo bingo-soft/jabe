@@ -177,7 +177,7 @@ class TableDataManager extends AbstractManager
                     $tableCount[$tableName] = $this->getTableCount($tableName);
                 }
                 //LOG.countRowsPerProcessEngineTable(tableCount);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 //throw LOG.countTableRowsException(e);
                 throw $e;
             }
@@ -258,14 +258,14 @@ class TableDataManager extends AbstractManager
                     $type = strtoupper($res["TYPE_NAME"]);
                     $result->addColumnMetaData($name, $type);
                 }
-            } catch (\Exception $se) {
+            } catch (\Throwable $se) {
                 throw $se;
             } finally {
                 if ($resultSet !== null) {
                     //$resultSet->close();
                 }
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //throw LOG.retrieveMetadataException(e);
             throw $e;
         }

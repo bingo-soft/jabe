@@ -2058,7 +2058,7 @@ class ExecutionEntity extends PvmExecutionImpl implements ExecutionInterface, Pr
 
             try {
                 return $modelElementInstance;
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $elementType = $modelElementInstance->getElementType();
                 //throw LOG.castModelInstanceException(modelElementInstance, "FlowElement", elementType->getTypeName(),
                 //elementType->getTypeNamespace(), e);

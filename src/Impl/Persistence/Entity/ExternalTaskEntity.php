@@ -469,7 +469,7 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
                 $activityExecution->setVariables($variables);
             }
             BpmnExceptionHandler::propagateBpmnError($bpmnError, $activityExecution);
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             //throw ProcessEngineLogger.CMD_LOGGER.exceptionBpmnErrorPropagationFailed(errorCode, ex);
             throw $ex;
         }
@@ -577,7 +577,7 @@ class ExternalTaskEntity implements ExternalTaskInterface, DbEntityInterface, Ha
     {
         try {
             return $errorEventDefinition->getExpression() !== null && $errorEventDefinition->getExpression()->getValue($this->getExecution()) == true;
-        } catch (\Exception $exception) {
+        } catch (\Throwable $exception) {
             if ($continueOnException) {
                 //ProcessEngineLogger.EXTERNAL_TASK_LOGGER.errorEventDefinitionEvaluationException(id, camundaErrorEventDefinition, exception);
                 return false;

@@ -65,7 +65,7 @@ class FormValidators
     {
         try {
             return new $validator();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw new ProcessEngineException("Could not instantiate validator", $e);
         }
     }

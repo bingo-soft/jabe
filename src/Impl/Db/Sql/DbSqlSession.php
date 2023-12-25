@@ -339,7 +339,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
         //LOG.executeDatabaseOperation("INSERT", parameter);
         try {
             $this->sqlSession->insert($insertStatement, $parameter);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // exception is wrapped later
             throw $e;
         }
@@ -373,7 +373,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
         $mappedDeleteStatement = $this->dbSqlSessionFactory->mapStatement($deleteStatement);
         try {
             return $this->sqlSession->delete($mappedDeleteStatement, $parameter);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // Exception is wrapped later
             throw $e;
         }
@@ -386,7 +386,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
         $mappedUpdateStatement = $this->dbSqlSessionFactory->mapStatement($updateStatement);
         try {
             return $this->sqlSession->update($mappedUpdateStatement, $parameter);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // Exception is wrapped later
             throw $e;
         }
@@ -438,7 +438,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
     {
         try {
             return $this->sqlSession->flushStatements();
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             // exception is wrapped later
             throw $ex;
         }
@@ -503,7 +503,7 @@ abstract class DbSqlSession extends AbstractPersistenceSession
                 //throw LOG.missingTableException(missingComponents);
                 throw new \Exception("missingTableException");
             }*/
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw $e;
             /*if ($this->isMissingTablesException($e)) {
                 //throw LOG.missingActivitiTablesException();

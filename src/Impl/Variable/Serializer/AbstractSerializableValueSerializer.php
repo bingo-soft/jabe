@@ -37,7 +37,7 @@ abstract class AbstractSerializableValueSerializer extends AbstractTypedValueSer
                 try {
                     $serializedByteValue = $this->serializeToByteArray($objectToSerialize);
                     $serializedStringValue = $serializedByteValue;
-                } catch (\Exception $e) {
+                } catch (\Throwable $e) {
                     throw new ProcessEngineException("Cannot serialize object in variable '" . $valueFields->getName());
                 }
             }
@@ -64,7 +64,7 @@ abstract class AbstractSerializableValueSerializer extends AbstractTypedValueSer
             if ($serializedByteValue !== null) {
                 try {
                     $deserializedObject = $this->deserializeFromByteArray($serializedByteValue, $valueFields);
-                } catch (\Exception $e) {
+                } catch (\Throwable $e) {
                     throw new ProcessEngineException("Cannot deserialize object in variable '" . $valueFields->getName() . "'");
                 }
             }

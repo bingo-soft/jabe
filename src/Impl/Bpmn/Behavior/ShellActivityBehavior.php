@@ -107,7 +107,7 @@ class ShellActivityBehavior extends AbstractBpmnActivityBehavior
                     $execution->setVariable($this->errorCodeVariableStr, intval($errorCode));
                 }
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //throw LOG.shellExecutionException(e);
             throw $e;
         }

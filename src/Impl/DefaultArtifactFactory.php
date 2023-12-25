@@ -14,7 +14,7 @@ class DefaultArtifactFactory implements ArtifactFactoryInterface
         try {
             $clazz = str_replace('.', '\\', $clazz);
             return new $clazz();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw new ProcessEngineException("couldn't instantiate class " . $clazz, $e);
         }
     }

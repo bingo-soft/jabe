@@ -11,7 +11,7 @@ class DurationBusinessCalendar implements BusinessCalendarInterface
         try {
             $dh = new DurationHelper($duedateDescription, $startDate);
             return $dh->getDateAfter($startDate);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw $e;
         }
     }

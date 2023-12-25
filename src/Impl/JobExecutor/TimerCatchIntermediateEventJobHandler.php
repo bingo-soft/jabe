@@ -32,8 +32,8 @@ class TimerCatchIntermediateEventJobHandler extends TimerEventJobHandler
                 // Event based gateway
                 $execution->executeEventHandlerActivity($intermediateEventActivity);
             }
-        } catch (\Exception $e) {
-            throw new ProcessEngineException("exception during timer execution: " . $e->getMessage(), $e);
+        } catch (\Throwable $e) {
+            throw new ProcessEngineException("exception during timer execution 2: " . $e->getMessage(), $e);
         }
     }
 }

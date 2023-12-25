@@ -413,7 +413,7 @@ class BpmnParse extends Parse
                     $newInstance = new CxfWSDLImporter();
                     $this->importers[$importType] = $newInstance;
                     return $newInstance;
-                } catch (\Exception $e) {
+                } catch (\Throwable $e) {
                     $this->addError("Could not find importer for type " . $importType, $theImport);
                 }
             }
@@ -615,7 +615,7 @@ class BpmnParse extends Parse
         try {
             $historyTimeToLive = $processElement->attributeNS(self::BPMN_EXTENSIONS_NS_PREFIX, "historyTimeToLive", Context::getProcessEngineConfiguration()->getHistoryTimeToLive());
             $processDefinition->setHistoryTimeToLive(ParseUtil::parseHistoryTimeToLive($historyTimeToLive));
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->addError(new BpmnParseException($e->getMessage(), $processElement, $e));
         }
 
@@ -2534,7 +2534,7 @@ class BpmnParse extends Parse
                 // constant values must be valid integers
                 try {
                     $value = intval($priorityAttributeValue);
-                } catch (\Exception $e) {
+                } catch (\Throwable $e) {
                     $this->addError("Value '" . $priorityAttributeValue . "' for attribute '" . $priorityAttribute . "' is not a valid number", $element);
                 }
             }
@@ -4896,7 +4896,7 @@ class BpmnParse extends Parse
         } else {
             try {
                 return floatval($doubleText);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $this->addError("Cannot parse " . $attributeName . ": " . $e->getMessage(), $element);
             }
         }

@@ -267,7 +267,7 @@ abstract class AbstractQuery extends ListQueryParameterObject implements Command
             try {
                 $method = $this->getMethod($methodName);
                 $method->invoke($this, $value);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 throw new ProcessEngineException("Unable to access method '" . $methodName . "' on class '" . get_class($this) . "'", $e);
             }
         }

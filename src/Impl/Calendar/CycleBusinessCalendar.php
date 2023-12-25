@@ -26,7 +26,7 @@ class CycleBusinessCalendar implements BusinessCalendarInterface
                 $cron = new CronExpression($duedateDescription);
                 return $cron->getNextRunDate($startDate ?? ClockUtil::getCurrentTime(...$args));
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //throw LOG.exceptionWhileParsingCronExpresison(duedateDescription, e);
             throw $e;
         }

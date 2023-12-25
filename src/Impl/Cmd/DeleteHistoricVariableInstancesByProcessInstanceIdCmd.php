@@ -59,7 +59,7 @@ class DeleteHistoricVariableInstancesByProcessInstanceIdCmd implements CommandIn
             $definition = $commandContext->getProcessEngineConfiguration()->getDeploymentCache()->findDeployedProcessDefinitionById(
                 $instance->getProcessDefinitionId()
             );
-        } catch (\Exception $nve) {
+        } catch (\Throwable $nve) {
             // definition has been deleted already
         }
         $commandContext->getOperationLogManager()->logHistoricVariableOperation(

@@ -34,7 +34,7 @@ abstract class AbstractPvmEventAtomicOperation extends AbstractEventAtomicOperat
                 // re-throw the original exception so that it is logged
                 // and set as cause of the failure
                 parent::eventNotificationsFailed($execution, $exception);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 parent::eventNotificationsFailed($execution, $e);
             }
         } else {

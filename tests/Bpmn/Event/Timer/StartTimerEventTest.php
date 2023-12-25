@@ -1246,7 +1246,7 @@ class StartTimerEventTest extends PluggableProcessEngineTest
         // when (1)
         try {
             $this->managementService->executeJob($jobId);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // expected
         }
 
@@ -1264,7 +1264,7 @@ class StartTimerEventTest extends PluggableProcessEngineTest
         // when (2)
         try {
             $this->managementService->executeJob($jobId);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
         }
 
         // then (2)
@@ -1474,7 +1474,7 @@ class StartTimerEventTest extends PluggableProcessEngineTest
         // when (1)
         try {
             $this->managementService->executeJob($jobId);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // expected
         }
 
@@ -1492,7 +1492,7 @@ class StartTimerEventTest extends PluggableProcessEngineTest
         // when (2)
         try {
             $this->managementService->executeJob($jobId);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // expected
         }
 

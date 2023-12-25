@@ -499,7 +499,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
             $modelElementInstance = $bpmnModelInstance->getModelElementById($this->taskDefinitionKey);
             try {
                 return $modelElementInstance;
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $elementType = $modelElementInstance->getElementType();
                 //throw LOG.castModelInstanceException(modelElementInstance, "UserTask", elementType->getTypeName(),
                 //    elementType->getTypeNamespace(), e);
@@ -1026,7 +1026,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
                 Context::getProcessEngineConfiguration()
                 ->getDelegateInterceptor()
                 ->handleInvocation($listenerInvocation);
-            } catch (\Exception $ex) {
+            } catch (\Throwable $ex) {
                 // exceptions on delete events are never handled as BPMN errors
                 if ($isBpmnTask && $eventName != TaskListenerInterface::EVENTNAME_DELETE) {
                     try {
@@ -1063,7 +1063,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
                     $commandInvocationContext->getProcessDataContext()->popSection();
                 }
                 return $result;
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 //throw LOG.invokeTaskListenerException(e);
                 throw $e;
             }
@@ -1728,7 +1728,7 @@ class TaskEntity extends AbstractVariableScope implements TaskInterface, Delegat
                 $activityExecution->setVariables($variables);
             }
             BpmnExceptionHandler::propagateBpmnError($bpmnError, $activityExecution);
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             //throw ProcessEngineLogger.CMD_LOGGER.exceptionBpmnErrorPropagationFailed(errorCode, ex);
             throw $ex;
         }

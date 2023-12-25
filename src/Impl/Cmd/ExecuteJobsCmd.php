@@ -103,7 +103,7 @@ class ExecuteJobsCmd implements CommandInterface
             $commandContext->registerCommandContextListener($this->jobFailureCollector);
             $commandContext->setCurrentJob($job);
             $job->execute($commandContext, ...$args);
-        } catch (\Exception $t) {
+        } catch (\Throwable $t) {
             $failedActivityId = Context::getCommandInvocationContext()
                 ->getProcessDataContext()
                 ->getLatestActivityId();

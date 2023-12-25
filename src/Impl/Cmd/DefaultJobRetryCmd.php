@@ -55,7 +55,7 @@ class DefaultJobRetryCmd extends JobRetryCmd
         } else {
             try {
                 $this->executeCustomStrategy($commandContext, $job, $activity);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 //LOG.debugFallbackToDefaultRetryStrategy();
                 $this->executeStandardStrategy($commandContext);
             }
@@ -166,7 +166,7 @@ class DefaultJobRetryCmd extends JobRetryCmd
 
         try {
             $value = $expression->getValue($execution, $execution);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //LOG.exceptionWhileParsingExpression(jobId, e.getCause().getMessage());
         }
 

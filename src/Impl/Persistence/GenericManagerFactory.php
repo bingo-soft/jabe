@@ -34,7 +34,7 @@ class GenericManagerFactory implements SessionFactoryInterface
         try {
             $managerImplementation = $this->managerImplementation;
             return new $managerImplementation(...$this->jobExecutorState);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //throw LOG.instantiateSessionException(managerImplementation.getName(), e);
             throw $e;
         }

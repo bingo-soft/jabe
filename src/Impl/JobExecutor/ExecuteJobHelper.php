@@ -59,7 +59,7 @@ class ExecuteJobHelper
 
         try {
             $commandExecutor->execute($cmd, ...$args);
-        } catch (\Exception $exception) {
+        } catch (\Throwable $exception) {
             self::handleJobFailure($nextJobId, $jobFailureCollector, $exception);
             // throw the original exception to indicate the ExecuteJobCmd failed
             //throw LOG.wrapJobExecutionFailure(jobFailureCollector, exception);
@@ -112,7 +112,7 @@ class ExecuteJobHelper
         try {
             $commandExecutor->execute($failedJobListener);
             return null;
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             $failedJobListener->incrementCountRetries();
             if ($failedJobListener->getRetriesLeft() > 0) {
                 return self::callFailedJobListenerWithRetries($commandExecutor, $failedJobListener);

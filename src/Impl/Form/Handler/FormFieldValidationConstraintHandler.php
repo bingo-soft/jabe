@@ -34,7 +34,7 @@ class FormFieldValidationConstraintHandler
             if (!$this->validator->validate($submittedValue, $context)) {
                 throw new \Exception("Invalid value submitted for form field '" . $formFieldHandler->getId() . "'");
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw $e;
         }
     }

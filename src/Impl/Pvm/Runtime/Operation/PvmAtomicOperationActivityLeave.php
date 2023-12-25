@@ -38,7 +38,7 @@ class PvmAtomicOperationActivityLeave implements PvmAtomicOperationInterface
 
             try {
                 $behavior->doLeave($execution);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 throw new PvmException("couldn't leave activity <" . $activity->getProperty("type") . " id=\"" . $activity->getId() . "\" ...>: " . $e->getMessage(), $e);
             }
         } else {

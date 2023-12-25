@@ -44,7 +44,7 @@ class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable
                     $acquiredJobs = $this->acquireJobs($this->acquisitionContext, $acquisitionStrategy, $currentProcessEngine);
                     $this->executeJobs($this->acquisitionContext, $currentProcessEngine, $acquiredJobs, ...$args);
                 }
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 //LOG.exceptionDuringJobAcquisition(e);
                 $this->acquisitionContext->setAcquisitionException($e);
             } finally {

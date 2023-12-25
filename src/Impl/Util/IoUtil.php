@@ -12,7 +12,7 @@ class IoUtil
         try {
             $meta = stream_get_meta_data($inputStream);
             return fread($inputStream, filesize($meta['uri']));
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //throw LOG.exceptionWhileReadingStream(inputStreamName, e);
             throw new \Exception(sprintf("exceptionWhileReadingStream %s", $inputStreamName));
         }

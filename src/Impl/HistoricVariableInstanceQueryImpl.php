@@ -250,7 +250,7 @@ class HistoricVariableInstanceQueryImpl extends AbstractQuery implements Histori
                 if ($this->shouldFetchValue($variableInstanceEntity)) {
                     try {
                         $variableInstanceEntity->getTypedValue($this->isCustomObjectDeserializationEnabled);
-                    } catch (\Exception $t) {
+                    } catch (\Throwable $t) {
                         // do not fail if one of the variables fails to load
                         //LOG.exceptionWhileGettingValueForVariable(t);
                     }

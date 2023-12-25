@@ -38,7 +38,7 @@ class TransactionInterceptor extends CommandInterceptor
                 $args = $this->getState();
             }
             $result = $this->next->execute($command, ...$args);
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             $this->doRollback();
             throw $ex;
         }
@@ -52,7 +52,7 @@ class TransactionInterceptor extends CommandInterceptor
     {
         try {
             $this->transactionManager->beginTransaction();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw new TransactionException("Unable to begin transaction");
         }
     }
@@ -66,7 +66,7 @@ class TransactionInterceptor extends CommandInterceptor
     {
         try {
             $this->transactionManager->commit();
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             $this->doRollback();
             throw $ex;
         }
@@ -76,7 +76,7 @@ class TransactionInterceptor extends CommandInterceptor
     {
         try {
             $this->transactionManager->rollback();
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             throw $ex;
         }
     }

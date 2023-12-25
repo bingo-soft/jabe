@@ -97,15 +97,21 @@ abstract class ResourceDefinitionCache
         $cachedDefinition = $this->cache->get($definitionId);
         if ($cachedDefinition === null) {
             $cachedDefinition = $this->cache->get($definitionId);
+            $deployment = null;
             if ($cachedDefinition === null) {
                 $deployment = Context::getCommandContext()
                     ->getDeploymentManager()
                     ->findDeploymentById($deploymentId);
-                $deployment->setNew(false);
-                $this->cacheDeployer->deployOnlyGivenResourcesOfDeployment($deployment, [ $definition->getResourceName() ], $definition->getDiagramResourceName());
-                $cachedDefinition = $this->cache->get($definitionId);
+                
+                if ($deployment !== null) {
+                    $deployment->setNew(false);
+                    $this->cacheDeployer->deployOnlyGivenResourcesOfDeployment($deployment, [ $definition->getResourceName() ], $definition->getDiagramResourceName());
+                    $cachedDefinition = $this->cache->get($definitionId);
+                }
             }
-            $this->checkInvalidDefinitionWasCached($deploymentId, $definitionId, $cachedDefinition);
+            if ($deployment !== null) {
+                $this->checkInvalidDefinitionWasCached($deploymentId, $definitionId, $cachedDefinition);
+            }
         }
         if ($cachedDefinition !== null) {
             $cachedDefinition->updateModifiableFieldsFromEntity($definition);

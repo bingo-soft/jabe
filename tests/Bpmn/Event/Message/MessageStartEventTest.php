@@ -64,7 +64,7 @@ class MessageStartEventTest extends PluggableProcessEngineTest
                 ->createDeployment()
                 ->addClasspathResource("tests/Resources/Bpmn/Event/Message/otherProcessWithNewInvoiceMessage.bpmn20.xml")
                 ->deploy();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->assertTrue(true);
         } finally {
             // clean db:

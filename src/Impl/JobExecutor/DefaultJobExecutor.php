@@ -46,7 +46,7 @@ class DefaultJobExecutor extends ThreadPoolJobExecutor
             if (!$this->threadPoolExecutor->awaitTermination(60, TimeUnit::SECONDS)) {
                 //LOG.timeoutDuringShutdown();
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //LOG.interruptedWhileShuttingDownjobExecutor(e);
         }
     }

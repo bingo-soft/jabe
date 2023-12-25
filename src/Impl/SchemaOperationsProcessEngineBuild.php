@@ -25,7 +25,7 @@ class SchemaOperationsProcessEngineBuild implements SchemaOperationsCommandInter
         if (ProcessEngineConfigurationImpl::DB_SCHEMA_UPDATE_DROP_CREATE == $databaseSchemaUpdate) {
             try {
                 $persistenceSession->dbSchemaDrop();
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 // ignore
             }
         }

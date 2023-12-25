@@ -93,7 +93,7 @@ class TelemetryReporter
                         $telemetrySendingTask->run();
                     });
                 });
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 //throw LOG.schedulingTaskFails(e);
                 throw $e;
             }

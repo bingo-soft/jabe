@@ -110,7 +110,7 @@ class ProcessApplicationManager
 
             $registeredDeployments = &Context::getProcessEngineConfiguration()->getRegisteredDeployments();
             $registeredDeployments = array_merge($registeredDeployments, $deploymentIds);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //throw LOG.exceptionWhileRegisteringDeploymentsWithJobExecutor(e);
             throw new \Exception("exceptionWhileRegisteringDeploymentsWithJobExecutor");
         }
@@ -126,7 +126,7 @@ class ProcessApplicationManager
                     unset($registeredDeployments[$id]);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //LOG.exceptionWhileUnregisteringDeploymentsWithJobExecutor(e);
             throw new \Exception("exceptionWhileUnregisteringDeploymentsWithJobExecutor");
         }

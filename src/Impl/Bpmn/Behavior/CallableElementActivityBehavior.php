@@ -160,7 +160,7 @@ abstract class CallableElementActivityBehavior extends AbstractBpmnActivityBehav
     {
         try {
             Context::getProcessEngineConfiguration()->getDelegateInterceptor()->handleInvocation($delegation);
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             throw new ProcessEngineException($ex->getMessage(), $ex);
         }
     }

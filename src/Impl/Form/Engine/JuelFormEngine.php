@@ -58,7 +58,7 @@ class JuelFormEngine implements FormEngineInterface
             $processEngineConfiguration
             ->getDelegateInterceptor()
             ->handleInvocation($invocation);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw $e;
         }
 
@@ -80,7 +80,7 @@ class JuelFormEngine implements FormEngineInterface
         $formTemplateString = "";
         try {
             $formTemplateString = $resourceBytes;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw $e;
         }
         return $formTemplateString;

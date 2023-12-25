@@ -54,7 +54,7 @@ class PvmAtomicOperationActivityExecute implements PvmAtomicOperationInterface
 
                 try {
                     $activityBehavior->execute($execution);
-                } catch (\Exception $e) {
+                } catch (\Throwable $e) {
                     throw new PvmException("couldn't execute activity <" . $activity->getProperty("type") . " id=\"" . $activity->getId() . "\" ...>: " . $e->getMessage(), $e);
                 }
                 return null;

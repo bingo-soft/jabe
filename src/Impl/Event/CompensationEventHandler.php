@@ -61,7 +61,7 @@ class CompensationEventHandler implements EventHandlerInterface
                     $compensatingExecution->setActivity($compensationHandler);
                     $compensatingExecution->performOperation(AtomicOperation::activityStart());
                 }
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 throw new ProcessEngineException("Error while handling compensation event ", $e);
             }
         }

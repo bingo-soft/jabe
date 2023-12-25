@@ -75,7 +75,7 @@ abstract class TestHelper
 
             try {
                 $method = self::getMethod($testClass, $methodName);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 if ($deploymentAnnotation == null) {
                     // we have neither the annotation, nor can look it up from the method
                     return null;
@@ -261,7 +261,7 @@ abstract class TestHelper
             if (!empty($attrs)) {
                 $annotation = $attrs->newInstance();
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // - ignore if we cannot access the method
             // - just try again with the class
             // => can for example be the case for parameterized tests where methodName does not correspond to the actual method name
@@ -284,7 +284,7 @@ abstract class TestHelper
     {
         try {
             return (new \ReflectionClass($clazz))->getMethod($methodName);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $parent = (new \ReflectionClass($clazz))->getParentClass();
             if ($parent) {
                 return self::getMethod($parent->name, $methodName);
@@ -401,7 +401,7 @@ abstract class TestHelper
                     $areJobsAvailable = self::areJobsAvailable($processEngineConfiguration);
                     $isTimeLimitExceeded = (time() - $cur) * 1000 >= $maxMillisToWait;
                 }
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
             } finally {
             }
             if ($areJobsAvailable) {

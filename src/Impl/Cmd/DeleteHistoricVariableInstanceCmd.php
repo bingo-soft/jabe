@@ -68,7 +68,7 @@ class DeleteHistoricVariableInstanceCmd implements CommandInterface
             }/*elseif ($variable.getCaseDefinitionId() !== null) {
                 definition = commandContext.getProcessEngineConfiguration().getDeploymentCache().findDeployedCaseDefinitionById(variable.getCaseDefinitionId());
             }*/
-        } catch (\Exception $nve) {
+        } catch (\Throwable $nve) {
             // definition has been deleted already
         }
         $commandContext->getOperationLogManager()->logHistoricVariableOperation(

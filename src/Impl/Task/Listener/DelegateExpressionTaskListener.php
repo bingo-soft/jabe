@@ -41,7 +41,7 @@ class DelegateExpressionTaskListener implements TaskListenerInterface
                 Context::getProcessEngineConfiguration()
                     ->getDelegateInterceptor()
                     ->handleInvocation(new TaskListenerInvocation($delegate, $delegateTask));
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 throw new ProcessEngineException("Exception while invoking TaskListener: " . $e->getMessage(), $e);
             }
         } else {

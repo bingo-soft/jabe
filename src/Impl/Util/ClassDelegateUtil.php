@@ -19,7 +19,7 @@ class ClassDelegateUtil
 
             self::applyFieldDeclaration($fieldDeclarations, $object);
             return $object;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //throw LOG.exceptionWhileInstantiatingClass(className, e);
             throw new \Exception("exceptionWhileInstantiatingClass");
         }
@@ -38,7 +38,7 @@ class ClassDelegateUtil
             if ($setterMethod != null) {
                 try {
                     $setterMethod->invoke($target, $declaration->getValue());
-                } catch (\Exception $e) {
+                } catch (\Throwable $e) {
                     //throw LOG.exceptionWhileApplyingFieldDeclatation(declaration.getName(), target.getClass().getName(), e);
                     throw new \Exception("exceptionWhileApplyingFieldDeclatation");
                 }

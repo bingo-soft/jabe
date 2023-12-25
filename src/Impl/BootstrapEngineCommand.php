@@ -125,7 +125,7 @@ class BootstrapEngineCommand implements ProcessEngineBootstrapCommandInterface
         try {
             $installationIdProperty = $commandContext->getPropertyManager()->findPropertyById(self::INSTALLATION_PROPERTY_NAME);
             return $installationIdProperty !== null ? $installationIdProperty->getValue() : null;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //LOG.couldNotSelectInstallationId(e.getMessage());
             return null;
         }

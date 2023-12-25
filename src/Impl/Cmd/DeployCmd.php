@@ -320,7 +320,7 @@ class DeployCmd implements CommandInterface
             );
             try {
                 $commandContext->getTransactionContext()->addTransactionListener(TransactionState::ROLLED_BACK, $listener);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 //TX_LOG.debugTransactionOperation("Could not register transaction synchronization. Probably the TX has already been rolled back by application code.");
                 $listener->execute($commandContext);
             }

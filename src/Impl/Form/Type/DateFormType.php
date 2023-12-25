@@ -47,7 +47,7 @@ class DateFormType extends AbstractFormFieldType
             }
             try {
                 return Variables::dateValue(new \DateTime($strValue), $propertyValue->isTransient());
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 throw new ProcessEngineException("Could not parse value '" . $value . "' as date using date format '" . $this->datePattern . "'.");
             }
         } else {

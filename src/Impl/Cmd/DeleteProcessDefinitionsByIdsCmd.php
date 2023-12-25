@@ -205,11 +205,12 @@ class DeleteProcessDefinitionsByIdsCmd implements CommandInterface
             $configuration = Context::getProcessEngineConfiguration();
             $deploymentCache = $configuration->getDeploymentCache();
             $newLatestProcessDefinition = $deploymentCache->resolveProcessDefinition($newLatestProcessDefinition);
-
-            $deployers = $configuration->getDeployers();
-            foreach ($deployers as $deployer) {
-                if ($deployer instanceof BpmnDeployer) {
-                    $deployer->addEventSubscriptions($newLatestProcessDefinition);
+            if ($newLatestProcessDefinition !== null) {
+                $deployers = $configuration->getDeployers();
+                foreach ($deployers as $deployer) {
+                    if ($deployer instanceof BpmnDeployer) {
+                        $deployer->addEventSubscriptions($newLatestProcessDefinition);
+                    }
                 }
             }
         }

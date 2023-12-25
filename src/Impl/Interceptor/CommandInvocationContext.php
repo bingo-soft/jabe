@@ -108,7 +108,7 @@ class CommandInvocationContext
             if ($invocation !== null) {
                 $invocation->execute($this->bpmnStackTrace, $this->processDataContext, ...$args);
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // log bpmn stacktrace
             $this->bpmnStackTrace->printStackTrace(Context::getProcessEngineConfiguration()->isBpmnStacktraceVerbose());
             // rethrow

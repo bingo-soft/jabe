@@ -111,7 +111,7 @@ class BpmnExceptionHandler
                     return $this->errorDeclarationFinder->getErrorEventDefinition() !== null || $element === null;
                 }
             });
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //LOG.errorPropagationException(execution.getActivityInstanceId(), e);
 
             // separate the exception handling to support a fail-safe error propagation

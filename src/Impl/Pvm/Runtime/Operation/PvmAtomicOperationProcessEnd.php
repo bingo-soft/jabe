@@ -41,7 +41,7 @@ class PvmAtomicOperationProcessEnd extends PvmAtomicOperationActivityInstanceEnd
             $subProcessActivityBehavior = $activity->getActivityBehavior();
             try {
                 $subProcessActivityBehavior->passOutputVariables($superExecution, $execution);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 //LOG.exceptionWhileCompletingSupProcess(execution, e);
                 throw new ProcessEngineException("Error while completing sub process of execution " . $execution, $e);
             }
@@ -67,7 +67,7 @@ class PvmAtomicOperationProcessEnd extends PvmAtomicOperationActivityInstanceEnd
             $superExecution->setSubProcessInstance(null);
             try {
                 $subProcessActivityBehavior->completed($superExecution);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 //LOG.exceptionWhileCompletingSupProcess(execution, e);
                 throw new ProcessEngineException("Error while completing sub process of execution " . $execution, $e);
             }

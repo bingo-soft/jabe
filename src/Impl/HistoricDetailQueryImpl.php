@@ -226,7 +226,7 @@ class HistoricDetailQueryImpl extends AbstractQuery implements HistoricDetailQue
                     if ($this->shouldFetchValue($entity)) {
                         try {
                             $entity->getTypedValue($this->isCustomObjectDeserializationEnabled);
-                        } catch (\Exception $t) {
+                        } catch (\Throwable $t) {
                             // do not fail if one of the variables fails to load
                             //LOG.exceptionWhileGettingValueForVariable(t);
                         }

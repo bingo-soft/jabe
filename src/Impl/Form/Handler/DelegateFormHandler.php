@@ -49,7 +49,7 @@ abstract class DelegateFormHandler
     {
         try {
             return $callable();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw $e;
         }
     }

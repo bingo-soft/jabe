@@ -93,7 +93,7 @@ class IdentityServiceImpl extends ServiceImpl implements IdentityServiceInterfac
     {
         try {
             $this->commandExecutor->execute(new SaveGroupCmd($group));
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             if (ExceptionUtil::checkConstraintViolationException($ex)) {
                 throw new BadUserRequestException("The group already exists", $ex);
             }
@@ -105,7 +105,7 @@ class IdentityServiceImpl extends ServiceImpl implements IdentityServiceInterfac
     {
         try {
             $this->commandExecutor->execute(new SaveUserCmd($user, $skipPasswordPolicy));
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             if (ExceptionUtil::checkConstraintViolationException($ex)) {
                 throw new BadUserRequestException("The user already exists", $ex);
             }
@@ -117,7 +117,7 @@ class IdentityServiceImpl extends ServiceImpl implements IdentityServiceInterfac
     {
         try {
             $this->commandExecutor->execute(new SaveTenantCmd($tenant));
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             if (ExceptionUtil::checkConstraintViolationException($ex)) {
                 throw new BadUserRequestException("The tenant already exists", $ex);
             }

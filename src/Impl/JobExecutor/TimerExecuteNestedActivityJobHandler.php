@@ -26,8 +26,8 @@ class TimerExecuteNestedActivityJobHandler extends TimerEventJobHandler
 
         try {
             $execution->executeEventHandlerActivity($activity);
-        } catch (\Exception $e) {
-            throw new ProcessEngineException("exception during timer execution: " . $e->getMessage(), $e);
+        } catch (\Throwable $e) {
+            throw new ProcessEngineException("exception during timer execution 1: " . $e->getMessage(), $e);
         }
     }
 }

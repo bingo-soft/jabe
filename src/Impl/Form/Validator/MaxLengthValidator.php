@@ -9,7 +9,7 @@ class MaxLengthValidator extends AbstractTextValueValidator
         $maxLength = null;
         try {
             $maxLength = intval($configuration);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // do not throw validation exception, as the issue is not with the submitted value
             throw new FormFieldConfigurationException("Cannot validate \"maxlength\": configuration");
         }

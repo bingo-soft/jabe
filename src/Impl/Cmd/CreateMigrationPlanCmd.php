@@ -129,7 +129,7 @@ class CreateMigrationPlanCmd implements CommandInterface
         try {
             return $commandContext->getProcessEngineConfiguration()
             ->getDeploymentCache()->findDeployedProcessDefinitionById($id);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             //throw LOG.processDefinitionDoesNotExist(id, type);
             throw new \Exception("processDefinitionDoesNotExist");
         }

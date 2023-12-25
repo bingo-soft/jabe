@@ -30,7 +30,7 @@ class TimerStartEventJobHandler extends TimerEventJobHandler
 
         try {
             $this->startProcessInstance($commandContext, $tenantId, $processDefinition, ...$args);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw $e;
         }
     }

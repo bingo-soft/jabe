@@ -33,7 +33,7 @@ class ScriptCondition implements ConditionInterface
             Context::getProcessEngineConfiguration()
             ->getDelegateInterceptor()
             ->handleInvocation($invocation);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw new ProcessEngineException($e->getMessage());
         }
 
