@@ -137,7 +137,12 @@ class CommandInvocationContext
                 } catch (\Throwable $tt) {
                 }
             }
-            fwrite(STDERR, sprintf("exception while executing command: %s", implode(' <= ', $errorStack)) . "\n"); //$this->throwable->getMessage()
+            fwrite(STDERR,
+                sprintf("Exception while executing command: %s\nError stack: %s\n",
+                    $this->throwable->getMessage(),
+                    implode(' <= ', $errorStack)
+                )
+            );
             throw new ProcessEngineException(sprintf("exception while executing command: %s", implode(' <= ', $errorStack)), $this->throwable);
         }
     }
