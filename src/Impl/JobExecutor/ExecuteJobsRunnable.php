@@ -33,11 +33,14 @@ class ExecuteJobsRunnable implements RunnableInterface
     protected static $loadedProcessEngineConfiguration;
     protected static $loadedProcessEngine;
     protected bool $queued = false;
+    protected $jobExecutionBootstrap;
+    protected bool $jobExecutionBootstrapInvoked = false;
 
-    public function __construct(array $jobIds, ProcessEngineImpl $processEngine)
+    public function __construct(array $jobIds, ProcessEngineImpl $processEngine, ?callable $jobExecutionBootstrap = null)
     {
         $this->jobIds = $jobIds;
         $this->processEngine = $processEngine;
+        $this->jobExecutionBootstrap = $jobExecutionBootstrap;
         //$this->jobExecutor = $processEngine->getProcessEngineConfiguration()->getJobExecutor();
     }
 
@@ -45,7 +48,10 @@ class ExecuteJobsRunnable implements RunnableInterface
     {
         return [
             'jobIds' => $this->jobIds,
-            'resource' => $this->processEngine->getProcessEngineConfiguration()->getResource()
+            'resource' => $this->processEngine->getProcessEngineConfiguration()->getResource(),
+            'jobExecutionBootstrap' => $this->isSerializableBootstrap($this->jobExecutionBootstrap)
+                ? $this->jobExecutionBootstrap
+                : null
         ];
     }
 
@@ -54,11 +60,14 @@ class ExecuteJobsRunnable implements RunnableInterface
         $this->queued = true;
         $this->jobIds = $data['jobIds'];
         $this->resource = $data['resource'];
+        $this->jobExecutionBootstrap = $data['jobExecutionBootstrap'] ?? null;
     }
 
     public function run(ThreadInterface $process = null, ...$args): void
     {
         $this->ensureProcessEngineConfigurationExists(...$args);
+
+        $this->invokeJobExecutionBootstrap();
 
         $jobExecutorContext = new JobExecutorContext();
         $currentProcessorJobQueue = $jobExecutorContext->getCurrentProcessorJobQueue();
@@ -112,6 +121,48 @@ class ExecuteJobsRunnable implements RunnableInterface
         if ($this->processEngine === null && self::$loadedProcessEngine !== null) {
             $this->processEngine = self::$loadedProcessEngine;
         }
+    }
+
+    private function invokeJobExecutionBootstrap(): void
+    {
+        if ($this->jobExecutionBootstrapInvoked) {
+            return;
+        }
+
+        try {
+            if (is_callable($this->jobExecutionBootstrap)) {
+                $this->callBootstrap($this->jobExecutionBootstrap);
+            }
+        } catch (\Throwable $e) {
+            fwrite(STDERR, sprintf("[%s] Job execution bootstrap failed: %s\n", date("d-m-Y H:i:s"), $e->getMessage()));
+        }
+
+        $this->jobExecutionBootstrapInvoked = true;
+    }
+
+    private function callBootstrap(callable $bootstrap): void
+    {
+        if (is_array($bootstrap) && count($bootstrap) === 2) {
+            $reflection = new \ReflectionMethod($bootstrap[0], $bootstrap[1]);
+        } else {
+            $reflection = new \ReflectionFunction(\Closure::fromCallable($bootstrap));
+        }
+
+        if ($reflection->getNumberOfParameters() > 0) {
+            $bootstrap($this->processEngine);
+            return;
+        }
+
+        $bootstrap();
+    }
+
+    private function isSerializableBootstrap($bootstrap): bool
+    {
+        if (!is_callable($bootstrap)) {
+            return false;
+        }
+
+        return !($bootstrap instanceof \Closure);
     }
 
     protected function executeJob(?string $nextJobId, CommandExecutorInterface $commandExecutor, JobFailureCollector $jobFailureCollector, ...$args): void

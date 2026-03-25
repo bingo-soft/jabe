@@ -49,6 +49,11 @@ abstract class JobExecutor
     protected $lockOwner;
     protected int $lockTimeInMillis = 5 * 30 * 1000;
 
+    /**
+     * @var callable|null
+     */
+    protected $jobExecutionBootstrap = null;
+
     protected $state = [];
 
     public function __construct(...$args)
@@ -152,8 +157,8 @@ abstract class JobExecutor
     {
         if ($engine->getProcessEngineConfiguration()->isMetricsEnabled()) {
             $engine->getProcessEngineConfiguration()
-            ->getMetricsRegistry()
-            ->markOccurrence(Metrics::JOB_ACQUISITION_ATTEMPT);
+                ->getMetricsRegistry()
+                ->markOccurrence(Metrics::JOB_ACQUISITION_ATTEMPT);
         }
     }
 
@@ -161,8 +166,8 @@ abstract class JobExecutor
     {
         if ($engine !== null && $engine->getProcessEngineConfiguration()->isMetricsEnabled()) {
             $engine->getProcessEngineConfiguration()
-            ->getMetricsRegistry()
-            ->markOccurrence(Metrics::JOB_ACQUIRED_SUCCESS, $numJobs);
+                ->getMetricsRegistry()
+                ->markOccurrence(Metrics::JOB_ACQUIRED_SUCCESS, $numJobs);
         }
     }
 
@@ -170,8 +175,8 @@ abstract class JobExecutor
     {
         if ($engine !== null && $engine->getProcessEngineConfiguration()->isMetricsEnabled()) {
             $engine->getProcessEngineConfiguration()
-            ->getMetricsRegistry()
-            ->markOccurrence(Metrics::JOB_ACQUIRED_FAILURE, $numJobs);
+                ->getMetricsRegistry()
+                ->markOccurrence(Metrics::JOB_ACQUIRED_FAILURE, $numJobs);
         }
     }
 
@@ -179,8 +184,8 @@ abstract class JobExecutor
     {
         if ($engine !== null && $engine->getProcessEngineConfiguration()->isMetricsEnabled()) {
             $engine->getProcessEngineConfiguration()
-            ->getMetricsRegistry()
-            ->markOccurrence(Metrics::JOB_EXECUTION_REJECTED, $numJobs);
+                ->getMetricsRegistry()
+                ->markOccurrence(Metrics::JOB_EXECUTION_REJECTED, $numJobs);
         }
     }
 
@@ -392,6 +397,16 @@ abstract class JobExecutor
 
     public function getExecuteJobsRunnable(array $jobIds, ProcessEngineImpl $processEngine): RunnableInterface
     {
-        return new ExecuteJobsRunnable($jobIds, $processEngine);
+        return new ExecuteJobsRunnable($jobIds, $processEngine, $this->jobExecutionBootstrap);
+    }
+
+    public function setJobExecutionBootstrap(?callable $jobExecutionBootstrap): void
+    {
+        $this->jobExecutionBootstrap = $jobExecutionBootstrap;
+    }
+
+    public function getJobExecutionBootstrap(): ?callable
+    {
+        return $this->jobExecutionBootstrap;
     }
 }
