@@ -28,11 +28,6 @@ class DefaultIncidentHandler implements IncidentHandlerInterface
     public function createIncident(IncidentContext $context, ?string $message): IncidentInterface
     {
         $newIncident = IncidentEntity::createAndInsertIncident($this->type, $context, $message);
-
-        if ($context->getExecutionId() !== null) {
-            $newIncident->createRecursiveIncidents();
-        }
-
         return $newIncident;
     }
 

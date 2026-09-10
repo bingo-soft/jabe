@@ -68,7 +68,7 @@ class ErrorEventDefinition
         return $this->errorCode === null || $this->errorCode == $errorCode;
     }
 
-    public function catchesException(\Exception $ex): bool
+    public function catchesException(\Throwable $ex): bool
     {
 
         if ($this->errorCode === null) {

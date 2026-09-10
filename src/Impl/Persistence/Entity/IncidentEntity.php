@@ -120,6 +120,10 @@ class IncidentEntity implements IncidentInterface, DbEntityInterface, HasDbRevis
         // insert new incident (and create a new historic incident)
         self::insert($newIncident);
 
+        if ($context->getExecutionId() !== null) {
+            $newIncident->createRecursiveIncidents();
+        }
+
         return $newIncident;
     }
 

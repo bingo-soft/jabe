@@ -107,18 +107,18 @@ class ExecuteJobHelper
      *
      * @return exception or null if succeeded
      */
-    private static function callFailedJobListenerWithRetries(CommandExecutorInterface $commandExecutor, FailedJobListener $failedJobListener): ?\Exception
+    protected static function callFailedJobListenerWithRetries(CommandExecutorInterface $commandExecutor, FailedJobListener $failedJobListener): ?\Throwable
     {
-        try {
-            $commandExecutor->execute($failedJobListener);
-            return null;
-        } catch (\Throwable $ex) {
-            $failedJobListener->incrementCountRetries();
-            if ($failedJobListener->getRetriesLeft() > 0) {
-                return self::callFailedJobListenerWithRetries($commandExecutor, $failedJobListener);
+        do {
+            try {
+                $commandExecutor->execute($failedJobListener);
+                return null;
+            } catch (\Throwable $ex) {
+                $failedJobListener->incrementCountRetries();
             }
-            return $ex;
-        }
+        } while ($failedJobListener->getRetriesLeft() > 0);
+
+        return $ex;
     }
 
     protected static function handleJobFailure(?string $nextJobId, JobFailureCollector $jobFailureCollector, \Throwable $exception): void
