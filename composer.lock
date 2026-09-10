@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "41250d93f14e942a839a72e8028012ed",
+    "content-hash": "b057a4acff068c85459f474c8310328d",
     "packages": [
         {
             "name": "bingo-soft/bpmn",
@@ -64,19 +64,21 @@
         },
         {
             "name": "bingo-soft/concurrent",
-            "version": "1.3.3",
+            "version": "1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/concurrent.git",
-                "reference": "6cb11150e465e07a85ccb2aa0e189fd4eee22196"
+                "reference": "9c6bf81cc698d14b559cf859863cb5e1ddb79039"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/concurrent/zipball/6cb11150e465e07a85ccb2aa0e189fd4eee22196",
-                "reference": "6cb11150e465e07a85ccb2aa0e189fd4eee22196",
+                "url": "https://api.github.com/repos/bingo-soft/concurrent/zipball/9c6bf81cc698d14b559cf859863cb5e1ddb79039",
+                "reference": "9c6bf81cc698d14b559cf859863cb5e1ddb79039",
                 "shasum": ""
             },
             "require": {
+                "bingo-soft/util": "^1.8",
+                "charescape/serialize-closure": "^3.8",
                 "php": "^7.4 || ^8.0"
             },
             "require-dev": {
@@ -111,9 +113,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/concurrent/issues",
-                "source": "https://github.com/bingo-soft/concurrent/tree/1.3.3"
+                "source": "https://github.com/bingo-soft/concurrent/tree/1.5.1"
             },
-            "time": "2023-06-13T14:52:21+00:00"
+            "time": "2026-09-10T09:21:05+00:00"
         },
         {
             "name": "bingo-soft/el",
@@ -438,22 +440,24 @@
         },
         {
             "name": "bingo-soft/util",
-            "version": "1.6.7",
+            "version": "1.8.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/util.git",
-                "reference": "1a56cae80b1da0ac56adea28535072971e5e2e56"
+                "reference": "63d5e3af2bc01c74e3464ce3f2141612ba9b08eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/util/zipball/1a56cae80b1da0ac56adea28535072971e5e2e56",
-                "reference": "1a56cae80b1da0ac56adea28535072971e5e2e56",
+                "url": "https://api.github.com/repos/bingo-soft/util/zipball/63d5e3af2bc01c74e3464ce3f2141612ba9b08eb",
+                "reference": "63d5e3af2bc01c74e3464ce3f2141612ba9b08eb",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.4 || ^8.0"
+                "php": "^8.0",
+                "symfony/process": "^7.0"
             },
             "require-dev": {
+                "bingo-soft/concurrent": "^1.3",
                 "doctrine/coding-standard": "*",
                 "phpunit/phpunit": "*",
                 "squizlabs/php_codesniffer": "*"
@@ -483,9 +487,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/util/issues",
-                "source": "https://github.com/bingo-soft/util/tree/1.6.7"
+                "source": "https://github.com/bingo-soft/util/tree/1.8.3"
             },
-            "time": "2023-08-14T06:05:49+00:00"
+            "time": "2024-04-02T16:49:37+00:00"
         },
         {
             "name": "bingo-soft/xml",
@@ -596,6 +600,75 @@
                 }
             ],
             "time": "2023-01-15T23:15:59+00:00"
+        },
+        {
+            "name": "charescape/serialize-closure",
+            "version": "3.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/charescape/serialize-closure.git",
+                "reference": "833c98ec940ffd72d2d3f879ef657aa0ca5192b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/charescape/serialize-closure/zipball/833c98ec940ffd72d2d3f879ef657aa0ca5192b0",
+                "reference": "833c98ec940ffd72d2d3f879ef657aa0ca5192b0",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.4 || ^7.0 || ^8.0"
+            },
+            "replace": {
+                "opis/closure": "*"
+            },
+            "require-dev": {
+                "ext-iconv": "*",
+                "ext-mbstring": "*",
+                "jeremeamia/superclosure": "^2.0",
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0 || ^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "functions.php"
+                ],
+                "psr-4": {
+                    "Opis\\Closure\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marius Sarca",
+                    "email": "marius.sarca@gmail.com"
+                },
+                {
+                    "name": "Sorin Sarca",
+                    "email": "sarca_sorin@hotmail.com"
+                }
+            ],
+            "description": "A library that can be used to serialize closures (anonymous functions) and arbitrary objects.",
+            "homepage": "https://opis.io/closure",
+            "keywords": [
+                "anonymous functions",
+                "closure",
+                "function",
+                "serializable",
+                "serialization",
+                "serialize"
+            ],
+            "support": {
+                "source": "https://github.com/charescape/serialize-closure/tree/3.8.0"
+            },
+            "time": "2023-04-12T09:30:16+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -2324,20 +2397,20 @@
         },
         {
             "name": "symfony/process",
-            "version": "v6.4.0",
+            "version": "v7.4.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "191703b1566d97a5425dc969e4350d32b8ef17aa"
+                "reference": "058d17fc284cce14efb2385783b55014a461b176"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/191703b1566d97a5425dc969e4350d32b8ef17aa",
-                "reference": "191703b1566d97a5425dc969e4350d32b8ef17aa",
+                "url": "https://api.github.com/repos/symfony/process/zipball/058d17fc284cce14efb2385783b55014a461b176",
+                "reference": "058d17fc284cce14efb2385783b55014a461b176",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1"
+                "php": ">=8.2"
             },
             "type": "library",
             "autoload": {
@@ -2365,7 +2438,7 @@
             "description": "Executes commands in sub-processes",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/process/tree/v6.4.0"
+                "source": "https://github.com/symfony/process/tree/v7.4.18"
             },
             "funding": [
                 {
@@ -2377,11 +2450,15 @@
                     "type": "github"
                 },
                 {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
                     "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-11-17T21:06:49+00:00"
+            "time": "2026-08-21T17:40:08+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -4495,5 +4572,5 @@
         "php": "^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

@@ -25,9 +25,9 @@ class BpmnExceptionHandler
      * Decides how to propagate the exception properly, e.g. as bpmn error or "normal" error.
      * @param execution the current execution
      * @param ex the exception to propagate
-     * @throws Exception if no error handler could be found
+     * @throws Throwable if no error handler could be found
      */
-    public static function propagateException(ActivityExecutionInterface $execution, \Exception $ex): void
+    public static function propagateException(ActivityExecutionInterface $execution, \Throwable $ex): void
     {
         $bpmnError = self::checkIfCauseOfExceptionIsBpmnError($ex);
         if ($bpmnError !== null) {
@@ -37,7 +37,7 @@ class BpmnExceptionHandler
         }
     }
 
-    protected static function propagateExceptionAsError(\Exception $exception, ActivityExecutionInterface $execution): void
+    protected static function propagateExceptionAsError(\Throwable $exception, ActivityExecutionInterface $execution): void
     {
         if (self::isProcessEngineExceptionWithoutCause($exception) || self::isTransactionNotActive()) {
             throw $exception;
@@ -51,7 +51,7 @@ class BpmnExceptionHandler
         return !Context::getCommandContext()->getTransactionContext()->isTransactionActive();
     }
 
-    protected static function isProcessEngineExceptionWithoutCause(\Exception $exception): bool
+    protected static function isProcessEngineExceptionWithoutCause(\Throwable $exception): bool
     {
         return $exception instanceof ProcessEngineException && $exception->getCause() === null;
     }
@@ -74,7 +74,7 @@ class BpmnExceptionHandler
             if ($e->getCause() === null) {
                 return null;
             }
-            self::checkIfCauseOfExceptionIsBpmnError($e->getCause());
+            return self::checkIfCauseOfExceptionIsBpmnError($e->getCause());
         }
         return null;
     }
@@ -84,7 +84,7 @@ class BpmnExceptionHandler
         self::propagateError($error->getCode(), $error->getMessage(), null, $execution);
     }
 
-    public static function propagateError(?string $errorCode, ?string $errorMessage, ?\Exception $origException, ActivityExecutionInterface $execution): void
+    public static function propagateError(?string $errorCode, ?string $errorMessage, ?\Throwable $origException, ActivityExecutionInterface $execution): void
     {
         $walker = new ActivityExecutionHierarchyWalker($execution);
 

@@ -31,8 +31,8 @@
         "bingo-soft/el": "*",
         "bingo-soft/script": "*",
         "bingo-soft/mybatis": "*",
-        "bingo-soft/concurrent": "*",
-        "symfony/process": "^6.2"
+        "bingo-soft/concurrent": "^1.5.1",
+        "symfony/process": "^6.2 || ^7.0"
     },
     "require-dev": {
         "doctrine/coding-standard": "^9",
