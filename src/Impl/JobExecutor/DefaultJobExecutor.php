@@ -26,13 +26,24 @@ class DefaultJobExecutor extends ThreadPoolJobExecutor
         $state = empty($args) ? $this->getState() : $args;
         if ($this->threadPoolExecutor === null || $this->threadPoolExecutor->isShutdown()) {
             $threadPoolQueue = new ArrayBlockingQueue($this->queueSize);
-            $this->threadPoolExecutor = new DefaultPoolExecutor($this->corePoolSize, 0, TimeUnit::MILLISECONDS, $threadPoolQueue);
+            $this->threadPoolExecutor = $this->createThreadPoolExecutor($threadPoolQueue);
             //$this->threadPoolExecutor->setRejectedExecutionHandler(...);
             //getAcquireJobsRunnable()
             $this->threadPoolExecutor->setScopeArguments(...$state);
         }
 
         parent::startExecutingJobs(...$state);
+    }
+
+    protected function createThreadPoolExecutor(ArrayBlockingQueue $threadPoolQueue): DefaultPoolExecutor
+    {
+        return new DefaultPoolExecutor(
+            $this->corePoolSize,
+            $this->maxPoolSize,
+            0,
+            TimeUnit::MILLISECONDS,
+            $threadPoolQueue
+        );
     }
 
     protected function stopExecutingJobs(): void
