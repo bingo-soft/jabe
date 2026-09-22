@@ -118,12 +118,12 @@ class JobAcquisitionContext
         return $this->additionalJobBatchesByEngine;
     }
 
-    public function setAcquisitionException(\Exception $e): void
+    public function setAcquisitionException(\Throwable $e): void
     {
         $this->acquisitionException = $e;
     }
 
-    public function getAcquisitionException(): ?\Exception
+    public function getAcquisitionException(): ?\Throwable
     {
         return $this->acquisitionException;
     }

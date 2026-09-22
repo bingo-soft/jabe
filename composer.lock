@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b057a4acff068c85459f474c8310328d",
+    "content-hash": "42e9b734f13b281f8c9fd5cae0e91e31",
     "packages": [
         {
             "name": "bingo-soft/bpmn",
@@ -64,16 +64,16 @@
         },
         {
             "name": "bingo-soft/concurrent",
-            "version": "1.5.1",
+            "version": "1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/concurrent.git",
-                "reference": "9c6bf81cc698d14b559cf859863cb5e1ddb79039"
+                "reference": "f70658e9030128cf426ea430fb13f3e2e4031d35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/concurrent/zipball/9c6bf81cc698d14b559cf859863cb5e1ddb79039",
-                "reference": "9c6bf81cc698d14b559cf859863cb5e1ddb79039",
+                "url": "https://api.github.com/repos/bingo-soft/concurrent/zipball/f70658e9030128cf426ea430fb13f3e2e4031d35",
+                "reference": "f70658e9030128cf426ea430fb13f3e2e4031d35",
                 "shasum": ""
             },
             "require": {
@@ -113,9 +113,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/concurrent/issues",
-                "source": "https://github.com/bingo-soft/concurrent/tree/1.5.1"
+                "source": "https://github.com/bingo-soft/concurrent/tree/1.5.2"
             },
-            "time": "2026-09-10T09:21:05+00:00"
+            "time": "2026-09-21T11:24:29+00:00"
         },
         {
             "name": "bingo-soft/el",
@@ -2397,16 +2397,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v7.4.18",
+            "version": "v7.4.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "058d17fc284cce14efb2385783b55014a461b176"
+                "reference": "ed0ae095b86994d370d5791612e55984f15aa30e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/058d17fc284cce14efb2385783b55014a461b176",
-                "reference": "058d17fc284cce14efb2385783b55014a461b176",
+                "url": "https://api.github.com/repos/symfony/process/zipball/ed0ae095b86994d370d5791612e55984f15aa30e",
+                "reference": "ed0ae095b86994d370d5791612e55984f15aa30e",
                 "shasum": ""
             },
             "require": {
@@ -2438,7 +2438,7 @@
             "description": "Executes commands in sub-processes",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/process/tree/v7.4.18"
+                "source": "https://github.com/symfony/process/tree/v7.4.19"
             },
             "funding": [
                 {
@@ -2458,7 +2458,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-08-21T17:40:08+00:00"
+            "time": "2026-09-02T12:38:34+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -4565,12 +4565,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.0"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.9.0"
 }

@@ -110,14 +110,19 @@ class DefaultJobRetryCmd extends JobRetryCmd
 
     protected function getCurrentActivity(CommandContext $commandContext, JobEntity $job): ?ActivityImpl
     {
+        if ($job === null || $job->getProcessDefinitionId() === null) {
+            return null;
+        }
+
         $type = $job->getJobHandlerType();
         $activity = null;
 
         if (in_array($type, self::SUPPORTED_TYPES)) {
             $deploymentCache = Context::getProcessEngineConfiguration()->getDeploymentCache();
-            $processDefinitionEntity =
-                $deploymentCache->findDeployedProcessDefinitionById($job->getProcessDefinitionId());
-            $activity = $processDefinitionEntity->findActivity($job->getActivityId());
+            $processDefinitionEntity = $deploymentCache->findDeployedProcessDefinitionById($job->getProcessDefinitionId());
+            if ($processDefinitionEntity !== null && $job->getActivityId() !== null) {
+                $activity = $processDefinitionEntity->findActivity($job->getActivityId());
+            }
         } else {
             // noop, because activity type is not supported
         }
