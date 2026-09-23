@@ -50,6 +50,45 @@ class ExecuteJobHelper
         ?ProcessEngineConfigurationImpl $configuration = null,
         ...$args
     ): void {
+        self::executeJobWithFailurePolicy(
+            $nextJobId,
+            $commandExecutor,
+            $jobFailureCollector,
+            $cmd,
+            $configuration,
+            true,
+            ...$args
+        );
+    }
+
+    public static function executeJobInWorker(
+        ?string $nextJobId,
+        CommandExecutorInterface $commandExecutor,
+        ?JobFailureCollector $jobFailureCollector = null,
+        ?CommandInterface $cmd = null,
+        ?ProcessEngineConfigurationImpl $configuration = null,
+        ...$args
+    ): void {
+        self::executeJobWithFailurePolicy(
+            $nextJobId,
+            $commandExecutor,
+            $jobFailureCollector,
+            $cmd,
+            $configuration,
+            false,
+            ...$args
+        );
+    }
+
+    protected static function executeJobWithFailurePolicy(
+        ?string $nextJobId,
+        CommandExecutorInterface $commandExecutor,
+        ?JobFailureCollector $jobFailureCollector,
+        ?CommandInterface $cmd,
+        ?ProcessEngineConfigurationImpl $configuration,
+        bool $rethrowHandledJobFailure,
+        ...$args
+    ): void {
         if ($jobFailureCollector === null) {
             $jobFailureCollector = new JobFailureCollector($nextJobId);
         }
@@ -57,13 +96,12 @@ class ExecuteJobHelper
             $cmd = new ExecuteJobsCmd($nextJobId, $jobFailureCollector);
         }
 
+        $jobExecutionFailure = null;
         try {
             $commandExecutor->execute($cmd, ...$args);
         } catch (\Throwable $exception) {
             self::handleJobFailure($nextJobId, $jobFailureCollector, $exception);
-            // throw the original exception to indicate the ExecuteJobCmd failed
-            //throw LOG.wrapJobExecutionFailure(jobFailureCollector, exception);
-            throw $exception;
+            $jobExecutionFailure = $exception;
         } finally {
             // preserve MDC properties before listener invocation and clear MDC for job listener
             $processDataContext = null;
@@ -81,6 +119,10 @@ class ExecuteJobHelper
             if ($processDataContext !== null) {
                 $processDataContext->updateMdcFromCurrentValues();
             }
+        }
+
+        if ($jobExecutionFailure !== null && $rethrowHandledJobFailure) {
+            throw $jobExecutionFailure;
         }
     }
 
