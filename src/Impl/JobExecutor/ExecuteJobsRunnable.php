@@ -135,6 +135,7 @@ class ExecuteJobsRunnable implements RunnableInterface
             }
         } catch (\Throwable $e) {
             fwrite(STDERR, sprintf("[%s] Job execution bootstrap failed: %s\n", date("d-m-Y H:i:s"), $e->getMessage()));
+            throw $e;
         }
 
         $this->jobExecutionBootstrapInvoked = true;
@@ -167,7 +168,14 @@ class ExecuteJobsRunnable implements RunnableInterface
 
     protected function executeJob(?string $nextJobId, CommandExecutorInterface $commandExecutor, JobFailureCollector $jobFailureCollector, ...$args): void
     {
-        ExecuteJobHelper::executeJob($nextJobId, $commandExecutor, $jobFailureCollector, new ExecuteJobsCmd($nextJobId, $jobFailureCollector), $this->processEngine->getProcessEngineConfiguration(), ...$args);
+        ExecuteJobHelper::executeJobInWorker(
+            $nextJobId,
+            $commandExecutor,
+            $jobFailureCollector,
+            new ExecuteJobsCmd($nextJobId, $jobFailureCollector),
+            $this->processEngine->getProcessEngineConfiguration(),
+            ...$args
+        );
     }
 
     protected function unlockJob(?string $nextJobId, CommandExecutorInterface $commandExecutor): void
