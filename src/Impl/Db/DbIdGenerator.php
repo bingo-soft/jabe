@@ -8,6 +8,7 @@ use Jabe\Impl\Interceptor\CommandExecutorInterface;
 
 class DbIdGenerator implements IdGeneratorInterface
 {
+    private const MAX_BLOCK_RESERVATION_RETRIES = 5;
     protected int $idBlockSize = 0;
     protected int $nextId = 0;
     protected int $lastId = 0;
@@ -46,9 +47,32 @@ class DbIdGenerator implements IdGeneratorInterface
 
     protected function getNewBlock(): void
     {
-        $idBlock = $this->commandExecutor->execute(new GetNextIdBlockCmd($this->idBlockSize));
-        $this->nextId = $idBlock->getNextId();
-        $this->lastId = $idBlock->getLastId();
+        for ($attempt = 0; $attempt < self::MAX_BLOCK_RESERVATION_RETRIES; ++$attempt) {
+            try {
+                $idBlock = $this->commandExecutor->execute(new GetNextIdBlockCmd($this->idBlockSize));
+                $this->nextId = $idBlock->getNextId();
+                $this->lastId = $idBlock->getLastId();
+                return;
+            } catch (\Throwable $exception) {
+                if (!$this->isReservationConflict($exception) || $attempt === self::MAX_BLOCK_RESERVATION_RETRIES - 1) {
+                    throw $exception;
+                }
+                usleep(1000 * (1 << $attempt));
+            }
+        }
+    }
+
+    private function isReservationConflict(\Throwable $exception): bool
+    {
+        do {
+            if ($exception instanceof \Jabe\OptimisticLockingException
+                && str_contains($exception->getMessage(), 'PropertyEntity[next.dbid]')) {
+                return true;
+            }
+            $exception = $exception->getPrevious();
+        } while ($exception !== null);
+
+        return false;
     }
 
     public function getIdBlockSize(): int
