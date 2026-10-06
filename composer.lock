@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "42e9b734f13b281f8c9fd5cae0e91e31",
+    "content-hash": "03b4a0bd3b309b1f4e5c265338a1ee92",
     "packages": [
         {
             "name": "bingo-soft/bpmn",
@@ -64,16 +64,16 @@
         },
         {
             "name": "bingo-soft/concurrent",
-            "version": "1.5.2",
+            "version": "1.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bingo-soft/concurrent.git",
-                "reference": "f70658e9030128cf426ea430fb13f3e2e4031d35"
+                "reference": "467917797f52b6d01b36ce6ec9a1ecdbe9b9d033"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bingo-soft/concurrent/zipball/f70658e9030128cf426ea430fb13f3e2e4031d35",
-                "reference": "f70658e9030128cf426ea430fb13f3e2e4031d35",
+                "url": "https://api.github.com/repos/bingo-soft/concurrent/zipball/467917797f52b6d01b36ce6ec9a1ecdbe9b9d033",
+                "reference": "467917797f52b6d01b36ce6ec9a1ecdbe9b9d033",
                 "shasum": ""
             },
             "require": {
@@ -113,9 +113,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bingo-soft/concurrent/issues",
-                "source": "https://github.com/bingo-soft/concurrent/tree/1.5.2"
+                "source": "https://github.com/bingo-soft/concurrent/tree/1.5.3"
             },
-            "time": "2026-09-21T11:24:29+00:00"
+            "time": "2026-10-02T13:25:15+00:00"
         },
         {
             "name": "bingo-soft/el",

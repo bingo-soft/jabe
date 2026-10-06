@@ -357,6 +357,7 @@ use Jabe\Variable\Variables;
 use Jabe\Variable\Type\ValueTypeInterface;
 use MyBatis\Builder\Xml\XMLConfigBuilder as MyBatisXMLConfigBuilder;
 use MyBatis\DataSource\DataSourceInterface;
+use Jabe\Impl\Db\ForkSafeDataSource;
 use MyBatis\DataSource\Unpooled\UnpooledDataSource;
 use MyBatis\Mapping\Environment;
 use MyBatis\Session\{
@@ -1698,7 +1699,7 @@ abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration
                 throw new ProcessEngineException("DataSource properties have to be specified in a process engine configuration");
             }
 
-            $this->dataSource = new UnpooledDataSource($this->dbDriver, $this->dbUrl, $this->dbUsername, $this->dbPassword);
+            $this->dataSource = new ForkSafeDataSource($this->dbDriver, $this->dbUrl, $this->dbUsername, $this->dbPassword);
 
             $props = [];
             if ($this->dbHost !== null) {

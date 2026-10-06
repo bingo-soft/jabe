@@ -392,8 +392,7 @@ class DbEntityManager implements SessionInterface, EntityLoadListenerInterface
                 break;
             case OptimisticLockingResult::THROW:
             default:
-                //throw LOG.concurrentUpdateDbEntityException(dbOperation);
-                throw new \Exception("concurrentUpdateDbEntityException");
+                throw new OptimisticLockingException("concurrentUpdateDbEntityException: " . $dbOperation);
         }
     }
 
